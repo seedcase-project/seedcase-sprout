@@ -1,0 +1,50 @@
+@startuml
+skinparam actorStyle awesome
+title Continuous Integration and Continuous Delivery
+
+
+'Continuous Integration -----------------------------------
+actor "Software Developer"                  as Developer
+(**feature branch**)                        as FeatureBranch
+"Github actions\nContinuous Integration"    as ci
+"Github actions\nContinuous Delivery"       as cd
+(**main branch**)                           as MainBranch
+
+
+Developer --> FeatureBranch : Code committed \nto new branch
+FeatureBranch --> ci : "Automatic trigger"
+FeatureBranch --> MainBranch : "Feature branch is merged\n into main branch with Pull-request"
+MainBranch --> cd : "Automatic trigger"
+
+rectangle ci {
+  ("Install dependencies")  as dependencies
+  ("Apply migrations")      as Migrations
+  ("Integration tests")     as ItTests
+  ("Unit tests")            as UnitTests
+
+  dependencies --> UnitTests
+  UnitTests --> Migrations
+  Migrations --> ItTests
+}
+
+rectangle cd {
+    collections "Run CI steps again"    as all_tests
+    artifact "Docker image"             as docker_image
+    database "DockerHub"                as docker_hub
+    artifact "Code package"             as code
+    cloud "Cloud Service (Demo)"        as cloud
+    node "University Server"            as server
+
+    all_tests --> docker_image : "Build docker\n image"
+    docker_image --> docker_hub : "Push to \nDockerHub"
+    docker_hub --> cloud : "Run image in cloud service"
+
+    all_tests  --> code : "Or create code package"
+    code --> cloud : "Run code in cloud service provider"
+    cloud --> server : "Manual approval or manual process \nto move artifact to university server?"
+}
+
+@enduml
+
+
+
