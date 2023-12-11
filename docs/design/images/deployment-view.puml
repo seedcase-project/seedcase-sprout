@@ -1,0 +1,25 @@
+@startuml
+skinparam actorStyle awesome
+title Infrastructure for Seedcase (Two versions)
+
+rectangle "Seedcase: SQLite" {
+    actor "User" as team1
+    node "**Server**\nSeedcase Image" as seedcase1
+    folder "**Mounted filesystem**:\nSQLite + Uploaded files" as file_system
+
+    team1 --> seedcase1 : "HTTPS ?"
+    seedcase1 --> file_system : "Mounted\n volume"
+}
+
+rectangle "Seedcase: Postgres" {
+    actor "User" as team2
+    node "**Server**\nSeedcase Image" as seedcase2
+    database "Postgres" as postgres
+    folder "**Mounted filesystem**:\nUploaded files" as file_system2
+
+    team2 --> seedcase2 : "HTTPS ?"
+    seedcase2 --> postgres : "Connection to\nDatabase"
+    seedcase2 --> file_system2 : "Mount filesystem"
+}
+
+@enduml
