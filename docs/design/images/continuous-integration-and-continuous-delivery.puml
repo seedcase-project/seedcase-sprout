@@ -6,45 +6,35 @@ title Continuous Integration and Continuous Delivery
 'Continuous Integration -----------------------------------
 actor "Software Developer"                  as Developer
 (**feature branch**)                        as FeatureBranch
-"Github actions\nContinuous Integration"    as ci
-"Github actions\nContinuous Delivery"       as cd
 (**main branch**)                           as MainBranch
 
-
 Developer --> FeatureBranch : Code committed \nto new branch
-FeatureBranch --> ci : "Automatic trigger"
+FeatureBranch --> "Continuous Integration" : "Automatic trigger GitHub actions"
 FeatureBranch --> MainBranch : "Feature branch is merged\n into main branch with Pull-request"
-MainBranch --> cd : "Automatic trigger"
+MainBranch --> "Continuous Delivery" : "Automatic trigger GitHub actions"
 
-rectangle ci {
-  ("Install dependencies")  as dependencies
-  ("Apply migrations")      as Migrations
-  ("Integration tests")     as ItTests
-  ("Unit tests")            as UnitTests
+rectangle "Continuous Integration" {
+  (Install dependencies)            as dependencies
+
+  (Unit tests)                      as UnitTests
+  (Integation tests)               as ItTests
+  cloud "Demo environment"          as demo
 
   dependencies --> UnitTests
-  UnitTests --> Migrations
-  Migrations --> ItTests
+  UnitTests --> ItTests
+  ItTests --> demo : "If pull-request \ndeploy to \ndemo env"
 }
 
-rectangle cd {
-    collections "Run CI steps again"    as all_tests
-    artifact "Docker image"             as docker_image
-    database "DockerHub"                as docker_hub
-    artifact "Code package"             as code
-    cloud "Cloud Service (Demo)"        as cloud
-    node "University Server"            as server
+rectangle "Continuous Delivery" {
+    collections "Run CI\nsteps again"       as all_tests
+    artifact "Docker image"                 as docker_image
+    database "DockerHub"                    as docker_hub
+    cloud "Main demo env"           as main_demo
+
 
     all_tests --> docker_image : "Build docker\n image"
     docker_image --> docker_hub : "Push to \nDockerHub"
-    docker_hub --> cloud : "Run image in cloud service"
-
-    all_tests  --> code : "Or create code package"
-    code --> cloud : "Run code in cloud service provider"
-    cloud --> server : "Manual approval or manual process \nto move artifact to university server?"
+    docker_hub --> main_demo : "Run image in\ncloud service"
 }
 
 @enduml
-
-
-
