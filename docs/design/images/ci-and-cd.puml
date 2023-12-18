@@ -1,4 +1,4 @@
-@startuml
+@startuml ci-and-cd
 skinparam actorStyle awesome
 title Continuous Integration and Continuous Delivery
 
