@@ -1,4 +1,4 @@
-@startuml
+@startuml deployment-view
 skinparam actorStyle awesome
 title Infrastructure for Seedcase (Two versions)
 
