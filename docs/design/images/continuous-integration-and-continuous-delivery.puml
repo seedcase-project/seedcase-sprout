@@ -10,19 +10,19 @@ actor "Software Developer"                  as Developer
 
 Developer --> FeatureBranch : Code committed \nto new branch
 FeatureBranch --> "Continuous Integration" : "Automatic trigger GitHub actions"
-FeatureBranch --> MainBranch : "Feature branch is merged\n into main branch with Pull-request"
+FeatureBranch --> MainBranch : "Feature branch is merged\n into main branch with\na pull request"
 MainBranch --> "Continuous Delivery" : "Automatic trigger GitHub actions"
 
 rectangle "Continuous Integration" {
   (Install dependencies)            as dependencies
 
   (Unit tests)                      as UnitTests
-  (Integation tests)               as ItTests
+  (Integration tests)               as ItTests
   cloud "Demo environment"          as demo
 
   dependencies --> UnitTests
   UnitTests --> ItTests
-  ItTests --> demo : "If pull-request \ndeploy to \ndemo env"
+  ItTests --> demo : "If pull request \ndeploy to \ndemo env"
 }
 
 rectangle "Continuous Delivery" {
