@@ -1,0 +1,40 @@
+@startuml ci-and-cd
+skinparam actorStyle awesome
+title Continuous Integration and Continuous Delivery
+
+
+'Continuous Integration -----------------------------------
+actor "Software Developer"                  as Developer
+(**Feature branch**)                        as FeatureBranch
+(**Main branch**)                           as MainBranch
+
+Developer --> FeatureBranch : Code committed \nto new branch
+FeatureBranch --> "Continuous Integration" : "Triggers GitHub Action"
+FeatureBranch --> MainBranch : "Feature branch is merged\n into main branch with\na pull request"
+MainBranch --> "Continuous Delivery" : "Triggers GitHub Action"
+
+rectangle "Continuous Integration (CI)" {
+  (Install dependencies)            as dependencies
+
+  (Run unit tests)                  as UnitTests
+  (Run integration tests)           as ItTests
+  cloud "Demo environment"          as demo
+
+  dependencies --> UnitTests
+  UnitTests --> ItTests : "If passes, next"
+  ItTests --> demo : "If passes, deploy"
+}
+
+rectangle "Continuous Delivery (CD)" {
+    collections "Run CI steps"       as all_tests
+    artifact "Docker image"          as docker_image
+    database "DockerHub"             as docker_hub
+    cloud "Main 'demo'\nenvironment"            as main_demo
+
+
+    all_tests --> docker_image : "Build"
+    docker_image --> docker_hub : "Push"
+    docker_hub --> main_demo : "Deploy"
+}
+
+@enduml
