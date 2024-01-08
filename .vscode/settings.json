@@ -10,13 +10,5 @@
   "autoDocstring.includeName": true,
   "autoDocstring.startOnNewLine": true,
   "editor.tabCompletion": "on",
-  "editor.snippetSuggestions": "inline",
-  "conventional-branch.type": [
-    "docs",
-    "feat",
-    "fix",
-    "build",
-    "chore"
-  ],
-  "conventional-branch.format": "{Type}/{Branch}"
+  "editor.snippetSuggestions": "inline"
 }
