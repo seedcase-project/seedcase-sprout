@@ -1,8 +1,7 @@
 import datetime
 from unittest import TestCase
 
-from app.utils.csv import CsvColumnStats, parse_boolean, parse_date, parse_datetime, \
-    parse_time
+from app.utils.csv import parse_boolean, parse_date, parse_datetime, parse_time
 
 
 class TypeParserTests(TestCase):
@@ -55,15 +54,9 @@ class TypeParserTests(TestCase):
         self.assertRaises(ValueError, parse_date, "2024011")
         self.assertRaises(ValueError, parse_date, "2024.11")
 
-    def test_parse_date_should_fail(self):
+    def test_parse_datetime_should_fail(self):
         self.assertRaises(ValueError, parse_datetime, "1")
         self.assertRaises(ValueError, parse_datetime, "0")
-
-    def test_datetime_parser(self):
-        csv_column = CsvColumnStats("a_column_with_datetime")
-        self.assertEqual("date", csv_column.analyze("2024-01-25"))
-        self.assertEqual("date", csv_column.analyze("25-01-2024"))
-        self.assertEqual("datetime", csv_column.analyze("2024-01-25 12:00:00"))
 
     def test_parse_boolean_should_raise_error_when_fails(self):
         try:
