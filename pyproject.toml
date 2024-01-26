@@ -5,13 +5,13 @@ description = "Grow your research data in a structured, modern way that follows 
 authors = [
   "Luke W. Johnston <lwjohnst@gmail.com>",
   "Henrik Goul <hgo@mjolner.dk>",
-  "Kristiane Beicher <kris.beicher@clin.au.dk>", 
+  "Kristiane Beicher <kris.beicher@clin.au.dk>",
   "Philip Christiansen <pch@mjolner.dk>",
   "Signe Kirk Brødbæk <signekb@clin.au.dk>",
 ]
 maintainers = [
   "Luke W. Johnston <lwjohnst@gmail.com>",
-  "Kristiane Beicher <kris.beicher@clin.au.dk>", 
+  "Kristiane Beicher <kris.beicher@clin.au.dk>",
   "Signe Kirk Brødbæk <signekb@clin.au.dk>",
 ]
 readme = "README.md"
@@ -28,6 +28,7 @@ ruff = "^0.1.9"
 whitenoise = "^6.6.0"
 gunicorn = "^21.2.0"
 dj-database-url = "^2.1.0"
+python-dateutil = "^2.8.2"
 
 [build-system]
 requires = ["poetry-core"]
