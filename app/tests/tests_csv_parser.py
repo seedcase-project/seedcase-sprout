@@ -2,7 +2,7 @@ import io
 from typing import Any
 from unittest import TestCase
 import numpy
-from pandas import DataFrame, Series
+from pandas import DataFrame, Series, Timedelta
 
 from app.csv_parser import read_csv_file
 
@@ -58,18 +58,20 @@ class CsvTests(TestCase):
     def test_datetime(self):
         csv_file = io.StringIO(
             "d1,                d2,         d3,     d4\n"
-            "1987-10-27 00:00:00,1987-06-27,12:00:00,\n"
-            "1987-11-28 12:00:00,1987-06-28,13:00:01,\n"
-            "1987-11-29 12:00:01,1987-06-29,00:00:00,"
+            "1987-10-27 00:00:00,1987-10-27,12:00:00,27. Oct 1987\n"
+            "2000-01-28 12:00:00,2000-01-28,13:00:01,28. Jan 2000\n"
+            "2024-07-01 12:00:01,2024-07-01,00:00:00,1. Jul 2024"
         )
 
         df = read_csv_file(csv_file)
 
-        self.assert_types(df, "datetime64[ns]", "datetime64[ns]", "timedelta64[ns]")
+        self.assert_types(df, "datetime64[ns]", "datetime64[ns]", "timedelta64[ns]", "datetime64[ns]")
         self.assert_dates(
-            df["d1"], "1987-10-27", "1987-11-28T12", "1987-11-29T12:00:01"
+            df["d1"], "1987-10-27", "2000-01-28T12", "2024-07-01T12:00:01"
         )
-        self.assert_dates(df["d2"], "1987-06-27", "1987-06-28", "1987-06-29")
+        self.assert_dates(df["d2"], "1987-10-27", "2000-01-28", "2024-07-01")
+        self.assert_values(df["d3"], Timedelta('12:00:00'), Timedelta('13:00:01'), Timedelta('00:00:00'))
+        self.assert_dates(df["d4"], "1987-10-27", "2000-01-28", "2024-07-01")
 
     def assert_types(self, df: DataFrame, *expected: str):
         column_names = df.columns.values
