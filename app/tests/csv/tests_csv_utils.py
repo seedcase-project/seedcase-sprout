@@ -1,7 +1,7 @@
 import io
 from typing import Tuple
 from unittest import TestCase
-from app.utils.csv import CsvColumnStats, derive_csv_column_types
+from app.csv import CsvColumnStats, derive_csv_column_types
 
 
 class CsvUtilsTest(TestCase):
