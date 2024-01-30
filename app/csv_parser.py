@@ -13,9 +13,6 @@ def read_csv_file(csv_file: IO, row_number=1000):
     - understands boolean-ish values like: Yes, y, 1
     - finds the csv dialect of the file (fx. is delimiter semicolon or comma)
     - removes whitespaces in column names
-    :param csv_file:
-    :param row_number: number of rows to read from the file
-    :return: pandas dataframe is returned with csv content
 
     Args:
         csv_file: the csv file to parse
