@@ -1,4 +1,4 @@
-from app.csv.type_parser import TypeParser, TYPE_PARSER_HIERARCHY
+from app.csv_parser.type_parser import TypeParser, TYPE_PARSER_HIERARCHY
 
 
 class CsvColumnStats:

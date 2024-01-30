@@ -1,7 +1,7 @@
 import csv
 import sys
 from typing import IO
-from app.csv import CsvColumnStats
+from app.csv_parser import CsvColumnStats
 
 
 def derive_csv_column_types(file: IO, max_row_count: int = sys.maxsize):

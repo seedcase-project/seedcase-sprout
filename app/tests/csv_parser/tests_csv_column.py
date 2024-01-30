@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.csv import CsvColumnStats
+from app.csv_parser import CsvColumnStats
 
 
 class CsvColumnTests(TestCase):

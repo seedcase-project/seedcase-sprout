@@ -1,7 +1,7 @@
 import datetime
 from unittest import TestCase
 
-from app.csv import parse_boolean, parse_date, parse_datetime, parse_time
+from app.csv_parser import parse_boolean, parse_date, parse_datetime, parse_time
 
 
 class TypeParserTests(TestCase):
