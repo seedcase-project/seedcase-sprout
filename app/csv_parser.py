@@ -1,14 +1,15 @@
 import csv
+from csv import Dialect
 from typing import IO, Callable
 
 import pandas
 from pandas import DataFrame, Series
 
 
-def read_csv_file(csv_file: IO, row_number: int = 1000):
+def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
     """
-    Reads a csv file and derives types. It uses pandas.csv_read(),
-    but adds some functionality:
+    Reads a csv file and returns a DataFrame with the values.
+    It uses pandas.csv_read(), but adds some functionality:
     - finds datetime64 and time_delta64 columns
     - understands boolean-ish values like: Yes, y, 1
     - finds the csv dialect of the file (fx. is delimiter semicolon or comma)
@@ -19,29 +20,38 @@ def read_csv_file(csv_file: IO, row_number: int = 1000):
         row_number: the number of rows to read from the file
 
     Returns:
-        a pandas dataframe with derived types in the property: dtypes
+        a pandas dataframe with derived types (dtypes)
     """
-    dialect = csv.Sniffer().sniff(csv_file.read(row_number))
-    csv_file.seek(0)
+    dialect = _derive_csv_dialect(csv_file, row_number)
 
     df = pandas.read_csv(csv_file, nrows=row_number, dialect=dialect)
-    convert_columns(df)
-    return df
+    return derive_column_types_and_convert(df)
 
 
-def convert_columns(df: DataFrame):
+def _derive_csv_dialect(csv_file, row_number) -> Dialect:
+    dialect = csv.Sniffer().sniff(csv_file.read(row_number))
+    csv_file.seek(0)
+    return dialect
+
+
+def derive_column_types_and_convert(df: DataFrame) -> DataFrame:
     """
     DataFrame columns are iterated and for every column we evaluate if the column should
     be converted to a different type
     Args:
         df: the dataframe with the csv data
+
+    Returns:
+        A dataframe where column types are derived and converted
     """
     df.columns.str.strip()
     for col in df.columns:
-        convert_column_if_possible(df, col)
+        _convert_column_if_possible(df, col)
+
+    return df
 
 
-def convert_column_if_possible(df: DataFrame, column_name: str):
+def _convert_column_if_possible(df: DataFrame, column_name: str) -> None:
     """
     The default pandas.read_csv is not able to derive datetime, timedelta
     and boolean-ish values.
@@ -53,24 +63,27 @@ def convert_column_if_possible(df: DataFrame, column_name: str):
         column_name: the name of the column we need to analyse and convert
 
     """
-    if try_convert(df, column_name, parse_boolean_ish):
+    if _try_convert(df, column_name, parse_boolean_ish):
         return
-    if try_convert(df, column_name, parse_timedelta):
+    if _try_convert(df, column_name, parse_timedelta):
         return
-    if try_convert(df, column_name, parse_datetimes):
+    if _try_convert(df, column_name, parse_datetimes):
         return
 
 
-def try_convert(df: DataFrame, col: str, parser: Callable[[Series], Series]) -> bool:
+def _try_convert(df: DataFrame, col: str, parser: Callable[[Series], Series]) -> bool:
     """
-    We try to convert a column to a certain format
+    We try to convert a column to a certain format with a parser function. The
+    parser will raise a ValueError if not possible convert
 
     Args:
         df: the entire dataframe
         col: the column to parse
         parser: the parser-method converting a panda Series to another panda Series
 
-    Returns: true if we are able to parse the column with the supplied parser
+    Returns:
+        true if we are able to parse the column with the supplied parser
+        false if the parser fails by raising ValueError
 
     """
     try:
