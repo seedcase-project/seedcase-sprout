@@ -5,7 +5,7 @@ import pandas
 from pandas import DataFrame, Series
 
 
-def read_csv_file(csv_file: IO, row_number=1000):
+def read_csv_file(csv_file: IO, row_number: int = 1000):
     """
     Reads a csv file and derives types. It uses pandas.csv_read(),
     but adds some functionality:
@@ -99,6 +99,20 @@ def parse_boolean_ish(series: Series) -> Series:
 
 
 def parse_boolean(val: str | int) -> bool:
+    """
+    We want to support boolean-ish values like "yes", "no", "y" and 1.
+
+
+    Args:
+        val: string or integer
+
+    Returns:
+        a boolean value based on the string or an ValueError is raised
+
+    Raises:
+        ValueError if value is not boolean-ish
+
+    """
     if isinstance(val, int):
         if val == 0:
             return False

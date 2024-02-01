@@ -9,6 +9,10 @@ from app.csv_parser import read_csv_file
 
 class CsvTests(TestCase):
     def test_csv_with_simple_types(self):
+        """
+        testing that read_csv_file should derive column "i1" as integer, "f1" as float
+        and "b1" as bool. And the values are also verified
+        """
         csv_file = io.StringIO(
             "i1,f1,b1\n"
             "1,2.3,true\n"
@@ -24,6 +28,9 @@ class CsvTests(TestCase):
         self.assert_values(df["b1"], True, False, False)
 
     def test_csv_with_semicolon_and_whitespace(self):
+        """
+        Testing a different csv dialect with semicolon and initial whitespace
+        """
         csv_file = io.StringIO(
             "i1;    f1;     b1;     s1\n"
             "10;    5.3;    True;   Hi\n"
@@ -40,6 +47,10 @@ class CsvTests(TestCase):
         self.assert_values(df["s1"], "Hi", "Hello", "Man")
 
     def test_boolean_ish_values(self):
+        """
+        Testing boolean-ish values are derived as booleans and that the values are
+        converted correct
+        """
         csv_file = io.StringIO(
             "b1,b2,b3,b4\n"
             "0,true,yes,y\n"
@@ -56,36 +67,62 @@ class CsvTests(TestCase):
         self.assert_values(df["b4"], True, True, False)
 
     def test_datetime(self):
+        """
+        Testing different date formats (d1, d2, d3) and a single time column (t1)
+        """
         csv_file = io.StringIO(
-            "d1,                d2,         d3,     d4\n"
-            "1987-10-27 00:00:00,1987-10-27,12:00:00,27. Oct 1987\n"
-            "2000-01-28 12:00:00,2000-01-28,13:00:01,28. Jan 2000\n"
-            "2024-07-01 12:00:01,2024-07-01,00:00:00,1. Jul 2024"
+            "d1,                    d2,         d3,             t1\n"
+            "1987-10-27 00:00:00,   1987-10-27, 27. Oct 1987,   12:00:00\n"
+            "2000-01-28 12:00:00,   2000-01-28, 28. Jan 2000,   13:00:01\n"
+            "2024-07-01 12:00:01,   2024-07-01, 1. Jul 2024,    00:00:00"
         )
 
         df = read_csv_file(csv_file)
 
-        self.assert_types(df, "datetime64[ns]", "datetime64[ns]", "timedelta64[ns]", "datetime64[ns]")
-        self.assert_dates(
-            df["d1"], "1987-10-27", "2000-01-28T12", "2024-07-01T12:00:01"
-        )
+        self.assert_types(df, "datetime64[ns]", "datetime64[ns]", "datetime64[ns]",
+                          "timedelta64[ns]")
+        self.assert_dates(df["d1"], "1987-10-27", "2000-01-28T12",
+                          "2024-07-01T12:00:01")
         self.assert_dates(df["d2"], "1987-10-27", "2000-01-28", "2024-07-01")
-        self.assert_values(df["d3"], Timedelta('12:00:00'), Timedelta('13:00:01'), Timedelta('00:00:00'))
-        self.assert_dates(df["d4"], "1987-10-27", "2000-01-28", "2024-07-01")
+        self.assert_dates(df["d3"], "1987-10-27", "2000-01-28", "2024-07-01")
+        self.assert_values(df["t1"], Timedelta('12:00:00'), Timedelta('13:00:01'),
+                           Timedelta('00:00:00'))
 
-    def assert_types(self, df: DataFrame, *expected: str):
+    def assert_types(self, df: DataFrame, *expected_types: str):
+        """
+        Asserts that a DataFrame have the expected_types. This is a shorthand way
+        of testing the types
+
+        Args:
+            df: The DataFrame with data and types
+            *expected_types: a list of types we expect (in order)
+        """
         column_names = df.columns.values
-        self.assertEqual(len(column_names), len(expected), "Check all columns types!")
-        for idx in range(0, len(expected)):
+        self.assertEqual(len(column_names), len(expected_types), "Missing columns!")
+        for idx in range(0, len(expected_types)):
             column_name = column_names[idx]
             column_type = df.dtypes[column_name]
-            self.assertEqual(expected[idx], column_type, "column:" + column_name)
+            self.assertEqual(expected_types[idx], column_type, "column:" + column_name)
 
     def assert_values(self, s: Series, *expected_values: Any):
+        """
+        A shorthand function asserting that a Series contain the expected_values.
+
+        Args:
+            s: A Series is a column of data
+            *expected_types: a list of types we expect (in order)
+        """
         for idx in range(0, len(s.values)):
             self.assertEqual(s.values[idx], expected_values[idx], "row:" + str(idx))
 
     def assert_dates(self, s: Series, *expected_dates: str):
+        """
+        A shorthand function asserting that a Series contain the expected_dates.
+
+        Args:
+            s: A Series is a column of data
+            *expected_dates: a list of types we expect (in order)
+        """
         for idx in range(0, len(s.values)):
             date = numpy.datetime64(expected_dates[idx])
             self.assertEqual(s.values[idx], date, "row:" + str(idx))
