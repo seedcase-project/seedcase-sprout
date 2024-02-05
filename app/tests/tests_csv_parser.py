@@ -10,8 +10,8 @@ from app.csv_parser import read_csv_file
 class CsvTests(TestCase):
     def test_csv_with_simple_types(self):
         """
-        testing that read_csv_file should derive column "i1" as integer, "f1" as float
-        and "b1" as bool. And the values are also verified
+        Testing that `read_csv_file()` should derive column "i1" as integer, "f1" as float
+        and "b1" as a boolean, and that the values are also verified.
         """
         csv_file = io.StringIO(
             "i1,f1,b1\n"
@@ -29,7 +29,7 @@ class CsvTests(TestCase):
 
     def test_csv_with_semicolon_and_whitespace(self):
         """
-        Testing a different csv dialect with semicolon and initial whitespace
+        Testing a different csv dialect with semicolon and initial whitespace.
         """
         csv_file = io.StringIO(
             "i1;    f1;     b1;     s1\n"
@@ -49,7 +49,7 @@ class CsvTests(TestCase):
     def test_boolean_ish_values(self):
         """
         Testing boolean-ish values are derived as booleans and that the values are
-        converted correct
+        converted correctly.
         """
         csv_file = io.StringIO(
             "b1,b2,b3,b4\n"
@@ -68,7 +68,7 @@ class CsvTests(TestCase):
 
     def test_datetime(self):
         """
-        Testing different date formats (d1, d2, d3) and a single time column (t1)
+        Testing different date formats (d1, d2, d3) and a single time column (t1).
         """
         csv_file = io.StringIO(
             "d1,                    d2,         d3,             t1\n"
@@ -79,14 +79,20 @@ class CsvTests(TestCase):
 
         df = read_csv_file(csv_file)
 
-        self.assert_types(df, "datetime64[ns]", "datetime64[ns]", "datetime64[ns]",
-                          "timedelta64[ns]")
-        self.assert_dates(df["d1"], "1987-10-27", "2000-01-28T12",
-                          "2024-07-01T12:00:01")
+        self.assert_types(
+            df, "datetime64[ns]", "datetime64[ns]", "datetime64[ns]", "timedelta64[ns]"
+        )
+        self.assert_dates(
+            df["d1"], "1987-10-27", "2000-01-28T12", "2024-07-01T12:00:01"
+        )
         self.assert_dates(df["d2"], "1987-10-27", "2000-01-28", "2024-07-01")
         self.assert_dates(df["d3"], "1987-10-27", "2000-01-28", "2024-07-01")
-        self.assert_values(df["t1"], Timedelta('12:00:00'), Timedelta('13:00:01'),
-                           Timedelta('00:00:00'))
+        self.assert_values(
+            df["t1"],
+            Timedelta("12:00:00"),
+            Timedelta("13:00:01"),
+            Timedelta("00:00:00"),
+        )
 
     def assert_types(self, df: DataFrame, *expected_types: str):
         """
@@ -99,21 +105,27 @@ class CsvTests(TestCase):
         """
         column_names = df.columns.values
         self.assertEqual(len(column_names), len(expected_types), "Missing columns!")
-        for idx in range(0, len(expected_types)):
-            column_name = column_names[idx]
+        for column_position in range(0, len(expected_types)):
+            column_name = column_names[column_position]
             column_type = df.dtypes[column_name]
-            self.assertEqual(expected_types[idx], column_type, "column:" + column_name)
+            self.assertEqual(
+                expected_types[column_position], column_type, "column:" + column_name
+            )
 
     def assert_values(self, s: Series, *expected_values: Any):
         """
-        A shorthand function asserting that a Series contain the expected_values.
+        A shorthand function asserting that a Series contain the `expected_values`.
 
         Args:
             s: A Series is a column of data
             *expected_types: a list of types we expect (in order)
         """
-        for idx in range(0, len(s.values)):
-            self.assertEqual(s.values[idx], expected_values[idx], "row:" + str(idx))
+        for value_position in range(0, len(s.values)):
+            self.assertEqual(
+                s.values[value_position],
+                expected_values[value_position],
+                "row:" + str(value_position),
+            )
 
     def assert_dates(self, s: Series, *expected_dates: str):
         """
@@ -123,6 +135,8 @@ class CsvTests(TestCase):
             s: A Series is a column of data
             *expected_dates: a list of types we expect (in order)
         """
-        for idx in range(0, len(s.values)):
-            date = numpy.datetime64(expected_dates[idx])
-            self.assertEqual(s.values[idx], date, "row:" + str(idx))
+        for value_position in range(0, len(s.values)):
+            date = numpy.datetime64(expected_dates[value_position])
+            self.assertEqual(
+                s.values[value_position], date, "row:" + str(value_position)
+            )
