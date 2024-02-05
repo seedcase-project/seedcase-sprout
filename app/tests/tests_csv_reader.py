@@ -5,7 +5,7 @@ from unittest import TestCase
 import numpy
 from pandas import DataFrame, Series, Timedelta
 
-from app.csv_parser import read_csv_file
+from app.csv_reader import read_csv_file
 
 
 class CsvTests(TestCase):
@@ -108,6 +108,7 @@ class CsvTests(TestCase):
         )
 
         self.assertRaises(csv.Error, read_csv_file, csv_file)
+
 
     def assert_types(self, df: DataFrame, *expected_types: str):
         """

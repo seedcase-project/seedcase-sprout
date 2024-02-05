@@ -5,6 +5,9 @@ from typing import IO
 import pandas
 from pandas import DataFrame, Series
 
+from app.csv_converters import convert_to_booleans, convert_to_datetimes, \
+    convert_to_timedeltas
+
 
 def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
     """
@@ -26,7 +29,11 @@ def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
     """
     dialect = _derive_csv_dialect(csv_file, row_number)
 
-    df = pandas.read_csv(csv_file, nrows=row_number, dialect=dialect)
+    df = pandas.read_csv(csv_file,
+                         nrows=row_number,
+                         dialect=dialect,
+                         true_values=["yes", "Yes", "YES", "y"],
+                         false_values=["no", "No", "NO", "n"])
     return derive_column_types_and_convert(df)
 
 
@@ -84,84 +91,10 @@ def _convert_column_if_possible(series: Series) -> Series:
         timedelta or bool
     """
 
-    for parser in [parse_boolean_ish, parse_timedelta, parse_datetimes]:
+    for parser in [convert_to_booleans, convert_to_timedeltas, convert_to_datetimes]:
         try:
             return parser(series)
         except ValueError:
             pass
 
     return series
-
-
-def parse_timedelta(series: Series) -> Series:
-    """
-    Parse values into a time object.
-
-    Args:
-        series (Series): The vector to parse.
-
-    Raises:
-        ValueError: If the `series` object isn't an "object" Pandas data type.
-
-    Returns:
-        Series: A vector converted into a time data type.
-    """
-    if series.dtype.name != "object":
-        raise ValueError("This series isn't an `object` data type, can't convert to a time vector.")
-    return pandas.to_timedelta(series)
-
-
-def parse_datetimes(series: Series) -> Series:
-    if series.dtype.name != "object":
-        raise ValueError
-    series = pandas.to_datetime(series)
-    series.attrs["is_date"] = all(check_if_datetime_is_a_date(s) for s in series)
-    return series
-
-
-def check_if_datetime_is_a_date(date_time: pandas.Timestamp):
-    return date_time.normalize() == date_time
-
-
-def parse_boolean_ish(series: Series) -> Series:
-    if series.dtype.name not in ("object", "int64"):
-        raise ValueError
-    return series.apply(parse_boolean)
-
-
-def parse_boolean(value: str | int) -> bool:
-    """
-    Parse values and convert to a boolean value.
-
-    This converts boolean-ish values like "yes", "no", "y" and 1 to actual boolean values.
-
-    Args:
-        value (str | int): A character or integer.
-
-    Raises:
-        ValueError: If the `value` is an integer that has values other than 0 or
-        1, it can't convert to boolean.
-        ValueError: If the `value` is a character but has values that can't be
-        meaningfully converted into a Boolean (e.g. isn't something like "yes" or "no").
-
-    Returns:
-        bool: Returns True/False value.
-    """
-    if isinstance(value, int):
-        if value == 0:
-            return False
-        if value == 1:
-            return True
-        raise ValueError(
-            "The value contains integers that are not 0 or 1, so can't convert to Boolean."
-        )
-
-    if value.lower() in ["true", "yes", "1", "y"]:
-        return True
-
-    if value.lower() in ["false", "no", "0", "n"]:
-        return False
-
-    raise ValueError(
-        "The value contains data that can't be meaningfully converted to a Boolean."
-    )
