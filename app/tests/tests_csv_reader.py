@@ -67,6 +67,24 @@ class CsvTests(TestCase):
         self.assert_values(df["b3"], True, False, True)
         self.assert_values(df["b4"], True, True, False)
 
+    def test_boolean_ish_values_should_fallback_to_string(self):
+        """
+        Testing that columns with values that are not boolean-ish will remain as
+        objects/strings
+        """
+        csv_file = io.StringIO(
+            "s1,    s2\n"
+            "0,     true\n"
+            "YEAH,  REALLY TRUE!\n"
+            "0,     false"
+        )
+
+        df = read_csv_file(csv_file)
+
+        self.assert_types(df, "object", "object")
+        self.assert_values(df["s1"], "0", "YEAH", "0")
+        self.assert_values(df["s2"], "true", "REALLY TRUE!", "false")
+
     def test_datetime(self):
         """
         Testing different date formats (d1, d2, d3) and a single time column (t1).
@@ -108,7 +126,6 @@ class CsvTests(TestCase):
         )
 
         self.assertRaises(csv.Error, read_csv_file, csv_file)
-
 
     def assert_types(self, df: DataFrame, *expected_types: str):
         """
