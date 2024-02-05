@@ -1,3 +1,4 @@
+import csv
 import io
 from typing import Any
 from unittest import TestCase
@@ -93,6 +94,20 @@ class CsvTests(TestCase):
             Timedelta("13:00:01"),
             Timedelta("00:00:00"),
         )
+
+    def test_wrongly_formatted_csv(self):
+        """
+        Testing a wrongly formatted CSV file with
+        2 columns but three values in a row.
+        A csv.Error is expected
+
+        """
+        csv_file = io.StringIO(
+            "s1,s2\n"
+            "Hello, World, Seedcase"
+        )
+
+        self.assertRaises(csv.Error, read_csv_file, csv_file)
 
     def assert_types(self, df: DataFrame, *expected_types: str):
         """

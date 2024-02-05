@@ -40,6 +40,9 @@ def _derive_csv_dialect(csv_file: IO, row_number: int = 1000) -> Dialect:
         csv_file (IO): The CSV file.
         row_number (int, optional): Number of rows to scan. Defaults to 1000.
 
+    Raises:
+        csv.Error: if unable to parse CSV dialect
+
     Returns:
         Dialect: A Dialect object containing information on the separator for the columns in the CSV file.
     """
