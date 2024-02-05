@@ -1,6 +1,6 @@
 import csv
 from csv import Dialect
-from typing import IO, Callable
+from typing import IO
 
 import pandas
 from pandas import DataFrame, Series
@@ -46,51 +46,33 @@ def derive_column_types_and_convert(df: DataFrame) -> DataFrame:
     """
     df.columns.str.strip()
     for col in df.columns:
-        _convert_column_if_possible(df, col)
+        df[col] = _convert_column_if_possible(df[col])
 
     return df
 
 
-def _convert_column_if_possible(df: DataFrame, column_name: str) -> None:
+def _convert_column_if_possible(series: Series) -> Series:
     """
     The default pandas.read_csv is not able to derive datetime, timedelta
     and boolean-ish values.
 
-    Here we try to convert a column to a certain type
+    Here we try to convert a column to one of these types
 
     Args:
-        df: the entire dataframe
-        column_name: the name of the column we need to analyse and convert
-
-    """
-    if _try_convert(df, column_name, parse_boolean_ish):
-        return
-    if _try_convert(df, column_name, parse_timedelta):
-        return
-    if _try_convert(df, column_name, parse_datetimes):
-        return
-
-
-def _try_convert(df: DataFrame, col: str, parser: Callable[[Series], Series]) -> bool:
-    """
-    We try to convert a column to a certain format with a parser function. The
-    parser will raise a ValueError if not possible convert
-
-    Args:
-        df: the entire dataframe
-        col: the column to parse
-        parser: the parser-method converting a panda Series to another panda Series
+        series: a pandas Series with column values and metadata
 
     Returns:
-        true if we are able to parse the column with the supplied parser
-        false if the parser fails by raising ValueError
-
+        either an unchanged series or a converted series with dtype datetime,
+        timedelta or bool
     """
-    try:
-        df[col] = parser(df[col])
-        return True
-    except ValueError:
-        return False
+
+    for parser in [parse_boolean_ish, parse_timedelta, parse_datetimes]:
+        try:
+            return parser(series)
+        except ValueError:
+            pass
+
+    return series
 
 
 def parse_timedelta(series: Series) -> Series:
@@ -102,7 +84,13 @@ def parse_timedelta(series: Series) -> Series:
 def parse_datetimes(series: Series) -> Series:
     if series.dtype.name != "object":
         raise ValueError
-    return pandas.to_datetime(series)
+    series = pandas.to_datetime(series)
+    series.attrs["is_date"] = all(check_if_datetime_is_a_date(s) for s in series)
+    return series
+
+
+def check_if_datetime_is_a_date(date_time: pandas.Timestamp):
+    return date_time.normalize() == date_time
 
 
 def parse_boolean_ish(series: Series) -> Series:
