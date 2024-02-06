@@ -1,10 +1,12 @@
+import csv
 from typing import IO, Dict
 
 from django.core.files.uploadhandler import StopUpload
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from app.models import ColumnMetadata, TableMetadata
+from app.csv_reader import read_csv_file
+from app.models import TableMetadata
 
 
 def file_upload(request: HttpRequest, table_id: int):
@@ -66,28 +68,10 @@ def validate_csv_and_save_columns(table_id: int, files: Dict[str, IO]):
         error_msg = "Unsupported file format: ." + uploaded_file.name.split(".")[-1]
         raise StopUpload(error_msg)
 
-    return extract_and_persist_column_metadata(table_id, uploaded_file)
-
-
-def extract_and_persist_column_metadata(table_id: int, uploaded_file: IO):
-    # A more complicated function needs to be added here
-    column_names = uploaded_file.readline().decode("utf-8").split(",")
-
-    if len(column_names) < 2:
-        error_msg = "Unable to extract column headers. We need at least two columns"
-        raise StopUpload(error_msg)
-
-    table_meta = TableMetadata.objects.get(pk=table_id)
-    table_meta.original_file_name = uploaded_file.name
-    table_meta.save()
-
-    for name in column_names:
-        ColumnMetadata(
-            table_metadata_id=table_id,
-            name=name,
-            title=name,
-            description="",
-            data_type_id=1,
-            allow_missing_value=True,
-            allow_duplicate_value=True,
-        ).save()
+    try:
+        df = read_csv_file(uploaded_file)
+        table_meta = TableMetadata.objects.get(pk=table_id)
+        table_meta.save_file_name(uploaded_file)
+        table_meta.create_columns(df)
+    except csv.Error as e:
+        raise StopUpload("Unable to parse CSV file: " + e.args[0])

@@ -24,6 +24,9 @@ def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
         csv_file: The CSV file to read.
         row_number: The number of rows to scan from the file. You don't need many to determine the data type of the column.
 
+    Raises:
+        csv.Error: An error is raised if we are unable to parse the CSV
+
     Returns:
         DataFrame: A Pandas DataFrame with the derived data types (`dtypes`).
     """
@@ -34,6 +37,13 @@ def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
                          dialect=dialect,
                          true_values=["yes", "Yes", "YES", "y"],
                          false_values=["no", "No", "NO", "n"])
+
+    if len(df.columns) == 0:
+        raise csv.Error("No columns were found")
+
+    if len(df[df.columns[0]]) == 0:
+        raise csv.Error("No rows where found")
+
     return derive_column_types_and_convert(df)
 
 
@@ -53,7 +63,11 @@ def _derive_csv_dialect(csv_file: IO, row_number: int = 1000) -> Dialect:
     Returns:
         Dialect: A Dialect object containing information on the separator for the columns in the CSV file.
     """
-    dialect = csv.Sniffer().sniff(csv_file.read(row_number))
+    content = csv_file.read(row_number)
+    if isinstance(content, bytes):
+        content = content.decode("utf-8")
+
+    dialect = csv.Sniffer().sniff(content)
     csv_file.seek(0)
     return dialect
 

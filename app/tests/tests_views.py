@@ -24,7 +24,8 @@ class FileUploadTests(TestCase):
         table_name = "Table Name"
         file_name = "file.csv"
         create_table(table_name).save()
-        file = SimpleUploadedFile(file_name, b"first_name,second_name,age")
+        file = SimpleUploadedFile(file_name, b"first_name,second_name,age"
+                                             b"\nPhil,HC,10")
 
         # Act
         response = Client().post("/file-upload/1", {"uploaded_file": file})
@@ -50,4 +51,4 @@ class FileUploadTests(TestCase):
 
         response = Client().post("/file-upload/1", {"uploaded_file": file})
 
-        self.assertContains(response, "Unable to extract column headers")
+        self.assertContains(response, "Unable to parse CSV file: No rows where found")

@@ -1,6 +1,7 @@
+import pandas as pd
 from django.test import TestCase
-from app.models import TableMetadata, ColumnMetadata
-from app.tests.db_test_utils import create_metadata_table_and_column
+from app.models import TableMetadata, ColumnMetadata, ColumnDataType
+from app.tests.db_test_utils import create_metadata_table_and_column, create_table
 
 
 class MetadataTests(TestCase):
@@ -41,3 +42,32 @@ class MetadataTests(TestCase):
         self.assertEqual(1, table_count, "Table should not be deleted")
         column_count = ColumnMetadata.objects.count()
         self.assertEqual(0, column_count, "Column should be deleted")
+
+    def test_create_table_from_pandas_dataframe(self):
+        table_metadata = create_table("TableName")
+        table_metadata.save()
+        df = pd.DataFrame(data={
+            "b": [True, False],
+            "s": ["Hi", "World"],
+            "f": [1.2, 1.3],
+            "i": [1, 2],
+            "d": [pd.to_datetime("2024-02-06"), pd.to_datetime("2024-02-07 12:00:01")],
+            "t": [pd.to_timedelta("00:00:00"), pd.to_timedelta("12:00:01")]
+        })
+
+        table_metadata.create_columns(df)
+
+        self.assertEqual(6, ColumnMetadata.objects.count())
+        self.assert_column_exists("b", "bool", "bool")
+        self.assert_column_exists("s", "str", "object")
+        self.assert_column_exists("f", "float", "float64")
+        self.assert_column_exists("i", "int", "int64")
+        self.assert_column_exists("d", "datetime", "datetime64[ns]")
+        self.assert_column_exists("t", "timedelta", "timedelta64[ns]")
+
+    def assert_column_exists(self, name: str, python_type: str, pandas_type: str):
+        data_type = ColumnDataType.objects.filter(python_type=python_type,
+                                                  pandas_type=pandas_type).first()
+        column = ColumnMetadata.objects.filter(name=name, data_type=data_type).first()
+
+        self.assertTrue(column, f"Was unable to find either type or column in database: {name}, {python_type}, {pandas_type}")
