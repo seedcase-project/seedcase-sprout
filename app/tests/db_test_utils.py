@@ -13,7 +13,7 @@ def create_column(name: str, table: TableMetadata):
         name=name,
         title=name + "Title",
         description=name + " description",
-        data_type_id=1,
+        data_type="TEXT",
         allow_missing_value=True,
         allow_duplicate_value=True,
     )

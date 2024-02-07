@@ -126,7 +126,7 @@ def extract_and_persist_column_metadata(
             name=name,
             title=name,
             description="",
-            data_type_id=1,
+            data_type="TEXT",
             allow_missing_value=True,
             allow_duplicate_value=True,
         ).save()
