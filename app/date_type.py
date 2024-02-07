@@ -18,17 +18,17 @@ class DataType:
         self.python_type = python_type
 
 
-# All DateTypes variables
-INT_DT = DataType("INT", "Whole Number", "An int", "int64", "int")
-FLOAT_DT = DataType("FLOAT", "Decimal", "A decimal or float", "float64", "float")
-TEXT_DT = DataType("TEXT", "Text", "A text", "object", "str")
-BOOL_DT = DataType("BOOL", "Yes/No", "Yes or No", "bool", "bool")
-TIME_DT = DataType("TIME", "Time", "A time", "deltatime64[ns]", "deltatime")
-DATETIME_DT = DataType("DATETIME", "Date+Time", "Date+Time", "datetime64[ns]", "datetime")
+# All DataTypes variables
+INT = DataType("INT", "Whole Number", "An int", "int64", "int")
+FLOAT = DataType("FLOAT", "Decimal", "A decimal or float", "float64", "float")
+TEXT = DataType("TEXT", "Text", "A text", "object", "str")
+BOOL = DataType("BOOL", "Yes/No", "Yes or No", "bool", "bool")
+TIME = DataType("TIME", "Time", "A time", "deltatime64[ns]", "deltatime")
+DATETIME = DataType("DATETIME", "Date+Time", "Date+Time", "datetime64[ns]", "datetime")
 
 
 # Valid DateTypes in a list
-TYPES = [INT_DT, FLOAT_DT, TEXT_DT, BOOL_DT, TIME_DT, DATETIME_DT]
+TYPES = [INT, FLOAT, TEXT, BOOL, TIME, DATETIME]
 
 # We need to reference the sprout types in the database. We can do this by using
 # something called "choices" in a Django model. It accepts a list of tuples
