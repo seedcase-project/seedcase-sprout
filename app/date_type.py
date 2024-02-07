@@ -10,27 +10,27 @@ class DataType:
 
 
     """
-    def __init__(self, name: str, description: str, pandas_type: str, python_type: str):
+    def __init__(self, id: str, name: str, description: str, pandas_type: str, python_type: str):
+        self.id = id
         self.name = name
         self.description = description
         self.pandas_type = pandas_type
         self.python_type = python_type
 
-    def get(self, id: str):
-        return TYPES[id]
 
-# All the valid sprout types are contained in this dictionary. The keys should never
-# change, but we can change all the other fields
-TYPES = {
-    "INT": DataType("Whole Number", "An int", "int64", "int"),
-    "FLOAT": DataType("Decimal", "A decimal or float", "float64", "float"),
-    "TEXT": DataType("Text", "A text", "object", "str"),
-    "BOOL": DataType("Yes/No", "Yes or No", "bool", "bool"),
-    "TIME": DataType("Time", "A time", "deltatime64[ns]", "deltatime"),
-    "DATETIME": DataType("Date+Time", "Date+Time", "datetime64[ns]", "datetime"),
-}
+# All DateTypes variables
+INT_DT = DataType("INT", "Whole Number", "An int", "int64", "int")
+FLOAT_DT = DataType("FLOAT", "Decimal", "A decimal or float", "float64", "float")
+TEXT_DT = DataType("TEXT", "Text", "A text", "object", "str")
+BOOL_DT = DataType("BOOL", "Yes/No", "Yes or No", "bool", "bool")
+TIME_DT = DataType("TIME", "Time", "A time", "deltatime64[ns]", "deltatime")
+DATETIME_DT = DataType("DATETIME", "Date+Time", "Date+Time", "datetime64[ns]", "datetime")
+
+
+# Valid DateTypes in a list
+TYPES = [INT_DT, FLOAT_DT, TEXT_DT, BOOL_DT, TIME_DT, DATETIME_DT]
 
 # We need to reference the sprout types in the database. We can do this by using
 # something called "choices" in a Django model. It accepts a list of tuples
 # Example: [("INT", "Whole Number"), ("FLOAT", "Decimal"), ...]
-TYPE_CHOICES = [(k, v.name) for k, v in TYPES.items()]
+TYPE_CHOICES = [(t.id, t.name) for t in TYPES]
