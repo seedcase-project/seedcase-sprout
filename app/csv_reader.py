@@ -5,8 +5,8 @@ from typing import IO
 import pandas
 from pandas import DataFrame, Series
 
-from app.csv_converters import convert_to_booleans, convert_to_datetimes, \
-    convert_to_timedeltas
+from app.series_datatype_converters import convert_to_booleans, convert_to_timedeltas, \
+    convert_to_datetimes
 
 
 def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
@@ -15,14 +15,14 @@ def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
 
     It uses `pandas.csv_read()`, but adds some additional functionality:
 
-    - Finds `datetime64`, date (converted from the `datetime64`), and `timedelta64` columns
-    - Understands boolean-ish values like: Yes, y, 1
+    - Finds `datetime64` and `timedelta64` columns
+    - Converts boolean-ish values (Yes, y, 1) to booleans
     - Finds the CSV dialect of the file (for example, the delimiter is semicolon or comma)
     - Removes whitespaces in column names
 
     Args:
-        csv_file: The CSV file to read.
-        row_number: The number of rows to scan from the file. You don't need many to determine the data type of the column.
+        csv_file: The CSV file to read
+        row_number: The number of rows to scan from the file
 
     Returns:
         DataFrame: A Pandas DataFrame with the derived data types (`dtypes`).
@@ -37,7 +37,7 @@ def read_csv_file(csv_file: IO, row_number: int = 1000) -> DataFrame:
     return derive_column_types_and_convert(df)
 
 
-def _derive_csv_dialect(csv_file: IO, row_number: int = 1000) -> Dialect:
+def _derive_csv_dialect(csv_file: IO, row_number) -> Dialect:
     """
     Extract the "dialect" of the CSV file.
 
@@ -54,6 +54,9 @@ def _derive_csv_dialect(csv_file: IO, row_number: int = 1000) -> Dialect:
         Dialect: A Dialect object containing information on the separator for the columns in the CSV file.
     """
     dialect = csv.Sniffer().sniff(csv_file.read(row_number))
+
+    # csv_file.seek(0) moves the file pointer to the beginning of the file as we want
+    # to leave the file unchanged
     csv_file.seek(0)
     return dialect
 

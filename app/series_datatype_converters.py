@@ -10,15 +10,17 @@ def convert_to_timedeltas(series: Series) -> Series:
         series (Series): The vector to parse.
 
     Raises:
-        ValueError: If the `series` object isn't an "object" Pandas data type.
+        ValueError: If not able to convert to timedelta
 
     Returns:
         Series: A vector converted into a time data type.
     """
-    if series.dtype.name != "object":
-        raise ValueError("This series isn't an `object` data type, can't convert to a time vector.")
 
-    return pandas.to_timedelta(series)
+    # A string like `12:00:01` is required. A panda `object` is a string
+    if series.dtype.name == "object":
+        return pandas.to_timedelta(series)
+
+    raise ValueError("Not able to convert to timedelta")
 
 
 def convert_to_datetimes(series: Series) -> Series:
@@ -27,29 +29,39 @@ def convert_to_datetimes(series: Series) -> Series:
     Args:
         series (Series): The vector to convert:
 
+    Raises:
+        ValueError: If not able to convert to datetime
+
     Returns:
         Series: A vector converted into a time data type.
     """
-    if series.dtype.name != "object":
-        raise ValueError
-    return pandas.to_datetime(series)
+
+    # A string like `2024-02-08 12:00:01` is required. A panda `object` is a string
+    if series.dtype.name == "object":
+        return pandas.to_datetime(series)
+
+    raise ValueError("Not able to convert to datetime")
 
 
 def convert_to_booleans(series: Series) -> Series:
     """
-    Converts a list of ints to booleans or raises ValueError
+    Converts a list of ints of 0 or 1 to booleans or raises ValueError
     Args:
         series (Series): The vector to convert:
+
+    Raises:
+        ValueError: If not able to convert to booleans
 
     Returns:
         Series: A vector converted into booleans
     """
-    if series.dtype.name != "int64":
-        raise ValueError
-    return series.apply(convert_int_to_boolean)
+    if series.dtype.name == "int64":
+        return series.apply(_convert_int_to_boolean_or_raise)
+
+    raise ValueError("Not able to convert to booleans")
 
 
-def convert_int_to_boolean(value: int) -> bool:
+def _convert_int_to_boolean_or_raise(value: int) -> bool:
     """
     Converts an int to a boolean value or raises ValueError
 
@@ -72,7 +84,7 @@ def convert_int_to_boolean(value: int) -> bool:
             return False
         if value == 1:
             return True
-        raise ValueError("The value contains integers that are not 0 or 1, so can't convert to Boolean.")
+        raise ValueError("Not able to convert to boolean")
 
     raise ValueError(
         "The value contains data that can't be meaningfully converted to a Boolean."
