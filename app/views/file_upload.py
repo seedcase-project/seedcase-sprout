@@ -6,7 +6,8 @@ from django.core.files.uploadhandler import StopUpload
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from app.models import ColumnMetadata, TableMetadata
+from app.csv_reader import read_csv_file
+from app.models import TableMetadata
 
 
 def file_upload(
@@ -109,24 +110,16 @@ def extract_and_persist_column_metadata(table_id: int, uploaded_file: IO) -> Non
         table_id: The id of the table
         uploaded_file: The CSV file
     """
-    # A more complicated function needs to be added here
-    column_names = uploaded_file.readline().decode("utf-8").split(",")
+    df = read_csv_file(uploaded_file)
 
-    if len(column_names) < 2:
-        error_msg = "Unable to extract column headers. We need at least two columns"
-        raise StopUpload(error_msg)
+    if len(df) == 0:
+        raise StopUpload("Unable to parse CSV file. No column headers found")
+
+    if df.height == 0:
+        raise StopUpload("Unable to parse CSV file. Found no rows")
 
     table_meta = TableMetadata.objects.get(pk=table_id)
     table_meta.original_file_name = uploaded_file.name
     table_meta.save()
 
-    for name in column_names:
-        ColumnMetadata(
-            table_metadata_id=table_id,
-            name=name,
-            title=name,
-            description="",
-            data_type_id=1,
-            allow_missing_value=True,
-            allow_duplicate_value=True,
-        ).save()
+    table_meta.create_columns(df)

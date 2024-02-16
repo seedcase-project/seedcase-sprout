@@ -116,7 +116,8 @@ class FileUploadTests(TestCase):
         table_name = "Table Name"
         file_name = "file.csv"
         create_table(table_name).save()
-        file = SimpleUploadedFile(file_name, b"first_name,second_name,age")
+        file = SimpleUploadedFile(file_name, b"first_name,second_name,age\n"
+                                   b"Philip,C,37")
 
         # Act
         response = Client().post("/file-upload/1", {"uploaded_file": file})
@@ -140,8 +141,9 @@ class FileUploadTests(TestCase):
     def test_upload_failed_with_invalid_csv_header(self):
         """Test for error if not able to extract headers from CSV."""
         create_table("Table Name").save()
-        file = SimpleUploadedFile("file-with-bad-headers.csv", b"no valid headers")
+        file = SimpleUploadedFile("file-with-bad-headers.csv", b"no,valid;headers")
 
         response = Client().post("/file-upload/1", {"uploaded_file": file})
 
-        self.assertContains(response, "Unable to extract column headers")
+        self.assertContains(response,
+                            "Unable to parse CSV file. No column headers found")

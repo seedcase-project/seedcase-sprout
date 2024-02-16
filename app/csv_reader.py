@@ -1,6 +1,7 @@
 """File with read_csv_file and related functions."""
 import csv
 import io
+from io import TextIOWrapper
 from typing import Any, TextIO
 
 from polars import Boolean, DataFrame, Series, read_csv
@@ -24,13 +25,15 @@ def read_csv_file(csv_file: TextIO, row_number: int = 500) -> DataFrame:
     Returns:
         DataFrame: A `polars.DataFrame` with column types in `dtypes`.
     """
+    csv_file = _convert_to_text_file_if_bytes(csv_file)
     csv_file = _transform_to_suitable_csv_format(csv_file, row_number)
     df = read_csv(csv_file, n_rows=row_number, try_parse_dates=True, separator=";")
 
     return df.select([_convert_to_booleans_if_possible(column) for column in df])
 
 
-def _transform_to_suitable_csv_format(csv_file: TextIO, row_number: int) -> TextIO:
+def _transform_to_suitable_csv_format(csv_file: TextIO | io.BytesIO,
+                                      row_number: int) -> TextIO:
     """Preparing the CSV content for polar.read_csv method.
 
     This function converts from any CSV dialect/format into a CSV format suitable
@@ -45,13 +48,30 @@ def _transform_to_suitable_csv_format(csv_file: TextIO, row_number: int) -> Text
         TextIO: An in-memory CSV file which is suitable for `polars.read_csv()`
     """
     # Read part of csv_file to detect dialect and return to beginning of file
-    dialect = csv.Sniffer().sniff(csv_file.read(row_number))
+    content = csv_file.read(row_number)
+    dialect = csv.Sniffer().sniff(content)
     csv_file.seek(0)
 
     csv_content = ""
     for line in csv.reader(csv_file, dialect=dialect):
         csv_content = csv_content + ";".join(line) + "\n"
     return io.StringIO(csv_content)
+
+
+def _convert_to_text_file_if_bytes(file: TextIO | io.BytesIO) -> TextIO:
+    """Convert to TextIO if BytesIO.
+
+    Args:
+        file: File either containing bytes or text
+
+    Returns:
+        TextIO: A TextIO file
+    """
+    content = file.read(10)
+    file.seek(0)
+    if isinstance(content, bytes):
+        return TextIOWrapper(file)
+    return file
 
 
 BOOLEAN_MAPPING = {

@@ -1,8 +1,11 @@
 """Tests for models."""
+import datetime
+
 from django.test import TestCase
+from polars import DataFrame
 
 from app.models import ColumnMetadata, TableMetadata
-from app.tests.db_test_utils import create_metadata_table_and_column
+from app.tests.db_test_utils import create_metadata_table_and_column, create_table
 
 
 class MetadataTests(TestCase):
@@ -61,3 +64,36 @@ class MetadataTests(TestCase):
         self.assertEqual(1, table_count, "Table should not be deleted")
         column_count = ColumnMetadata.objects.count()
         self.assertEqual(0, column_count, "Column should be deleted")
+
+    def test_create_MetaDataColumns_from_DataFrame(self):
+        """DataFrame columns should create the correct MetaDataColumns."""
+        df = DataFrame(
+            {
+                "i": [1],
+                "f": [1.1],
+                "s": ["A"],
+                "b": [True],
+                "t": [datetime.time(1, 2, 3)],
+                "d": [datetime.date(2024, 2, 14)],
+                "dt": [datetime.datetime(2024, 2, 14)],
+            }
+        )
+        table = create_table("test_table")
+        table.save()
+
+        table.create_columns(df)
+
+        columns = ColumnMetadata.objects.filter(table_metadata=table)
+        expected_types = {
+            "i": "Whole Number",
+            "f": "Decimal",
+            "s": "Text",
+            "b": "Yes/No",
+            "t": "Time",
+            "d": "Date",
+            "dt": "Date+Time",
+        }
+
+        for column_name, expected_type in expected_types.items():
+            actual_type = columns.get(name=column_name).data_type.display_name
+            self.assertEqual(expected_type, actual_type, "Mismatch" + column_name)
