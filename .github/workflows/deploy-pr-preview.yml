@@ -1,9 +1,9 @@
 # From: https://github.com/superfly/fly-pr-review-apps
 name: Deploy PR Preview App
 
-on:  
-  pull_request:  
-    types: [opened, reopened, synchronize, closed]  
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
     branches:
       - main
 
@@ -42,6 +42,7 @@ jobs:
         uses: superfly/fly-pr-review-apps@1.0.0
         with:
           name: ${{ github.event.repository.name }}-pr-${{ github.event.number }}
+          config: "fly-pr.toml"
 
       # This removes left over items in GitHub from the building and deploying.
       - name: Clean up GitHub environment
