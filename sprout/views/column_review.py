@@ -23,14 +23,24 @@ def column_review(request, table_id):
     columns_metadata = ColumnMetadata.objects.filter(table_metadata=table_metadata)
 
     if request.method == "POST":
-        forms = [
-            ColumnMetadataForm(request.POST, instance=column, prefix=str(column.id))
-            for column in columns_metadata
-        ]
-        if all(form.is_valid() for form in forms):
-            for form in forms:
-                form.save()
-            return redirect(reverse("column-review", args=[table_id]))
+        if "save_cont" in request.POST:
+            forms = [
+                ColumnMetadataForm(request.POST, instance=column, prefix=str(column.id))
+                for column in columns_metadata
+            ]
+            if all(form.is_valid() for form in forms):
+                for form in forms:
+                    form.save()
+                return redirect(reverse("column-review", args=[table_id]))
+        if "save_exit" in request.POST:
+            forms = [
+                ColumnMetadataForm(request.POST, instance=column, prefix=str(column.id))
+                for column in columns_metadata
+            ]
+            if all(form.is_valid() for form in forms):
+                for form in forms:
+                    form.save()
+                return redirect(reverse("data_import"))
 
     else:
         forms = [
