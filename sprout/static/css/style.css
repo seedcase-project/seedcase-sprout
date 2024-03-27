@@ -29,3 +29,19 @@ dd {
   display: inline-block;
   width: 85%;
 }
+
+.selectable:hover {
+  background-color: #ededed;
+  cursor: pointer;
+}
+.selected,
+.selected:hover {
+  background-color: #DCDFFF;
+}
+.selectable {
+  cursor: pointer
+}
+.table tr th {
+  background-color: #D9D9D9 !important;
+  border-bottom: none !important;
+}
