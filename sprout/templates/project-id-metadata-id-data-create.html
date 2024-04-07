@@ -1,0 +1,31 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+
+<!-- TODO: This should probably be a button on the "metadata create" page -->
+
+{% block content %}
+  <div>
+    <h1 class="center-align">Create database from {{ table_name }}</h1>
+
+    <!-- The file drop zone is included -->
+    <form method="post" class="center-align">
+      {% csrf_token %}
+      <button type="submit" class="extra vertical">
+        <i>database</i>
+        <span>Create database<br />from the uploaded<br />csv file?</span>
+      </button>
+    </form>
+
+    {% if upload_success %}
+      <div class="snackbar active">
+        <div class="max">
+          <i>task_alt</i>
+          <span>Successfully uploaded <code class="file-ext">{{ file_metadata.original_file_name }}</code> and added {{ number_rows }} to {{ table_name }}</span>
+        </div>
+        <!-- TODO: Should this be here or as a button below the drop zone? -->
+        <a href="{% url 'project-id-metadata-view' %}" class="inverse-link">Return to data view</a>
+      </div>
+    {% endif %}
+    <!-- TODO: Need to set an upload error (if for instance they accidentally upload again) -->
+  </div>
+{% endblock %}
