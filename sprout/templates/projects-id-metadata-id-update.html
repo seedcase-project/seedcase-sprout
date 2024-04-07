@@ -98,8 +98,9 @@
       {% endfor %}
     </div>
 
-    <div class="row" style="justify-content: center">
-      <button type="submit" tabindex="10">Update All</button>
+    <div class="row" style="justify-content: right">
+      <button type="submit" tabindex="10">Update metadata</button>
+      <a href="{% url 'project-id-metadata-id-data-create' table_id %}" class="button">Continue to upload</a>
     </div>
   </form>
 
