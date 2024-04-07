@@ -1,7 +1,6 @@
 import os
 from typing import IO
 
-from config.settings import PERSISTENT_STORAGE_PATH
 from sprout.helpers.paths import path_raw_storage
 
 
