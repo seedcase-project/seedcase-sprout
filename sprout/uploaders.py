@@ -2,6 +2,7 @@ import os
 from typing import IO
 
 from config.settings import PERSISTENT_STORAGE_PATH
+from sprout.helpers.paths import path_raw_storage
 
 
 def write_to_raw(file: IO, output_file: str) -> str:
@@ -25,10 +26,3 @@ def write(file: IO, output_path: str) -> str:
     with open(output_path, "wb") as target:
         target.write(file.read())
     return output_path
-
-
-def path_raw_storage() -> str:
-    raw_folder = f"{PERSISTENT_STORAGE_PATH}/raw"
-    if not os.path.exists(raw_folder):
-        os.makedirs(raw_folder)
-    return raw_folder
