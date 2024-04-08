@@ -4,7 +4,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from sprout.csv.csv_reader import read_csv_file
-from sprout.models import ColumnMetadata, FileMetadata, TableMetadata
+from sprout.models import Columns, Files, Tables
 
 
 def project_id_metadata_id_data_update(
@@ -19,15 +19,15 @@ def project_id_metadata_id_data_update(
     Returns:
         Outputs an HTTP response object.
     """
-    table_metadata = get_object_or_404(TableMetadata, id=table_id)
+    tables = get_object_or_404(Tables, id=table_id)
     context = {
         "upload_success": False,
-        "table_name": table_metadata.name,
+        "table_name": tables.name,
     }
     if request.method == "POST":
         new_uploaded_file = get_uploaded_file(request)
-        file_metadata = FileMetadata.create_file_metadata(new_uploaded_file, table_id)
-        new_server_file = file_metadata.server_file_path
+        files = Files.create_raw_file(new_uploaded_file, table_id)
+        new_server_file = files.server_file_path
         schema = get_schema(id=table_id)
         data_update = read_csv_file(new_server_file, row_count=None)
 
@@ -53,9 +53,9 @@ def project_id_metadata_id_data_update(
         # TODO: verify that database has been written to.
 
         context = {
-            "table_name": table_metadata.name,
+            "table_name": tables.name,
             "upload_success": True,
-            "file_metadata": file_metadata,
+            "file_metadata": files,
             "number_rows": count_rows(new_server_file),
         }
 
@@ -89,6 +89,6 @@ def count_rows(path: str) -> int:
     return data.select(pl.len()).collect().item()
 
 
-def get_schema(id: int) -> ColumnMetadata:
-    """Get the schema of a specific table via ColumnMetadata."""
-    return ColumnMetadata.objects.get(id=id)
+def get_schema(id: int) -> Columns:
+    """Get the schema of a specific table via Columns."""
+    return Columns.objects.get(id=id)

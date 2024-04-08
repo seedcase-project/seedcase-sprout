@@ -4,8 +4,7 @@ from django.shortcuts import get_object_or_404, render
 
 from sprout.csv.csv_reader import read_csv_file
 from sprout.helpers.paths import path_databases
-from sprout.models import ColumnMetadata, FileMetadata, TableMetadata
-from sprout.views.project_id_metadata_id_data_update import get_uploaded_file
+from sprout.models import Columns, Files, Tables
 
 
 def project_id_metadata_id_data_create(
@@ -20,17 +19,17 @@ def project_id_metadata_id_data_create(
     Returns:
         Outputs an HTTP response object.
     """
-    table_metadata = get_object_or_404(TableMetadata, id=table_id)
+    tables = get_object_or_404(Tables, id=table_id)
     context = {
         "upload_success": False,
-        "table_name": table_metadata.name,
+        "table_name": tables.name,
     }
     if request.method == "POST":
-        file_metadata = FileMetadata.objects.get(table_metadata_id=table_id)
-        data = read_csv_file(file_metadata.server_file_path, row_count=None)
+        files = Files.objects.get(table_metadata_id=table_id)
+        data = read_csv_file(files.server_file_path, row_count=None)
 
         data_as_db = data.write_database(
-            table_name=table_metadata.name,
+            table_name=tables.name,
             # TODO: Connect to all other tables in project
             # TODO: Convert to Postgres
             connection=f"sqlite:///{path_databases()}/project_database.db",
@@ -40,9 +39,9 @@ def project_id_metadata_id_data_create(
         )
 
         context = {
-            "table_name": table_metadata.name,
+            "table_name": tables.name,
             "upload_success": True,
-            "file_metadata": file_metadata,
+            "file_metadata": files,
             "number_rows": data_as_db,
         }
 
