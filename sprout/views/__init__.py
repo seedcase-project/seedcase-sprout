@@ -5,11 +5,9 @@ from django.shortcuts import render
 
 from .project_id_metadata_id_data_create import project_id_metadata_id_data_create
 from .project_id_metadata_id_data_update import project_id_metadata_id_data_update
-from .project_id_metadata_view import (
-    project_id_metadata_view,
-)
 from .projects_id_metadata_create import projects_id_metadata_create
 from .projects_id_metadata_id_update import projects_id_metadata_id_update
+from .projects_id_metadata_view import projects_id_metadata_view
 from .projects_id_view import projects_id_view
 from .table_files import table_file_download, table_files
 

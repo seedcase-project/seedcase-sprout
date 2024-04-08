@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'includes/base.html' %}
 
 {% block content %}
   <!-- View all metadata -->
@@ -64,16 +64,17 @@
     <a href="#" class="button" id="upload-link" disabled><i>upload</i>Upload data</a>
   </nav>
 
+  <!-- Create metadata dialog -->
+  {% include 'includes/metadata-create-dialog.html' %}
+
   <script>
-    let edit_url = "{% url 'column-review' table_id=0 %}"
-    let upload_url = "{% url 'project-id-metadata-id-data-update' table_id=0 %}"
-    
+    let edit_url = "{% url 'projects-id-metadata-id-update' table_id=0 %}"
+    let upload_url = "{% url 'projects-id-metadata-id-data-update' table_id=0 %}"
     function rowSelected(row) {
       // Deselect all other rows
       document.querySelectorAll('.selectable').forEach(function (otherRow) {
         otherRow.classList.remove('selected')
       })
-    
       // Add selected class
       row.classList.add('selected')
     

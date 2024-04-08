@@ -28,9 +28,9 @@ urlpatterns = [
         name="projects-id-metadata-id-update",
     ),
     path(
-        "project-id-metadata-view",
-        views.project_id_metadata_view,
-        name="project-id-metadata-view",
+        "metadata",
+        views.projects_id_metadata_view,
+        name="projects-id-metadata-view",
     ),
     path(
         "table-files/<int:table_id>",
