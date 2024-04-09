@@ -22,7 +22,8 @@
           <td>{{ metadata.created_at }}</td>
           <td>Cell</td>
           <td style="text-align: right">
-            <button class="circle fill" style="z-index: 10" onclick="event.stopPropagation()">
+            <!-- Actions button. z-index decreasing so the next is not covering this -->
+            <button class="circle transparent" style="z-index: {{ forloop.revcounter }}"  onclick="event.stopPropagation()">
               <i>more_horiz</i>
               <menu class="left no-wrap">
                 <a href="{% url 'projects-id-metadata-id-data-update' table_id=metadata.id  %}"><i>add</i>Add data</a>
@@ -85,12 +86,6 @@
       })
       // Add selected class
       row.classList.add('selected')
-
-      // Update the href and disabled state of the edit and upload buttons based on row selection
-      document.querySelector('#edit-link').href = edit_url.replace('0', row.id)
-      document.querySelector('#edit-link').removeAttribute('disabled')
-      document.querySelector('#upload-link').href = upload_url.replace('0', row.id)
-      document.querySelector('#upload-link').removeAttribute('disabled')
 
       // Get all metadata columns
       let metadata_columns = document.getElementsByClassName('metadata_columns_table')
