@@ -12,7 +12,7 @@ from sprout.models.tables import Tables
 class Columns(models.Model):
     """Model representing the metadata of columns."""
 
-    tables = models.ForeignKey(Tables, on_delete=models.CASCADE)
+    tables = models.ForeignKey(Tables, on_delete=models.CASCADE, related_name="columns")
     extracted_name = models.CharField(max_length=1000)
     machine_readable_name = models.CharField(max_length=200)
     display_name = models.CharField(max_length=200)

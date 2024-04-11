@@ -20,8 +20,7 @@ def projects_id_metadata_view(request: HttpRequest) -> HttpResponse:
         HTTP response that either renders the projects-id-metadata page or redirects
         to create new metadata, update existing metadata, or upload new data.
     """
-    existing_metadata = Tables.objects.all()
-    existing_metadata_columns = Columns.objects.all()
+    existing_metadata = Tables.objects.prefetch_related("columns").all()
 
     # if POST, process the data in form (only happens when creating new metadata)
     if request.method == "POST":
@@ -45,10 +44,9 @@ def projects_id_metadata_view(request: HttpRequest) -> HttpResponse:
 
     return render(
         request=request,
-        template_name="projects-id-metadata-view.html",
+        template_name="projects-id-metadata-view-cards.html",
         context={
             "existing_metadata": existing_metadata,
-            "existing_metadata_columns": existing_metadata_columns,
             "form": form,
         },
     )

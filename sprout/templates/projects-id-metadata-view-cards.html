@@ -1,0 +1,156 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+  <style>
+    .field-label {
+      color: darkgray;
+    }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+    .space {
+      margin-top: 10px;
+    }
+    .align-start {
+      align-items: stretch;
+    }
+    .edit-icon {
+      cursor: pointer;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .justify-end {
+      justify-content: end;
+    }
+    .metadata-card {
+      border: 1px solid gray;
+      border-radius: 12px;
+      width: 23%;
+      align-items: start;
+    }
+  </style>
+  <!-- CARD grid -->
+  <div class="row wrap align-start">
+    {% for table in existing_metadata %}
+
+      <!-- CARD -->
+      <article class="metadata-card" >
+        <!-- CARD CONTENT -->
+        <div class="row align-start">
+          <div class="max">
+            <p class="field-label">Name:</p>
+            <h4>{{ table.name }}</h4>
+          </div>
+          <a href="{% url 'projects-id-metadata-id-update' table_id=table.id %}">
+            <i class="edit-icon">edit</i>
+          </a>
+        </div>
+
+        <div class="space"></div>
+        <p class="field-label">Description:</p>
+        <p>{{ table.description }}</p>
+
+        <div class="space"></div>
+        <p class="field-label">Columns:</p>
+        <p class="cursor-pointer" data-ui="#dialog-{{ table.id }}">
+          {{ table.columns.all|length }} <span class="link">(View columns)</span>
+        </p>
+        <!-- DIALOG for columns -->
+        <dialog class="medium" id="dialog-{{ table.id }}">
+          <h5>{{ table.name }} columns:</h5>
+          <table>
+            <thead>
+              <tr>
+                <th>Original Column Name</th>
+                <th>Variable Name</th>
+                <th>Display Name</th>
+                <th>Data Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for column in table.columns.all %}
+                <tr>
+                  <td>{{ column.extracted_name }}</td>
+                  <td>{{ column.machine_readable_name }}</td>
+                  <td>{{ column.display_name }}</td>
+                  <td>{{ column.data_type }}</td>
+                  <td>{{ column.description }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <nav class="justify-end">
+            <button data-ui="#dialog-{{ table.id }}" >Ok</button>
+          </nav>
+        </dialog>
+        <div class="row">
+          <div class="max">
+            <p class="field-label">Created</p>
+            <p>{{ table.created_at|date:'Y-m-d' }}</p>
+          </div>
+          <div class="max">
+            <p class="field-label">Updated</p>
+            <p>{{ table.updated_at|date:'Y-m-d'|default:"-" }}</p>
+          </div>
+          <div class="max">
+            <p class="field-label">Rows:</p>
+            <!-- TODO -->
+            <p>0</p>
+          </div>
+        </div>
+
+        <div class="row justify-center">
+
+          <button>
+            <i>add</i>
+            Add data
+          </button>
+        </div>
+      </article>
+      {% endfor %}
+    <article class="metadata-card" style="height: 300px">
+      <div class="row justify-center" style="height: 100%">
+{#        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">#}
+{#          <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />#}
+{#        </svg>#}
+        <button class="primary" data-ui="#create-metadata-dialog">
+          <i>add</i>
+          <span>Create new metadata</span>
+        </button>
+      </div>
+    </article>
+  </div>
+
+
+  <!-- Create metadata dialog -->
+  {% include 'includes/metadata-create-dialog.html' %}
+
+  <script>
+    let edit_url = "{% url 'projects-id-metadata-id-update' table_id=0 %}"
+    let upload_url = "{% url 'projects-id-metadata-id-data-update' table_id=0 %}"
+    function rowSelected(row) {
+      // Deselect all other rows
+      document.querySelectorAll('.selectable').forEach(function (otherRow) {
+        otherRow.classList.remove('selected')
+      })
+      // Add selected class
+      row.classList.add('selected')
+
+      // Get all metadata columns
+      let metadata_columns = document.getElementsByClassName('metadata_columns_table')
+
+      // Loop through all the metadata columns and show the ones that matches the selected row
+      for (const metadata_column of metadata_columns) {
+        // If the metadata column's id matches the selected row's id, then show element
+        if (metadata_column.id === row.id) {
+          metadata_column.hidden = false
+        } else {
+          // Otherwise, hide alle other elements
+          metadata_column.hidden = true
+        }
+      }
+    }
+  </script>
+{% endblock %}
