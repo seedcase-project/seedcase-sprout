@@ -7,6 +7,8 @@
   <div>
     <h1 class="center-align">Create database from {{ table_name }}</h1>
 
+    {% comment %}TODO: Add some details about the database?{% endcomment %}
+
     <!-- The file drop zone is included -->
     <form method="post" class="center-align">
       {% csrf_token %}
