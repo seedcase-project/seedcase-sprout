@@ -5,7 +5,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.home, name="home"),
+    path("", views.projects_id_metadata_view, name="projects-id-metadata-view"),
+    path(
+        "metadata/<int:table_id>/data/update",
+        views.projects_id_metadata_id_data_update,
+        name="projects-id-metadata-id-data-update",
+    ),
     path("view", views.projects_id_view, name="projects-id-view"),
     path(
         "metadata/<int:table_id>/create",
@@ -18,19 +23,9 @@ urlpatterns = [
         name="project-id-metadata-id-data-create",
     ),
     path(
-        "metadata/<int:table_id>/data/update",
-        views.project_id_metadata_id_data_update,
-        name="project-id-metadata-id-data-update",
-    ),
-    path(
         "metadata/<int:table_id>/update",
         views.projects_id_metadata_id_update,
         name="projects-id-metadata-id-update",
-    ),
-    path(
-        "metadata",
-        views.projects_id_metadata_view,
-        name="projects-id-metadata-view",
     ),
     path(
         "table-files/<int:table_id>",
