@@ -4,10 +4,10 @@ from django.shortcuts import get_object_or_404, render
 
 from sprout.csv.csv_reader import read_csv_file
 from sprout.helpers.paths import path_databases
-from sprout.models import Columns, Files, Tables
+from sprout.models import Files, Tables
 
 
-def project_id_metadata_id_data_create(
+def projects_id_metadata_id_data_create(
     request: HttpRequest, table_id: int
 ) -> HttpResponse:
     """Creates a whole new database table for data from a specific metadata object.

@@ -3,10 +3,12 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from .project_id_metadata_id_data_create import project_id_metadata_id_data_create
-from .project_id_metadata_id_data_update import project_id_metadata_id_data_update
 from .projects_id_metadata_create import projects_id_metadata_create
-from .projects_id_metadata_id_data_update import projects_id_metadata_id_data_update
+from .projects_id_metadata_id_data_create import projects_id_metadata_id_data_create
+from .projects_id_metadata_id_data_update import (
+    project_id_metadata_id_data_update,
+    projects_id_metadata_id_data_update,
+)
 from .projects_id_metadata_id_update import projects_id_metadata_id_update
 from .projects_id_metadata_view import projects_id_metadata_view
 from .projects_id_view import projects_id_view
