@@ -3,7 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from sprout.csv.csv_reader import read_csv_file
-from sprout.helpers.paths import path_databases
+from sprout.helpers.paths import path_database_file
 from sprout.models import Files, Tables
 
 
@@ -28,11 +28,12 @@ def projects_id_metadata_id_data_create(
         files = Files.objects.get(table_metadata_id=table_id)
         data = read_csv_file(files.server_file_path, row_count=None)
 
+        # TODO: Don't include columns that were excluded
         data_as_db = data.write_database(
             table_name=tables.name,
             # TODO: Connect to all other tables in project
             # TODO: Convert to Postgres
-            connection=f"sqlite:///{path_databases()}/project_database.db",
+            connection=f"sqlite:///{path_database_file(0)}",
             # TODO: Not sure which engine to use. Alternative is "adbc"
             # Requires sqlalchemy, pandas, and pyarrow
             # engine="sqlalchemy"
@@ -47,4 +48,4 @@ def projects_id_metadata_id_data_create(
 
     # TODO: Provide context for response instead of redirect?
     # And button in template to move to other page?
-    return render(request, "project-id-metadata-id-data-create.html", context)
+    return render(request, "projects-id-metadata-id-data-create.html", context)

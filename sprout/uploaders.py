@@ -1,4 +1,4 @@
-import os
+import pathlib
 from typing import IO
 
 from sprout.helpers.paths import path_raw_storage
@@ -14,8 +14,7 @@ def write_to_raw(file: IO, output_file: str) -> str:
     Returns:
         str: The path to the saved file.
     """
-    raw_folder = path_raw_storage()
-    output_path = f"{raw_folder}/{output_file}"
+    output_path = path_raw_storage(0).joinpath(output_file)
     return write(file, output_path)
 
 
@@ -34,17 +33,3 @@ def write(file: IO, output_path: str) -> str:
     with open(output_path, "wb") as target:
         target.write(file.read())
     return output_path
-
-
-def path_raw_storage() -> str:
-    """Get the path to the raw storage folder.
-
-    If it doesn't exist, it will be created.
-
-    Returns:
-        str: The path to the raw storage folder.
-    """
-    raw_folder = f"{PERSISTENT_STORAGE_PATH}/raw"
-    if not os.path.exists(raw_folder):
-        os.makedirs(raw_folder)
-    return raw_folder
