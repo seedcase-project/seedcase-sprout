@@ -1,0 +1,12 @@
+docs
+.git
+.gitignore
+.env
+.github
+.vscode
+.idea
+fly.toml
+.git/
+*.sqlite3
+staticfiles
+persistent_storage/
