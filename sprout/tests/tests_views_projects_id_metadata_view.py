@@ -45,7 +45,7 @@ class ProjectIdMetaDataTests(TestCase):
 
         # Assert
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "projects-id-metadata-view.html")
+        self.assertTemplateUsed(response, "projects-id-metadata-view-cards.html")
 
     def test_view_shows_all_tables(self):
         """Test that the view shows all tables in Tables."""
