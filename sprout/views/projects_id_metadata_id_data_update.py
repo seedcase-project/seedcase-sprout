@@ -3,6 +3,7 @@ from django.core.files.uploadedfile import UploadedFile
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
+from sprout.csv.csv_reader import read_csv_file
 from sprout.models import Columns, Files, Tables
 
 

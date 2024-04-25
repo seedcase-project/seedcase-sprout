@@ -154,3 +154,10 @@ Some general guidelines when naming things in Python:
     -   Prefer the plural form: `objects`.
     -   Use singular form *only* if the function or method input *must*
         only contain one item.
+
+### Data file paths
+
+```
+STORAGE project id databases
+STORAGE project id raw
+```

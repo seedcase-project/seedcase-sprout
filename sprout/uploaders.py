@@ -1,7 +1,7 @@
 import os
 from typing import IO
 
-from config.settings import PERSISTENT_STORAGE_PATH
+from sprout.helpers.paths import path_raw_storage
 
 
 def write_to_raw(file: IO, output_file: str) -> str:
