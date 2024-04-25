@@ -60,6 +60,7 @@
           {% endif %}
         </td>
         </tr>
+        <tr style="height: 10px"></tr>
       {% empty %}
       <p>No existing metadata to show.</p>
     {% endfor %}
@@ -121,7 +122,7 @@
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].style.display = "block";
       }
-    
+
       // change icon to expand more
       let expand_icon = row.querySelector('#expand_icon');
       expand_icon.textContent = "expand_more";

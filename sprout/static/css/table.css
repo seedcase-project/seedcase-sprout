@@ -10,8 +10,7 @@ thead>tr>th {
   background-color: var(--surface-container-lowest);
   color: var(--on-surface-container-lowest);
   box-shadow: var(--elevate1);
-  border-radius: 7px !important;
-  border-spacing: 0 5px;
+  border-radius: 10px !important;
 }
 
 .primary-table tbody {
@@ -20,12 +19,20 @@ thead>tr>th {
   border-radius: 0px;
 }
 
-td:first-child:not(.secondary-table td) {
+table > tbody > tr:not(.selected) > td:first-child {
   border-radius: 7px 0 0 7px;
 }
 
-td:last-child:not(.secondary-table td) {
+table > tbody > tr.selected > td:first-child {
+  border-radius: 7px 0 0 0;
+}
+
+table > tbody > tr:not(.selected) > td:last-child {
   border-radius: 0 7px 7px 0;
+}
+
+table > tbody > tr.selected > td:last-child {
+  border-radius: 0 7px 0 0;
 }
 
 .selectable:hover {
@@ -36,7 +43,6 @@ td:last-child:not(.secondary-table td) {
 .selected,
 .selected:hover {
   background-color: var(--secondary);
-  border: 2px solid var(--outline);
 }
 
 .selectable {
@@ -44,7 +50,7 @@ td:last-child:not(.secondary-table td) {
 }
 
 .metadata_columns_table {
-  background-color: var(--surface-container-lowest);
+  background-color: var(--secondary);
 }
 
 .secondary-table thead tr {
