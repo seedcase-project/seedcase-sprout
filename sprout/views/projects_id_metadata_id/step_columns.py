@@ -7,10 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from sprout.csv.csv_reader import read_csv_file
 from sprout.forms import ColumnsForm
 from sprout.models import Columns, Files, Tables
-from sprout.views.projects_id_metadata_id.helpers import (
-    create_stepper_url,
-    update_stepper_url,
-)
+from sprout.views.projects_id_metadata_id.helpers import create_stepper_url
 
 
 def step_columns(
