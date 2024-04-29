@@ -5,28 +5,13 @@ from django.shortcuts import redirect, render
 
 from sprout.csv.csv_reader import read_csv_file
 from sprout.models import Columns, Files, Tables
+from sprout.views.projects_id_metadata_id.helpers import create_stepper_url
 
 
-def projects_id_metadata_create(
+def step_file_upload(
     request: HttpRequest, table_id: int
 ) -> HttpResponse | HttpResponseRedirect:
-    """Renders page for creating metadata for data.
-
-    The ``table_id`` comes from the URL. The ``table_id`` is used fetch the
-    tables from the database.
-
-    - On GET requests, the page is rendered.
-    - On POST requests, the submitted CSV file is validated and column
-      metadata persisted for the table.
-
-    Args:
-        request: The HTTP request from the server.
-        table_id: The ``table_id`` from the Tables.
-
-    Returns:
-        HttpResponse: For GET requests and POST requests with errors
-        HttpResponseRedirect: For POST request without any error
-    """
+    """Renders page for creating metadata step 2 - upload data."""
     if request.method == "POST":
         return handle_post_request_with_file(request, table_id)
 
@@ -66,7 +51,7 @@ def handle_post_request_with_file(
         file_meta.delete()
         return render_projects_id_metadata_create(request, table_id, csv_error.args[0])
 
-    return redirect("/metadata/" + str(table_id) + "/update")
+    return redirect(create_stepper_url(3, table_id))
 
 
 def render_projects_id_metadata_create(
@@ -87,7 +72,7 @@ def render_projects_id_metadata_create(
         "table_name": tables.name,
         "upload_error": upload_error,
     }
-    return render(request, "projects-id-metadata-create.html", context)
+    return render(request, "projects_id_metadata_id/create.html", context)
 
 
 def validate_csv_and_save_columns(table_id: int, file: Files) -> None:
