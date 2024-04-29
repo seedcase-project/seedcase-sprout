@@ -45,7 +45,7 @@ def step_columns(
             if form.cleaned_data["excluded"]:
                 form.instance.delete()
         if update:
-            return redirect(update_stepper_url(2, table_id))
+            return redirect("projects-id-metadata-view")
         else:
             return redirect(create_stepper_url(4, table_id))
 
