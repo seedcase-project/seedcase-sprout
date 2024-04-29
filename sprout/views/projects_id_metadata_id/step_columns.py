@@ -7,11 +7,17 @@ from django.shortcuts import get_object_or_404, redirect, render
 from sprout.csv.csv_reader import read_csv_file
 from sprout.forms import ColumnsForm
 from sprout.models import Columns, Files, Tables
-from sprout.views.projects_id_metadata_id.helpers import create_stepper_url
+from sprout.views.projects_id_metadata_id.helpers import (
+    create_stepper_url,
+    update_stepper_url,
+)
 
 
-def step_columns(request: HttpRequest, table_id: int) -> HttpResponse:
+def step_columns(
+    request: HttpRequest, table_id: int, update: bool = False
+) -> HttpResponse:
     """Renders the step with metadata columns."""
+    template = "projects-id-metadata-create.html"
     tables = get_object_or_404(Tables, id=table_id)
     columns_metadata = Columns.objects.select_related("data_type").filter(tables=tables)
     data_sample = create_sample_of_unique_values(tables.id)
@@ -38,12 +44,17 @@ def step_columns(request: HttpRequest, table_id: int) -> HttpResponse:
             # Delete excluded columns
             if form.cleaned_data["excluded"]:
                 form.instance.delete()
+        if update:
+            return redirect(update_stepper_url(2, table_id))
+        else:
+            return redirect(create_stepper_url(4, table_id))
 
-        return redirect(create_stepper_url(4, table_id))
+    if update:
+        template = "projects-id-metadata-id-update.html"
 
     return render(
         request,
-        "projects-id-metadata-create.html",
+        template,
         {
             "forms": forms,
             "tables": tables,
@@ -69,7 +80,7 @@ def create_form(request: HttpRequest, column: Columns) -> ColumnsForm:
 
 
 def create_sample_of_unique_values(tables_id: int) -> Dict[str, List]:
-    """Create sample of unique values based on the uploaded file for a table.
+    """Create sample of unique values based on the updateed file for a table.
 
     The unique values are based on the first 500 rows.
 

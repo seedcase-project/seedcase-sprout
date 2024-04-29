@@ -24,7 +24,7 @@ def projects_id_metadata_id_update(
 
     # Step 2
     if step == "2":
-        return step_columns(request, table_id, upload=True)
+        return step_columns(request, table_id, update=True)
 
     # Step 1
-    return step_name_and_description(request, table_id, upload=True)
+    return step_name_and_description(request, table_id, update=True)
