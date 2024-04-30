@@ -44,6 +44,7 @@ if APP_NAME:
 # Application definition
 INSTALLED_APPS = [
     "widget_tweaks",
+    "accounts",
     "sprout",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -63,6 +64,20 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+LOGIN_REDIRECT_URL = "/"
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+# The EMAIL_BACKEND is responsible for sending password-reset emails.
+# We use a mock email backend (print to console) until we get a real email account.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# A real email account can be configured with the following settings:
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'user@gmail.com'
+# EMAIL_HOST_PASSWORD = 'password'
 
 ROOT_URLCONF = "config.urls"
 
@@ -95,7 +110,6 @@ sqlite_url = "sqlite:///db.sqlite3"
 database_url = os.environ.get("DATABASE_URL", sqlite_url)
 
 DATABASES = {"default": dj_database_url.parse(database_url, conn_max_age=600)}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
