@@ -1,0 +1,35 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block headers %}
+  <link rel="stylesheet" href="{% static 'css/metadata-stepper.css' %}" />
+{% endblock headers %}
+{% block content %}
+  <h4>EDIT METADATA {{ table.name }}</h4>
+  <p>On this page, you can edit your metadata.</p>
+  <!-- STEP 1: NAME AND DESCRIPTION -->
+  <div class="margin-bottom">
+    <div>
+      <div class="step-header {% if not request.GET.step or request.GET.step == '1' %}selected-step{% endif %}">
+        <div>1. Edit name and description</div>
+        <i class="more">expand_more</i>
+        <i class="less">expand_less</i>
+      </div>
+    </div>
+    {% if not request.GET.step or request.GET.step == '1' %}
+      {% include 'projects_id_metadata/step-name-and-description.html' %}
+    {% endif %}
+  </div>
+  <!-- STEP 2: COLUMNS -->
+  <div class="margin-bottom">
+    <div>
+      <div class="step-header {% if request.GET.step == '3' %}selected-step{% endif %}">
+        <div>2. Columns</div>
+        <i class="more">expand_more</i>
+        <i class="less">expand_less</i>
+      </div>
+    </div>
+    {% if request.GET.step == '2' %}
+      {% include 'projects_id_metadata/step-columns.html' %}
+    {% endif %}
+  </div>
+{% endblock %}

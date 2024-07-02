@@ -7,6 +7,11 @@ from . import views
 urlpatterns = [
     path("", views.projects_id_metadata_view, name="projects-id-metadata-view"),
     path(
+        "metadata/<int:table_id>/update",
+        views.projects_id_metadata_id_update,
+        name="projects-id-metadata-id-update",
+    ),
+    path(
         "metadata/<int:table_id>/data/update",
         views.projects_id_metadata_id_data_update,
         name="projects-id-metadata-id-data-update",

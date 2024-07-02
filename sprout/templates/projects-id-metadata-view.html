@@ -68,7 +68,7 @@
   </nav>
 
   <script>
-    let edit_url = "{% url 'projects-id-metadata-create'%}?table_id=0&step=3"
+    let edit_url = "{% url 'projects-id-metadata-id-update' table_id=0 %}"
     let upload_url = "{% url 'projects-id-metadata-id-data-update' table_id=0 %}"
 
     // This function selects a row in the parent table
