@@ -1,13 +1,13 @@
 @_default:
     just --list --unsorted
 
-# Generate PNG images from all PlantUML files
+# Generate SVG images from all PlantUML files
 generate-puml-all:
-  docker run --rm -v $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tpng "**/*.puml"
+  docker run --rm -v $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tsvg "**/*.puml"
 
-# Generate PNG image from specific PlantUML file
+# Generate SVG image from specific PlantUML file
 generate-puml name:
-  docker run --rm -v  $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tpng "**/{{name}}.puml"
+  docker run --rm -v  $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tsvg "**/{{name}}.puml"
 
 # Start up the docker container
 start-docker:
@@ -57,4 +57,4 @@ reset-local:
 
 # Build the documentation website using Quarto
 build-website:
-  docker run --rm -v $(pwd):/site -w /site ghcr.io/quarto-dev/quarto:latest quarto render docs
+  docker run --rm -v $(pwd):/site -w /site ghcr.io/quarto-dev/quarto:latest quarto render

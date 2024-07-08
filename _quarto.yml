@@ -1,0 +1,46 @@
+project:
+  type: seedcase-theme
+  render:
+    - "docs/*" 
+    - "index.qmd"
+
+website:
+  title: "Seedcase Sprout"
+  site-url: "https://sprout.seedcase-project.org/"
+  repo-url: "https://github.com/seedcase-project/seedcase-sprout"
+  page-navigation: true
+  navbar:
+    pinned: true
+    title: false
+    logo: "_extensions/seedcase-project/seedcase-theme/logos/navbar-logo-seedcase-sprout.svg"
+    logo-alt: "Seedcase Sprout logo: Main page"
+    left:
+      - text: "Design"
+        href: docs/design/index.qmd
+    tools:
+      - icon: github
+        href: "https://github.com/seedcase-project/seedcase-sprout"
+        aria-label: "GitHub icon: Source code"
+      - icon: house
+        href: https://seedcase-project.org
+        aria-label: "House icon: Seedcase Project home page"
+  sidebar:
+    - id: design
+      title: "Design"
+      pinned: true
+      style: "floating"
+      align: left
+      collapse-level: 1
+      contents:
+        - auto: docs/design/
+
+# format:
+#   seedcase-theme-html:
+    # include-before-body:
+      # - "includes/site-counter.html"
+      # - "includes/contribute.html"
+
+editor:
+  markdown:
+    wrap: 72
+    canonical: true
