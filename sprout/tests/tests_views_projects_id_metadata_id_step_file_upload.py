@@ -4,8 +4,8 @@ from pathlib import Path
 from django.test import TestCase
 
 from sprout.app.models import Columns, Files
-from sprout.app.tests.db_test_utils import create_table
 from sprout.app.views.projects_id_metadata_id.helpers import create_stepper_url
+from sprout.tests.db_test_utils import create_table
 
 
 class MetadataStepFileUploadTests(TestCase):
