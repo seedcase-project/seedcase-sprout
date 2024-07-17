@@ -51,7 +51,7 @@ add-test-data: install-deps update-migrations
 # Reset local Sprout (remove __pycache__ folders, db, migrations, and persistent storage raw files)
 reset-local: 
   find . -type d -name "__pycache__" -exec rm -rf {} +
-  find */migrations */*/migrations -type f ! -name '__init__.py' -exec rm {} \;
+  find */**/migrations -type f ! -name '__init__.py' -exec rm {} \;
   rm db.sqlite3
   rm persistent_storage/raw/*.csv
 
