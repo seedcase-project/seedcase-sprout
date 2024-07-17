@@ -22,9 +22,16 @@ update-migrations: install-deps
   yes | poetry run python manage.py makemigrations
   poetry run python manage.py migrate
 
+# Run core tests
+run-core-tests: 
+  poetry run python -m unittest discover -s sprout/core/tests
+
 # Run Django tests
-run-tests: install-deps update-migrations
+run-django-tests: install-deps update-migrations
   poetry run python manage.py test
+
+# Run all tests
+run-tests: run-core-tests run-django-tests
 
 # Check Python code with the linter for any errors that need manual attention
 check-python: install-deps
