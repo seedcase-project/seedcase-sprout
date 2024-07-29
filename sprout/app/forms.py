@@ -1,13 +1,74 @@
 """Module defining forms."""
 
-from django.forms import BooleanField, CharField, ModelForm, Textarea
+from django.forms import BooleanField, CharField, ChoiceField, Form, ModelForm, Textarea
 
 from sprout.app.models import Columns, Tables
 from sprout.app.validators import (
     validate_no_special_characters,
     validate_table_name_does_not_exist,
 )
+from sprout.core.enums import DataType
 
+
+class ResourceForm(Form):
+    """Form for creating a Resource."""
+    
+    # Adding 'autocomplete: new-password' to disable suggestions on input field
+    # TODO: Look into other solutions for this? (later)
+    name = CharField(
+        label="Name", 
+        widget=Textarea(attrs={"autocomplete": "new-password"})
+        )
+    description = CharField(label="Description", required=False)
+
+    def clean_name(self) -> str:
+        """Clean and validate field name.
+
+        Adds extra validations for the field "name" on top of the validations
+        defined by the model.
+
+        Raises:
+            ValidatorError: If either table name exists in the database or the name
+            includes special characters.
+
+        Returns:
+            str: The cleaned value of the "name" field.
+        """
+        name_value = self.cleaned_data.get("name")
+
+        # TODO: update this to check Resource instead
+        # validate_table_name_does_not_exist(name=name_value)
+
+        validate_no_special_characters(field_name="name", field_value=name_value)
+
+        return name_value
+    
+class FieldForm(Form):
+    """Form for creating a Field."""
+    
+    name = CharField(max_length=255, label="Name")
+    machine_readable_name = CharField(max_length=255, label="Machine Readable Name")
+    title = CharField(max_length=255, label="Display Name")
+    description = CharField(widget=Textarea, label="Description")
+    type = ChoiceField(choices=DataType.all(), label="Data Type")
+    allow_missing_value = BooleanField(
+        initial=True, 
+        required=False, 
+        label="Allow Missing Value"
+        )
+    allow_duplicate_value = BooleanField(
+        initial=True, 
+        required=False, 
+        label="Allow Duplicate Value"
+        )
+    excluded = BooleanField(initial=False, required=False, label="Excluded")
+
+    def __init__(self, *args, **kwargs):
+        """Overriding the __init__ method to customize field properties."""
+        super().__init__(*args, **kwargs)
+        self.fields["data_type"].empty_label = None
+        # .empty_label removes the argument None from data_type, this could also be done
+        # in the settings.py file if we would like to make it global.
 
 class TablesForm(ModelForm):
     """ModelForm for creating Tables."""
