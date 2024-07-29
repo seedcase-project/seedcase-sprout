@@ -15,7 +15,7 @@ def get_project_path(project_name: str) -> "Path":
 def get_datapackage_path(project_name: str) -> "Path":
     return Path(get_project_path(project_name), DATAPACKAGE_FILE_NAME)
 
-def _convert_to_snake_case(string: str) -> str:
+def convert_to_snake_case(string: str) -> str:
     """This function takes a string and converts it to snake case.
 
     Args:
@@ -42,7 +42,7 @@ def _convert_to_snake_case(string: str) -> str:
     return altered_string.lower()
 
 
-def _convert_to_human_readable(string: str) -> str:
+def convert_to_human_readable(string: str) -> str:
     """This function takes a string and converts it to human-readable title.
 
     Examples:

@@ -5,7 +5,7 @@ from django.db import models
 
 from sprout.app.models.data_types import DataTypes
 from sprout.app.models.tables import Tables
-from sprout.core.utils import _convert_to_human_readable, _convert_to_snake_case
+from sprout.core.utils import convert_to_human_readable, convert_to_snake_case
 
 
 class Columns(models.Model):
@@ -34,8 +34,8 @@ class Columns(models.Model):
         return Columns(
             tables_id=table_id,
             extracted_name=series.name,
-            machine_readable_name=_convert_to_snake_case(series.name),
-            display_name=_convert_to_human_readable(series.name),
+            machine_readable_name=convert_to_snake_case(series.name),
+            display_name=convert_to_human_readable(series.name),
             description="",
             data_type=DataTypes.get_from_series(series),
             allow_missing_value=True,

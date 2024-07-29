@@ -22,20 +22,24 @@ def projects_id_metadata_create(
     This function/view is responsible for delegating to the correct view/function based
     on "step".
     """
-    table_id = int(request.GET["table_id"]) if "table_id" in request.GET else None
+    resource_name = (
+        int(request.GET["resource_name"]) 
+        if "resource_name" in request.GET 
+        else None
+    )
     step = request.GET.get("step")
 
     # Step 2
     if step == "2":
-        return step_file_upload(request, table_id)
+        return step_file_upload(request, resource_name)
 
     # Step 3
     if step == "3":
-        return step_columns(request, table_id)
+        return step_columns(request, resource_name)
 
     # Step 4
     if step == "4":
-        return step_confirmation(request, table_id)
+        return step_confirmation(request, resource_name)
 
     # Step 1
-    return step_name_and_description(request, table_id)
+    return step_name_and_description(request, resource_name)
