@@ -1,5 +1,4 @@
 {% extends 'includes/base.html' %}
-
 {% block content %}
   <!-- View all metadata -->
   <div class="table-content">
@@ -12,24 +11,26 @@
       <div class="table-cell">Last Upload</div>
       <div style="width: 5%"></div>
     </div>
-
     <!-- TABLE ROWS -->
-    {% for metadata in existing_metadata %}
-
+    {% for resource in project.resources %}
       <!-- TABLE ROW -->
-      <div id="{{ metadata.id }}" class="table-row" onclick="selectRow('{{ metadata.id }}')">
-        <div class="table-cell">{{ metadata.name }}</div>
-        <div class="table-cell">{{ metadata.description }}</div>
-        <div class="table-cell">{{ metadata.created_at }}</div>
-        <div class="table-cell">{{ metadata.data_rows }}</div>
-        <div class="table-cell">{{ metadata.last_data_upload }}</div>
-        <div class="table-cell-icon" onclick="selectRow('{{ metadata.id }}')">
+      <div id="{{ resource.custom.id }}"
+           class="table-row"
+           onclick="selectRow('{{ resource.custom.id }}')">
+        <div class="table-cell">{{ resource.name }}</div>
+        <div class="table-cell">{{ resource.description }}</div>
+        <div class="table-cell">{{ resource.custom.created_at }}</div>
+        <div class="table-cell">{{ resource.custom.data_rows }}</div>
+        <div class="table-cell">{{ resource.custom.last_data_upload }}</div>
+        <div class="table-cell-icon"
+             onclick="selectRow('{{ resource.custom.id }}')">
           <i id="expand_icon">expand_less</i>
         </div>
-
-
         <!-- EXPANDED CONTENT -->
-        <div hidden class="expanded-content" id="{{ metadata.id }}" onclick="event.stopPropagation()">
+        <div hidden
+             class="expanded-content"
+             id="{{ resource.custom.id }}"
+             onclick="event.stopPropagation()">
           <div class="expanded-table">
             <div class="expanded-table-head">
               <div class="expanded-table-cell">Original Column Name</div>
@@ -38,20 +39,19 @@
               <div class="expanded-table-cell">Description</div>
             </div>
             <div class="expanded-table-body">
-              {% for column in metadata.columns_set.all %}
-                <div class="expanded-table-row" {% if forloop.counter > 5 %}hidden{% endif %}>
-                  <div class="expanded-table-cell">{{ column.extracted_name }}</div>
-                  <div class="expanded-table-cell">{{ column.display_name }}</div>
-                  <div class="expanded-table-cell">{{ column.data_type }}</div>
-                  <div class="expanded-table-cell">{{ column.description }}</div>
+              {% for field in resource.schema.fields %}
+                <div class="expanded-table-row"
+                     {% if forloop.counter > 5 %}hidden{% endif %}>
+                  <div class="expanded-table-cell">{{ field.name }}</div>
+                  <div class="expanded-table-cell">{{ field.title }}</div>
+                  <div class="expanded-table-cell">{{ field.type }}</div>
+                  <div class="expanded-table-cell">{{ field.description }}</div>
                 </div>
-                {% endfor %}
-
-              {% if metadata.columns_set.all|length > 5 %}
+              {% endfor %}
+              {% if resource.schema.fields|length > 5 %}
                 <div class="more-button-container">
                   <button class="border small-round" onclick="showMore(event.target)">Show more columns</button>
                 </div>
-
               {% endif %}
             </div>
           </div>
@@ -59,14 +59,12 @@
       </div>
     {% endfor %}
   </div>
-
   <!-- Three buttons create new metadata, edit existing metadata, or upload data to metadata -->
   <nav class="right-align">
     <a class="button" href="{% url 'projects-id-metadata-create' %}"><i>add</i>Create new metadata</a>
     <a href="#" class="button" id="edit-link" disabled><i>edit</i>Edit metadata</a>
     <a href="#" class="button" id="upload-link" disabled><i>upload</i>Upload data</a>
   </nav>
-
   <script>
     let edit_url = "{% url 'projects-id-metadata-create'%}?table_id=0&step=3"
     let upload_url = "{% url 'projects-id-metadata-id-data-update' table_id=0 %}"
