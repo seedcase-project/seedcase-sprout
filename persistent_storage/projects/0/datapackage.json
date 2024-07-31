@@ -3,7 +3,7 @@
     {
       "name": "patients",
       "type": "table",
-      "path": "patients.csv",
+      "path": "raw/patients-2d40e191163443659fd745a72cc40d0a.csv.gz",
       "scheme": "file",
       "format": "csv",
       "mediatype": "text/csv",
@@ -18,9 +18,9 @@
       "data_rows": 1151,
       "files": [
         {
-          "path": "patients.csv",
+          "path": "raw/patients-2d40e191163443659fd745a72cc40d0a.csv.gz",
           "original_file_name": "patients.csv",
-          "server_file_path": "persistent_storage/projects/sample-project/patients.csv",
+          "server_file_path": "persistent_storage/projects/0/data/1/raw/patients-2d40e191163443659fd745a72cc40d0a.csv.gz",
           "file_extension": "csv",
           "file_size_bytes": 96042,
           "created_at": "2024-03-20T12:51:15.028Z",
