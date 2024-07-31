@@ -9,30 +9,10 @@
       "mediatype": "text/csv",
       "encoding": "utf-8",
       "description": "A table with patient information. This is created automatically when DEBUG=TRUE",
-      "is_draft": false,
-      "created_at": "2024-03-20T12:51:09.614Z",
-      "created_by": null,
-      "modified_at": "2024-03-20T12:51:15.056Z",
-      "modified_by": null,
-      "last_data_upload": "2024-03-20T12:51:15.056Z",
-      "data_rows": 1151,
-      "files": [
-        {
-          "path": "raw/patients-2d40e191163443659fd745a72cc40d0a.csv.gz",
-          "original_file_name": "patients.csv",
-          "server_file_path": "persistent_storage/projects/0/data/1/raw/patients-2d40e191163443659fd745a72cc40d0a.csv.gz",
-          "file_extension": "csv",
-          "file_size_bytes": 96042,
-          "created_at": "2024-03-20T12:51:15.028Z",
-          "created_by": null,
-          "modified_at": "2024-03-20T12:51:15.036Z"
-        }
-      ],
       "schema": {
         "fields": [
           {
             "name": "Id",
-            "machine_readable_name": "id",
             "title": "Id",
             "description": "Unique patient identifier",
             "type": "string",
@@ -43,7 +23,6 @@
           },
           {
             "name": "BIRTHDATE",
-            "machine_readable_name": "birthdate",
             "title": "BIRTHDATE",
             "description": "Patient's birth date. YYYY-MM-DD. Doesn't include missing values.",
             "type": "date",
@@ -53,7 +32,6 @@
           },
           {
             "name": "DEATHDATE",
-            "machine_readable_name": "deathdate",
             "title": "DEATHDATE",
             "description": "Patient's death date. YYYY-MM-DD. Includes missing values.",
             "type": "date",
@@ -63,7 +41,6 @@
           },
           {
             "name": "MARITAL",
-            "machine_readable_name": "marital",
             "title": "MARITAL",
             "description": "Patient's marital status. S=Single, M=Married, D=Divorced, W=Widowed. Includes missing values.",
             "type": "string",
@@ -81,7 +58,6 @@
           },
           {
             "name": "ETHNICITY",
-            "machine_readable_name": "ethnicity",
             "title": "ETHNICITY",
             "description": "Patient's ethnicity. Either hispanic or nonhispanic. Doesn't include missing values",
             "type": "string",
@@ -95,7 +71,6 @@
           },
           {
             "name": "SEX",
-            "machine_readable_name": "sex",
             "title": "SEX",
             "description": "Patient's sex. F=female, M=male. Doesn't include missing values.",
             "type": "string",
@@ -109,7 +84,6 @@
           },
           {
             "name": "HEALTHCARE_EXPENSES",
-            "machine_readable_name": "healthcare_expenses",
             "title": "HEALTHCARE_EXPENSES",
             "description": "Patient's yearly healthcare expenses in US dollars. Doesn't include missing values.",
             "type": "number",
@@ -119,7 +93,6 @@
           },
           {
             "name": "INCOME",
-            "machine_readable_name": "income",
             "title": "INCOME",
             "description": "Patient's yearly income in US dollars. Doesn't include missing values.",
             "type": "integer",
