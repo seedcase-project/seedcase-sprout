@@ -1,0 +1,83 @@
+@startuml function-flow
+!theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
+
+skinparam StateFontColor black
+skinparam StateFontSize 18
+skinparam StateFontName Fira Code
+
+state "read_resource_*()" as rr
+rr : - Required argument is path
+rr : - This function name will depend on the file type given
+rr : - For instance, read_resource_csv()
+
+state "path_dir_root()" as pdr
+pdr : List path to the root\nwhere packages are stored
+
+state "package_resource_create()" as prc {
+  prc : - Required arguments are package_id, resource_id, and data
+  prc : - Optional argument is properties object or manual user input
+
+  state "write_resource_raw()" as wrr
+  wrr : - Required argument is data and path
+
+  state "write_resource_properties()" as wrp
+  state "write_resource_data()" as wrd
+
+  state "write_package_database()" as wpd
+
+  state "read_resource_properties()" as rrp
+  state "read_package_database()" as rpd
+
+  state "get_properties_data()" as gpd
+
+
+  state "path_file_raw_resource()" as pfrr
+  pfrr : Create the file name for the raw file
+
+  state "path_file_package_database()" as pfpd
+
+  state "path_file_properties()" as pfp
+
+  state "verify_resource_properties()" as vrp
+  state "verify_package_properties()" as vpp
+  state "verify_resource_data()" as vrd
+
+  ' state "validate_resource_data()" as vrd
+
+  state "/database.sqlite" as file_sql
+  state "/datapackage.json" as file_dpj
+  state "/resources/<id>/data.parquet" as file_rid
+  state "/resources/<id>/raw/*.gzip" as file_rir
+
+  ' Write data to raw location.
+  pfrr --> wrr
+  data --> wrr
+  wrr --> file_rir
+
+  ' Set properties of resource
+  properties --> vrp : Optionally requires\nuser input
+  vrp --> rrp
+  rrp --> vpp 
+  vpp --> wrp
+  pfp --> wrp
+  wrp --> file_dpj
+
+  ' Get the properties from the data
+  data --> gpd
+  gpd -> properties
+
+  ' Read the data, get the 
+  rr -> data 
+  pfpd --> rpd 
+  rpd --> vrd 
+  vrd --> wpd
+  pfpd --> wpd
+  wpd --> file_sql
+  vrd --> wrd
+  wrd --> file_rid
+}
+
+pdr --> prc
+
+@enduml
+
