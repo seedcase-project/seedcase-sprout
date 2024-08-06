@@ -2,82 +2,142 @@
 !theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
 
 skinparam StateFontColor black
-skinparam StateFontSize 18
 skinparam StateFontName Fira Code
 
-state "read_resource_*()" as rr
-rr : - Required argument is path
-rr : - This function name will depend on the file type given
-rr : - For instance, read_resource_csv()
-
-state "path_dir_root()" as pdr
-pdr : List path to the root\nwhere packages are stored
-
-state "package_resource_create()" as prc {
-  prc : - Required arguments are package_id, resource_id, and data
-  prc : - Optional argument is properties object or manual user input
-
-  state "write_resource_raw()" as wrr
-  wrr : - Required argument is data and path
-
-  state "write_resource_properties()" as wrp
-  state "write_resource_data()" as wrd
-
-  state "write_package_database()" as wpd
-
-  state "read_resource_properties()" as rrp
-  state "read_package_database()" as rpd
-
-  state "get_properties_data()" as gpd
-
-
-  state "path_file_raw_resource()" as pfrr
-  pfrr : Create the file name for the raw file
-
-  state "path_file_package_database()" as pfpd
-
-  state "path_file_properties()" as pfp
-
-  state "verify_resource_properties()" as vrp
-  state "verify_package_properties()" as vpp
-  state "verify_resource_data()" as vrd
-
-  ' state "validate_resource_data()" as vrd
-
-  state "/database.sqlite" as file_sql
-  state "/datapackage.json" as file_dpj
-  state "/resources/<id>/data.parquet" as file_rid
-  state "/resources/<id>/raw/*.gzip" as file_rir
-
-  ' Write data to raw location.
-  pfrr --> wrr
-  data --> wrr
-  wrr --> file_rir
-
-  ' Set properties of resource
-  properties --> vrp : Optionally requires\nuser input
-  vrp --> rrp
-  rrp --> vpp 
-  vpp --> wrp
-  pfp --> wrp
-  wrp --> file_dpj
-
-  ' Get the properties from the data
-  data --> gpd
-  gpd -> properties
-
-  ' Read the data, get the 
-  rr -> data 
-  pfpd --> rpd 
-  rpd --> vrd 
-  vrd --> wpd
-  pfpd --> wpd
-  wpd --> file_sql
-  vrd --> wrd
-  wrd --> file_rid
+state "Input" as input {
+  input : Args package_id and resource_id are not included,\nas they are only integers
+  ' Arguments -----
+  path : Path to the file with data in it
+  properties : (Optional) JSON object with\nkey-value pairs that match\ndata package spec
 }
 
-pdr --> prc
+state "Output" as output {
+  output : The package parent folder is shown as /
+  state "/database.sqlite" as file_sql
+  file_sql : The SQLite database with\nthe resources as tables
+
+  state "/datapackage.json" as file_dpj
+  file_dpj : JSON file following\nthe Data Package spec
+
+  state "/resources/<id>/data.parquet" as file_rid
+  file_rid : Parquet file for tabular\ndata to act as a backup
+
+  state "/resources/<id>/raw/*.gzip" as file_rir
+  file_rir : Untouched raw file with data
+}
+
+state "package_resource_create()" as prc {
+  prc : - Required arguments: package_id, resource_id, and path
+  prc : - Optional argument is properties object or manual user input
+
+  ' Path functions -----
+  state "path_file_resource_raw()" as pfrr
+  pfrr : Create the file path for the raw file
+
+  state "path_file_resource_data()" as pfrd
+  pfrd : Create the file path for the data file
+
+  state "path_file_package_database()" as pfpd
+  pfpd : Create the file path for the database file
+
+  state "path_file_package_properties()" as pfpp
+  pfpp : Create the file path for the properties file
+
+  pfrr -[hidden]> pfrd
+  pfrd -[hidden]> pfpd
+  pfpd -[hidden]> pfpp
+  pfpd -[hidden]> gpd
+
+  ' Read functions -----
+  state "read_resource_properties()" as rrp
+  rrp : - Required arguments: path
+
+  state "read_package_database()" as rpd
+  rpd : - Required arguments: path
+
+  state "read_resource()" as rr
+  rr : - Required arguments: path, file_extension
+
+  rrp -[hidden]> rpd
+  rpd -[hidden]> rr
+
+  ' Get functions -----
+  state "get_properties_data()" as gpd
+  gpd : - Required argument: path
+  gpd : - Gets the schema properties\n  from the data in the file
+
+  ' Write functions -----
+  state "write_resource_raw()" as wrr
+  wrr : - Required arguments: input_path, output_path
+
+  state "write_resource_properties()" as wrp
+  wrp : - Required arguments: json_object, path
+
+  state "write_resource_data()" as wrd
+  wrd : - Required arguments: data, path
+
+  state "write_package_database()" as wpd
+  wpd : - Required arguments: json_object, path
+
+  ' Verify functions -----
+  ' Checks that it fits with data package spec
+  state "verify_resource_properties()" as vrp
+  vrp : - Required arguments: json_object
+  vrp : - Checks against resources spec of data package
+
+  state "verify_package_properties()" as vpp
+  vpp : - Required arguments: json_object
+  vpp : - Checks against full spec of data package
+
+  state "verify_resource_data()" as vrd
+  vrd : - Required arguments: json_object
+  vrd : - Checks against full spec of data package
+
+  ' Validate functions -----
+  ' Checks against what is expected of the data, 
+  ' requires domain knowledge though
+  ' state "validate_resource_data()" as vrd
+
+  ' Database functions -----
+  state "create_database_table()" as cdt
+  cdt : - Required arguments: data, database
+
+  ' Flow for getting properties metadata (schema)
+  path --> gpd : JSON
+  gpd --> vrp : JSON
+  properties --> vrp : JSON: Optionally requires\nuser input\confirmation
+  vrp --> wrp : JSON
+  pfpp --> wrp : Path object
+
+  ' Write data to raw location
+  path --> wrr : Path object
+  pfrr --> wrr : Path object
+  wrr --> file_rir : File
+
+  ' Set properties of resource
+  properties --> rrp : JSON: If given\nas argument
+  rrp --> vpp : JSON
+  vpp --> wrp : JSON
+  wrp --> file_dpj : File
+
+  ' Read the data, store in database
+  pfpd --> rpd : Path object
+  rpd --> cdt : DataFrame
+  path --> rr : Path object
+  rr --> vrd : DataFrame
+  vrd --> cdt : DataFrame
+  cdt --> wpd : DataFrame
+  pfpd --> wpd : Path object
+  wpd --> file_sql : File
+
+  ' Store as backup
+  vrd --> wrd : DataFrame
+  pfrd --> wrd : Path object
+  wrd --> file_rid : File
+}
+
+input --[hidden]> prc
+prc --[hidden]> output
 
 @enduml
 
