@@ -55,7 +55,7 @@ state "package_resource_create()" as prc {
   state "read_package_database()" as rpd
   rpd : - Required arguments: path
 
-  state "read_resource()" as rr
+  state "read_resource_data()" as rr
   rr : - Required arguments: path, file_extension
 
   rrp -[hidden]> rpd
