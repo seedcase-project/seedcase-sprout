@@ -1,189 +1,315 @@
 ---
-title: "Naming scheme"
+title: "Core Python Functions"
 ---
 
 {{< include /docs/includes/_wip.qmd >}}
 
-The naming scheme for Sprout is guided by our [style
-guide](https://design.seedcase-project.org/style/) as well as by the the
-[Frictionless Framework](https://v4.framework.frictionlessdata.io/) and
-[Data Package](https://datapackage.org/) structure. The below naming
-scheme *only* applies to file paths, data objects, functions, URLs, API
-endpoints, and command line interfaces that are exposed to or associated
-with user-facing content. It does *not* apply to internal content; see
-the style guide for details on naming internal (developer-facing)
-content.
-
-## Code-based actions and objects
-
-We'll compose names based on the objects we and our users interact with
-as well as the actions taken on those objects. Following along with the
-Data Package terminology, we simplify "data package" to "package" and
-"data resource" to "resource".
-
--   Types of core objects: packages, resources, properties (package and resource metadata), and data.
--   Types of actions taken on those objects: create, view, edit,
-    add, list, and delete.
--   Types of identifiers for specific items of objects (as numbers):
-    packages and resources.
-
-### Functions
-
-Based on the above principles and our style guide, we have defined the
-following naming scheme for functions. Several of the functions have a potentially optional argument called `properties`, which is a list of key-value pairs that describe the package, as per the Data Package specification.
-
-`packages_list()`
-
-:   List basic details of all packages.
-
-`package_view(package_id)`
-
-:   View details of a package.
-
-`package_create(properties)`
-
-:   Create the folder and file structure for a new package, as well as
-    the overall properties that describes the package. 
-
-`package_edit(package_id, properties)`
-
-:   Edit the properties of a specific package.
-
-`package_delete(package_id)`
-
-:   Delete a specific package.
-
-`package_resources_list(package_id)`
-
-:   List all the resources of a specific package.
-
-`package_resource_view(package_id, resource_id)`
-
-:   View the details of a package's specific resource.
-
-`package_resource_create(package_id, data, properties)`
-
-:   Create a new resource in a specific (existing) package using data and the properties metadata.
-
-`package_resource_add(package_id, resource_id, data)`
-
-:   Add more data to a resource of a specific package.
-
-`package_resource_edit(package_id, resource_id, properties)`
-
-:   Edit the properties metadata of a specific resource of a specific package.
-
-`package_resource_delete(package_id, resource_id)`
-
-:   Delete all associated data and properties metadata of a specific resource of a specific package.
-
-### App page URLs
-
-For the URL/app pages naming scheme, they follow a similar style to the
-functions above, with some small differences:
-
--   When a naming scheme ends without an action, the default action is
-    `view`.
--   Database and resource file objects do not have any `view` action, as
-    we want to limit access viewing data in the raw files and database.
-
-Following these principles, the URLs would be:
-
-`packages`
-
-:   View all packages within the server or found by the app.
-
-`packages/create`
-
-:   Create and setup a new package, with basic properties metadata about the package but without any resources inside.
-
-`packages/<id>`
-
-:   View the landing page of a specific package showing its properties and resources.
-
-`packages/<id>/edit`
-
-:   Edit the properties of a specific package.
-
-`packages/<id>/delete`
-
-:   Delete a specific package.
-
-`packages/<id>/resources`
-
-:   View basic details of all resources of a specific package.
-
-`packages/<id>/resources/create`
-
-:   Create a new resource with associated data and properties in a specific
-    package.
-
-`packages/<id>/resources/<id>`
-
-:   View the details of a specific resource in a specific
-    package.
-
-`packages/<id>/resources/<id>/edit`
-
-:   Edit the properties of a specific resource of a specific package.
-
-`packages/<id>/resources/<id>/add`
-
-:   Add data to a specific resource of a specific package.
-
-`packages/<id>/resources/<id>/delete`
-
-:   Delete all associated data and properties metadata of a specific package's resource.
-
-## Package file paths
-
-Sprout is designed to store and structure data in a coherent and
-consistent way. Part of that is about how the data are stored into files
-and folders. Depending on the context, if Sprout is within a server
-environment with Postgres installed, the original input from the user
-will be stored in the Postgres database as the below file path and can
-be exported into actual files if desired.
-
-The types of files and folders that make up the package are:
-
--   Types of files: JSON, Parquet, SQLite, compressed raw data (if
-    appropriate).
--   Types of folders: raw and resources.
--   Types of identifiers for specific items of objects (as numbers):
-    packages and resources.
-
-Following a similar pattern described in the actions and objects section
-above, the base folders are:
-
--   `packages/<id>/`: The related set of data specific to, for instance,
-    one data collection study.
--   `resources/<id>/`: The files related to a specific table or file. They will always be within a specific package, e.g. `packages/1/resources/1/`.
--   `ROOT`: The default location that packages are stored in. If on a
-    server, it would be the path to that server space given to Sprout. If
-    on a local computer, it would be a default path provided by Sprout for
-    the specific operating system.
-
-The naming scheme would then be:
-
-`ROOT/packages/<id>/resources/<id>/raw/<timestamp>-<uuid>.<extension>.gzip`
-
-:   Compressed raw data files associated with a specific resource.
-
-`ROOT/packages/<id>/resources/<id>/data.parquet`
-
-:   For tabular type data, it would likely be stored as a Parquet file
-    to act as a backup to the database and to act as a faster file
-    format for potential uses in analytics.
-
-`ROOT/packages/<id>/database.sqlite`
-
-:   All the data for the data package, with tables for each resource.
-
-`ROOT/packages/<id>/datapackage.json`
-
-:   Machine-readable JSON file following the Data Package specification.
-
-`ROOT/packages/<id>/README.md`
-
-:   A human readable, auto-generated 'metadata' file based on the
+Based on the [naming scheme](naming.qmd), these are the core
+external-facing functions in Sprout, which are stored in `sprout/core/`.
+See the [Outputs](outputs.qmd) section for an overview and explanation
+of the different outputs provided by Sprout. There are some small
+differences between the naming scheme and the functions described here.
+
+1.  Whenever `view` is used, it is always for one object (either a
+    package or a resource in a package). Whenever `list` is used, it is
+    always to show basic details of all objects (packages or resources
+    in a package). Both `view` and `list` only ever show the information
+    contained in the `datapackage.json` and never show actual data (at
+    least in a format that might not be in compliance with legal and
+    privacy regulations). We don't provide the ability to view data
+    directly since it is out of scope for Sprout and we want to minimise
+    any security and privacy risks. The IT admin and data package admin
+    users can always be able to directly (outside of Sprout) view the
+    data as they will have the appropriate IT and legal permissions.
+2.  `edit` only ever edits the `datapackage.json` properties for the
+    metadata on the package or resource themselves but never edits the
+    data itself. If there is a need for updates to the data itself, the
+    user can update it by uploading a new file with the updates (as long
+    as the primary keys like participant ID and time of collection are
+    the same). We don't provide access for users to directly edit the
+    data because we want to limit security risks as well as to maintain
+    privacy and legal compliance.
+3.  `add` only ever adds more data to an existing data resource and not
+    to add any new metadata to the `datapackage.json`. Since Sprout
+    contains the full Frictionless Data specification, using `edit` is
+    enough to make updates to the existing properties found in the
     `datapackage.json` file.
+
+Nearly all the of the functions have a `path` argument. Depending on
+what the function does, the path object would be different. Use the
+`path_*()` functions to get the correct path object for the specific
+function. It's designed this way to make it more flexible to where
+individual packages and resources are stored and to make it a bit easier
+to write tests for the functions. For a similar reason, most of the
+functions output either a JSON file or path object so it can be easier
+to test.
+
+Several of the functions have an optional argument called `properties`,
+which is a list of key-value pairs (as a JSON object) that describe the
+package that can be used for the `datapackage.json` file and that
+follows the Frictionless Data specification.
+
+## Data package functions
+
+`list_packages(path)`
+
+:   This function lists some basic details contained in the
+    `datapackage.json` files of all data packages found in the `path`
+    location. This would be a list, showing very basic information that
+    would be allowed by privacy and legal regulations (e.g. like the
+    package ID as well as the name, description, and contact persons for
+    each package). Use `path_sprout_root()` to provide the path to the
+    place packages are stored by default. Outputs a JSON object by
+    default.
+
+`view_package_properties(path)`
+
+:   This will show the information contained within the
+    `datapackage.json` file of a package for only the fields relevant to
+    the package itself, not the resources within the package. Use
+    `path_package_properties()` to provide the correct path location.
+    Outputs a JSON object.
+
+`create_package_structure(path)`
+
+:   This is the first function to use to create a new data package. It
+    assigns a package ID and then creates all the necessary files for a
+    package (excluding the resources), as described in the
+    [Outputs](outputs.qmd) section. Creates the files and then outputs
+    the file paths for the created files. Use `path_package()` to
+    provide the correct path location to create this structure.
+
+`create_package_properties(path, properties)`
+
+:   This is the second function to use to create a new data package. It
+    is used to fill in the details in the `datapackage.json` file by
+    using the `properties` argument which must be a JSON object. If the
+    `properties` argument isn't given, the user will be prompted to
+    enter in the required information needed for the `datapackage.json`
+    file. The `properties` argument must follow the Frictionless Data
+    specification, use `view_package_properties_template()` to get a
+    JSON object that follows the correct specification. Use
+    `path_package_properties()` to provide the correct path location.
+    Outputs a JSON object only, use `write_package_properties()` to save
+    back to the `datapackage.json` file.
+
+`edit_package_properties(path, properties)`
+
+:   Make edits to the `datapackage.json` properties of a specific
+    package. Only edits metadata on the package itself, not on the data
+    resources contained within the package. If the `properties` argument
+    isn't given, the user will be prompted to edit the required fields.
+    The `properties` argument must follow the Frictionless Data
+    specification, use `view_package_properties_template()` to get a
+    JSON object that follows the correct specification. Use
+    `path_package_properties()` in the `path` argument to provide the
+    correct location for the file. Outputs a JSON object only, use
+    `write_package_properties()` to save back to the `datapackage.json`
+    file.
+
+`delete_package(path, ask)`
+
+:   Completely delete a specific package and all it's data resources.
+    Because this action would be permanent, the optional argument `ask`
+    would default to true so that the function obtains explicit
+    confirmation from the user by prompting the user to confirm yes or
+    no on the deletion. Use `path_package()` function in the `path` to
+    get the correct location. Outputs `true` if the deletion was
+    successful.
+
+`write_package_properties(json_object, path)`
+
+:   Use to write the JSON object back to the `datapackage.json` file.
+    The `path` argument is the location of the `datapackage.json` file,
+    use the `path_package_properties()` function to provide this path to
+    the correct location. Returns the same path object as given in the
+    `path` argument.
+
+## Data resource functions
+
+`list_resources(path)`
+
+:   This looks in one specific package's `datapackage.json` file and
+    lists a basic summary of all the data resources contained within the
+    package. The list would be basic information like resource ID, name,
+    and description. Use `path_package()` to provide the correct path
+    location. Outputs a JSON object by default.
+
+`view_resource(path, properties_path)`
+
+:   Views the information on a package's specific resource that is
+    contained within the `datapackage.json` file. Use the
+    `path_resource()` function to provide the correct location for the
+    `path` and `path_resource_properties()` for the `properties_path()`.
+    Outputs a JSON object.
+
+`create_resource_structure(path)`
+
+:   This is the first function to use to setup the structure for a data
+    resource. Creates a new data resource in a specific (existing)
+    package by creating the file and folder setup as described in the
+    [Outputs](outputs.qmd) section. Use the `path_resource()` function
+    to provide the correct path location. Creates the files and outputs
+    a path object.
+
+`create_resource_properties(path, data_path, properties)`
+
+:   This function either takes the data found in the `data_path`
+    location to create a JSON object following the Frictionless Data
+    properties or takes the `properties` argument to fill in the correct
+    fields for the data resource in the `datapackage.json` file.
+
+    If the `data_path` argument is given, it tries to guess and fill in
+    some of the property fields required by the Frictionless Data
+    resource specification. The user will be prompted to edit or add any
+    fields that the function can't guess (like variable description).
+
+    If the `data_path` argument is not given, the `properties` argument
+    is required and is used to directly provide the properties values
+    for the resource in the `datapackage.json` file. It must be given a
+    a JSON object (use `view_resource_properties_template()` to have the
+    correct JSON object).
+
+    Use `path_package()` to provide the correct `path` location. Outputs
+    a JSON object only, use `write_resource_properties()` to save back
+    to the `datapackage.json` file.
+
+`copy_resource_data_to_raw(path, data_path)`
+
+:   Copy the file from `data_path` over into the resource location given
+    by `path`. This will compress the file and use a timestamped, unique
+    file name to store as a backup. See the explanation of this file in
+    the [Outputs](outputs.qmd) section. All data in this folder are
+    joined together and merged over into the `data.parquet` file using
+    the `construct_resource_data()` function. Use `path_resource_raw()`
+    to provide the correct `path` location. Copies the file and outputs
+    the path object of the created file.
+
+`construct_resource_data(path, raw_path)`
+
+:   This function takes the files provided by `raw_path` and merges them
+    into a `data.parquet` file provided by `path`. Use
+    `path_resource_data()` to provide the correct path location for
+    `path` and `path_resources_raw_files()` for the `raw_path` argument.
+    Outputs the path object of the created file.
+
+`edit_resource_properties(path, properties)`
+
+:   Edit the properties of a resource in a package. The `properties`
+    argument must be a JSON object that follows the Frictionless Data
+    specification. If the `properties` argument isn't given, the user
+    will be prompted to edit the required fields. Use the
+    `path_resource_properties()` function to provide the correct path
+    location. Outputs a JSON object only, use
+    `write_resource_properties()` to save back to the `datapackage.json`
+    file.
+
+`delete_resource_raw_file(path, ask)`
+
+:   Use this to delete a raw file in the `raw/` folder of a resource.
+    This is useful if the file is no longer needed or if it is incorrect
+    or had an issue during the time when a user first is adding the file
+    to a resource. Use `path_resource_raw_files()` to select from the
+    list of files found to delete from. Will only delete one file. The
+    optional argument `ask` defaults to true so that the function
+    obtains explicit confirmation from the user by prompting the user to
+    confirm yes or no on the deletion. Outputs `true` if the deletion
+    was successful.
+
+`delete_resource_data(path, ask)`
+
+:   Delete all data and raw data of a specific resource. Use
+    `path_resource_raw()` to provide the correct path location. The
+    optional argument `ask` defaults to true so that the function
+    obtains explicit confirmation from the user by prompting the user to
+    confirm yes or no on the deletion. Outputs `true` if the deletion
+    was successful. Use `delete_resource_properties()` to delete the the
+    associated metadata for the resource.
+
+`delete_resource_properties(path, ask)`
+
+:   Deletes all properties for a resource within the `datapackage.json`
+    file. Use `path_resource_properties()` to provide the correct
+    location for `path`. The optional argument `ask` defaults to true so
+    that the function obtains explicit confirmation from the user by
+    prompting the user to confirm yes or no on the deletion. Outputs
+    `true` if the deletion was successful.
+
+`write_resource_to_parquet(data, path)`
+
+:   Writes a data object to the `path` location. Use
+    `path_resource_data()` to provide the correct path location. Outputs
+    the path object of the created file.
+
+`write_resource_to_table(data, path, properties)`
+
+:   Writes a data object to the `path` database location. Use
+    `path_resource_database()` to provide the correct location for the
+    `path` object. The `properties` argument, using `view_resource()`,
+    ensures the correct table is created in the database. Outputs the
+    same `path` object as well as the name of the newly created database
+    table.
+
+## Path functions
+
+::: callout-warning
+These functions are still being developed.
+:::
+
+`path_resource(package_id, resource_id)`
+
+:   TODO
+
+`path_resource_raw(package_id, resource_id)`
+
+:   TODO
+
+`path_resource_raw_files(package_id, resource_id)`
+
+:   TODO
+
+`path_resource_data(package_id, resource_id)`
+
+:   TODO
+
+`path_resource_properties(package_id, resource_id)`
+
+:   TODO
+
+`path_package_properties(package_id)`
+
+:   TODO
+
+`path_package_database(package_id)`
+
+:   TODO
+
+`path_package(package_id)`
+
+:   TODO
+
+`path_sprout_root(package_id)`
+
+:   TODO
+
+## Helper functions
+
+::: callout-warning
+These functions are still being developed.
+:::
+
+`pretty_json(json)`
+
+:   Create a prettier, human readable version of a JSON object.
+
+`create_properties_template()`
+
+:   TODO
+
+`view_package_properties_template()`
+
+:   TODO. Outputs a JSON object.
+
+`view_resource_properties_template()`
+
+:   TODO. Outputs a JSON object.
