@@ -1,0 +1,91 @@
+@startuml package-create-flow
+!theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
+
+skinparam StateFontColor black
+skinparam StateFontName Fira Code
+
+state "Input" as input {
+' Arguments -----
+  path : Path to the file with data in it
+  properties : (Optional) JSON object with\nkey-value pairs that match\ndata package spec
+}
+
+state "Output" as output {
+  output : The package parent folder is shown as /
+  state "/database.sqlite" as file_sql
+  file_sql : The SQLite database with users and user roles
+
+  state "/datapackage.json" as file_dpj
+  file_dpj : JSON file following\nthe Data Package spec
+
+  state "/README.md" as file_rm
+  file_rm : README file based on datapackage.json
+}
+
+state "package_create()" as pc {
+  pc : - Required arguments: path
+  pc : - Optional argument: properties object or manual user input
+
+' Create package database
+  state "package_database_create()" as udc {
+  udc : - Includes user roles and admin user information
+
+  /' Path '/
+    state "path_file_package_database()" as pfpd
+    pfpd : Create the file path for the database file
+
+  /' Database '/
+    state "create_database()" as cdt
+    cdt : - Required arguments: database
+
+    state "create_user_tables()" as cut
+    cut : - Required arguments: database
+    /' TODO: How do we get user information on the admin/user who creates the package? '/
+
+  /' Write '/
+    state "write_package_database()" as wpd
+    wpd : - Required arguments: json_object, path
+    wpd : - Writes to the package database
+  }
+
+' Create package properties
+  state "package_properties_create()" as ppc {
+
+  /' Get '/
+    state "get_properties_from_data()" as gpd
+    gpd : - Required argument: path
+    gpd : - Gets the schema properties\n  from the data in the file
+  
+  /' Path '/
+    state "path_file_package_properties()" as pfpp
+    pfpp : Create the file path for the\n  properties file
+
+    /' Verify '/
+    state "verify_package_properties()" as vpp
+    vpp : - Required arguments: json_object
+    vpp : - Checks against full spec of data\n  package
+
+    /' Write '/
+    state "write_package_properties()" as wpp
+    wpp : - Required arguments: json_object, path
+  }
+
+}
+' Flow for creating package db 
+pfpd --> cdt 
+cdt --> cut
+cut --> wpd
+wpd --> file_sql
+
+' Flow for creating properties
+path --> gpd : JSON
+gpd --> vpp : JSON
+properties --> vpp : JSON: Optionally requires\nuser input\confirmation
+pfpp --> wpp : Path object
+
+vpp --> wpp : JSON
+wpp --> file_dpj : File
+wpp --> file_rm : File
+
+@enduml
+
