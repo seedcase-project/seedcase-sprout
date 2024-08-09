@@ -21,9 +21,9 @@ as well as the actions taken on those objects. Following along with the
 Data Package terminology, we simplify "data package" to "package" and
 "data resource" to "resource".
 
--   Types of core objects: packages, resources, properties (data package metadata), and data.
--   Types of actions taken on those objects: create, view, edit (a
-    file), add (data in the package), list, and delete.
+-   Types of core objects: packages, resources, properties (package and resource metadata), and data.
+-   Types of actions taken on those objects: create, view, edit,
+    add, list, and delete.
 -   Types of identifiers for specific items of objects (as numbers):
     packages and resources.
 
@@ -43,11 +43,11 @@ following naming scheme for functions. Several of the functions have a potential
 `package_create(properties)`
 
 :   Create the folder and file structure for a new package, as well as
-    the overall properties metadata that describes the package. 
+    the overall properties that describes the package. 
 
 `package_edit(package_id, properties)`
 
-:   Edit the properties metadata of the specific package.
+:   Edit the properties of a specific package.
 
 `package_delete(package_id)`
 
@@ -63,7 +63,7 @@ following naming scheme for functions. Several of the functions have a potential
 
 `package_resource_create(package_id, data, properties)`
 
-:   Create a new resource in a specific package using data and the properties metadata.
+:   Create a new resource in a specific (existing) package using data and the properties metadata.
 
 `package_resource_add(package_id, resource_id, data)`
 
@@ -99,11 +99,11 @@ Following these principles, the URLs would be:
 
 `packages/<id>`
 
-:   View the landing page of a specific package.
+:   View the landing page of a specific package showing its properties and resources.
 
 `packages/<id>/edit`
 
-:   Edit the properties metadata of a specific package.
+:   Edit the properties of a specific package.
 
 `packages/<id>/delete`
 
@@ -115,17 +115,17 @@ Following these principles, the URLs would be:
 
 `packages/<id>/resources/create`
 
-:   Create a new resource with associated data and properties metadata in a specific
+:   Create a new resource with associated data and properties in a specific
     package.
 
 `packages/<id>/resources/<id>`
 
 :   View the details of a specific resource in a specific
-    package as a landing page.
+    package.
 
 `packages/<id>/resources/<id>/edit`
 
-:   Edit the properties metadata of a specific resource of a specific package.
+:   Edit the properties of a specific resource of a specific package.
 
 `packages/<id>/resources/<id>/add`
 
@@ -157,17 +157,17 @@ above, the base folders are:
 
 -   `packages/<id>/`: The related set of data specific to, for instance,
     one data collection study.
--   `resources/<id>/`: The files related to a specific table or file.
+-   `resources/<id>/`: The files related to a specific table or file. They will always be within a specific package, e.g. `packages/1/resources/1/`.
 -   `ROOT`: The default location that packages are stored in. If on a
-    server, would be the path to that server space given to Sprout. If
-    on a local computer, would be a default path provided by Sprout for
+    server, it would be the path to that server space given to Sprout. If
+    on a local computer, it would be a default path provided by Sprout for
     the specific operating system.
 
 The naming scheme would then be:
 
 `ROOT/packages/<id>/resources/<id>/raw/<timestamp>-<uuid>.<extension>.gzip`
 
-:   Compress all raw data files.
+:   Compressed raw data files associated with a specific resource.
 
 `ROOT/packages/<id>/resources/<id>/data.parquet`
 
