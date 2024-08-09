@@ -1,105 +1,61 @@
 ---
-title: "Naming scheme"
+title: "Web App URLs and Functionality"
 ---
 
 {{< include /docs/includes/_wip.qmd >}}
 
-The naming scheme for Sprout is guided by our [style
-guide](https://design.seedcase-project.org/style/) as well as by the the
-[Frictionless Framework](https://v4.framework.frictionlessdata.io/) and
-[Data Package](https://datapackage.org/) structure. The below naming
-scheme *only* applies to file paths, data objects, functions, URLs, API
-endpoints, and command line interfaces that are exposed to or associated
-with user-facing content. It does *not* apply to internal content; see
-the style guide for details on naming internal (developer-facing)
-content.
+Based on the [naming scheme](naming.qmd), this document describes the
+core, user-facing web app URLs and functionality provided within
+`sprout/app/`. See the [outputs](outputs.qmd) document for an overview
+and explanation of the file and folder structure outputs of Sprout.
+There are some differences between the naming scheme and the web app
+URLs:
 
-## Code-based actions and objects
-
-We'll compose names based on the objects we and our users interact with
-as well as the actions taken on those objects. Following along with the
-Data Package terminology, we simplify "data package" to "package" and
-"data resource" to "resource".
-
--   Types of core objects: packages, resources, properties (package and resource metadata), and data.
--   Types of actions taken on those objects: create, view, edit,
-    add, list, and delete.
--   Types of identifiers for specific items of objects (as numbers):
-    packages and resources.
-
-### Functions
-
-Based on the above principles and our style guide, we have defined the
-following naming scheme for functions. Several of the functions have a potentially optional argument called `properties`, which is a list of key-value pairs that describe the package, as per the Data Package specification.
-
-`packages_list()`
-
-:   List basic details of all packages.
-
-`package_view(package_id)`
-
-:   View details of a package.
-
-`package_create(properties)`
-
-:   Create the folder and file structure for a new package, as well as
-    the overall properties that describes the package. 
-
-`package_edit(package_id, properties)`
-
-:   Edit the properties of a specific package.
-
-`package_delete(package_id)`
-
-:   Delete a specific package.
-
-`package_resources_list(package_id)`
-
-:   List all the resources of a specific package.
-
-`package_resource_view(package_id, resource_id)`
-
-:   View the details of a package's specific resource.
-
-`package_resource_create(package_id, data, properties)`
-
-:   Create a new resource in a specific (existing) package using data and the properties metadata.
-
-`package_resource_add(package_id, resource_id, data)`
-
-:   Add more data to a resource of a specific package.
-
-`package_resource_edit(package_id, resource_id, properties)`
-
-:   Edit the properties metadata of a specific resource of a specific package.
-
-`package_resource_delete(package_id, resource_id)`
-
-:   Delete all associated data and properties metadata of a specific resource of a specific package.
-
-### App page URLs
-
-For the URL/app pages naming scheme, they follow a similar style to the
-functions above, with some small differences:
-
--   When a naming scheme ends without an action, the default action is
-    `view`.
--   Database and resource file objects do not have any `view` action, as
-    we want to limit access viewing data in the raw files and database.
+1.  Instead of singular nouns like `package` and `resource`, the URLs
+    use plural nouns like `packages` and `resources` since they
+    represent a collection of items traditionally shown in a folder or
+    list view. For instance, `packages/` is the URL/folder that contains
+    all the packages, but `packages/1/` is folder for package with ID of
+    1.
+2.  Since the default action for seeing a list of items or seeing
+    details of a specific item are the same, unlike the Python functions
+    having either `list` or `view`, the URLs will not have a `list`
+    action. The default action is `view`. Viewing a URL doesn't just
+    show basic description of the object, but also has options to edit,
+    delete, or create new objects.
+3.  Unlike the Python functions which start with the `action`, in the
+    URLs, the `action` is at the end. For instance, `packages/create` is
+    the action to create a package.
+4.  When a URL ends without an action, the default action is `view`.
+5.  Databases and resource data files objects do not have any `view` nor
+    `edit` action, as we want to limit access viewing data in the raw
+    files and database. This is done for security, privary, and legal
+    reasons, as well as being out of scope for Sprout.
+6.  Properties refers to the metadata of the package or resource as
+    described by the Frictionless Data specification, explained in both
+    the [naming scheme](naming.qmd) and [outputs](outputs.qmd)
+    documents.
 
 Following these principles, the URLs would be:
 
 `packages`
 
-:   View all packages within the server or found by the app.
+:   View all packages within the server or found by the app by showing a
+    list or table of packages. From here, a user can select a package to
+    move to its own viewing page.
 
 `packages/create`
 
-:   Create and setup a new package, with basic properties metadata about the package but without any resources inside.
+:   Create and setup a new package, with basic information (as
+    properties) about the package. Starts with no data resources inside.
+    Will prompt the user to add details about the package.
 
 `packages/<id>`
 
-:   View the landing page of a specific package showing its properties and resources.
+:   View the landing page of a package by showing its properties and
+    resources. Users can move forward from here by either creating a
+    data resource, adding more data to a data resource, or editing the
+    package's .
 
 `packages/<id>/edit`
 
@@ -107,83 +63,39 @@ Following these principles, the URLs would be:
 
 `packages/<id>/delete`
 
-:   Delete a specific package.
-
-`packages/<id>/resources`
-
-:   View basic details of all resources of a specific package.
+:   Delete a specific package. Is permanent, so asks the user to confirm
+    the deletion.
 
 `packages/<id>/resources/create`
 
-:   Create a new resource with associated data and properties in a specific
-    package.
+:   Creates a new resource for data and associated properties. The user
+    can upload a file with data, which will be used to extract some
+    basic properties from the data that the user will than need to fill
+    in and complete. The user can continue to edit the resource after
+    creation.
 
 `packages/<id>/resources/<id>`
 
-:   View the details of a specific resource in a specific
-    package.
+:   View the properties of a specific resource. From here, a user can
+    move forward by adding more data to the resource or editing the
+    resource's properties.
 
 `packages/<id>/resources/<id>/edit`
 
-:   Edit the properties of a specific resource of a specific package.
+:   Edit a resource's properties, but not the data itself. We
+    intentionally don't allow access to data to minimise potential
+    points of security and privacy concern and to reduce the amount of
+    work we have to do to develop safe ways to show the data. Editing
+    the data is also outside the scope of Sprout.
 
 `packages/<id>/resources/<id>/add`
 
-:   Add data to a specific resource of a specific package.
+:   Add more data to a specific resource. The uploaded data *must*
+    conform to the existing properties of the resource, otherwise, the
+    properties will need to be updated first (via `edit`).
 
 `packages/<id>/resources/<id>/delete`
 
-:   Delete all associated data and properties metadata of a specific package's resource.
-
-## Package file paths
-
-Sprout is designed to store and structure data in a coherent and
-consistent way. Part of that is about how the data are stored into files
-and folders. Depending on the context, if Sprout is within a server
-environment with Postgres installed, the original input from the user
-will be stored in the Postgres database as the below file path and can
-be exported into actual files if desired.
-
-The types of files and folders that make up the package are:
-
--   Types of files: JSON, Parquet, SQLite, compressed raw data (if
-    appropriate).
--   Types of folders: raw and resources.
--   Types of identifiers for specific items of objects (as numbers):
-    packages and resources.
-
-Following a similar pattern described in the actions and objects section
-above, the base folders are:
-
--   `packages/<id>/`: The related set of data specific to, for instance,
-    one data collection study.
--   `resources/<id>/`: The files related to a specific table or file. They will always be within a specific package, e.g. `packages/1/resources/1/`.
--   `ROOT`: The default location that packages are stored in. If on a
-    server, it would be the path to that server space given to Sprout. If
-    on a local computer, it would be a default path provided by Sprout for
-    the specific operating system.
-
-The naming scheme would then be:
-
-`ROOT/packages/<id>/resources/<id>/raw/<timestamp>-<uuid>.<extension>.gzip`
-
-:   Compressed raw data files associated with a specific resource.
-
-`ROOT/packages/<id>/resources/<id>/data.parquet`
-
-:   For tabular type data, it would likely be stored as a Parquet file
-    to act as a backup to the database and to act as a faster file
-    format for potential uses in analytics.
-
-`ROOT/packages/<id>/database.sqlite`
-
-:   All the data for the data package, with tables for each resource.
-
-`ROOT/packages/<id>/datapackage.json`
-
-:   Machine-readable JSON file following the Data Package specification.
-
-`ROOT/packages/<id>/README.md`
-
-:   A human readable, auto-generated 'metadata' file based on the
-    `datapackage.json` file.
+:   Delete all associated data and properties metadata of a specific
+    package's resource. This is permanent, so the user will be asked to
+    confirm the deletion.
