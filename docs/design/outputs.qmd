@@ -17,7 +17,7 @@ used as a web app on a server.
 We follow our [naming scheme](naming.qmd), as well as the [Frictionless
 Data
 specification](https://decisions.seedcase-project.org/why-frictionless-data/),
-to decide on the structure and name of the file and folders. All data
+to decide on the structure and name of the files and folders. All data
 stored in Sprout for a specific set of conditions is called a data
 package and each set of data within the data package is called a data
 resource.
@@ -27,8 +27,8 @@ When a user starts using Sprout to structure their data, that data will
 form a Data Package (from the Frictionless Data standard). A data
 package is called many things in other fields, for instance it could be
 a "cohort study data", a "data resource", a database, clinical trial
-dataset, a dataset, a study dataset, simply "data", or any other number
-of combinations of words that include the word data. To keep it
+dataset, a dataset, a study dataset, simply "data", or any other combination
+of words that include the word data. To keep it
 consistent with the Frictionless Data standard, we name it a data
 package.
 
@@ -49,19 +49,19 @@ The folders that Sprout creates and uses are:
 
 `SPROUT_ROOT/`
 
-:   The location that Sprout will store all data that form one or more
+:   The location where Sprout will store all data that form one or more
     data packages. This location can be changed depending on the needs
     of the users. The default location is determined based on the
-    operating system and where it is installed locally by a user or on a
+    operating system and where Sprout is installed locally by a user or on a
     server by an IT admin. An example default location for a local
-    computer that installed on a user's drive would be
+    computer, where Sprout is installed on a user's drive, would be
     `/home/USERNAME/.sprout/`.
 
 `SPROUT_ROOT/packages/<id>/`
 
 :   All data packages are stored in the `packages/` folder and given an
     `<id>` (likely a number or some unique combination of characters).
-    Within this folder contains all the files relevant for **one** data
+    Each `<id>` folder contains all the files relevant for **one** data
     package.
 
 `SPROUT_ROOT/packages/<id>/resources/<id>/`
@@ -71,19 +71,19 @@ The folders that Sprout creates and uses are:
     encompasses data collected in a specific way and for a specific set
     of measurements from a specific set of input sources for a specific
     purpose. The data resource(s) will always be within one specific
-    package, e.g. `packages/1/resources/1/`.
+    package, with each data resource in its own folder, e.g. `packages/1/resources/1/`.
 
     Using the demographics and blood sample example above, the reason
-    why it would be considered one data resource for each of them,
-    rather than one data resource for both of them, is because, while
+    why these would be considered two separate data resources,
+    rather than a single, joint data resource, is because, while
     they both measure data on the same group of people, they measure the
     data in different ways. The demographic data is usually measured
     from a survey by a researcher or technician (or the participant
-    themselves if online) and done in a relatively consistent way using
+    themselves if online) and obtained in a relatively consistent way using
     some survey software. Meanwhile, the blood sample data is usually
     taken at a specific time and measured by a specific machine by a
     specific laboratory in a specific way that is output in a specific
-    format. Both are measured in different ways and should be recognized
+    format. The two types of data are collected in different ways and should be recognized
     as separate entities and thus separate data resources.
 
 `SPROUT_ROOT/packages/<id>/resources/<id>/raw/`
@@ -116,7 +116,7 @@ Sprout creates and uses these files:
     will contain some basic information from the `datapackage.json` file
     that is structured in a human readable, auto-generated way. This
     file is largely used to a) adhere to interoperable principles and b)
-    to potentially use as the basis for displaying information for a
+    serve potentially as the basis for displaying information for a
     data package's landing page in the Sprout web app.
 
 `SPROUT_ROOT/packages/<id>/database.sqlite`
@@ -129,7 +129,7 @@ Sprout creates and uses these files:
     also a common database format that is used in many applications and
     is easy to export to other database formats. The file is only
     described within the `datapackage.json` file and is not classified
-    as a data resource so can not be used by software following the
+    as a data resource, so the database file cannot be used by software that follows the
     Frictionless Data standard. We use and provide it because of the
     features that formal databases provide, like indexing, querying, and
     data integrity. The `data.parquet` file described below will be the
@@ -150,17 +150,17 @@ Sprout creates and uses these files:
 `SPROUT_ROOT/packages/<id>/resources/<id>/data.parquet`
 
 :   When a user creates a data resource and adds or updates data in the
-    resource, it is processed and stored as a
+    resource, all resource data is processed and stored in
     [Parquet](https://decisions.seedcase-project.org/why-parquet/) data
     format (if it is tabular data). The reason there is both a Parquet
-    file as well as the table in the SQLite database is because of the
+    file as well as a table in the SQLite database is the
     way the data package specification describes and sets data
     resources. The specification requires either a path value or a data
     value to set as a data resource, but does not allow for setting a
     table in a database as a value. So interoperability of the data
-    package occurs by providing the Parquet file, rather than the SQLite
-    database. We use both the Parquet data file and the data in the
-    table of the database for different reasons, even though they are
+    package is achieved by providing the Parquet file, rather than the SQLite
+    database. We use both the Parquet data file and the database
+    table for different reasons, even though they contain
     the same data.
 
 ## Server or multi-user computer
