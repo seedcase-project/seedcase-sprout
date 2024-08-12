@@ -1,0 +1,125 @@
+---
+title: "Creating and Managing Data Packages"
+---
+
+{{< include /docs/includes/_wip.qmd >}}
+
+At the core of Sprout is the Data Package, which is a standardized way
+to structuring and sharing data. This guide will show you how to create
+and manage data packages using Sprout.
+
+<!-- TODO: this callout might need to be its own include, since other docs will use it too -->
+
+::: callout-important
+For both the Python library and the CLI, Sprout assumes you have full
+control over the folders and files of the system, or at least your
+user's home directory. This includes being given space on a server that
+mostly has access through a Terminal, where you have control over the
+directories you can write to.
+
+An easy example of this is if you install Sprout on your own computer
+because you want to create some data packages for studies you are
+running. Another example would be if your research group has storage
+space on a server that you need to use a Terminal and SSH to access.
+:::
+
+## Creating a Data Package
+
+:::: panel-tabset
+### Python
+
+The first thing you'll need to decide is where you want to store all
+your data packages. By default, Sprout will create it in
+`~/.sprout/packages/` on Linux (see [Outputs](design/outputs.qmd) for
+operating system specific locations), but you can change this by setting
+the `SPROUT_ROOT` environment variable. For instance, maybe you want the
+location to be `~/Documents/data-packages/`. You can set this in your
+Python script like so:
+
+``` python
+import sprout.core as sp
+import os
+
+os.environ["SPROUT_ROOT"] = "~/Documents/data-packages/"
+```
+
+Afterwards, you would create the structure for your first data package
+like so:
+
+``` python
+sp.create_package_structure(path=sp.path_package())
+```
+
+```         
+[PosixPath('~/Documents/data-packages/1/datapackage.json'),
+ PosixPath('~/Documents/data-packages/1/README.md'),
+ PosixPath('~/Documents/data-packages/1/resources')]
+```
+
+Then to fill in the details in the `datapackage.json` file, you can use
+the `create_package_properties()` function:
+
+``` python
+package_properties = sp.create_package_properties(
+  path=sp.path_package_properties(package_id=1),
+  properties=sp.properties_json(
+    title="Diabetes and Hypertension Study", 
+    description="Data from the 2021 study on diabetes and hypertension", 
+    contributors=["Jamie Jones", "Jimmy James"],
+    licenses=["ODC-BY-1.0"]
+  )
+)
+
+# TODO: add an example output of the above.
+# Save the package properties back to the file
+sp.write_package_properties(
+  json_object=package_properties,
+  path=sp.path_package_properties(package_id=1)
+)
+```
+
+If you need help with filling in the right properties, use
+`view_package_properties_template()` to see the available fields to fill
+in.
+
+### CLI
+
+The CLI is a bit more straightforward as long as you are comfortable
+using the Terminal. You can set the `SPROUT_ROOT` environment variable
+to change the location of the data packages. For instance, maybe you
+want the location to be `~/Documents/data-packages/`. You can set this
+in your terminal like so:
+
+``` bash
+export SPROUT_ROOT=~/Documents/data-packages/
+```
+
+Then creating a new package would be as simple as:
+
+``` bash
+sprout package create 
+```
+
+This will prompt you for some required fields you need to fill in, like
+the title and description of the data package. If you want to skip the
+prompt, you can provide the information directly in the command:
+
+```         
+sprout package create --title "Diabetes and Hypertension Study" \
+  --description "Data from the 2021 study on diabetes and hypertension"
+```
+
+You will now have a new data package in the location you specified:
+
+```         
+~/Documents/data-packages/1/datapackage.json
+~/Documents/data-packages/1/README.md
+~/Documents/data-packages/1/resources
+```
+
+### Web App
+
+::: callout-warning
+In development.
+:::
+::::
