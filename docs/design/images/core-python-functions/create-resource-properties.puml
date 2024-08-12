@@ -1,0 +1,92 @@
+@startuml create-resource-properties
+!theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
+
+skinparam StateFontColor black
+skinparam StateFontName Fira Code
+
+state "Input" as input {
+  input : `path_*()` functions assist with giving correct paths
+' Arguments -----
+  path : Path to specific\nresource folder
+  data_path : Path to file with\ndata in it
+  properties : JSON of\nproperties
+  path -[hidden]> data_path
+  data_path -[hidden]> properties
+}
+
+state "Output" as output {
+  state "JSON" as json_output
+  json_output : - JSON object of the resource following\n  the Data Package spec
+  json_output : - Use `write_resource_properties()` to\n  save back to `datapackage.json`
+}
+
+state "create_resource_properties()" as crp {
+  crp : - Required arg: path
+  crp : - Conditional args: data_path or properties object
+  crp : - Needs user input if data_path given
+
+  state arg_path <<entryPoint>>
+  state arg_data_path <<entryPoint>>
+  state arg_properties <<entryPoint>>
+
+  path --> arg_path
+  data_path --> arg_data_path
+  properties --> arg_properties
+
+  state "verify_is_directory()" as vid
+  vid : - Required arg: path
+  vid : - Output: path or Error
+  arg_path --> vid
+
+  state "path_root_is_package()" as papr
+  papr : - Required arg: absolute path 
+  papr : - Output: relative path\n  (e.g. `resource/1/data.parquet`)
+  vid --> papr
+
+  state condition <<choice>>
+  arg_properties --> condition
+  
+  state "verify_resource_properties()" as vrp
+  vrp : - Required arg: properties
+  vrp : - Output: JSON or Error
+  vrp : - Checks against spec
+  condition --> vrp : If properties given
+
+  state "add_resource_properties()" as arp
+  arp : - Required arg: json 
+  arp : - Output: JSON
+  papr --> arp : Add `path`\nproperty
+  vrp --> arp
+
+  arg_data_path --> condition
+
+  state "verify_is_file()" as vif
+  vif : - Required arg: path
+  vif : - Output: path or Error
+  condition --> vif : If data_path given
+
+  state "verify_supported_formats()" as vsf
+  vsf : - Required arg: path
+  vsf : - Output: path or Error
+  vif --> vsf
+
+  state "extract_resource_properties()" as erp
+  erp : - Required arg: path
+  erp : - Output: JSON
+  vsf --> erp
+
+  state "prompt_confirm_properties()" as pcp
+  pcp : - Required arg: json
+  pcp : - Output: JSON
+  pcp : - Prompt user to fill in\n  missing details
+  pcp : - Likely has internal\n  verification
+  erp --> pcp
+  pcp --> vrp
+
+  state "return" <<exitPoint>>
+  vrp --> return
+  arp --> return
+  return --> output
+}
+@enduml
+
