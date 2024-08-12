@@ -6,7 +6,7 @@ skinparam StateFontName Fira Code
 
 state "Input" as input {
   input : Args package_id and resource_id are not included,\nas they are only integers
-  ' Arguments -----
+' Arguments -----
   path : Path to the file with data in it
   properties : (Optional) JSON object with\nkey-value pairs that match\ndata package spec
 }
@@ -27,100 +27,120 @@ state "Output" as output {
 }
 
 state "package_resource_create()" as prc {
-  prc : - Required arguments: package_id, resource_id, and path
-  prc : - Optional argument is properties object or manual user input
+  prc : - Required arguments: package_id and path
+  prc : - Optional argument: properties object or manual user input
 
-  ' Path functions -----
-  state "path_file_resource_raw()" as pfrr
-  pfrr : Create the file path for the raw file
+' Path function
+  state "resource_raw_create()" as rrc {
+    state "path_file_resource_raw()" as pfrr
+    pfrr : Create the file path for the raw file
+    
+' Write function
+    state "write_resource_raw()" as wrr
+    wrr : - Required arguments: input_path, output_path
+  }
 
-  state "path_file_resource_data()" as pfrd
-  pfrd : Create the file path for the data file
 
-  state "path_file_package_database()" as pfpd
-  pfpd : Create the file path for the database file
+  state "resource_data_create()" as rdc {
+' Path functions
+    state "path_file_resource_data()" as pfrd
+    pfrd : Create the file path for the data file
 
-  state "path_file_package_properties()" as pfpp
-  pfpp : Create the file path for the properties file
+    state "path_file_package_database()" as pfpd
+    pfpd : Create the file path for the database file
 
-  pfrr -[hidden]> pfrd
-  pfrd -[hidden]> pfpd
-  pfpd -[hidden]> pfpp
-  pfpd -[hidden]> gpd
+' Read functions
+    state "read_resource_data()" as rr
+    rr : - Required arguments: path, file_extension
 
-  ' Read functions -----
-  state "read_resource_properties()" as rrp
-  rrp : - Required arguments: path
+    state "read_package_database()" as rpd
+    rpd : - Required arguments: path
 
-  state "read_package_database()" as rpd
-  rpd : - Required arguments: path
+' Verify function
+    state "verify_resource_data()" as vrd
+    vrd : - Required arguments: json_object
+    vrd : - Checks against full spec of\n  data package
 
-  state "read_resource_data()" as rr
-  rr : - Required arguments: path, file_extension
+' Database functions
+    state "create_database_table()" as cdt
+    cdt : - Required arguments: data, database
 
-  rrp -[hidden]> rpd
-  rpd -[hidden]> rr
+' Write functions
+    state "write_resource_data()" as wrd
+    wrd : - Required arguments: data, path
 
-  ' Get functions -----
-  state "get_properties_data()" as gpd
-  gpd : - Required argument: path
-  gpd : - Gets the schema properties\n  from the data in the file
+    state "write_package_database()" as wpd
+    wpd : - Required arguments: json_object, path
 
-  ' Write functions -----
-  state "write_resource_raw()" as wrr
-  wrr : - Required arguments: input_path, output_path
+  }
 
-  state "write_resource_properties()" as wrp
-  wrp : - Required arguments: json_object, path
 
-  state "write_resource_data()" as wrd
-  wrd : - Required arguments: data, path
+  state "properties_update()" as pu {
+' Path function
+    state "path_file_package_properties()" as pfpp
+    pfpp : Create the file path for the\n  properties file
 
-  state "write_package_database()" as wpd
-  wpd : - Required arguments: json_object, path
-
-  ' Verify functions -----
-  ' Checks that it fits with data package spec
+' Read function
+    state "read_resource_properties()" as rrp
+    rrp : - Required arguments: path
+  
+' Get function
+    state "get_properties_data()" as gpd
+    gpd : - Required argument: path
+    gpd : - Gets the schema properties\n  from the data in the file
+  
+' Verify functions
   state "verify_resource_properties()" as vrp
   vrp : - Required arguments: json_object
-  vrp : - Checks against resources spec of data package
+  vrp : - Checks against resources spec of\n  data package
 
   state "verify_package_properties()" as vpp
   vpp : - Required arguments: json_object
-  vpp : - Checks against full spec of data package
+  vpp : - Checks against full spec of data\n  package
+  
+' Write function
+  state "write_resource_properties()" as wrp
+  wrp : - Required arguments: json_object, path
+  }
 
-  state "verify_resource_data()" as vrd
-  vrd : - Required arguments: json_object
-  vrd : - Checks against full spec of data package
+' Path functions -----
 
-  ' Validate functions -----
+'  pfrr -[hidden]> pfrd
+'  pfrd -[hidden]> pfpd
+'  pfpd -[hidden]> pfpp
+'  pfpd -[hidden]> gpd
+
+' Read functions -----
+
+'  rrp -[hidden]> rpd
+'  rpd -[hidden]> rr
+
+
+' Validate functions -----
   ' Checks against what is expected of the data, 
   ' requires domain knowledge though
   ' state "validate_resource_data()" as vrd
 
-  ' Database functions -----
-  state "create_database_table()" as cdt
-  cdt : - Required arguments: data, database
 
-  ' Flow for getting properties metadata (schema)
+' Flow for getting properties metadata (schema)
   path --> gpd : JSON
   gpd --> vrp : JSON
   properties --> vrp : JSON: Optionally requires\nuser input\confirmation
   vrp --> wrp : JSON
   pfpp --> wrp : Path object
 
-  ' Write data to raw location
+' Write data to raw location
   path --> wrr : Path object
   pfrr --> wrr : Path object
   wrr --> file_rir : File
 
-  ' Set properties of resource
+' Set properties of resource
   properties --> rrp : JSON: If given\nas argument
   rrp --> vpp : JSON
   vpp --> wrp : JSON
   wrp --> file_dpj : File
 
-  ' Read the data, store in database
+' Read the data, store in database
   pfpd --> rpd : Path object
   rpd --> cdt : DataFrame
   path --> rr : Path object
@@ -130,14 +150,12 @@ state "package_resource_create()" as prc {
   pfpd --> wpd : Path object
   wpd --> file_sql : File
 
-  ' Store as backup
+' Store as backup
   vrd --> wrd : DataFrame
   pfrd --> wrd : Path object
   wrd --> file_rid : File
 }
 
-input --[hidden]> prc
-prc --[hidden]> output
 
 @enduml
 
