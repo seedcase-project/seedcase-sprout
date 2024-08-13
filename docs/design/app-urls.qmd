@@ -40,7 +40,7 @@ Following these principles, the URLs would be:
 
 `packages`
 
-:   View all packages within the server or found by the app by showing a
+:   View all packages found by the app by showing a
     list or table of packages. From here, a user can select a package to
     view the package's own landing page.
 
