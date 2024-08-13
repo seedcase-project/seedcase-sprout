@@ -44,9 +44,9 @@ to write tests for the functions. For a similar reason, most of the
 functions output either a JSON file or path object to make them easier
 to test.
 
-Several of the functions have an optional argument called `properties`,
-which is a list of key-value pairs (as a JSON object) that describe the
-package that can be used for the `datapackage.json` file and that
+Several of the functions have an optional argument called `properties`.
+The properties argument is a list of key-value pairs (as a JSON object) that describe the
+package. This description is stored in the `datapackage.json` file and
 follows the Frictionless Data specification.
 
 ## Data package functions
@@ -170,7 +170,8 @@ follows the Frictionless Data specification.
     a JSON object (use `view_resource_properties_template()` to have the
     correct JSON object).
 
-    Use `path_package()` to provide the correct `path` location. Outputs
+    Use `path_resource()` to provide the correct `path` location or use the output
+    of `create_resource_structure()`. Outputs
     a JSON object only, use `write_resource_properties()` to save back
     to the `datapackage.json` file.
 
@@ -235,6 +236,14 @@ follows the Frictionless Data specification.
     prompting the user to confirm yes or no on the deletion. Outputs
     `true` if the deletion was successful.
 
+`write_resource_properties(json_object, path)`
+
+:   Use to write the resource JSON object back to the `datapackage.json` file.
+    The `path` argument is the location of the `datapackage.json` file,
+    use the `path_package_properties()` function to provide this path to
+    the correct location. Returns the same path object as given in the
+    `path` argument.
+ 
 `write_resource_to_parquet(data, path)`
 
 :   Writes a data object to the `path` location. Use
