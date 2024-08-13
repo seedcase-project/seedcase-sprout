@@ -83,10 +83,8 @@ follows the Frictionless Data specification.
 
 :   This is the second function to use to create a new data package. It
     is used to fill in the details in the `datapackage.json` file by
-    using the `properties` argument which must be a JSON object. If the
-    `properties` argument isn't given, the user will be prompted to
-    enter in the required information needed for the `datapackage.json`
-    file. The `properties` argument must follow the Frictionless Data
+    using the `properties` argument which must be a JSON object.
+  The `properties` argument must follow the Frictionless Data
     specification, use `view_package_properties_template()` to get a
     JSON object that follows the correct specification. Use
     `path_package_properties()` to provide the correct path location.
@@ -97,8 +95,7 @@ follows the Frictionless Data specification.
 
 :   Make edits to the `datapackage.json` properties of a specific
     package. Only edits metadata on the package itself, not on the data
-    resources contained within the package. If the `properties` argument
-    isn't given, the user will be prompted to edit the required fields.
+    resources contained within the package. 
     The `properties` argument must follow the Frictionless Data
     specification, use `view_package_properties_template()` to get a
     JSON object that follows the correct specification. Use
@@ -112,8 +109,7 @@ follows the Frictionless Data specification.
 :   Completely delete a specific package and all it's data resources.
     Because this action would be permanent, the optional argument `ask`
     would default to true so that the function obtains explicit
-    confirmation from the user by prompting the user to confirm yes or
-    no on the deletion. Use `path_package()` function in the `path` to
+    confirmation from the user and isn't used accidentally. Use `path_package()` function in the `path` to
     get the correct location. Outputs `true` if the deletion was
     successful.
 
@@ -161,8 +157,8 @@ follows the Frictionless Data specification.
 
     If the `data_path` argument is given, it tries to guess and fill in
     some of the property fields required by the Frictionless Data
-    resource specification. The user will be prompted to edit or add any
-    fields that the function can't guess (like variable description).
+    resource specification. Use `edit_resource_properties()` to fill in
+    any missing fields.
 
     If the `data_path` argument is not given, the `properties` argument
     is required and is used to directly provide the properties values
@@ -198,8 +194,7 @@ follows the Frictionless Data specification.
 
 :   Edit the properties of a resource in a package. The `properties`
     argument must be a JSON object that follows the Frictionless Data
-    specification. If the `properties` argument isn't given, the user
-    will be prompted to edit the required fields. Use the
+    specification. Use the
     `path_resource_properties()` function to provide the correct path
     location. Outputs a JSON object only, use
     `write_resource_properties()` to save back to the `datapackage.json`
@@ -213,8 +208,8 @@ follows the Frictionless Data specification.
     to a resource. Use `path_resource_raw_files()` to select which file
     to delete from the list of files found. Will only delete one file. The
     optional argument `ask` defaults to true so that the function
-    obtains explicit confirmation from the user by prompting the user to
-    confirm yes or no on the deletion. Outputs `true` if the deletion
+    obtains explicit confirmation from the user and to prevent accidental deletion.
+    Outputs `true` if the deletion
     was successful.
 
 `delete_resource_data(path, ask)`
@@ -222,8 +217,8 @@ follows the Frictionless Data specification.
 :   Delete all data and raw data of a specific resource. Use
     `path_resource_raw()` to provide the correct path location. The
     optional argument `ask` defaults to true so that the function
-    obtains explicit confirmation from the user by prompting the user to
-    confirm yes or no on the deletion. Outputs `true` if the deletion
+    obtains explicit confirmation from the user and to prevent accidental deletion.
+    Outputs `true` if the deletion
     was successful. Use `delete_resource_properties()` to delete the the
     associated metadata for the resource.
 
@@ -232,8 +227,8 @@ follows the Frictionless Data specification.
 :   Deletes all properties for a resource within the `datapackage.json`
     file. Use `path_resource_properties()` to provide the correct
     location for `path`. The optional argument `ask` defaults to true so
-    that the function obtains explicit confirmation from the user by
-    prompting the user to confirm yes or no on the deletion. Outputs
+    that the function obtains explicit confirmation from the user and to
+    prevent accidental deletion. Outputs
     `true` if the deletion was successful.
 
 `write_resource_properties(json_object, path)`
