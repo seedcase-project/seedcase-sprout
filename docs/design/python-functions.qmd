@@ -104,11 +104,11 @@ follows the Frictionless Data specification.
     `write_package_properties()` to save back to the `datapackage.json`
     file.
 
-`delete_package(path, ask)`
+`delete_package(path, confirm)`
 
 :   Completely delete a specific package and all it's data resources.
-    Because this action would be permanent, the optional argument `ask`
-    would default to true so that the function obtains explicit
+    Because this action would be permanent, the `confirm` argument
+    would default to false so that the function obtains explicit
     confirmation from the user and isn't used accidentally. Use `path_package()` function in the `path` to
     get the correct location. Outputs `true` if the deletion was
     successful.
@@ -200,33 +200,33 @@ follows the Frictionless Data specification.
     `write_resource_properties()` to save back to the `datapackage.json`
     file.
 
-`delete_resource_raw_file(path, ask)`
+`delete_resource_raw_file(path, confirm)`
 
 :   Use this to delete a raw file in the `raw/` folder of a resource.
     This is useful if the file is no longer needed or if it is incorrect
     or had an issue during the time when a user first added the file
     to a resource. Use `path_resource_raw_files()` to select which file
     to delete from the list of files found. Will only delete one file. The
-    optional argument `ask` defaults to true so that the function
+    `confirm` argument defaults to false so that the function
     obtains explicit confirmation from the user and to prevent accidental deletion.
     Outputs `true` if the deletion
     was successful.
 
-`delete_resource_data(path, ask)`
+`delete_resource_data(path, confirm)`
 
 :   Delete all data and raw data of a specific resource. Use
     `path_resource_raw()` to provide the correct path location. The
-    optional argument `ask` defaults to true so that the function
+    `confirm` argument defaults to false so that the function
     obtains explicit confirmation from the user and to prevent accidental deletion.
     Outputs `true` if the deletion
     was successful. Use `delete_resource_properties()` to delete the the
     associated metadata for the resource.
 
-`delete_resource_properties(path, ask)`
+`delete_resource_properties(path, confirm)`
 
 :   Deletes all properties for a resource within the `datapackage.json`
     file. Use `path_resource_properties()` to provide the correct
-    location for `path`. The optional argument `ask` defaults to true so
+    location for `path`. The `confirm` argument defaults to false so
     that the function obtains explicit confirmation from the user and to
     prevent accidental deletion. Outputs
     `true` if the deletion was successful.
