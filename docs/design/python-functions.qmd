@@ -67,7 +67,7 @@ follows the Frictionless Data specification.
 :   This will show the information contained within the
     `datapackage.json` file of a package for only the fields relevant to
     the package itself, not the resources within the package. Use
-    `path_package_properties()` to provide the correct path location.
+    `path_properties()` to provide the correct path location.
     Outputs a JSON object.
 
 `create_package_structure(path)`
@@ -87,7 +87,7 @@ follows the Frictionless Data specification.
   The `properties` argument must follow the Frictionless Data
     specification, use `view_package_properties_template()` to get a
     JSON object that follows the correct specification. Use
-    `path_package_properties()` to provide the correct path location.
+    `path_properties()` to provide the correct path location.
     Outputs a JSON object only, use `write_package_properties()` to save
     back to the `datapackage.json` file.
 
@@ -99,7 +99,7 @@ follows the Frictionless Data specification.
     The `properties` argument must follow the Frictionless Data
     specification, use `view_package_properties_template()` to get a
     JSON object that follows the correct specification. Use
-    `path_package_properties()` in the `path` argument to provide the
+    `path_properties()` in the `path` argument to provide the
     correct location for the file. Outputs a JSON object only, use
     `write_package_properties()` to save back to the `datapackage.json`
     file.
@@ -117,7 +117,7 @@ follows the Frictionless Data specification.
 
 :   Use to write the JSON object back to the `datapackage.json` file.
     The `path` argument is the location of the `datapackage.json` file,
-    use the `path_package_properties()` function to provide this path to
+    use the `path_properties()` function to provide this path to
     the correct location. Returns the same path object as given in the
     `path` argument.
 
@@ -136,7 +136,7 @@ follows the Frictionless Data specification.
 :   Views the information on a package's specific resource that is
     contained within the `datapackage.json` file. Use the
     `path_resource()` function to provide the correct location for the
-    `path` and `path_resource_properties()` for the `properties_path()`.
+    `path` and `path_properties()` for the `properties_path` argument.
     Outputs a JSON object.
 
 `create_resource_structure(path)`
@@ -195,7 +195,7 @@ follows the Frictionless Data specification.
 :   Edit the properties of a resource in a package. The `properties`
     argument must be a JSON object that follows the Frictionless Data
     specification. Use the
-    `path_resource_properties()` function to provide the correct path
+    `path_properties()` function to provide the correct path
     location. Outputs a JSON object only, use
     `write_resource_properties()` to save back to the `datapackage.json`
     file.
@@ -225,7 +225,7 @@ follows the Frictionless Data specification.
 `delete_resource_properties(path, confirm)`
 
 :   Deletes all properties for a resource within the `datapackage.json`
-    file. Use `path_resource_properties()` to provide the correct
+    file. Use `path_properties()` to provide the correct
     location for `path`. The `confirm` argument defaults to false so
     that the function obtains explicit confirmation from the user and to
     prevent accidental deletion. Outputs
@@ -235,7 +235,7 @@ follows the Frictionless Data specification.
 
 :   Use to write the resource JSON object back to the `datapackage.json` file.
     The `path` argument is the location of the `datapackage.json` file,
-    use the `path_package_properties()` function to provide this path to
+    use the `path_properties()` function to provide this path to
     the correct location. Returns the same path object as given in the
     `path` argument.
  
@@ -276,11 +276,7 @@ These functions are still being developed.
 
 :   TODO
 
-`path_resource_properties(package_id, resource_id)`
-
-:   TODO
-
-`path_package_properties(package_id)`
+`path_properties(package_id)`
 
 :   TODO
 
