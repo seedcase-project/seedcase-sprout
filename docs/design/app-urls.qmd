@@ -15,23 +15,23 @@ URLs:
     use plural nouns like `packages` and `resources` since they
     represent a collection of items traditionally shown in a folder or
     list view. For instance, `packages/` is the URL/folder that contains
-    all the packages, but `packages/1/` is folder for package with ID of
+    all the packages, but `packages/1/` is the folder for the package with the ID of
     1.
 2.  Since the default action for seeing a list of items or seeing
     details of a specific item are the same, unlike the Python functions
     having either `list` or `view`, the URLs will not have a `list`
     action. The default action is `view`. Viewing a URL doesn't just
-    show basic description of the object, but also has options to edit,
+    show a basic description of the object, but also has options to edit,
     delete, or create new objects.
 3.  Unlike the Python functions which start with the `action`, in the
     URLs, the `action` is at the end. For instance, `packages/create` is
     the action to create a package.
 4.  When a URL ends without an action, the default action is `view`.
-5.  Databases and resource data files objects do not have any `view` nor
-    `edit` action, as we want to limit access viewing data in the raw
-    files and database. This is done for security, privary, and legal
+5.  Databases and resource data file objects do not have any `view` or
+    `edit` action, as we do not want to allow view access to data in the raw
+    files and database. This is done for security, privacy, and legal
     reasons, as well as being out of scope for Sprout.
-6.  Properties refers to the metadata of the package or resource as
+6.  "Properties" refers to the metadata of the package or resource as
     described by the Frictionless Data specification, explained in both
     the [naming scheme](naming.qmd) and [outputs](outputs.qmd)
     documents.
@@ -42,11 +42,11 @@ Following these principles, the URLs would be:
 
 :   View all packages within the server or found by the app by showing a
     list or table of packages. From here, a user can select a package to
-    move to its own viewing page.
+    view the package's own landing page.
 
 `packages/create`
 
-:   Create and setup a new package, with basic information (as
+:   Create and set up a new package, with basic information (i.e.
     properties) about the package. Starts with no data resources inside.
     Will prompt the user to add details about the package.
 
@@ -55,7 +55,7 @@ Following these principles, the URLs would be:
 :   View the landing page of a package by showing its properties and
     resources. Users can move forward from here by either creating a
     data resource, adding more data to a data resource, or editing the
-    package's .
+    package's properties.
 
 `packages/<id>/edit`
 
@@ -70,8 +70,8 @@ Following these principles, the URLs would be:
 
 :   Creates a new resource for data and associated properties. The user
     can upload a file with data, which will be used to extract some
-    basic properties from the data that the user will than need to fill
-    in and complete. The user can continue to edit the resource after
+    basic properties. The user will then need to fill in and complete
+    the extracted properties. The user can continue to edit the resource after
     creation.
 
 `packages/<id>/resources/<id>`
@@ -84,7 +84,7 @@ Following these principles, the URLs would be:
 
 :   Edit a resource's properties, but not the data itself. We
     intentionally don't allow access to data to minimise potential
-    points of security and privacy concern and to reduce the amount of
+    security and privacy concerns and to reduce the amount of
     work we have to do to develop safe ways to show the data. Editing
     the data is also outside the scope of Sprout.
 
@@ -97,5 +97,5 @@ Following these principles, the URLs would be:
 `packages/<id>/resources/<id>/delete`
 
 :   Delete all associated data and properties metadata of a specific
-    package's resource. This is permanent, so the user will be asked to
+    package's specific resource. This is permanent, so the user will be asked to
     confirm the deletion.
