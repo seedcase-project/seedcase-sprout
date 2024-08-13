@@ -9,7 +9,7 @@ standardized, coherent, and consistent way. At the base of how data is
 structured and stored are the files and folders. So this document
 describes the main file and folder structure output when using Sprout.
 It is split into two sections: the file system when used either locally
-or via the code-based way (through Python or the command line), or when
+or via the code-based way (through Python or the command line) in a user-controlled and terminal-only server, or when
 used as a web app on a server.
 
 ## Local file and folder structure
@@ -76,12 +76,12 @@ The folders that Sprout creates and uses are:
     Using the demographics and blood sample example above, the reason
     why these would be considered two separate data resources,
     rather than a single, joint data resource, is because, while
-    they both measure data on the same group of people, they measure the
-    data in different ways. The demographic data is usually measured
-    from a survey by a researcher or technician (or the participant
+    they both collect data on the same group of people, they collect the
+    data in different ways. The demographic data is usually collected
+    with a survey by a researcher or technician (or the participant
     themselves if online) and obtained in a relatively consistent way using
     some survey software. Meanwhile, the blood sample data is usually
-    taken at a specific time and measured by a specific machine by a
+    taken at a specific time and analyzed by a specific machine by a
     specific laboratory in a specific way that is output in a specific
     format. The two types of data are collected in different ways and should be recognized
     as separate entities and thus separate data resources.
