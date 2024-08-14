@@ -7,7 +7,7 @@ skinparam StateFontName Fira Code
 state "Input" as input {
   input : 'path_*()' functions assist\nwith giving correct paths
 ' Arguments -----
-  path : Path to resource\nfolder in a package
+  path : Path to resources\nfolder in a package
 }
 
 state "Output" as output {
