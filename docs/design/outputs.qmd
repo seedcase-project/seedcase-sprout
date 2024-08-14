@@ -35,7 +35,7 @@ of words that include the word data. To keep it
 consistent with the Frictionless Data standard, we name it a data
 package.
 
-A data package is one or more files (called data resources) that contain
+A data package consists of one or more files (called data resources) that contain
 data specific to a given set of conditions. For instance, a data package
 could be a research study that collects information from people older
 than 50 who live in Denmark and who have diabetes. In this example data
@@ -56,7 +56,7 @@ The folders that Sprout creates and uses are:
     data packages. This location can be changed depending on the needs
     of the users. The default location is determined based on the
     operating system and where Sprout is installed locally by a user or on a
-    server by an IT admin. An example default location for a local
+    server. An example default location for a local
     computer, where Sprout is installed on a user's drive, would be
     `/home/USERNAME/.sprout/`.
 
@@ -74,7 +74,7 @@ The folders that Sprout creates and uses are:
     encompasses data collected in a specific way and for a specific set
     of measurements from a specific set of input sources for a specific
     purpose. The data resource(s) will always be within one specific
-    package, with each data resource in its own folder, e.g. `packages/1/resources/1/`.
+    package, with each data resource in its own folder based on a number `<id>`, e.g. `packages/1/resources/1/`.
 
     ::: callout-note
     Using the demographics and blood sample example above, the reason
@@ -99,7 +99,7 @@ The folders that Sprout creates and uses are:
     import stage. Given how messy data often is and given how some data
     storage formats (e.g. Excel) often have their own way of storing and
     encoding information, computer mistakes can happen that are not
-    caused by any human error (aside from the choice of storage format).
+    caused by any human error.
     The data in the `raw/` folder can potentially be used to determine
     where things went wrong if they did go wrong.
 
@@ -110,7 +110,7 @@ Sprout creates and uses these files:
 `SPROUT_ROOT/packages/<id>/datapackage.json`
 
 :   This machine-readable JSON file is the foundation of a data package
-    and contains the full Frictionless Data specification. This file
+    and contains the full [Frictionless Data specification](https://datapackage.org/). This file
     contains the metadata on the package (like title, description, and contributors) as
     well as metadata on the data resources (like column names, data
     types, descriptions, and a path to the Parquet file with the data in it).
@@ -159,7 +159,7 @@ Sprout creates and uses these files:
     [Parquet](https://decisions.seedcase-project.org/why-parquet/) data
     format (if it is tabular data). The reason there is both a Parquet
     file as well as a table in the SQLite database is the
-    way the data package specification describes and sets data
+    way the [Frictionless Data Package](https://datapackage.org/) specification describes and sets data
     resources. The specification requires either a path value or a data
     value to be set for a data resource, but does not allow for setting a
     table in a database as a value. So interoperability of the data
