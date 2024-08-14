@@ -1,5 +1,5 @@
 ---
-title: "Creating and Managing Data Packages"
+title: "Creating and managing Data Packages"
 ---
 
 {{< include /docs/includes/_wip.qmd >}}
@@ -28,7 +28,7 @@ space on a server that you need to use a Terminal and SSH to access.
 :::: panel-tabset
 ### Python
 
-The first thing you'll need to decide is where you want to store all
+The first thing you'll need to decide is where you want to store
 your data packages. By default, Sprout will create it in
 `~/.sprout/packages/` on Linux (see [Outputs](design/outputs.qmd) for
 operating system specific locations), but you can change this by setting
@@ -43,7 +43,7 @@ import os
 os.environ["SPROUT_ROOT"] = "~/Documents/data-packages/"
 ```
 
-Afterwards, you would create the structure for your first data package
+Afterwards, you will create the structure for your first data package
 like so:
 
 ``` python
@@ -65,13 +65,20 @@ package_properties = sp.create_package_properties(
   properties=sp.properties_json(
     title="Diabetes and Hypertension Study", 
     description="Data from the 2021 study on diabetes and hypertension", 
-    contributors=["Jamie Jones", "Jimmy James"],
+    contributors=[{
+  "title": "Jamie Jones",
+  "email": "jamie_jones@example.com",
+  "roles": ["creator"]}, 
+  {"title": "Jimmy James",
+  "email": "jimmy_james@example.com",
+  "roles": ["contact"]
+  }] 
     licenses=["ODC-BY-1.0"]
   )
 )
 
 # TODO: add an example output of the above.
-# Save the package properties back to the file
+# Save the package properties to the `datapackage.json` file
 sp.write_package_properties(
   json_object=package_properties,
   path=sp.path_package_properties(package_id=1)
