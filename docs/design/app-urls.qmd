@@ -15,11 +15,11 @@ URLs:
     use plural nouns like `packages` and `resources` since they
     represent a collection of items traditionally shown in a folder or
     list view. For instance, `packages/` is the URL/folder that contains
-    all the packages, but `packages/1/` is the folder for the package with the ID of
-    1.
-2.  Since the default action for seeing a list of items or seeing
-    details of a specific item are the same, unlike the Python functions
-    having either `list` or `view`, the URLs will not have a `list`
+    all the packages, but `packages/1/` is the folder for the package 
+    with the ID of 1.
+2.  Since the default action for viewing a list of items or
+    details of a specific item are the same, unlike for the Python functions
+    that include `list` and `view`, the URLs do not have a `list`
     action. The default action is `view`. Viewing a URL doesn't just
     show a basic description of the object, but also has options to edit,
     delete, or create new objects.
@@ -30,25 +30,21 @@ URLs:
 5.  Databases and resource data file objects do not have any `view` or
     `edit` action, as we do not want to allow view access to data in the raw
     files and database. This is done for security, privacy, and legal
-    reasons, as well as being out of scope for Sprout.
-6.  "Properties" refers to the metadata of the package or resource as
-    described by the Frictionless Data specification, explained in both
-    the [naming scheme](naming.qmd) and [outputs](outputs.qmd)
-    documents.
+    reasons, and it is also [out of scope](index.qmd#goals) of Sprout.
 
 Following these principles, the URLs would be:
 
 `packages`
 
 :   View all packages found by the app by showing a
-    list or table of packages. From here, a user can select a package to
+    list or table of packages and some basic information about each of them. From here, a user can select a package to
     view the package's own landing page.
 
 `packages/create`
 
 :   Create and set up a new package, with basic information (i.e.
-    properties) about the package. Starts with no data resources inside.
-    Will prompt the user to add details about the package.
+    properties) about the package. At the beginning, there is no resources inside a package.
+    This URL will prompt the user to add details about the package.
 
 `packages/<id>`
 
@@ -63,16 +59,17 @@ Following these principles, the URLs would be:
 
 `packages/<id>/delete`
 
-:   Delete a specific package. Is permanent, so asks the user to confirm
+:   Delete a specific package. This action is permanent, so the user will be asked to confirm
     the deletion.
 
 `packages/<id>/resources/create`
 
-:   Creates a new resource for data and associated properties. The user
+:   Create a new resource for data and associated properties. The user
     can upload a file with data, which will be used to extract some
-    basic properties. The user will then need to fill in and complete
-    the extracted properties. The user can continue to edit the resource after
-    creation.
+    basic properties. The user will then be prompted to fill in the remaining 
+    properties and validate the extracted properties. When this is done, the 
+    properties are completed and created. The user can continue to edit the 
+    resource after creation.
 
 `packages/<id>/resources/<id>`
 
@@ -96,6 +93,5 @@ Following these principles, the URLs would be:
 
 `packages/<id>/resources/<id>/delete`
 
-:   Delete all associated data and properties metadata of a specific
-    package's specific resource. This is permanent, so the user will be asked to
-    confirm the deletion.
+:   Delete all associated data and properties of a specific resource. 
+    This is permanent, so the user will be asked to confirm the deletion.
