@@ -51,7 +51,7 @@ Following these principles, the URLs would be:
 :   View the landing page of a package by showing its properties and
     resources. Users can move forward from here by either creating a
     data resource, adding more data to a data resource, or editing the
-    package's properties.
+    package's or resource's properties.
 
 `packages/<id>/edit`
 
@@ -89,7 +89,8 @@ Following these principles, the URLs would be:
 
 :   Add more data to a specific resource. The uploaded data *must*
     conform to the existing properties of the resource, otherwise, the
-    properties will need to be updated first (via `edit`).
+    properties will need to be updated first (via `edit`). Either that, or the
+    new data will need to be edited manually before it can successfully be uploaded.
 
 `packages/<id>/resources/<id>/delete`
 
