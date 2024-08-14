@@ -12,7 +12,7 @@ state "Input" as input {
 
 state "Output" as output {
   output : The package parent folder is shown as /
-  output : Output: list of paths
+  output : Output: list two paths, the resource path and the resource raw path
   state "/resources/<id>/" as folder_id
   folder_id : Folder with assigned ID (e.g. '1')
 
