@@ -65,7 +65,7 @@ state "create_resource_properties()" as crp {
   vif : - Output: path or Error
   condition --> vif : If data_path given
 
-  state "verify_supported_formats()" as vsf
+  state "verify_format_supported()" as vsf
   vsf : - Required arg: path
   vsf : - Output: path or Error
   vif --> vsf
