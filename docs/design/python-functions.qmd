@@ -303,9 +303,17 @@ These functions are still being developed.
 
 :   Create a prettier, human readable version of a JSON object.
 
-`create_properties_template()`
+`create_package_properties_template()`
 
 :   TODO
+
+`create_resource_properties_template()`
+
+:   TODO
+
+`view_properties()`
+
+:   TODO. Outputs a JSON object.
 
 `view_package_properties_template()`
 
