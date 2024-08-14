@@ -4,9 +4,9 @@ title: "Naming scheme"
 
 {{< include /docs/includes/_wip.qmd >}}
 
-This document describes a general naming scheme style for Sprout that
-guided by our [style guide](https://design.seedcase-project.org/style/)
-as well as by the the [Frictionless
+This document describes a general naming scheme for Sprout that
+is guided by our [style guide](https://design.seedcase-project.org/style/)
+as well as by the [Frictionless
 Framework](https://v4.framework.frictionlessdata.io/) and [Data
 Package](https://datapackage.org/) structure. This naming scheme *only*
 applies to file paths, data objects, functions, URLs, API endpoints, and
@@ -17,9 +17,9 @@ style guide for details on naming internal (developer-facing) content.
 We'll compose names based on the objects we and our users interact with
 as well as the actions taken on those objects. Following along with the
 Data Package terminology, we simplify "data package" to "package" and
-"data resource" to "resource". We use words "property" or "properties"
-to describe the metadata about the package or resource that is contained
-within the `datapackage.json` file that follows the Frictionless Data
+"data resource" to "resource". We use the words "property" or "properties"
+to describe package and resource metadata contained
+in the `datapackage.json` file that follows the Frictionless Data
 specification.
 
 ## Objects
@@ -43,7 +43,7 @@ specification.
 | resources | The folder that contains all resource files in a package. |
 | raw | The folder that contains raw data files for a data resource. |
 | raw data file | A compressed raw data file format, such as a `.zip`, `.gzip`, or `.tar.gz` file. |
-| JSON | The main way we pass and save information around. |
+| JSON | The main way we save and pass information around. |
 | Parquet | A columnar, efficient storage file format that we use to save a data resource. |
 | SQLite | A relational database file format that we use to contain all data resources in a package. |
 
@@ -60,7 +60,7 @@ specification.
 | edit | Edit an object, specifically the properties object. |
 | add | Add another object to an existing object, specifically adding data to a resource. |
 | write | Write an object to a file. |
-| copy | Copy a file from on location to another. |
+| copy | Copy a file from one location to another. |
 | delete | Permanently delete an object. |
 
 : General actions that Sprout can take on objects or files/folders.
