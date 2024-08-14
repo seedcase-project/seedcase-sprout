@@ -27,7 +27,7 @@ specification.
 | Object | Description |
 |----------------------------|--------------------------------------------|
 | package(s) | A data package that contains a collection of related data resources and properties. |
-| resource(s) | A single data file within a package. |
+| resource(s) | A single data file within a package, along with its properties. |
 | properties or property | Metadata about a package or resource. |
 | file structure or structure | The file and folder structure of a package. |
 | path | A file path listing the location of folders or files that Sprout interacts with. |
