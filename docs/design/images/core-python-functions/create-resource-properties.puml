@@ -5,11 +5,11 @@ skinparam StateFontColor black
 skinparam StateFontName Fira Code
 
 state "Input" as input {
-  input : `path_*()` functions assist with giving correct paths
+  input : - `path_*()` functions assist with giving correct paths
 ' Arguments -----
-  path : Path to specific\nresource folder
-  data_path : Path to file with\ndata in it
-  properties : JSON of\nproperties
+  path : - Path to specific\n  resource folder
+  data_path : - Path to file with\n  data in it
+  properties : - JSON of\n  properties
   path -[hidden]> data_path
   data_path -[hidden]> properties
 }
@@ -43,27 +43,21 @@ state "create_resource_properties()" as crp {
   prrd : - Output: relative path\n  (e.g. `resource/1/data.parquet`)
   vid --> prrd
 
-  state condition <<choice>>
-  arg_properties --> condition
-  
+  state condition_input <<choice>>
+  arg_properties --> condition_input
+
   state "verify_resource_properties()" as vrp
   vrp : - Required arg: properties
   vrp : - Output: JSON or Error
   vrp : - Checks against spec
-  condition --> vrp : If properties given
+  condition_input --> vrp : If properties given
 
-  state "edit_resource_properties_field()" as arp
-  arp : - Required arg: json 
-  arp : - Output: JSON
-  prrd --> arp : Add `path`\nproperty
-  vrp --> arp
-
-  arg_data_path --> condition
+  arg_data_path --> condition_input
 
   state "verify_is_file()" as vif
   vif : - Required arg: path
   vif : - Output: path or Error
-  condition --> vif : If data_path given
+  condition_input --> vif : If data_path given
 
   state "verify_format_supported()" as vsf
   vsf : - Required arg: path
@@ -75,12 +69,18 @@ state "create_resource_properties()" as crp {
   erp : - Output: JSON
   vsf --> erp
 
+  state condition_output <<choice>>
+  erp --> condition_output
+  vrp --> condition_output
 
-  state "join" <<join>>
+  state "edit_resource_properties_field()" as erpf
+  erpf : - Required args: properties, field, value
+  erpf : - Output: JSON
+  prrd --> erpf : Update `path`\nproperty
+  condition_output --> erpf
+
   state "return" <<exitPoint>>
-  vrp --> join
-  arp --> join
-  join --> return
+  erpf --> return
   return --> output
 }
 @enduml
