@@ -180,12 +180,12 @@ follows the Frictionless Data specification.
     to provide the correct `path` location. Copies and compresses the file, and outputs
     the path object of the created file.
 
-`construct_resource_data(path, raw_path)`
+`write_resource_parquet(raw_files, path)`
 
-:   This function takes the files provided by `raw_path` and merges them
+:   This function takes the files provided by `raw_files` and merges them
     into a `data.parquet` file provided by `path`. Use
     `path_resource_data()` to provide the correct path location for
-    `path` and `path_resources_raw_files()` for the `raw_path` argument.
+    `path` and `path_resources_raw_files()` for the `raw_files` argument.
     Outputs the path object of the created file.
 
 `edit_resource_properties(path, properties)`
@@ -237,11 +237,6 @@ follows the Frictionless Data specification.
     the correct location. Returns the same path object as given in the
     `path` argument.
  
-`write_resource_to_parquet(data, path)`
-
-:   Writes a data object to the `path` location. Use
-    `path_resource_data()` to provide the correct path location. Outputs
-    the path object of the created file.
 
 `write_resource_to_database(data, path, properties)`
 
