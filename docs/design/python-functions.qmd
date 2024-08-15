@@ -4,7 +4,7 @@ title: "Core Python functions"
 
 {{< include /docs/includes/_wip.qmd >}}
 
-Based on the [naming scheme](naming.qmd) and the [Data Package standard](https://datapackage.org), these are the core
+Based on the [naming scheme](naming.qmd) and the [Frictionless Data Package standard](https://datapackage.org), these are the core
 external-facing functions in Sprout, which are stored in `sprout/core/`.
 See the [Outputs](outputs.qmd) section for an overview and explanation
 of the different outputs provided by Sprout. 
@@ -67,7 +67,7 @@ follows the Frictionless Data specification.
 
 :   This will show the information contained within the
     `datapackage.json` file of a package for only the fields relevant to
-    the package itself, not the resources within the package. Use
+    the package itself, and only basic details of the resources within the package. Use
     `path_properties()` to provide the correct path location.
     Outputs a JSON object.
 
@@ -111,7 +111,7 @@ follows the Frictionless Data specification.
     Because this action would be permanent, the `confirm` argument
     would default to `false` so that the user needs to explicitly provide `true` to the function argument as confirmation.
     This is done to prevent accidental deletion.
-    confirmation from the user and isn't used accidentally. Use `path_package()` function in the `path` to
+    Use `path_package()` function in the `path` to
     get the correct location. Outputs `true` if the deletion was
     successful.
 
@@ -209,7 +209,7 @@ follows the Frictionless Data specification.
     to a resource. Use `path_resource_raw_files()` to select which file
     to delete from the list of files found. Will only delete one file. The
     `confirm` argument defaults to `false` so that the user needs to explicitly provide `true` to the function argument as confirmation.
-    obtains explicit confirmation from the user and to prevent accidental deletion.
+    This is done to prevent accidental deletion.
     Outputs `true` if the deletion
     was successful.
 
@@ -227,9 +227,9 @@ follows the Frictionless Data specification.
 
 :   Deletes all properties for a resource within the `datapackage.json`
     file. Use `path_properties()` to provide the correct
-    location for `path`. The `confirm` argument defaults to false so
-    that the function obtains explicit confirmation from the user and to
-    prevent accidental deletion. Outputs
+    location for `path`. The `confirm` argument defaults to `false` so that the user needs to explicitly provide `true` to the function argument as confirmation.
+    This is done to prevent accidental deletion.
+    Outputs
     `true` if the deletion was successful.
 
 `write_resource_properties(properties, path)`
