@@ -43,7 +43,7 @@ Following these principles, the URLs would be:
 `packages/create`
 
 :   Create and set up a new package, with basic information (i.e.
-    properties) about the package. At the beginning, there is no resources inside a package.
+    properties) about the package. At the beginning, there are no resources inside a package.
     This URL will prompt the user to add details about the package.
 
 `packages/<id>`
