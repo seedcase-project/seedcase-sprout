@@ -63,7 +63,7 @@ The folders that Sprout creates and uses are:
 `SPROUT_ROOT/packages/<id>/`
 
 :   All data packages are stored in the `packages/` folder and given an
-    `<id>` (likely a number or some unique combination of characters).
+    `<id>` (a whole number).
     Each `<id>` folder contains all the files relevant for **one** data
     package.
 
