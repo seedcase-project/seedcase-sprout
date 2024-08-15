@@ -142,7 +142,7 @@ follows the Frictionless Data specification.
 
 :   This is the first function to use to set up the structure for a data
     resource. It creates the paths for a new data resource in a specific (existing)
-    package by creating folder setup as described in the
+    package by creating the folder setup described in the
     [Outputs](outputs.qmd) section. Use the `path_resources()` function
     to provide the correct path location. It creates two paths:  the `resources/<id>/` 
     path and the `resources/<id>/raw/` path. The output is a list of these two path
