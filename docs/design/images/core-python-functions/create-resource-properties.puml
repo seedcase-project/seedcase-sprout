@@ -40,7 +40,7 @@ state "create_resource_properties()" as crp {
 
   state "path_relative_resource_data()" as prrd
   prrd : - Required arg: absolute path from input
-  prrd : - Output: relative path\n  (e.g. `resource/1/data.parquet`)
+  prrd : - Output: relative path\n  (e.g. `resources/1/data.parquet`)
   vid --> prrd
 
   state condition_input <<choice>>
