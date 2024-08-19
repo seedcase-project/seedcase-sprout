@@ -1,0 +1,76 @@
+@startuml create-package-structure
+!theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
+
+skinparam StateFontName Fira Code
+
+state "Input" as input {
+' Arguments -----
+  path : Path to where packages are stored
+}
+
+state "Output" as output {
+  output : The package parent folder is shown as /
+  state "/packages/<id>/datapackage.json" as prop_file
+  state "/packages/<id>/README.md" as readme
+  state "/packages/<id>/resources/" as rfolder
+
+  prop_file --[hidden]> readme
+  readme --[hidden]> rfolder
+}
+
+state "create_package_structure()" as cps {
+  cps : - Required arguments: path
+
+  state arg <<entryPoint>>
+  input --> arg
+
+  state "verify_is_directory()" as vid
+  vid : - Required arg: path
+  vid : - Output: path or Error
+  arg --> vid
+
+  state "get_package_ids()" as gpi
+  gpi : - Required arg: path to packages folder
+  gpi : - Output: list of existing IDs\n  (if no existing IDs, an empty list is returned)
+  vid --> gpi
+
+  state "create_next_id()" as cni
+  cni : - Required arg: list of existing IDs
+  cni : - Output: ID
+  gpi --> cni
+
+  state "create_package_dir()" as cpd
+  cpd : - Required arg: ID to assign for directory
+  cpd : - Output: path of created directory
+  cni --> cpd
+
+  state "create_resources_dir()" as crd
+  crd : - Required arg: package path
+  crd : - Output: path of created directory
+  cpd --> crd
+
+  state "create_properties_template()" as cpt
+  cpt : - Required arg: package path
+  cpt : - Output: JSON object
+  cpd --> cpt
+
+  state "write_package_properties()" as wpp
+  wpp : - Required arg: JSON object
+  wpp : - Output: path of created file
+  cpt --> wpp
+
+  state "write_package_readme()" as wpr
+  wpr : - Required arg: path of properties file
+  wpr : - Output: path of created file
+  wpp --> wpr
+  
+  state join <<join>>
+  state return <<exitPoint>>
+  crd --> join
+  wpp --> join
+  wpr --> join
+  join --> return
+  return --> output
+}
+
+@enduml
