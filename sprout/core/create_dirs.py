@@ -5,11 +5,13 @@ def create_dirs(path: list[Path]) -> list[Path]:
     """Creates directories from a list of directories.
 
     Args:
-        path: The path pointing to the new directory to create
+        path: A list of paths pointing to where directories should be created.
+
     Raises:
         NoDirectoryError: If the directory wasn't created
+
     Returns:
-        path to the newly created directory.
+        A list of paths to the newly created directories.
     """
     return [create_dir(p) for p in path]
 
@@ -19,8 +21,10 @@ def create_dir(path: Path) -> Path:
 
     Args:
         path: The path pointing to the new directory to create
+
     Raises:
         NoDirectoryError: If the directory wasn't created
+
     Returns:
         path to the newly created directory.
     """
