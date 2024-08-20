@@ -29,7 +29,8 @@ def test_get_ids_returns_empty_list(tmp_path):
 
 
 def test_get_ids_raises_not_a_directory_error(tmp_path):
-    """Test that the get_ids function raises a NotADirectoryError if the path is not a directory.
+    """Test that the get_ids function raises a NotADirectoryError if the path is not an
+    existing directory.
 
     Args:
         tmp_path: Temporary directory created by pytest
