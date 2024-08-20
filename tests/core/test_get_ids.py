@@ -26,7 +26,6 @@ def test_get_ids_returns_empty_list(tmp_path):
     assert get_ids(tmp_path) == []
 
 
-# What happens if it's not a directory?
 def test_get_ids_raises_not_a_directory_error(tmp_path):
     """Test that the get_ids function raises a NotADirectoryError if the path is not a directory.
 
