@@ -5,7 +5,7 @@ title: "Creating and managing Data Packages"
 {{< include /docs/includes/_wip.qmd >}}
 
 At the core of Sprout is the Data Package, which is a standardized way
-to structuring and sharing data. This guide will show you how to create
+of structuring and sharing data. This guide will show you how to create
 and manage data packages using Sprout.
 
 <!-- TODO: this callout might need to be its own include, since other docs will use it too -->
