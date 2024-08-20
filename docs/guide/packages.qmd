@@ -18,9 +18,10 @@ mostly has access through a Terminal, where you have control over the
 directories you can write to.
 
 An easy example of this is if you install Sprout on your own computer
-because you want to create some data packages for studies you are
-running. Another example would be if your research group has storage
-space on a server that you need to use a Terminal and SSH to access.
+because you want to create some data packages for research studies you
+are running. Another example would be if your research group has storage
+space on a server that you need to use a Terminal and SSH to be able to
+access.
 :::
 
 ## Creating a Data Package
@@ -28,13 +29,13 @@ space on a server that you need to use a Terminal and SSH to access.
 :::: panel-tabset
 ### Python
 
-The first thing you'll need to decide is where you want to store
-your data packages. By default, Sprout will create it in
-`~/.sprout/packages/` on Linux (see [Outputs](design/outputs.qmd) for
-operating system specific locations), but you can change this by setting
-the `SPROUT_ROOT` environment variable. For instance, maybe you want the
-location to be `~/Documents/data-packages/`. You can set this in your
-Python script like so:
+The first thing you'll need to decide is where you want to store your
+data packages. By default, Sprout will create it in
+`~/.sprout/packages/` on Linux (see [Outputs](/docs/design/outputs.qmd)
+for operating system specific locations), but you can change this by
+setting the `SPROUT_ROOT` environment variable. For instance, maybe you
+want the location to be `~/Documents/data-packages/`. You can set this
+in your Python script like so:
 
 ``` python
 import sprout.core as sp
@@ -43,8 +44,8 @@ import os
 os.environ["SPROUT_ROOT"] = "~/Documents/data-packages/"
 ```
 
-Afterwards, you will create the structure for your first data package
-like so:
+Afterwards, you will create the structure for your first data package by
+using:
 
 ``` python
 sp.create_package_structure(path=sp.path_package())
@@ -52,8 +53,7 @@ sp.create_package_structure(path=sp.path_package())
 
 ```         
 [PosixPath('~/Documents/data-packages/1/datapackage.json'),
- PosixPath('~/Documents/data-packages/1/README.md'),
- PosixPath('~/Documents/data-packages/1/resources')]
+ PosixPath('~/Documents/data-packages/1/README.md')]
 ```
 
 Then to fill in the details in the `datapackage.json` file, you can use
@@ -66,13 +66,15 @@ package_properties = sp.create_package_properties(
     title="Diabetes and Hypertension Study", 
     description="Data from the 2021 study on diabetes and hypertension", 
     contributors=[{
-  "title": "Jamie Jones",
-  "email": "jamie_jones@example.com",
-  "roles": ["creator"]}, 
-  {"title": "Jimmy James",
-  "email": "jimmy_james@example.com",
-  "roles": ["contact"]
-  }] 
+        "title": "Jamie Jones",
+        "email": "jamie_jones@example.com",
+        "roles": ["creator"]
+      }, 
+      {
+        "title": "Jimmy James",
+        "email": "jimmy_james@example.com",
+        "roles": ["contact"]
+      }],
     licenses=["ODC-BY-1.0"]
   )
 )
@@ -88,6 +90,9 @@ sp.write_package_properties(
 If you need help with filling in the right properties, use
 `view_package_properties_template()` to see the available fields to fill
 in.
+
+You now have the basic starting point for adding data resources to your
+data package.
 
 ### CLI
 
@@ -111,8 +116,9 @@ This will prompt you for some required fields you need to fill in, like
 the title and description of the data package. If you want to skip the
 prompt, you can provide the information directly in the command:
 
-```         
-sprout package create --title "Diabetes and Hypertension Study" \
+``` bash
+sprout package create \
+  --title "Diabetes and Hypertension Study" \
   --description "Data from the 2021 study on diabetes and hypertension"
 ```
 
@@ -121,7 +127,6 @@ You will now have a new data package in the location you specified:
 ```         
 ~/Documents/data-packages/1/datapackage.json
 ~/Documents/data-packages/1/README.md
-~/Documents/data-packages/1/resources
 ```
 
 ### Web App
