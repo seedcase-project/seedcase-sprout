@@ -1,4 +1,4 @@
-import pytest
+from pytest import raises
 
 from sprout.core.verify_is_directory import verify_is_directory
 
@@ -19,7 +19,7 @@ def test_verify_is_directory_raises_not_a_directory_error(tmp_path):
     Args:
         tmp_path: Temporary directory created by pytest
     """
-    with pytest.raises(
+    with raises(
         NotADirectoryError,
         match=r"/non_existent_directory is not an existing directory",
     ):
