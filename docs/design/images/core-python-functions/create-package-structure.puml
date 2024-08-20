@@ -29,15 +29,15 @@ state "create_package_structure()" as cps {
   vid : - Output: path or Error
   arg --> vid
 
-  state "get_package_ids()" as gpi
-  gpi : - Required arg: path to packages folder
-  gpi : - Output: list of existing IDs\n  (if no existing IDs, an empty list is returned)
-  vid --> gpi
+  state "get_ids()" as gi
+  gi : - Required arg: path to packages folder
+  gi : - Output: list of existing IDs\n  (if no existing IDs, an empty list is returned)
+  vid --> gi
 
   state "create_next_id()" as cni
   cni : - Required arg: list of existing IDs
   cni : - Output: ID
-  gpi --> cni
+  gi --> cni
 
   state "create_package_dir()" as cpd
   cpd : - Required arg: ID to assign for directory
