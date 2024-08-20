@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-def verify_is_directory(path: Path):
+def verify_is_directory(path: Path) -> Path:
     """Verifies if the path is an existing directory.
 
     Args:
