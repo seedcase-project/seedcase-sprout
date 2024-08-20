@@ -11,8 +11,10 @@ def test_get_ids_returns_list_of_resources(tmp_path):
     """
     (tmp_path / "1").mkdir()  # single digit
     (tmp_path / "20").mkdir()  # double digit
-    (tmp_path / "datapackage.json").mkdir()  # file
     (tmp_path / "resources").mkdir()  # directory without digits
+    (tmp_path / "test1").mkdir()  # directory with digits
+    (tmp_path / "datapackage.json").mkdir()  # file without digits
+    (tmp_path / "test1.json").mkdir()  # file with digits
 
     assert sorted(get_ids(tmp_path)) == [1, 20]
 
