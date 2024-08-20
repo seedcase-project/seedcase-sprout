@@ -14,6 +14,6 @@ def test_verify_is_directory_raises_not_a_directory_error(tmp_path):
     if the directory does not exist."""
     with raises(
         NotADirectoryError,
-        match=r"/non_existent_directory is not an existing directory",
+        match=r"/non_existent_directory doesn't exist.",
     ):
         verify_is_directory(tmp_path / "non_existent_directory")
