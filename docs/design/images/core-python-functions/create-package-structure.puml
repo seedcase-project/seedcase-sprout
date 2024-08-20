@@ -1,25 +1,20 @@
 @startuml create-package-structure
 !theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
 
-skinparam StateFontName Fira Code
-
 state "Input" as input {
+  input: - Use `path_*()` functions to help\ncreate correct paths
 ' Arguments -----
-  path : Path to where packages are stored
+  path : - Path to where packages are stored
 }
 
 state "Output" as output {
-  output : The package parent folder is shown as /
-  state "/packages/<id>/datapackage.json" as prop_file
+  output : - The package parent folder is shown as /
+  state "/packages/<id>/datapackage.json" as properties_file
   state "/packages/<id>/README.md" as readme
-  state "/packages/<id>/resources/" as rfolder
-
-  prop_file --[hidden]> readme
-  readme --[hidden]> rfolder
 }
 
 state "create_package_structure()" as cps {
-  cps : - Required arguments: path
+  cps : - Required arg: path
 
   state arg <<entryPoint>>
   input --> arg
@@ -30,8 +25,8 @@ state "create_package_structure()" as cps {
   arg --> vid
 
   state "get_ids()" as gi
-  gi : - Required arg: path to packages folder
-  gi : - Output: list of existing IDs\n  (if no existing IDs, an empty list is returned)
+  gi : - Required arg: path
+  gi : - Output: list of existing IDs\n  (otherwise an empty list)
   vid --> gi
 
   state "create_next_id()" as cni
@@ -39,37 +34,56 @@ state "create_package_structure()" as cps {
   cni : - Output: ID
   gi --> cni
 
-  state "create_package_dir()" as cpd
-  cpd : - Required arg: ID to assign for directory
-  cpd : - Output: path of created directory
-  cni --> cpd
+  state "create_package_path()" as cpp
+  cpp : - Required arg: path and ID to assign for directory
+  cpp : - Output: path of created directory
+  cni --> cpp
 
-  state "create_resources_dir()" as crd
-  crd : - Required arg: package path
-  crd : - Output: path of created directory
-  cpd --> crd
+  state "create_dirs()" as cd
+  cd : - Required arg: A list of paths
+  cd : - Output: A list of paths\n  of created directories
+  cpp --> cd
 
   state "create_properties_template()" as cpt
-  cpt : - Required arg: package path
+  cpt : - Required arg: path
   cpt : - Output: JSON object
-  cpd --> cpt
+  cpp --> cpt
 
-  state "write_package_properties()" as wpp
-  wpp : - Required arg: JSON object
-  wpp : - Output: path of created file
-  cpt --> wpp
+  state "create_readme_text()" as crt
+  crt : - Required arg: JSON object
+  crt : - Output: string
+  cpt --> crt
 
-  state "write_package_readme()" as wpr
-  wpr : - Required arg: path of properties file
-  wpr : - Output: path of created file
-  wpp --> wpr
+  state "create_readme_path()" as crp
+  crp : - Required arg: path
+  crp : - Output: path to README
+  cd --> crp
+
+  state "create_properties_path()" as cprop
+  cprop : - Required arg: path
+  cprop : - Output: path to properties
+  cpp --> cprop
+
+  state "write_file()" as wf
+  wf : - Required args: string (including JSON\n  as a string) and path
+  wf : - Output: path of created file
+  wf : - Only one string and path at a time
+  wf : - Used multiple times for each write\n  operation
   
-  state join <<join>>
+  state str_input <<join>>
+  state path_input <<join>>
+  state as_list <<join>>
   state return <<exitPoint>>
-  crd --> join
-  wpp --> join
-  wpr --> join
-  join --> return
+
+  cpt --> str_input
+  crt --> str_input
+  cprop --> path_input
+  crp --> path_input
+  str_input --> wf : string input
+  path_input --> wf : path input
+  
+  wf --> as_list : Convert to list
+  as_list --> return
   return --> output
 }
 
