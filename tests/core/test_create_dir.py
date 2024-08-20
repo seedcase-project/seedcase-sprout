@@ -1,5 +1,3 @@
-import pytest
-
 from sprout.core.create_dir import create_dir
 
 
