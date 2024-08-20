@@ -1,5 +1,3 @@
-from pytest import raises
-
 from sprout.core.get_ids import get_ids
 
 
