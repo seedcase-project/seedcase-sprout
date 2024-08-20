@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 def verify_is_directory(path: Path) -> Path:
-    """Verifies if the path is an existing directory.
+    """Verifies whether the directory given by the path exists or not.
 
     Args:
         path: The path to verify
