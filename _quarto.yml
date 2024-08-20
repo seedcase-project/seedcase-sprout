@@ -37,6 +37,9 @@ website:
         - docs/design/requirements.qmd
         - docs/design/c4-models.qmd
         - docs/design/naming.qmd
+        - docs/design/outputs.qmd
+        - docs/design/python-functions.qmd
+        - docs/design/app-urls.qmd
         - docs/design/user-roles.qmd
     - id: getting-started
       title: "Getting Started"

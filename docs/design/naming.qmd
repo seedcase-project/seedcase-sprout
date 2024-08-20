@@ -4,122 +4,63 @@ title: "Naming scheme"
 
 {{< include /docs/includes/_wip.qmd >}}
 
-The naming scheme for Sprout is guided by our [style
-guide](https://design.seedcase-project.org/style/). The below naming
-scheme *only* applies to file paths, data objects, functions, URLs, API
-endpoints, and command line interfaces that are exposed to or associated
-with user-facing content. It does *not* apply to internal content; see
-the style guide for details on naming internal (developer-facing)
-content.
+This document describes a general naming scheme for Sprout that
+is guided by our [style guide](https://design.seedcase-project.org/style/)
+as well as by the [Frictionless
+Framework](https://v4.framework.frictionlessdata.io/) and [Data
+Package](https://datapackage.org/) structure. This naming scheme *only*
+applies to data objects, functions, URLs, API endpoints, and
+command line interfaces that are exposed to or associated with
+user-facing content. It does *not* apply to internal content; see the
+style guide for details on naming internal (developer-facing) content.
 
-## Actions and objects
+We'll compose names based on the objects we and our users interact with
+as well as the actions taken on those objects. Following along with the
+[Frictionless Data Package](https://datapackage.org/) terminology, we simplify "data package" to "package" and
+"data resource" to "resource". We use the words "property" or "properties"
+to describe package and resource metadata contained
+in the `datapackage.json` file that follows the Frictionless Data
+specification.
 
-Guided by our style guide, we'll compose names based on the objects we
-and our users interact with as well as the actions taken on those
-objects.
+## Objects
 
--   Types of objects Sprout interacts with: projects, data, and
-    metadata.
--   Types of actions Sprout takes on those objects: create, view,
-    update, and delete
--   Types of identifiers for specific items of objects (as numbers):
-    data, metadata, and project identifiers.
+| Object | Description |
+|----------------------------|--------------------------------------------|
+| package(s) | A data package that contains a collection of related data resources and properties. |
+| resource(s) | A single data file within a package, along with its properties and associated *raw* data files. |
+| properties or property | Metadata about a package or resource. |
+| file structure or structure | The file and folder structure of a package. |
+| path | A file path listing the location of folders or files that Sprout interacts with. |
+| template | A template file for specific objects, such as a template for a package or resource properties file. |
+| data | The data file within a resource. Within Sprout, this includes the table in the database, the Parquet file, as well as raw files. |
+| identifier | A unique identifier for a package or resource, denoted as `id`. |
 
-Additional "rules" to the naming include:
+: General objects used throughout Sprout.
 
--   When a naming scheme ends without an action, the default action is
-    `view`.
--   Data objects do not have any `view` action, since we want to limit
-    access to looking at raw data.
+| File or folder | Description |
+|----------------------------|--------------------------------------------|
+| packages | The folder that contains all packages. |
+| resources | The folder that contains all resource files in a package. |
+| raw | The folder that contains raw data files for a data resource. |
+| raw data file | A compressed raw data file format, such as a `.zip`, `.gzip`, or `.tar.gz` file. |
+| JSON | The main way we save and pass information around on the package's or resource's properties. |
+| Parquet | A columnar, efficient storage file format that we use to save data within a resource. |
+| SQLite | A relational database file format that we use to contain all data resources in a package. |
 
-Based on the above principles and our style guide, we have defined the
-following naming scheme (here shown with `space` as separator):
+: Specific files and folders used within or output by Sprout.
 
-```         
-# View all projects
-projects
+## Actions
 
-# Create a new project
-projects create
+| Action | Description |
+|----------------------------|--------------------------------------------|
+| create | Create a new object. |
+| construct | Construct or reconstruct a data file (like the Parquet file). |
+| view | View details about an object. |
+| list | List basic details about many objects. |
+| edit | Edit an object, specifically the properties object. |
+| add | Add another object to an existing object, specifically adding data to a resource. |
+| write | Write an object to a file. |
+| copy | Copy a file from one location to another. |
+| delete | Permanently delete an object. |
 
-# View landing page of a specific project
-projects <id> 
-
-# Update or delete a specific project 
-projects <id> update
-projects <id> delete
-
-# View all metadata objects of a specific project
-projects <id> metadata
-
-# Create a new metadata object with associated data in a 
-# specific project
-projects <id> metadata create
-# This creates an associated data object at:
-# projects <id> metadata <id> data
-
-# View the landing page of a specific metadata object in 
-# a specific project
-projects <id> metadata <id>
-
-# Update or delete metadata of a specific project
-projects <id> metadata <id> update
-projects <id> metadata <id> delete
-
-# Update or delete data of a specific metadata object to 
-# a specific project
-projects <id> metadata <id> data update
-projects <id> metadata <id> data delete
-```
-
-## Project file paths
-
-Sprout is designed to store and structure data in a coherent and
-consistent way. Part of that is about how the data are stored into files
-and folders. Depending on the context, if Sprout is within a server
-environment with Postgres installed, the original input from the user
-will be stored in the Postgres database as the below file path and can
-be exported into actual files if desired.
-
-When constructing the project paths, we use our [style
-guide](https://design.seedcase-project.org/style/) as well as these
-additional guidelines:
-
--   Follow the [Frictionless
-    Framework](https://v4.framework.frictionlessdata.io/) and [Data
-    Package](https://datapackage.org/) structure
-
-The types of files and folders that make up the project are:
-
--   Types of files: metadata, raw, database (as a SQLite database),
-    parquet (as a backup of the database)
--   Types of folders: raw, data
-
-Following a similar pattern described in the actions and objects section
-above, the base folders are:
-
--   `project <id>`: The related set of data specific to, for instance,
-    one data collection study.
--   `data <id>`: The files related to a specific table or file. Uses
-    `data` instead of `metadata` like above because the metadata is
-    contained a separate file (see below), while the individual files
-    are themselves the data.
--   `ROOT`: The default location that projects are stored in. If on a
-    server, would be the path to that server space given to Sprout. If
-    on a local computer, would be a default path provided by Sprout for
-    the specific operating system.
-
-```         
-# Compress all raw data files
-ROOT/projects/<id>/data/<id>/raw/<timestamp>-<uuid>.<extension>.gzip
-ROOT/projects/<id>/data/<id>/data.parquet
-
-# Full database
-ROOT/projects/<id>/database.sqlite
-
-# Machine-readable metadata file
-ROOT/projects/<id>/datapackage.json
-
-# A human readable, auto-generated 'metadata' file
-ROOT/projects/<id>/README.md
-```
+: General actions that Sprout can take on objects or files/folders.
