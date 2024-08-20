@@ -1,4 +1,4 @@
-def generate_next_id(existing_ids: list[int]) -> int:
+def create_next_id(existing_ids: list[int]) -> int:
     """Generates the next ID in a sequence, given a list of existing IDs. Starts at 1.
 
     Args:
