@@ -8,12 +8,12 @@ def verify_is_directory(path: Path) -> Path:
         path: The path to verify
 
     Raises:
-        NotADirectoryError: If the path is not an existing directory
+        NotADirectoryError: When the directory in the path doesn't exist.
 
     Returns:
-        path if it's a directory
+        A Path object if it is a directory.
     """
     if not path.is_dir():
-        raise NotADirectoryError(f"{path} is not an existing directory")
+        raise NotADirectoryError(f"The {path} directory doesn't exist.")
 
     return path
