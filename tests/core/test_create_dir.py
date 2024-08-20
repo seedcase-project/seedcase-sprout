@@ -2,11 +2,8 @@ from sprout.core.create_dir import create_dir
 
 
 def test_create_dir_existing_folder(tmp_path):
-    """Test that the create_dir function checks for existing folder and returns the name
+    """Checks for an existing folder and returns the name
     if the folder already exists.
-
-    Args:
-        tmp_path: Temporary directory created by pytest
     """
     # Create a temporary directory
     folder_path = tmp_path / "existing_folder"
@@ -20,12 +17,7 @@ def test_create_dir_existing_folder(tmp_path):
 
 
 def test_create_dir_new_folder(tmp_path):
-    """Test that the create_dir function creates a new folder and returns the path
-    correctly.
-
-    Args:
-      tmp_path: Temporary directory created by pytest
-    """
+    """Create a new folder and returns the path correctly."""
     # Create a temporary directory
     folder_path = tmp_path / "new_folder"
 
