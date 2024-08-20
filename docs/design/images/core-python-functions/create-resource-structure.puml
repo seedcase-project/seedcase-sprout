@@ -30,8 +30,8 @@ state "create_resource_structure()" as crs {
   arg --> vid
 
   state "get_ids()" as gi
-  gi : - Required arg: path to resources folder
-  gi : - Output: list of existing IDs (or the empty list) 
+  gi : - Required arg: path to\n  resources folder
+  gi : - Output: list of existing\n  IDs (or the empty list) 
   vid --> gi
 
   state "create_next_id()" as cni
@@ -40,25 +40,24 @@ state "create_resource_structure()" as crs {
   gi --> cni
 
   state "create_resource_path()" as crp
-  crp : - Required args:\n    - ID to assign for directory\n    - path to resources folder
+  crp : - Required args: path to resources folder\n  and ID to assign for folder
   crp : - Output: path to directory for new resource
   cni --> crp
+  arg --> crp
 
-  state "create_dir()" as cd
-  cd : - Required arg: path to directory to create
-  cd : - Output: path to created directory
+  state "create_resource_raw_path()" as crrp
+  crrp : - Required arg: path to resource ID
+  crrp : - Output: path to raw folder
+  crp --> crrp
+
+  state "create_dirs()" as cd
+  cd : - Required arg: list of paths of\n  directories to create
+  cd : - Output: list of paths of created\n  directories
   crp --> cd
+  crrp --> cd
 
-  state "create_resource_raw_dir()" as crrd
-  crrd : - Required arg: path to resource ID
-  crrd : - Output: path of created directory
-  cd --> crrd
-
-  state join <<join>>
   state return <<exitPoint>>
-  crrd --> join
-  cd --> join
-  join --> return
+  cd --> return
   return --> output
 }
 
