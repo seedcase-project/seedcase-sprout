@@ -30,10 +30,12 @@ def test_return_multiple_ids(tmp_path):
     assert sorted(get_ids(tmp_path)) == [1, 2]
 
 
-def test_only_numbers_output(tmp_path):
+def test_return_only_id_dirs(tmp_path):
     """Return only directories with IDs/numbers only."""
     (tmp_path / "1").mkdir()
     (tmp_path / "a").mkdir()
+    (tmp_path / "1a").mkdir()
+    (tmp_path / "b3").mkdir()
 
     assert get_ids(tmp_path) == [1]
 
@@ -45,12 +47,3 @@ def test_different_numbers_output(tmp_path):
     (tmp_path / "999").mkdir()
 
     assert sorted(get_ids(tmp_path)) == [1, 20, 999]
-
-
-def test_get_only_dirs_with_numbers(tmp_path):
-    """Test that the get_ids function returns only directories with numbers."""
-    (tmp_path / "1").mkdir()
-    (tmp_path / "1a").mkdir()
-    (tmp_path / "b3").mkdir()
-
-    assert get_ids(tmp_path) == [1]
