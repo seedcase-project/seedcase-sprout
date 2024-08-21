@@ -7,10 +7,12 @@ def test_get_single_id(tmp_path):
     assert get_ids(tmp_path) == [1]
 
 
-def test_only_dirs_gotten(tmp_path):
-    """Test that the get_ids function returns a list of resources."""
-    (tmp_path / "1").mkdir()  # single digit
-    (tmp_path / "datapackage.json").touch()  # file without digits
+def test_get_only_dirs(tmp_path):
+    """Return only directories - not files."""
+    (tmp_path / "1").mkdir()
+    (tmp_path / "datapackage.json").touch()
+    (tmp_path / "1.txt").touch()
+    (tmp_path / "2").touch()
 
     assert get_ids(tmp_path) == [1]
 
