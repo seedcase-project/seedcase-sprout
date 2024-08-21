@@ -10,5 +10,4 @@ def create_resource_raw_path(path: Path) -> Path:
     Returns:
         A path to the folder.
     """
-
     return path / "raw"
