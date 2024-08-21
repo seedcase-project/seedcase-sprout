@@ -25,10 +25,10 @@ def get_number(path: Path) -> int | None:
     """Get only the number from directory.
 
     Args:
-      path: Directory to extract the number from.
-    
+        path: Directory to extract the number from.
+
     Returns:
-    	A single integer.
+        A single integer or None if the directory name does not contain a number.
     """
     directory_name = path.name
     if re.match(r"^\d+$", directory_name):
