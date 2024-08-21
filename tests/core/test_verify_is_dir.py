@@ -4,13 +4,12 @@ from sprout.core.verify_is_dir import verify_is_dir
 
 
 def test_returns_existing_directory(tmp_path):
-    """Test that the verify_is_dir function returns the directory if it exists."""
+    """Test the path is returned if the directory exists."""
     assert verify_is_dir(tmp_path) == tmp_path
 
 
 def test_raises_error_with_non_existent_directory(tmp_path):
-    """Test that the verify_is_dir function raises a NotADirectoryError
-    if the directory does not exist."""
+    """Test that NotADirectoryError is raised if the directory doesn't exist."""
     with raises(
         NotADirectoryError,
         match=r"/non_existent_directory directory doesn't exist.",
@@ -19,8 +18,7 @@ def test_raises_error_with_non_existent_directory(tmp_path):
 
 
 def test_returns_error_with_file(tmp_path):
-    """Test that the verify_is_dir function raises a NotADirectoryError
-    if the directory does not exist."""
+    """Test that NotADirectoryError is raised when a path to a file is given as input."""
 
     file_path = tmp_path / "test.py"
     file_path.write_text("# This is a temporary Python file")
