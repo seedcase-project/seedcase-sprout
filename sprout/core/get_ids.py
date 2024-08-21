@@ -21,11 +21,14 @@ def get_ids(path: Path) -> list[int]:
     return ids
 
 
-def get_number(path: Path) -> int:
+def get_number(path: Path) -> int | None:
     """Get only the number from directory.
 
     Args:
       path: Directory to extract the number from.
+    
+    Returns:
+    	A single integer.
     """
     directory_name = path.name
     if re.match(r"^\d+$", directory_name):

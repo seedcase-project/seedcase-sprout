@@ -16,7 +16,7 @@ def test_only_dirs_gotten(tmp_path):
 
 
 def test_empty_list_when_no_ids(tmp_path):
-    """Test that the get_ids function returns the directory if it exists."""
+    """Return an empty list when there are no IDs."""
     assert get_ids(tmp_path) == []
 
 
