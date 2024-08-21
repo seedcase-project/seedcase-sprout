@@ -4,8 +4,7 @@ from sprout.core.verify_is_directory import verify_is_directory
 
 
 def test_verify_is_directory_returns_existing_directory(tmp_path):
-    """Test that the verify_is_directory function returns the directory if it exists.
-    """
+    """Test that the verify_is_directory function returns the directory if it exists."""
     assert verify_is_directory(tmp_path) == tmp_path
 
 
