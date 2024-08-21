@@ -13,8 +13,8 @@ def get_ids(path: Path) -> list[int]:
         If no IDs are found, an empty list is returned.
     """
     # Keep only directories
-    directories = list(path.glob("*/"))
-    ids = list(map(get_number, directories))
+    dirs = list(path.glob("*/"))
+    ids = list(map(get_number, dirs))
     # Drop any empty items
     ids = list(filter(None, ids))
 
@@ -30,6 +30,6 @@ def get_number(path: Path) -> int | None:
     Returns:
         A single integer or None if the directory name does not contain a number.
     """
-    directory_name = path.name
-    if re.match(r"^\d+$", directory_name):
-        return int(directory_name)
+    dir_name = path.name
+    if re.match(r"^\d+$", dir_name):
+        return int(dir_name)
