@@ -14,14 +14,14 @@ def get_ids(path: Path) -> list[int]:
     """
     # Keep only directories
     dirs = list(path.glob("*/"))
-    ids = list(map(get_number, dirs))
+    ids = list(map(get_number_from_dir, dirs))
     # Drop any empty items
     ids = list(filter(None, ids))
 
     return ids
 
 
-def get_number(path: Path) -> int | None:
+def get_number_from_dir(path: Path) -> int | None:
     """Get only the number from directory.
 
     Args:
