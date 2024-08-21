@@ -9,7 +9,7 @@ def test_verify_is_directory_returns_existing_directory(tmp_path):
     assert verify_is_directory(tmp_path) == tmp_path
 
 
-def test_verify_is_directory_raises_not_a_directory_error(tmp_path):
+def test_verify_is_directory_raises_error_with_non_existent_directory(tmp_path):
     """Test that the verify_is_directory function raises a NotADirectoryError
     if the directory does not exist."""
     with raises(
