@@ -1,4 +1,4 @@
-from sprout.core.get_ids import get_ids
+from sprout.core.get_ids import get_ids, get_number_from_dir
 
 
 def test_get_single_id(tmp_path):
@@ -47,3 +47,14 @@ def test_different_numbers_output(tmp_path):
     (tmp_path / "999").mkdir()
 
     assert sorted(get_ids(tmp_path)) == [1, 20, 999]
+
+
+def test_get_number_from_dir_returns_number(tmp_path):
+    """get_number_from_dir() returns only the number from a directory ."""
+    assert get_number_from_dir(tmp_path / "1") == 1
+
+
+def test_get_number_from_dir_returns_none(tmp_path):
+    """get_number_from_dir() returns None when the directory name is not an
+    ID/a number."""
+    assert get_number_from_dir(tmp_path / "b1") is None
