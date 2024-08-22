@@ -44,7 +44,7 @@ state "create_package_structure()" as cps {
   cd : - Output: A list of paths\n  of created directories
   cpp --> cd
 
-  state "create_properties_template()" as cpt
+  state "create_package_properties_template()" as cpt
   cpt : - Required arg: path
   cpt : - Output: JSON object
   cpp --> cpt
