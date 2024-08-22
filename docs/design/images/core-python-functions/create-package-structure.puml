@@ -34,15 +34,15 @@ state "create_package_structure()" as cps {
   cni : - Output: ID
   gi --> cni
 
-  state "create_id_path()" as cpp
-  cpp : - Required arg: path and ID to assign for directory
-  cpp : - Output: path of created directory
-  cni --> cpp
+  state "create_id_path()" as cip
+  cip : - Required arg: path and ID to assign for directory
+  cip : - Output: path of created directory
+  cni --> cip
 
   state "create_dirs()" as cd
   cd : - Required arg: A list of paths
   cd : - Output: A list of paths\n  of created directories
-  cpp --> cd
+  cip --> cd
 
   state "create_package_properties_template()" as cppt
   cppt : - Required arg: path
