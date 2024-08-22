@@ -18,7 +18,7 @@ def test_raises_error_with_non_existent_directory(tmp_path):
 
 
 def test_returns_error_with_file(tmp_path):
-    """Test that NotADirectoryError is raised when a path to a file is given as input."""
+    """Test that NotADirectoryError is raised when a file path is given as input."""
 
     file_path = tmp_path / "test.py"
     file_path.write_text("# This is a temporary Python file")
