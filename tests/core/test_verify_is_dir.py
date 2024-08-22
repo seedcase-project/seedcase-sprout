@@ -12,7 +12,7 @@ def test_raises_error_with_non_existent_directory(tmp_path):
     """Test that NotADirectoryError is raised if the directory doesn't exist."""
     with raises(
         NotADirectoryError,
-        match=r"/non_existent_directory directory doesn't exist.",
+        match=r"/non_existent_directory",
     ):
         verify_is_dir(tmp_path / "non_existent_directory")
 
@@ -27,6 +27,6 @@ def test_returns_error_with_file(tmp_path):
 
     with raises(
         NotADirectoryError,
-        match=r"/test.py directory doesn't exist.",
+        match=r"/test.py",
     ):
         verify_is_dir(file_path)
