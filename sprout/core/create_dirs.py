@@ -10,7 +10,7 @@ def create_dir(path: Path) -> Path:
         path: The path pointing to the new directory to create
 
     Raises:
-        NoDirectoryError: If the directory wasn't created
+        NotADirectoryError: If the directory wasn't created
 
     Returns:
         path to the newly created directory.
@@ -26,7 +26,7 @@ def create_dirs(path: list[Path]) -> list[Path]:
         path: A list of paths pointing to where directories should be created.
 
     Raises:
-        NoDirectoryError: If the directory wasn't created
+        NotADirectoryError: If the directory wasn't created
 
     Returns:
         A list of paths to the newly created directories
