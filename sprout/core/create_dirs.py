@@ -15,11 +15,8 @@ def create_dir(path: Path) -> Path:
     Returns:
         path to the newly created directory.
     """
-    if path.is_dir():
-        return path
-    else:
-        path.mkdir(parents=True, exist_ok=False)
-        return path
+    path.mkdir(parents=True, exist_ok=False)
+    return path
 
 
 def create_dirs(path: list[Path]) -> list[Path]:
