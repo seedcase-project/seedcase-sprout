@@ -47,7 +47,7 @@ state "create_package_structure()" as cps {
   state "create_package_properties_template()" as cppt
   cppt : - Required arg: path
   cppt : - Output: JSON object
-  cpp --> cppt
+  cd --> cppt
 
   state "create_readme_text()" as crt
   crt : - Required arg: JSON object
@@ -62,7 +62,7 @@ state "create_package_structure()" as cps {
   state "create_properties_path()" as cprop
   cprop : - Required arg: path
   cprop : - Output: path to properties
-  cpp --> cprop
+  cd --> cprop
 
   state "write_file()" as wf
   wf : - Required args: string (including JSON\n  as a string) and path
@@ -86,6 +86,9 @@ state "create_package_structure()" as cps {
   wf --> as_list : Convert to list
   as_list --> return
   return --> output
+
+  crp -[hidden]> cppt
+  cppt-[hidden]> cprop
 }
 
 @enduml
