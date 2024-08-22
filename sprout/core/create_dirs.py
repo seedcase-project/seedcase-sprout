@@ -15,7 +15,10 @@ def create_dir(path: Path) -> Path:
     Returns:
         path to the newly created directory.
     """
-    path.mkdir(parents=True, exist_ok=False)
+    try:
+        path.mkdir(parents=True, exist_ok=False)
+    except FileExistsError:
+        raise NotADirectoryError(f"Failed to create directory: {path}")
     return path
 
 
@@ -26,9 +29,19 @@ def create_dirs(path: list[Path]) -> list[Path]:
         path: A list of paths pointing to where directories should be created.
 
     Raises:
-        NotADirectoryError: If the directory wasn't created
+        NotADirectoryError: If any of the directories fail to be created, and
+        removes any directories already created.
 
     Returns:
-        A list of paths to the newly created directories
+        A list of paths to the newly created directories.
     """
-    return [create_dir(p) for p in path]
+    created_dirs = []
+    for p in path:
+        try:
+            created_dirs.append(create_dir(p))
+        except NotADirectoryError:
+            # Clean up already created directories
+            for dir_path in created_dirs:
+                dir_path.rmdir()
+            raise
+    return created_dirs
