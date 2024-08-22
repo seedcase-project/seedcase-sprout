@@ -13,9 +13,9 @@ def test_accepts_supported_format(tmp_path, extension):
     file_path = tmp_path / f"test.{extension}"
     assert verify_format_supported(file_path) == file_path
 
-@mark.parametrize("extension", ["xyz", "rtf", "tar.gz", "123", "*^%#", ".", " ", ""])
-def test_rejects_unsupported_format(tmp_path, extension):
+@mark.parametrize("suffix", [".xyz", ".rtf", ".tar.gz", ".123", ".*^%#", ". ", ".", ""])
+def test_rejects_unsupported_format(tmp_path, suffix):
     """Given an unsupported file format, should raise an UnsupportedFormatError."""
-    file_path = tmp_path / f"test.{extension}"
+    file_path = tmp_path / f"test{suffix}"
     with raises(UnsupportedFormatError):
         verify_format_supported(file_path)
