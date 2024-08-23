@@ -151,28 +151,16 @@ follows the Frictionless Data specification.
     path and the `resources/<id>/raw/` path. The output is a list of these two path
     objects.
 
-`create_resource_properties(path, data_path, properties)`
+`create_resource_properties(properties)`
 
-:   This function either takes the data found in the `data_path`
-    location and creates a JSON object following the Frictionless Data
-    standard or takes the `properties` argument to fill in the correct
-    fields for the data resource in the `datapackage.json` file.
-
-    If the `data_path` argument is given, it tries to guess and fill in
-    some of the property fields required by the Frictionless Data
-    resource specification. Use `edit_resource_properties()` to fill in
-    any missing fields.
-
-    If the `data_path` argument is not given, the `properties` argument
-    is required and is used to directly provide the properties values
-    for the resource in the `datapackage.json` file. It must be given a
-    a JSON object (use `view_resource_properties_template()` to have the
-    correct JSON object).
-
-    Use `path_resource()` to provide the correct `path` location or use the output
-    of `create_resource_structure()`. Outputs
-    a JSON object only; use `write_resource_properties()` to save the JSON object
-    to the `datapackage.json` file.
+:   This function sets up and structures a new resource property by
+    taking the fields given in the `properties` argument to fill them
+    and prepare them to be added to the `datapackage.json` file. It must
+    be given a a JSON object following the Data Package specification
+    (use `view_resource_properties_template()` to have the correct JSON
+    object). Outputs a JSON object only; use
+    `write_resource_properties()` to save the JSON object to the
+    `datapackage.json` file.
 
 `write_resource_data_to_raw(path, data_path)`
 
@@ -250,6 +238,20 @@ follows the Frictionless Data specification.
     ensures the correct table is created in the database. Outputs the
     same `path` object as well as the name of the newly created database
     table.
+
+### `extract_resource_properties(path)`
+
+This takes the data found at the `path` location and creates a JSON
+object following the Frictionless Data standard. Internally it uses the
+frictionless Python package to guess and fill in some of the property
+fields required by the Frictionless Data resource specification. This
+function is often followed by `edit_resource_properties()` to fill in
+any remaining missing fields and then `verify_resource_properties()`
+function. Usually, you use either this function or the
+`create_resource_properties()` function to create the resource
+properties for the specific data resource given. Outputs a JSON object,
+use `write_resource_properties()` to save the JSON object to the
+`datapackage.json` file.
 
 ## Path functions
 
