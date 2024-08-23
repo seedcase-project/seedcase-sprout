@@ -330,6 +330,11 @@ These functions are still being developed.
 
 :   TODO
 
+![Diagram showing the internal function flow of the
+`create_properties_template()`
+function.](images/core-python-functions/create-properties-template.svg){#fig-create-properties-template
+fig-alt="A Plant UML schematic of the detailed code flow within the `create_properties_template()` function."}
+
 `create_resource_properties_template()`
 
 :   TODO
