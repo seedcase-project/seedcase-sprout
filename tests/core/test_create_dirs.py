@@ -24,9 +24,9 @@ def test_creating_existing_directory(tmp_path):
 
 
 def test_create_single_dir(tmp_path):
-    """Create a new directory and returns the path correctly."""
+    """Create a new directory and return the path correctly."""
     # Create a temporary directory
-    new_dir = [tmp_path / "new_dir"]
+    new_dirs = [tmp_path / "new_dir"]
 
     result = create_dirs(new_dir)
 
