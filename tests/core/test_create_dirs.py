@@ -41,7 +41,7 @@ def test_create_single_dir(tmp_path):
 
 
 def test_create_two_dirs(tmp_path):
-    """Create a new directory and returns the path correctly."""
+    """Create a number of new directories and returns the paths correctly."""
     # Create a temporary directory
     new_dirs = [
         tmp_path / "new_dir1",

@@ -26,11 +26,11 @@ def create_dirs(paths: list[Path]) -> list[Path]:
     """Creates directories from a list of paths using the function create_dir.
 
     Args:
-        path: A list of paths pointing to where directories should be created.
+        paths: A list of paths pointing to where directories should be created.
 
     Raises:
-        NotADirectoryError: If any of the directories fail to be created, and
-        removes any directories already created.
+        NotADirectoryError: If any of the directories fail to be created throw
+        an error and remove any directories already created.
 
     Returns:
         A list of paths to the newly created directories.
@@ -38,7 +38,7 @@ def create_dirs(paths: list[Path]) -> list[Path]:
     created_dirs = []
     for path in paths:
         try:
-            created_dirs.append(create_dir(p))
+            created_dirs.append(create_dir(path))
         except NotADirectoryError:
             # Clean up already created directories
             for dir_path in created_dirs:
