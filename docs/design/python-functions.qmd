@@ -4,7 +4,15 @@ title: "Core Python functions"
 
 {{< include /docs/includes/_wip.qmd >}}
 
-Based on the [naming scheme](naming.qmd) and the [Frictionless Data Package standard](https://datapackage.org), these are the core
+::: callout-important
+We created this document, and especially the function diagrams, mainly
+as a way to help us as a team all understand and agree on what we're
+making and what needs to be worked on. Which means that the descriptions
+and explanations of these functions, in particular the diagrams, will
+likely change quite a bit and may even be deleted later when they are no
+longer needed.
+:::
+
 external-facing functions in Sprout, which are stored in `sprout/core/`.
 See the [Outputs](outputs.qmd) section for an overview and explanation
 of the different outputs provided by Sprout. 
