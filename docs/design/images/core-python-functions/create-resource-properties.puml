@@ -30,15 +30,15 @@ state "create_resource_properties()" as crp {
   data_path --> arg_data_path
   properties --> arg_properties
 
-  state "verify_is_directory()" as vid
+  state "verify_is_dir()" as vid
   vid : - Required arg: path
   vid : - Output: path or Error
   arg_path --> vid
 
-  state "path_relative_resource_data()" as prrd
-  prrd : - Required arg: absolute path from input
-  prrd : - Output: relative path\n  (e.g. `resources/1/data.parquet`)
-  vid --> prrd
+  state "create_relative_resource_data_path()" as crrdp
+  crrdp : - Required arg: absolute path from input
+  crrdp : - Output: relative path\n  (e.g. `resources/1/data.parquet`)
+  vid --> crrdp
 
   state condition_input <<choice>>
   arg_properties --> condition_input
@@ -56,7 +56,7 @@ state "create_resource_properties()" as crp {
   vif : - Output: path or Error
   condition_input --> vif : If data_path given
 
-  state "verify_format_supported()" as vsf
+  state "verify_is_supported_format()" as vsf
   vsf : - Required arg: path
   vsf : - Output: path or Error
   vif --> vsf
@@ -73,7 +73,7 @@ state "create_resource_properties()" as crp {
   state "edit_resource_properties_field()" as erpf
   erpf : - Required args: properties, field, value
   erpf : - Output: JSON
-  prrd --> erpf : Update `path`\nproperty
+  crrdp --> erpf : Update `path`\nproperty
   condition_output --> erpf
 
   state "return" <<exitPoint>>
