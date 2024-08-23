@@ -62,5 +62,7 @@ specification.
 | write | Write an object to a file. |
 | copy | Copy a file from one location to another. |
 | delete | Permanently delete an object. |
+| verify | Compare against a standard, specifically the properties object against the specification. |
+| extract | Extract specific information from an object, specifically the properties from a data file. |
 
 : General actions that Sprout can take on objects or files/folders.
