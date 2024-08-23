@@ -151,14 +151,16 @@ follows the Frictionless Data specification.
     path and the `resources/<id>/raw/` path. The output is a list of these two path
     objects.
 
-`create_resource_properties(properties)`
+`create_resource_properties(path, properties)`
 
 :   This function sets up and structures a new resource property by
     taking the fields given in the `properties` argument to fill them
     and prepare them to be added to the `datapackage.json` file. It must
     be given a a JSON object following the Data Package specification
     (use `view_resource_properties_template()` to have the correct JSON
-    object). Outputs a JSON object only; use
+    object). The `path` argument provides the path to the resource `id`
+    that the properties are for; use `path_resource()` to provide the
+    correct path. Outputs a JSON object only; use
     `write_resource_properties()` to save the JSON object to the
     `datapackage.json` file.
 
@@ -239,9 +241,9 @@ follows the Frictionless Data specification.
     same `path` object as well as the name of the newly created database
     table.
 
-### `extract_resource_properties(path)`
+### `extract_resource_properties(path, data_path)`
 
-This takes the data found at the `path` location and creates a JSON
+This takes the data found at the `data_path` location and creates a JSON
 object following the Frictionless Data standard. Internally it uses the
 frictionless Python package to guess and fill in some of the property
 fields required by the Frictionless Data resource specification. This
@@ -249,9 +251,11 @@ function is often followed by `edit_resource_properties()` to fill in
 any remaining missing fields and then `verify_resource_properties()`
 function. Usually, you use either this function or the
 `create_resource_properties()` function to create the resource
-properties for the specific data resource given. Outputs a JSON object,
-use `write_resource_properties()` to save the JSON object to the
-`datapackage.json` file.
+properties for the specific data resource given. The `path` argument
+points to the resource `id` folder the properties are for; use
+`path_resource()` to help give the correct path. to give the path to the
+resource; Outputs a JSON object, use `write_resource_properties()` to
+save the JSON object to the `datapackage.json` file.
 
 ## Path functions
 
