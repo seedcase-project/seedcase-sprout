@@ -16,13 +16,13 @@ state "create_properties_template()" as cpt {
   url --> su : string
 
   state "drop_property_field()" as dpf
-  dpf : - Required arg: json, field
+  dpf : - Required arg: properties, field
   dpf : - Output: JSON
   dpf : - Drop any fields we don't use
   su --> dpf : JSON object
 
   state "edit_property_field()" as epf
-  epf : - Required arg: json,\n  field, value
+  epf : - Required arg: properties,\n  field, value
   epf : - Output: JSON
   epf : - Edit field values to\n  defaults we use
   dpf --> epf : JSON object
