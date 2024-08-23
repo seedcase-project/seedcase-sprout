@@ -39,21 +39,21 @@ state "create_resource_structure()" as crs {
   cni : - Output: ID
   gi --> cni
 
-  state "create_resource_path()" as crp
-  crp : - Required args: path to resources folder\n  and ID to assign for folder
-  crp : - Output: path to directory for new resource
-  cni --> crp
-  arg --> crp
+  state "create_id_path()" as cip
+  cip : - Required args: path to resources folder\n  and ID to assign for folder
+  cip : - Output: path to directory for new resource
+  cni --> cip
+  arg --> cip
 
   state "create_resource_raw_path()" as crrp
   crrp : - Required arg: path to resource ID
   crrp : - Output: path to raw folder
-  crp --> crrp
+  cip --> crrp
 
   state "create_dirs()" as cd
   cd : - Required arg: list of paths of\n  directories to create
   cd : - Output: list of paths of created\n  directories
-  crp --> cd
+  cip --> cd
   crrp --> cd
 
   state return <<exitPoint>>
