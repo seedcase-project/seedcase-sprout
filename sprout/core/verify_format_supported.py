@@ -13,10 +13,13 @@ class UnsupportedFormatError(Exception):
             *args: non-keyword arguments
             **kwargs: keyword arguments
         """
-        message = f"File format '{format}' is not supported."
+        message = (
+            f"File format '{format}' is not supported. Sprout currently "
+            f"supports the following formats: {', '.join(SUPPORTED_FORMATS)}."
+        )        
         super().__init__(message, *args, **kwargs)
 
-def verify_format_supported(path: Path) -> Path:
+def verify_is_supported_format(path: Path) -> Path:
     """Checks that the format of the file given by the path is supported by Sprout.
 
     Args:
