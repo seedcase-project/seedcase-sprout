@@ -1,6 +1,6 @@
 from pytest import mark, raises
 
-from sprout.core.verify_format_supported import (
+from sprout.core.verify_is_supported_format import (
     SUPPORTED_FORMATS,
     UnsupportedFormatError,
     verify_is_supported_format,
