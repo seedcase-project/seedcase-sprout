@@ -25,5 +25,5 @@ def create_dirs(paths: list[Path]) -> list[Path]:
     Returns:
         A list of paths to the newly created directories.
     """
-		created_dirs = [create_dir(path) for path in paths]
+    created_dirs = [create_dir(path) for path in paths]
     return created_dirs
