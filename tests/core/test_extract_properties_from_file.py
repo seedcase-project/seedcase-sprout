@@ -1,7 +1,7 @@
 import csv
 import json
 
-from sprout.core.extract_resource_properties import extract_resource_properties
+from sprout.core.extract_properties_from_file import extract_properties_from_file
 
 
 def test_extracts_properties_from_empty_csv(tmp_path):
@@ -22,7 +22,7 @@ def test_extracts_properties_from_empty_csv(tmp_path):
     }
 
     # when + then
-    assert extract_resource_properties(file_path) == expected_properties
+    assert extract_properties_from_file(file_path) == expected_properties
 
 
 def test_extracts_properties_from_complete_csv(tmp_path):
@@ -53,7 +53,7 @@ def test_extracts_properties_from_complete_csv(tmp_path):
         writer.writerows(data)
 
     # when + then
-    assert extract_resource_properties(file_path) == expected_properties
+    assert extract_properties_from_file(file_path) == expected_properties
 
 
 def test_extracts_properties_from_json(tmp_path):
@@ -75,4 +75,4 @@ def test_extracts_properties_from_json(tmp_path):
         json.dump(data, file)
 
     # when + then
-    assert extract_resource_properties(file_path) == expected_properties
+    assert extract_properties_from_file(file_path) == expected_properties

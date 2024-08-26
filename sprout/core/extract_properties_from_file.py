@@ -3,7 +3,7 @@ from pathlib import Path
 from frictionless import describe
 
 
-def extract_resource_properties(path: Path) -> dict:
+def extract_properties_from_file(path: Path) -> dict:
     """Extracts resource properties from the provided data file.
 
     Args:
