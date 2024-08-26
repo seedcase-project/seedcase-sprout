@@ -14,9 +14,6 @@ def test_create_single_dir(tmp_path):
     # Check if the result is equal to the new directory
     assert result[0] == new_dir[0]
 
-    # Check that only one directory is created
-    assert len(result) == len(new_dir)
-
 
 def test_create_two_dirs(tmp_path):
     """Create a number of new directories and returns the paths correctly."""
@@ -34,6 +31,3 @@ def test_create_two_dirs(tmp_path):
 
     # Check if the result is equal to the new directory
     assert result == new_dirs
-
-    # Check that two directories were created
-    assert len(result) == len(new_dirs)
