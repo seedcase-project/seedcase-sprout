@@ -11,6 +11,6 @@ def test_returns_file_with_valid_path(tmp_path):
 
 
 def test_raises_error_with_non_existent_file(tmp_path):
-    """Test that FileNotFound is raised if the file doesn't exist."""
+    """Test that FileNotFoundError is raised if the file doesn't exist."""
     with raises(FileNotFoundError):
         verify_is_file(tmp_path / "non_existent_file.txt")
