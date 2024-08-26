@@ -44,7 +44,7 @@ import os
 os.environ["SPROUT_ROOT"] = "~/Documents/data-packages/"
 ```
 
-Afterwards, you will create the structure for your first data package by
+Afterwards, you can create the structure for your first data package by
 using:
 
 ``` python
@@ -56,6 +56,7 @@ sp.create_package_structure(path=sp.path_package())
  PosixPath('~/Documents/data-packages/1/README.md')]
 ```
 
+This creates the initial structure of your new package with the ID `1`. The output above shows that the folder of your Data Package `1` has been created. This folder consists of two files: `datapackage.json` and `README.md`. The `datapackage.json` file is empty initially, but it will contain the metadata, a.k.a. the `properties`, of your Data Package. `README.md` is a prettified, human-readable version of the content of the `datapackage.json`.
 Then to fill in the details in the `datapackage.json` file, you can use
 the `create_package_properties()` function:
 
@@ -80,7 +81,11 @@ package_properties = sp.create_package_properties(
 )
 
 # TODO: add an example output of the above.
-# Save the package properties to the `datapackage.json` file
+```
+
+To save the package properties to the `datapackage.json` file, run:
+
+```
 sp.write_package_properties(
   json_object=package_properties,
   path=sp.path_package_properties(package_id=1)
@@ -122,7 +127,9 @@ sprout package create \
   --description "Data from the 2021 study on diabetes and hypertension"
 ```
 
-You will now have a new data package in the location you specified:
+This creates the initial structure of your new package with the ID `1`. The output above shows that the folder of your Data Package `1` has been created. This folder consists of two files: `datapackage.json` and `README.md`. The `datapackage.json` file is empty initially, but it will contain the metadata, a.k.a. the `properties`, of your Data Package. `README.md` is a prettified, human-readable version of the content of the `datapackage.json`.
+
+You now have the basic starting point for adding data resources to your data package in the location you specified:
 
 ```         
 ~/Documents/data-packages/1/datapackage.json
