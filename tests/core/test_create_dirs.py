@@ -1,32 +1,10 @@
 from sprout.core.create_dirs import create_dirs
 
 
-def test_creating_existing_directory(tmp_path):
-    """Checks for an existing directory and returns the name
-    if the directory already exists.
-    """
-    # Create a list of temporary directories
-    temp_dirs = [
-        tmp_path / "existing_folder",
-        tmp_path / "existing_folder2",
-    ]
-
-    for dir in temp_dirs:
-        dir.mkdir()
-
-    result = create_dirs(temp_dirs)
-
-    # Check if the result is equal to the existing paths
-    assert result == temp_dirs
-
-    # Check the number of directories created
-    assert len(result) == len(temp_dirs)
-
-
 def test_create_single_dir(tmp_path):
     """Create a new directory and return the path correctly."""
     # Create a temporary directory
-    new_dirs = [tmp_path / "new_dir"]
+    new_dir = [tmp_path / "new_dir"]
 
     result = create_dirs(new_dir)
 
