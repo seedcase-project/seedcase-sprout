@@ -26,7 +26,8 @@ access.
 
 ## Creating a Data Package
 
-:::: panel-tabset
+::: panel-tabset
+
 ### Python
 
 The first thing you'll need to decide is where you want to store your
@@ -51,14 +52,20 @@ using:
 sp.create_package_structure(path=sp.path_package())
 ```
 
-```         
+```
 [PosixPath('~/Documents/data-packages/1/datapackage.json'),
  PosixPath('~/Documents/data-packages/1/README.md')]
 ```
 
-This creates the initial structure of your new package with the ID `1`. The output above shows that the folder of your Data Package `1` has been created. This folder consists of two files: `datapackage.json` and `README.md`. The `datapackage.json` file is empty initially, but it will contain the metadata, a.k.a. the `properties`, of your Data Package. `README.md` is a prettified, human-readable version of the content of the `datapackage.json`.
-Then to fill in the details in the `datapackage.json` file, you can use
-the `create_package_properties()` function:
+This creates the initial structure of your new package with the ID `1`.
+The output above shows that the folder of your Data Package `1` has been
+created. This folder consists of two files: `datapackage.json` and
+`README.md`. The `datapackage.json` file is empty initially, but it will
+contain the metadata, a.k.a. the `properties`, of your Data Package.
+`README.md` is a prettified, human-readable version of the content of
+the `datapackage.json`. Then to fill in the details in the
+`datapackage.json` file, you can use the `create_package_properties()`
+function:
 
 ``` python
 package_properties = sp.create_package_properties(
@@ -127,11 +134,18 @@ sprout package create \
   --description "Data from the 2021 study on diabetes and hypertension"
 ```
 
-This creates the initial structure of your new package with the ID `1`. The output above shows that the folder of your Data Package `1` has been created. This folder consists of two files: `datapackage.json` and `README.md`. The `datapackage.json` file is empty initially, but it will contain the metadata, a.k.a. the `properties`, of your Data Package. `README.md` is a prettified, human-readable version of the content of the `datapackage.json`.
+This creates the initial structure of your new package with the ID `1`.
+The output above shows that the folder of your Data Package `1` has been
+created. This folder consists of two files: `datapackage.json` and
+`README.md`. The `datapackage.json` file is empty initially, but it will
+contain the metadata, a.k.a. the `properties`, of your Data Package.
+`README.md` is a prettified, human-readable version of the content of
+the `datapackage.json`.
 
-You now have the basic starting point for adding data resources to your data package in the location you specified:
+You now have the basic starting point for adding data resources to your
+data package in the location you specified:
 
-```         
+```
 ~/Documents/data-packages/1/datapackage.json
 ~/Documents/data-packages/1/README.md
 ```
@@ -141,4 +155,4 @@ You now have the basic starting point for adding data resources to your data pac
 ::: callout-warning
 In development.
 :::
-::::
+:::
