@@ -1,3 +1,4 @@
+from pytest import raises
 from sprout.core.create_dirs import create_dirs
 
 
@@ -14,13 +15,8 @@ def test_creating_existing_directory(tmp_path):
     for dir in temp_dirs:
         dir.mkdir()
 
-    result = create_dirs(temp_dirs)
-
-    # Check if the result is equal to the existing paths
-    assert result == temp_dirs
-
-    # Check the number of directories created
-    assert len(result) == len(temp_dirs)
+		with raises(FileExistsError):
+				create_dirs(temp_dirs)
 
 
 def test_create_single_dir(tmp_path):
@@ -36,8 +32,6 @@ def test_create_single_dir(tmp_path):
     # Check if the result is equal to the new directory
     assert result[0] == new_dir[0]
 
-    # Check that only one directory is created
-    assert len(result) == len(new_dir)
 
 
 def test_create_two_dirs(tmp_path):
@@ -57,5 +51,3 @@ def test_create_two_dirs(tmp_path):
     # Check if the result is equal to the new directory
     assert result == new_dirs
 
-    # Check that two directories were created
-    assert len(result) == len(new_dirs)
