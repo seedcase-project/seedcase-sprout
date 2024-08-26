@@ -248,13 +248,13 @@ object following the Frictionless Data standard. Internally it uses the
 frictionless Python package to guess and fill in some of the property
 fields required by the Frictionless Data resource specification. This
 function is often followed by `edit_resource_properties()` to fill in
-any remaining missing fields and then `verify_resource_properties()`
+any remaining missing fields and then the `verify_resource_properties()`
 function. Usually, you use either this function or the
 `create_resource_properties()` function to create the resource
 properties for the specific data resource given. The `path` argument
 points to the resource `id` folder the properties are for; use
-`path_resource()` to help give the correct path. to give the path to the
-resource; Outputs a JSON object, use `write_resource_properties()` to
+`path_resource()` to help give the correct path. Outputs a JSON object,
+use `write_resource_properties()` to
 save the JSON object to the `datapackage.json` file.
 
 ## Path functions
