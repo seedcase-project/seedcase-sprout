@@ -31,3 +31,15 @@ def test_create_two_dirs(tmp_path):
 
     # Check if the result is equal to the new directory
     assert result == new_dirs
+
+def test_raise_error_with_existing_dir(tmp_path):
+    """Raise FileExistsError when the input path is an existent directory."""
+    # Create a temporary directory
+    new_dir = [tmp_path / "new_dir"]
+    new_dir[0].mkdir()
+
+    with raises(
+        FileExistsError,
+    ):
+        create_dirs(new_dir)
+
