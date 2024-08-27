@@ -6,25 +6,27 @@ state "create_properties_template()" as cpt {
 
   state arg <<entryPoint>>
 
+  arg -[hidden]> url
+
   state "DATA_PACKAGE_SPEC_URL" as url 
   url : - Variable of the URL to the\n  Data Package Spec
 
   state "scrape_url()" as su
   su : - Required arg: url
   su : - Output: JSON
-  su : - Scrapes the JSON using web API
+  su : - Scrapes the JSON\n  using web API
   url --> su : string
 
-  state "drop_property_fields()" as djf
-  dpf : - Required arg: properties, field
+  state "drop_property_fields()" as dpf
+  dpf : - Required arg: properties,\n  field (a list of strings)
   dpf : - Output: JSON
   dpf : - Drop any fields we don't use
   su --> dpf : JSON object
 
-  state "edit_property_field()" as ejf
-  epf : - Required arg: properties,\n  field, value
+  state "edit_property_field()" as epf
+  epf : - Required arg: properties, field (a\n  string), value (a string)
   epf : - Output: JSON
-  epf : - Edit field values to\n  defaults we use
+  epf : - Edit field values to defaults we use
   dpf --> epf : JSON object
 
   state "write_file()" as wf
