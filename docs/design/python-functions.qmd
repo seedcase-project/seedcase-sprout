@@ -167,6 +167,11 @@ provide the correct path location. It creates two paths: the
 `resources/<id>/` path and the `resources/<id>/raw/` path. The output is
 a list of these two path objects.
 
+![Diagram showing the internal function flow of the
+`create_resource_structure()`
+function.](images/core-python-functions/create-resource-structure.svg){#fig-create-resource-structure
+fig-alt="A Plant UML schematic of the detailed code flow within the `create_resource_structure()` function."}
+
 ### `create_resource_properties(path, properties)`
 
 This function sets up and structures a new resource property by taking
@@ -176,8 +181,9 @@ JSON object following the Data Package specification (use
 `view_resource_properties_template()` to get a JSON object that follows
 the Frictionless Data Package standard). The `path` argument provides
 the path to the resource `id` that the properties are for; use
-`path_resource()` to provide the correct path. Outputs a JSON object
-only; use `write_resource_properties()` to save the JSON object to the
+`path_resource()` to provide the correct path or use the output of
+`create_resource_structure()`. Outputs a JSON object; use
+`write_resource_properties()` to save the JSON object to the
 `datapackage.json` file.
 
 ![Diagram showing the internal function flow of the
