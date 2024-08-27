@@ -181,16 +181,6 @@ only; use `write_resource_properties()` to save the JSON object to the
 `datapackage.json` file.
 
 ![Diagram showing the internal function flow of the
-`create_resource_structure()`
-function.](images/core-python-functions/create-resource-structure.svg){#fig-create-resource-structure
-fig-alt="A Plant UML schematic of the detailed code flow within the `create_resource_structure()` function."}
-
-Use `path_resource()` to provide the correct `path` location or use the
-output of `create_resource_structure()`. Outputs a JSON object only; use
-`write_resource_properties()` to save the JSON object to the
-`datapackage.json` file.
-
-![Diagram showing the internal function flow of the
 `create_resource_properties()`
 function.](images/core-python-functions/create-resource-properties.svg){#fig-create-resource-properties
 fig-alt="A Plant UML schematic of the detailed code flow within the `create_resource_properties()` function."}
