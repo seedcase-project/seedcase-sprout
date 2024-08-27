@@ -47,7 +47,7 @@ state "extract_resource_properties()" as erp {
   state "extract_properties_from_file()" as epff
   epff : - Required arg: path
   epff : - Output: JSON
-  vsf --> epff : JSON object
+  vsf --> epff : path object
 
   state "edit_resource_properties_field()" as erpf
   erpf : - Required args: properties, field, value
