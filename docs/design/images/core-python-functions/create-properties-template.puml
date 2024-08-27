@@ -15,20 +15,20 @@ state "create_properties_template()" as cpt {
   su : - Scrapes the JSON using web API
   url --> su : string
 
-  state "drop_property_field()" as dpf
+  state "drop_property_fields()" as djf
   dpf : - Required arg: properties, field
   dpf : - Output: JSON
   dpf : - Drop any fields we don't use
   su --> dpf : JSON object
 
-  state "edit_property_field()" as epf
+  state "edit_property_field()" as ejf
   epf : - Required arg: properties,\n  field, value
   epf : - Output: JSON
   epf : - Edit field values to\n  defaults we use
   dpf --> epf : JSON object
 
   state "write_file()" as wf
-  wf : - Required arg: string and path
+  wf : - Required arg: JSON and path
   wf : - Output: path
   arg --> wf : path object
   epf --> wf : JSON object
