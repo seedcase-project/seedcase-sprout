@@ -258,11 +258,11 @@ follows the Frictionless Data specification.
     `resource_id` to complete the correct path for the specific
     package/resource.
 -   All of these functions output a path object.
--   The path's returned by all of these functions are paths that exist,
+-   The paths returned by all of these functions are paths that exist,
     so all include a `verify_is_dir()` or `verify_is_file()` check.
 -   If the wrong `package_id` or `resource_id` is given, an error
     message will include a list of all the actual `package_id` at the
-    `path_sprout_root()` location or `resource_id` for a specific
+    `path_sprout_root()` location or all actual `resource_id` for a specific
     package.
 
 ### `path_resources(package_id)`
