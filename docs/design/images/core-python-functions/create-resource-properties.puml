@@ -1,6 +1,13 @@
 @startuml create-resource-properties
 !theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
 
+state "Input" as input {
+  input : - `path_*()` functions assist with giving correct paths
+' Arguments -----
+  path : - Path to resource <id> folder
+  properties: - JSON object of the resource\n  following the Data Package spec
+}
+
 state "Output" as output {
   state "JSON" as json_output
   json_output : - JSON object of the resource following\n  the Data Package spec
@@ -10,13 +17,16 @@ state "Output" as output {
 state "create_resource_properties()" as crp {
   crp : - Required arg: path and properties object
 
-  state path <<entryPoint>>
-  state properties <<entryPoint>>
+  state arg_path <<entryPoint>>
+  state arg_properties <<entryPoint>>
+
+  path --> arg_path
+  properties --> arg_properties
 
   state "verify_is_dir()" as vid
   vid : - Required arg: path
   vid : - Output: path or Error
-  path --> vid : path object
+  arg_path --> vid : path object
 
   state "create_relative_resource_data_path()" as crrdp
   crrdp : - Required arg: absolute path from input
@@ -27,7 +37,7 @@ state "create_resource_properties()" as crp {
   vrp : - Required arg: properties
   vrp : - Output: JSON or Error
   vrp : - Checks against spec
-  properties --> vrp : JSON object
+  arg_properties --> vrp : JSON object
 
   state "edit_resource_properties_field()" as erpf
   erpf : - Required args: properties, field, value
