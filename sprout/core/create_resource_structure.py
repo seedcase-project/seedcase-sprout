@@ -11,16 +11,23 @@ from sprout.core.verify_is_dir import verify_is_dir
 def create_resource_structure(path: Path) -> list[Path]:
     """Create the directory structure of a new resource.
 
+    This is the first function to use to set up the structure for a data resource. It
+    creates the paths for a new data resource in a specific (existing) package by
+    creating the folder setup described in the
+    [Outputs](https://sprout.seedcase-project.org/docs/design/outputs) section on the
+    Sprout website. Use the `path_resources()` function to provide the correct path
+    location.
+
     Args:
-        path: Path to the resources directory in a package.
+       path: Path to the resources directory in a package.
 
     Returns:
-        A list of the two created directories:
-          - A path to the resource directory and
-          - A path to the raw data directory.
+       A list of the two created directories:
+         - A path to the resource directory and
+         - A path to the raw data directory.
 
     Raises:
-        NotADirectoryError: If path is not an existing directory.
+       NotADirectoryError: If path is not an existing directory.
     """
     verify_is_dir(path)
 
