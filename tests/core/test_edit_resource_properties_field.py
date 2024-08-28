@@ -1,4 +1,4 @@
-from pytest import mark
+from pytest import mark, raises
 
 from sprout.core.edit_resource_properties_field import edit_resource_properties_field
 
@@ -16,14 +16,9 @@ def test_updates_existing_property(value):
     )
 
 
-@mark.parametrize(
-    "value", ["new value", 123, [1, 2, 3], {"outer": {"inner": "new value"}}]
-)
-def test_adds_new_property(value):
-    """Given a properties object without the specified property, should add that
-    property with the specified value."""
-    properties = {}
-    expected_properties = {"test": value}
-    assert (
-        edit_resource_properties_field(properties, "test", value) == expected_properties
-    )
+def test_rejects_nonexistent_property():
+    """Given a properties object without the specified property, should raise
+    KeyError."""
+    properties = {"test": "old value"}
+    with raises(KeyError):
+        edit_resource_properties_field(properties, "nonexistent", "new value")
