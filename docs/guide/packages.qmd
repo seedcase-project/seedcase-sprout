@@ -1,12 +1,12 @@
 ---
-title: "Creating and managing Data Packages"
+title: "Creating and managing data packages"
 ---
 
 {{< include /docs/includes/_wip.qmd >}}
 
-At the core of Sprout is the Data Package, which is a standardized way
-of structuring and sharing data. This guide will show you how to create
-and manage data packages using Sprout.
+At the core of Sprout is the [data package](/docs/design/outputs.qmd),
+which is a standardized way of structuring and sharing data. This guide
+will show you how to create and manage data packages using Sprout.
 
 <!-- TODO: this callout might need to be its own include, since other docs will use it too -->
 
@@ -24,10 +24,9 @@ space on a server that you need to use a Terminal and SSH to be able to
 access.
 :::
 
-## Creating a Data Package
+## Creating a data package
 
-::: panel-tabset
-
+:::: panel-tabset
 ### Python
 
 The first thing you'll need to decide is where you want to store your
@@ -52,16 +51,16 @@ using:
 sp.create_package_structure(path=sp.path_package())
 ```
 
-```
+```         
 [PosixPath('~/Documents/data-packages/1/datapackage.json'),
  PosixPath('~/Documents/data-packages/1/README.md')]
 ```
 
 This creates the initial structure of your new package with the ID `1`.
-The output above shows that the folder of your Data Package `1` has been
+The output above shows that the folder of your data package `1` has been
 created. This folder consists of two files: `datapackage.json` and
 `README.md`. The `datapackage.json` file is empty initially, but it will
-contain the metadata, a.k.a. the `properties`, of your Data Package.
+contain the metadata, a.k.a. the `properties`, of your data package.
 `README.md` is a prettified, human-readable version of the content of
 the `datapackage.json`. Then to fill in the details in the
 `datapackage.json` file, you can use the `create_package_properties()`
@@ -70,7 +69,7 @@ function:
 ``` python
 package_properties = sp.create_package_properties(
   path=sp.path_package_properties(package_id=1),
-  properties=sp.properties_json(
+  properties=sp.package_properties(
     title="Diabetes and Hypertension Study", 
     description="Data from the 2021 study on diabetes and hypertension", 
     contributors=[{
@@ -92,9 +91,9 @@ package_properties = sp.create_package_properties(
 
 To save the package properties to the `datapackage.json` file, run:
 
-```
+``` python
 sp.write_package_properties(
-  json_object=package_properties,
+  properties=package_properties,
   path=sp.path_package_properties(package_id=1)
 )
 ```
@@ -135,17 +134,17 @@ sprout package create \
 ```
 
 This creates the initial structure of your new package with the ID `1`.
-The output above shows that the folder of your Data Package `1` has been
+The output above shows that the folder of your data package `1` has been
 created. This folder consists of two files: `datapackage.json` and
 `README.md`. The `datapackage.json` file is empty initially, but it will
-contain the metadata, a.k.a. the `properties`, of your Data Package.
+contain the metadata, a.k.a. the `properties`, of your data package.
 `README.md` is a prettified, human-readable version of the content of
 the `datapackage.json`.
 
 You now have the basic starting point for adding data resources to your
 data package in the location you specified:
 
-```
+```         
 ~/Documents/data-packages/1/datapackage.json
 ~/Documents/data-packages/1/README.md
 ```
@@ -155,4 +154,4 @@ data package in the location you specified:
 ::: callout-warning
 In development.
 :::
-:::
+::::
