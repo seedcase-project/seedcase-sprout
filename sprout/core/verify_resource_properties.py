@@ -13,6 +13,8 @@ class InvalidResourcePropertiesError(Exception):
             *args: non-keyword arguments
             **kwargs: keyword arguments
         """
+        # TODO: Consider if it's a problem for us that report.errors is not guaranteed
+        # to include all errors.
         errors = [
             f"{error.title}: {error.description} {error.message}"
             for error in report.errors
