@@ -14,7 +14,8 @@
 # Resources -----
 # from .list_resources import *
 # from .view_resource import *
-# from .create_resource_structure import *
+from .create_resource_structure import *
+
 # from .create_resource_properties import *
 # from .extract_resource_properties import *
 # from .edit_resource_properties import *
@@ -57,7 +58,7 @@ __all__ = [
     # Resources -----
     # "list_resources",
     # "view_resource",
-    # "create_resource_structure",
+    "create_resource_structure",
     # "create_resource_properties",
     # "extract_resource_properties",
     # "edit_resource_properties",
