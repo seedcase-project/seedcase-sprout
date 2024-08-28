@@ -47,6 +47,7 @@ state "create_package_structure()" as cps {
   state "create_package_properties()" as cppt
   cppt : - Required arg: path
   cppt : - Output: JSON object
+  cppt : - Uses create_properties_template()\n  internally
   cd --> cppt
 
   state "create_readme_text()" as crt
