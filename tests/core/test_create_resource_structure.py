@@ -3,7 +3,7 @@ from pytest import raises
 import sprout.core as sp
 
 
-def test_returns_resource_structure_when_no_resources_exists(tmp_path):
+def test_returns_resource_structure_when_no_resources_exist(tmp_path):
     """Returns the paths to the resource and raw data folder."""
     lst_created_paths = sp.create_resource_structure(tmp_path)
 
@@ -12,7 +12,7 @@ def test_returns_resource_structure_when_no_resources_exists(tmp_path):
     assert lst_created_paths == [tmp_path / "1", tmp_path / "1" / "raw"]
 
 
-def test_returns_resource_structure_when_resources_exists(tmp_path):
+def test_returns_resource_structure_when_resources_exist(tmp_path):
     """Returns the paths to the resource and raw data folder with the next id."""
     # Create first resource structure
     sp.create_resource_structure(tmp_path)
