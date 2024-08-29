@@ -1,4 +1,4 @@
-from pytest import fixture, mark
+from pytest import fixture
 
 from sprout.core.write_file import write_file
 
