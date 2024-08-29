@@ -16,7 +16,7 @@ def test_returns_dict_with_expected_content_when_url_contains_json():
         "required",
         "properties",
     ]
-    expected_content_except = (
+    expected_content_excerpt = (
         "'$schema': 'http://json-schema.org/draft-07/schema#', "
         "'title': 'Data Package', "
         "'description': 'Data Package', "
@@ -26,7 +26,7 @@ def test_returns_dict_with_expected_content_when_url_contains_json():
 
     assert isinstance(url_content, dict)
     assert expected_keys == list(url_content.keys())
-    assert expected_content_except in str(url_content)
+    assert expected_content_excerpt in str(url_content)
 
 
 def test_raises_error_when_url_does_not_contain_json():
