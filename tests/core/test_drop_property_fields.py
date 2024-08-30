@@ -19,14 +19,10 @@ def test_drops_multiple_fields():
         "test1": "value1",
         "test2": "value2",
         "test3": "value3",
-        "test4": "value4",
     }
-    expected_properties = {"test4": "value4"}
+    expected_properties = {"test3": "value3"}
 
-    assert (
-        drop_property_fields(properties, ["test1", "test2", "test3"])
-        == expected_properties
-    )
+    assert drop_property_fields(properties, ["test1", "test2"]) == expected_properties
 
 
 def test_drops_no_fields_if_input_empty():
