@@ -1,7 +1,7 @@
 from requests import get
 
 
-def scrape_url(url: str) -> dict:
+def scrape_json_from_url(url: str) -> dict:
     """Scrapes a URL with a JSON object.
 
     Args:
