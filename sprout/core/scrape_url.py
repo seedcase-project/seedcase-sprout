@@ -13,6 +13,4 @@ def scrape_url(url: str) -> dict:
     Raises:
         JSONDecodeError: If the URL does not contain a JSON object.
     """
-    url_content = get(url).json()
-
-    return url_content
+    return get(url).json()
