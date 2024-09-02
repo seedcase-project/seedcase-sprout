@@ -17,11 +17,11 @@ def create_resource_properties(path: Path, properties: dict) -> dict:
 
     Args:
         path: the path to the resource `id` folder; use `path_resource()`
-        to provide the correct path or use the output of `create_resource_structure()`
+        	to provide the correct path or use the output of `create_resource_structure()`
         properties: the properties of the resource; must be given as a
-        JSON object following the Data Package specification; use
-        `view_resource_properties_template()` to get a JSON object
-        that follows the Frictionless Data Package standard
+        	JSON object following the Data Package specification; use
+        	`view_resource_properties_template()` to get a JSON object
+        	that follows the Frictionless Data Package standard
 
     Raises:
         NotADirectoryError: if path does not point to a directory
