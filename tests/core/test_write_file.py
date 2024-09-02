@@ -35,8 +35,8 @@ def test_raises_error_when_parent_folder_does_not_exist(tmp_path, file_content):
 def test_overwrites_file_content_if_file_already_exists(tmp_path, file_content):
     """Tests that if file already exists, it will be overwritten."""
     file_path = tmp_path / "test.txt"
-    write_file(file_path, file_content)
+    write_file(file_content, file_path)
     new_file_content = "This is new content."
 
-    assert write_file(file_path, new_file_content) == file_path
+    assert write_file(new_file_content, file_path) == file_path
     assert file_path.read_text() == new_file_content
