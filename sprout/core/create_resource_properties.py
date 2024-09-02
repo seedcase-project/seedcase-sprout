@@ -13,17 +13,15 @@ def create_resource_properties(path: Path, properties: dict) -> dict:
 
     This function sets up and structures a new resource property by taking
     the fields given in the `properties` argument to fill them and prepare
-    them to be added to the `datapackage.json` file. It must be given as a
-    JSON object following the Data Package specification (use
-    `view_resource_properties_template()` to get a JSON object that follows
-    the Frictionless Data Package standard). The `path` argument provides
-    the path to the resource `id` that the properties are for; use
-    `path_resource()` to provide the correct path or use the output of
-    `create_resource_structure()`.
+    them to be added to the `datapackage.json` file.
 
     Args:
-        path: the path to the resource folder
-        properties: the properties of the resource
+        path: the path to the resource `id` folder; use `path_resource()`
+        to provide the correct path or use the output of `create_resource_structure()`
+        properties: the properties of the resource; must be given as a
+        JSON object following the Data Package specification; use
+        `view_resource_properties_template()` to get a JSON object
+        that follows the Frictionless Data Package standard
 
     Raises:
         NotADirectoryError: if path does not point to a directory
