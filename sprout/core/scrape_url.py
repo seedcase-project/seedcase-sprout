@@ -11,7 +11,7 @@ def scrape_url(url: str) -> dict:
         A dictionary with the JSON object from the URL.
 
     Raises:
-        JSONDecodeError: If the URL does not contain a JSON object.
-        ConnectionError: If the URL is not reachable.
+        json.JSONDecodeError: If the URL does not contain a JSON object.
+        requests.exceptions.ConnectionError: If the URL is not reachable.
     """
     return get(url).json()
