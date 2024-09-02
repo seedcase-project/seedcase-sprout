@@ -5,6 +5,7 @@ def write_file(string: str, path: Path) -> Path:
     """Writes a file to the given path with the given content.
 
     The parent folder of the file given in path must exist.
+    If the file already exists, it will be overwritten.
 
     Args:
         string: Content to be written to the file.
