@@ -1,4 +1,4 @@
-@startuml create-package-structure
+@startuml create-package-properties
 !theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
 
 state "Input" as input {
