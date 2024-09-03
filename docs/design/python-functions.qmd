@@ -354,6 +354,16 @@ These functions are still being developed.
 
 :   Create a prettier, human readable version of a JSON object.
 
+`resource_properties(...)`
+
+:   TODO: This function is still being developed. Used to help create
+    and validate a properties object to pass around.
+
+`package_properties(...)`
+
+:   TODO: This function is still being developed. Used to help create a
+    properties object to pass around.
+
 `create_properties_template(path)`
 
 :   While mostly intended for internal purposes, this function can be
