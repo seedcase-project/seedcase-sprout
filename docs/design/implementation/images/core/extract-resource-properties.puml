@@ -1,11 +1,12 @@
-@startuml create-resource-properties
+@startuml extract-resource-properties
 !theme seedcase from https://raw.githubusercontent.com/seedcase-project/seedcase-theme/main
 
 state "Input" as input {
   input : - `path_*()` functions assist with giving correct paths
 ' Arguments -----
-  path : - Path to resource <id> folder
-  properties: - JSON object of the resource\n  following the Data Package spec
+  path : - Path to specific\n  resource folder
+  data_path : - Path to file with\n  data in it
+  path -[hidden]> data_path
 }
 
 state "Output" as output {
@@ -14,14 +15,14 @@ state "Output" as output {
   json_output : - Use `write_resource_properties()` to\n  save back to `datapackage.json`
 }
 
-state "create_resource_properties()" as crp {
-  crp : - Required arg: path and properties object
+state "extract_resource_properties()" as erp {
+  erp : - Required arg: path, data_path
 
   state arg_path <<entryPoint>>
-  state arg_properties <<entryPoint>>
+  state arg_data_path <<entryPoint>>
 
   path --> arg_path
-  properties --> arg_properties
+  data_path --> arg_data_path
 
   state "verify_is_dir()" as vid
   vid : - Required arg: path
@@ -33,20 +34,35 @@ state "create_resource_properties()" as crp {
   crrdp : - Output: relative path\n  (e.g. `resources/1/data.parquet`)
   vid --> crrdp : path object
 
+  state "verify_is_file()" as vif
+  vif : - Required arg: path
+  vif : - Output: path or Error
+  arg_data_path --> vif : path object
+
+  state "verify_is_supported_format()" as vsf
+  vsf : - Required arg: path
+  vsf : - Output: path or Error
+  vif --> vsf : path object
+
+  state "extract_properties_from_file()" as epff
+  epff : - Required arg: path
+  epff : - Output: JSON
+  vsf --> epff : path object
+
+  state "edit_property_field()" as epf
+  epf : - Required args: properties, field, value
+  epf : - Output: JSON
+  epff --> epf : JSON object
+  crrdp --> epf : Update `path`\nproperty
+
   state "verify_resource_properties()" as vrp
   vrp : - Required arg: properties
   vrp : - Output: JSON or Error
   vrp : - Checks against spec
-  arg_properties --> vrp : JSON object
-
-  state "edit_resource_properties_field()" as erpf
-  erpf : - Required args: properties, field, value
-  erpf : - Output: JSON
-  crrdp --> erpf : Update `path`\nproperty
-  vrp --> erpf : JSON object
+  epf --> vrp : JSON object
 
   state "return" <<exitPoint>>
-  erpf --> return : JSON object
+  vrp --> return : JSON object
   return --> output
 }
 @enduml
