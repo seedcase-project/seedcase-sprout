@@ -40,7 +40,7 @@ state "create_package_properties()" as cps {
   vif --> rp : path object
 
   state "join_properties()" as jp
-  jp : - Required args: current and new
+  jp : - Required args: current_properties and new_properties
   jp : - Output: JSON
   rp --> jp : JSON object
   vpp --> jp
