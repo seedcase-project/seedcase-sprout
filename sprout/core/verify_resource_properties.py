@@ -1,5 +1,19 @@
 from frictionless import Report, Resource
 
+RESOURCE_REQUIRED_PROPERTIES = {
+    "id",
+    "name",
+    "path",
+    "type",
+    "title",
+    "description",
+    "homepage",
+    "sources",
+    "format",
+    "mediatype",
+    "encoding",
+}
+
 
 class InvalidResourcePropertiesError(Exception):
     """Raised if the resource properties are invalid."""

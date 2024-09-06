@@ -1,0 +1,15 @@
+PACKAGE_REQUIRED_PROPERTIES = {
+    "id",
+    "name",
+    "title",
+    "description",
+    "homepage",
+    "version",
+    "created",
+    "contributors",
+    "keywords",
+    "image",
+    "licenses",
+    "resources",
+    "sources",
+}
