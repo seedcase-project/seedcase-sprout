@@ -31,7 +31,7 @@ describe metadata as the structure of the properties (the metadata as a
 whole) and as the file itself. Since we mainly create, modify, or delete
 properties not descriptors and since we want to minimize using and
 introducing additional terms, for simplicity we use "properties" to refer to
-the content of the `datapackage.json` file rather than it's structure.
+the content of the `datapackage.json` file rather than its structure.
 We may also occasionally use "properties" to refer to the file itself.
 :::
 
