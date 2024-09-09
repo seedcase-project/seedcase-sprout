@@ -34,13 +34,8 @@ state "create_package_properties()" as cps {
   vpp : - Required arg: properties
   vpp : - Output: JSON or Error
   vpp : - Checks that all fields\n  and values match spec
+  vpp : - Checks that required\n  fields are present
   arg_properties --> vpp
-
-  state "verify_required_package_properties()" as vrp
-  vrp : - Required arg: properties
-  vrp : - Output: JSON or Error
-  vrp : - Checks that required fields\n  are added
-  vpp --> vrp : JSON object
 
   state "read_properties()" as rp
   rp : - Required arg: path
@@ -52,7 +47,7 @@ state "create_package_properties()" as cps {
   up : - Output: JSON
   up : - New properties overwrite old ones
   rp --> up : JSON object
-  vrp --> up : JSON object
+  vpp --> up : JSON object
 
   state "return" <<exitPoint>>
   up --> return : JSON object
