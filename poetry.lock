@@ -237,6 +237,20 @@ files = [
 ]
 
 [[package]]
+name = "freezegun"
+version = "1.5.1"
+description = "Let your Python tests travel through time"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "freezegun-1.5.1-py3-none-any.whl", hash = "sha256:bf111d7138a8abe55ab48a71755673dbaa4ab87f4cff5634a4442dfec34c15f1"},
+    {file = "freezegun-1.5.1.tar.gz", hash = "sha256:b29dedfcda6d5e8e083ce71b2b542753ad48cfec44037b3fc79702e2980a89e9"},
+]
+
+[package.dependencies]
+python-dateutil = ">=2.7"
+
+[[package]]
 name = "frictionless"
 version = "5.17.1"
 description = "Data management framework for Python that provides functionality to describe, extract, validate, and transform tabular data"
@@ -1513,4 +1527,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "6c4c0f45771ee68e641f94b1d2a01027632bb35e029f7a20d5ab72b2b7c4a0ec"
+content-hash = "13b9e6a79052f1fb90c85818617827d4e6ca1054cea999fc72eff17890cda0c5"
