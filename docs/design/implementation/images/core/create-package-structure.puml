@@ -44,10 +44,10 @@ state "create_package_structure()" as cps {
   cd : - Output: A list of paths\n  of created directories
   cip --> cd
 
-  state "create_package_properties()" as cppt
+  state "create_properties_object()" as cppt
   cppt : - Required arg: path
   cppt : - Output: JSON object
-  cppt : - Uses create_properties_template()\n  internally
+  cppt : - Uses properties dataclasses\n  internally and sets default values
   cd --> cppt
 
   state "create_readme_text()" as crt
