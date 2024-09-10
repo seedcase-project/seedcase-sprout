@@ -2,7 +2,6 @@
 # This exposes only the functions we want exposed when
 # the package is imported via `from sprout.core import *`.
 
-
 # Packages -----
 # from .list_packages import *
 # from .view_package_properties import *
