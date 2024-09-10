@@ -2,9 +2,6 @@
 # This exposes only the functions we want exposed when
 # the package is imported via `from sprout.core import *`.
 
-from .create_properties_template import create_properties_template
-from .create_resource_properties import create_resource_properties
-from .create_resource_structure import create_resource_structure
 
 # Packages -----
 # from .list_packages import *
@@ -18,6 +15,9 @@ from .create_resource_structure import create_resource_structure
 # Resources -----
 # from .list_resources import *
 # from .view_resource import *
+from .create_resource_properties import create_resource_properties
+from .create_resource_structure import create_resource_structure
+
 # from .extract_resource_properties import *
 # from .edit_resource_properties import *
 # from .write_resource_data_to_raw import *
@@ -80,7 +80,6 @@ __all__ = [
     # "path_package",
     # "path_sprout_root",
     # Helpers -----
-    "create_properties_template",
     # "pretty_json",
     # "view_properties",
     # "view_package_properties_template",
