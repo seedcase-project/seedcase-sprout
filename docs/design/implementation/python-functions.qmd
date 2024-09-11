@@ -409,35 +409,21 @@ also creates the necessary directory if it doesn't exist.
 ## Property functions
 
 ::: {.callout-note collapse="true"}
-### `view_properties()`
+### `Properties(...)`
 
-TODO. Outputs a JSON object.
-:::
+Is a Python class with nested dataclasses that is used to help create
+properties objects used throughout Sprout. It mains is used for users to
+identify what fields are available to include, what are required, and to
+provide a way of creating correct properties that follow the
+Frictionless Data Package specification.
 
-::: {.callout-note collapse="true"}
-### `view_package_properties_template()`
+-   `Properties.Package(...)`
+-   `Properties.Licenses(...)`
+-   `Properties.Contributors(...)`
+-   `Properties.Resource(...)`
+-   `Properties.TableSchema(...)`
 
-TODO. Outputs a JSON object.
-:::
-
-::: {.callout-note collapse="true"}
-### `view_resource_properties_template()`
-
-TODO. Outputs a JSON object.
-:::
-
-::: {.callout-note collapse="true"}
-### `resource_properties(...)`
-
-TODO: This function is still being developed. Used to help create and
-validate a properties object to pass around.
-:::
-
-::: {.callout-note collapse="true"}
-### `package_properties(...)`
-
-TODO: This function is still being developed. Used to help create a
-properties object to pass around.
+<!-- TODO: Not going to repeat docs here, this can be auto-generated from Data Package -->
 :::
 
 ## Helper functions
