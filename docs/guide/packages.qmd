@@ -4,9 +4,10 @@ title: "Creating and managing data packages"
 
 {{< include /docs/includes/_wip.qmd >}}
 
-At the core of Sprout is the [data package](/docs/design/implementation/outputs.qmd),
-which is a standardized way of structuring and sharing data. This guide
-will show you how to create and manage data packages using Sprout.
+At the core of Sprout is the [data
+package](/docs/design/implementation/outputs.qmd), which is a
+standardized way of structuring and sharing data. This guide will show
+you how to create and manage data packages using Sprout.
 
 <!-- TODO: this callout might need to be its own include, since other docs will use it too -->
 
@@ -26,16 +27,17 @@ access.
 
 ## Creating a data package
 
-:::: panel-tabset
+::::: panel-tabset
 ### Python
 
 The first thing you'll need to decide is where you want to store your
 data packages. By default, Sprout will create it in
-`~/.sprout/packages/` on Linux (see [Outputs](/docs/design/implementation/outputs.qmd)
-for operating system specific locations), but you can change this by
-setting the `SPROUT_ROOT` environment variable. For instance, maybe you
-want the location to be `~/Documents/data-packages/`. You can set this
-in your Python script like so:
+`~/.sprout/packages/` on Linux (see
+[Outputs](/docs/design/implementation/outputs.qmd) for operating system
+specific locations), but you can change this by setting the
+`SPROUT_ROOT` environment variable. For instance, maybe you want the
+location to be `~/Documents/data-packages/`. You can set this in your
+Python script like so:
 
 ``` python
 import sprout.core as sp
@@ -51,7 +53,7 @@ using:
 sp.create_package_structure(path=sp.path_package())
 ```
 
-```         
+```
 [PosixPath('~/Documents/data-packages/1/datapackage.json'),
  PosixPath('~/Documents/data-packages/1/README.md')]
 ```
@@ -59,35 +61,54 @@ sp.create_package_structure(path=sp.path_package())
 This creates the initial structure of your new package with the ID `1`.
 The output above shows that the folder of your data package `1` has been
 created. This folder consists of two files: `datapackage.json` and
-`README.md`. The `datapackage.json` file is empty initially, but it will
-contain the metadata, a.k.a. the `properties`, of your data package.
-`README.md` is a prettified, human-readable version of the content of
-the `datapackage.json`. Then to fill in the details in the
-`datapackage.json` file, you can use the `create_package_properties()`
-function:
+`README.md`. The `datapackage.json` file initially contains fields with
+some default values in them, but it eventually will contain the
+metadata, a.k.a. the `properties`, of your data package. `README.md` is
+a prettified, human-readable version of the content of the
+`datapackage.json`.
+
+While you *could* manually fill in the details in the `datapackage.json`
+file, we have a helper `Properties()` class to make it easier for you.
+
+``` python
+properties = sp.Properties.Package(
+    title="Diabetes and Hypertension Study",
+    description="Data from the 2021 study on diabetes and hypertension",
+    contributors=[sp.Properties.Contributors(
+        title="Jamie Jones",
+        email="jamie_jones@example.com",
+        roles=["creator"]
+    )],
+    licenses=[sp.Properties.Licenses("ODC-BY-1.0")]
+)
+print(properties)
+```
+
+```
+# TODO: This will eventually show the actual output.
+Package(...)
+```
+
+Then, to apply this back into the current `datapackage.json` file, you
+first use the `create_package_properties()` function:
 
 ``` python
 package_properties = sp.create_package_properties(
   path=sp.path_package_properties(package_id=1),
-  properties=sp.package_properties(
-    title="Diabetes and Hypertension Study", 
-    description="Data from the 2021 study on diabetes and hypertension", 
-    contributors=[{
-        "title": "Jamie Jones",
-        "email": "jamie_jones@example.com",
-        "roles": ["creator"]
-      }, 
-      {
-        "title": "Jimmy James",
-        "email": "jimmy_james@example.com",
-        "roles": ["contact"]
-      }],
-    licenses=["ODC-BY-1.0"]
-  )
+  properties=properties
 )
-
-# TODO: add an example output of the above.
+print(package_properties)
 ```
+
+```
+# TODO: add an example output of the above.
+{...}
+```
+
+::: callout-important
+The `create_package_properties()` function will give an error if the
+required fields are not filled in to create a valid data package.
+:::
 
 To save the package properties to the `datapackage.json` file, run:
 
@@ -98,9 +119,10 @@ sp.write_package_properties(
 )
 ```
 
-If you need help with filling in the right properties, use
-`view_package_properties_template()` to see the available fields to fill
-in.
+If you need help with filling in the right properties, check the
+documentation for the `Properties()` class or run
+`print(sp.Properties.Package())` to get a list of all the fields you can
+fill in.
 
 You now have the basic starting point for adding data resources to your
 data package.
@@ -120,7 +142,7 @@ export SPROUT_ROOT=~/Documents/data-packages/
 Then creating a new package would be as simple as:
 
 ``` bash
-sprout package create 
+sprout package create
 ```
 
 This will prompt you for some required fields you need to fill in, like
@@ -144,7 +166,7 @@ the `datapackage.json`.
 You now have the basic starting point for adding data resources to your
 data package in the location you specified:
 
-```         
+```
 ~/Documents/data-packages/1/datapackage.json
 ~/Documents/data-packages/1/README.md
 ```
@@ -154,4 +176,4 @@ data package in the location you specified:
 ::: callout-warning
 In development.
 :::
-::::
+:::::
