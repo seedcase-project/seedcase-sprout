@@ -16,6 +16,9 @@ def test_returns_root_envvar_if_set(tmp_path):
     # Then
     assert root_path == root
 
+    # Clean up
+    os.environ.pop("SPROUT_ROOT")
+
 
 def test_returns_none_if_root_envvar_is_not_set():
     """Returns None if SPROUT_ROOT isn't set."""
