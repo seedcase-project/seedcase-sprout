@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import ClassVar
 
 
 @dataclass
@@ -15,6 +16,20 @@ class Source:
 @dataclass
 class Resource:
     """Class representing a Sprout data resource."""
+
+    REQUIRED_PROPERTIES: ClassVar[set[str]] = {
+        "id",
+        "name",
+        "path",
+        "type",
+        "title",
+        "description",
+        "homepage",
+        "sources",
+        "format",
+        "mediatype",
+        "encoding",
+    }
 
     id: str = ""
     name: str = ""
@@ -55,6 +70,22 @@ class License:
 @dataclass
 class Package:
     """Class representing a Sprout data package."""
+
+    REQUIRED_PROPERTIES: ClassVar[set[str]] = {
+        "id",
+        "name",
+        "title",
+        "description",
+        "homepage",
+        "version",
+        "created",
+        "contributors",
+        "keywords",
+        "image",
+        "licenses",
+        "resources",
+        "sources",
+    }
 
     id: str = ""
     name: str = ""
