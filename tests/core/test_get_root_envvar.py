@@ -5,14 +5,15 @@ from sprout.core.get_root_envvar import get_root_envvar
 
 def test_returns_root_envvar_if_set(tmp_path):
     """Returns the root environment variable SPROUT_ROOT if it is set."""
+    # Given
     root = tmp_path / "sprout"
     root.mkdir
     os.environ["SPROUT_ROOT"] = str(root)
 
-    # Act
+    # When
     root_path = get_root_envvar()
 
-    # Assert
+    # Then
     assert root_path == root
 
 
