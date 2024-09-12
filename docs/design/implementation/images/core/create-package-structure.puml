@@ -45,11 +45,8 @@ state "create_package_structure()" as cps {
   cip --> cd
 
   state "create_properties_object()" as cppt
-  cppt : - Required arg: path
   cppt : - Output: JSON object
   cppt : - Uses properties dataclasses\n  internally and sets default values
-  cd --> cppt
-
   state "create_readme_text()" as crt
   crt : - Required arg: JSON object
   crt : - Output: string
