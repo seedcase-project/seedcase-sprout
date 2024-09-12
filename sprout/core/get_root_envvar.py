@@ -9,6 +9,4 @@ def get_root_envvar() -> Path | None:
         A Path object containing SPROUT_ROOT if it is set, otherwise None.
     """
     root = getenv("SPROUT_ROOT")
-    if root is None:
-        return None
-    return Path(root)
+    return Path(root) if root else None
