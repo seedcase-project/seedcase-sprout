@@ -9,6 +9,4 @@ def create_root_path() -> Path:
     Returns:
         A Path with the Sprout root directory tied to the user.
     """
-    root_path = user_data_path("sprout")
-
-    return root_path
+    return user_data_path("sprout")
