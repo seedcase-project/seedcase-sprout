@@ -1,23 +1,16 @@
-import os
+from pathlib import Path
 
 from sprout.core.get_root_envvar import get_root_envvar
 
 
-def test_returns_root_envvar_if_set(tmp_path):
-    """Returns the root environment variable SPROUT_ROOT if it is set."""
+def test_returns_root_envvar_if_set(monkeypatch):
+    """Returns SPROUT_ROOT if it is set."""
     # Given
-    root = tmp_path / "sprout"
-    root.mkdir
-    os.environ["SPROUT_ROOT"] = str(root)
+    SPROUT_ROOT = "my/sprout/root"
+    monkeypatch.setenv("SPROUT_ROOT", SPROUT_ROOT)
 
-    # When
-    root_path = get_root_envvar()
-
-    # Then
-    assert root_path == root
-
-    # Clean up
-    os.environ.pop("SPROUT_ROOT")
+    # When, then
+    assert get_root_envvar() == Path(SPROUT_ROOT)
 
 
 def test_returns_none_if_root_envvar_is_not_set():
