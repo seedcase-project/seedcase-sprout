@@ -448,6 +448,12 @@ properties object to pass around.
 Create a prettier, human readable version of a JSON object.
 :::
 
+::: {.callout-note collapse="true"}
+### `update_readme(properties_path, readme_path)`
+
+TODO: Fill in.
+:::
+
 ## Observational unit level functions
 
 Observational unit is the level of detail on the entity (e.g. human,
