@@ -448,6 +448,10 @@ print(path_properties(6))
 ### `path_package_database(package_id)`
 
 Creates the absolute path to the package's database.
+
+<!-- TODO: Not sure if we will keep this database thing -->
+:::
+
 ::: {.callout-note collapse="true"}
 ### `path_packages()`
 
