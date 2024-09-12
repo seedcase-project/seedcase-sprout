@@ -72,7 +72,7 @@ This function lists some basic details contained in the
 location. This would be a list, showing very basic information that
 would be allowed by privacy and legal regulations (e.g. the package ID
 as well as the name, description, and contact persons for each package).
-Use `path_sprout_root()` to provide the path to the place packages are
+Use `path_packages()` to provide the path to the place packages are
 stored by default. Outputs a JSON object by default.
 :::
 
@@ -93,7 +93,7 @@ This is the first function to use to create a new data package. It
 assigns a package ID and then creates a package folder and all the
 necessary files for a package (excluding the resources), as described in
 the [Outputs](outputs.qmd) section. Creates the files and then outputs
-the file paths for the created files. Use `path_package()` to provide
+the file paths for the created files. Use `path_packages()` to provide
 the correct path location to create this structure.
 
 ![Diagram showing the internal function flow of the
@@ -164,7 +164,7 @@ path object as given in the `path` argument.
 This looks in one specific package's `datapackage.json` file and lists a
 basic summary of all the data resources contained within the package.
 The list would be basic information like resource ID, name, and
-description. Use `path_package()` to provide the correct path location.
+description. Use `path_resources()` to provide the correct path location.
 Outputs a JSON object.
 :::
 
@@ -253,7 +253,7 @@ correct path location. Outputs a JSON object only; use
 Use this to delete a raw file in the `raw/` folder of a resource. This
 is useful if the file is no longer needed or if it is incorrect or had
 an issue during the time when a user first added the file to a resource.
-Use `path_resource_raw_files()` to select which file to delete from the
+Use `path_resource_raw()` and `list_files()` to select which file to delete from the
 list of files found. Will only delete one file. The `confirm` argument
 defaults to `false` so that the user needs to explicitly provide `true`
 to the function argument as confirmation. This is done to prevent
