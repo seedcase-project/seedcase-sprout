@@ -15,7 +15,4 @@ def test_returns_root_envvar_if_set(monkeypatch):
 
 def test_returns_none_if_root_envvar_is_not_set():
     """Returns None if SPROUT_ROOT isn't set."""
-    root_path = get_root_envvar()
-
-    # Assert
-    assert root_path is None
+    assert get_root_envvar() is None
