@@ -232,8 +232,8 @@ path object of the created file.
 This function takes the files provided by `raw_files` and merges them
 into a `data.parquet` file provided by `path`. Use
 `path_resource_data()` to provide the correct path location for `path`
-and `path_resources_raw_files()` for the `raw_files` argument. Outputs
-the path object of the created file.
+and `path_resources_raw()` with `list_files()` for the `raw_files`
+argument. Outputs the path object of the created file.
 :::
 
 ::: {.callout-note collapse="true"}
@@ -549,6 +549,12 @@ properties object to pass around.
 :::
 
 ## Helper functions
+
+::: {.callout-note collapse="true"}
+### `list_files(path)`
+
+List all files in a directory. Outputs a list of path objects.
+:::
 
 ::: {.callout-note collapse="true"}
 ### `pretty_json(json)`
