@@ -68,32 +68,32 @@ a prettified, human-readable version of the content of the
 `datapackage.json`.
 
 While you *could* manually fill in the details in the `datapackage.json`
-file, we have a helper `Properties()` class to make it easier for you.
+file, we have several helper classes, such as `PackageProperties`, `LicenseProperties`, and `ContributorProperties`, to make it easier for you.
 
 ``` python
-properties = sp.Properties.Package(
+properties = sp.PackageProperties(
     title="Diabetes and Hypertension Study",
     description="Data from the 2021 study on diabetes and hypertension",
-    contributors=[sp.Properties.Contributors(
+    contributors=[sp.ContributorProperties(
         title="Jamie Jones",
         email="jamie_jones@example.com",
         roles=["creator"]
     )],
-    licenses=[sp.Properties.Licenses("ODC-BY-1.0")]
+    licenses=[sp.LicensesProperties("ODC-BY-1.0")]
 )
 print(properties)
 ```
 
 ```
 # TODO: This will eventually show the actual output.
-Package(...)
+PackageProperties(...)
 ```
 
 Then, to apply this back into the current `datapackage.json` file, you
-first use the `create_package_properties()` function:
+first use the `update_package_properties()` function:
 
 ``` python
-package_properties = sp.create_package_properties(
+package_properties = sp.update_package_properties(
   path=sp.path_package_properties(package_id=1),
   properties=properties
 )
