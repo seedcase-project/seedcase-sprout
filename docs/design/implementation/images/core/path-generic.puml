@@ -14,7 +14,7 @@ state "path_*()" as pr {
   state "pathlib.Path()" as path
   path : - Required args: fstring in form of\n  `f"{root}/packages/{package_id}/..."`
   psr --> path : path object
-  args --> path : path object
+  args --> path : integer
 
   state "verify_is_dir()" as vid
   vid : - Required arg: path
