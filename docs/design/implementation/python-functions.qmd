@@ -403,21 +403,24 @@ will return the default path to where data packages will be stored. The
 default locations are dependent on the operating system. This function
 also creates the necessary directory if it doesn't exist.
 
-![Diagram showing the internal function flow of the `path_sprout_root()` function.](images/core/path-sprout-root.svg){#fig-path-sprout-root fig-alt="A Plant UML schematic of the detailed code flow within the `path_sprout_root()` function."}
+![Diagram showing the internal function flow of the `path_sprout_root()`
+function.](images/core/path-sprout-root.svg){#fig-path-sprout-root
+fig-alt="A Plant UML schematic of the detailed code flow within the `path_sprout_root()` function."}
 :::
 
-## Property dataclasses
+## Properties dataclasses
 
 These dataclasses contain an explicit, structured set of official
-properties defined within a data package. The main purpose of these
-is to allow us to pass structured properties objects between functions.
+properties defined within a data package. The main purpose of these is
+to allow us to pass structured properties objects between functions.
 They also enable users to create valid properties objects more easily
 and get an overview of optional and required class fields.
 
 ::: {.callout-note collapse="true"}
 ### `PackageProperties(...)`
 
-Creates a dataclass object with all the necessary properties for the top level metadata of a data package.
+Creates a dataclass object with all the necessary properties for the top
+level metadata of a data package.
 
 #### Example usage
 
@@ -451,7 +454,9 @@ PackageProperties(title=None, description=None, licenses=[LicenseProperties(name
 ::: {.callout-note collapse="true"}
 ### `ResourceProperties(...)`
 
-Creates a dataclass object with all the necessary properties for a resource, which would be given in the `resources` field of a `PackageProperties` object.
+Creates a dataclass object with all the necessary properties for a
+resource, which would be given in the `resources` field of a
+`PackageProperties` object.
 
 #### Example usage
 
@@ -475,8 +480,9 @@ ResourceProperties(name="Blood Samples", description=None, path=None, schema=Non
 ::: {.callout-note collapse="true"}
 ### `ContributorProperties(...)`
 
-Creates a dataclass object with all the necessary properties for a contributor.
-This would be given in the `contributors` field of a `PackageProperties` object.
+Creates a dataclass object with all the necessary properties for a
+contributor. This would be given in the `contributors` field of a
+`PackageProperties` object.
 
 #### Example usage
 
@@ -492,7 +498,9 @@ ContributorProperties(title=None, email=None, roles=None)
 ::: {.callout-note collapse="true"}
 ### `LicenseProperties(...)`
 
-Creates a dataclass object with all the necessary properties for a license, so that it can be added to the `licenses` field of a `PackageProperties` object.
+Creates a dataclass object with all the necessary properties for a
+license, so that it can be added to the `licenses` field of a
+`PackageProperties` object.
 
 #### Example usage
 
@@ -508,7 +516,9 @@ LicenseProperties(name=None, path=None, title=None)
 ::: {.callout-note collapse="true"}
 ### `TableSchemaProperties(...)`
 
-Creates a dataclass object with all the necessary properties for a table schema, so that it can be added to the `schema` field of a `ResourceProperties` object.
+Creates a dataclass object with all the necessary properties for a table
+schema, so that it can be added to the `schema` field of a
+`ResourceProperties` object.
 
 #### Example usage
 
