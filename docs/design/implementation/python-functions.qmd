@@ -449,7 +449,7 @@ print(path_properties(6))
 
 Creates the absolute path to the package's database.
 
-<!-- TODO: Not sure if we will keep this database thing -->
+<!-- TODO: Not sure if we will keep the database -->
 :::
 
 ::: {.callout-note collapse="true"}
