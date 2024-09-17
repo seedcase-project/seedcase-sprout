@@ -1,17 +1,22 @@
 import json
 
-
-def create_readme_text(json_object: json) -> str:
+def create_readme_text(properties: dict) -> str:
     """Create a json object containing the readme text.
 
     Args:
-      json_object: A JSON object containing the package properties template
+      properties: An object containing the package and resource properties.
 
     Returns:
-      A string with the README text
+      A string for the README text
     """
+    properties = json.loads(properties)
+    resources = # Python code to convert the resource details in the dict as
+    # a Markdown list. 
+
     readme_text = (
         f"This is the README file for the package.\n\n"
-        f"{json.dumps(json_object, indent=4)}"
+        f"{properties.name}: {properties.title}\n\n"
+        f"Within this data package contains:\n\n"
+        f"{properties.resources}"
     )
     return readme_text
