@@ -38,18 +38,16 @@ state "create_package_structure()" as cps {
   cip : - Required arg: path and ID to assign for directory
   cip : - Output: path of created directory
   cni --> cip
+  arg --> cip
 
   state "create_dirs()" as cd
   cd : - Required arg: A list of paths
   cd : - Output: A list of paths\n  of created directories
   cip --> cd
 
-  state "create_package_properties()" as cppt
-  cppt : - Required arg: path
+  state "create_properties_object()" as cppt
   cppt : - Output: JSON object
-  cppt : - Uses create_properties_template()\n  internally
-  cd --> cppt
-
+  cppt : - Uses properties dataclasses\n  internally and sets default values
   state "create_readme_text()" as crt
   crt : - Required arg: JSON object
   crt : - Output: string
