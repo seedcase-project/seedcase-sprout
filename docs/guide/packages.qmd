@@ -118,9 +118,9 @@ sp.write_package_properties(
 )
 ```
 
-If you need help with filling in the right properties, check the
-documentation for the `Properties` classes or run
-e.g., `print(sp.PackageProperties)` to get a list of all the fields you can
+If you need help with filling in the right properties, see the
+documentation for the `PackageProperties` classes or run
+e.g., `print(sp.PackageProperties())` to get a list of all the fields you can
 fill in for a package.
 
 You now have the basic starting point for adding data resources to your
