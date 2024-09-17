@@ -36,7 +36,7 @@ from .create_resource_structure import create_resource_structure
 # from .path_properties import *
 # from .path_package_database import *
 # from .path_package import *
-from .path_sprout_root import *
+from .path_sprout_root import path_sprout_root
 
 # Helpers -----
 # from .pretty_json import *
