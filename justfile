@@ -71,3 +71,8 @@ generate-properties-classes:
     --use-double-quotes \
     --reuse-model \
     --target-python-version 3.12
+
+# Add files for a new function (function file and test file)
+add-function app part name:
+  touch ./{{app}}/{{part}}/{{name}}.py
+  touch ./tests/{{part}}/test_{{name}}.py
