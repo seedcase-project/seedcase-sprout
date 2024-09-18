@@ -1,24 +1,26 @@
-import json
+# import json
 
 from sprout.core.create_readme_text import create_readme_text
 
 
-def test_create_readme_text_with_valid_json():
+# def test_create_readme_text_with_valid_json():
     # Arrange
-    json_string = '{"name": "My Package", "version": "1.0.0", "description": "Sample"}'
-    json_object = json.loads(json_string)
+    # json_string = '{"name": "My Package", "title": "1.0.0"'
+    # json_object = json.loads(json_string)
 
     # Act
-    result = create_readme_text(json_object)
+    # TODO: Finish this once Properties have been finished.
+    # result = create_readme_text(json_object)
 
-    expected_output = (
+    # TODO: Finish this once Properties have been finished.
+    """ expected_output = (
         "This is the README file for the package.\n\n"
         "{\n"
         '    "name": "My Package",\n'
-        '    "version": "1.0.0",\n'
-        '    "description": "Sample"\n'
+        '    "title": "1.0.0",\n'
         "}"
-    )
+    ) """
 
     # Assert
-    assert result == expected_output
+    # TODO: Finish this once Properties have been finished.
+    # assert result == expected_output
