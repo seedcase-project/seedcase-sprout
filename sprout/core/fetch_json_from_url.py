@@ -16,5 +16,5 @@ def fetch_json_from_url(url: str) -> dict:
         urllib3.exceptions.HTTPError: If the response contains an error status code.
     """
     response = requests.get(url)
-    response.raise_for_status() 
+    response.raise_for_status()
     return response.json()

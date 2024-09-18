@@ -57,7 +57,7 @@ def main():
             table_schema_fkey_items["oneOf"][0]["properties"]
         )
         del table_schema_fkey_items["oneOf"]
-    
+
         write_json(schema, SCHEMA_PATH)
 
         run_codegen()
@@ -66,6 +66,6 @@ def main():
     finally:
         SCHEMA_PATH.unlink(missing_ok=True)
 
-    
+
 if __name__ == "__main__":
     main()
