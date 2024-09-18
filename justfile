@@ -58,21 +58,11 @@ reset-local:
 build-website:
   docker run --rm -v $(pwd):/site -w /site ghcr.io/quarto-dev/quarto:latest quarto render
 
-generate-properties-classes:
-  poetry run datamodel-codegen \
-    --url https://datapackage.org/profiles/2.0/datapackage.json \
-    --output properties.py \
-    --output-model-type dataclasses.dataclass \
-    --use-title-as-name \
-    --use-union-operator \
-    --snake-case-field \
-    --use-field-description \
-    --use-schema-description \
-    --use-double-quotes \
-    --reuse-model \
-    --target-python-version 3.12
-
 # Add files for a new function (function file and test file)
 add-function app part name:
   touch ./{{app}}/{{part}}/{{name}}.py
   touch ./tests/{{part}}/test_{{name}}.py
+
+# Extract dataclasses from the Data Package JSON schema
+generate-dataclasses:
+  poetry run python sprout/core/codegen/generate_dataclasses.py
