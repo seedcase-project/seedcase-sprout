@@ -4,17 +4,21 @@ from typing import Any, Literal
 
 @dataclass
 class ContributorProperties:
-    """A contributor to this descriptor.
+    """The people or organizations who contributed to this Data Package.
 
     Attributes:
-        - title (str | None): A human-readable title.
-        - path (str | None): A fully qualified URL, or a POSIX file path.
+        - title (str | None): A string containing a name of the contributor.
+        - path (str | None): A fully qualified URL pointing to a relevant
+        location online for the contributor.
         - email (str | None): An email address.
-        - given_name (str | None):
-        - family_name (str | None):
+        - given_name (str | None): A string containing the name a person has been
+        given, if the contributor is a person.
+        - family_name (str | None): A string containing the familial name that a person
+        inherits, if the contributor is a person.
         - organization (str | None): An organizational affiliation for this
         contributor.
-        - roles (list[str] | None):
+        - roles (list[str] | None): An array of strings describing the roles of the
+        contributor.
     """
 
     title: str | None = None
@@ -28,10 +32,10 @@ class ContributorProperties:
 
 @dataclass
 class LicenseProperties:
-    """A license for this descriptor.
+    """The license(s) under which the package is provided.
 
     Attributes:
-        - name (str | None): MUST be an Open Definition license identifier,
+        - name (str | None): An Open Definition license identifier,
         see http://licenses.opendefinition.org/
         - path (str | None): A fully qualified URL, or a POSIX file path.
         - title (str | None): A human-readable title.
@@ -47,13 +51,13 @@ Path = str | None
 
 @dataclass
 class SourceProperties:
-    """A source file.
+    """The raw sources for this Data Package.
 
     Attributes:
-        - title (str | None): A human-readable title.
+        - title (str | None): The title of the source (e.g. document or organization).
         - path (str | None): A fully qualified URL, or a POSIX file path.
         - email (str | None): An email address.
-        - version (str | None):
+        - version (str | None): The version of the source.
     """
 
     title: str | None = None
@@ -64,39 +68,49 @@ class SourceProperties:
 
 @dataclass
 class TableDialectProperties:
-    r"""The Table dialect descriptor.
+    r"""Table Dialect describes how tabular data is stored in a file.
+
+    It supports delimited text files like CSV, semi-structured formats like JSON
+    and YAML, and spreadsheets like Microsoft Excel.
 
     Attributes:
         - header (bool | None): Specifies if the file includes a header row,
         always as the first row in the file.
-        - header_rows (list[int] | None):
-        - header_join (str | None):
-        - comment_rows (list[int] | None):
+        - header_rows (list[int] | None): Specifies the row numbers for the header.
+        - header_join (str | None): Specifies how multiline-header files have to join
+        the resulting header rows.
+        - comment_rows (list[int] | None): Specifies what rows have to be omitted from
+        the data.
         - comment_char (str | None): Specifies that any row beginning with
-        this one-character string, without preceeding whitespace, causes the
+        this one-character string, without preceding whitespace, causes the
         entire line to be ignored.
         - delimiter (str | None): A character sequence to use as the field
         separator.
         - line_terminator (str | None): Specifies the character sequence that
         must be used to terminate rows.
-        - quote_char (str | None): Specifies a one-character string to use as
-        the quoting character.
-        - double_quote (bool | None): Specifies the handling of quotes inside
-        fields.
+        - quote_char (str | None): Specifies a character to use for quoting in
+        case the `delimiter` needs to be used inside a data cell.
+        - double_quote (bool | None): Controls the handling of `quote_char` inside
+        data cells. If true, two consecutive quotes are interpreted as one.
         - escape_char (str | None): Specifies a one-character string to use as
-        the escape character.
+        the escape character. Mutually exclusive with `quote_char`.
         - null_sequence (str | None): Specifies the null sequence, for
-        example, `\\N`.
+        example, `\N`.
         - skip_initial_space (bool | None): Specifies the interpretation of
         whitespace immediately following a delimiter. If false, whitespace
         immediately after a delimiter should be treated as part of the
         subsequent field.
-        - property (str | None):
-        - item_type (Literal['array', 'object'] | None):
-        - item_keys (list[str] | None):
-        - sheet_number (int | None):
-        - sheet_name (str | None):
-        - table (str | None):
+        - property (str | None): Specifies where a data array is located in the
+        data structure.
+        - item_type (Literal['array', 'object'] | None): Specifies whether the data
+        `property` contains an array of arrays or an array of objects.
+        - item_keys (list[str] | None): Specifies the keys for extracting rows from
+        data arrays where `item_type` is `object`.
+        - sheet_number (int | None): Specifies a sheet number of a table in the
+        spreadsheet file.
+        - sheet_name (str | None): Specifies a sheet name of a table in the spreadsheet
+        file.
+        - table (str | None): Specifies a name of the table in the database.
     """
 
     header: bool | None = True
@@ -124,11 +138,14 @@ UniqueKey = list[str] | None
 
 @dataclass
 class ReferenceProperties:
-    """Reference for a foreign key.
+    """The destination part of a foreign key.
 
     Attributes:
-        - resource: (str | None): The resource pointed to by the foreign key.
-        - fields: (list[str] | None): The fields pointed to by the foreign key.
+        - resource: (str | None): The name of the resource within the current Data
+        Package where the `fields` are located.
+        - fields: (list[str] | None): An array of strings of the same length as
+        `TableSchemaForeignKeyProperties.fields`, specifying the field (or fields)
+        that form the destination part of the foreign key.
     """
 
     resource: str | None = None
@@ -137,11 +154,17 @@ class ReferenceProperties:
 
 @dataclass
 class TableSchemaForeignKeyProperties:
-    """Table Schema Foreign Key.
+    """A foreign key in a Table Schema.
+
+    A foreign key is a reference where values in a field (or fields) on the table
+    ("resource" in Data Package terminology) described by the Table Schema connect to
+    values in a field (or fields) on this or a separate table (resource).
 
     Attributes:
-        - fields (list[str] | None):
-        - reference (ReferenceProperties | None):
+        - fields (list[str] | None): An array of strings specifying the field (or
+        fields) on this resource that form the source part of the foreign key.
+        - reference (ReferenceProperties | None): An object specifying the
+        destination part of the foreign key.
     """
 
     fields: list[str] | None = None
@@ -150,17 +173,18 @@ class TableSchemaForeignKeyProperties:
 
 @dataclass
 class MissingValueProperties:
-    """Values that when encountered in the source, should be considered as not present.
+    """Values that, when encountered in the source, should be considered as not present.
 
     Attributes:
-        - value (str | None):
-        - label (str | None):
+        - value (str | None): String representing the missing value.
+        - label (str | None): A human-readable label for the missing value.
     """
 
     value: str | None = None
     label: str | None = None
 
 
+# Allowed types for a field in a Table Schema.
 FieldType = Literal[
     "string",
     "number",
@@ -183,18 +207,18 @@ FieldType = Literal[
 
 @dataclass
 class ConstraintsProperties:
-    """A class used by consumers to list constraints for validating field values.
+    """A class that expresses constraints for validating field values.
 
     Attributes:
         - required (bool | None): Indicates whether a property must have a
         value for each instance.
         - unique (bool | None): When `true`, each value for the property
-        `MUST` be unique.
+        must be unique.
         - pattern (str | None): A regular expression pattern to test each
         value of the property against, where a truthy response indicates
         validity.
         - enum (list | None): The value of the field must exactly match one of
-        the values in the enum array.
+        the values in the `enum` array.
         - min_length (int | None): An integer that specifies the minimum
         length of a value.
         - max_length (int | None): An integer that specifies the maximum
@@ -227,6 +251,9 @@ class ConstraintsProperties:
 class FieldProperties:
     """A field in a Table Schema.
 
+    Provides human-readable documentation, as well as additional information that can
+    be used to validate the field or create a user interface for data entry.
+
     Attributes:
         - name (str | None): A name for this field. Must be unique amongst other field
         names in this Table Schema.
@@ -242,7 +269,7 @@ class FieldProperties:
         - categories_ordered (bool | None): Specifies whether the order of appearance
         of the values in the `categories` property should be regarded as their natural
         order.
-        - missing_values (list[str] | list[MissingValueProperties] | None): Values that
+        - missing_values (list[str] | list[MissingValueProperties] | None): Values that,
         when encountered in the source, should be considered as not present. Takes
         precedence over the schema-level property.
     """
@@ -263,24 +290,34 @@ class FieldProperties:
 
 @dataclass
 class TableSchemaProperties:
-    """A Table Schema for this resource, compliant with the Table Schema specification.
+    """A Table Schema for a Data Resource.
+
+    Table Schema is a simple language- and implementation-agnostic way to declare a
+    schema for tabular data. Table Schema is well suited for use cases around handling
+    and validating tabular data in text formats such as CSV, but its utility extends
+    well beyond this core usage, towards a range of applications where data benefits
+    from a portable schema format.
 
     Attributes:
-        - fields (list[FieldProperties] | None): An `array` of Table Schema Field
-        objects.
-        - fields_match (list | None):
+        - fields (list[FieldProperties] | None): Specifies the fields in this Table
+        Schema.
+        - fields_match (list | None): Specifies how fields in a Table Schema match
+        the fields in the data source.
         - primary_key (list[str] | str | None): A primary key is a field name
-        or an array of field names, whose values `MUST` uniquely identify
+        or an array of field names, whose values must uniquely identify
         each row in the table.
-        - unique_keys (list[UniqueKey] | None):
-        - foreign_keys (list[TableSchemaForeignKeyProperties] | None):
-        - missing_values (list[str] | list[MissingValueProperties] | None): Values that
-        when encountered in the source, should be considered as `null`, 'not
-        present', or 'blank' values.
+        - unique_keys (list[UniqueKey] | None): A field or a set of fields that are
+        required to have unique logical values in each row in the table.
+        - foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
+        values in a field (or fields) on the table (resource) described by this Table
+        Schema connect to values in a field (or fields) on this or a separate table
+        (resource).
+        - missing_values (list[str] | list[MissingValueProperties] | None): Values that,
+        when encountered in the source, should be considered as not present.
     """
 
     fields: list[FieldProperties] | None = None
-    fields_match: list | None = None
+    fields_match: Literal["exact", "equal", "subset", "superset", "partial"] = "exact"
     primary_key: list[str] | str | None = None
     unique_keys: list[UniqueKey] | None = None
     foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
@@ -291,36 +328,43 @@ class TableSchemaProperties:
 
 @dataclass
 class ResourceProperties:
-    """Data Resource.
+    """A Data Resource.
+
+    A simple format to describe and package a single data resource such as an
+    individual table or file. The essence of a Data Resource is a locator for
+    the data it describes. A range of other properties can be declared to provide a
+    richer set of metadata.
 
     Attributes:
-        - name (str | None): An identifier string.
+        - name (str | None): A simple name or identifier to be used for this resource.
+        Should consist only of lowercase English alphanumeric characters plus characters
+        in `.-_`.
         - id (str | None): The unique identifier of this resource.
         - path (str | list[Path] | None): A reference to the data for this
-        resource, as either a path as a string, or an array of paths as
-        strings. of valid URIs.
+        resource as either a path as a string, or an array of paths as
+        strings of valid URIs.
         - data (Any | None): Inline data for this resource.
-        - type (Literal['table'] | None):
+        - type (Literal['table'] | None): Specifies the type of the resource.
         - title (str | None): A human-readable title.
-        - description (str | None): A text description. Markdown is
-        encouraged.
+        - description (str | None): A text description. Markdown is encouraged.
         - homepage (str | None): The home on the web that is related to this
         data package.
         - sources (list[SourceProperties] | None): The raw sources for this resource.
         - licenses (list[LicenseProperties] | None): The license(s) under which the
         resource is published.
-        - format (str | None): The file format of this resource.
+        - format (str | None): The file format of this resource. Expected to be the
+        standard file extension.
         - mediatype (str | None): The media type of this resource. Can be any
-        valid media type listed with
-        [IANA](https://www.iana.org/assignments/media-types/media-
-        types.xhtml).
+        valid media type listed with [IANA]
+        (https://www.iana.org/assignments/media-types/media-types.xhtml).
         - encoding (str | None): The file encoding of this resource.
         - bytes (int | None): The size of this resource in bytes.
         - hash (str | None): The MD5 hash of this resource. Indicate other
         hashing algorithms with the {algorithm}:{hash} format.
-        - dialect (TableDialectProperties | None): The Table dialect descriptor.
-        - schema (TableSchemaProperties | None): A Table Schema for this resource,
-        compliant with the [Table Schema](/tableschema/) specification.
+        - dialect (TableDialectProperties | None): The tabular dialect of the resource
+        data.
+        - schema (TableSchemaProperties | None): A Table Schema for the resource data,
+        compliant with the Table Schema specification.
     """
 
     name: str | None = None
@@ -344,32 +388,33 @@ class ResourceProperties:
 
 @dataclass
 class PackageProperties:
-    """Data Package.
+    """A Data Package.
+
+    A simple container format for describing a coherent collection of data in a single
+    "package". It provides the basis for convenient delivery, installation and
+    management of datasets.
 
     Attributes:
-        - name (str | None): An identifier string.
-        - id (str | None): A property reserved for globally unique
-        identifiers. Examples of identifiers that are unique include UUIDs
-        and DOIs.
+        - name (str | None): A simple name or identifier to be used for this package.
+        Should consist only of lowercase English alphanumeric characters plus characters
+        in `.-_`.
+        - id (str | None): The unique identifier of this package.
         - title (str | None): A human-readable title.
-        - description (str | None): A text description. Markdown is
-        encouraged.
-        - homepage (str | None): The home on the web that is related to this
-        data package.
-        - version (str | None): A unique version number for this descriptor.
-        - created (str | None): The datetime on which this descriptor was
-        created.
-        - contributors (list[ContributorProperties] | None): The contributors to this
-        descriptor.
-        - keywords (list[str] | None): A list of keywords that describe this
-        package.
-        - image (str | None): A image to represent this package.
+        - description (str | None): A text description. Markdown is encouraged.
+        - homepage (str | None): The home on the web that is related to this Data
+        Package.
+        - version (str | None): A version string identifying the version of the package.
+        - created (str | None): The datetime on which this package was created.
+        - contributors (list[ContributorProperties] | None): The people or organizations
+        who contributed to this Data Package.
+        - keywords (list[str] | None): A list of keywords that describe this package.
+        - image (str | None): An image to represent this package.
         - licenses (list[LicenseProperties] | None): The license(s) under which this
         package is published.
-        - resources (list[ResourceProperties] | None): An `array` of Data Resource
-        objects, each compliant with the [Data Resource](/data-resource/)
-        specification.
-        - sources (list[SourceProperties] | None): The raw sources for this resource.
+        - resources (list[ResourceProperties] | None): Specifies the Data Resources
+        in this Data Package, each compliant with the Data Resource specification.
+        - sources (list[SourceProperties] | None): The raw sources for this Data
+        Package.
     """
 
     name: str | None = None
