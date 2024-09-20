@@ -7,7 +7,7 @@ class ContributorProperties:
     """The people or organizations who contributed to this Data Package.
 
     Attributes:
-        - title (str | None): A string containing a name of the contributor.
+        - title (str | None): The name of the contributor.
         - path (str | None): A fully qualified URL pointing to a relevant
         location online for the contributor.
         - email (str | None): An email address.
@@ -32,7 +32,7 @@ class ContributorProperties:
 
 @dataclass
 class LicenseProperties:
-    """The license(s) under which the package is provided.
+    """The license(s) under which the package or resource is provided.
 
     Attributes:
         - name (str | None): An Open Definition license identifier,
@@ -99,15 +99,15 @@ class TableDialectProperties:
         subsequent field.
         - property (str | None): Specifies where a data array is located in the
         data structure.
-        - item_type (Literal['array', 'object'] | None): Specifies whether the data
-        `property` contains an array of arrays or an array of objects.
+        - item_type (Literal['array', 'object'] | None): Specifies whether `property`
+        contains an array of arrays or an array of objects.
         - item_keys (list[str] | None): Specifies the keys for extracting rows from
         data arrays where `item_type` is `object`.
-        - sheet_number (int | None): Specifies a sheet number of a table in the
+        - sheet_number (int | None): Specifies the sheet number of a table in a
         spreadsheet file.
-        - sheet_name (str | None): Specifies a sheet name of a table in the spreadsheet
+        - sheet_name (str | None): Specifies the sheet name of a table in a spreadsheet
         file.
-        - table (str | None): Specifies a name of the table in the database.
+        - table (str | None): Specifies the name of a table in a database.
     """
 
     header: bool | None = True
@@ -245,7 +245,7 @@ class ConstraintsProperties:
 class FieldProperties:
     """A field in a Table Schema.
 
-    Provides human-readable documentation, as well as additional information that can
+    Provides human-readable documentation as well as additional information that can
     be used to validate the field or create a user interface for data entry.
 
     Attributes:
@@ -295,7 +295,7 @@ class TableSchemaProperties:
     Attributes:
         - fields (list[FieldProperties] | None): Specifies the fields in this Table
         Schema.
-        - fields_match (list | None): Specifies how fields in a Table Schema match
+        - fields_match (list | None): Specifies how fields in the Table Schema match
         the fields in the data source.
         - primary_key (list[str] | str | None): A primary key is a field name
         or an array of field names, whose values must uniquely identify
@@ -311,7 +311,7 @@ class TableSchemaProperties:
     """
 
     fields: list[FieldProperties] | None = None
-    fields_match: Literal["exact", "equal", "subset", "superset", "partial"] = "exact"
+    fields_match: list | None = None
     primary_key: list[str] | str | None = None
     unique_keys: list[list[str]] | None = None
     foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
@@ -339,8 +339,6 @@ class ResourceProperties:
         - type (Literal['table'] | None): Specifies the type of the resource.
         - title (str | None): A human-readable title.
         - description (str | None): A text description. Markdown is encouraged.
-        - homepage (str | None): The home on the web that is related to this
-        data package.
         - sources (list[SourceProperties] | None): The raw sources for this resource.
         - licenses (list[LicenseProperties] | None): The license(s) under which the
         resource is published.
