@@ -282,6 +282,10 @@ class FieldProperties:
     )
 
 
+# Allowed strategies for matching fields in the Table Schema to fields the data source.
+FieldsMatchType = Literal["exact", "equal", "subset", "superset", "partial"]
+
+
 @dataclass
 class TableSchemaProperties:
     """A Table Schema for a Data Resource.
@@ -295,12 +299,12 @@ class TableSchemaProperties:
     Attributes:
         - fields (list[FieldProperties] | None): Specifies the fields in this Table
         Schema.
-        - fields_match (list | None): Specifies how fields in the Table Schema match
+        - fields_match (FieldsMatchType | None): Specifies how fields in the Table Schema match
         the fields in the data source.
         - primary_key (list[str] | str | None): A primary key is a field name
         or an array of field names, whose values must uniquely identify
         each row in the table.
-        - unique_keys (list[UniqueKey] | None): A field or a set of fields that are
+        - unique_keys (list[list[str]] | None): A field or a set of fields that are
         required to have unique logical values in each row in the table.
         - foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
         values in a field (or fields) on the table (resource) described by this Table
@@ -311,7 +315,7 @@ class TableSchemaProperties:
     """
 
     fields: list[FieldProperties] | None = None
-    fields_match: list | None = None
+    fields_match: FieldsMatchType | None = "exact"
     primary_key: list[str] | str | None = None
     unique_keys: list[list[str]] | None = None
     foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
