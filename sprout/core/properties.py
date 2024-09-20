@@ -42,9 +42,6 @@ class LicenseProperties:
     title: str | None = None
 
 
-Path = str | None
-
-
 @dataclass
 class SourceProperties:
     """A source file.
@@ -117,9 +114,6 @@ class TableDialectProperties:
     sheet_number: int | None = None
     sheet_name: str | None = None
     table: str | None = None
-
-
-UniqueKey = list[str] | None
 
 
 @dataclass
@@ -282,7 +276,7 @@ class TableSchemaProperties:
     fields: list[FieldProperties] | None = None
     fields_match: list | None = None
     primary_key: list[str] | str | None = None
-    unique_keys: list[UniqueKey] | None = None
+    unique_keys: list[list[str]] | None = None
     foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
     missing_values: list[str] | list[MissingValueProperties] | None = field(
         default_factory=lambda: [""]
@@ -296,15 +290,12 @@ class ResourceProperties:
     Attributes:
         - name (str | None): An identifier string.
         - id (str | None): The unique identifier of this resource.
-        - path (str | list[Path] | None): A reference to the data for this
-        resource, as either a path as a string, or an array of paths as
-        strings. of valid URIs.
+        - path (str | None): A path pointing to the data for this resource.
         - data (Any | None): Inline data for this resource.
         - type (Literal['table'] | None):
         - title (str | None): A human-readable title.
         - description (str | None): A text description. Markdown is
         encouraged.
-        - homepage (str | None): The home on the web that is related to this
         data package.
         - sources (list[SourceProperties] | None): The raw sources for this resource.
         - licenses (list[LicenseProperties] | None): The license(s) under which the
@@ -325,12 +316,11 @@ class ResourceProperties:
 
     name: str | None = None
     id: str | None = None
-    path: str | list[Path] | None = None
+    path: str | None = None
     data: Any | None = None
     type: Literal["table"] | None = None
     title: str | None = None
     description: str | None = None
-    homepage: str | None = None
     sources: list[SourceProperties] | None = None
     licenses: list[LicenseProperties] | None = None
     format: str | None = None
