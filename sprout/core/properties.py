@@ -1,3 +1,8 @@
+# NOTE: This content is modified from the auto-generated
+# `generate_properties/generated_properties.py` file. Update the auto-generated
+# properties file to add more dataclasses and move them into this file.
+
+
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
