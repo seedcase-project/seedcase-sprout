@@ -70,7 +70,7 @@ class SourceProperties:
 
 @dataclass
 class TableDialectProperties:
-    """Table Dialect describes how tabular data is stored in a file.
+    r"""Table Dialect describes how tabular data is stored in a file.
 
     It supports delimited text files like CSV, semi-structured formats like JSON
     and YAML, and spreadsheets like Microsoft Excel.
@@ -304,8 +304,8 @@ class TableSchemaProperties:
     Attributes:
         - fields (list[FieldProperties] | None): Specifies the fields in this Table
         Schema.
-        - fields_match (FieldsMatchType | None): Specifies how fields in the Table Schema match
-        the fields in the data source.
+        - fields_match (FieldsMatchType | None): Specifies how fields in the Table
+        Schema match the fields in the data source.
         - primary_key (list[str] | str | None): A primary key is a field name
         or an array of field names, whose values must uniquely identify
         each row in the table.
