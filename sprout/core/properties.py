@@ -1,3 +1,8 @@
+# NOTE: This content is modified from the auto-generated
+# `generate_properties/generated_properties.py` file. Update the auto-generated
+# properties file to add more dataclasses and move them into this file.
+
+
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
@@ -65,7 +70,7 @@ class SourceProperties:
 
 @dataclass
 class TableDialectProperties:
-    r"""Table Dialect describes how tabular data is stored in a file.
+    """Table Dialect describes how tabular data is stored in a file.
 
     It supports delimited text files like CSV, semi-structured formats like JSON
     and YAML, and spreadsheets like Microsoft Excel.
