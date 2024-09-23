@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from sprout.core.fetch_json_from_url import fetch_json_from_url
+from sprout.core.get_json_from_url import get_json_from_url
 from sprout.core.write_json import write_json
 
 SCHEMA_URL = "https://datapackage.org/profiles/2.0/datapackage.json"
@@ -45,7 +45,7 @@ def run_codegen():
 def main():
     """Downloads, preprocesses and extracts dataclasses from the Data Package schema."""
     try:
-        schema = fetch_json_from_url(SCHEMA_URL)
+        schema = get_json_from_url(SCHEMA_URL)
 
         # edit the schema to simplify the generated class structure
         resource_items = schema["properties"]["resources"]["items"]
