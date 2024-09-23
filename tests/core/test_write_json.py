@@ -12,18 +12,20 @@ def test_writes_dictionary_to_json_correctly(tmp_path):
         "outer": "value",
         "inner": {"prop1": 123, "prop2": [1, 2, None], "prop3": True},
     }
-    expected_contents = """{
-  "outer": "value",
-  "inner": {
-    "prop1": 123,
-    "prop2": [
-      1,
-      2,
-      null
-    ],
-    "prop3": true
-  }
-}"""
+    expected_contents = (
+        "{\n"
+        '  "outer": "value",\n'
+        '  "inner": {\n'
+        '    "prop1": 123,\n'
+        '    "prop2": [\n'
+        "      1,\n"
+        "      2,\n"
+        "      null\n"
+        "    ],\n"
+        '    "prop3": true\n'
+        "  }\n"
+        "}"
+    )
 
     # when
     file_path_out = write_json(json_object, file_path_in)
@@ -40,14 +42,16 @@ def test_writes_list_to_json_correctly(tmp_path):
     # given
     file_path_in = tmp_path / "test.test"
     json_object = [{"prop1": "value"}, {"prop2": 123}]
-    expected_contents = """[
-  {
-    "prop1": "value"
-  },
-  {
-    "prop2": 123
-  }
-]"""
+    expected_contents = (
+        "[\n"
+        "  {\n"
+        '    "prop1": "value"\n'
+        "  },\n"
+        "  {\n"
+        '    "prop2": 123\n'
+        "  }\n"
+        "]"
+    )
 
     # when
     file_path_out = write_json(json_object, file_path_in)
