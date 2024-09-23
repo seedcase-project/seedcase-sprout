@@ -37,11 +37,38 @@ from .create_resource_structure import create_resource_structure
 # from .path_package_database import *
 # from .path_package import *
 from .path_sprout_root import path_sprout_root
+from .properties import (
+    ConstraintsProperties,
+    ContributorProperties,
+    FieldProperties,
+    LicenseProperties,
+    MissingValueProperties,
+    PackageProperties,
+    ReferenceProperties,
+    ResourceProperties,
+    SourceProperties,
+    TableDialectProperties,
+    TableSchemaForeignKeyProperties,
+    TableSchemaProperties,
+)
 
 # Helpers -----
 # from .pretty_json import *
 
 __all__ = [
+    # Properties -----
+    "ConstraintsProperties",
+    "ContributorProperties",
+    "FieldProperties",
+    "LicenseProperties",
+    "MissingValueProperties",
+    "PackageProperties",
+    "ReferenceProperties",
+    "ResourceProperties",
+    "SourceProperties",
+    "TableDialectProperties",
+    "TableSchemaForeignKeyProperties",
+    "TableSchemaProperties",
     # Packages -----
     # "list_packages",
     # "view_package_properties",
