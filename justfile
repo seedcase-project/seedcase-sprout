@@ -65,4 +65,4 @@ add-function app part name:
 
 # Extract dataclasses from the Data Package JSON schema
 generate-dataclasses:
-  poetry run python sprout/core/codegen/generate_dataclasses.py
+  poetry run python sprout/core/generate_properties/generate_dataclasses.py

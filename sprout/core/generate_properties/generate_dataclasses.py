@@ -5,11 +5,11 @@ from sprout.core.fetch_json_from_url import fetch_json_from_url
 from sprout.core.write_json import write_json
 
 SCHEMA_URL = "https://datapackage.org/profiles/2.0/datapackage.json"
-CODEGEN = Path("sprout", "core", "codegen")
-SCHEMA_PATH = CODEGEN / "schema.json"
-OUTPUT_PATH = CODEGEN / "generated_properties.py"
-CUSTOM_TEMPLATE_DIR = CODEGEN
-CUSTOM_FORMATTERS_MODULE = f"{".".join(CODEGEN.parts)}.custom_formatters"
+ROOT = Path("sprout", "core", "generate_properties")
+SCHEMA_PATH = ROOT / "schema.json"
+OUTPUT_PATH = ROOT / "generated_properties.py"
+CUSTOM_TEMPLATE_DIR = ROOT
+CUSTOM_FORMATTERS_MODULE = f"{".".join(ROOT.parts)}.custom_formatters"
 
 
 def run_codegen():
