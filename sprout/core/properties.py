@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 @dataclass
 class ContributorProperties:
-    """The people or organizations who contributed to this Package.
+    """The people or organizations who contributed to this data package.
 
     Attributes:
         - title (str | None): The name of the contributor.
@@ -53,7 +53,7 @@ class LicenseProperties:
 
 @dataclass
 class SourceProperties:
-    """The raw sources for this Data Package.
+    """The raw sources for this data package.
 
     Attributes:
         - title (str | None): The title of the source (e.g. document or organization).
@@ -70,7 +70,7 @@ class SourceProperties:
 
 @dataclass
 class TableDialectProperties:
-    r"""Table Dialect describes how tabular data is stored in a file.
+    r"""Table dialect describes how tabular data is stored in a file.
 
     It supports delimited text files like CSV, semi-structured formats like JSON
     and YAML, and spreadsheets like Microsoft Excel.
@@ -140,8 +140,8 @@ class ReferenceProperties:
     """The destination part of a foreign key.
 
     Attributes:
-        - resource: (str | None): The name of the resource within the current Data
-        Package where the `fields` are located.
+        - resource: (str | None): The name of the resource within the current data
+        package where the `fields` are located.
         - fields: (list[str] | None): An array of strings of the same length as
         `TableSchemaForeignKeyProperties.fields`, specifying the field (or fields)
         that form the destination part of the foreign key.
@@ -153,10 +153,10 @@ class ReferenceProperties:
 
 @dataclass
 class TableSchemaForeignKeyProperties:
-    """A foreign key in a Table Schema.
+    """A foreign key in a table schema.
 
     A foreign key is a reference where values in a field (or fields) on the table
-    ("resource" in Data Package terminology) described by the Table Schema connect to
+    ("resource" in data package terminology) described by the table schema connect to
     values in a field (or fields) on this or a separate table (resource).
 
     Attributes:
@@ -183,7 +183,7 @@ class MissingValueProperties:
     label: str | None = None
 
 
-# Allowed types for a field in a Table Schema.
+# Allowed types for a field in a table schema.
 FieldType = Literal[
     "string",
     "number",
@@ -228,9 +228,9 @@ class ConstraintsProperties:
         value for a field.
         - exclusive_maximum (str | float | int | None): Specifies an exclusive maximum
         value for a field.
-        - json_schema (dict[str, Any] | None): A valid JSON Schema object to
+        - json_schema (dict[str, Any] | None): A valid JSON schema object to
         validate field values. If a field value conforms to the provided
-        JSON Schema then this field value is valid.
+        JSON schema then this field value is valid.
     """
 
     required: bool | None = None
@@ -248,14 +248,14 @@ class ConstraintsProperties:
 
 @dataclass
 class FieldProperties:
-    """A field in a Table Schema.
+    """A field in a table schema.
 
     Provides human-readable documentation as well as additional information that can
     be used to validate the field or create a user interface for data entry.
 
     Attributes:
         - name (str | None): A name for this field. Must be unique amongst other field
-        names in this Table Schema.
+        names in this table schema.
         - title (str | None): A human readable label or title for this field.
         - type (FieldType | None): The data type of this field.
         - format (str | None): The format for this field.
@@ -287,33 +287,33 @@ class FieldProperties:
     )
 
 
-# Allowed strategies for matching fields in the Table Schema to fields the data source.
+# Allowed strategies for matching fields in the table schema to fields the data source.
 FieldsMatchType = Literal["exact", "equal", "subset", "superset", "partial"]
 
 
 @dataclass
 class TableSchemaProperties:
-    """A Table Schema for a Data Resource.
+    """A table schema for a data resource.
 
-    Table Schema is a simple language- and implementation-agnostic way to declare a
-    schema for tabular data. Table Schema is well suited for use cases around handling
+    Table schema is a simple language- and implementation-agnostic way to declare a
+    schema for tabular data. Table schema is well suited for use cases around handling
     and validating tabular data in text formats such as CSV, but its utility extends
     well beyond this core usage, towards a range of applications where data benefits
     from a portable schema format.
 
     Attributes:
-        - fields (list[FieldProperties] | None): Specifies the fields in this Table
-        Schema.
-        - fields_match (FieldsMatchType | None): Specifies how fields in the Table
-        Schema match the fields in the data source.
+        - fields (list[FieldProperties] | None): Specifies the fields in this table
+        schema.
+        - fields_match (FieldsMatchType | None): Specifies how fields in the table
+        schema match the fields in the data source.
         - primary_key (list[str] | str | None): A primary key is a field name
         or an array of field names, whose values must uniquely identify
         each row in the table.
         - unique_keys (list[list[str]] | None): A field or a set of fields that are
         required to have unique logical values in each row in the table.
         - foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
-        values in a field (or fields) on the table (resource) described by this Table
-        Schema connect to values in a field (or fields) on this or a separate table
+        values in a field (or fields) on the table (resource) described by this table
+        schema connect to values in a field (or fields) on this or a separate table
         (resource).
         - missing_values (list[str] | list[MissingValueProperties] | None): Values that,
         when encountered in the source, should be considered as not present.
@@ -331,10 +331,10 @@ class TableSchemaProperties:
 
 @dataclass
 class ResourceProperties:
-    """A Data Resource.
+    """A data resource.
 
     A simple format to describe and package a single data resource such as an
-    individual table or file. The essence of a Data Resource is a locator for
+    individual table or file. The essence of a data resource is a locator for
     the data it describes. A range of other properties can be declared to provide a
     richer set of metadata.
 
@@ -362,8 +362,8 @@ class ResourceProperties:
         hashing algorithms with the {algorithm}:{hash} format.
         - dialect (TableDialectProperties | None): The tabular dialect of the resource
         data.
-        - schema (TableSchemaProperties | None): A Table Schema for the resource data,
-        compliant with the Table Schema specification.
+        - schema (TableSchemaProperties | None): A table schema for the resource data,
+        compliant with the table schema specification.
     """
 
     name: str | None = None
@@ -386,7 +386,7 @@ class ResourceProperties:
 
 @dataclass
 class PackageProperties:
-    """A Data Package.
+    """A data package.
 
     A simple container format for describing a coherent collection of data in a single
     "package". It provides the basis for convenient delivery, installation and
@@ -399,20 +399,19 @@ class PackageProperties:
         - id (str | None): The unique identifier of this package.
         - title (str | None): A human-readable title.
         - description (str | None): A text description. Markdown is encouraged.
-        - homepage (str | None): The home on the web that is related to this Data
-        Package.
-        - version (str | None): A version string identifying the version of this Data Package.
+        - homepage (str | None): The home on the web that is related to this package.
+        - version (str | None): A version string identifying the version of this package.
         - created (str | None): The datetime on which this package was created.
         - contributors (list[ContributorProperties] | None): The people or organizations
-        who contributed to this Data Package.
+        who contributed to this package.
         - keywords (list[str] | None): A list of keywords that describe this package.
         - image (str | None): An image to represent this package.
         - licenses (list[LicenseProperties] | None): The license(s) under which this
         package is published.
-        - resources (list[ResourceProperties] | None): Specifies the Data Resources
-        in this Data Package, each compliant with the Data Resource specification.
-        - sources (list[SourceProperties] | None): The raw sources for this Data
-        Package.
+        - resources (list[ResourceProperties] | None): Specifies the data resources
+        in this data package, each compliant with the data resource specification.
+        - sources (list[SourceProperties] | None): The raw sources for this data
+        package.
     """
 
     name: str | None = None
