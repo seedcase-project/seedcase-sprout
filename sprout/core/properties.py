@@ -70,7 +70,7 @@ class SourceProperties:
 
 @dataclass
 class TableDialectProperties:
-    r"""Table dialect describes how tabular data is stored in a file.
+    """Table dialect describes how tabular data is stored in a file.
 
     It supports delimited text files like CSV, semi-structured formats like JSON
     and YAML, and spreadsheets like Microsoft Excel.
