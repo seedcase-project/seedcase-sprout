@@ -68,9 +68,10 @@ class SourceProperties:
     version: str | None = None
 
 
+# The `r"""` string is used to avoid escaping backslashes in the `null_sequence` attribute.
 @dataclass
 class TableDialectProperties:
-    """Table dialect describes how tabular data is stored in a file.
+    r"""Table dialect describes how tabular data is stored in a file.
 
     It supports delimited text files like CSV, semi-structured formats like JSON
     and YAML, and spreadsheets like Microsoft Excel.
@@ -266,8 +267,8 @@ class FieldProperties:
         categories (list[str] | list[int] | None): A finite set of possible values
             for this field.
         categories_ordered (bool | None): Specifies whether the order of appearance
-            of the values in the `categories` property should be regarded as their natural
-            order.
+            of the values in the `categories` property should be regarded as their
+            natural order.
         missing_values (list[str] | list[MissingValueProperties] | None): Values that,
             when encountered in the field, should be considered as not present. Takes
             precedence over the schema-level property.
@@ -312,9 +313,9 @@ class TableSchemaProperties:
         unique_keys (list[list[str]] | None): A field or a set of fields that are
             required to have unique logical values in each row in the table.
         foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
-            values in a field (or fields) on the table (resource) described by this table
-            schema connect to values in a field (or fields) on this or a separate table
-            (resource).
+            values in a field (or fields) on the table (resource) described by this
+            table schema connect to values in a field (or fields) on this or a separate
+            table (resource).
         missing_values (list[str] | list[MissingValueProperties] | None): Values that,
             when encountered in the source, should be considered as not present.
     """
@@ -394,8 +395,8 @@ class PackageProperties:
 
     Attributes:
         name (str | None): A simple name or identifier to be used for this package.
-            Should consist only of lowercase English alphanumeric characters plus characters
-            in `.-_`.
+            Should consist only of lowercase English alphanumeric characters plus
+            characters in `.-_`.
         id (str | None): The unique identifier of this package.
         title (str | None): A human-readable title.
         description (str | None): A text description. Markdown is encouraged.
