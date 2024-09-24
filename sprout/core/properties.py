@@ -298,7 +298,7 @@ class ResourceProperties:
 
     Attributes:
         - name (str | None): An identifier string.
-        - id (str | None): The unique identifier of this resource.
+        - id (int | None): The unique identifier of this resource.
         - path (str | None): A path pointing to the data for this resource.
         - data (Any | None): Inline data for this resource.
         - type (Literal['table'] | None):
@@ -324,7 +324,7 @@ class ResourceProperties:
     """
 
     name: str | None = None
-    id: str | None = None
+    id: int | None = None
     path: str | None = None
     data: Any | None = None
     type: Literal["table"] | None = None
@@ -347,7 +347,7 @@ class PackageProperties:
 
     Attributes:
         - name (str | None): An identifier string.
-        - id (str | None): A property reserved for globally unique
+        - id (int | None): A property reserved for globally unique
         identifiers. Examples of identifiers that are unique include UUIDs
         and DOIs.
         - title (str | None): A human-readable title.
@@ -372,7 +372,7 @@ class PackageProperties:
     """
 
     name: str | None = None
-    id: str | None = None
+    id: int | None = None
     title: str | None = None
     description: str | None = None
     homepage: str | None = None
