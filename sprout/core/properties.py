@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 @dataclass
 class ContributorProperties:
-    """The people or organizations who contributed to this Data Package.
+    """The people or organizations who contributed to this Package.
 
     Attributes:
         - title (str | None): The name of the contributor.
@@ -40,7 +40,7 @@ class LicenseProperties:
     """The license(s) under which the package or resource is provided.
 
     Attributes:
-        - name (str | None): An Open Definition license identifier,
+        - name (str | None): Must be an Open Definition license identifier,
         see http://licenses.opendefinition.org/
         - path (str | None): A fully qualified URL, or a POSIX file path.
         - title (str | None): A human-readable title.
@@ -91,7 +91,7 @@ class TableDialectProperties:
         - line_terminator (str | None): Specifies the character sequence that
         must be used to terminate rows.
         - quote_char (str | None): Specifies a character to use for quoting in
-        case the `delimiter` needs to be used inside a data cell.
+        case the `delimiter` is used inside a data cell.
         - double_quote (bool | None): Controls the handling of `quote_char` inside
         data cells. If true, two consecutive quotes are interpreted as one.
         - escape_char (str | None): Specifies a one-character string to use as
@@ -269,7 +269,7 @@ class FieldProperties:
         of the values in the `categories` property should be regarded as their natural
         order.
         - missing_values (list[str] | list[MissingValueProperties] | None): Values that,
-        when encountered in the source, should be considered as not present. Takes
+        when encountered in the field, should be considered as not present. Takes
         precedence over the schema-level property.
     """
 
@@ -401,7 +401,7 @@ class PackageProperties:
         - description (str | None): A text description. Markdown is encouraged.
         - homepage (str | None): The home on the web that is related to this Data
         Package.
-        - version (str | None): A version string identifying the version of the package.
+        - version (str | None): A version string identifying the version of this Data Package.
         - created (str | None): The datetime on which this package was created.
         - contributors (list[ContributorProperties] | None): The people or organizations
         who contributed to this Data Package.
