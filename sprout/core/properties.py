@@ -68,7 +68,8 @@ class SourceProperties:
     version: str | None = None
 
 
-# The `r"""` string is used to avoid escaping backslashes in the `null_sequence` attribute.
+# The `r"""` string is used to avoid escaping backslashes in the `null_sequence`
+# attribute.
 @dataclass
 class TableDialectProperties:
     r"""Table dialect describes how tabular data is stored in a file.
