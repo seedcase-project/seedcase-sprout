@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from sprout.core.path_sprout_root import path_sprout_root
-from sprout.core.path_utils import (
+from sprout.core.path_error_context import (
     verify_is_dir_or_raise_error_with_id_context,
     verify_is_file_or_raise_error_with_id_context,
 )
+from sprout.core.path_sprout_root import path_sprout_root
 from sprout.core.verify_is_dir import verify_is_dir
 
 
