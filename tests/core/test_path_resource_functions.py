@@ -10,7 +10,7 @@ from sprout.core import (
     path_resource_raw_files,
     path_resources,
 )
-from tests.core.path_test_utils import (
+from tests.core.directory_structure_setup import (
     create_test_package_structure,
     create_test_resource_structure,
 )

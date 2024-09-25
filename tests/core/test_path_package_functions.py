@@ -9,7 +9,7 @@ from sprout.core import (
     path_package_properties,
     path_packages,
 )
-from tests.core.path_test_utils import (
+from tests.core.directory_structure_setup import (
     create_test_package_structure,
 )
 
