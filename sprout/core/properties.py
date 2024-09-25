@@ -298,7 +298,6 @@ class ResourceProperties:
 
     Attributes:
         - name (str | None): An identifier string.
-        - id (str | None): The unique identifier of this resource.
         - path (str | None): A path pointing to the data for this resource.
         - data (Any | None): Inline data for this resource.
         - type (Literal['table'] | None):
@@ -324,7 +323,6 @@ class ResourceProperties:
     """
 
     name: str | None = None
-    id: str | None = None
     path: str | None = None
     data: Any | None = None
     type: Literal["table"] | None = None
