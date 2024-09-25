@@ -3,7 +3,7 @@ from re import escape
 
 from pytest import fixture, mark, raises
 
-from sprout.core.path_package_functions import (
+from sprout.core import (
     path_package,
     path_package_database,
     path_package_properties,
