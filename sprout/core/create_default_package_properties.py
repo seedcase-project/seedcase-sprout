@@ -1,23 +1,18 @@
 from dataclasses import asdict
+from uuid import uuid4
 
+from sprout.core.get_iso_timestamp import get_iso_timestamp
 from sprout.core.properties import PackageProperties
-from sprout.core.utils import get_iso_timestamp
 
 
-def create_default_package_properties(id: int) -> dict:
+def create_default_package_properties() -> dict:
     """Creates a `PackageProperties` object with default values.
-
-    Args:
-        id: The id of the package.
 
     Returns:
         A dictionary representation of the package properties.
     """
     package_properties = PackageProperties(
-        id=id,
-        name=f"package-{id}",
-        title=f"Package {id}",
-        description=f"This is a description of Package {id}.",
+        id=str(uuid4()),
         version="0.1.0",
         created=get_iso_timestamp(),
     )
