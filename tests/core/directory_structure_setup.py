@@ -28,16 +28,15 @@ def create_test_resource_structure(
     """Creates a resource file structure (with empty files) for path function tests.
 
     Args:
-        path_package: Path to package.$
+        path_package: Path to package.
         resource_id: ID of the resource to create.
         raw_files: Name(s) of raw file(s).
 
     Returns:
-        List with two Paths: one to the resource, one to it's raw directory.
+        List with two Paths: one to the resource, one to its raw directory.
     """
     path_resources = path_package / "resources"
-    if not (path_resources).exists():
-        path_resources.mkdir(parents=True)
+    path_resources.mkdir(parents=True, exist_ok=True)
 
     path_list_resource = create_resource_structure(path_resources)
     (path_list_resource[0] / "data.parquet").touch()

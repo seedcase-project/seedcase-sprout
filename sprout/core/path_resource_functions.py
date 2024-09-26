@@ -100,10 +100,10 @@ def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
 
     try:
         verify_is_dir(path)
-        return [file for file in path.iterdir()]
+        return list(path.iterdir())
     except NotADirectoryError as e:
         raise NotADirectoryError(
-            f"Existing ID's are {get_ids(path.parent.parent)}"
+            f"Existing IDs are {get_ids(path.parent.parent)}"
         ) from e
 
 
