@@ -1,4 +1,3 @@
-from pathlib import Path
 from re import escape
 
 from pytest import fixture, mark, raises
