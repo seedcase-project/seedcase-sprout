@@ -41,18 +41,14 @@ def test_path_package_functions_return_expected_path(
 
 
 @mark.parametrize(
-    "function, expected_exception",
-    [
-        (path_package, NotADirectoryError),
-        (path_package_database, FileNotFoundError),
-        (path_package_properties, FileNotFoundError),
-    ],
+    "function",
+    [path_package, path_package_database, path_package_properties],
 )
 def test_path_package_functions_raise_error_if_package_id_does_not_exist(
-    tmp_sprout_root, function, expected_exception
+    tmp_sprout_root, function
 ):
     # When, then
-    with raises(expected_exception, match=escape("[1]")):
+    with raises(NotADirectoryError, match=escape("[1]")):
         function(package_id=2)
 
 

@@ -73,39 +73,35 @@ def test_path_resource_raw_files_returns_expected_list_of_paths(tmp_sprout_root)
 
 
 @mark.parametrize(
-    "function, expected_exception",
-    [
-        (path_resource, NotADirectoryError),
-        (path_resource_data, FileNotFoundError),
-        (path_resource_raw, NotADirectoryError),
-        (path_resource_raw_files, NotADirectoryError),
-    ],
+    "function",
+    [path_resource, path_resource_data, path_resource_raw, path_resource_raw_files],
 )
 def test_path_resource_functions_raise_error_if_res_id_does_not_exist(
-    tmp_sprout_root, function, expected_exception
+    tmp_sprout_root, function
 ):
     """Raises error if package ID exists but resource ID does not"""
     # When, then
-    with raises(expected_exception, match=escape("[1, 2]")):
+    with raises(NotADirectoryError, match=r"resource.+\[1, 2\]"):
         function(package_id=1, resource_id=3)
 
 
 @mark.parametrize(
-    "function, expected_exception",
+    "function",
     [
-        (path_resource, NotADirectoryError),
-        (path_resource_data, FileNotFoundError),
-        (path_resource_raw, NotADirectoryError),
-        (path_resource_raw_files, NotADirectoryError),
+        path_resource,
+        path_resource_data,
+        path_resource_raw,
+        path_resource_raw_files,
     ],
 )
 def test_raises_error_if_package_id_does_not_exist(
-    tmp_sprout_root, function, expected_exception
+    tmp_sprout_root,
+    function,
 ):
     """Raises error if package ID doesn't exist but resource ID does
     in another package"""
     # When, then
-    with raises(expected_exception, match=escape("[]")):
+    with raises(NotADirectoryError, match=r"package.+\[1\]"):
         function(package_id=2, resource_id=1)
 
 

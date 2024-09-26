@@ -1,12 +1,9 @@
 from pathlib import Path
 
-from sprout.core.get_ids import get_ids
+from sprout.core import path_package
 from sprout.core.path_error_context import (
     verify_is_dir_or_raise_error_with_id_context,
-    verify_is_file_or_raise_error_with_id_context,
 )
-from sprout.core.path_sprout_root import path_sprout_root
-from sprout.core.verify_is_dir import verify_is_dir
 
 
 def path_resource(package_id: int, resource_id: int) -> Path:
@@ -19,14 +16,10 @@ def path_resource(package_id: int, resource_id: int) -> Path:
     Returns:
         A Path to the resource.
     """
-    path = (
-        path_sprout_root()
-        / "packages"
-        / str(package_id)
-        / "resources"
-        / str(resource_id)
+    path = path_resources(package_id) / str(resource_id)
+    return verify_is_dir_or_raise_error_with_id_context(
+        path=path, ids_path=path.parent, context="resource"
     )
-    return verify_is_dir_or_raise_error_with_id_context(path=path, ids_path=path.parent)
 
 
 def path_resource_data(package_id: int, resource_id: int) -> Path:
@@ -39,17 +32,7 @@ def path_resource_data(package_id: int, resource_id: int) -> Path:
     Returns:
         A Path to the resource's data file.
     """
-    path = (
-        path_sprout_root()
-        / "packages"
-        / str(package_id)
-        / "resources"
-        / str(resource_id)
-        / "data.parquet"
-    )
-    return verify_is_file_or_raise_error_with_id_context(
-        path=path, ids_path=path.parent.parent
-    )
+    return path_resource(package_id, resource_id) / "data.parquet"
 
 
 def path_resource_raw(package_id: int, resource_id: int) -> Path:
@@ -62,17 +45,7 @@ def path_resource_raw(package_id: int, resource_id: int) -> Path:
     Returns:
         A Path to the resource's raw folder.
     """
-    path = (
-        path_sprout_root()
-        / "packages"
-        / str(package_id)
-        / "resources"
-        / str(resource_id)
-        / "raw"
-    )
-    return verify_is_dir_or_raise_error_with_id_context(
-        path=path, ids_path=path.parent.parent
-    )
+    return path_resource(package_id, resource_id) / "raw"
 
 
 def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
@@ -89,22 +62,7 @@ def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
         NotADirectoryError: If the package_id doesn't exist or the resource_id doesn't
             exist within the package.
     """
-    path = (
-        path_sprout_root()
-        / "packages"
-        / str(package_id)
-        / "resources"
-        / str(resource_id)
-        / "raw"
-    )
-
-    try:
-        verify_is_dir(path)
-        return list(path.iterdir())
-    except NotADirectoryError as e:
-        raise NotADirectoryError(
-            f"Existing IDs are {get_ids(path.parent.parent)}"
-        ) from e
+    return list(path_resource_raw(package_id, resource_id).iterdir())
 
 
 def path_resources(package_id: int) -> Path:
@@ -116,5 +74,7 @@ def path_resources(package_id: int) -> Path:
     Returns:
         A Path to the resources within the package.
     """
-    path = path_sprout_root() / "packages" / str(package_id) / "resources"
-    return verify_is_dir_or_raise_error_with_id_context(path, path.parent.parent)
+    path = path_package(package_id) / "resources"
+    return verify_is_dir_or_raise_error_with_id_context(
+        path=path, ids_path=path, context="resource"
+    )
