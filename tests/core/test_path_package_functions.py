@@ -18,11 +18,10 @@ from tests.core.directory_structure_setup import (
 @fixture
 def tmp_sprout_root(monkeypatch, tmp_path):
     """Set up test package folder structure and return temp root directory"""
-    SPROUT_ROOT = str(tmp_path)
-    monkeypatch.setenv("SPROUT_ROOT", SPROUT_ROOT)
+    monkeypatch.setenv("SPROUT_ROOT", str(tmp_path))
     create_test_package_structure(tmp_path, "1")
 
-    return SPROUT_ROOT
+    return tmp_path
 
 
 @mark.parametrize(
@@ -37,7 +36,7 @@ def test_path_package_functions_return_expected_path(
     tmp_sprout_root, function, expected_path
 ):
     # When, then
-    assert function(package_id=1) == Path(tmp_sprout_root) / expected_path
+    assert function(package_id=1) == tmp_sprout_root / expected_path
 
 
 @mark.parametrize(
@@ -54,7 +53,7 @@ def test_path_package_functions_raise_error_if_package_id_does_not_exist(
 
 def test_path_packages_returns_expected_path(tmp_sprout_root):
     # When, then
-    assert path_packages() == Path(tmp_sprout_root) / "packages"
+    assert path_packages() == tmp_sprout_root / "packages"
 
 
 def test_path_packages_raises_error_when_no_packages_exist():

@@ -20,8 +20,7 @@ from tests.core.directory_structure_setup import (
 @fixture
 def tmp_sprout_root(monkeypatch, tmp_path):
     """Set up test package folder structure return temp root directory"""
-    SPROUT_ROOT = str(tmp_path)
-    monkeypatch.setenv("SPROUT_ROOT", SPROUT_ROOT)
+    monkeypatch.setenv("SPROUT_ROOT", str(tmp_path))
 
     path_package_1 = create_test_package_structure(tmp_path, "1")
 
@@ -30,7 +29,7 @@ def tmp_sprout_root(monkeypatch, tmp_path):
         path_package_1, ["raw_file_2.csv.gz", "raw_file_3.csv.gz"]
     )
 
-    return SPROUT_ROOT
+    return tmp_path
 
 
 @mark.parametrize(
@@ -45,16 +44,13 @@ def test_path_resource_functions_return_expected_path(
     tmp_sprout_root, function, expected_path
 ):
     # When, then
-    assert (
-        function(package_id=1, resource_id=2) == Path(tmp_sprout_root) / expected_path
-    )
+    assert function(package_id=1, resource_id=2) == tmp_sprout_root / expected_path
 
 
 def test_path_resources_returns_expected_path(tmp_sprout_root):
     # When, then
     assert (
-        path_resources(package_id=1)
-        == Path(tmp_sprout_root) / "packages" / "1" / "resources"
+        path_resources(package_id=1) == tmp_sprout_root / "packages" / "1" / "resources"
     )
 
 
