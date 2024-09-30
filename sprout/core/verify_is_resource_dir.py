@@ -1,11 +1,12 @@
 from pathlib import Path
+from typing import Literal
 
 from sprout.core.get_ids import get_ids
 from sprout.core.verify_is_dir import verify_is_dir
 
 
-def verify_is_package_dir(path: Path) -> Path:
-    """Verifies that the path is a directory in the package directory.
+def verify_is_resource_dir(path: Path) -> Path:
+    """Verifies that the path is a directory in the resources folder.
 
     Args:
         path: Path to verify.
@@ -21,6 +22,6 @@ def verify_is_package_dir(path: Path) -> Path:
         return verify_is_dir(path)
     except NotADirectoryError as error:
         raise NotADirectoryError(
-            f"This path can't be found, did you use the correct package ID?"
+            f"This path can't be found, did you use the correct resource ID?"
             f"- Existing IDs: {get_ids(path.parent)}"
         ) from error
