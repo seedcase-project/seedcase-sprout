@@ -32,19 +32,38 @@ state "write_resource_data_to_raw()" as wrdtr {
   vif : - Output: path or Error
   arg_data_path --> vif : path object
 
-  state "create_raw_file_path()" as crfp
-  crfp : - Required arg: path
-  crfp : - Output: path object
-  crfp : - Internally creates\n  `timestamp` and `uuid`
-  crfp : - Uses `data_path` to\n  get extension
-  vif --> crfp : path object
+  state "create_raw_file_name()" as crfn
+  crfn : - Required arg: path
+  crfn : - Output: path object
+  crfn : - Internally creates\n  `timestamp` and `uuid`
+  crfn : - Uses `data_path` to\n  get extension
+  vif --> crfn : path object
+
+  state "verify_raw_data()" as verify_rd
+  verify_rd : - Required arg: path
+  verify_rd : - Output: path or Error
+  verify_rd : - Basic checks on readability\n  and structure of data
+  vif --> verify_rd
+
+  state "validate_raw_data()" as validate_rd
+  validate_rd : - Required arg: path
+  validate_rd : - Output: path or Error
+  validate_rd : - Validate against constraints\n  properties (if they exist)
+  verify_rd --> validate_rd
 
   state "write_compressed_file()" as wcf
   wcf : - Required arg: input_path and output_path
   wcf : - Output: path object
   wcf : - Internally uses gzip compression
-  crfp --> wcf : path object
-  vid --> wcf : path object
+
+  state output_path <<join>>
+  crfn --> output_path : path object
+  vid --> output_path : path object
+  output_path --> wcf : path object
+
+  state input_path <<join>>
+  validate_rd --> input_path
+  input_path --> wcf : path object
 
   state "return" <<exitPoint>>
   wcf --> return : path object
