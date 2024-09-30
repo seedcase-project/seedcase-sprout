@@ -1,10 +1,8 @@
 from pathlib import Path
 
-from sprout.core.path_error_context import (
-    verify_is_dir_or_raise_error_with_id_context,
-)
 from sprout.core.path_sprout_root import path_sprout_root
 from sprout.core.verify_is_dir import verify_is_dir
+from sprout.core.verify_is_file import verify_is_file
 from sprout.core.verify_is_package_dir import verify_is_package_dir
 
 
@@ -30,7 +28,8 @@ def path_package_database(package_id: int) -> Path:
     Returns:
         A Path to the package's database.
     """
-    return path_package(package_id) / "database.sql"
+    path = path_package(package_id) / "database.sql"
+    return verify_is_file(path)
 
 
 def path_package_properties(package_id: int) -> Path:
@@ -42,7 +41,8 @@ def path_package_properties(package_id: int) -> Path:
     Returns:
         A Path to the properties file.
     """
-    return path_package(package_id) / "datapackage.json"
+    path = path_package(package_id) / "datapackage.json"
+    return verify_is_file(path)
 
 
 def path_packages() -> Path:

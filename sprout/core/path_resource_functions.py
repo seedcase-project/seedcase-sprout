@@ -1,6 +1,8 @@
 from pathlib import Path
 
 from sprout.core import path_package
+from sprout.core.verify_is_dir import verify_is_dir
+from sprout.core.verify_is_file import verify_is_file
 from sprout.core.verify_is_package_dir import verify_is_package_dir
 from sprout.core.verify_is_resource_dir import verify_is_resource_dir
 
@@ -29,7 +31,8 @@ def path_resource_data(package_id: int, resource_id: int) -> Path:
     Returns:
         A Path to the resource's data file.
     """
-    return path_resource(package_id, resource_id) / "data.parquet"
+    path = path_resource(package_id, resource_id) / "data.parquet"
+    return verify_is_file(path)
 
 
 def path_resource_raw(package_id: int, resource_id: int) -> Path:
@@ -42,7 +45,8 @@ def path_resource_raw(package_id: int, resource_id: int) -> Path:
     Returns:
         A Path to the resource's raw folder.
     """
-    return path_resource(package_id, resource_id) / "raw"
+    path = path_resource(package_id, resource_id) / "raw"
+    return verify_is_dir(path)
 
 
 def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
