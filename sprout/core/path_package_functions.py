@@ -5,6 +5,7 @@ from sprout.core.path_error_context import (
 )
 from sprout.core.path_sprout_root import path_sprout_root
 from sprout.core.verify_is_dir import verify_is_dir
+from sprout.core.verify_is_package_dir import verify_is_package_dir
 
 
 def path_package(package_id: int) -> Path:
@@ -17,9 +18,7 @@ def path_package(package_id: int) -> Path:
         The absolute path to the package folder.
     """
     path = path_packages() / str(package_id)
-    return verify_is_dir_or_raise_error_with_id_context(
-        path=path, ids_path=path.parent, context="package"
-    )
+    return verify_is_package_dir(path)
 
 
 def path_package_database(package_id: int) -> Path:

@@ -1,9 +1,8 @@
 from pathlib import Path
 
 from sprout.core import path_package
-from sprout.core.path_error_context import (
-    verify_is_dir_or_raise_error_with_id_context,
-)
+from sprout.core.verify_is_package_dir import verify_is_package_dir
+from sprout.core.verify_is_resource_dir import verify_is_resource_dir
 
 
 def path_resource(package_id: int, resource_id: int) -> Path:
@@ -17,9 +16,7 @@ def path_resource(package_id: int, resource_id: int) -> Path:
         A Path to the resource.
     """
     path = path_resources(package_id) / str(resource_id)
-    return verify_is_dir_or_raise_error_with_id_context(
-        path=path, ids_path=path.parent, context="resource"
-    )
+    return verify_is_resource_dir(path)
 
 
 def path_resource_data(package_id: int, resource_id: int) -> Path:
@@ -75,6 +72,5 @@ def path_resources(package_id: int) -> Path:
         A Path to the resources within the package.
     """
     path = path_package(package_id) / "resources"
-    return verify_is_dir_or_raise_error_with_id_context(
-        path=path, ids_path=path, context="resource"
-    )
+    verify_is_package_dir(path.parent)
+    return path
