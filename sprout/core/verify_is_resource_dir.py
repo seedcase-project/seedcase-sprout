@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Literal
 
 from sprout.core.get_ids import get_ids
 from sprout.core.verify_is_dir import verify_is_dir
