@@ -1,9 +1,7 @@
 from pytest import mark, raises
 
-from sprout.core.verify_resource_properties import (
-    InvalidResourcePropertiesError,
-    verify_resource_properties,
-)
+from sprout.core.invalid_properties_error import InvalidPropertiesError
+from sprout.core.verify_resource_properties import verify_resource_properties
 
 
 def test_returns_valid_properties():
@@ -54,14 +52,14 @@ def test_returns_valid_properties_with_custom_field():
 @mark.parametrize("properties", [{}, [], 1, None])
 def test_rejects_completely_malformed_properties(properties):
     """Given an input which is empty or the wrong type, should throw
-    InvalidResourcePropertiesError."""
-    with raises(InvalidResourcePropertiesError):
+    InvalidPropertiesError."""
+    with raises(InvalidPropertiesError):
         verify_resource_properties(properties)
 
 
 def test_rejects_properties_with_single_invalid_field():
     """Given a set of properties with a single invalid field, should throw
-    InvalidResourcePropertiesError."""
+    InvalidPropertiesError."""
     properties = {
         "name": "test",
         "type": "unknown type",
@@ -80,7 +78,7 @@ def test_rejects_properties_with_single_invalid_field():
     }
 
     with raises(
-        InvalidResourcePropertiesError,
+        InvalidPropertiesError,
         match='resource type "unknown type" is not supported',
     ):
         verify_resource_properties(properties)
@@ -88,7 +86,7 @@ def test_rejects_properties_with_single_invalid_field():
 
 def test_rejects_properties_with_multiple_invalid_fields():
     """Given a set of properties with multiple invalid fields, should throw
-    InvalidResourcePropertiesError."""
+    InvalidPropertiesError."""
     properties = {
         "type": "table",
         "path": "test.csv",
@@ -105,7 +103,7 @@ def test_rejects_properties_with_multiple_invalid_fields():
         },
     }
 
-    with raises(InvalidResourcePropertiesError) as error:
+    with raises(InvalidPropertiesError) as error:
         verify_resource_properties(properties)
 
     message = str(error.value)
