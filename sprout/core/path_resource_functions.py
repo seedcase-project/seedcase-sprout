@@ -76,5 +76,5 @@ def path_resources(package_id: int) -> Path:
         A Path to the resources within the package.
     """
     path = path_package(package_id) / "resources"
-    verify_is_package_dir(path.parent)
+    verify_is_dir(path)
     return path
