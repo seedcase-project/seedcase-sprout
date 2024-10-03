@@ -17,5 +17,5 @@ def verify_resource_properties(properties: dict) -> dict:
     """
     report = Resource.validate_descriptor(properties)
     if not report.valid:
-        raise InvalidPropertiesError(report, properties)
+        raise InvalidPropertiesError(report.errors, properties)
     return properties
