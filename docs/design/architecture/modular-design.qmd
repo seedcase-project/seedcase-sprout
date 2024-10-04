@@ -19,14 +19,14 @@ exposed to the user and to other programs.
 
 Any extensions would then only need to incorporate and depend on the
 `sprout.core` package to get Sprout's functionality. Each extension
-would be it's own module within Sprout, with modules named like
+would be its own module within Sprout, with modules named like
 `sprout/extension_name/`, for instance, `sprout/cli/`. That way, within
 the extension's module, the logic that we implement is only specific to
-creating the CLI and not with the actual functionality of Sprout.
+creating the CLI and not to the actual functionality of Sprout.
 
 Other potential extensions would follow the same or similar pattern.
 This allows other developers to create their own extensions and
-interfaces with Sprout that suit their particular needs.
+interfaces to Sprout that suit their particular needs.
 
 Our [Guide](/guide/index.qmd) has examples and tutorials on how each
 split is used.
@@ -41,7 +41,7 @@ split is used.
     Python packages that convert that code into a web app.
 
 -   The web API is in `sprout/api/`. Each endpoint imports the required
-    functions from `sprout.core` and converted into a web API form using
+    functions from `sprout.core` with
     functions from other Python packages that convert that code into a
     web API. This particular module may not be necessary as many Python
     packages that create web apps are also able to easily create web
