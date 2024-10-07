@@ -1,6 +1,7 @@
 from pytest import raises
 
 from sprout.core.create_package_structure import create_package_structure
+from sprout.core.read_json import read_json
 
 
 def test_creates_folder_structure_correctly(tmp_path):
@@ -20,6 +21,15 @@ def test_creates_folder_structure_correctly(tmp_path):
     assert paths == [expected_properties_path, expected_readme_path]
     assert expected_properties_path.is_file()
     assert expected_readme_path.is_file()
+
+
+def test_writes_nonempty_files(tmp_path):
+    """The files written should not be empty. The properties file should be parsable as
+    JSON."""
+    properties_path, readme_path = create_package_structure(tmp_path)
+
+    assert read_json(properties_path)
+    assert readme_path.read_text()
 
 
 def test_throws_if_directory_does_not_exist(tmp_path):
