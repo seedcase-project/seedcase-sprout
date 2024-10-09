@@ -1,0 +1,25 @@
+---
+title: "Creating and managing data resources"
+order: 2
+---
+
+In each [data package](/docs/design/implementation/outputs.qmd) are [data resources](/docs/design/implementation/outputs.qmd),
+which contain a conceptually standalone set of data. This page shows
+you how to create and manage data resources inside a data package using Sprout.
+We assume that a data package has already been [created](packages.qmd).
+
+<!-- {{< include _preamble.qmd >}} -->
+
+## Creating a data resource
+
+::::: panel-tabset
+### Python
+
+### CLI
+
+### Web App
+
+::: callout-warning
+In development.
+:::
+:::::
