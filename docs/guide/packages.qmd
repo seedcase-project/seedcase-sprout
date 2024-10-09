@@ -1,5 +1,6 @@
 ---
 title: "Creating and managing data packages"
+order: 1
 ---
 
 {{< include /docs/includes/_wip.qmd >}}
