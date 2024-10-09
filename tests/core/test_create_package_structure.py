@@ -32,13 +32,13 @@ def test_writes_nonempty_files(tmp_path):
     assert readme_path.read_text()
 
 
-def test_throws_if_directory_does_not_exist(tmp_path):
+def test_throws_error_if_directory_does_not_exist(tmp_path):
     """Raises NotADirectoryError if the input path points to a nonexistent folder."""
     with raises(NotADirectoryError):
         create_package_structure(tmp_path / "nonexistent")
 
 
-def test_throws_if_path_points_to_file(tmp_path):
+def test_throws_error_if_path_points_to_file(tmp_path):
     """Raises NotADirectoryError if the input path points to a file."""
     file_path = tmp_path / "test.txt"
     file_path.touch()
