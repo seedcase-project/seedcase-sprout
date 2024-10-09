@@ -21,7 +21,7 @@ you have control over the directories you can write to.
 
 ## Installing Sprout using pip
 
-### Making sure the correct software is installed
+### Making sure your system is ready
 
 There are some things you will need to ensure are installed on your
 system before you can install Sprout. You will need python 3.6 or
@@ -50,9 +50,25 @@ once it is done you will be able to install Sprout.
 
 ### Installing Sprout
 
-To install Sprout, you will need to run the following command in your
-terminal:
+::::: panel-tabset
+### Local installation
+
+Start by deciding where you want to store your data packages. By default, Sprout will be installed in the directory that your terminal is currently in. If you want to install Sprout in a different directory, you can navigate to that directory in your terminal before running the installation command (if you don't know how to navigate directories in your terminal, you can find a guide [here](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands)).
+
+Once you have decided where you want to install Sprout, you can run the following command in your terminal:
+
 
 `pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout`
+
 this will install Sprout on your system. Once the installation is
 complete, you will be able to run Sprout from the command line.
+
+
+### Server installation
+
+::: callout-warning
+In development.
+:::
+
+:::::
+
