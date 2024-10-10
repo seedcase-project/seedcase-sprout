@@ -1,8 +1,7 @@
 ---
 title: "Creating and managing data packages"
+order: 1
 ---
-
-{{< include /docs/includes/_wip.qmd >}}
 
 At the core of Sprout is the [data
 package](/docs/design/implementation/outputs.qmd), which is a
