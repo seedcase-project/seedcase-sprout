@@ -32,21 +32,32 @@ website](https://www.python.org/downloads/) if you don't have it on your
 machine), you can check if you have pip installed by running the
 following command in your terminal:
 
-`pip --version` the reply to this should be a version number. If you do
-not have pip installed, you can install it by following the instructions
-on the [pip website](https://pip.pypa.io/en/stable/installation/). If
-pip is outdated it will tell you, and provide guidance on how to update
-it.
+``` bash
+pip --version
+```
+
+The reply to this should be a version number. If you do not have pip
+installed, you can install it by following the instructions on the [pip
+website](https://pip.pypa.io/en/stable/installation/). If pip is
+outdated it will tell you, and provide guidance on how to update it.
 
 You will also need to check that pipenv is installed. You can do this by
 running the following command in your terminal:
 
-`pipenv --version` the reply to this should be a version number. If you
-do not have pipenv installed, you can install it by running the
-following command in your terminal:
+``` bash
+pipenv --version
+```
 
-`pip install pipenv` this installation will take a little while, but
-once it is done you will be able to install Sprout.
+The reply to this should be a version number. If you do not have pipenv
+installed, you can install it by running the following command in your
+terminal:
+
+``` bash
+pip install pipenv
+```
+
+This installation will take a little while, but once it is done you will
+be able to install Sprout.
 
 ### Installing Sprout
 
@@ -64,9 +75,11 @@ your terminal, you can find a guide
 Once you have decided where you want to install Sprout, you can run the
 following command in your terminal:
 
-`pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout`
+``` bash
+pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout
+```
 
-this will install Sprout on your system. Once the installation is
+This will install Sprout on your system. Once the installation is
 complete, you will be able to run Sprout from the command line.
 
 ### Server installation
