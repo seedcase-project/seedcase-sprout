@@ -26,7 +26,7 @@ def verify_properties_complete(
     errors = [
         error_cls(note=f"'{field}' is a required property and cannot be empty.")
         for field in required_fields
-        # N.B. that an empty list is an acceptable value for a required field. 
+        # N.B. that an empty list is an acceptable value for a required field.
         if properties.get(field) in ["", None]
     ]
 

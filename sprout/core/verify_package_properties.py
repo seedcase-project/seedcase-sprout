@@ -15,16 +15,17 @@ REQUIRED_PACKAGE_PROPERTIES = {
 
 
 def verify_package_properties(properties: dict) -> dict:
-    """Verifies if a dictionary representation of a set of package properties is valid.
+    """Verifies if a set of package properties is correct.
 
-    The package properties are valid if they conform to the Data Package specification
-    and they contain non-empty values for all required package properties fields.
+    The package properties are correct if they conform to the Data Package
+    specification and they contain non-empty values for all required package
+    properties fields.
 
     Args:
         properties: The package properties to verify.
 
     Returns:
-        The package properties, if valid.
+        The package properties, if correct.
 
     Raises:
         NotPropertiesError: If the package properties are not correct.
