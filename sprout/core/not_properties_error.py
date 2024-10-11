@@ -16,8 +16,7 @@ class NotPropertiesError(Exception):
         # TODO: Consider if it's a problem for us that errors from frictionless reports
         # are not guaranteed to include all errors.
         errors = [
-            f"{error.title}: {error.description} {error.message}"
-            for error in errors
+            f"{error.title}: {error.description} {error.message}" for error in errors
         ]
         message = (
             f"Incorrect properties provided:\n{properties}"

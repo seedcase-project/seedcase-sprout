@@ -10,8 +10,6 @@ from sprout.core.properties import (
 from sprout.core.verify_package_properties import (
     REQUIRED_PACKAGE_PROPERTIES,
     verify_package_properties,
-    verify_package_properties_complete,
-    verify_package_properties_well_formed,
 )
 
 
@@ -27,28 +25,12 @@ def properties():
     ).asdict
 
 
-@mark.parametrize(
-    "verify",
-    [
-        verify_package_properties,
-        verify_package_properties_complete,
-        verify_package_properties_well_formed,
-    ],
-)
-def test_accepts_required_fields(properties, verify):
+def test_accepts_required_fields(properties):
     """Should accept an object containing values for required fields."""
-    assert verify(properties) == properties
+    assert verify_package_properties(properties) == properties
 
 
-@mark.parametrize(
-    "verify",
-    [
-        verify_package_properties,
-        verify_package_properties_complete,
-        verify_package_properties_well_formed,
-    ],
-)
-def test_accepts_required_and_optional_fields(properties, verify):
+def test_accepts_required_and_optional_fields(properties):
     """Should accept an object containing values for required and optional fields."""
     properties["homepage"] = "www.mypage.com"
     properties["keywords"] = ["a", "b"]
@@ -59,50 +41,32 @@ def test_accepts_required_and_optional_fields(properties, verify):
     properties["custom1"] = ""
     properties["custom2"] = "test"
 
-    assert verify(properties) == properties
+    assert verify_package_properties(properties) == properties
 
 
-def test_verify_well_formed_accepts_default_values():
-    """Should accept an object with default values, some of which are blank."""
-    properties = PackageProperties().asdict
-
-    assert verify_package_properties_well_formed(properties) == properties
-
-
-@mark.parametrize(
-    "verify", [verify_package_properties, verify_package_properties_complete]
-)
-def test_rejects_empty_object(verify):
+def test_rejects_empty_object():
     """Should reject an empty object."""
     with raises(NotPropertiesError) as error:
-        verify({})
+        verify_package_properties({})
 
     message = str(error.value)
     for field in REQUIRED_PACKAGE_PROPERTIES:
         assert f"'{field}' is a required property" in message
 
 
-@mark.parametrize(
-    "verify", [verify_package_properties, verify_package_properties_well_formed]
-)
-def test_rejects_properties_not_conform_to_spec(properties, verify):
+def test_rejects_properties_not_conform_to_spec(properties):
     """Should reject an object with a value not meeting the Data Package spec."""
     properties["name"] = "an invalid name"
 
     with raises(NotPropertiesError, match="at property 'name'"):
-        verify(properties)
+        verify_package_properties(properties)
 
 
-@mark.parametrize(
-    "verify", [verify_package_properties, verify_package_properties_complete]
-)
 @mark.parametrize("field", REQUIRED_PACKAGE_PROPERTIES)
 @mark.parametrize("empty_value", ["", None])
-def test_rejects_empty_value_for_required_fields(
-    properties, verify, field, empty_value
-):
+def test_rejects_empty_value_for_required_fields(properties, field, empty_value):
     """Should reject an object with a missing or blank required field."""
     properties[field] = empty_value
 
     with raises(NotPropertiesError, match=f"'{field}' is a required property"):
-        verify(properties)
+        verify_package_properties(properties)
