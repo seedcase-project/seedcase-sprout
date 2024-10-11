@@ -1,6 +1,6 @@
 from pytest import mark, raises
 
-from sprout.core.invalid_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import InvalidPropertiesError
 from sprout.core.verify_resource_properties import verify_resource_properties
 
 

@@ -1,6 +1,6 @@
 from pytest import fixture, mark, raises
 
-from sprout.core.invalid_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import InvalidPropertiesError
 from sprout.core.properties import (
     ContributorProperties,
     LicenseProperties,

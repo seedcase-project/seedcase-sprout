@@ -1,7 +1,7 @@
 from frictionless import Package
 from frictionless.errors import PackageError
 
-from sprout.core.invalid_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import InvalidPropertiesError
 
 REQUIRED_PACKAGE_PROPERTIES = {
     "name",

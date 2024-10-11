@@ -1,6 +1,6 @@
 from frictionless import Resource
 
-from sprout.core.invalid_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import InvalidPropertiesError
 
 
 def verify_resource_properties(properties: dict) -> dict:
