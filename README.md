@@ -13,22 +13,26 @@ would like to store in a responsible way.
 
 ## Install
 
-seedcase Sprout can be installed in two ways. The first is to install it as a user, and the second is to install it as a contributor.
+Seedcase Sprout can be installed in two ways. The first is to install it
+as a user, and the second is to install it as a contributor.
 
 ### Installation for users
 
-To install Seedcase Sprout as a user, you will need to have pip, and pipenv installed. Once you've ensured that these are up-to-date, you can use the following command to install Seedcase Sprout:
+To install Seedcase Sprout as a user, you will need to have `pip`, and
+`pipenv` installed. Once you've ensured that these are up-to-date, you
+can use the following command to install Seedcase Sprout:
 
 ``` bash
-pip install seedcase-sprout
+pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout
 ```
 
 ### Installation for contributors
 
-The Seedcase project uses Poetry to manage dependencies. If you haven't worked
-with Poetry before, you will find an excellent introduction to it in the
-[Poetry documentation](https://python-poetry.org/docs/). If you have
-worked with it before you can find a quick guide to installing it below.
+The Seedcase project uses Poetry to manage dependencies. If you haven't
+worked with Poetry before, you will find an excellent introduction to it
+in the [Poetry documentation](https://python-poetry.org/docs/). If you
+have worked with it before you can find a quick guide to installing it
+below.
 
 To install Poetry, run:
 
@@ -48,7 +52,7 @@ Or with the justfile:
 ``` bash
 just start-app
 ```
-
+<!-- 
 ... which will run the Django project locally.
 
 ### Running the application with docker
@@ -71,3 +75,4 @@ Or with the `justfile`:
 just start-docker
 just stop-docker
 ```
+ -->
