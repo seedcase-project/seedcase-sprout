@@ -5,35 +5,47 @@ created or collected for research studies and "grow" it in a structured
 way using modern data engineering best practices.
 
 Sprout is the backbone of the Seedcase family; this is where data is
-uploaded, described, and stored based on a relational database design.
-Sprout is also the application which contains the user administration
-part of Seedcase (although this may change at a later date).
+uploaded, described, and stored.
 
 Seedcase Sprout is designed to receive data files and guide the user
 through adding metadata to the research data that the user of Seedcase
 would like to store in a responsible way.
 
-Check out a [demo](https://seedcase-sprout.fly.dev/) of Sprout, where
-you can upload a csv file with data and experience how to add metadata.
+## Install
 
-## Installation
+seedcase Sprout can be installed in two ways. The first is to install it as a user, and the second is to install it as a contributor.
 
-This project uses Poetry to manage dependencies. To install Poetry, run:
+### Installation for users
 
+To install Seedcase Sprout as a user, you will need to have pip, and pipenv installed. Once you've ensured that these are up-to-date, you can use the following command to install Seedcase Sprout:
+
+``` bash
+pip install seedcase-sprout
 ```
+
+### Installation for contributors
+
+The Seedcase project uses Poetry to manage dependencies. If you haven't worked
+with Poetry before, you will find an excellent introduction to it in the
+[Poetry documentation](https://python-poetry.org/docs/). If you have
+worked with it before you can find a quick guide to installing it below.
+
+To install Poetry, run:
+
+``` bash
 pipx install poetry
 ```
 
 To run any Python commands within this project, always append the
 command with `poetry run`, for instance:
 
-```
+``` bash
 poetry run python manage.py runserver
 ```
 
 Or with the justfile:
 
-```
+``` bash
 just start-app
 ```
 
@@ -43,7 +55,7 @@ just start-app
 
 You can run the Django application with docker:
 
-```
+``` bash
 # Run application
 docker compose up -d
 
@@ -55,7 +67,7 @@ docker compose down
 
 Or with the `justfile`:
 
-```
+``` bash
 just start-docker
 just stop-docker
 ```
