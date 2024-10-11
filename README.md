@@ -28,6 +28,12 @@ pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-spr
 
 ### Installation for contributors
 
+If you would like to contribute to Seedcase Sprout, you should first
+read the contribution guidelines in the [CONTRIBUTING]() file. Then
+return here to install poetry and clone the repository.
+
+TODO: add link
+
 The Seedcase project uses Poetry to manage dependencies. If you haven't
 worked with Poetry before, you will find an excellent introduction to it
 in the [Poetry documentation](https://python-poetry.org/docs/). If you
@@ -52,6 +58,8 @@ Or with the justfile:
 ``` bash
 just start-app
 ```
+
+````{=html}
 <!-- 
 ... which will run the Django project locally.
 
@@ -76,3 +84,4 @@ just start-docker
 just stop-docker
 ```
  -->
+````
