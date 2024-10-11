@@ -10,6 +10,7 @@ REQUIRED_PACKAGE_PROPERTIES = {
     "description",
     "version",
     "created",
+    "resources",
 }
 
 
