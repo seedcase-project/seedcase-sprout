@@ -1,6 +1,6 @@
 from frictionless import Resource
 
-from sprout.core.not_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import NotPropertiesError
 
 
 def verify_resource_properties(properties: dict) -> dict:
@@ -10,12 +10,12 @@ def verify_resource_properties(properties: dict) -> dict:
         properties: the resource properties to check
 
     Raises:
-        InvalidPropertiesError: if Frictionless finds an error in the properties
+        NotPropertiesError: if Frictionless finds an error in the properties
 
     Returns:
         the properties, if valid
     """
     report = Resource.validate_descriptor(properties)
     if not report.valid:
-        raise InvalidPropertiesError(report.errors, properties)
+        raise NotPropertiesError(report.errors, properties)
     return properties

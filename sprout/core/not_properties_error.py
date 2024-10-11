@@ -1,15 +1,15 @@
 from frictionless import Error
 
 
-class InvalidPropertiesError(Exception):
-    """Raised for invalid properties objects."""
+class NotPropertiesError(Exception):
+    """Raised for incorrect properties objects."""
 
     def __init__(self, errors: list[Error], properties: dict, *args, **kwargs):
-        """Initialises InvalidPropertiesError.
+        """Initialises NotPropertiesError.
 
         Args:
             errors: List of Frictionless errors.
-            properties: Invalid properties.
+            properties: Incorrect properties.
             *args: Non-keyword arguments.
             **kwargs: Keyword arguments.
         """
@@ -20,7 +20,7 @@ class InvalidPropertiesError(Exception):
             for error in errors
         ]
         message = (
-            f"Invalid properties provided:\n{properties}"
+            f"Incorrect properties provided:\n{properties}"
             f"\nThe following errors were found:\n{'\n'.join(errors)}"
         )
         super().__init__(message, *args, **kwargs)

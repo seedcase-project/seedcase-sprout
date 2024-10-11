@@ -1,7 +1,7 @@
 from frictionless import Package
 from frictionless.errors import PackageError
 
-from sprout.core.not_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import NotPropertiesError
 
 REQUIRED_PACKAGE_PROPERTIES = {
     "name",
@@ -26,7 +26,7 @@ def verify_package_properties(properties: dict) -> dict:
         The package properties, if valid.
 
     Raises:
-        InvalidPropertiesError: If the package properties are not valid.
+        NotPropertiesError: If the package properties are not correct.
     """
     verify_package_properties_complete(properties)
     verify_package_properties_well_formed(properties)
@@ -44,7 +44,7 @@ def verify_package_properties_complete(properties: dict) -> dict:
         The package properties, if complete.
 
     Raises:
-        InvalidPropertiesError: If the package properties are not complete.
+        NotPropertiesError: If the package properties are not complete.
     """
     errors = [
         PackageError(note=f"'{field}' is a required property and cannot be empty.")
@@ -53,7 +53,7 @@ def verify_package_properties_complete(properties: dict) -> dict:
     ]
 
     if errors:
-        raise InvalidPropertiesError(errors, properties)
+        raise NotPropertiesError(errors, properties)
 
     return properties
 
@@ -72,7 +72,7 @@ def verify_package_properties_well_formed(properties: dict) -> dict:
         The package properties, if well formed.
 
     Raises:
-        InvalidPropertiesError: If the package properties are not well formed.
+        NotPropertiesError: If the package properties are not well formed.
     """
     non_empty_properties = {
         key: value for key, value in properties.items() if value != ""
@@ -80,6 +80,6 @@ def verify_package_properties_well_formed(properties: dict) -> dict:
     report = Package.validate_descriptor(non_empty_properties)
 
     if not report.valid:
-        raise InvalidPropertiesError(report.errors, properties)
+        raise NotPropertiesError(report.errors, properties)
 
     return properties

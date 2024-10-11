@@ -1,6 +1,6 @@
 from pytest import fixture, mark, raises
 
-from sprout.core.not_properties_error import InvalidPropertiesError
+from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import (
     ContributorProperties,
     LicenseProperties,
@@ -74,7 +74,7 @@ def test_verify_well_formed_accepts_default_values():
 )
 def test_rejects_empty_object(verify):
     """Should reject an empty object."""
-    with raises(InvalidPropertiesError) as error:
+    with raises(NotPropertiesError) as error:
         verify({})
 
     message = str(error.value)
@@ -89,7 +89,7 @@ def test_rejects_properties_not_conform_to_spec(properties, verify):
     """Should reject an object with a value not meeting the Data Package spec."""
     properties["name"] = "an invalid name"
 
-    with raises(InvalidPropertiesError, match="at property 'name'"):
+    with raises(NotPropertiesError, match="at property 'name'"):
         verify(properties)
 
 
@@ -104,5 +104,5 @@ def test_rejects_empty_value_for_required_fields(
     """Should reject an object with a missing or blank required field."""
     properties[field] = empty_value
 
-    with raises(InvalidPropertiesError, match=f"'{field}' is a required property"):
+    with raises(NotPropertiesError, match=f"'{field}' is a required property"):
         verify(properties)
