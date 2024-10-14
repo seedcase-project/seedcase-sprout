@@ -5,6 +5,7 @@ from sprout.core.properties import (
     ContributorProperties,
     LicenseProperties,
     PackageProperties,
+    ResourceProperties,
     SourceProperties,
 )
 from sprout.core.verify_package_properties import (
@@ -40,6 +41,15 @@ def test_accepts_required_and_optional_fields(properties):
     properties["contributors"] = [ContributorProperties().asdict]
     properties["custom1"] = ""
     properties["custom2"] = "test"
+
+    assert verify_package_properties(properties) == properties
+
+
+def test_accepts_properties_with_only_resource_error(properties):
+    """Should not throw if there's a malformed resource but the package properties are
+    correct."""
+    bad_resource = ResourceProperties(name="a bad name").asdict
+    properties["resources"].append(bad_resource)
 
     assert verify_package_properties(properties) == properties
 

@@ -3,15 +3,17 @@ from frictionless import validate
 from sprout.core.not_properties_error import NotPropertiesError
 
 
-def verify_properties_well_formed(properties: dict) -> dict:
+def verify_properties_well_formed(properties: dict, error_type: str) -> dict:
     """Verifies if the properties provided have the correct structure.
 
     This function checks that `properties` contains the fields expected by the Data
-    Package spec.
-    At this point, empty values are not checked against format constraints.
+    Package spec. At this point, empty values are not checked against format
+    constraints. This function takes into account only errors specific to the type of
+    metadata being verified.
 
     Args:
         properties: The properties to verify.
+        error_type: The type of Frictionless error to filter for.
 
     Returns:
         The properties, if well formed.
@@ -24,7 +26,13 @@ def verify_properties_well_formed(properties: dict) -> dict:
     }
     report = validate(non_empty_properties)
 
-    if not report.valid:
-        raise NotPropertiesError(report.errors, properties)
+    errors = [
+        error
+        for error in report.errors
+        + [error for task in report.tasks for error in task.errors]
+        if error.type == error_type
+    ]
+    if errors:
+        raise NotPropertiesError(errors, properties)
 
     return properties

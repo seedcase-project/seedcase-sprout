@@ -31,6 +31,6 @@ def verify_package_properties(properties: dict) -> dict:
         NotPropertiesError: If the package properties are not correct.
     """
     verify_properties_complete(properties, PackageError, REQUIRED_PACKAGE_PROPERTIES)
-    verify_properties_well_formed(properties)
+    verify_properties_well_formed(properties, PackageError.type)
 
     return properties
