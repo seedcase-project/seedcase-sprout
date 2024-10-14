@@ -11,9 +11,9 @@ website:
   page-navigation: true
   body-header: |
     ::: {.callout-warning appearance="default" icon="true"}
-    🚧 Sprout is still in very active development and is evolving quickly, so
-    documentation and functionality may or may not work as described or intended
-    and could have substantial changes 🚧
+    🚧 Sprout is still in active development and evolving quickly, so the
+    documentation and functionality may not work as described
+    and could undergo substantial changes 🚧
     :::
   navbar:
     pinned: true
