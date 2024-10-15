@@ -1,8 +1,7 @@
 ---
-title: "Installing Seedcase Sprout using pip"
+title: "Install Sprout"
 ---
 
-{{< include /docs/includes/_wip.qmd >}}
 
 In order for Seedcase Sprout to work it will need to be installed either
 locally or on a server. This guide will show you how to install Sprout
@@ -19,72 +18,72 @@ given space on a server that mostly has access through a Terminal, where
 you have control over the directories you can write to.
 :::
 
-## Installing Sprout using pip
+## Install Sprout using pip
 
-### Making sure your system is ready
+::: {.callout-tip title="Not too comfortable using the terminal? Look here!" collapse="true"}
+If you're not comfortable using the terminal, fear not! Below you'll find a thorough
+step-by-step guide to help you along.
 
-There are some things you will need to ensure are installed on your
-system before you can install Sprout. You will need python 3.6 or
-higher, pip, and pipenv.
+<!-- TODO: Add instructions for people not comfortable with the terminal -->
+:::
+### 1. **Python** and **pip**
 
-Once you have python installed (see the [Python
-website](https://www.python.org/downloads/) if you don't have it on your
-machine), you can check if you have pip installed by running the
+Sprout requires Python and pip to be installed on your system:
+
+::: {.callout-note title="Software requirements"}
+-   [Python](https://www.python.org/downloads/) 3.6–3.12
+-   [pip](https://pip.pypa.io/en/stable/installation/) version 19.0 or
+    higher
+    <!--TODO: Do we have a specific pip version we require? This version
+    was taken from TensorFlow's installation guide. They do vary their
+    version requirements based on OS, not sure if we should too?-->
+:::
+
+Check your Python and pip version by running the following commands in
+your terminal:
+
+``` bash
+python3 --version
+python3 -m pip --version
+```
+
+If you don't get a Python version between 3.6 and 3.12 (or at all), go
+to the [Python website](https://www.python.org/downloads/) to download
+and install Python.
+
+If you don't have pip installed, you can install it by following the
+instructions on the [pip
+website](https://pip.pypa.io/en/stable/installation/).
+
+### 2. **Install Sprout**
+
+To install Sprout, make sure that pip is up to date by running the
 following command in your terminal:
 
 ``` bash
-pip --version
+pip install --upgrade pip
 ```
 
-The reply to this should be a version number. If you do not have pip
-installed, you can install it by following the instructions on the [pip
-website](https://pip.pypa.io/en/stable/installation/). If pip is
-outdated it will tell you, and provide guidance on how to update it.
-
-You will also need to check that pipenv is installed. You can do this by
-running the following command in your terminal:
-
-``` bash
-pipenv --version
-```
-
-The reply to this should be a version number. If you do not have pipenv
-installed, you can install it by running the following command in your
-terminal:
-
-``` bash
-pip install pipenv
-```
-
-This installation will take a little while, but once it is done you will
-be able to install Sprout.
-
-### Installing Sprout
-
-::: panel-tabset
-### Local installation
-
-Start by deciding where you want to store your data packages. By
-default, Sprout will be installed in the directory that your terminal is
-currently in. If you want to install Sprout in a different directory,
-you can navigate to that directory in your terminal before running the
-installation command (if you don't know how to navigate directories in
-your terminal, you can find a guide
-[here](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands)).
-
-Once you have decided where you want to install Sprout, you can run the
-following command in your terminal:
+Then, install Sprout directly from the [GitHub
+repository](https://github.com/seedcase-project/seedcase-sprout) by
+running the following command:
 
 ``` bash
 pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout
 ```
 
-This will install Sprout on your system. Once the installation is
-complete, you will be able to run Sprout from the command line.
+### 3. **Check the installation**
 
-### Server installation
+To check that Sprout has been installed correctly, run the following
+command in your terminal:
 
-::: callout-warning
-In development.
-:::
-:::
+``` bash
+python3 -c "import sprout.core as sp; print(sp.PackageProperties())"
+```
+
+If a `PackageProperties` object is returned, Sprout has been installed
+successfully. 
+
+Get started with your first data package by following the guide on 
+[Creating and managing data packages](https://sprout.seedcase-project.org/docs/guide/packages).
+```
