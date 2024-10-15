@@ -3,8 +3,10 @@ from pathlib import Path
 from frictionless.errors import ResourceError
 
 from sprout.core.not_properties_error import NotPropertiesError
-from sprout.core.verify_properties_complete import verify_properties_complete
-from sprout.core.verify_properties_well_formed import verify_properties_well_formed
+from sprout.core.verify_properties_are_complete import verify_properties_are_complete
+from sprout.core.verify_properties_are_well_formed import (
+    verify_properties_are_well_formed,
+)
 
 REQUIRED_RESOURCE_PROPERTIES = {"name", "path", "title", "description"}
 
@@ -25,8 +27,10 @@ def verify_resource_properties(properties: dict) -> dict:
     Raises:
         NotPropertiesError: If the resource properties are not correct.
     """
-    verify_properties_complete(properties, ResourceError, REQUIRED_RESOURCE_PROPERTIES)
-    verify_properties_well_formed(properties, ResourceError.type)
+    verify_properties_are_complete(
+        properties, ResourceError, REQUIRED_RESOURCE_PROPERTIES
+    )
+    verify_properties_are_well_formed(properties, ResourceError.type)
     verify_data_path(properties)
 
     return properties
