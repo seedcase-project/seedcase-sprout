@@ -7,7 +7,7 @@ from sprout.core.verify_properties_are_well_formed import (
     verify_properties_are_well_formed,
 )
 
-error_type = errors.PackageError.type
+package_error = errors.PackageError.type
 
 
 @fixture
@@ -26,13 +26,13 @@ def test_accepts_default_values():
     """Should accept an object with default values, some of which are blank."""
     properties = PackageProperties().asdict
 
-    assert verify_properties_are_well_formed(properties, error_type) == properties
+    assert verify_properties_are_well_formed(properties, package_error) == properties
 
 
 def test_accepts_custom_values(package_properties):
     """Should accept a well-formed properties object."""
     assert (
-        verify_properties_are_well_formed(package_properties, error_type)
+        verify_properties_are_well_formed(package_properties, package_error)
         == package_properties
     )
 
@@ -42,7 +42,7 @@ def test_rejects_properties_not_conforming_to_spec(package_properties):
     package_properties["name"] = "an invalid name with spaces"
 
     with raises(NotPropertiesError, match="at property 'name'"):
-        verify_properties_are_well_formed(package_properties, error_type)
+        verify_properties_are_well_formed(package_properties, package_error)
 
 
 def test_filters_for_the_specified_error_type(package_properties):
@@ -51,6 +51,6 @@ def test_filters_for_the_specified_error_type(package_properties):
     package_properties["resources"].append(bad_resource)
 
     assert (
-        verify_properties_are_well_formed(package_properties, error_type)
+        verify_properties_are_well_formed(package_properties, package_error)
         == package_properties
     )
