@@ -16,22 +16,16 @@ would like to store in a responsible way.
 Seedcase Sprout can be installed in two ways. The first is to install it
 as a user, and the second is to install it as a contributor.
 
-### Installation for users
-
-To install Seedcase Sprout as a user, you will need to have `pip`
-installed. Once you've ensured that it is up-to-date, you can use the
-following command to install Seedcase Sprout:
-
-``` bash
-pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout
-```
+To install it as a user, see our [Installation Guide](https://sprout.seedcase-project.org/docs/guide/installation).
 
 ### Installation for contributors
 
-If you would like to contribute to Seedcase Sprout, you should first
-read the contribution guidelines in the [CONTRIBUTING]() file. Then
-return here to install poetry and clone the repository.
-<!--TODO add link above--> The Seedcase project uses Poetry to manage
+If you would like to contribute, please
+read the [contribution guidelines]() first. Then
+return here to install Poetry and clone the repository.
+<!--TODO add link above--> 
+
+We use Poetry to manage
 dependencies. If you haven't worked with Poetry before, you will find an
 excellent introduction to it in the [Poetry
 documentation](https://python-poetry.org/docs/). If you have worked with
@@ -43,15 +37,9 @@ To install Poetry, run:
 pipx install poetry
 ```
 
-To run any Python commands within this project, always append the
-command with `poetry run`, for instance:
+Then, open a terminal so that the working directory is the root of this project (`seedcase-sprout/`) and run:
+
 
 ``` bash
-poetry run python manage.py runserver
-```
-
-Or with the justfile:
-
-``` bash
-just start-app
+just install-deps
 ```
