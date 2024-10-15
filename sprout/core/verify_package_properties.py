@@ -1,7 +1,9 @@
 from frictionless.errors import PackageError
 
-from sprout.core.verify_properties_complete import verify_properties_complete
-from sprout.core.verify_properties_well_formed import verify_properties_well_formed
+from sprout.core.verify_properties_are_complete import verify_properties_are_complete
+from sprout.core.verify_properties_are_well_formed import (
+    verify_properties_are_well_formed,
+)
 
 REQUIRED_PACKAGE_PROPERTIES = {
     "name",
@@ -30,7 +32,9 @@ def verify_package_properties(properties: dict) -> dict:
     Raises:
         NotPropertiesError: If the package properties are not correct.
     """
-    verify_properties_complete(properties, PackageError, REQUIRED_PACKAGE_PROPERTIES)
-    verify_properties_well_formed(properties, PackageError.type)
+    verify_properties_are_complete(
+        properties, PackageError, REQUIRED_PACKAGE_PROPERTIES
+    )
+    verify_properties_are_well_formed(properties, PackageError.type)
 
     return properties

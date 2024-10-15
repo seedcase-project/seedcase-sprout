@@ -48,7 +48,7 @@ def test_accepts_required_and_optional_fields(properties):
 def test_accepts_properties_with_only_resource_error(properties):
     """Should not throw if there's a malformed resource but the package properties are
     correct."""
-    bad_resource = ResourceProperties(name="a bad name").asdict
+    bad_resource = ResourceProperties(name="a bad name with spaces").asdict
     properties["resources"].append(bad_resource)
 
     assert verify_package_properties(properties) == properties
@@ -64,9 +64,9 @@ def test_rejects_empty_object():
         assert f"'{field}' is a required property" in message
 
 
-def test_rejects_properties_not_conform_to_spec(properties):
+def test_rejects_properties_not_conforming_to_spec(properties):
     """Should reject an object with a value not meeting the Data Package spec."""
-    properties["name"] = "an invalid name"
+    properties["name"] = "an invalid name with spaces"
 
     with raises(NotPropertiesError, match="at property 'name'"):
         verify_package_properties(properties)

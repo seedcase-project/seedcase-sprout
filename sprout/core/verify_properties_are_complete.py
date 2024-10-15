@@ -5,7 +5,7 @@ from frictionless.errors import PackageError, ResourceError
 from sprout.core.not_properties_error import NotPropertiesError
 
 
-def verify_properties_complete(
+def verify_properties_are_complete(
     properties: dict,
     error_cls: Type[PackageError | ResourceError],
     required_fields: set[str],
