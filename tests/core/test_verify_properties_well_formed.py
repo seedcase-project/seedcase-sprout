@@ -3,7 +3,9 @@ from pytest import fixture, raises
 
 from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import PackageProperties, ResourceProperties
-from sprout.core.verify_properties_are_well_formed import verify_properties_are_well_formed
+from sprout.core.verify_properties_are_well_formed import (
+    verify_properties_are_well_formed,
+)
 
 error_type = errors.PackageError.type
 

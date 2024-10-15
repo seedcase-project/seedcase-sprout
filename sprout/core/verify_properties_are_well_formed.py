@@ -3,7 +3,7 @@ from frictionless import validate
 from sprout.core.not_properties_error import NotPropertiesError
 
 
-def verify_properties_well_formed(properties: dict, error_type: str) -> dict:
+def verify_properties_are_well_formed(properties: dict, error_type: str) -> dict:
     """Verifies if the properties provided have the correct structure.
 
     This function checks that `properties` contains the fields expected by the Data
