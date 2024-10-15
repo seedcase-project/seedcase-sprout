@@ -17,11 +17,6 @@ from .create_package_structure import create_package_structure
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 
-# from .extract_resource_properties import *
-# from .edit_resource_properties import *
-# from .write_resource_data_to_raw import *
-# from .write_resource_parquet import *
-# from .write_resource_properties import *
 # from .write_resource_to_database import *
 # from .delete_resource_raw_file import *
 # from .delete_resource_data import *
@@ -57,6 +52,12 @@ from .properties import (
     TableSchemaProperties,
 )
 
+# from .extract_resource_properties import *
+# from .edit_resource_properties import *
+# from .write_resource_data_to_raw import *
+# from .write_resource_parquet import *
+from .write_resource_properties import write_resource_properties
+
 # Helpers -----
 # from .pretty_json import *
 
@@ -91,7 +92,7 @@ __all__ = [
     # "edit_resource_properties",
     # "write_resource_data_to_raw",
     # "write_resource_parquet",
-    # "write_resource_properties",
+    "write_resource_properties",
     # "write_resource_to_database",
     # "delete_resource_raw_file",
     # "delete_resource_data",
