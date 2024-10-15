@@ -26,7 +26,7 @@ step-by-step guide to help you along.
 
 <!-- TODO: Add instructions for people not comfortable with the terminal -->
 :::
-### 1. **Python** and **pip**
+### Installing dependent software
 
 Sprout requires Python and pip to be installed on your system:
 
@@ -55,7 +55,7 @@ If you don't have pip installed, you can install it by following the
 instructions on the [pip
 website](https://pip.pypa.io/en/stable/installation/).
 
-### 2. **Install Sprout**
+### Install Sprout
 
 To install Sprout, make sure that pip is up to date by running the
 following command in your terminal:
@@ -69,21 +69,20 @@ repository](https://github.com/seedcase-project/seedcase-sprout) by
 running the following command:
 
 ``` bash
-pip install seedcase_sprout@git+https://github.com/seedcase-project/seedcase-sprout
+pip install git+https://github.com/seedcase-project/seedcase-sprout
 ```
 
-### 3. **Check the installation**
+### Check the installation
 
 To check that Sprout has been installed correctly, run the following
 command in your terminal:
 
 ``` bash
-python3 -c "import sprout.core as sp; print(sp.PackageProperties())"
+pip show seedcase_sprout
 ```
 
-If a `PackageProperties` object is returned, Sprout has been installed
-successfully. 
+If install was successful, it will show details about Sprout.
 
 Get started with your first data package by following the guide on 
-[Creating and managing data packages](https://sprout.seedcase-project.org/docs/guide/packages).
+[Creating and managing data packages](/docs/guide/packages.qmd).
 ```
