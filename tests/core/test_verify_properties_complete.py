@@ -6,7 +6,7 @@ from sprout.core.verify_properties_complete import verify_properties_complete
 
 
 @mark.parametrize("required_fields", [{}, {"field1"}, {"field1", "field2"}])
-def test_checks_for_required_fields(required_fields):
+def test_accepts_required_fields(required_fields):
     """Should accept an object containing values for all required fields."""
     properties = {
         "field1": "my field 1",

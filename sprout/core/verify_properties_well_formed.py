@@ -16,10 +16,10 @@ def verify_properties_well_formed(properties: dict, error_type: str) -> dict:
         error_type: The type of Frictionless error to filter for.
 
     Returns:
-        The properties, if well formed.
+        The properties, if well-formed.
 
     Raises:
-        NotPropertiesError: If the properties are not well formed.
+        NotPropertiesError: If the properties are not well-formed.
     """
     non_empty_properties = {
         key: value for key, value in properties.items() if value != ""

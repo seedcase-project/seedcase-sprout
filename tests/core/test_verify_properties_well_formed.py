@@ -35,17 +35,17 @@ def test_accepts_custom_values(package_properties):
     )
 
 
-def test_rejects_properties_not_conform_to_spec(package_properties):
+def test_rejects_properties_not_conforming_to_spec(package_properties):
     """Should reject an object with a value not meeting the Data Package spec."""
-    package_properties["name"] = "an invalid name"
+    package_properties["name"] = "an invalid name with spaces"
 
     with raises(NotPropertiesError, match="at property 'name'"):
         verify_properties_well_formed(package_properties, error_type)
 
 
 def test_filters_for_the_specified_error_type(package_properties):
-    """Should throw only if errors of the specified type are detected."""
-    bad_resource = ResourceProperties(name="a bad name").asdict
+    """Should throw only if PackageErrors are detected."""
+    bad_resource = ResourceProperties(name="a bad name with spaces").asdict
     package_properties["resources"].append(bad_resource)
 
     assert (
