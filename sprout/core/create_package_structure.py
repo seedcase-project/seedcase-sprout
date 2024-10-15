@@ -46,4 +46,8 @@ def create_package_structure(path: Path) -> list[Path]:
     readme = create_readme_text(properties)
     readme_path = create_readme_path(package_path)
 
-    return [write_json(properties, properties_path), write_file(readme, readme_path)]
+    return [
+        write_json(properties, properties_path),
+        write_file(readme, readme_path),
+        create_dir(package_path / "resources"),
+    ]
