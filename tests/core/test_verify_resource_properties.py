@@ -55,7 +55,7 @@ def test_rejects_empty_object():
         assert f"'{field}' is a required property" in message
 
 
-def test_rejects_properties_not_conform_to_spec(resource_properties):
+def test_rejects_properties_violating_spec(resource_properties):
     """Should reject an object with a value not meeting the Data Package spec."""
     resource_properties["name"] = "an invalid name"
 
