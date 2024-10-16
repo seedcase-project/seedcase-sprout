@@ -15,14 +15,31 @@ from sprout.core.verify_properties_are_well_formed import (
 def edit_package_properties(path: Path, properties: dict) -> dict:
     """Edits the properties of an existing package.
 
-    Values in `properties` overwrite preexisting values on the package.
+    Use this any time you want to edit the package's properties and particularly
+    after using `create_package_structure()`.  Because
+    `create_package_structure()` also creates an empty `datapackage.json` file,
+    you would use `edit_package_properties()` to fill in the properties file with
+    details specific for the package.
+
+    When you need to edit the `datapackage.json` properties, use this function
+    to ensure the properties are correctly structured and written.  It only
+    edits metadata on the package itself, not on the data resources contained
+    within the package.
+
+    Any value you give in `properties` will overwrite any preexisting values
+    within the original package properties.
 
     Args:
-        path: The path to the `datapackage.json` file.
-        properties: The new package properties.
+        path: The path to the `datapackage.json` file, use `path_properties()` to
+            provide the correct path.
+        properties: The new package properties to update from the original. Use
+            `PackageProperties` to provide a correctly structured properties
+            dictionary. See `help(PackageProperties)` for details on how to use it.
 
     Returns:
-        The updated package properties.
+        The updated package properties as a Python dictionary that mimicks the
+        JSON structure. Use `write_package_properties()` to save it back to the
+        `datapackage.json` file.
 
     Raises:
         FileNotFound: If the `datapackage.json` file doesn't exist.
