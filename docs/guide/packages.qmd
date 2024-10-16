@@ -29,6 +29,7 @@ Python script like so:
 import sprout.core as sp
 import os
 import pathlib
+from pprint import pprint # for pretty printing
 
 # TODO: function to assign path to root? Since this doesn't know about `~`
 os.environ["SPROUT_ROOT"] = "~/Desktop/sprout/"
