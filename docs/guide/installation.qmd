@@ -37,7 +37,7 @@ page](https://www.python.org/downloads/).
 
 In general, it isn't recommended to use pip to install into your global
 system (accessible everywhere on your computer) because it can
-negatively effect other Python packages. Rather, you install a package
+negatively affect other Python packages. Rather, you install a package
 into a virtual environment so that it doesn't affect your global system.
 
 To make this virtual environment, we need to create it with venv in a
