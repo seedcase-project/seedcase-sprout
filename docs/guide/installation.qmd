@@ -6,7 +6,7 @@ order: 0
 We designed Sprout to be installed for use either on your own computer
 (locally) or on a server (remote). This guide will walk you through
 installing Sprout. Regardless of how you install Sprout, you will need
-to use the Terminal. If you unfamiliar with the terminal, start with our
+to use the Terminal. If you are unfamiliar with the terminal, start with our
 [guide for beginners]() before continuing.
 
 <!-- TODO: this callout might need to be its own include, since other docs will use it too -->
