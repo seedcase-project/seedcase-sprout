@@ -147,7 +147,9 @@ def test_throws_error_if_data_path_malformed(
         write_resource_properties(package_properties_path, resource_properties_1.asdict)
 
 
-def test_throws_error_if_package_properties_are_incorrect(tmp_path, resource_properties_1):
+def test_throws_error_if_package_properties_are_incorrect(
+    tmp_path, resource_properties_1
+):
     """Should throw NotPropertiesError if the package properties are incorrect."""
     path = write_json({}, tmp_path / "datapackage.json")
 

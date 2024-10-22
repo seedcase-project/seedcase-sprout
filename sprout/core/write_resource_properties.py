@@ -11,10 +11,9 @@ def write_resource_properties(path: Path, resource_properties: dict) -> Path:
     """Adds the specified resource properties to the `datapackage.json` file.
 
     This functions verifies `resource_properties`, and if a
-    resource with that ID is already present on the package, the properties of the resource
-    with that ID are updated, with values in `resource_properties` overwriting
-    preexisting values. Otherwise, `resource_properties` is
-    added as a new resource.
+    resource with that ID is already present on the package, the properties of the
+    resource with that ID are updated, with values in `resource_properties` overwriting
+    preexisting values. Otherwise, `resource_properties` is added as a new resource.
 
     Args:
         path: The path to the `datapackage.json` file.
@@ -34,8 +33,8 @@ def write_resource_properties(path: Path, resource_properties: dict) -> Path:
     package_properties = read_json(path)
     verify_package_properties(package_properties)
 
-    resource_id = get_resource_id(resource_properties)
-    current_resource = find_resource(package_properties, resource_id)
+    resource_id = get_resource_id_from_properties(resource_properties)
+    current_resource = get_resource_properties(package_properties, resource_id)
     if current_resource:
         current_resource.update(resource_properties)
     else:
@@ -44,7 +43,7 @@ def write_resource_properties(path: Path, resource_properties: dict) -> Path:
     return write_json(package_properties, path)
 
 
-def find_resource(package_properties: dict, resource_id: int) -> dict | None:
+def get_resource_properties(package_properties: dict, resource_id: int) -> dict | None:
     """Finds the resource properties with the given ID within the given package.
 
     Args:
@@ -55,11 +54,11 @@ def find_resource(package_properties: dict, resource_id: int) -> dict | None:
         The resource with the specified ID, if found. Otherwise returns `None`.
     """
     for resource in package_properties["resources"]:
-        if get_resource_id(resource) == resource_id:
+        if get_resource_id_from_properties(resource) == resource_id:
             return resource
 
 
-def get_resource_id(resource_properties: dict) -> int:
+def get_resource_id_from_properties(resource_properties: dict) -> int:
     """Returns the resource ID of the specified resource properties.
 
     Args:
