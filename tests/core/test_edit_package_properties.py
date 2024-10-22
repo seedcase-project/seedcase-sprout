@@ -53,7 +53,7 @@ def test_throws_error_if_properties_file_cannot_be_read(tmp_path, properties):
         edit_package_properties(file_path, properties)
 
 
-def test_throws_error_if_current_package_properties_malformed(tmp_path, properties):
+def test_throws_error_if_current_package_properties_are_malformed(tmp_path, properties):
     """Should throw NotPropertiesError if the current package properties are
     malformed."""
     package_properties = PackageProperties(name="invalid name with spaces").asdict
@@ -63,7 +63,7 @@ def test_throws_error_if_current_package_properties_malformed(tmp_path, properti
         edit_package_properties(path, properties)
 
 
-def test_throws_error_if_new_package_properties_incorrect(properties_path):
+def test_throws_error_if_new_package_properties_are_incorrect(properties_path):
     """Should throw NotPropertiesError if the new package properties are incorrect."""
     with raises(NotPropertiesError):
         edit_package_properties(properties_path, {})

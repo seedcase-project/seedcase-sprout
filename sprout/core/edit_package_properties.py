@@ -16,21 +16,21 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
     """Edits the properties of an existing package.
 
     Use this any time you want to edit the package's properties and particularly
-    after using `create_package_structure()`.  Because
+    after using `create_package_structure()`. Because
     `create_package_structure()` also creates an empty `datapackage.json` file,
-    you would use `edit_package_properties()` to fill in the properties file with
+    `edit_package_properties()` is used to fill in the properties file with
     details specific for the package.
 
     When you need to edit the `datapackage.json` properties, use this function
-    to ensure the properties are correctly structured and written.  It only
-    edits metadata on the package itself, not on the data resources contained
+    to ensure the properties are correctly structured and written. It only
+    edits the properties of the package itself, not on the data resources contained
     within the package.
 
-    Any value you give in `properties` will overwrite any preexisting values
+    If the values in `properties` are well-formed, they will overwrite any preexisting values
     within the original package properties.
 
     Args:
-        path: The path to the `datapackage.json` file, use `path_properties()` to
+        path: The path to the `datapackage.json` file. Use `path_properties()` to
             provide the correct path.
         properties: The new package properties to update from the original. Use
             `PackageProperties` to provide a correctly structured properties
