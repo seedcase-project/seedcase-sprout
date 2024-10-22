@@ -10,10 +10,10 @@ from sprout.core.write_json import write_json
 def write_resource_properties(path: Path, resource_properties: dict) -> Path:
     """Adds the specified resource properties to the `datapackage.json` file.
 
-    This functions verifies the resource properties in the input and checks if a
-    resource with that ID is already present on the package. If so, the resource
-    with that ID is updated, with values in `resource_properties` overwriting
-    preexisting values. Otherwise, the resource properties in the input are
+    This functions verifies `resource_properties`, and if a
+    resource with that ID is already present on the package, the properties of the resource
+    with that ID are updated, with values in `resource_properties` overwriting
+    preexisting values. Otherwise, `resource_properties` is
     added as a new resource.
 
     Args:
