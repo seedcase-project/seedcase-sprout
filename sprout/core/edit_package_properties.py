@@ -26,12 +26,12 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
     edits the properties of the package itself, not on the data resources contained
     within the package.
 
-    If the values in `properties` are well-formed, they will overwrite any preexisting values
-    within the original package properties.
+    If the values in `properties` are well-formed, they will overwrite any preexisting
+    values within the original package properties.
 
     Args:
-        path: The path to the `datapackage.json` file. Use `path_properties()` to
-            provide the correct path.
+        path: The path to the `datapackage.json` file. Use `path_package_properties()`
+            to provide the correct path.
         properties: The new package properties to update from the original. Use
             `PackageProperties` to provide a correctly structured properties
             dictionary. See `help(PackageProperties)` for details on how to use it.
