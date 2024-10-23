@@ -3,6 +3,7 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
+from sprout.core.create_package_structure import create_package_structure
 from sprout.core.edit_package_properties import edit_package_properties
 from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import PackageProperties
@@ -13,18 +14,28 @@ from sprout.core.write_json import write_json
 def properties():
     return PackageProperties(
         name="my-new-package-name",
-        id="123-abc-123",
-        title="My Package",
-        description="This is my package.",
         version="2.0.0",
-        created="2024-05-14T05:00:01+00:00",
     ).asdict
 
 
 @fixture
 def properties_path(tmp_path) -> Path:
-    package_properties = PackageProperties(version="1.0.0")
-    return write_json(package_properties.asdict, tmp_path / "datapackage.json")
+    properties_path = create_package_structure(tmp_path)[0]
+    # Write a correct properties file for editing
+    # The original file will cause a NotPropertiesError due to empty default values.
+    write_json(
+        PackageProperties(
+            name="my-package",
+            id="123-abc-123",
+            title="My Package",
+            description="This is my package.",
+            version="1.0.0",
+            created="2024-05-14T05:00:01+00:00",
+        ).asdict,
+        properties_path,
+    )
+    return properties_path
+
 
 
 def test_edits_package_properties(properties_path, properties):
