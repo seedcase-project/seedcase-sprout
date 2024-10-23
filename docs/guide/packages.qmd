@@ -65,6 +65,7 @@ you.
 
 ```{python}
 properties = sp.PackageProperties(
+    name="diabetes-hypertension-study",
     title="Diabetes and Hypertension Study",
     description="Data from the 2021 study on diabetes and hypertension",
     contributors=[sp.ContributorProperties(
