@@ -34,7 +34,7 @@ def test_rejects_path_if_invalid(tmp_path):
         create_resource_properties(resource_path, properties)
 
 
-def test_rejects_properties_if_incorrect(tmp_path):
-    """Given an incorrect properties input, should raise NotPropertiesError."""
-    with raises(NotPropertiesError):
+def test_rejects_properties_if_empty(tmp_path):
+    """Should raise ValueError if given an empty properties."""
+    with raises(ValueError):
         create_resource_properties(tmp_path, {})
