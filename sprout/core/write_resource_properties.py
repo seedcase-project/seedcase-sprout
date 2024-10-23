@@ -24,7 +24,8 @@ def write_resource_properties(path: Path, resource_properties: dict) -> Path:
 
     Raises:
         FileNotFound: If the `datapackage.json` file doesn't exist.
-        NotPropertiesError: If the resource or package properties are not correct.
+        NotPropertiesError: If the resource or package properties are not correct, i.e.,
+            they are incomplete or don't follow the Data Package specification.
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
     """
     verify_is_file(path)
