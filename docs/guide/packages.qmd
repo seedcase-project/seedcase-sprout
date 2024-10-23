@@ -87,7 +87,7 @@ package_properties = sp.edit_package_properties(
   path=sp.path_package_properties(package_id=1),
   properties=properties.asdict
 )
-print(package_properties)
+pprint(package_properties)
 ```
 
 ::: callout-important
