@@ -68,7 +68,8 @@ properties = sp.PackageProperties(
     title="Diabetes and Hypertension Study",
     description="Data from the 2021 study on diabetes and hypertension",
     contributors=[sp.ContributorProperties(
-        title="Jamie Jones",
+        given_name="Jamie",
+        family_name="Jones",
         email="jamie_jones@example.com",
         roles=["creator"]
     )],
