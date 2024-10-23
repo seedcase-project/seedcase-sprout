@@ -3,9 +3,11 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
+from sprout.core.create_package_structure import create_package_structure
 from sprout.core.edit_package_properties import edit_package_properties
 from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import PackageProperties
+from sprout.core.read_json import read_json
 from sprout.core.write_json import write_json
 
 
@@ -13,23 +15,40 @@ from sprout.core.write_json import write_json
 def properties():
     return PackageProperties(
         name="my-new-package-name",
-        id="123-abc-123",
-        title="My Package",
-        description="This is my package.",
         version="2.0.0",
-        created="2024-05-14T05:00:01+00:00",
     ).asdict
 
 
 @fixture
 def properties_path(tmp_path) -> Path:
-    package_properties = PackageProperties(version="1.0.0")
-    return write_json(package_properties.asdict, tmp_path / "datapackage.json")
+    properties_path = create_package_structure(tmp_path)[0]
+    # Write a correct properties file for editing
+    # The original file will cause a NotPropertiesError due to empty default values.
+    write_json(
+        PackageProperties(
+            name="my-package",
+            id="123-abc-123",
+            title="My Package",
+            description="This is my package.",
+            version="1.0.0",
+            created="2024-05-14T05:00:01+00:00",
+        ).asdict,
+        properties_path,
+    )
+    return properties_path
 
 
-def test_edits_package_properties(properties_path, properties):
-    """Should update package properties."""
-    assert edit_package_properties(properties_path, properties) == properties
+def test_edits_only_changed_package_properties(properties_path, properties):
+    """Should only edit package properties and leave unchanged values as is."""
+    # Given
+    current_properties = read_json(properties_path)
+
+    # When, Then
+    expected_properties = current_properties | {
+        "name": properties["name"],
+        "version": properties["version"],
+    }
+    assert edit_package_properties(properties_path, properties) == expected_properties
 
 
 def test_throws_error_if_path_points_to_dir(tmp_path):
@@ -63,7 +82,7 @@ def test_throws_error_if_current_package_properties_are_malformed(tmp_path, prop
         edit_package_properties(path, properties)
 
 
-def test_throws_error_if_new_package_properties_are_incorrect(properties_path):
-    """Should throw NotPropertiesError if the new package properties are incorrect."""
-    with raises(NotPropertiesError):
+def test_throws_error_if_new_package_properties_are_empty(properties_path):
+    """Should throw ValueError if the new package properties are empty."""
+    with raises(ValueError):
         edit_package_properties(properties_path, {})
