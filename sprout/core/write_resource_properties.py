@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from sprout.core.read_json import read_json
+from sprout.core.verify_data_path import verify_data_path
 from sprout.core.verify_is_file import verify_is_file
 from sprout.core.verify_package_properties import verify_package_properties
 from sprout.core.verify_resource_properties import verify_resource_properties
@@ -67,5 +68,10 @@ def get_resource_id_from_properties(resource_properties: dict) -> int:
 
     Returns:
         The ID of the resource.
+
+    Raises:
+        NotPropertiesError: If the resource properties have a malformed or missing
+            data path.
     """
+    verify_data_path(resource_properties)
     return int(Path(resource_properties["path"]).parts[1])

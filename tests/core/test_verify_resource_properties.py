@@ -6,7 +6,6 @@ from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import ResourceProperties, TableSchemaProperties
 from sprout.core.verify_resource_properties import (
     REQUIRED_RESOURCE_PROPERTIES,
-    verify_data_path,
     verify_resource_properties,
 )
 
@@ -75,7 +74,6 @@ def test_rejects_empty_value_for_required_fields(
         verify_resource_properties(resource_properties)
 
 
-@mark.parametrize("verify", [verify_data_path, verify_resource_properties])
 @mark.parametrize(
     "data_path",
     [
@@ -84,7 +82,7 @@ def test_rejects_empty_value_for_required_fields(
         Path("resources", "1", "data.parquet", "1"),
     ],
 )
-def test_rejects_malformed_path(resource_properties, data_path, verify):
+def test_rejects_malformed_path(resource_properties, data_path):
     """Given a set of properties with a malformed data path, should throw
     NotPropertiesError."""
     resource_properties["path"] = str(data_path)
@@ -93,4 +91,4 @@ def test_rejects_malformed_path(resource_properties, data_path, verify):
         NotPropertiesError,
         match="No resource ID found on resource properties",
     ):
-        verify(resource_properties)
+        verify_resource_properties(resource_properties)

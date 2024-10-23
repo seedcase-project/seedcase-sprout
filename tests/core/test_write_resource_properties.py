@@ -136,15 +136,40 @@ def test_throws_error_if_resource_properties_are_incorrect(package_properties_pa
         write_resource_properties(package_properties_path, {})
 
 
-def test_throws_error_if_data_path_malformed(
+def test_throws_error_if_data_path_malformed_on_new_resource(
     package_properties_path, resource_properties_1
 ):
-    """Should throw NotPropertiesError if the data path of the resource is
+    """Should throw NotPropertiesError if the data path of the new resource is
     malformed."""
     resource_properties_1.path = str(Path("no", "id"))
 
     with raises(NotPropertiesError):
         write_resource_properties(package_properties_path, resource_properties_1.asdict)
+
+
+def test_throws_error_if_data_path_malformed_on_existing_resource(
+    tmp_path, resource_properties_1, resource_properties_2
+):
+    """Should throw NotPropertiesError if the data path of an existing resource is
+    malformed."""
+    # given
+    resource_properties_1.path = str(Path("no", "id"))
+    package_properties = PackageProperties(
+        name="my-package",
+        id="123-abc-123",
+        title="My Package",
+        description="This is my package.",
+        version="2.0.0",
+        created="2024-05-14T05:00:01+00:00",
+        resources=[resource_properties_1],
+    )
+    package_properties_path = write_json(
+        package_properties.asdict, tmp_path / "datapackage.json"
+    )
+
+    # when + then
+    with raises(NotPropertiesError):
+        write_resource_properties(package_properties_path, resource_properties_2.asdict)
 
 
 def test_throws_error_if_package_properties_are_incorrect(
