@@ -56,13 +56,11 @@ reset-local:
 
 # Build the documentation website using Quarto
 build-website:
-  docker run --rm -v $(pwd):/site -w /site ghcr.io/quarto-dev/quarto:latest quarto render
+  # To let Quarto know where python is.
+  export QUARTO_PYTHON=.venv/bin/python3
+  poetry run quarto render --execute
 
 # Add files for a new function (function file and test file)
 add-function app part name:
   touch ./{{app}}/{{part}}/{{name}}.py
   touch ./tests/{{part}}/test_{{name}}.py
-
-# Extract dataclasses from the Data Package JSON schema
-generate-dataclasses:
-  poetry run python sprout/core/generate_properties/generate_dataclasses.py

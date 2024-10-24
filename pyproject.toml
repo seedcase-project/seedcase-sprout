@@ -38,7 +38,7 @@ pytest-django = "^4.8.0"
 time-machine = "^2.15.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.6.2"
+ruff = "^0.7.0"
 datamodel-code-generator = {extras = ["http"], version = "^0.26.0"}
 
 [tool.poetry.group.django.dependencies]
@@ -48,6 +48,10 @@ dj-database-url = "^2.2.0"
 gunicorn = "^23.0.0"
 whitenoise = "^6.7.0"
 django = "^5.1"
+
+
+[tool.poetry.group.docs.dependencies]
+jupyter = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core"]
