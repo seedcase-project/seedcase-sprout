@@ -2,7 +2,6 @@ from pathlib import Path
 
 from frictionless.errors import PackageError
 
-from sprout.core.properties import PackageProperties
 from sprout.core.read_json import read_json
 from sprout.core.verify_is_file import verify_is_file
 from sprout.core.verify_package_properties import (
@@ -49,35 +48,10 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
     """
     verify_is_file(path)
+    verify_package_properties(properties)
 
-    # verify current properties
     current_properties = read_json(path)
     verify_properties_are_well_formed(current_properties, PackageError.type)
 
-    # verify new properties + remove default values to avoid overwriting existing values
-    verify_properties_are_well_formed(properties, PackageError.type)
-    properties = remove_default_package_properties_from_dict(properties)
-
-    return verify_package_properties(current_properties | properties)
-
-
-def remove_default_package_properties_from_dict(properties: dict) -> dict:
-    """Removes default package properties from a dictionary.
-
-    This is to ensure that existing values are not overwritten with initial, empty
-    default values.
-
-    Args:
-        properties: The package properties to remove default values from.
-
-    Returns:
-        The package properties dictionary with default values removed.
-
-    """
-    default_properties = PackageProperties().asdict
-
-    return {
-        key: value
-        for key, value in properties.items()
-        if value != default_properties[key]
-    }
+    current_properties.update(properties)
+    return current_properties
