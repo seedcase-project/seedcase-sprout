@@ -215,11 +215,7 @@ fig-alt="A Plant UML schematic of the detailed code flow within the `write_resou
 ::: {.callout-note collapse="true"}
 ### `write_resource_parquet(raw_files, path)`
 
-This function takes the files provided by `raw_files` and merges them
-into a `data.parquet` file provided by `path`. Use
-`path_resource_data()` to provide the correct path location for `path`
-and `path_resource_raw_files()` for the `raw_files` argument. Outputs
-the path object of the created file.
+See `help(write_resource_parquet)` for more details.
 :::
 
 ::: {.callout-note collapse="true"}
