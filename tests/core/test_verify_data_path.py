@@ -29,7 +29,7 @@ def test_rejects_properties_with_no_path(resource_properties):
 
     with raises(
         NotPropertiesError,
-        match="No resource ID found on resource properties",
+        match="No resource ID found",
     ):
         verify_data_path(resource_properties)
 
@@ -49,6 +49,6 @@ def test_rejects_malformed_path(resource_properties, data_path):
 
     with raises(
         NotPropertiesError,
-        match="No resource ID found on resource properties",
+        match="No resource ID found",
     ):
         verify_data_path(resource_properties)

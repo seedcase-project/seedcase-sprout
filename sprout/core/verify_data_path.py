@@ -21,9 +21,9 @@ def verify_data_path(properties: dict) -> dict:
     if len(data_path.parts) != 3 or not data_path.parts[1].isdigit():
         error = ResourceError(
             note=(
-                "No resource ID found in the field `path` in resource properties. The `path` field on the "
-                "resource should point to the associated data file. "
-                "Are you sure you set up the resource correctly?"
+                "No resource ID found in the field `path` in resource properties. The "
+                "`path` field on the resource should point to the associated data "
+                "file. Are you sure you set up the resource correctly?"
             )
         )
         raise NotPropertiesError([error], properties)
