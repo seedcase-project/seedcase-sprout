@@ -2,14 +2,18 @@
 # `generate_properties/generated_properties.py` file. Update the auto-generated
 # properties file to add more dataclasses and move them into this file.
 
-
-from abc import ABC
-from dataclasses import asdict, dataclass, field
+from abc import ABC, abstractmethod
+from dataclasses import asdict, dataclass
 from typing import Any, Literal
 
 
 class Properties(ABC):
     """An abstract base class for all *Properties classes holding common logic."""
+
+    @abstractmethod
+    def default(self) -> "Properties":
+        """Abstract method that needs to be implemented by subclasses."""
+        pass
 
     @property
     def asdict(self) -> dict:
@@ -48,6 +52,23 @@ class ContributorProperties(Properties):
     organization: str | None = None
     roles: list[str] | None = None
 
+    @classmethod
+    def default(cls: "type[ContributorProperties]") -> "ContributorProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A ContributorProperties object with default values
+        """
+        return cls(
+            title="",
+            path="",
+            email="",
+            given_name="",
+            family_name="",
+            organization="",
+            roles=[],
+        )
+
 
 @dataclass
 class LicenseProperties(Properties):
@@ -63,6 +84,15 @@ class LicenseProperties(Properties):
     name: str | None = None
     path: str | None = None
     title: str | None = None
+
+    @classmethod
+    def default(cls: "type[LicenseProperties]") -> "LicenseProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A LicenseProperties object with default values
+        """
+        return cls(name="", path="", title="")
 
 
 @dataclass
@@ -80,6 +110,15 @@ class SourceProperties(Properties):
     path: str | None = None
     email: str | None = None
     version: str | None = None
+
+    @classmethod
+    def default(cls: "type[SourceProperties]") -> "SourceProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A SourceProperties object with default values
+        """
+        return cls(title="", path="", email="", version="")
 
 
 # The `r"""` string is used to avoid escaping backslashes in the `null_sequence`
@@ -126,24 +165,52 @@ class TableDialectProperties(Properties):
         table (str): Specifies the name of a table in a database.
     """
 
-    header: bool = True
-    header_rows: list[int] = field(default_factory=lambda: [1])
-    header_join: str = " "
-    comment_rows: list[int] = field(default_factory=lambda: [1])
-    comment_char: str = ""
-    delimiter: str = ","
-    line_terminator: str = "\r\n"
-    quote_char: str = '"'
-    double_quote: bool = True
-    escape_char: str = ""
-    null_sequence: str = ""
-    skip_initial_space: bool = False
-    property: str = ""
-    item_type: Literal["array", "object"] = "array"
-    item_keys: list[str] = field(default_factory=list)
-    sheet_number: int = 1
-    sheet_name: str = ""
-    table: str = ""
+    header: bool | None = None
+    header_rows: list[int] | None = None
+    header_join: str | None = None
+    comment_rows: list[int] | None = None
+    comment_char: str | None = None
+    delimiter: str | None = None
+    line_terminator: str | None = None
+    quote_char: str | None = None
+    double_quote: bool | None = None
+    escape_char: str | None = None
+    null_sequence: str | None = None
+    skip_initial_space: bool | None = None
+    property: str | None = None
+    item_type: Literal["array", "object"] | None = None
+    item_keys: list[str] | None = None
+    sheet_number: int | None = None
+    sheet_name: str | None = None
+    table: str | None = None
+
+    @classmethod
+    def default(cls: "type[TableDialectProperties]") -> "TableDialectProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A TableDialectProperties object with default values
+        """
+        return cls(
+            header=True,
+            header_rows=[1],
+            header_join=" ",
+            comment_rows=[1],
+            comment_char="",
+            delimiter=",",
+            line_terminator="\r\n",
+            quote_char='"',
+            double_quote=True,
+            escape_char="",
+            null_sequence="",
+            skip_initial_space=False,
+            property="",
+            item_type="array",
+            item_keys=[],
+            sheet_number=1,
+            sheet_name="",
+            table="",
+        )
 
 
 @dataclass
@@ -160,6 +227,15 @@ class ReferenceProperties(Properties):
 
     resource: str | None = None
     fields: list[str] | None = None
+
+    @classmethod
+    def default(cls: "type[ReferenceProperties]") -> "ReferenceProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A ReferenceProperties object with default values
+        """
+        return cls(resource="", fields=[])
 
 
 @dataclass
@@ -180,6 +256,17 @@ class TableSchemaForeignKeyProperties(Properties):
     fields: list[str] | None = None
     reference: ReferenceProperties | None = None
 
+    @classmethod
+    def default(
+        cls: "type[TableSchemaForeignKeyProperties]",
+    ) -> "TableSchemaForeignKeyProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A TableSchemaForeignKeyProperties object with default values
+        """
+        return cls(fields=[], reference=None)
+
 
 @dataclass
 class MissingValueProperties(Properties):
@@ -192,6 +279,15 @@ class MissingValueProperties(Properties):
 
     value: str | None = None
     label: str | None = None
+
+    @classmethod
+    def default(cls: "type[MissingValueProperties]") -> "MissingValueProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A MissingValueProperties object with default values
+        """
+        return cls(value="", label="")
 
 
 # Allowed types for a field in a table schema.
@@ -256,6 +352,27 @@ class ConstraintsProperties(Properties):
     exclusive_maximum: str | float | int | None = None
     json_schema: dict[str, Any] | None = None
 
+    @classmethod
+    def default(cls: "type[ConstraintsProperties]") -> "ConstraintsProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A ConstraintsProperties object with default values
+        """
+        return cls(
+            required=False,
+            unique=False,
+            pattern="",
+            enum=[],
+            min_length=0,
+            max_length=None,
+            minimum=None,
+            maximum=None,
+            exclusive_minimum=None,
+            exclusive_maximum=None,
+            json_schema={},
+        )
+
 
 @dataclass
 class FieldProperties(Properties):
@@ -287,15 +404,33 @@ class FieldProperties(Properties):
     name: str | None = None
     title: str | None = None
     type: FieldType | None = None
-    format: str | None = "default"
+    format: str | None = None
     description: str | None = None
     example: str | None = None
     constraints: ConstraintsProperties | None = None
     categories: list[str] | list[int] | None = None
     categories_ordered: bool | None = None
-    missing_values: list[str] | list[MissingValueProperties] | None = field(
-        default_factory=lambda: [""]
-    )
+    missing_values: list[str] | list[MissingValueProperties] | None = None
+
+    @classmethod
+    def default(cls: "type[FieldProperties]") -> "FieldProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A FieldProperties object with default values
+        """
+        return cls(
+            name="",
+            title="",
+            type="string",
+            format="default",
+            description="",
+            example="",
+            constraints=None,
+            categories=[],
+            categories_ordered=False,
+            missing_values=[],
+        )
 
 
 # Allowed strategies for matching fields in the table schema to fields the data source.
@@ -328,14 +463,28 @@ class TableSchemaProperties(Properties):
             when encountered in the source, should be considered as not present.
     """
 
-    fields: list[FieldProperties] = field(default_factory=list)
-    fields_match: FieldsMatchType = "exact"
-    primary_key: list[str] | str = ""
-    unique_keys: list[list[str]] = field(default_factory=list)
-    foreign_keys: list[TableSchemaForeignKeyProperties] = field(default_factory=list)
-    missing_values: list[str] | list[MissingValueProperties] = field(
-        default_factory=lambda: [""]
-    )
+    fields: list[FieldProperties] | None = None
+    fields_match: FieldsMatchType | None = None
+    primary_key: list[str] | str | None = None
+    unique_keys: list[list[str]] | None = None
+    foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
+    missing_values: list[str] | list[MissingValueProperties] | None = None
+
+    @classmethod
+    def default(cls: "type[TableSchemaProperties]") -> "TableSchemaProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A TableSchemaProperties object with default values
+        """
+        return cls(
+            fields=[],
+            fields_match="exact",
+            primary_key="",
+            unique_keys=[],
+            foreign_keys=[],
+            missing_values=[],
+        )
 
 
 @dataclass
@@ -372,20 +521,46 @@ class ResourceProperties(Properties):
             compliant with the table schema specification.
     """
 
-    name: str = ""
-    path: str = ""
-    type: Literal["table"] = "table"
-    title: str = ""
-    description: str = ""
-    sources: list[SourceProperties] = field(default_factory=list)
-    licenses: list[LicenseProperties] = field(default_factory=list)
-    format: str = ""
-    mediatype: str = ""
-    encoding: str = "utf-8"
-    bytes: int = 0
-    hash: str = ""
-    dialect: TableDialectProperties = field(default_factory=TableDialectProperties)
-    schema: TableSchemaProperties = field(default_factory=TableSchemaProperties)
+    name: str | None = None
+    path: str | None = None
+    type: Literal["table"] | None = None
+    title: str | None = None
+    description: str | None = None
+    sources: list[SourceProperties] | None = None
+    licenses: list[LicenseProperties] | None = None
+    format: str | None = None
+    mediatype: str | None = None
+    encoding: str | None = None
+    bytes: int | None = None
+    hash: str | None = None
+    dialect: TableDialectProperties | None = None
+    schema: TableSchemaProperties | None = None
+
+    @classmethod
+    def default(
+        cls: "type[ResourceProperties]",
+    ) -> "ResourceProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A ResourceProperties object with default values
+        """
+        return cls(
+            name="",
+            path="",
+            type="table",
+            title="",
+            description="",
+            sources=[],
+            licenses=[],
+            format="",
+            mediatype="",
+            encoding="utf-8",
+            bytes=0,
+            hash="",
+            dialect=None,
+            schema=None,
+        )
 
 
 @dataclass
@@ -431,3 +606,26 @@ class PackageProperties(Properties):
     licenses: list[LicenseProperties] | None = None
     resources: list[ResourceProperties] | None = None
     sources: list[SourceProperties] | None = None
+
+    @classmethod
+    def default(cls: "type[PackageProperties]") -> "PackageProperties":
+        """Creates an instance with "sensible" default values.
+
+        Returns:
+            A PackageProperties object with default values
+        """
+        return cls(
+            name="",
+            id="",
+            title="",
+            description="",
+            homepage="",
+            version="",
+            created="",
+            contributors=[],
+            keywords=[],
+            image="",
+            licenses=[],
+            resources=[],
+            sources=[],
+        )
