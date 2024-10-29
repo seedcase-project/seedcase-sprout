@@ -16,7 +16,7 @@ class Properties(ABC):
         pass
 
     @property
-    def asdict(self) -> dict:
+    def as_pruned_dict(self) -> dict:
         """Convert the object to a dictionary, removing any keys with None values.
 
         Returns:
