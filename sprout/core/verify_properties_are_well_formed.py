@@ -20,14 +20,7 @@ def verify_properties_are_well_formed(properties: dict, error_type: str) -> dict
 
     Raises:
         NotPropertiesError: If the properties are not well-formed.
-        ValueError: If the properties are empty.
     """
-    if len(properties) == 0:
-        raise ValueError(
-            ["Properties are empty. Expected at least one property."],
-            properties,
-        )
-
     non_empty_properties = {
         key: value for key, value in properties.items() if value != ""
     }
