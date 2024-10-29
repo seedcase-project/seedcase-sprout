@@ -17,12 +17,12 @@ class Properties(ABC):
 
     @property
     def asdict(self) -> dict:
-        """Produces a dictionary representation of the object.
+        """Convert the object to a dictionary, removing any keys with None values.
 
         Returns:
-            The object as a dictionary.
+            A dictionary representation of the object with only non-None values.
         """
-        return asdict(self)
+        return {key: value for key, value in asdict(self).items() if value is not None}
 
 
 @dataclass
