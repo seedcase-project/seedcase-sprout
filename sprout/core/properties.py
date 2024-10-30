@@ -10,9 +10,10 @@ from typing import Any, Literal
 class Properties(ABC):
     """An abstract base class for all *Properties classes holding common logic."""
 
+    @classmethod
     @abstractmethod
     def default(self) -> "Properties":
-        """Abstract method that needs to be implemented by subclasses."""
+        """Creates an instance with default values."""
         pass
 
     @property
@@ -53,7 +54,7 @@ class ContributorProperties(Properties):
     roles: list[str] | None = None
 
     @classmethod
-    def default(cls: "type[ContributorProperties]") -> "ContributorProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:

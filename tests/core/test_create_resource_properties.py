@@ -3,6 +3,7 @@ from pathlib import Path
 from pytest import raises
 
 from sprout.core.create_resource_properties import create_resource_properties
+from sprout.core.not_properties_error import NotPropertiesError
 
 
 def test_creates_properties_correctly(tmp_path):

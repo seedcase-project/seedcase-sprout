@@ -62,8 +62,7 @@ def test_as_pruned_dict_generates_empty_dictionary_when_no_args_given(cls):
     class"""
     properties_dict = cls().as_pruned_dict
 
-    assert isinstance(properties_dict, dict)
-    assert len(properties_dict) == 0
+    assert properties_dict == {}
 
 
 @mark.parametrize(
