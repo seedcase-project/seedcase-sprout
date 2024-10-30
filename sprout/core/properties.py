@@ -267,7 +267,7 @@ class TableSchemaForeignKeyProperties(Properties):
         Returns:
             A TableSchemaForeignKeyProperties object with default values
         """
-        return cls(fields=[], reference=None)
+        return cls(fields=[])
 
 
 @dataclass
@@ -367,11 +367,6 @@ class ConstraintsProperties(Properties):
             pattern="",
             enum=[],
             min_length=0,
-            max_length=None,
-            minimum=None,
-            maximum=None,
-            exclusive_minimum=None,
-            exclusive_maximum=None,
             json_schema={},
         )
 
@@ -429,7 +424,6 @@ class FieldProperties(Properties):
             format="default",
             description="",
             example="",
-            constraints=None,
             categories=[],
             categories_ordered=False,
             missing_values=[],
@@ -562,8 +556,6 @@ class ResourceProperties(Properties):
             encoding="utf-8",
             bytes=0,
             hash="",
-            dialect=None,
-            schema=None,
         )
 
 
