@@ -4,7 +4,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import asdict, dataclass
-from typing import Any, Literal
+from typing import Any, Literal, Self, Type
 
 
 class Properties(ABC):
@@ -12,7 +12,7 @@ class Properties(ABC):
 
     @classmethod
     @abstractmethod
-    def default(self) -> "Properties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with default values."""
         pass
 
@@ -87,7 +87,7 @@ class LicenseProperties(Properties):
     title: str | None = None
 
     @classmethod
-    def default(cls: "type[LicenseProperties]") -> "LicenseProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -113,7 +113,7 @@ class SourceProperties(Properties):
     version: str | None = None
 
     @classmethod
-    def default(cls: "type[SourceProperties]") -> "SourceProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -186,7 +186,7 @@ class TableDialectProperties(Properties):
     table: str | None = None
 
     @classmethod
-    def default(cls: "type[TableDialectProperties]") -> "TableDialectProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -230,7 +230,7 @@ class ReferenceProperties(Properties):
     fields: list[str] | None = None
 
     @classmethod
-    def default(cls: "type[ReferenceProperties]") -> "ReferenceProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -258,9 +258,7 @@ class TableSchemaForeignKeyProperties(Properties):
     reference: ReferenceProperties | None = None
 
     @classmethod
-    def default(
-        cls: "type[TableSchemaForeignKeyProperties]",
-    ) -> "TableSchemaForeignKeyProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -282,7 +280,7 @@ class MissingValueProperties(Properties):
     label: str | None = None
 
     @classmethod
-    def default(cls: "type[MissingValueProperties]") -> "MissingValueProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -354,7 +352,7 @@ class ConstraintsProperties(Properties):
     json_schema: dict[str, Any] | None = None
 
     @classmethod
-    def default(cls: "type[ConstraintsProperties]") -> "ConstraintsProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -414,7 +412,8 @@ class FieldProperties(Properties):
     missing_values: list[str] | list[MissingValueProperties] | None = None
 
     @classmethod
-    def default(cls: "type[FieldProperties]") -> "FieldProperties":
+    # use Type here to avoid error bc of variable `type`
+    def default(cls: Type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -472,7 +471,7 @@ class TableSchemaProperties(Properties):
     missing_values: list[str] | list[MissingValueProperties] | None = None
 
     @classmethod
-    def default(cls: "type[TableSchemaProperties]") -> "TableSchemaProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -538,9 +537,8 @@ class ResourceProperties(Properties):
     schema: TableSchemaProperties | None = None
 
     @classmethod
-    def default(
-        cls: "type[ResourceProperties]",
-    ) -> "ResourceProperties":
+    # use Type here to avoid error bc of variable `type`
+    def default(cls: Type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
@@ -609,7 +607,7 @@ class PackageProperties(Properties):
     sources: list[SourceProperties] | None = None
 
     @classmethod
-    def default(cls: "type[PackageProperties]") -> "PackageProperties":
+    def default(cls: type[Self]) -> Self:
         """Creates an instance with "sensible" default values.
 
         Returns:
