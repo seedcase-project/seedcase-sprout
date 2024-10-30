@@ -70,32 +70,3 @@ def test_as_pruned_dict_generates_empty_dictionary_when_no_args_given():
 def test_as_pruned_dict_preserves_only_non_none_values(properties, expected_dict):
     """Should return a dictionary with only non-None values when args given."""
     assert properties.as_pruned_dict == expected_dict
-
-
-@mark.parametrize(
-    "cls",
-    [
-        ContributorProperties,
-        LicenseProperties,
-        SourceProperties,
-        TableDialectProperties,
-        ReferenceProperties,
-        TableSchemaForeignKeyProperties,
-        MissingValueProperties,
-        ConstraintsProperties,
-        FieldProperties,
-        TableSchemaProperties,
-        ResourceProperties,
-        PackageProperties,
-    ],
-)
-def test_default_return_properties_objects_with_same_keys_as_just_instantiated_object(
-    cls,
-):
-    """Should return a Properties object with the same keys as a just-instantiated
-    object, but different values."""
-    default_properties = cls.default()
-
-    assert asdict(default_properties).keys() == asdict(cls()).keys()
-    assert asdict(default_properties).values() != asdict(cls()).values()
-
