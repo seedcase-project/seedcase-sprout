@@ -55,7 +55,7 @@ class ContributorProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A ContributorProperties object with default values
@@ -88,7 +88,7 @@ class LicenseProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A LicenseProperties object with default values
@@ -114,7 +114,7 @@ class SourceProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A SourceProperties object with default values
@@ -190,7 +190,7 @@ class TableDialectProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A TableDialectProperties object with default values
@@ -234,7 +234,7 @@ class ReferenceProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A ReferenceProperties object with default values
@@ -262,7 +262,7 @@ class TableSchemaForeignKeyProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A TableSchemaForeignKeyProperties object with default values
@@ -284,7 +284,7 @@ class MissingValueProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A MissingValueProperties object with default values
@@ -356,7 +356,7 @@ class ConstraintsProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A ConstraintsProperties object with default values
@@ -411,6 +411,7 @@ class FieldProperties(Properties):
 
     @classmethod
     def default(cls: "type[Self]") -> Self:
+        """Creates an instance with default values.
 
         Returns:
             A FieldProperties object with default values
@@ -468,7 +469,7 @@ class TableSchemaProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A TableSchemaProperties object with default values
@@ -535,6 +536,7 @@ class ResourceProperties(Properties):
 
     @classmethod
     def default(cls: "type[Self]") -> Self:
+        """Creates an instance with default values.
 
         Returns:
             A ResourceProperties object with default values
@@ -601,7 +603,7 @@ class PackageProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+        """Creates an instance with default values.
 
         Returns:
             A PackageProperties object with default values
