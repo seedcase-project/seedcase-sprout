@@ -2,7 +2,7 @@
     <a href="https://sprout.seedcase-project.org/">
         <img src="_extensions/seedcase-project/seedcase-theme/logos/navbar-logo-seedcase-sprout.svg" height="150" alt="Sprout website"/>
     </a>
-</p> 
+</p>
 
 ## Grow structured and scalable data
 
@@ -29,7 +29,7 @@ To install it as a user, see our [Installation Guide](https://sprout.seedcase-pr
 If you would like to contribute, please
 read the [contribution guidelines]() first. Then
 return here to install Poetry and clone the repository.
-<!--TODO add link above--> 
+<!--TODO add link above-->
 
 We use Poetry to manage
 dependencies. If you haven't worked with Poetry before, you will find an
