@@ -7,7 +7,6 @@ from sprout.core.create_package_structure import create_package_structure
 from sprout.core.edit_package_properties import edit_package_properties
 from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import PackageProperties
-from sprout.core.read_json import read_json
 from sprout.core.write_json import write_json
 
 
@@ -38,17 +37,10 @@ def properties_path(tmp_path) -> Path:
     return properties_path
 
 
-def test_edits_only_changed_package_properties(properties_path, properties):
-    """Should only edit package properties and leave unchanged values as is."""
-    # Given
-    current_properties = read_json(properties_path)
 
-    # When, Then
-    expected_properties = current_properties | {
-        "name": properties["name"],
-        "version": properties["version"],
-    }
-    assert edit_package_properties(properties_path, properties) == expected_properties
+def test_edits_package_properties(properties_path, properties):
+    """Should update package properties."""
+    assert edit_package_properties(properties_path, properties) == properties
 
 
 def test_throws_error_if_path_points_to_dir(tmp_path):
