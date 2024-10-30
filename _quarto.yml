@@ -33,6 +33,8 @@ website:
         href: docs/design/index.qmd
       - text: "Reference"
         href: docs/reference/index.qmd
+      - text: "Glossary"
+        href: docs/glossary.qmd
     tools:
       - icon: github
         href: "https://github.com/seedcase-project/seedcase-sprout"
