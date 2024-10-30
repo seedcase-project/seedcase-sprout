@@ -137,7 +137,8 @@ class TableDialectProperties(Properties):
         header_rows (list[int] | None): Specifies the row numbers for the header.
         header_join (str | None): Specifies how multiline-header files have to join
             the resulting header rows.
-        comment_rows (list[int] | None): Specifies what rows have to be omitted from the data.
+        comment_rows (list[int] | None): Specifies what rows have to be omitted from the
+            data.
         comment_char (str | None): Specifies that any row beginning with
             this one-character string, without preceding whitespace, causes the
             entire line to be ignored.
@@ -155,14 +156,16 @@ class TableDialectProperties(Properties):
             whitespace immediately following a delimiter. If false, whitespace
             immediately after a delimiter should be treated as part of the
             subsequent field.
-        property (str | None): Specifies where a data array is located in the data structure.
+        property (str | None): Specifies where a data array is located in the data
+            structure.
         item_type (Literal['array', 'object'] | None): Specifies whether `property`
             contains an array of arrays or an array of objects.
         item_keys (list[str] | None): Specifies the keys for extracting rows from
             data arrays where `item_type` is `object`.
-        sheet_number (int | None): Specifies the sheet number of a table in a spreadsheet
+        sheet_number (int | None): Specifies the sheet number of a table in a
+            spreadsheet file.
+        sheet_name (str | None): Specifies the sheet name of a table in a spreadsheet
             file.
-        sheet_name (str | None): Specifies the sheet name of a table in a spreadsheet file.
         table (str): Specifies the name of a table in a database.
     """
 
@@ -448,11 +451,12 @@ class TableSchemaProperties(Properties):
     from a portable schema format.
 
     Attributes:
-        fields (list[FieldProperties] | None): Specifies the fields in this table schema.
+        fields (list[FieldProperties] | None): Specifies the fields in this table
+            schema.
         fields_match (FieldsMatchType | None): Specifies how fields in the table
             schema match the fields in the data source.
-        primary_key (list[str] | str | None): A primary key is a field name or an array of
-            field names, whose values must uniquely identify each row in the table.
+        primary_key (list[str] | str | None): A primary key is a field name or an array
+            of field names, whose values must uniquely identify each row in the table.
         unique_keys (list[list[str]] | None): A field or a set of fields that are
             required to have unique logical values in each row in the table.
         foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
@@ -516,7 +520,8 @@ class ResourceProperties(Properties):
         bytes (int | None): The size of this resource in bytes.
         hash (str | None): The MD5 hash of this resource. Indicate other
             hashing algorithms with the {algorithm}:{hash} format.
-        dialect (TableDialectProperties | None): The tabular dialect of the resource data.
+        dialect (TableDialectProperties | None): The tabular dialect of the resource
+            data.
         schema (TableSchemaProperties | None): A table schema for the resource data,
             compliant with the table schema specification.
     """
