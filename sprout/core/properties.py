@@ -132,37 +132,37 @@ class TableDialectProperties(Properties):
     and YAML, and spreadsheets like Microsoft Excel.
 
     Attributes:
-        header (bool): Specifies if the file includes a header row,
+        header (bool | None): Specifies if the file includes a header row,
             always as the first row in the file.
-        header_rows (list[int]): Specifies the row numbers for the header.
-        header_join (str): Specifies how multiline-header files have to join
+        header_rows (list[int] | None): Specifies the row numbers for the header.
+        header_join (str | None): Specifies how multiline-header files have to join
             the resulting header rows.
-        comment_rows (list[int]): Specifies what rows have to be omitted from the data.
-        comment_char (str): Specifies that any row beginning with
+        comment_rows (list[int] | None): Specifies what rows have to be omitted from the data.
+        comment_char (str | None): Specifies that any row beginning with
             this one-character string, without preceding whitespace, causes the
             entire line to be ignored.
-        delimiter (str): A character sequence to use as the field separator.
-        line_terminator (str): Specifies the character sequence that
+        delimiter (str | None): A character sequence to use as the field separator.
+        line_terminator (str | None): Specifies the character sequence that
             must be used to terminate rows.
-        quote_char (str): Specifies a character to use for quoting in
+        quote_char (str | None): Specifies a character to use for quoting in
             case the `delimiter` is used inside a data cell.
-        double_quote (bool): Controls the handling of `quote_char` inside
+        double_quote (bool | None): Controls the handling of `quote_char` inside
             data cells. If true, two consecutive quotes are interpreted as one.
-        escape_char (str): Specifies a one-character string to use as
+        escape_char (str | None): Specifies a one-character string to use as
             the escape character. Mutually exclusive with `quote_char`.
-        null_sequence (str): Specifies the null sequence, for example, `\N`.
-        skip_initial_space (bool): Specifies the interpretation of
+        null_sequence (str | None): Specifies the null sequence, for example, `\N`.
+        skip_initial_space (bool | None): Specifies the interpretation of
             whitespace immediately following a delimiter. If false, whitespace
             immediately after a delimiter should be treated as part of the
             subsequent field.
-        property (str): Specifies where a data array is located in the data structure.
-        item_type (Literal['array', 'object']): Specifies whether `property`
+        property (str | None): Specifies where a data array is located in the data structure.
+        item_type (Literal['array', 'object'] | None): Specifies whether `property`
             contains an array of arrays or an array of objects.
-        item_keys (list[str]): Specifies the keys for extracting rows from
+        item_keys (list[str] | None): Specifies the keys for extracting rows from
             data arrays where `item_type` is `object`.
-        sheet_number (int): Specifies the sheet number of a table in a spreadsheet
+        sheet_number (int | None): Specifies the sheet number of a table in a spreadsheet
             file.
-        sheet_name (str): Specifies the sheet name of a table in a spreadsheet file.
+        sheet_name (str | None): Specifies the sheet name of a table in a spreadsheet file.
         table (str): Specifies the name of a table in a database.
     """
 
@@ -448,18 +448,18 @@ class TableSchemaProperties(Properties):
     from a portable schema format.
 
     Attributes:
-        fields (list[FieldProperties]): Specifies the fields in this table schema.
-        fields_match (FieldsMatchType): Specifies how fields in the table
+        fields (list[FieldProperties] | None): Specifies the fields in this table schema.
+        fields_match (FieldsMatchType | None): Specifies how fields in the table
             schema match the fields in the data source.
-        primary_key (list[str] | str): A primary key is a field name or an array of
+        primary_key (list[str] | str | None): A primary key is a field name or an array of
             field names, whose values must uniquely identify each row in the table.
-        unique_keys (list[list[str]]): A field or a set of fields that are
+        unique_keys (list[list[str]] | None): A field or a set of fields that are
             required to have unique logical values in each row in the table.
-        foreign_keys (list[TableSchemaForeignKeyProperties]): A reference where
+        foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
             values in a field (or fields) on the table (resource) described by this
             table schema connect to values in a field (or fields) on this or a separate
             table (resource).
-        missing_values (list[str] | list[MissingValueProperties]): Values that,
+        missing_values (list[str] | list[MissingValueProperties] | None): Values that,
             when encountered in the source, should be considered as not present.
     """
 
@@ -497,27 +497,27 @@ class ResourceProperties(Properties):
     richer set of metadata.
 
     Attributes:
-        name (str): A simple name or identifier to be used for this resource.
+        name (str | None): A simple name or identifier to be used for this resource.
             Should consist only of lowercase English alphanumeric characters plus
             characters in `.-_`.
-        path (str): A path pointing to the data for this resource.
-        type (Literal['table']): Specifies the type of the resource.
-        title (str): A human-readable title.
-        description (str): A text description. Markdown is encouraged.
-        sources (list[SourceProperties]): The raw sources for this resource.
-        licenses (list[LicenseProperties]): The license(s) under which the
+        path (str | None): A path pointing to the data for this resource.
+        type (Literal['table'] | None): Specifies the type of the resource.
+        title (str | None): A human-readable title.
+        description (str | None): A text description. Markdown is encouraged.
+        sources (list[SourceProperties] | None): The raw sources for this resource.
+        licenses (list[LicenseProperties] | None): The license(s) under which the
             resource is published.
-        format (str): The file format of this resource. Expected to be the
+        format (str | None): The file format of this resource. Expected to be the
             standard file extension.
-        mediatype (str): The media type of this resource. Can be any
+        mediatype (str | None): The media type of this resource. Can be any
             valid media type listed with
             [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).
-        encoding (str): The file encoding of this resource.
-        bytes (int): The size of this resource in bytes.
-        hash (str): The MD5 hash of this resource. Indicate other
+        encoding (str | None): The file encoding of this resource.
+        bytes (int | None): The size of this resource in bytes.
+        hash (str | None): The MD5 hash of this resource. Indicate other
             hashing algorithms with the {algorithm}:{hash} format.
-        dialect (TableDialectProperties): The tabular dialect of the resource data.
-        schema (TableSchemaProperties): A table schema for the resource data,
+        dialect (TableDialectProperties | None): The tabular dialect of the resource data.
+        schema (TableSchemaProperties | None): A table schema for the resource data,
             compliant with the table schema specification.
     """
 
