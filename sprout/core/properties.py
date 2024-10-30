@@ -4,7 +4,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import asdict, dataclass
-from typing import Any, Literal, Self, Type
+from typing import Any, Literal, Self
 
 
 class Properties(ABC):
@@ -410,9 +410,7 @@ class FieldProperties(Properties):
     missing_values: list[str] | list[MissingValueProperties] | None = None
 
     @classmethod
-    # use Type here to avoid error bc of variable `type`
-    def default(cls: Type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+    def default(cls: "type[Self]") -> Self:
 
         Returns:
             A FieldProperties object with default values
@@ -536,9 +534,7 @@ class ResourceProperties(Properties):
     schema: TableSchemaProperties | None = None
 
     @classmethod
-    # use Type here to avoid error bc of variable `type`
-    def default(cls: Type[Self]) -> Self:
-        """Creates an instance with "sensible" default values.
+    def default(cls: "type[Self]") -> Self:
 
         Returns:
             A ResourceProperties object with default values
