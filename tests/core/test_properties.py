@@ -47,26 +47,12 @@ def test_as_pruned_dict_generates_empty_dictionary_when_no_args_given():
     assert ResourceProperties().as_pruned_dict == {}
 
 
-@mark.parametrize(
-    "properties, expected_dict",
-    [
-        (ContributorProperties(family_name="Kirk"), {"family_name": "Kirk"}),
-        (LicenseProperties(name="MIT"), {"name": "MIT"}),
-        (SourceProperties(title="SDCA"), {"title": "SDCA"}),
-        (TableDialectProperties(header=True), {"header": True}),
-        (ReferenceProperties(resource="resource-1"), {"resource": "resource-1"}),
-        (TableSchemaForeignKeyProperties(fields=["field-1"]), {"fields": ["field-1"]}),
-        (MissingValueProperties(value="NA"), {"value": "NA"}),
-        (ConstraintsProperties(required=False), {"required": False}),
-        (FieldProperties(name="field-1"), {"name": "field-1"}),
-        (TableSchemaProperties(fields=["field-1"]), {"fields": ["field-1"]}),
-        (ResourceProperties(name="resource-1"), {"name": "resource-1"}),
-        (
-            PackageProperties(name="package-1", version="3.2.1"),
-            {"name": "package-1", "version": "3.2.1"},
-        ),
-    ],
-)
-def test_as_pruned_dict_preserves_only_non_none_values(properties, expected_dict):
+def test_as_pruned_dict_preserves_only_non_none_values():
     """Should return a dictionary with only non-None values when args given."""
-    assert properties.as_pruned_dict == expected_dict
+    # Since this is a test of the base class, it's enough to test only one subclass
+
+    # Given
+    properties = PackageProperties(name="package-1", version="3.2.1")
+
+    # When, then
+    assert properties.as_pruned_dict == {"name": "package-1", "version": "3.2.1"}
