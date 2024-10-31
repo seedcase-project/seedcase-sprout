@@ -5,6 +5,9 @@
 from abc import ABC, abstractmethod
 from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
+from uuid import uuid4
+
+from sprout.core.get_iso_timestamp import get_iso_timestamp
 
 
 class Properties(ABC):
@@ -610,12 +613,12 @@ class PackageProperties(Properties):
         """
         return cls(
             name="",
-            id="",
+            id=str(uuid4()),
             title="",
             description="",
             homepage="",
-            version="",
-            created="",
+            version="0.1.0",
+            created=get_iso_timestamp(),
             contributors=[],
             keywords=[],
             image="",
