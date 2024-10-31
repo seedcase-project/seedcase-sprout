@@ -5,14 +5,14 @@ description = "Grow your research data in a structured, modern way that follows 
 authors = [
   "Luke W. Johnston <lwjohnst@gmail.com>",
   "Henrik Goul <hgo@mjolner.dk>",
-  "Kristiane Beicher <kris.beicher@clin.au.dk>", 
+  "Kristiane Beicher <kris.beicher@clin.au.dk>",
   "Philip Christiansen <pch@mjolner.dk>",
   "Signe Kirk Brødbæk <signekb@clin.au.dk>",
   "Marton Vago <marton.vago95@gmail.com >",
 ]
 maintainers = [
   "Luke W. Johnston <lwjohnst@gmail.com>",
-  "Kristiane Beicher <kris.beicher@clin.au.dk>", 
+  "Kristiane Beicher <kris.beicher@clin.au.dk>",
   "Signe Kirk Brødbæk <signekb@clin.au.dk>",
   "Marton Vago <marton.vago95@gmail.com >",
 ]
@@ -54,6 +54,7 @@ django = "^5.1"
 
 [tool.poetry.group.docs.dependencies]
 jupyter = "^1.1.1"
+quartodoc = "^0.8.1"
 
 [build-system]
 requires = ["poetry-core"]
