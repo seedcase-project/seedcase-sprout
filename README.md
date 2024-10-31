@@ -6,6 +6,8 @@
 
 ## Grow structured and scalable data
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/seedcase-project/seedcase-sprout/main.svg)](https://results.pre-commit.ci/latest/github/seedcase-project/seedcase-sprout/main)
+
 Sprout is a component of the Seedcase framework that aims to take data
 created or collected for research studies and "grow" it in a structured
 way using modern data engineering best practices.
@@ -44,7 +46,6 @@ pipx install poetry
 ```
 
 Then, open a terminal so that the working directory is the root of this project (`seedcase-sprout/`) and run:
-
 
 ``` bash
 just install-deps
