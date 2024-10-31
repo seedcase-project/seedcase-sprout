@@ -40,14 +40,14 @@ def test_initiated_class_only_contains_none_values(cls):
     assert all(value is None for value in asdict(cls()).values())
 
 
-def test_as_pruned_dict_generates_empty_dictionary_when_no_args_given():
+def test_compact_dict_generates_empty_dictionary_when_no_args_given():
     """Should return an empty dictionary, when no arguments are given to Properties
     class."""
     # Since this is a test of the base class, it's enough to test only one subclass
-    assert ResourceProperties().as_pruned_dict == {}
+    assert ResourceProperties().compact_dict == {}
 
 
-def test_as_pruned_dict_preserves_only_non_none_values():
+def test_compact_dict_preserves_only_non_none_values():
     """Should return a dictionary with only non-None values when args given."""
     # Since this is a test of the base class, it's enough to test only one subclass
 
@@ -55,4 +55,4 @@ def test_as_pruned_dict_preserves_only_non_none_values():
     properties = PackageProperties(name="package-1", version="3.2.1")
 
     # When, then
-    assert properties.as_pruned_dict == {"name": "package-1", "version": "3.2.1"}
+    assert properties.compact_dict == {"name": "package-1", "version": "3.2.1"}
