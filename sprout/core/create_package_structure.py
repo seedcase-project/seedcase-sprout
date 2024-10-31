@@ -40,7 +40,7 @@ def create_package_structure(path: Path) -> list[Path]:
     package_path = create_id_path(path, id)
     create_dir(package_path)
 
-    properties = asdict(PackageProperties.default())
+    properties = PackageProperties.default().compact_dict
     properties_path = create_properties_path(package_path)
     readme = create_readme_text(properties)
     readme_path = create_readme_path(package_path)
