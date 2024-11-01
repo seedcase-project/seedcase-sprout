@@ -83,6 +83,20 @@ def test_throws_error_if_current_package_properties_are_malformed(tmp_path, prop
         edit_package_properties(path, properties)
 
 
+def test_adds_custom_fields(
+    properties_path,
+):
+    """Should add custom fields to properties."""
+    # Given
+    current_properties = read_json(properties_path)
+    new_properties = {"custom-field": "custom-value"}
+
+    # When, Then
+    edit_package_properties(
+        properties_path, new_properties
+    ) == current_properties | new_properties
+
+
 def test_throws_error_if_new_properties_are_empty(properties_path):
     """Should throw NotPropertiesError if the new properties are empty."""
     with raises(NotPropertiesError):
