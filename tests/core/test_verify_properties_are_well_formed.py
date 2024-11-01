@@ -86,7 +86,7 @@ def test_rejects_properties_not_conforming_to_spec(properties, error_type, reque
 def test_filters_for_package_errors(package_properties):
     """Should throw only if PackageErrors are detected."""
     bad_resource = ResourceProperties(name="a bad name with spaces").compact_dict
-    package_properties["resources"].append(bad_resource)
+    package_properties["resources"] = [bad_resource]
 
     assert (
         verify_properties_are_well_formed(package_properties, package_error)
