@@ -60,7 +60,7 @@ def test_accepts_default_values(properties_cls, error_type):
         ("resource_properties", resource_error),
     ],
 )
-def test_accepts_custom_values(properties, error_type, request):
+def test_accepts_well_formed_properties_object(properties, error_type, request):
     """Should accept a well-formed properties object."""
     properties = request.getfixturevalue(properties)
 
