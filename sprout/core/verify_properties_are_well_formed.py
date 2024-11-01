@@ -29,8 +29,7 @@ def verify_properties_are_well_formed(properties: dict, error_type: str) -> dict
     errors = [
         error
         for error in report.errors
-        + [error for task in report.tasks for error in task.errors]
-        if error.type == error_type
+        if "required" not in error.message and error.type == error_type
     ]
     if errors:
         raise NotPropertiesError(errors, properties)
