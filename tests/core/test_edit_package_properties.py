@@ -18,7 +18,7 @@ def properties():
         description="This is my package.",
         version="2.0.0",
         created="2024-05-14T05:00:01+00:00",
-    ).asdict
+    ).compact_dict
 
 
 @fixture
@@ -56,7 +56,7 @@ def test_throws_error_if_properties_file_cannot_be_read(tmp_path, properties):
 def test_throws_error_if_current_package_properties_are_malformed(tmp_path, properties):
     """Should throw NotPropertiesError if the current package properties are
     malformed."""
-    package_properties = PackageProperties(name="invalid name with spaces").asdict
+    package_properties = PackageProperties(name="invalid name with spaces").compact_dict
     path = write_json(package_properties, tmp_path / "datapackage.json")
 
     with raises(NotPropertiesError):

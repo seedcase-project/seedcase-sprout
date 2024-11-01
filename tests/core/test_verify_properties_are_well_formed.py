@@ -26,7 +26,7 @@ def package_properties():
         description="This is my package.",
         version="2.0.0",
         created="2024-05-14T05:00:01+00:00",
-    ).asdict
+    ).compact_dict
 
 
 @fixture
@@ -36,7 +36,7 @@ def resource_properties() -> dict:
         path=str(Path("resources", "1", "data.parquet")),
         title="My Resource",
         description="This is my resource.",
-    ).asdict
+    ).compact_dict
 
 
 @mark.parametrize(
@@ -48,7 +48,7 @@ def resource_properties() -> dict:
 )
 def test_accepts_default_values(properties_cls, error_type):
     """Should accept an object with default values, some of which are blank."""
-    properties = properties_cls().asdict
+    properties = properties_cls.default().compact_dict
 
     assert verify_properties_are_well_formed(properties, error_type) == properties
 
@@ -85,7 +85,7 @@ def test_rejects_properties_not_conforming_to_spec(properties, error_type, reque
 
 def test_filters_for_package_errors(package_properties):
     """Should throw only if PackageErrors are detected."""
-    bad_resource = ResourceProperties(name="a bad name with spaces").asdict
+    bad_resource = ResourceProperties(name="a bad name with spaces").compact_dict
     package_properties["resources"].append(bad_resource)
 
     assert (
@@ -96,7 +96,7 @@ def test_filters_for_package_errors(package_properties):
 
 def test_filters_for_resource_errors(resource_properties):
     """Should throw only if ResourceErrors are detected."""
-    bad_schema = TableSchemaProperties(fields="these are not fields").asdict
+    bad_schema = TableSchemaProperties(fields="these are not fields").compact_dict
     resource_properties["schema"] = bad_schema
 
     assert (
