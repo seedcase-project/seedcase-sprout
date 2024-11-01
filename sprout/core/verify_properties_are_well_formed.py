@@ -1,4 +1,5 @@
 from frictionless import validate
+from frictionless.errors import Error
 
 from sprout.core.not_properties_error import NotPropertiesError
 
@@ -31,6 +32,10 @@ def verify_properties_are_well_formed(properties: dict, error_type: str) -> dict
         for error in report.errors
         if "required" not in error.message and error.type == error_type
     ]
+
+    if properties == {}:
+        errors = [Error(note="Empty properties provided")]
+
     if errors:
         raise NotPropertiesError(errors, properties)
 
