@@ -83,7 +83,7 @@ def test_throws_error_if_current_package_properties_are_malformed(tmp_path, prop
         edit_package_properties(path, properties)
 
 
-def test_throws_error_if_new_package_properties_are_incorrect(properties_path):
-    """Should throw NotPropertiesError if the new package properties are incorrect."""
+def test_throws_error_if_new_properties_are_empty(properties_path):
+    """Should throw NotPropertiesError if the new properties are empty."""
     with raises(NotPropertiesError):
         edit_package_properties(properties_path, {})
