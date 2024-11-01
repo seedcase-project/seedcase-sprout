@@ -24,7 +24,7 @@ def verify_properties_are_well_formed(properties: dict, error_type: str) -> dict
     non_empty_properties = {
         key: value for key, value in properties.items() if value != ""
     }
-    report = validate(non_empty_properties)
+    report = validate(non_empty_properties, type=error_type.replace("-error", ""))
 
     errors = [
         error
