@@ -23,6 +23,7 @@ def properties():
         description="This is my package.",
         version="2.0.0",
         created="2024-05-14T05:00:01+00:00",
+        resources=[],
     ).compact_dict
 
 
