@@ -54,4 +54,5 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
     verify_properties_are_well_formed(current_properties, PackageError.type)
 
     current_properties.update(properties)
-    return current_properties
+
+    return verify_package_properties(current_properties)
