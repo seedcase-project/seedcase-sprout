@@ -103,3 +103,9 @@ def test_filters_for_resource_errors(resource_properties):
         verify_properties_are_well_formed(resource_properties, resource_error)
         == resource_properties
     )
+
+
+def test_throws_error_if_properties_are_empty():
+    """Should throw NotPropertiesError if the properties are empty."""
+    with raises(NotPropertiesError):
+        verify_properties_are_well_formed({}, package_error)
