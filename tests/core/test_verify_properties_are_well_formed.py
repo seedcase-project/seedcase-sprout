@@ -60,7 +60,7 @@ def test_accepts_default_values(properties_cls, error_type):
         ("resource_properties", resource_error),
     ],
 )
-def test_accepts_custom_values(properties, error_type, request):
+def test_accepts_well_formed_properties_object(properties, error_type, request):
     """Should accept a well-formed properties object."""
     properties = request.getfixturevalue(properties)
 
@@ -86,7 +86,7 @@ def test_rejects_properties_not_conforming_to_spec(properties, error_type, reque
 def test_filters_for_package_errors(package_properties):
     """Should throw only if PackageErrors are detected."""
     bad_resource = ResourceProperties(name="a bad name with spaces").compact_dict
-    package_properties["resources"].append(bad_resource)
+    package_properties["resources"] = [bad_resource]
 
     assert (
         verify_properties_are_well_formed(package_properties, package_error)
@@ -103,3 +103,9 @@ def test_filters_for_resource_errors(resource_properties):
         verify_properties_are_well_formed(resource_properties, resource_error)
         == resource_properties
     )
+
+
+def test_throws_error_if_properties_are_empty():
+    """Should throw NotPropertiesError if the properties are empty."""
+    with raises(NotPropertiesError):
+        verify_properties_are_well_formed({}, package_error)
