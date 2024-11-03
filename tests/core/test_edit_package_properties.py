@@ -92,7 +92,7 @@ def test_adds_custom_fields(
     new_properties = {"custom-field": "custom-value"}
 
     # When, Then
-    edit_package_properties(
+    assert edit_package_properties(
         properties_path, new_properties
     ) == current_properties | new_properties
 
