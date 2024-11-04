@@ -14,7 +14,7 @@ about:
   image-width: 25em
   links:
     - text: "Install Sprout"
-      href: "https://sprout.seedcase-project.org/docs/guide/installation.qmd"
+      href: "https://sprout.seedcase-project.org/docs/guide/installation"
     - text: "Explore tutorials"
       href: "https://sprout.seedcase-project.org/docs/guide"
 ---
