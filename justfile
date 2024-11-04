@@ -1,6 +1,8 @@
 @_default:
     just --list --unsorted
 
+run-all: install-deps format-python check-python run-tests
+
 # Generate SVG images from all PlantUML files
 generate-puml-all:
   docker run --rm -v $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tsvg "**/*.puml"
@@ -61,7 +63,9 @@ build-website: install-deps
   poetry run quartodoc build
   poetry run quarto render --execute
 
-# Add files for a new function (function file and test file)
-add-function app part name:
-  touch ./{{app}}/{{part}}/{{name}}.py
-  touch ./tests/{{part}}/test_{{name}}.py
+check-commit:
+  #!/bin/zsh
+  if [[ $(git rev-parse --abbrev-ref HEAD) != "main" ]]
+  then
+    poetry run cz check --rev-range main..HEAD
+  fi
