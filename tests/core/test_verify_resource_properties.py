@@ -6,7 +6,6 @@ from sprout.core.not_properties_error import NotPropertiesError
 from sprout.core.properties import ResourceProperties, TableSchemaProperties
 from sprout.core.verify_resource_properties import (
     REQUIRED_RESOURCE_PROPERTIES,
-    verify_data_path,
     verify_resource_properties,
 )
 
@@ -18,7 +17,7 @@ def resource_properties() -> dict:
         path=str(Path("resources", "1", "data.parquet")),
         title="My Resource",
         description="This is my resource.",
-    ).asdict
+    ).compact_dict
 
 
 def test_accepts_required_fields(resource_properties):
@@ -39,7 +38,7 @@ def test_accepts_required_and_optional_fields(resource_properties):
 def test_accepts_properties_with_only_schema_error(resource_properties):
     """Should not throw if there's a malformed schema but the resource properties are
     correct."""
-    bad_schema = TableSchemaProperties(fields="these are not fields").asdict
+    bad_schema = TableSchemaProperties(fields="these are not fields").compact_dict
     resource_properties["schema"] = bad_schema
 
     assert verify_resource_properties(resource_properties) == resource_properties
@@ -75,7 +74,6 @@ def test_rejects_empty_value_for_required_fields(
         verify_resource_properties(resource_properties)
 
 
-@mark.parametrize("verify", [verify_data_path, verify_resource_properties])
 @mark.parametrize(
     "data_path",
     [
@@ -84,13 +82,13 @@ def test_rejects_empty_value_for_required_fields(
         Path("resources", "1", "data.parquet", "1"),
     ],
 )
-def test_rejects_malformed_path(resource_properties, data_path, verify):
+def test_rejects_malformed_path(resource_properties, data_path):
     """Given a set of properties with a malformed data path, should throw
     NotPropertiesError."""
     resource_properties["path"] = str(data_path)
 
     with raises(
         NotPropertiesError,
-        match="No resource ID found on resource properties",
+        match="No resource ID found",
     ):
-        verify(resource_properties)
+        verify_resource_properties(resource_properties)

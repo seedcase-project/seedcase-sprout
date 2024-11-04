@@ -1,6 +1,8 @@
 @_default:
     just --list --unsorted
 
+run-all: install-deps format-python check-python run-tests
+
 # Generate SVG images from all PlantUML files
 generate-puml-all:
   docker run --rm -v $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tsvg "**/*.puml"
@@ -48,19 +50,22 @@ add-test-data: install-deps update-migrations
   poetry run python manage.py loaddata */*/fixtures/*.json
 
 # Reset local Sprout (remove __pycache__ folders, db, migrations, and persistent storage raw files)
-reset-local: 
+reset-local:
   find . -type d -name "__pycache__" -exec rm -rf {} +
   find */**/migrations -type f ! -name '__init__.py' -exec rm {} \;
   rm db.sqlite3
   rm persistent_storage/raw/*.csv
 
 # Build the documentation website using Quarto
-build-website:
+build-website: install-deps
   # To let Quarto know where python is.
   export QUARTO_PYTHON=.venv/bin/python3
+  poetry run quartodoc build
   poetry run quarto render --execute
 
-# Add files for a new function (function file and test file)
-add-function app part name:
-  touch ./{{app}}/{{part}}/{{name}}.py
-  touch ./tests/{{part}}/test_{{name}}.py
+check-commit:
+  #!/bin/zsh
+  if [[ $(git rev-parse --abbrev-ref HEAD) != "main" ]]
+  then
+    poetry run cz check --rev-range main..HEAD
+  fi
