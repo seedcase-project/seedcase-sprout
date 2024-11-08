@@ -22,5 +22,5 @@ def test_formats_timestamp_in_other_timezone_correctly():
 
 @time_machine.travel(datetime(2024, 5, 14, 5, 0, 1), tick=False)
 def test_removes_nonnumeric_characters_correctly():
-    """Should return a timestamp with only numeric characters."""
-    assert get_compact_iso_timestamp() == "20240514-0500010000"
+    """Should return an iso compatible timestamp with only numeric characters."""
+    assert get_compact_iso_timestamp() == "2024-05-14T050001Z"

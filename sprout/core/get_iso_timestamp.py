@@ -1,5 +1,4 @@
 from datetime import datetime
-from re import sub
 
 
 def get_iso_timestamp() -> str:
@@ -17,4 +16,4 @@ def get_compact_iso_timestamp() -> str:
     Returns:
         The timestamp as a string. E.g. `20240514-05000100`.
     """
-    return sub(r"\W", "", get_iso_timestamp()).replace("T", "-")
+    return datetime.now().strftime("%Y-%m-%dT%H%M%SZ")
