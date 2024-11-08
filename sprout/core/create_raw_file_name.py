@@ -8,7 +8,7 @@ def create_raw_file_name(path: Path) -> str:
     """Generates a unique filename for a raw file.
 
     Args:
-        path: The path to the raw file.
+        path: The path to the raw file to extract the original extension from.
 
     Returns:
         The created raw file name in the format {timestamp}-{uuid}{ext}.gz

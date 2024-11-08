@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 def get_iso_timestamp() -> str:
-    """Generates a timestamp compliant with the Data Package spec.
+    """Generates an ISO timestamp compliant with the Data Package spec.
 
     Returns:
         The timestamp as a string. E.g. `2024-05-14T05:00:01+00:00`.
@@ -11,9 +11,9 @@ def get_iso_timestamp() -> str:
 
 
 def get_compact_iso_timestamp() -> str:
-    """Generates a compact timestamp.
+    """Generates a compact ISO timestamp.
 
     Returns:
-        The timestamp as a string. E.g. `20240514-05000100`.
+        The timestamp as a string. E.g. `2024-05-14T050000Z`.
     """
     return datetime.now().strftime("%Y-%m-%dT%H%M%SZ")
