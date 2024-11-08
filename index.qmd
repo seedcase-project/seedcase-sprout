@@ -1,5 +1,71 @@
 ---
-title: "Welcome to Seedcase Sprout!"
+title: Grow structured, organized, and *usable* data
+toc: false
+page-layout: custom
+section-divs: false
+sidebar: false
+about:
+  id: hero-heading
+  template: jolla
+  image: "docs/images/home.svg"
+  image-title: Image from Storyset.
+  image-alt: Illustration of a woman interacting with digital files and folders, with database objects on the ground in front of her.
+  image-shape: rectangle
+  image-width: 25em
+  links:
+    - text: "Install Sprout"
+      href: "https://sprout.seedcase-project.org/docs/guide/installation"
+    - text: "Explore tutorials"
+      href: "https://sprout.seedcase-project.org/docs/guide"
 ---
 
-{{< include /docs/includes/_wip.qmd >}}
+```{=html}
+<style>
+div.quarto-about-jolla {
+  margin-top: 0%;
+  margin-bottom: 0%;
+}
+</style>
+```
+
+::: {.landing-page-block}
+::: {#hero-heading}
+:::
+:::
+
+::: {.hero-banner}
+::: {.landing-page-block}
+::: {.hero-text}
+## Manage your data in a consistent way
+
+**Sprout** is at the backbone of the [**Seedcase
+Project**](https://seedcase-project.org), offering a flexible solution
+to structure and manage your data.
+
+Sprout has three key components:
+
+-   A **Python package** for organising and managing data
+    programmatically.
+-   A **CLI** for managing data directly from the terminal.
+-   A **web interface** for an easy-to-use graphical experience.
+
+With these options, you can choose the method that works best for your
+workflow.
+:::
+:::
+:::
+
+::: {.landing-page-block}
+## Want to contribute?
+
+We’re a community-driven project and would love your feedback! Head over
+to our [GitHub
+repository](https://github.com/seedcase-project/seedcase-sprout) to
+share your ideas or contribute code. Your input makes us better!
+
+<!-- TODO: Add link to a guide on how to contribute in more detail -->
+:::
+
+::: {.landing-page-block}
+## Image by [Storyset](https://storyset.com/data) {.appendix}
+:::

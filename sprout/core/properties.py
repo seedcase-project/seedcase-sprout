@@ -2,23 +2,31 @@
 # `generate_properties/generated_properties.py` file. Update the auto-generated
 # properties file to add more dataclasses and move them into this file.
 
+from abc import ABC, abstractmethod
+from dataclasses import asdict, dataclass
+from typing import Any, Literal, Self
+from uuid import uuid4
 
-from abc import ABC
-from dataclasses import asdict, dataclass, field
-from typing import Any, Literal
+from sprout.core.get_iso_timestamp import get_iso_timestamp
 
 
 class Properties(ABC):
     """An abstract base class for all *Properties classes holding common logic."""
 
+    @classmethod
+    @abstractmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values."""
+        pass
+
     @property
-    def asdict(self) -> dict:
-        """Produces a dictionary representation of the object.
+    def compact_dict(self) -> dict:
+        """Convert the object to a dictionary, removing any keys with None values.
 
         Returns:
-            The object as a dictionary.
+            A dictionary representation of the object with only non-None values.
         """
-        return asdict(self)
+        return {key: value for key, value in asdict(self).items() if value is not None}
 
 
 @dataclass
@@ -26,25 +34,44 @@ class ContributorProperties(Properties):
     """The people or organizations who contributed to this data package.
 
     Attributes:
-        title (str): The name of the contributor.
-        path (str): A fully qualified URL pointing to a relevant
+        title (str | None): The name of the contributor.
+        path (str | None): A fully qualified URL pointing to a relevant
             location online for the contributor.
-        email (str): An email address.
-        given_name (str): A string containing the name a person has been
+        email (str | None): An email address.
+        given_name (str | None): A string containing the name a person has been
             given, if the contributor is a person.
-        family_name (str): A string containing the familial name that a person
+        family_name (str | None): A string containing the familial name that a person
             inherits, if the contributor is a person.
-        organization (str): An organizational affiliation for this contributor.
-        roles (list[str]): An array of strings describing the roles of the contributor.
+        organization (str | None): An organizational affiliation for this
+            contributor.
+        roles (list[str] | None): An array of strings describing the roles of the
+            contributor.
     """
 
-    title: str = ""
-    path: str = ""
-    email: str = ""
-    given_name: str = ""
-    family_name: str = ""
-    organization: str = ""
-    roles: list[str] = field(default_factory=list)
+    title: str | None = None
+    path: str | None = None
+    email: str | None = None
+    given_name: str | None = None
+    family_name: str | None = None
+    organization: str | None = None
+    roles: list[str] | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A ContributorProperties object with default values
+        """
+        return cls(
+            title="",
+            path="",
+            email="",
+            given_name="",
+            family_name="",
+            organization="",
+            roles=[],
+        )
 
 
 @dataclass
@@ -52,15 +79,24 @@ class LicenseProperties(Properties):
     """The license(s) under which the package or resource is provided.
 
     Attributes:
-        name (str): Must be an Open Definition license identifier,
+        name (str | None): Must be an Open Definition license identifier,
             see http://licenses.opendefinition.org/
-        path (str): A fully qualified URL, or a POSIX file path.
-        title (str): A human-readable title.
+        path (str | None): A fully qualified URL, or a POSIX file path.
+        title (str | None): A human-readable title.
     """
 
-    name: str = ""
-    path: str = ""
-    title: str = ""
+    name: str | None = None
+    path: str | None = None
+    title: str | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A LicenseProperties object with default values
+        """
+        return cls(name="", path="", title="")
 
 
 @dataclass
@@ -68,16 +104,25 @@ class SourceProperties(Properties):
     """The raw sources for this data package.
 
     Attributes:
-        title (str): The title of the source (e.g. document or organization).
-        path (str): A fully qualified URL, or a POSIX file path.
-        email (str): An email address.
-        version (str): The version of the source.
+        title (str | None): The title of the source (e.g. document or organization).
+        path (str | None): A fully qualified URL, or a POSIX file path.
+        email (str | None): An email address.
+        version (str | None): The version of the source.
     """
 
-    title: str = ""
-    path: str = ""
-    email: str = ""
-    version: str = ""
+    title: str | None = None
+    path: str | None = None
+    email: str | None = None
+    version: str | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A SourceProperties object with default values
+        """
+        return cls(title="", path="", email="", version="")
 
 
 # The `r"""` string is used to avoid escaping backslashes in the `null_sequence`
@@ -95,13 +140,12 @@ class TableDialectProperties(Properties):
         header_rows (list[int] | None): Specifies the row numbers for the header.
         header_join (str | None): Specifies how multiline-header files have to join
             the resulting header rows.
-        comment_rows (list[int] | None): Specifies what rows have to be omitted from
-            the data.
+        comment_rows (list[int] | None): Specifies what rows have to be omitted from the
+            data.
         comment_char (str | None): Specifies that any row beginning with
             this one-character string, without preceding whitespace, causes the
             entire line to be ignored.
-        delimiter (str | None): A character sequence to use as the field
-            separator.
+        delimiter (str | None): A character sequence to use as the field separator.
         line_terminator (str | None): Specifies the character sequence that
             must be used to terminate rows.
         quote_char (str | None): Specifies a character to use for quoting in
@@ -110,14 +154,13 @@ class TableDialectProperties(Properties):
             data cells. If true, two consecutive quotes are interpreted as one.
         escape_char (str | None): Specifies a one-character string to use as
             the escape character. Mutually exclusive with `quote_char`.
-        null_sequence (str | None): Specifies the null sequence, for
-            example, `\N`.
+        null_sequence (str | None): Specifies the null sequence, for example, `\N`.
         skip_initial_space (bool | None): Specifies the interpretation of
             whitespace immediately following a delimiter. If false, whitespace
             immediately after a delimiter should be treated as part of the
             subsequent field.
-        property (str | None): Specifies where a data array is located in the
-            data structure.
+        property (str | None): Specifies where a data array is located in the data
+            structure.
         item_type (Literal['array', 'object'] | None): Specifies whether `property`
             contains an array of arrays or an array of objects.
         item_keys (list[str] | None): Specifies the keys for extracting rows from
@@ -126,27 +169,55 @@ class TableDialectProperties(Properties):
             spreadsheet file.
         sheet_name (str | None): Specifies the sheet name of a table in a spreadsheet
             file.
-        table (str | None): Specifies the name of a table in a database.
+        table (str): Specifies the name of a table in a database.
     """
 
-    header: bool | None = True
-    header_rows: list[int] | None = field(default_factory=lambda: [1])
-    header_join: str | None = " "
-    comment_rows: list[int] | None = field(default_factory=lambda: [1])
+    header: bool | None = None
+    header_rows: list[int] | None = None
+    header_join: str | None = None
+    comment_rows: list[int] | None = None
     comment_char: str | None = None
-    delimiter: str | None = ","
-    line_terminator: str | None = "\r\n"
-    quote_char: str | None = '"'
-    double_quote: bool | None = True
+    delimiter: str | None = None
+    line_terminator: str | None = None
+    quote_char: str | None = None
+    double_quote: bool | None = None
     escape_char: str | None = None
     null_sequence: str | None = None
-    skip_initial_space: bool | None = False
+    skip_initial_space: bool | None = None
     property: str | None = None
     item_type: Literal["array", "object"] | None = None
     item_keys: list[str] | None = None
     sheet_number: int | None = None
     sheet_name: str | None = None
     table: str | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A TableDialectProperties object with default values
+        """
+        return cls(
+            header=True,
+            header_rows=[1],
+            header_join=" ",
+            comment_rows=[1],
+            comment_char="",
+            delimiter=",",
+            line_terminator="\r\n",
+            quote_char='"',
+            double_quote=True,
+            escape_char="",
+            null_sequence="",
+            skip_initial_space=False,
+            property="",
+            item_type="array",
+            item_keys=[],
+            sheet_number=1,
+            sheet_name="",
+            table="",
+        )
 
 
 @dataclass
@@ -163,6 +234,15 @@ class ReferenceProperties(Properties):
 
     resource: str | None = None
     fields: list[str] | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A ReferenceProperties object with default values
+        """
+        return cls(resource="", fields=[])
 
 
 @dataclass
@@ -183,6 +263,15 @@ class TableSchemaForeignKeyProperties(Properties):
     fields: list[str] | None = None
     reference: ReferenceProperties | None = None
 
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A TableSchemaForeignKeyProperties object with default values
+        """
+        return cls(fields=[])
+
 
 @dataclass
 class MissingValueProperties(Properties):
@@ -195,6 +284,15 @@ class MissingValueProperties(Properties):
 
     value: str | None = None
     label: str | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A MissingValueProperties object with default values
+        """
+        return cls(value="", label="")
 
 
 # Allowed types for a field in a table schema.
@@ -259,6 +357,22 @@ class ConstraintsProperties(Properties):
     exclusive_maximum: str | float | int | None = None
     json_schema: dict[str, Any] | None = None
 
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A ConstraintsProperties object with default values
+        """
+        return cls(
+            required=False,
+            unique=False,
+            pattern="",
+            enum=[],
+            min_length=0,
+            json_schema={},
+        )
+
 
 @dataclass
 class FieldProperties(Properties):
@@ -290,15 +404,32 @@ class FieldProperties(Properties):
     name: str | None = None
     title: str | None = None
     type: FieldType | None = None
-    format: str | None = "default"
+    format: str | None = None
     description: str | None = None
     example: str | None = None
     constraints: ConstraintsProperties | None = None
     categories: list[str] | list[int] | None = None
     categories_ordered: bool | None = None
-    missing_values: list[str] | list[MissingValueProperties] | None = field(
-        default_factory=lambda: [""]
-    )
+    missing_values: list[str] | list[MissingValueProperties] | None = None
+
+    @classmethod
+    def default(cls: "type[Self]") -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A FieldProperties object with default values
+        """
+        return cls(
+            name="",
+            title="",
+            type="string",
+            format="default",
+            description="",
+            example="",
+            categories=[],
+            categories_ordered=False,
+            missing_values=[],
+        )
 
 
 # Allowed strategies for matching fields in the table schema to fields the data source.
@@ -320,9 +451,8 @@ class TableSchemaProperties(Properties):
             schema.
         fields_match (FieldsMatchType | None): Specifies how fields in the table
             schema match the fields in the data source.
-        primary_key (list[str] | str | None): A primary key is a field name
-            or an array of field names, whose values must uniquely identify
-            each row in the table.
+        primary_key (list[str] | str | None): A primary key is a field name or an array
+            of field names, whose values must uniquely identify each row in the table.
         unique_keys (list[list[str]] | None): A field or a set of fields that are
             required to have unique logical values in each row in the table.
         foreign_keys (list[TableSchemaForeignKeyProperties] | None): A reference where
@@ -334,13 +464,27 @@ class TableSchemaProperties(Properties):
     """
 
     fields: list[FieldProperties] | None = None
-    fields_match: FieldsMatchType | None = "exact"
+    fields_match: FieldsMatchType | None = None
     primary_key: list[str] | str | None = None
     unique_keys: list[list[str]] | None = None
     foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
-    missing_values: list[str] | list[MissingValueProperties] | None = field(
-        default_factory=lambda: [""]
-    )
+    missing_values: list[str] | list[MissingValueProperties] | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A TableSchemaProperties object with default values
+        """
+        return cls(
+            fields=[],
+            fields_match="exact",
+            primary_key="",
+            unique_keys=[],
+            foreign_keys=[],
+            missing_values=[],
+        )
 
 
 @dataclass
@@ -357,7 +501,6 @@ class ResourceProperties(Properties):
             Should consist only of lowercase English alphanumeric characters plus
             characters in `.-_`.
         path (str | None): A path pointing to the data for this resource.
-        data (Any | None): Inline data for this resource.
         type (Literal['table'] | None): Specifies the type of the resource.
         title (str | None): A human-readable title.
         description (str | None): A text description. Markdown is encouraged.
@@ -381,7 +524,6 @@ class ResourceProperties(Properties):
 
     name: str | None = None
     path: str | None = None
-    data: Any | None = None
     type: Literal["table"] | None = None
     title: str | None = None
     description: str | None = None
@@ -389,11 +531,33 @@ class ResourceProperties(Properties):
     licenses: list[LicenseProperties] | None = None
     format: str | None = None
     mediatype: str | None = None
-    encoding: str | None = "utf-8"
+    encoding: str | None = None
     bytes: int | None = None
     hash: str | None = None
     dialect: TableDialectProperties | None = None
     schema: TableSchemaProperties | None = None
+
+    @classmethod
+    def default(cls: "type[Self]") -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A ResourceProperties object with default values
+        """
+        return cls(
+            name="",
+            path="",
+            type="table",
+            title="",
+            description="",
+            sources=[],
+            licenses=[],
+            format="",
+            mediatype="",
+            encoding="utf-8",
+            bytes=0,
+            hash="",
+        )
 
 
 @dataclass
@@ -405,36 +569,60 @@ class PackageProperties(Properties):
     management of datasets.
 
     Attributes:
-        name (str): A simple name or identifier to be used for this package.
+        name (str | None): A simple name or identifier to be used for this package.
             Should consist only of lowercase English alphanumeric characters plus
             characters in `.-_`.
-        id (str): The unique identifier of this package.
-        title (str): A human-readable title.
-        description (str): A text description. Markdown is encouraged.
-        homepage (str): The home on the web that is related to this package.
-        version (str): A version string identifying the version of this package.
-        created (str): The datetime on which this package was created.
-        contributors (list[ContributorProperties]): The people or organizations
+        id (str | None): The unique identifier of this package.
+        title (str | None): A human-readable title.
+        description (str | None): A text description. Markdown is encouraged.
+        homepage (str | None): The home on the web that is related to this package.
+        version (str | None): A version string identifying the version of this package.
+        created (str | None): The datetime on which this package was created.
+        contributors (list[ContributorProperties] | None): The people or organizations
             who contributed to this package.
-        keywords (list[str]): A list of keywords that describe this package.
-        image (str): An image to represent this package.
-        licenses (list[LicenseProperties]): The license(s) under which this
+        keywords (list[str] | None): A list of keywords that describe this package.
+        image (str | None): An image to represent this package.
+        licenses (list[LicenseProperties] | None): The license(s) under which this
             package is published.
-        resources (list[ResourceProperties]): Specifies the data resources
+        resources (list[ResourceProperties] | None): Specifies the data resources
             in this data package, each compliant with the data resource specification.
-        sources (list[SourceProperties]): The raw sources for this data package.
+        sources (list[SourceProperties] | None): The raw sources for this data
+            package.
     """
 
-    name: str = ""
-    id: str = ""
-    title: str = ""
-    description: str = ""
-    homepage: str = ""
-    version: str = ""
-    created: str = ""
-    contributors: list[ContributorProperties] = field(default_factory=list)
-    keywords: list[str] = field(default_factory=list)
-    image: str = ""
-    licenses: list[LicenseProperties] = field(default_factory=list)
-    resources: list[ResourceProperties] = field(default_factory=list)
-    sources: list[SourceProperties] = field(default_factory=list)
+    name: str | None = None
+    id: str | None = None
+    title: str | None = None
+    description: str | None = None
+    homepage: str | None = None
+    version: str | None = None
+    created: str | None = None
+    contributors: list[ContributorProperties] | None = None
+    keywords: list[str] | None = None
+    image: str | None = None
+    licenses: list[LicenseProperties] | None = None
+    resources: list[ResourceProperties] | None = None
+    sources: list[SourceProperties] | None = None
+
+    @classmethod
+    def default(cls: type[Self]) -> Self:
+        """Creates an instance with default values.
+
+        Returns:
+            A PackageProperties object with default values
+        """
+        return cls(
+            name="",
+            id=str(uuid4()),
+            title="",
+            description="",
+            homepage="",
+            version="0.1.0",
+            created=get_iso_timestamp(),
+            contributors=[],
+            keywords=[],
+            image="",
+            licenses=[],
+            resources=[],
+            sources=[],
+        )

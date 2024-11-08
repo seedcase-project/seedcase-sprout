@@ -4,8 +4,6 @@ callout-icon: false
 callout-appearance: "minimal"
 ---
 
-{{< include /docs/includes/_wip.qmd >}}
-
 ::: {.callout-important appearance="default" icon="true"}
 We created this document, and especially the function diagrams, mainly
 as a way to help us as a team all understand and agree on what we're
@@ -105,19 +103,7 @@ fig-alt="A Plant UML schematic of the detailed code flow within the `create_pack
 ::: {.callout-note collapse="true"}
 ### `edit_package_properties(path, properties)`
 
-Because there already exists an empty `datapackage.json` file, we use
-this function to fill in the properties file with details specific to
-the package. We update the properties file by using the `properties`
-argument and giving it the `PackageProperties` object. See the help
-documentation of `PackageProperties` to know what should or needs to be
-added to the `datapackage.json` file. Use `path_properties()` to provide
-the correct path location. Outputs a JSON object only. Use
-`write_package_properties()` to save back to the `datapackage.json`
-file.
-
-Whenever you need to edit the `datapackage.json` properties, this is the
-function you will use again. It only edits metadata on the package
-itself, not on the data resources contained within the package.
+See the help documentation with `help(edit_package_properties())` for more details.
 
 ![Diagram showing the internal function flow of the
 `edit_package_properties()`

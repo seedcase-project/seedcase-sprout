@@ -1,44 +1,34 @@
-from frictionless import Report, Resource
+from frictionless.errors import ResourceError
 
+from sprout.core.verify_data_path import verify_data_path
+from sprout.core.verify_properties_are_complete import verify_properties_are_complete
+from sprout.core.verify_properties_are_well_formed import (
+    verify_properties_are_well_formed,
+)
 
-class InvalidResourcePropertiesError(Exception):
-    """Raised if the resource properties are invalid."""
-
-    def __init__(self, report: Report, properties: dict, *args, **kwargs):
-        """Initialises InvalidResourcePropertiesError.
-
-        Args:
-            report: validation report provided by Frictionless
-            properties: invalid resource properties
-            *args: non-keyword arguments
-            **kwargs: keyword arguments
-        """
-        # TODO: Consider if it's a problem for us that report.errors is not guaranteed
-        # to include all errors.
-        errors = [
-            f"{error.title}: {error.description} {error.message}"
-            for error in report.errors
-        ]
-        message = (
-            f"Invalid resource properties provided:\n{properties}"
-            f"\nThe following errors were found:\n{'\n'.join(errors)}"
-        )
-        super().__init__(message, *args, **kwargs)
+REQUIRED_RESOURCE_PROPERTIES = {"name", "path", "title", "description"}
 
 
 def verify_resource_properties(properties: dict) -> dict:
-    """Checks if the resource properties provided are valid.
+    """Verifies if a set of resource properties is correct.
+
+    The resource properties are correct if they conform to the Data Resource
+    specification and they contain non-empty values for all required resource
+    properties fields. They should also have a well-formed value for `path`.
 
     Args:
-        properties: the resource properties to check
-
-    Raises:
-        InvalidResourcePropertiesError: if Frictionless finds an error in the properties
+        properties: The resource properties to verify.
 
     Returns:
-        the properties, if valid
+        The resource properties, if correct.
+
+    Raises:
+        NotPropertiesError: If the resource properties are not correct.
     """
-    report = Resource.validate_descriptor(properties)
-    if not report.valid:
-        raise InvalidResourcePropertiesError(report, properties)
+    verify_properties_are_complete(
+        properties, ResourceError, REQUIRED_RESOURCE_PROPERTIES
+    )
+    verify_properties_are_well_formed(properties, ResourceError.type)
+    verify_data_path(properties)
+
     return properties

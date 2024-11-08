@@ -18,6 +18,12 @@ $toc-active-border: rgb(139, 139, 139); // #8b8b8b;
 $navbar-padding-y: .2rem;
 
 /*-- scss:rules --*/
+
+/* Wrap Python output so it looks nicer */
+.cell-output pre code {
+  white-space: pre-wrap;
+}
+
 .navbar {
   border-bottom: rgba($toc-active-border, 0.3) 1px solid;
 }
@@ -39,14 +45,17 @@ figcaption {
 }
 
 .about-link {
-  background-color: $secondary !important;
-  border: 1px solid $tertiary !important;
+  border: 2px solid $tertiary !important;
   border-radius: 50px !important;
   color: $primary !important;
+  font-size: 20px !important;
+  font-weight: bold;
+  padding: 5px 15px !important;
 }
 
 .about-link:hover {
-  background-color: rgba($secondary, 0.3) !important;
+  background-color: $tertiary !important;
+  color: white !important;
 }
 
 .about-links {
@@ -54,23 +63,48 @@ figcaption {
   padding: 10px 0px 0px 0px !important;
 }
 
-/* TODO: take inspiration from Quarto-web to make this cleaner */
-.landing-page-banner {
-  background-color: rgba($secondary, 0.3);
-  padding: 10px;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  width: 100vw;
-  margin-left: -50vw;
-  margin-right: -50vw;
+.landing-page-block {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
-.landing-page-banner-content {
-  max-width: 800px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  margin-bottom: 40px;
+@media(min-width: 900px) {
+  .landing-page-block {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .landing-page-block {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.hero-banner {
+  position: relative;
+  background: rgba($secondary, 0.5);
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.hero-banner .landing-page-block {
+  display: flex;
+  flex-direction: row;
+}
+
+.hero-text {
+  width: 90%;
+}
+
+.hero-text>h2 {
+  margin-top: 0.5rem;
+  border-bottom: none;
 }
 
 .landing-page-card {

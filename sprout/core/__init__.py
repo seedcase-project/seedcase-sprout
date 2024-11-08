@@ -5,23 +5,17 @@
 # Packages -----
 # from .list_packages import *
 # from .view_package_properties import *
-# from .create_package_structure import *
-# from .create_package_properties import *
-# from .edit_package_properties import *
+from .create_package_structure import create_package_structure
+
 # from .write_package_properties import *
 # from .delete_package import *
-
 # Resources -----
 # from .list_resources import *
 # from .view_resource import *
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
+from .edit_package_properties import edit_package_properties
 
-# from .extract_resource_properties import *
-# from .edit_resource_properties import *
-# from .write_resource_data_to_raw import *
-# from .write_resource_parquet import *
-# from .write_resource_properties import *
 # from .write_resource_to_database import *
 # from .delete_resource_raw_file import *
 # from .delete_resource_data import *
@@ -57,6 +51,12 @@ from .properties import (
     TableSchemaProperties,
 )
 
+# from .extract_resource_properties import *
+# from .edit_resource_properties import *
+# from .write_resource_data_to_raw import *
+# from .write_resource_parquet import *
+from .write_resource_properties import write_resource_properties
+
 # Helpers -----
 # from .pretty_json import *
 
@@ -77,9 +77,8 @@ __all__ = [
     # Packages -----
     # "list_packages",
     # "view_package_properties",
-    # "create_package_structure",
-    # "create_package_properties",
-    # "edit_package_properties",
+    "create_package_structure",
+    "edit_package_properties",
     # "write_package_properties",
     # "delete_package",
     # Resources -----
@@ -91,7 +90,7 @@ __all__ = [
     # "edit_resource_properties",
     # "write_resource_data_to_raw",
     # "write_resource_parquet",
-    # "write_resource_properties",
+    "write_resource_properties",
     # "write_resource_to_database",
     # "delete_resource_raw_file",
     # "delete_resource_data",
