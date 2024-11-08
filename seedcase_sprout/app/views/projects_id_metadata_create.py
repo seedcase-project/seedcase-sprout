@@ -7,7 +7,7 @@ from seedcase_sprout.app.views.projects_id_metadata_id.step_confirmation import 
 from seedcase_sprout.app.views.projects_id_metadata_id.step_file_upload import (
     step_file_upload,
 )
-from seedcase_sprout.app.views.projects_id_metadata_id.step_name_and_description import (
+from seedcase_sprout.app.views.projects_id_metadata_id.step_name_and_description import (  # noqa: E501
     step_name_and_description,
 )
 
