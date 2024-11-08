@@ -13,4 +13,4 @@ from sprout.core.create_raw_file_name import create_raw_file_name
 def test_returns_expected_raw_file_name(mock_uuid, tmp_path):
     path = create_raw_file_name(Path(tmp_path) / "test.csv")
 
-    assert path == f"20240514-0500010000-{mock_uuid()}.csv.gz"
+    assert path == f"2024-05-14T050001Z-{mock_uuid()}.csv.gz"
