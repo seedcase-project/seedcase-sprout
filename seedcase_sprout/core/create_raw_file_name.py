@@ -1,7 +1,7 @@
 from pathlib import Path
 from uuid import uuid4
 
-from sprout.core.get_iso_timestamp import get_compact_iso_timestamp
+from seedcase_sprout.core.get_iso_timestamp import get_compact_iso_timestamp
 
 
 def create_raw_file_name(path: Path) -> str:
