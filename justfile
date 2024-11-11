@@ -19,7 +19,7 @@ start-docker:
 stop-docker:
   docker compose down
 
-# Run Django tests
+# Run tests
 run-tests: install-deps
   poetry run pytest
 
