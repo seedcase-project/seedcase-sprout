@@ -92,9 +92,10 @@ def test_adds_custom_fields(
     new_properties = {"custom-field": "custom-value"}
 
     # When, Then
-    assert edit_package_properties(
-        properties_path, new_properties
-    ) == current_properties | new_properties
+    assert (
+        edit_package_properties(properties_path, new_properties)
+        == current_properties | new_properties
+    )
 
 
 def test_throws_error_if_new_properties_are_empty(properties_path):
