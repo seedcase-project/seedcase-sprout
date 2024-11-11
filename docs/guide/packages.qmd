@@ -4,10 +4,7 @@ order: 1
 jupyter: python3
 ---
 
-At the core of Sprout is the [data
-package](/docs/design/implementation/outputs.qmd), which is a
-standardized way of structuring and sharing data. This guide will show
-you how to create and manage data packages using Sprout.
+At the core of Sprout is the [{{< glossary "data package">}}](../glossary.qmd), which is a standardized way of structuring and sharing data. This guide will show you how to create and manage data packages using Sprout.
 
 {{< include _preamble.qmd >}}
 
@@ -82,7 +79,7 @@ pprint(properties)
 Then, to update the current `datapackage.json` file with these
 properties, you can use the `update_package_properties()` function:
 
-``` {python}
+``` python
 package_properties = sp.edit_package_properties(
   path=sp.path_package_properties(package_id=1),
   properties=properties.asdict
@@ -152,7 +149,7 @@ the `datapackage.json`.
 You now have the basic starting point for adding data resources to your
 data package in the location you specified:
 
-```         
+```
 ~/Documents/data-packages/1/datapackage.json
 ~/Documents/data-packages/1/README.md
 ```
