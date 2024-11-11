@@ -7,7 +7,7 @@ from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
 from uuid import uuid4
 
-from sprout.core.get_iso_timestamp import get_iso_timestamp
+from seedcase_sprout.core.get_iso_timestamp import get_iso_timestamp
 
 
 class Properties(ABC):

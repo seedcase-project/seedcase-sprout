@@ -1,4 +1,4 @@
-from sprout.core.utils import convert_to_snake_case
+from seedcase_sprout.core.utils import convert_to_snake_case
 
 
 def test_convert_to_snake_case_snake_case():

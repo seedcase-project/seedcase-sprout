@@ -1,8 +1,8 @@
 import subprocess
 from pathlib import Path
 
-from sprout.core.get_json_from_url import get_json_from_url
-from sprout.core.write_json import write_json
+from seedcase_sprout.core.get_json_from_url import get_json_from_url
+from seedcase_sprout.core.write_json import write_json
 
 SCHEMA_URL = "https://datapackage.org/profiles/2.0/datapackage.json"
 ROOT = Path("sprout", "core", "generate_properties")

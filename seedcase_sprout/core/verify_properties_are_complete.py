@@ -2,7 +2,7 @@ from typing import Type
 
 from frictionless.errors import PackageError, ResourceError
 
-from sprout.core.not_properties_error import NotPropertiesError
+from seedcase_sprout.core.not_properties_error import NotPropertiesError
 
 
 def verify_properties_are_complete(

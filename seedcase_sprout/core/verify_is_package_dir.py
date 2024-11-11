@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from sprout.core.get_ids import get_ids
-from sprout.core.verify_is_dir import verify_is_dir
+from seedcase_sprout.core.get_ids import get_ids
+from seedcase_sprout.core.verify_is_dir import verify_is_dir
 
 
 def verify_is_package_dir(path: Path) -> Path:

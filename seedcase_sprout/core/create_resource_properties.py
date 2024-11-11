@@ -2,12 +2,12 @@ from pathlib import Path
 
 from frictionless.errors import ResourceError
 
-from sprout.core.create_relative_resource_data_path import (
+from seedcase_sprout.core.create_relative_resource_data_path import (
     create_relative_resource_data_path,
 )
-from sprout.core.edit_property_field import edit_property_field
-from sprout.core.verify_is_dir import verify_is_dir
-from sprout.core.verify_properties_are_well_formed import (
+from seedcase_sprout.core.edit_property_field import edit_property_field
+from seedcase_sprout.core.verify_is_dir import verify_is_dir
+from seedcase_sprout.core.verify_properties_are_well_formed import (
     verify_properties_are_well_formed,
 )
 

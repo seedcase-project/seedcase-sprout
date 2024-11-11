@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from sprout.core.read_json import read_json
-from sprout.core.verify_data_path import verify_data_path
-from sprout.core.verify_is_file import verify_is_file
-from sprout.core.verify_package_properties import verify_package_properties
-from sprout.core.verify_resource_properties import verify_resource_properties
-from sprout.core.write_json import write_json
+from seedcase_sprout.core.read_json import read_json
+from seedcase_sprout.core.verify_data_path import verify_data_path
+from seedcase_sprout.core.verify_is_file import verify_is_file
+from seedcase_sprout.core.verify_package_properties import verify_package_properties
+from seedcase_sprout.core.verify_resource_properties import verify_resource_properties
+from seedcase_sprout.core.write_json import write_json
 
 
 def write_resource_properties(path: Path, resource_properties: dict) -> Path:

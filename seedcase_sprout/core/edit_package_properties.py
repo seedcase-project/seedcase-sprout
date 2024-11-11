@@ -2,12 +2,12 @@ from pathlib import Path
 
 from frictionless.errors import PackageError
 
-from sprout.core.read_json import read_json
-from sprout.core.verify_is_file import verify_is_file
-from sprout.core.verify_package_properties import (
+from seedcase_sprout.core.read_json import read_json
+from seedcase_sprout.core.verify_is_file import verify_is_file
+from seedcase_sprout.core.verify_package_properties import (
     verify_package_properties,
 )
-from sprout.core.verify_properties_are_well_formed import (
+from seedcase_sprout.core.verify_properties_are_well_formed import (
     verify_properties_are_well_formed,
 )
 

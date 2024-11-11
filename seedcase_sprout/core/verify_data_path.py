@@ -2,7 +2,7 @@ from pathlib import Path
 
 from frictionless.errors import ResourceError
 
-from sprout.core.not_properties_error import NotPropertiesError
+from seedcase_sprout.core.not_properties_error import NotPropertiesError
 
 
 def verify_data_path(properties: dict) -> dict:

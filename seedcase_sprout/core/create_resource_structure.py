@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from sprout.core.create_dirs import create_dirs
-from sprout.core.create_id_path import create_id_path
-from sprout.core.create_next_id import create_next_id
-from sprout.core.create_resource_raw_path import create_resource_raw_path
-from sprout.core.get_ids import get_ids
-from sprout.core.verify_is_dir import verify_is_dir
+from seedcase_sprout.core.create_dirs import create_dirs
+from seedcase_sprout.core.create_id_path import create_id_path
+from seedcase_sprout.core.create_next_id import create_next_id
+from seedcase_sprout.core.create_resource_raw_path import create_resource_raw_path
+from seedcase_sprout.core.get_ids import get_ids
+from seedcase_sprout.core.verify_is_dir import verify_is_dir
 
 
 def create_resource_structure(path: Path) -> list[Path]:

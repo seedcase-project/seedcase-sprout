@@ -1,7 +1,7 @@
 from frictionless import validate
 from frictionless.errors import Error
 
-from sprout.core.not_properties_error import NotPropertiesError
+from seedcase_sprout.core.not_properties_error import NotPropertiesError
 
 
 def verify_properties_are_well_formed(properties: dict, error_type: str) -> dict:

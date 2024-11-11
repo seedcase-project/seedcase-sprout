@@ -1,16 +1,16 @@
 from pathlib import Path
 
-from sprout.core.create_dirs import create_dir
-from sprout.core.create_id_path import create_id_path
-from sprout.core.create_next_id import create_next_id
-from sprout.core.create_properties_path import create_properties_path
-from sprout.core.create_readme_path import create_readme_path
-from sprout.core.create_readme_text import create_readme_text
-from sprout.core.get_ids import get_ids
-from sprout.core.properties import PackageProperties
-from sprout.core.verify_is_dir import verify_is_dir
-from sprout.core.write_file import write_file
-from sprout.core.write_json import write_json
+from seedcase_sprout.core.create_dirs import create_dir
+from seedcase_sprout.core.create_id_path import create_id_path
+from seedcase_sprout.core.create_next_id import create_next_id
+from seedcase_sprout.core.create_properties_path import create_properties_path
+from seedcase_sprout.core.create_readme_path import create_readme_path
+from seedcase_sprout.core.create_readme_text import create_readme_text
+from seedcase_sprout.core.get_ids import get_ids
+from seedcase_sprout.core.properties import PackageProperties
+from seedcase_sprout.core.verify_is_dir import verify_is_dir
+from seedcase_sprout.core.write_file import write_file
+from seedcase_sprout.core.write_json import write_json
 
 
 def create_package_structure(path: Path) -> list[Path]:

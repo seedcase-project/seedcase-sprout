@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from sprout.core.create_dirs import create_dir
-from sprout.core.path_sprout_root import path_sprout_root
-from sprout.core.verify_is_dir import verify_is_dir
-from sprout.core.verify_is_file import verify_is_file
-from sprout.core.verify_is_package_dir import verify_is_package_dir
+from seedcase_sprout.core.create_dirs import create_dir
+from seedcase_sprout.core.path_sprout_root import path_sprout_root
+from seedcase_sprout.core.verify_is_dir import verify_is_dir
+from seedcase_sprout.core.verify_is_file import verify_is_file
+from seedcase_sprout.core.verify_is_package_dir import verify_is_package_dir
 
 
 def path_package(package_id: int) -> Path:

@@ -5,8 +5,8 @@ from typing import Mapping
 import polars as pl
 from polars import read_csv
 
-from sprout.core.csv_utils.csv_reader import _transform_to_suitable_csv_format
-from sprout.core.csv_utils.csv_validation_error import CsvValidationError
+from seedcase_sprout.core.csv_utils.csv_reader import _transform_to_suitable_csv_format
+from seedcase_sprout.core.csv_utils.csv_validation_error import CsvValidationError
 
 
 def validate_csv(

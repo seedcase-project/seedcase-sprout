@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from sprout.core.create_root_path import create_root_path
-from sprout.core.get_root_envvar import get_root_envvar
+from seedcase_sprout.core.create_root_path import create_root_path
+from seedcase_sprout.core.get_root_envvar import get_root_envvar
 
 
 def path_sprout_root() -> Path:

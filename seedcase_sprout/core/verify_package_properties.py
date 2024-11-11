@@ -1,7 +1,9 @@
 from frictionless.errors import PackageError
 
-from sprout.core.verify_properties_are_complete import verify_properties_are_complete
-from sprout.core.verify_properties_are_well_formed import (
+from seedcase_sprout.core.verify_properties_are_complete import (
+    verify_properties_are_complete,
+)
+from seedcase_sprout.core.verify_properties_are_well_formed import (
     verify_properties_are_well_formed,
 )
 

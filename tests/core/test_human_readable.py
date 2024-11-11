@@ -1,4 +1,4 @@
-from sprout.core.utils import convert_to_human_readable
+from seedcase_sprout.core.utils import convert_to_human_readable
 
 
 def test_snake_case_to_human_readable():
