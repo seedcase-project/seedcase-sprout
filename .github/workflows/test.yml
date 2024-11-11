@@ -22,11 +22,11 @@ jobs:
       - name: Install dependencies with Poetry
         run: poetry install --no-interaction --no-root
 
-      - name: Show Django migration plan
-        run: poetry run python manage.py migrate --plan --verbosity 3
-
       - name: Create migration files if missing (remove when migrations are added to git)
         run: poetry run python manage.py makemigrations --verbosity 3
+
+      - name: Show Django migration plan
+        run: poetry run python manage.py migrate --plan --verbosity 3
 
       - name: Add database migrations to test database
         run: poetry run python manage.py migrate --verbosity 3
