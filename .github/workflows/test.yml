@@ -1,0 +1,35 @@
+name: Run Django Tests
+
+on:
+  workflow_call:
+
+jobs:
+  django-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Install Python (with cache for Poetry)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'poetry'
+
+      - name: Install dependencies with Poetry
+        run: poetry install --no-interaction --no-root
+
+      - name: Show Django migration plan
+        run: poetry run python manage.py migrate --plan --verbosity 3
+
+      - name: Create migration files if missing (remove when migrations are added to git)
+        run: poetry run python manage.py makemigrations --verbosity 3
+
+      - name: Add database migrations to test database
+        run: poetry run python manage.py migrate --verbosity 3
+
+      - name: Run unit tests
+        run: poetry run pytest
