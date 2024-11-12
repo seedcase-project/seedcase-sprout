@@ -23,7 +23,7 @@ will store it in our current working directory in the hidden folder
 `.storage/`.
 
 ```{python}
-import sprout.core as sp
+import seedcase_sprout.core as sp
 import os
 import pathlib
 
