@@ -61,7 +61,7 @@ website:
           href: docs/design/implementation/index.qmd
           contents:
             - docs/design/implementation/outputs.qmd
-            - docs/design/implementation/python-functions.qmd
+            - docs/design/implementation/core.qmd
             - docs/design/implementation/app-urls.qmd
     - id: guide
       contents:
