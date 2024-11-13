@@ -83,15 +83,15 @@ quartodoc:
     - subtitle: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
       contents:
-        - create_package_structure
-        - edit_package_properties
+        - core.create_package_structure
+        - core.edit_package_properties
 
     - subtitle: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
       contents:
-        - write_resource_properties
-        - create_resource_properties
-        - create_resource_structure
+        - core.write_resource_properties
+        - core.create_resource_properties
+        - core.create_resource_structure
 
     - subtitle: "Property dataclasses"
       desc: "Dataclasses that support creating correct data package properties."
