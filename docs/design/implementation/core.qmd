@@ -103,7 +103,8 @@ fig-alt="A Plant UML schematic of the detailed code flow within the `create_pack
 ::: {.callout-note collapse="true"}
 ### `edit_package_properties(path, properties)`
 
-See the help documentation with `help(edit_package_properties())` for more details.
+See the help documentation with `help(edit_package_properties())` for
+more details.
 
 ![Diagram showing the internal function flow of the
 `edit_package_properties()`
@@ -649,6 +650,77 @@ print(TableSchemaProperties())
 TableSchemaProperties(fields=[], missingValues=[], primaryKey=[], foreignKeys=[])
 ```
 :::
+
+## Check properties functions
+
+-   All functions have at least an argument of `properties` (as a
+    dictionary).
+-   The full `datapackage.json` object, as a dictionary, must be given
+    to the `properties` argument.
+
+### Properties checked against the standard
+
+These checks are for specific sections of the `datapackage.json`
+specification:
+
+-   Data package level as `check_package_*`. Sublevels are:
+    -   Contributors and contributor roles as `check_contributors_*` and
+        `check_contributor_roles_*`.
+    -   Data package license sublevel as `check_license_*`.
+-   Data resource level as `check_resource_*`.
+-   Table dialect level as `check_dialect_*`.
+-   Table schema level as `check_schema_*`.
+
+Generic checks are:
+
+-   `*_required_fields()`: Check if all required fields are present and
+    filled in.
+-   `*_field_type()`: Check if all fields are the correct type, e.g.
+    `str` or `int`.
+-   `*_array_fields()`: Check if all array fields are lists.
+-   `*_str_fields()`: Check if all string fields are strings.
+-   `*_date_fields()`: Check if all date fields are in the correct
+    format.
+-   `*_name_field()`: Check that all name fields match the
+    specification.
+-   `*_version_field()`: Check that the version field is in the correct
+    format.
+-   `*_url_fields()`: Check that real URLs are in the URL fields.
+-   `*_email_fields()`: Check the real emails, or at least an email
+    pattern, are in the email fields.
+-   `*_path_fields()`: Check that real paths are in the path fields.
+-   `*_id()`: Check if the ID is formatted as a UUID/GUID.
+
+For `check_schema_*` specific checks:
+
+-   `*_fields_format()`: Check if the `type` property has the correct
+    corresponding `format` property of `fields` property in `schema`.
+-   `*_fields_type()`: Check
+
+Other potential checks not implemented in the Frictionless Data Package
+standard:
+
+-   `_paths_are_relative()`: Check that all paths are relative. This is
+    largely a security check, see the [security
+    section](https://datapackage.org/standard/security/) of the
+    Frictionless Data Package standard website for details on this.
+
+### Properties checked against the data
+
+Since these all relate to data, the checks begin with `check_data_*`.
+These functions all have two arguments: `data` and `properties`.
+
+-   `*_fields_name()`: Check if all column names match the `name`
+    properties in the `fields` property (e.g. the column names) and are
+    valid.
+-   `*_unique_fields()`: Check if all fields are unique.
+-   `*_foreign_keys_exist()`: Check if all foreign keys exist and
+    connect to the correct fields.
+-   `*_fields_type()`: Check if the data's column types match the `type`
+    property of `fields`.
+-   `*_fields_format()`: Check if all fields are the correct type.
+-   `*_fields_categories()`: Check if data columns with a `categories`
+    property has the correct categories.
 
 ## Helper functions
 
