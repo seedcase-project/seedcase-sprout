@@ -2,12 +2,13 @@ name: Check Data Package standard version
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # Runs at midnight on Sundays
+    # Runs at midnight on Sundays
+    - cron: 0 0 * * 0
   workflow_dispatch:
 
 env:
-  CURRENT_VERSION: "v2.0"
-  DP_REPO: "frictionlessdata/datapackage"
+  CURRENT_VERSION: v2.0
+  DP_REPO: frictionlessdata/datapackage
 
 jobs:
   check-latest-version:
