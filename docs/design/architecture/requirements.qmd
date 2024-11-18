@@ -20,7 +20,7 @@ Things Sprout must do:
     tools, and is storage efficient: Sprout is first and foremost a data
     engineering tool for research data storage and distribution (or at
     least, easier sharing).
--   Store, organize, and manage multiple, distinct data sources per user
+-   Store, organize, and manage multiple distinct data sources per user
     or group of users (as in a server setting): Researchers rarely
     collect and work on one data source over their careers or at any
     given time. So Sprout must be able to handle multiple distinct data
@@ -40,6 +40,6 @@ Things Sprout must do:
 
 Things Sprout will not do:
 
--   Analytic computing or any data science work: While there are some
+-   Analytic computing or any data science work: While there is some
     data processing and analysis that might occur, it is only in
     relation to running checks on the quality of the data.
