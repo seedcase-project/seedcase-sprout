@@ -59,10 +59,3 @@ each split is used.
     imports the required functions from `seedcase_sprout.core`, with
     functions from other Python packages that convert that code into a
     web app.
-
--   The web API is in `seedcase_sprout/api/`. Each endpoint imports the
-    required functions from `seedcase_sprout.core` with functions from
-    other Python packages that convert that code into a web API. This
-    particular module may not be necessary as many Python packages that
-    create web apps are also able to easily create web APIs from the
-    same or slightly modified code.
