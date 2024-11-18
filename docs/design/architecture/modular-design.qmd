@@ -14,7 +14,7 @@ In order to achieve our aims, the main functionality is designed and
 implemented as a Python package and can be used as a Python package.
 This code is stored in the Python module (folder location)
 `seedcase_sprout/core/` and is accessible via the Python code
-`import seedcase_sprout.core` statement. Only external-facing functions
+`import seedcase_sprout.core as sp` statement. Only external-facing functions
 would be exposed to the user and to other programs.
 
 The `core` functions and classes aim to have as few external assumptions
@@ -40,9 +40,9 @@ interfaces to Sprout that suit their particular needs.
 Our [Guide](/docs/guide/index.qmd) has examples and tutorials on how
 each split is used.
 
--   A higher-level, opinionated Python implementation of `core`, named
+-   A higher-level, opinionated Python abstraction of `core`, named
     `lib` and stored in `seedcase_sprout/lib/`. This module abstracts
-    away and simplified many of the steps and functions available in
+    away and simplifies many of the steps and functions available in
     `core`, with the consequence of being less flexible and less
     customizable. This module is intended for users who want to use
     Sprout without having to worry about the finer details of the exact
