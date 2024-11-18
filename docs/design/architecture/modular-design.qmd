@@ -48,12 +48,12 @@ each split is used.
     Sprout without having to worry about the finer details of the exact
     implementation. The internals of the `lib` functions would be strict
     and opinionated steps for how we envision a data package to be
-    created and managed.
+    created, structured, and managed.
 
--   For our CLI, it is placed in the module `seedcase_sprout/cli/`. Each
+-   The CLI is placed in the module `seedcase_sprout/cli/`. Each
     command imports the relevant functions from `seedcase_sprout.core`,
     along with decorators (from other Python packages) to convert the
-    Python code into a CLI program.
+    Python code into a CLI.
 
 -   The web app is in `seedcase_sprout/app/`. Each page of the web app
     imports the required functions from `seedcase_sprout.core`, with
