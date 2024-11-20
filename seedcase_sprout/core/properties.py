@@ -3,7 +3,7 @@
 # properties file to add more dataclasses and move them into this file.
 
 from abc import ABC, abstractmethod
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass, fields
 from typing import Any, Literal, Self
 from uuid import uuid4
 
@@ -21,12 +21,37 @@ class Properties(ABC):
 
     @property
     def compact_dict(self) -> dict:
-        """Convert the object to a dictionary, removing any keys with None values.
+        """Converts the object to a dictionary, removing any keys with None values.
+
+        Applies recursively to nested `*Properties` objects.
 
         Returns:
             A dictionary representation of the object with only non-None values.
         """
-        return {key: value for key, value in asdict(self).items() if value is not None}
+        compact_form = {}
+        for field in fields(self):
+            key = field.name
+            value = get_compact_value(getattr(self, key))
+            if value is not None:
+                compact_form[key] = value
+        return compact_form
+
+
+def get_compact_value(value: Any) -> Any:
+    """Recursively calls `compact_dict` on all nested fields in a `*Properties` object.
+
+    Args:
+        value: The value of a field of a `*Properties` object.
+
+    Returns:
+        The value in a compact form.
+    """
+    if isinstance(value, Properties):
+        return value.compact_dict
+    elif isinstance(value, list):
+        return [get_compact_value(item) for item in value]
+    else:
+        return value
 
 
 @dataclass
