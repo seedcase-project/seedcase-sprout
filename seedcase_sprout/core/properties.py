@@ -30,9 +30,9 @@ class Properties(ABC):
         """
         return asdict(
             obj=self,
-            dict_factory=lambda tuples: dict(
-                tuple for tuple in tuples if tuple[1] is not None
-            ),
+            dict_factory=lambda tuples: {
+                key: value for key, value in tuples if value is not None
+            },
         )
 
 
