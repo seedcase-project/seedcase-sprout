@@ -75,3 +75,5 @@ We may also occasionally use "properties" to refer to the file itself.
 | extract | Extract specific information from an object, specifically the properties from a data file. |
 
 : General actions that Sprout can take on objects or files/folders.
+
+<!--Next Review date: 2024-10-01-->
