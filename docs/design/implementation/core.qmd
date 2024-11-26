@@ -660,55 +660,26 @@ TableSchemaProperties(fields=[], missingValues=[], primaryKey=[], foreignKeys=[]
 
 ### Properties checked against the standard
 
-These checks are for specific sections of the `datapackage.json`
-specification:
+These checks are specific to checking the `datapackage.json`
+specification, and not against the data itself.
 
--   Data package level as `check_package_*`. Sublevels are:
-    -   Contributors and contributor roles as `check_contributors_*` and
-        `check_contributor_roles_*`.
-    -   Data package license sublevel as `check_license_*`.
--   Data resource level as `check_resource_*`.
--   Table dialect level as `check_dialect_*`.
--   Table schema level as `check_schema_*`.
-
-Generic checks are:
-
--   `*_required_fields()`: Check if all required fields are present and
-    filled in.
--   `*_field_type()`: Check if all fields are the correct type, e.g.
-    `str` or `int`.
--   `*_array_fields()`: Check if all array fields are lists.
--   `*_str_fields()`: Check if all string fields are strings.
--   `*_date_fields()`: Check if all date fields are in the correct
-    format.
--   `*_name_field()`: Check that all name fields match the
-    specification.
--   `*_version_field()`: Check that the version field is in the correct
-    format.
--   `*_url_fields()`: Check that real URLs are in the URL fields.
--   `*_email_fields()`: Check the real emails, or at least an email
-    pattern, are in the email fields.
--   `*_path_fields()`: Check that real paths are in the path fields.
--   `*_id()`: Check if the ID is formatted as a UUID/GUID.
-
-For `check_schema_*` specific checks:
-
--   `*_fields_format()`: Check if the `type` property has the correct
-    corresponding `format` property of `fields` property in `schema`.
--   `*_fields_type()`: Check
-
-Other potential checks not implemented in the Frictionless Data Package
-standard:
-
--   `_paths_are_relative()`: Check that all paths are relative. This is
-    largely a security check, see the [security
-    section](https://datapackage.org/standard/security/) of the
-    Frictionless Data Package standard website for details on this.
+- `check_properties()`: This is a wrapper function that runs all the
+    checks below.
+    - `check_properties_against_standard()`: Check if the properties
+      given match the requirements of the Frictionless Data Package standard.
+    - `check_properties_against_recommendations()`: Check if the
+      properties given match the informal recommendations described on the Frictionless Data Package specification. For instance, some properties have descriptions like *"`name` `SHOULD` be human-readable and consist only of lowercase English alphanumeric characters plus `.`, `-` and `_`."*
 
 ### Properties checked against the data
 
 Since these all relate to data, the checks begin with `check_data_*`.
 These functions all have two arguments: `data` and `properties`.
+
+such as checking which would be the property found in the subitem `resources.[].schema.fields.[].constraints` in the `datapackage.json` file.
+
+- `check_data()`:
+    - `check_data_against_properties()`:
+
 
 -   `*_fields_name()`: Check if all column names match the `name`
     properties in the `fields` property (e.g. the column names) and are
