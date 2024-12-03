@@ -36,7 +36,7 @@ div.quarto-about-jolla {
 ::: {.hero-banner}
 ::: {.landing-page-block}
 ::: {.hero-text}
-## Manage your data in a consistent way
+## Streamlined data management for every workflow
 
 **Sprout** is at the backbone of the [**Seedcase
 Project**](https://seedcase-project.org), offering a flexible solution
