@@ -18,7 +18,7 @@ def check_package_properties(
     """Checks that `properties` matches the Data Package standard.
 
     Only package properties are checked, the internal structure of individual resource
-    properties is ignored.Structural, type and format constraints are all checked.
+    properties is ignored. Structural, type and format constraints are all checked.
     All schema violations are collected before errors are returned.
 
     Args:
@@ -36,7 +36,7 @@ def check_package_properties(
         add_package_recommendations(schema)
 
     # Ignore internal structure of resource properties
-    schema["required"] = [field for field in schema["required"] if field != "resources"]
+    schema["required"].remove("resources")
     del schema["properties"]["resources"]["minItems"]
     del schema["properties"]["resources"]["items"]
 
