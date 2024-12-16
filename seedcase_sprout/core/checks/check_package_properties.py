@@ -15,19 +15,24 @@ from seedcase_sprout.core.read_json import read_json
 def check_package_properties(
     properties: dict, check_recommendations: bool = True
 ) -> list[ValidationError]:
-    """Checks that `properties` matches the Data Package standard.
+    """Checks that `properties` matches the Data Package standard (v2.0).
 
-    Only package properties are checked, the internal structure of individual resource
-    properties is ignored. Structural, type and format constraints are all checked.
-    All schema violations are collected before errors are returned.
+    Only package properties are checked. Schema constraints for resource properties are
+    removed, so the internal structure of resource properties is not checked.
+    Structural, type and format constraints are all checked. All schema violations are
+    collected before errors are returned.
+
+    The schema loaded or constructed in this function overrides any values specified
+    in the `$schema` attribute of `properties`, including the default value.
 
     Args:
         properties: The package properties to check.
         check_recommendations: Whether `properties` should be checked against
-            recommendations in the Data Package standard. Defaults to True.
+            recommendations in the Data Package standard in addition to requirements.
+            Defaults to True.
 
     Returns:
-        A list of errors. The empty list, if no errors are found.
+        A list of errors. An empty list, if no errors are found.
     """
     schema = read_json(DATA_PACKAGE_SCHEMA_PATH)
 
@@ -35,7 +40,7 @@ def check_package_properties(
     if check_recommendations:
         add_package_recommendations(schema)
 
-    # Ignore internal structure of resource properties
+    # Remove schema constraints for resource properties
     schema["required"].remove("resources")
     del schema["properties"]["resources"]["minItems"]
     del schema["properties"]["resources"]["items"]

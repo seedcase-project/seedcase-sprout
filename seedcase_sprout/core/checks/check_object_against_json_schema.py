@@ -14,7 +14,7 @@ def check_object_against_json_schema(
         schema: The JSON schema to check against.
 
     Returns:
-        A list of errors. The empty list, if no errors are found.
+        A list of errors. An empty list, if no errors are found.
 
     Raises:
         jsonschema.exceptions.SchemaError: If the given schema is invalid.
