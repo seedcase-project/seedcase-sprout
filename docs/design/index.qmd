@@ -7,7 +7,7 @@ Within the design documentation are two main sections:
 -   [Architecture](architecture/index.qmd): The architecture section
     describes the high-level requirements, components, use cases,
     expected users, and how the system will be organized and structured.
--   [Interface](interface/index.qmd): The interface section describes a
+-   [Interface](interface/index.qmd): The interface section gives a
     much more detailed description of the software interface for the
     architecture. The detail is at the level of exact Python functions
     and CLI commands, as well as their arguments, inputs, and outputs.
