@@ -1,8 +1,26 @@
 ---
-title: "Design of Sprout"
+title: "Design"
 ---
 
-Within the design documentation are two main sections:
+The core aim of Sprout is to **take data and metadata and convert them
+into a standardized and organized storage structure** that follows best
+practices for data engineering, at least within a research context.
+Specifically, Sprout aims to:
+
+1.  Take generated data from various source locations (such as the
+    clinic or laboratories), that may be distributed geographically or
+    organizationally, and store it in a standardized and efficient
+    format.
+2.  Require metadata be included for the data and organized following a
+    standardized format, in a way that explicitly and programmatically
+    links the metadata to the data.
+
+The purpose of these documents are to describe the overall design of
+Sprout in enough detail to primarily help us develop Sprout in a way
+that is maintainable over the long term and that ensures we as a team
+are on the same page on what Sprout is and is not.
+
+There are two main sections of this design documentation:
 
 -   [Architecture](architecture/index.qmd): The architecture section
     describes the high-level requirements, components, use cases,
