@@ -11,12 +11,12 @@ Specifically, Sprout aims to:
     clinic or laboratories), that may be distributed geographically or
     organizationally, and store it in a standardized and efficient
     format.
-2.  Require metadata be included for the data and organized following a
+2.  Ensure that metadata is included for the data and organized following a
     standardized format, in a way that explicitly and programmatically
     links the metadata to the data.
 
-The purpose of these documents are to describe the overall design of
-Sprout in enough detail to primarily help us develop Sprout in a way
+The purpose of these documents is to describe the overall design of
+Sprout in enough detail to help us develop Sprout in a way
 that is maintainable over the long term and that ensures we as a team
 are on the same page on what Sprout is and is not.
 
