@@ -32,14 +32,14 @@ def test_fails_properties_without_resources():
 
 
 @mark.parametrize(
-    "resources, json_path",
+    "resources, json_path, num_errors",
     [
-        ([], "$.resources"),
-        ([{}], "$.resources[0]"),
-        ([{"name": "a name", "path": "/a/bad/path"}], "$.resources[0].path"),
+        ([], "$.resources", 1),
+        ([{}], "$.resources[0]", 4),
+        ([{"name": "a name", "path": "/a/bad/path"}], "$.resources[0].path", 2),
     ],
 )
-def test_fails_properties_with_bad_resources(resources, json_path):
+def test_fails_properties_with_bad_resources(resources, json_path, num_errors):
     """Should fail properties with malformed resources."""
     properties = {
         "name": "a name with spaces",
@@ -48,7 +48,7 @@ def test_fails_properties_with_bad_resources(resources, json_path):
 
     errors = check_properties(properties, check_recommendations=False)
 
-    assert len(errors) == 1
+    assert len(errors) == num_errors
     assert errors[0].json_path == json_path
 
 
@@ -62,13 +62,11 @@ def test_fails_properties_with_missing_required_fields():
 
     errors = check_properties(properties, check_recommendations=False)
 
-    assert len(errors) == 1
-    assert errors[0].validator == "anyOf"
-    assert errors[0].json_path == "$.licenses[0]"
-
-    context = errors[0].context
-    assert len(context) == 2
-    assert all(error.validator == "required" for error in context)
+    assert len(errors) == 2
+    assert all(
+        error.validator == "required" and error.json_path == "$.licenses[0]"
+        for error in errors
+    )
 
 
 def test_fails_properties_with_bad_type():

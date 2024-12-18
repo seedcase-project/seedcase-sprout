@@ -50,13 +50,11 @@ def test_fails_properties_with_missing_required_fields():
 
     errors = check_package_properties(properties, check_recommendations=False)
 
-    assert len(errors) == 1
-    assert errors[0].validator == "anyOf"
-    assert errors[0].json_path == "$.licenses[0]"
-
-    context = errors[0].context
-    assert len(context) == 2
-    assert all(error.validator == "required" for error in context)
+    assert len(errors) == 2
+    assert all(
+        error.validator == "required" and error.json_path == "$.licenses[0]"
+        for error in errors
+    )
 
 
 def test_fails_properties_with_bad_type():
