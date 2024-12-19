@@ -16,7 +16,7 @@ def test_fails_properties_with_missing_required_fields():
     """Should fail properties with missing required fields."""
     errors = check_resource_properties({}, check_recommendations=False)
 
-    assert len(errors) == 4
+    assert len(errors) == 3
     assert all(error.validator == "required" for error in errors)
 
 

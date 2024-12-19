@@ -28,14 +28,14 @@ def test_fails_properties_without_resources():
 
     assert len(errors) == 1
     assert errors[0].validator == "required"
-    assert errors[0].json_path == "$"
+    assert errors[0].json_path == "$.resources"
 
 
 @mark.parametrize(
     "resources, json_path, num_errors",
     [
         ([], "$.resources", 1),
-        ([{}], "$.resources[0]", 4),
+        ([{}], "$.resources[0].data", 3),
         ([{"name": "a name", "path": "/a/bad/path"}], "$.resources[0].path", 2),
     ],
 )
@@ -63,10 +63,11 @@ def test_fails_properties_with_missing_required_fields():
     errors = check_properties(properties, check_recommendations=False)
 
     assert len(errors) == 2
-    assert all(
-        error.validator == "required" and error.json_path == "$.licenses[0]"
-        for error in errors
-    )
+    assert all(error.validator == "required" for error in errors)
+    assert {error.json_path for error in errors} == {
+        "$.licenses[0].name",
+        "$.licenses[0].path",
+    }
 
 
 def test_fails_properties_with_bad_type():
@@ -162,7 +163,7 @@ def test_fails_properties_violating_recommendations():
     assert {error.json_path for error in errors} == {
         "$.name",
         "$.version",
-        "$.contributors[0]",
-        "$.sources[0]",
+        "$.contributors[0].title",
+        "$.sources[0].title",
         "$.resources[0].name",
     }

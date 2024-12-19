@@ -1,6 +1,7 @@
-import re
+from functools import total_ordering
 
 
+@total_ordering
 class CheckError(Exception):
     """Raised or returned when a properties object fails a single check."""
 
@@ -21,22 +22,64 @@ class CheckError(Exception):
         self.message = message
         self.json_path = json_path
         self.validator = validator
-        super().__init__(
-            f"Error at `{json_path}` caused by validator `{validator}`: {message}"
-        )
+        super().__init__(self.__str__())
 
-    @property
-    def field(self) -> str | None:
-        """Returns the name of the field where the error occurred.
+    def __eq__(self, other: object) -> bool:
+        """Checks if this error is equal to an object.
 
-        Returns None if the field cannot be specified.
+        Args:
+            other: The object to compare.
 
         Returns:
-            The name of the field.
+            If the objects are equal.
         """
-        if self.validator == "required":
-            match = re.search("'(.*)' is a required property", self.message)
-            if match:
-                return match.group(1)
+        if not isinstance(other, CheckError):
+            return NotImplemented
+        return (
+            self.message == other.message
+            and self.json_path == other.json_path
+            and self.validator == other.validator
+        )
 
-        return self.json_path.split(".")[-1] if "." in self.json_path else None
+    def __lt__(self, other: object) -> bool:
+        """Checks if this error is less than an object.
+
+        Args:
+            other: The object to compare.
+
+        Returns:
+            The result of the comparison.
+        """
+        if not isinstance(other, CheckError):
+            return NotImplemented
+        return self.json_path < other.json_path
+
+    def __hash__(self) -> int:
+        """Returns a hash for this error.
+
+        Returns:
+            The hash.
+        """
+        return hash((self.message, self.json_path, self.validator))
+
+    def __str__(self) -> str:
+        """Returns a user-friendly string representation of the error.
+
+        Returns:
+            The string representation.
+        """
+        return (
+            f"Error at `{self.json_path}` caused by `{self.validator}`: {self.message}"
+        )
+
+    def __repr__(self) -> str:
+        """Returns a developer-friendly, unambiguous representation of the error.
+
+        Returns:
+            The developer-friendly representation.
+        """
+        return (
+            f"CheckError(message={self.message!r}, "
+            f"json_path={self.json_path!r}, "
+            f"validator={self.validator!r})"
+        )
