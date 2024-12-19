@@ -12,8 +12,9 @@ def get_full_json_path_from_error(error: ValidationError) -> str:
     Returns:
         The `json_path`.
     """
+    json_path = error.json_path
     if error.validator == "required":
         match = re.search("'(.*)' is a required property", error.message)
         if match:
-            error.path.append(match.group(1))
-    return error.json_path
+            json_path += f".{match.group(1)}"
+    return json_path

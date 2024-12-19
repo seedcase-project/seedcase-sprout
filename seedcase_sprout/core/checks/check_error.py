@@ -52,7 +52,11 @@ class CheckError(Exception):
         """
         if not isinstance(other, CheckError):
             return NotImplemented
-        return self.json_path < other.json_path
+        return (self.json_path, self.validator, self.message) < (
+            other.json_path,
+            other.validator,
+            other.message,
+        )
 
     def __hash__(self) -> int:
         """Returns a hash for this error.
