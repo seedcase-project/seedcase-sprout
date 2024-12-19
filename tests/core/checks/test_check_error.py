@@ -52,13 +52,13 @@ def test_equality_checked_correctly(error, other, expected):
     ],
 )
 def test_lt_checked_correctly_for_different_errors(error, other, expected):
-    """Should find the lesser of two different errors correctly."""
+    """Should find the smaller (the one that comes first) of two different errors."""
     assert (error < other) is expected
     assert (other < error) is not expected
 
 
 def test_lt_checked_correctly_for_same_error():
-    """Should not consider an error lesser than itself."""
+    """Should not consider an error smaller than itself."""
     assert not (check_error < check_error)
 
 
