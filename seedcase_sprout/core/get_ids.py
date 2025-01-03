@@ -10,7 +10,7 @@ def get_ids(path: Path) -> list[int]:
 
     Returns:
         A list of integers representing the ids of the subdirectories.
-        If no IDs are found, an empty list is returned.
+            If no IDs are found, an empty list is returned.
     """
     # Keep only directories
     dirs = list(path.glob("*/"))

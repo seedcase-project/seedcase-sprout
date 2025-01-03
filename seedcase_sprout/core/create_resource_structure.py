@@ -23,8 +23,8 @@ def create_resource_structure(path: Path) -> list[Path]:
 
     Returns:
        A list of the two created directories:
-         - A path to the resource directory and
-         - A path to the raw data directory.
+          - A path to the resource directory and
+          - A path to the raw data directory.
 
     Raises:
        NotADirectoryError: If path is not an existing directory.

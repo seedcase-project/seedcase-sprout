@@ -9,6 +9,6 @@ def create_relative_resource_data_path(path: Path) -> Path:
 
     Returns:
         Relative path from the package root to the resource data file
-        E.g., "resources/1/data.parquet"
+            E.g., "resources/1/data.parquet"
     """
     return Path(*path.parts[-2:]) / "data.parquet"
