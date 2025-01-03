@@ -2,10 +2,10 @@ from pathlib import Path
 
 
 def check_is_dir(path: Path) -> Path:
-    """Verifies whether the directory given by the path exists or not.
+    """Checks whether the path exists and is a directory.
 
     Args:
-        path: The path to verify
+        path: The path to check.
 
     Returns:
         The path if it is a directory.
@@ -14,6 +14,6 @@ def check_is_dir(path: Path) -> Path:
         NotADirectoryError: If path either doesn't exist or isn't a directory.
     """
     if not path.is_dir():
-        raise NotADirectoryError(f"{path} either isn't a directory or doesn't exist.")
+        raise NotADirectoryError(f"{path} either doesn't exist or isn't a directory.")
 
     return path

@@ -9,7 +9,7 @@ from seedcase_sprout.core.get_ids import get_ids
 
 
 def create_resource_structure(path: Path) -> list[Path]:
-    """Create the directory structure of a new resource.
+    """Creates the directory structure of a new resource.
 
     This is the first function to use to set up the structure for a data
     resource. It creates the paths for a new data resource in a specific

@@ -8,10 +8,10 @@ def check_is_resource_dir(path: Path) -> Path:
     """Verifies that the path is a directory in the resources folder.
 
     Args:
-        path: Path to verify.
+        path: The Path to verify.
 
     Returns:
-        Path, if path is a directory.
+        Path if path is a directory.
 
     Raises:
         NotADirectoryError: If the path is not a directory. The error message
