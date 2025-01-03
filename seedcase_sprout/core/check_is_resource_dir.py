@@ -11,7 +11,7 @@ def check_is_resource_dir(path: Path) -> Path:
         path: The path to check.
 
     Returns:
-        Path if path is a directory.
+        The path if it's a directory.
 
     Raises:
         NotADirectoryError: If the path is not a directory. The error message
