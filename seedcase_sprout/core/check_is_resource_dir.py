@@ -5,10 +5,10 @@ from seedcase_sprout.core.get_ids import get_ids
 
 
 def check_is_resource_dir(path: Path) -> Path:
-    """Verifies that the path is a directory in the resources folder.
+    """Checks that the path is a directory in the resources folder.
 
     Args:
-        path: The Path to verify.
+        path: The path to check.
 
     Returns:
         Path if path is a directory.
