@@ -8,11 +8,11 @@ def edit_property_field(properties: dict, field: str, value: any) -> dict:
         field: the name of the field to update
         value: the value to assign to the field
 
-    Raises:
-        KeyError: if the specified field does not exist in properties
-
     Returns:
         the updated properties object
+
+    Raises:
+        KeyError: if the specified field does not exist in properties
     """
     if field not in properties:
         raise KeyError(f"Field '{field}' does not exist in properties {properties}.")

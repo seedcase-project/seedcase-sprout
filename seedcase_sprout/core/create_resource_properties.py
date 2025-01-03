@@ -29,13 +29,13 @@ def create_resource_properties(path: Path, properties: dict) -> dict:
             See the `ResourceProperties` help documentation for details
             on what can or needs to be filled in.
 
+    Returns:
+        the properties object, verified and updated
+
     Raises:
         NotADirectoryError: if path does not point to a directory.
         NotPropertiesError: if properties are not correct Frictionless
             resource properties.
-
-    Returns:
-        the properties object, verified and updated
     """
     check_is_dir(path)
     verify_properties_are_well_formed(properties, ResourceError.type)

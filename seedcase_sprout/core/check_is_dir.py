@@ -7,11 +7,11 @@ def check_is_dir(path: Path) -> Path:
     Args:
         path: The path to verify
 
-    Raises:
-        NotADirectoryError: When the directory in the path doesn't exist.
-
     Returns:
-        A Path object if it is a directory.
+        The path if it is a directory.
+
+    Raises:
+        NotADirectoryError: If path either doesn't exist or isn't a directory.
     """
     if not path.is_dir():
         raise NotADirectoryError(f"{path} either isn't a directory or doesn't exist.")

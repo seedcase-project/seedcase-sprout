@@ -7,11 +7,11 @@ def check_is_file(path: Path) -> Path:
     Args:
         path: The path to verify.
 
-    Raises:
-        FileNotFound: When the file in the path doesn't exist.
-
     Returns:
         A Path object if it is a file.
+
+    Raises:
+        FileNotFound: If the file in the path doesn't exist or isn't a file.
     """
     if not path.is_file():
         raise FileNotFoundError(f"{path} is not a file.")
