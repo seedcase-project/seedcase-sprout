@@ -79,6 +79,7 @@ quartodoc:
     table_style: description-list
   sections:
     - title: "Core functions"
+      desc: "Core functions that support the creation and management of data packages and data resources."
 
     - subtitle: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
