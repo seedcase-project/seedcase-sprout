@@ -1,5 +1,5 @@
 def create_readme_text(properties: dict) -> str:
-    """Creates a json object containing the README text.
+    """Creates a string containing the README text.
 
     Args:
       properties: An object containing the package and resource properties.
