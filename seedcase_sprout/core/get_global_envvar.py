@@ -8,5 +8,5 @@ def get_global_envvar() -> Path | None:
     Returns:
         A Path object containing `SPROUT_GLOBAL` if it is set, otherwise None.
     """
-    path = getenv("SPROUT_GLOBAL")
-    return Path(path) if path else None
+   sprout_global = getenv("SPROUT_GLOBAL")
+    return Path(sprout_global) if sprout_global else None
