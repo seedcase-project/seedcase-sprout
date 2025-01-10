@@ -15,7 +15,7 @@ def to_check_errors(validation_errors: Iterator[ValidationError]) -> list[CheckE
     """Transforms `jsonschema.ValidationError`s to more compact `CheckError`s.
 
     The list of errors is:
-    
+
       - flattened
       - filtered for summary-type errors
       - filtered for duplicates
