@@ -3,7 +3,7 @@ from pathlib import Path
 from platformdirs import user_data_path
 
 
-def create_global_path() -> Path:
+def create_sprout_globalpath() -> Path:
     """Creates the path to Sprout global location.
 
     Returns:

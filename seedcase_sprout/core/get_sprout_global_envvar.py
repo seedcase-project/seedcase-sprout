@@ -2,7 +2,7 @@ from os import getenv
 from pathlib import Path
 
 
-def get_global_envvar() -> Path | None:
+def get_sprout_global_envvar() -> Path | None:
     """Gets the global environment variable `SPROUT_GLOBAL` if it exists.
 
     Returns:

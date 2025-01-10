@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from seedcase_sprout.core.get_global_envvar import get_global_envvar
+from seedcase_sprout.core.get_sprout_global_envvar import get_sprout_global_envvar
 
 
 def test_returns_global_envvar_if_set(monkeypatch):
@@ -10,9 +10,9 @@ def test_returns_global_envvar_if_set(monkeypatch):
     monkeypatch.setenv("SPROUT_GLOBAL", SPROUT_GLOBAL)
 
     # When, then
-    assert get_global_envvar() == Path(SPROUT_GLOBAL)
+    assert get_sprout_global_envvar() == Path(SPROUT_GLOBAL)
 
 
 def test_returns_none_if_global_envvar_is_not_set():
     """Returns None if SPROUT_GLOBAL isn't set."""
-    assert get_global_envvar() is None
+    assert get_sprout_global_envvar() is None
