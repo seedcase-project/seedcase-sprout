@@ -1,14 +1,9 @@
 from pathlib import Path
 
-from frictionless.errors import PackageError
-
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.read_json import read_json
-from seedcase_sprout.core.verify_package_properties import (
-    verify_package_properties,
-)
-from seedcase_sprout.core.verify_properties_are_well_formed import (
-    verify_properties_are_well_formed,
+from seedcase_sprout.core.sprout_checks.check_package_properties import (
+    check_package_properties,
 )
 
 
@@ -43,16 +38,18 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
 
     Raises:
         FileNotFound: If the `datapackage.json` file doesn't exist.
-        NotPropertiesError: If the new package properties are not correct or the current
-            package properties are not well-formed.
+        FailedCheckError: If there is an error in the current, incoming or resulting
+            package properties.
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
     """
     check_is_file(path)
-    verify_properties_are_well_formed(properties, PackageError.type)
+    properties.pop("resources", None)
+
+    check_package_properties(properties, check_required=False)
 
     current_properties = read_json(path)
-    verify_properties_are_well_formed(current_properties, PackageError.type)
+    check_package_properties(current_properties, check_required=False)
 
     current_properties.update(properties)
 
-    return verify_package_properties(current_properties)
+    return check_package_properties(current_properties, check_required=True)

@@ -30,12 +30,12 @@ state "edit_package_properties()" as cps {
   vif : - Output: path or Error
   arg_path --> vif
 
-  state "verify_package_properties()" as vpp
-  vpp : - Required arg: properties
-  vpp : - Output: JSON or Error
-  vpp : - Checks that all fields\n  and values match spec
-  vpp : - Checks that required\n  fields are present
-  arg_properties --> vpp
+  state "check_package_properties()" as cpp
+  cpp : - Required arg: properties
+  cpp : - Output: JSON or Error
+  cpp : - Checks that all fields\n  and values match spec
+  cpp : - Checks that required\n  fields are present
+  arg_properties --> cpp
 
   state "read_properties()" as rp
   rp : - Required arg: path
@@ -47,7 +47,7 @@ state "edit_package_properties()" as cps {
   jp : - Output: JSON
   jp : - New properties overwrite old ones
   rp --> jp : JSON object
-  vpp --> jp : JSON object
+  cpp --> jp : JSON object
 
   state "return" <<exitPoint>>
   jp --> return : JSON object
