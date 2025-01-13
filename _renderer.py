@@ -38,11 +38,10 @@ class Renderer(MdRenderer):
                 "<code>[:]{.parameter-annotation-sep} ", "<code>"
             ).replace("[]{.parameter-name} [:]{.parameter-annotation-sep} ", "")
 
-        else:
-            row_tuples = [row.to_tuple(style) for row in rows]
-            # remove empty fields
-            row_tuples_compact = [
-                tuple(field for field in tup if field not in (None, ""))
-                for tup in row_tuples
-            ]
-            return tabulate(row_tuples_compact, headers=headers, tablefmt="github")
+        row_tuples = [row.to_tuple(style) for row in rows]
+        # remove empty fields
+        row_tuples_compact = [
+            tuple(field for field in tup if field not in (None, ""))
+            for tup in row_tuples
+        ]
+        return tabulate(row_tuples_compact, headers=headers, tablefmt="github")
