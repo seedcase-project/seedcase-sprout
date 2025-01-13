@@ -4,13 +4,13 @@ from jsonschema import ValidationError
 
 
 def get_full_json_path_from_error(error: ValidationError) -> str:
-    """Returns a more complete `json_path` to the error, if possible.
+    """Returns the full `json_path` to the error, if possible.
 
     Args:
-        error: The error.
+        error: The error to get the full `json_path` for.
 
     Returns:
-        The `json_path`.
+        The full`json_path` of the error.
     """
     if error.validator == "required":
         match = re.search("'(.*)' is a required property", error.message)
