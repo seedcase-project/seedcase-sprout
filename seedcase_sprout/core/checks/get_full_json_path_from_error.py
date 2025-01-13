@@ -4,7 +4,9 @@ from jsonschema import ValidationError
 
 
 def get_full_json_path_from_error(error: ValidationError) -> str:
-    """Returns the full `json_path` to the error, if possible.
+    """Returns the full `json_path` to the error.
+
+    For 'required' errors, the field name is extracted from the error message.
 
     Args:
         error: The error to get the full `json_path` for.
