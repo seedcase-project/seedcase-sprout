@@ -1,7 +1,9 @@
 from jsonschema import Draft7Validator, FormatChecker
 
 from seedcase_sprout.core.checks.check_error import CheckError
-from seedcase_sprout.core.checks.to_check_errors import to_check_errors
+from seedcase_sprout.core.checks.to_check_errors import (
+    validation_errors_to_check_errors,
+)
 
 
 def check_object_against_json_schema(
@@ -24,4 +26,4 @@ def check_object_against_json_schema(
     """
     Draft7Validator.check_schema(schema)
     validator = Draft7Validator(schema, format_checker=FormatChecker())
-    return to_check_errors(validator.iter_errors(json_object))
+    return validation_errors_to_check_errors(validator.iter_errors(json_object))

@@ -4,7 +4,7 @@ from pytest import mark
 from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.checks.to_check_errors import (
     COMPLEX_VALIDATORS,
-    to_check_errors,
+    validation_errors_to_check_errors,
 )
 
 simple_error = ValidationError(
@@ -52,7 +52,7 @@ def test_processes_flat_errors():
     """Should unwrap and transform a flat list of errors into `CheckError`s."""
     errors = iter([simple_error])
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(
             message=simple_error.message,
             json_path=simple_error.json_path,
@@ -65,7 +65,7 @@ def test_processes_nested_errors():
     """Should flatten nested errors into a single list of `CheckError`s."""
     errors = iter([nested_error])
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(
             message=nested_error.context[0].message,
             json_path="$.items[0].name",
@@ -83,7 +83,7 @@ def test_processes_deeply_nested_errors():
     """Should unwrap deeply nested errors and transform them into `CheckError`s."""
     errors = iter([deeply_nested_error])
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(
             message="Top-level error",
             json_path="$.user",
@@ -109,7 +109,7 @@ def test_processes_multiple_toplevel_errors():
         [simple_error, deeply_nested_error, simple_error, nested_error, simple_error]
     )
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(
             message=nested_error.context[0].message,
             json_path="$.items[0].name",
@@ -156,14 +156,14 @@ def test_ignores_complex_validators(validator):
         ]
     )
 
-    assert to_check_errors(errors) == []
+    assert validation_errors_to_check_errors(errors) == []
 
 
 def test_removes_duplicate_errors():
     """Should remove duplicate `CheckError`s after transformation."""
     errors = iter([simple_error] * 8)
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(
             message=simple_error.message,
             json_path=simple_error.json_path,
@@ -188,7 +188,7 @@ def test_sorts_errors_by_json_path():
         ]
     )
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(message="Second error", json_path="$.data.a", validator="type"),
         CheckError(message="First error", json_path="$.data.b", validator="type"),
         CheckError(message="Third error", json_path="$.data.c", validator="type"),
@@ -205,7 +205,7 @@ def test_adds_field_name_for_required_errors():
         ]
     )
 
-    assert to_check_errors(errors) == [
+    assert validation_errors_to_check_errors(errors) == [
         CheckError(
             message="'name' is a required property",
             json_path="$.name",
