@@ -8,6 +8,7 @@ class RequiredFieldType(str, Enum):
 
     str = "str"
     list = "list"
+    any = "any"
 
 
 PACKAGE_REQUIRED_FIELDS = {
@@ -23,4 +24,5 @@ PACKAGE_RECOMMENDED_FIELDS = {
 RESOURCE_REQUIRED_FIELDS = {
     "name": RequiredFieldType.str,
     "path": RequiredFieldType.str,
+    "data": RequiredFieldType.any,
 }
