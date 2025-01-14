@@ -4,12 +4,12 @@ from seedcase_sprout.core.sprout_checks.remove_not_sprout_related_resource_error
 )
 
 
-def test_accepts_empty_list():
+def test_returns_unaltered_empty_list():
     """Should not alter an empty list."""
     assert remove_not_sprout_related_resource_errors([]) == []
 
 
-def test_removes_correct_errors():
+def test_returns_only_sprout_related_errors():
     """Should only remove errors not relevant for Sprout."""
     errors = [
         CheckError(

@@ -21,7 +21,7 @@ def check_resource_id_in_data_path(
         The properties, if the data path is well-formed.
     """
     data_path = properties.get("path")
-    if data_path is None or type(data_path) is not str:
+    if not isinstance(data_path, str):
         return []
 
     data_path = Path(data_path)
