@@ -13,8 +13,8 @@ def test_passes_if_data_not_set(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_if_data_is_set(index):
-    """Should fail if inline data is set."""
+def test_error_found_if_data_is_set(index):
+    """Should find an error if inline data is set."""
     properties = {"data": "some data"}
 
     errors = check_no_inline_data(properties, index)
