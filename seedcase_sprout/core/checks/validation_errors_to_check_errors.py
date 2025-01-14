@@ -11,7 +11,9 @@ from seedcase_sprout.core.checks.unwrap_errors import unwrap_errors
 COMPLEX_VALIDATORS = {"allOf", "anyOf", "oneOf"}
 
 
-def to_check_errors(validation_errors: Iterator[ValidationError]) -> list[CheckError]:
+def validation_errors_to_check_errors(
+    validation_errors: Iterator[ValidationError],
+) -> list[CheckError]:
     """Transforms `jsonschema.ValidationError`s to more compact `CheckError`s.
 
     The list of errors is:
