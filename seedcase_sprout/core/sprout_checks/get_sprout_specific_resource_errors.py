@@ -1,7 +1,7 @@
 from seedcase_sprout.core.checks.check_error import CheckError
 
 
-def remove_not_sprout_related_resource_errors(
+def get_sprout_specific_resource_errors(
     errors: list[CheckError],
 ) -> list[CheckError]:
     """Filters out resource errors that are not relevant for Sprout.

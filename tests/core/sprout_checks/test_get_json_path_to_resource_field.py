@@ -3,7 +3,7 @@ from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
 )
 
 
-def test_returns_correct_path_without_index():
+def test_returns_expected_json_path_without_index():
     """Should form the correct JSON path with no index supplied."""
     assert get_json_path_to_resource_field("myField") == "$.myField"
 

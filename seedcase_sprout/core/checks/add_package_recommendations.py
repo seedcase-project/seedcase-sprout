@@ -1,6 +1,6 @@
 from seedcase_sprout.core.checks.config import NAME_PATTERN, SEMVER_PATTERN
 from seedcase_sprout.core.checks.required_fields import (
-    PACKAGE_RECOMMENDED_REQUIRED_FIELDS,
+    PACKAGE_RECOMMENDED_FIELDS,
 )
 
 
@@ -15,7 +15,7 @@ def add_package_recommendations(schema: dict) -> dict:
     Returns:
         The updated Data Package schema.
     """
-    schema["required"].extend(PACKAGE_RECOMMENDED_REQUIRED_FIELDS.keys())
+    schema["required"].extend(PACKAGE_RECOMMENDED_FIELDS.keys())
     schema["properties"]["name"]["pattern"] = NAME_PATTERN
     schema["properties"]["version"]["pattern"] = SEMVER_PATTERN
     schema["properties"]["contributors"]["items"]["required"] = ["title"]
