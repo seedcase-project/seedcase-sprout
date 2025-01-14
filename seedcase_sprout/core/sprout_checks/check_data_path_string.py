@@ -17,14 +17,13 @@ def check_data_path_string(
         A list of errors. An empty list if no error was found.
     """
     path = properties.get("path", "")
-    return (
-        []
-        if type(path) is str
-        else [
-            CheckError(
-                message=f"{path} is not of type 'string'",
-                json_path=get_json_path_to_resource_field("path", index),
-                validator="type",
-            )
-        ]
-    )
+    if isinstance(path, str):
+        return []
+
+    return [
+        CheckError(
+            message=f"{path} is not of type 'string'",
+            json_path=get_json_path_to_resource_field("path", index),
+            validator="type",
+        )
+    ]
