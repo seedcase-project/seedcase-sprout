@@ -23,8 +23,8 @@ def test_passes_if_data_path_not_present(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_if_path_not_string(index):
-    """Should fail if the path is not of type string."""
+def test_error_found_if_path_not_string(index):
+    """Should find an error if the path is not of type string."""
     properties = {"path": 123}
 
     errors = check_data_path_string(properties, index)

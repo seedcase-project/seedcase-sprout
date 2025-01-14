@@ -16,17 +16,16 @@ def check_no_inline_data(
     Returns:
         A list of errors. The empty list if no error was found.
     """
-    return (
-        []
-        if properties.get("data") is None
-        else [
-            CheckError(
-                message=(
-                    "'data' should not be set. Sprout expects data in separate "
-                    "data files specified by 'path'."
-                ),
-                json_path=get_json_path_to_resource_field("data", index),
-                validator="inline-data",
-            )
-        ]
-    )
+    if properties.get("data") is None:
+        return []
+
+    return [
+        CheckError(
+            message=(
+                "'data' should not be set. Sprout expects data in separate "
+                "data files specified by 'path'."
+            ),
+            json_path=get_json_path_to_resource_field("data", index),
+            validator="inline-data",
+        )
+    ]

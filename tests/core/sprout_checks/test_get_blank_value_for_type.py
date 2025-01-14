@@ -16,6 +16,6 @@ from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
         ("something else", None),
     ],
 )
-def test_returns_correct_value(type, value):
-    """Should return the correct blank value for each type."""
+def test_returns_expected_blank_value_for_each_type(type, value):
+    """Should return the expected blank value for each type."""
     assert get_blank_value_for_type(type) == value
