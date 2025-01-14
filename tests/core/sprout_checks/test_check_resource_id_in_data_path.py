@@ -43,8 +43,8 @@ def test_passes_if_path_of_wrong_type(index, data_path):
         Path("resources", "1", "data.parquet", "1"),
     ],
 )
-def test_fails_if_path_malformed(index, data_path):
-    """Should fail if the path does not contain a resource ID."""
+def test_returns_error_if_data_path_malformed(index, data_path):
+    """Returns list of `CheckError`s if the data path does not contain a resource ID."""
     properties = {"path": str(data_path)}
 
     errors = check_resource_id_in_data_path(properties, index)
