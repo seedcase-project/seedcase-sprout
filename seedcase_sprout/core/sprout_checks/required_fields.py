@@ -5,7 +5,7 @@ from seedcase_sprout.core.checks.required_fields import (
 
 # Sprout-specific required fields and their types
 
-PACKAGE_SPROUT_REQUIRED_FIELDS = checks.PACKAGE_RECOMMENDED_REQUIRED_FIELDS | {
+PACKAGE_SPROUT_REQUIRED_FIELDS = checks.PACKAGE_RECOMMENDED_FIELDS | {
     "title": RequiredFieldType.str,
     "description": RequiredFieldType.str,
     "version": RequiredFieldType.str,

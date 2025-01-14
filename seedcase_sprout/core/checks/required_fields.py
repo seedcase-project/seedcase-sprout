@@ -14,7 +14,7 @@ PACKAGE_REQUIRED_FIELDS = {
     "resources": RequiredFieldType.list,
 }
 
-PACKAGE_RECOMMENDED_REQUIRED_FIELDS = {
+PACKAGE_RECOMMENDED_FIELDS = {
     "name": RequiredFieldType.str,
     "id": RequiredFieldType.str,
     "licenses": RequiredFieldType.list,
