@@ -1,5 +1,5 @@
 from seedcase_sprout.core.checks.check_error import CheckError
-from seedcase_sprout.core.sprout_checks.remove_not_sprout_related_resource_errors import (  # noqa: E501
+from seedcase_sprout.core.sprout_checks.get_sprout_specific_resource_errors import (
     get_sprout_specific_resource_errors,
 )
 
