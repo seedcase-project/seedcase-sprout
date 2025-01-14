@@ -9,7 +9,7 @@ def check_package_properties(properties: dict, check_required=True) -> dict:
     """Checks that package `properties` matches requirements in Sprout.
 
     `properties` is checked against the Data Package standard and the following
-    Sprout-specific requirements.
+    Sprout-specific requirements:
       - Sprout-specific required fields are present
       - Required fields are not blank
 

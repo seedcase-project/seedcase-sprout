@@ -1,10 +1,10 @@
 from seedcase_sprout.core import checks
+from seedcase_sprout.core.sprout_checks.exclude_non_sprout_resource_errors import (
+    exclude_non_sprout_resource_errors,
+)
 from seedcase_sprout.core.sprout_checks.failed_check_error import FailedCheckError
 from seedcase_sprout.core.sprout_checks.get_sprout_resource_errors import (
     get_sprout_resource_errors,
-)
-from seedcase_sprout.core.sprout_checks.remove_not_sprout_related_resource_errors import (  # noqa: E501
-    remove_not_sprout_related_resource_errors,
 )
 
 
@@ -33,7 +33,7 @@ def check_resource_properties(properties: dict, check_required=True) -> dict:
         FailedCheckError: If at least one check failed.
     """
     errors = checks.check_resource_properties(properties)
-    errors = remove_not_sprout_related_resource_errors(errors)
+    errors = exclude_non_sprout_resource_errors(errors)
 
     if not check_required:
         errors = [error for error in errors if error.validator != "required"]
