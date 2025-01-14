@@ -1,12 +1,12 @@
 from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.sprout_checks.remove_not_sprout_related_resource_errors import (  # noqa: E501
-    remove_not_sprout_related_resource_errors,
+    get_sprout_specific_resource_errors,
 )
 
 
 def test_returns_unaltered_empty_list():
     """Should not alter an empty list."""
-    assert remove_not_sprout_related_resource_errors([]) == []
+    assert get_sprout_specific_resource_errors([]) == []
 
 
 def test_returns_only_sprout_related_errors():
@@ -35,7 +35,7 @@ def test_returns_only_sprout_related_errors():
         ),
     ]
 
-    assert remove_not_sprout_related_resource_errors(errors) == [
+    assert get_sprout_specific_resource_errors(errors) == [
         CheckError(
             message="'name' is a required property",
             json_path="$.name",
