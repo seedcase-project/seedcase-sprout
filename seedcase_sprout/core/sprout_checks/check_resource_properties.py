@@ -8,7 +8,7 @@ from seedcase_sprout.core.sprout_checks.get_sprout_resource_errors import (
 )
 
 
-def check_resource_properties(properties: dict, check_required=True) -> dict:
+def check_resource_properties(properties: dict, check_required: bool = True) -> dict:
     """Checks that resource `properties` matches requirements in Sprout.
 
     `properties` is checked against the Data Package standard and the following
