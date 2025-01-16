@@ -12,7 +12,7 @@ def exclude_errors(
         matchers: The matches to exclude.
 
     Returns:
-        A list of errors without any.
+        A list of errors without any errors that matched.
     """
     return [
         error

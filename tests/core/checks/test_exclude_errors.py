@@ -36,7 +36,7 @@ def test_not_matching_matchers_have_no_effect():
 
 
 def test_matched_errors_are_excluded():
-    """If any matchers match, error should be excluded."""
+    """If any matchers match, the error should be excluded."""
     assert (
         exclude_errors(
             errors,
