@@ -7,6 +7,8 @@ from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
 from uuid import uuid4
 
+from dacite import from_dict
+
 from seedcase_sprout.core.get_iso_timestamp import get_iso_timestamp
 
 
@@ -18,6 +20,19 @@ class Properties(ABC):
     def default(cls: type[Self]) -> Self:
         """Creates an instance with default values."""
         pass
+
+    @classmethod
+    def from_dict(cls: type[Self], data: dict) -> Self:
+        """Creates an instance populated with values from `data`.
+
+        Args:
+            cls: The class to create an instance of.
+            data: The data to populate the instance with.
+
+        Returns:
+            The new instance.
+        """
+        return from_dict(cls, data)
 
     @property
     def compact_dict(self) -> dict:

@@ -1,13 +1,16 @@
 from pathlib import Path
 
 from seedcase_sprout.core.check_is_file import check_is_file
+from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_package_properties import (
     check_package_properties,
 )
 
 
-def edit_package_properties(path: Path, properties: dict) -> dict:
+def edit_package_properties(
+    path: Path, properties: PackageProperties
+) -> PackageProperties:
     """Edits the properties of an existing package.
 
     Use this any time you want to edit the package's properties and particularly
@@ -32,9 +35,8 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
             dictionary. See `help(PackageProperties)` for details on how to use it.
 
     Returns:
-        The updated package properties as a Python dictionary that mimics the
-            JSON structure. Use `write_package_properties()` to save it back to the
-            `datapackage.json` file.
+        The updated package properties. Use `write_package_properties()` to save it back
+            to the `datapackage.json` file.
 
     Raises:
         FileNotFound: If the `datapackage.json` file doesn't exist.
@@ -43,7 +45,8 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
     """
     check_is_file(path)
-    properties.pop("resources", None)
+    properties.resources = None
+    properties = properties.compact_dict
 
     check_package_properties(properties, check_required=False)
 
@@ -51,5 +54,8 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
     check_package_properties(current_properties, check_required=False)
 
     current_properties.update(properties)
+    current_properties = check_package_properties(
+        current_properties, check_required=True
+    )
 
-    return check_package_properties(current_properties, check_required=True)
+    return PackageProperties.from_dict(current_properties)
