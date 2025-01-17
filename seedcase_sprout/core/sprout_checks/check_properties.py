@@ -1,7 +1,6 @@
 from seedcase_sprout.core import checks
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
 from seedcase_sprout.core.checks.exclude_errors import exclude_errors
-from seedcase_sprout.core.sprout_checks.failed_check_error import FailedCheckError
 from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
 )
@@ -21,10 +20,10 @@ def check_properties(properties: dict, ignore: list[CheckErrorMatcher] = []) -> 
         ignore: A list of matchers for any `CheckErrors` to ignore.
 
     Returns:
-        `properties`, if all checks passed.
+        `properties`, if all checks pass.
 
     Raises:
-        FailedCheckError: If at least one check failed.
+        ExceptionGroup: A group of `CheckError`s, one for each check that failed.
     """
     errors = checks.check_properties(properties)
     errors += get_sprout_package_errors(properties)
@@ -45,7 +44,7 @@ def check_properties(properties: dict, ignore: list[CheckErrorMatcher] = []) -> 
     errors = sorted(set(errors))
 
     if errors:
-        raise FailedCheckError(
+        raise ExceptionGroup(
             f"Properties check failed on properties\n{properties}", errors
         )
 
