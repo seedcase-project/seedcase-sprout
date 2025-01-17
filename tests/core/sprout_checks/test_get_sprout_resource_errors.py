@@ -43,8 +43,8 @@ def test_passes_full_resource_properties(properties):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_with_inline_data(properties, index):
-    """Should fail if inline data is set."""
+def test_error_found_if_inline_data_is_set(properties, index):
+    """Should find an error if inline data is set."""
     properties["data"] = "some data"
 
     errors = get_sprout_resource_errors(properties, check_required=True, index=index)
@@ -56,8 +56,8 @@ def test_fails_with_inline_data(properties, index):
 
 @mark.parametrize("index", [None, 2])
 @mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_fields_blank(properties, name, type, index):
-    """Should fail if there is one required field that is present but blank."""
+def test_error_found_if_fields_are_blank(properties, name, type, index):
+    """Should find an error if there is one required field that is present but blank."""
     properties[name] = get_blank_value_for_type(type)
 
     errors = get_sprout_resource_errors(properties, check_required=True, index=index)
@@ -69,8 +69,8 @@ def test_fails_if_fields_blank(properties, name, type, index):
 
 @mark.parametrize("index", [None, 2])
 @mark.parametrize("name", RESOURCE_SPROUT_REQUIRED_FIELDS.keys())
-def test_fails_with_missing_required_fields(properties, name, index):
-    """Should fail if there is a missing required field and required fields are
+def test_error_found_if_required_fields_are_missing(properties, name, index):
+    """Should find an error if there is a missing required field and required fields are
     enforced."""
     del properties[name]
 
@@ -96,9 +96,9 @@ def test_passes_partial_resource_properties_without_required_check():
 
 
 @mark.parametrize("path", ["", [], str(Path("resources", "1"))])
-def test_fails_if_data_path_incorrect_(properties, path):
-    """Should fail if `path` contains no resource ID, is not a string, or is
-    otherwise malformed."""
+def test_error_found_if_data_path_is_incorrect_(properties, path):
+    """Should find at least one error if `path` contains no resource ID, is not a
+    string, or is otherwise malformed."""
     properties["path"] = path
 
     errors = get_sprout_resource_errors(properties, check_required=False)
@@ -108,10 +108,10 @@ def test_fails_if_data_path_incorrect_(properties, path):
 
 @mark.parametrize("index", [None, 2])
 @mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_fields_blank_without_required_check(
+def test_error_found_if_fields_are_blank_without_required_check(
     properties_partial, name, type, index
 ):
-    """Should fail if there is one required field that is present but blank."""
+    """Should find an error if there is one required field that is present but blank."""
     properties_partial[name] = get_blank_value_for_type(type)
 
     errors = get_sprout_resource_errors(
