@@ -40,7 +40,8 @@ def test_passes_full_package_properties(properties, check_required):
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("resources", [[], [{}], [{"name": "name", "path": "data.csv"}]])
 def test_passes_without_checking_resources(resources, properties, check_required):
-    """Should pass matching package properties without checking individual resource
+    """Should pass well-formed package properties without checking individual resource
+``
     properties."""
     properties["resources"] = resources
 

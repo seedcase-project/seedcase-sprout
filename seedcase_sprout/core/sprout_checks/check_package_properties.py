@@ -21,10 +21,10 @@ def check_package_properties(properties: dict, check_required=True) -> dict:
             fields. Defaults to True.
 
     Returns:
-        `properties`, if all checks passed.
+        `properties` if all checks pass.
 
     Raises:
-        FailedCheckError: If at least one check failed.
+        FailedCheckError: If at least one check fails.
     """
     errors = checks.check_package_properties(properties)
 
