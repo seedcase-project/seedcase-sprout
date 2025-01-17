@@ -56,8 +56,9 @@ def test_passes_partial_properties_without_required_check():
 
 
 @mark.parametrize("field", [*PACKAGE_SPROUT_REQUIRED_FIELDS.keys(), "resources"])
-def test_fails_if_package_required_field_missing(properties, field):
-    """Should fail if a required field is missing among the package properties."""
+def test_raises_error_if_package_required_field_is_missing(properties, field):
+    """Should raise an error if a required field is missing among the package
+    properties."""
     del properties[field]
 
     with raises(ExceptionGroup) as error_info:
@@ -70,8 +71,9 @@ def test_fails_if_package_required_field_missing(properties, field):
 
 
 @mark.parametrize("field", RESOURCE_SPROUT_REQUIRED_FIELDS.keys())
-def test_fails_if_resource_required_field_missing(properties, field):
-    """Should fail if a required field is missing among the resource properties."""
+def test_raises_error_if_resource_required_field_is_missing(properties, field):
+    """Should raise an error if a required field is missing among the resource
+    properties."""
     del properties["resources"][0][field]
 
     with raises(ExceptionGroup) as error_info:
@@ -85,8 +87,9 @@ def test_fails_if_resource_required_field_missing(properties, field):
 
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("name,type", PACKAGE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_package_field_blank(properties, name, type, check_required):
-    """Should fail if there is one required package field that is present but blank."""
+def test_raises_error_if_package_field_is_blank(properties, name, type, check_required):
+    """Should raise an error if there is one required package field that is present but
+    blank."""
     properties[name] = get_blank_value_for_type(type)
 
     with raises(ExceptionGroup) as error_info:
@@ -102,8 +105,11 @@ def test_fails_if_package_field_blank(properties, name, type, check_required):
 
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_resource_field_blank(properties, name, type, check_required):
-    """Should fail if there is one required resource field that is present but blank."""
+def test_raises_error_if_resource_field_is_blank(
+    properties, name, type, check_required
+):
+    """Should raise an error if there is one required resource field that is present
+    but blank."""
     properties["resources"][0][name] = get_blank_value_for_type(type)
 
     with raises(ExceptionGroup) as error_info:
@@ -118,8 +124,10 @@ def test_fails_if_resource_field_blank(properties, name, type, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_both_package_and_resource_errors(properties, check_required):
-    """Should fail if there are both package and resource errors."""
+def test_raises_error_if_there_are_both_package_and_resource_errors(
+    properties, check_required
+):
+    """Should raise `CheckError`s if there are both package and resource errors."""
     properties["name"] = "space in name"
     properties["title"] = 123
     properties["resources"][0]["name"] = "space in name"
@@ -149,7 +157,7 @@ def test_fails_with_both_package_and_resource_errors(properties, check_required)
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_only_sprout_specific_errors(properties, check_required):
+def test_raises_error_for_only_sprout_specific_errors(properties, check_required):
     """Errors should be triggered by only those Data Package standard violations that
     are relevant for Sprout."""
     properties["resources"][0]["path"] = 123
