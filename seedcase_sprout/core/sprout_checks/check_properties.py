@@ -23,10 +23,10 @@ def check_properties(properties: dict, check_required=True) -> dict:
             fields. Defaults to True.
 
     Returns:
-        `properties`, if all checks passed.
+        `properties`, if all checks pass.
 
     Raises:
-        FailedCheckError: If at least one check failed.
+        FailedCheckError: If at least one check fails.
     """
     errors = checks.check_properties(properties)
     errors = exclude_non_sprout_resource_errors(errors)

@@ -45,7 +45,7 @@ def properties():
 
 
 @mark.parametrize("check_required", [True, False])
-def test_passes_full_properties(properties, check_required):
+def test_check_passes_full_properties(properties, check_required):
     """Should pass if all required fields are present and correct."""
     assert check_properties(properties, check_required=check_required) == properties
 
