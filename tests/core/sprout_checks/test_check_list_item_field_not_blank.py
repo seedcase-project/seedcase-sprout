@@ -45,8 +45,8 @@ def test_passes_with_fields_of_wrong_type():
     "field_type,value",
     [(RequiredFieldType.str, "value"), (RequiredFieldType.list, [1])],
 )
-def test_fails_item_with_blank_field(field_type, value):
-    """Should fail if there is an item with a blank field."""
+def test_error_found_if_an_item_has_a_blank_field(field_type, value):
+    """Should find an error if there is an item with a blank field."""
     properties = {
         "items": [{"field": value}, {"field": get_blank_value_for_type(field_type)}]
     }
@@ -60,8 +60,8 @@ def test_fails_item_with_blank_field(field_type, value):
 
 
 @mark.parametrize("field_type", RequiredFieldType)
-def test_fails_items_with_blank_field(field_type):
-    """Should fail if there are multiple items with a blank field."""
+def test_error_found_if_multiple_items_have_a_blank_field(field_type):
+    """Should find an error if there are multiple items with a blank field."""
     properties = {"items": [{"field": get_blank_value_for_type(field_type)}] * 2}
 
     errors = check_list_item_field_not_blank(properties, "items", "field", field_type)

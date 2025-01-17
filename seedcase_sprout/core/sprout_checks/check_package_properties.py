@@ -1,5 +1,4 @@
 from seedcase_sprout.core import checks
-from seedcase_sprout.core.sprout_checks.failed_check_error import FailedCheckError
 from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
 )
@@ -21,10 +20,10 @@ def check_package_properties(properties: dict, check_required=True) -> dict:
             fields. Defaults to True.
 
     Returns:
-        `properties`, if all checks passed.
+        `properties` if all checks pass.
 
     Raises:
-        FailedCheckError: If at least one check failed.
+        ExceptionGroup: A group of `CheckError`s, one for each check that failed.
     """
     errors = checks.check_package_properties(properties)
 
@@ -35,7 +34,7 @@ def check_package_properties(properties: dict, check_required=True) -> dict:
     errors = sorted(set(errors))
 
     if errors:
-        raise FailedCheckError(
+        raise ExceptionGroup(
             f"Package properties check failed on properties\n{properties}", errors
         )
 
