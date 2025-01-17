@@ -2,13 +2,12 @@ from seedcase_sprout.core import checks
 from seedcase_sprout.core.sprout_checks.exclude_non_sprout_resource_errors import (
     exclude_non_sprout_resource_errors,
 )
-from seedcase_sprout.core.sprout_checks.failed_check_error import FailedCheckError
 from seedcase_sprout.core.sprout_checks.get_sprout_resource_errors import (
     get_sprout_resource_errors,
 )
 
 
-def check_resource_properties(properties: dict, check_required=True) -> dict:
+def check_resource_properties(properties: dict, check_required: bool = True) -> dict:
     """Checks that resource `properties` matches requirements in Sprout.
 
     `properties` is checked against the Data Package standard and the following
@@ -30,7 +29,7 @@ def check_resource_properties(properties: dict, check_required=True) -> dict:
         `properties`, if all checks passed.
 
     Raises:
-        FailedCheckError: If at least one check failed.
+        ExceptionGroup: A group of `CheckError`s, one for each check that failed.
     """
     errors = checks.check_resource_properties(properties)
     errors = exclude_non_sprout_resource_errors(errors)
@@ -42,7 +41,7 @@ def check_resource_properties(properties: dict, check_required=True) -> dict:
     errors = sorted(set(errors))
 
     if errors:
-        raise FailedCheckError(
+        raise ExceptionGroup(
             f"Resource properties check failed on properties\n{properties}", errors
         )
 
