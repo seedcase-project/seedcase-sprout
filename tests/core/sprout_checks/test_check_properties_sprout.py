@@ -5,7 +5,6 @@ from pytest import fixture, mark, raises
 from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
-from seedcase_sprout.core.sprout_checks.failed_check_error import FailedCheckError
 from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
@@ -61,10 +60,10 @@ def test_fails_if_package_required_field_missing(properties, field):
     """Should fail if a required field is missing among the package properties."""
     del properties[field]
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         check_properties(properties, check_required=True)
 
-    errors = error.value.errors
+    errors = error_info.value.exceptions
     assert len(errors) == 1
     assert errors[0].json_path == f"$.{field}"
     assert errors[0].validator == "required"
@@ -75,10 +74,10 @@ def test_fails_if_resource_required_field_missing(properties, field):
     """Should fail if a required field is missing among the resource properties."""
     del properties["resources"][0][field]
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         check_properties(properties, check_required=True)
 
-    errors = error.value.errors
+    errors = error_info.value.exceptions
     assert len(errors) == 1
     assert errors[0].json_path == f"$.resources[0].{field}"
     assert errors[0].validator == "required"
@@ -90,10 +89,12 @@ def test_fails_if_package_field_blank(properties, name, type, check_required):
     """Should fail if there is one required package field that is present but blank."""
     properties[name] = get_blank_value_for_type(type)
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         check_properties(properties, check_required=check_required)
 
-    blank_errors = [error for error in error.value.errors if error.validator == "blank"]
+    blank_errors = [
+        error for error in error_info.value.exceptions if error.validator == "blank"
+    ]
 
     assert len(blank_errors) == 1
     assert blank_errors[0].json_path == f"$.{name}"
@@ -105,10 +106,12 @@ def test_fails_if_resource_field_blank(properties, name, type, check_required):
     """Should fail if there is one required resource field that is present but blank."""
     properties["resources"][0][name] = get_blank_value_for_type(type)
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         check_properties(properties, check_required=check_required)
 
-    blank_errors = [error for error in error.value.errors if error.validator == "blank"]
+    blank_errors = [
+        error for error in error_info.value.exceptions if error.validator == "blank"
+    ]
 
     assert len(blank_errors) == 1
     assert blank_errors[0].json_path == f"$.resources[0].{name}"
@@ -123,10 +126,10 @@ def test_fails_with_both_package_and_resource_errors(properties, check_required)
     properties["resources"][1]["path"] = "/bad path"
     properties["resources"][1]["data"] = "some data"
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         check_properties(properties, check_required=check_required)
 
-    errors = error.value.errors
+    errors = error_info.value.exceptions
     assert [error.json_path for error in errors] == [
         "$.name",
         "$.resources[0].name",
@@ -151,10 +154,10 @@ def test_fails_with_only_sprout_specific_errors(properties, check_required):
     are relevant for Sprout."""
     properties["resources"][0]["path"] = 123
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         check_properties(properties, check_required=check_required)
 
-    errors = error.value.errors
-    assert errors == [
-        CheckError("123 is not of type 'string'", "$.resources[0].path", "type")
-    ]
+    errors = error_info.value.exceptions
+    assert errors == (
+        CheckError("123 is not of type 'string'", "$.resources[0].path", "type"),
+    )
