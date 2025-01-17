@@ -88,7 +88,8 @@ def test_error_raised_if_inline_data_is_set(properties, check_required):
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
 def test_error_raised_if_fields_are_blank(properties, name, type, check_required):
-    """Should raise an error if there is one required field that is present but blank."""
+    """Should raise an error if there is one required field that is present but
+    blank."""
     properties[name] = get_blank_value_for_type(type)
 
     with raises(ExceptionGroup) as error_info:
