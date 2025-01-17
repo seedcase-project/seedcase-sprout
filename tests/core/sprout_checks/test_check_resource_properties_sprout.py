@@ -38,8 +38,8 @@ def test_passes_full_resource_properties(properties, check_required):
     "field",
     RESOURCE_SPROUT_REQUIRED_FIELDS.keys(),
 )
-def test_fails_if_required_field_missing(properties, field):
-    """Should fail if a required field is missing."""
+def test_error_found_if_required_field_is_missing(properties, field):
+    """Should find an error if a required field is missing."""
     del properties[field]
 
     with raises(ExceptionGroup) as error_info:
@@ -54,8 +54,8 @@ def test_fails_if_required_field_missing(properties, field):
 
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("path", ["", [], str(Path("resources", "1")), "/bad/path/data.csv"])
-def test_fails_if_data_path_incorrect_(properties, path, check_required):
-    """Should fail if `path` contains no resource ID, is not a string, or is
+def test_error_found_if_data_path_is_incorrect_(properties, path, check_required):
+    """Should find an error if `path` contains no resource ID, is not a string, or is
     otherwise malformed."""
     properties["path"] = path
 
@@ -71,8 +71,8 @@ def test_fails_if_data_path_incorrect_(properties, path, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_inline_data(properties, check_required):
-    """Should fail if inline data is set."""
+def test_error_found_if_inline_data_is_set(properties, check_required):
+    """Should find an error if inline data is set."""
     properties["data"] = "some data"
 
     with raises(ExceptionGroup) as error_info:
@@ -87,8 +87,8 @@ def test_fails_with_inline_data(properties, check_required):
 
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_fields_blank(properties, name, type, check_required):
-    """Should fail if there is one required field that is present but blank."""
+def test_error_found_if_fields_are_blank(properties, name, type, check_required):
+    """Should find an error if there is one required field that is present but blank."""
     properties[name] = get_blank_value_for_type(type)
 
     with raises(ExceptionGroup) as error_info:
@@ -104,8 +104,8 @@ def test_fails_if_fields_blank(properties, name, type, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_mismatched_pattern(properties, check_required):
-    """Should fail if `name` violates the pattern."""
+def test_error_found_for_mismatched_pattern(properties, check_required):
+    """Should find an error if `name` violates the pattern."""
     properties["name"] = "a name with spaces"
 
     with raises(ExceptionGroup) as error_info:
@@ -119,8 +119,8 @@ def test_fails_with_mismatched_pattern(properties, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_mismatched_format(properties, check_required):
-    """Should fail if `homepage` violates the format."""
+def test_error_found_for_mismatched_format(properties, check_required):
+    """Should find an error if `homepage` violates the format."""
     properties["homepage"] = "not a URL"
 
     with raises(ExceptionGroup) as error_info:
@@ -134,8 +134,8 @@ def test_fails_with_mismatched_format(properties, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_mismatched_type(properties, check_required):
-    """Should fail if `name` violates the type constraint."""
+def test_error_found_for_mismatched_type(properties, check_required):
+    """Should find an error if `name` violates the type constraint."""
     properties["name"] = 123
 
     with raises(ExceptionGroup) as error_info:
@@ -149,7 +149,7 @@ def test_fails_with_mismatched_type(properties, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_only_sprout_specific_errors(properties, check_required):
+def test_error_found_for_only_sprout_specific_errors(properties, check_required):
     """Errors should be triggered by only those Data Package standard violations that
     are relevant for Sprout."""
     properties["path"] = 123
