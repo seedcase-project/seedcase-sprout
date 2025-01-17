@@ -40,9 +40,10 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
 
     Raises:
         FileNotFound: If the `datapackage.json` file doesn't exist.
-        FailedCheckError: If there is an error in the current, incoming or resulting
-            package properties.
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
+        ExceptionGroup: If there is an error in the current, incoming or resulting
+            package properties. A group of `CheckError`s, one error for each failed
+            check.
     """
     check_is_file(path)
 

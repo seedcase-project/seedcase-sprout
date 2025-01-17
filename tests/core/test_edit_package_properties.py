@@ -9,7 +9,6 @@ from seedcase_sprout.core.properties import (
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.sprout_checks.failed_check_error import FailedCheckError
 from seedcase_sprout.core.write_json import write_json
 
 full_properties = PackageProperties(
@@ -129,24 +128,24 @@ def test_throws_error_if_properties_file_cannot_be_read(tmp_path):
 
 
 def test_throws_error_if_current_properties_have_a_package_error(tmp_path):
-    """Should throw FailedCheckError if the current properties have an error
+    """Should throw a group of `CheckError`s if the current properties have an error
     among the package properties."""
     current_properties = PackageProperties(name="invalid name with spaces").compact_dict
     properties_path = get_properties_path(tmp_path, current_properties)
     properties = PackageProperties(name="my-new-package-name").compact_dict
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         edit_package_properties(properties_path, properties)
 
-    assert "invalid name with spaces" in error.value.message
-    errors = error.value.errors
+    assert "invalid name with spaces" in error_info.value.message
+    errors = error_info.value.exceptions
     assert len(errors) == 1
     assert errors[0].json_path == "$.name"
     assert errors[0].validator == "pattern"
 
 
 def test_throws_error_if_current_properties_have_a_resource_error(tmp_path):
-    """Should throw FailedCheckError if the current properties have an error
+    """Should throw a group of `CheckError`s if the current properties have an error
     among the resource properties."""
     current_properties = full_properties | {
         "resources": [
@@ -161,60 +160,60 @@ def test_throws_error_if_current_properties_have_a_resource_error(tmp_path):
     properties_path = get_properties_path(tmp_path, current_properties)
     properties = PackageProperties(name="my-new-package-name").compact_dict
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         edit_package_properties(properties_path, properties)
 
-    assert "my-package" in error.value.message
-    assert "invalid name with spaces" in error.value.message
-    errors = error.value.errors
+    assert "my-package" in error_info.value.message
+    assert "invalid name with spaces" in error_info.value.message
+    errors = error_info.value.exceptions
     assert len(errors) == 1
     assert errors[0].json_path == "$.resources[0].name"
     assert errors[0].validator == "pattern"
 
 
 def test_throws_error_if_incoming_package_properties_are_malformed(tmp_path):
-    """Should throw FailedCheckError if the incoming package properties are
+    """Should throw a group of `CheckError`s if the incoming package properties are
     malformed."""
     properties_path = get_properties_path(tmp_path, full_properties)
     properties = PackageProperties(name="a name with spaces").compact_dict
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         edit_package_properties(properties_path, properties)
 
-    assert "a name with spaces" in error.value.message
-    errors = error.value.errors
+    assert "a name with spaces" in error_info.value.message
+    errors = error_info.value.exceptions
     assert len(errors) == 1
     assert errors[0].json_path == "$.name"
     assert errors[0].validator == "pattern"
 
 
 def test_throws_error_if_resulting_properties_are_incomplete(tmp_path):
-    """Should throw FailedCheckError if the resulting properties have missing required
-    fields."""
+    """Should throw a group of `CheckError`s if the resulting properties have missing
+    required fields."""
     current_properties = PackageProperties(name="my-incomplete-package").compact_dict
     properties_path = get_properties_path(tmp_path, current_properties)
     properties = PackageProperties(title="My Incomplete Package").compact_dict
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         edit_package_properties(properties_path, properties)
 
-    message = error.value.message
+    message = error_info.value.message
     assert "my-incomplete-package" in message
     assert "My Incomplete Package" in message
-    errors = error.value.errors
+    errors = error_info.value.exceptions
     assert len(errors) == 5
     assert all(error.validator == "required" for error in errors)
 
 
 def test_throws_error_if_both_current_and_incoming_properties_empty(tmp_path):
-    """Should throw FailedCheckError if both current and incoming properties are
+    """Should throw a group of `CheckError`s if both current and incoming properties are
     empty."""
     properties_path = get_properties_path(tmp_path, {})
 
-    with raises(FailedCheckError) as error:
+    with raises(ExceptionGroup) as error_info:
         edit_package_properties(properties_path, {})
 
-    assert "{}" in error.value.message
-    errors = error.value.errors
+    assert "{}" in error_info.value.message
+    errors = error_info.value.exceptions
     assert len(errors) == 7
     assert all(error.validator == "required" for error in errors)
