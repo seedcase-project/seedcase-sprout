@@ -49,8 +49,8 @@ def test_passes_if_all_required_fields_missing():
         ("licenses", [{"path": ""}], "$.licenses[0].path"),
     ],
 )
-def test_fails_if_required_field_blank(properties, field, value, json_path):
-    """Should fail if a required field is present but blank."""
+def test_error_found_if_required_field_is_blank(properties, field, value, json_path):
+    """Should find an error if a required field is present but blank."""
     properties[field] = value
 
     errors = check_required_package_properties_not_blank(properties)
@@ -60,8 +60,8 @@ def test_fails_if_required_field_blank(properties, field, value, json_path):
     assert errors[0].validator == "blank"
 
 
-def test_fails_if_all_required_fields_blank():
-    """Should fail if all required fields are present but blank."""
+def test_error_found_if_all_required_fields_are_blank():
+    """Should find an error if all required fields are present but blank."""
     properties = {
         "name": "",
         "id": "",
