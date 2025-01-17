@@ -33,8 +33,8 @@ def test_passes_full_package_properties(properties):
 
 
 @mark.parametrize("name,type", PACKAGE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_fields_blank(properties, name, type):
-    """Should fail if there is one required field that is present but blank."""
+def test_error_found_if_fields_are_blank(properties, name, type):
+    """Should find an error if there is one required field that is present but blank."""
     properties[name] = get_blank_value_for_type(type)
 
     errors = get_sprout_package_errors(properties)
@@ -45,8 +45,8 @@ def test_fails_if_fields_blank(properties, name, type):
 
 
 @mark.parametrize("name", PACKAGE_SPROUT_REQUIRED_FIELDS.keys())
-def test_fails_with_missing_required_fields(properties, name):
-    """Should fail if there is a missing required field."""
+def test_error_found_if_required_fields_are_missing(properties, name):
+    """Should find an error if there is a missing required field."""
     del properties[name]
 
     errors = get_sprout_package_errors(properties)
