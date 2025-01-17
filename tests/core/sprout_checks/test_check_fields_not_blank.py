@@ -26,8 +26,8 @@ def test_passes_properties_with_fields_missing(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_properties_with_blank_field(index):
-    """Should fail properties with a blank field."""
+def test_error_found_if_properties_have_a_blank_field(index):
+    """Should find an error if properties contain a blank field."""
     properties = {"name": "My name", "tags": []}
 
     errors = check_fields_not_blank(properties, FIELDS, index)
@@ -39,8 +39,8 @@ def test_fails_properties_with_blank_field(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_properties_with_multiple_blank_fields(index):
-    """Should fail properties with multiple blank fields."""
+def test_error_found_if_properties_have_multiple_blank_fields(index):
+    """Should find an error if properties contain multiple blank fields."""
     properties = {"name": "", "tags": []}
 
     errors = check_fields_not_blank(properties, FIELDS, index)

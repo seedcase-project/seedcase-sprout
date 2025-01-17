@@ -28,8 +28,8 @@ def test_passes_properties_with_required_fields_blank(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_properties_with_missing_required_field(index):
-    """Should fail properties with a missing required field."""
+def test_error_found_if_there_is_a_missing_required_field(index):
+    """Should find an error if there is a missing required field."""
     properties = {"name": "My name"}
 
     errors = check_fields_present(properties, REQUIRED_FIELDS, index)
@@ -41,8 +41,8 @@ def test_fails_properties_with_missing_required_field(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_fails_properties_with_multiple_missing_required_fields(index):
-    """Should fail properties with multiple missing required fields."""
+def test_error_found_if_there_are_multiple_missing_required_fields(index):
+    """Should find an error if there are multiple missing required fields."""
     errors = check_fields_present({}, REQUIRED_FIELDS, index)
 
     assert len(errors) == 2
