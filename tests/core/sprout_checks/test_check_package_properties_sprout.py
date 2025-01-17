@@ -51,8 +51,9 @@ def test_passes_without_checking_resources(resources, properties, check_required
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_resources_of_wrong_type(properties, check_required):
-    """Should fail if there is a `resources` field with a value of the wrong type."""
+def test_raises_error_for_resources_of_wrong_type(properties, check_required):
+    """Should raise an error if there is a `resources` field with a value of the wrong
+    type."""
     properties["resources"] = 123
 
     with raises(ExceptionGroup) as error_info:
@@ -65,8 +66,8 @@ def test_fails_with_resources_of_wrong_type(properties, check_required):
 
 
 @mark.parametrize("field", PACKAGE_SPROUT_REQUIRED_FIELDS.keys())
-def test_fails_if_required_field_missing(properties, field):
-    """Should fail if a required field is missing."""
+def test_raises_error_if_required_field_is_missing(properties, field):
+    """Should raise an error if a required field is missing."""
     del properties[field]
 
     with raises(ExceptionGroup) as error_info:
@@ -78,8 +79,8 @@ def test_fails_if_required_field_missing(properties, field):
     assert errors[0].validator == "required"
 
 
-def test_fails_if_nested_required_fields_missing():
-    """Should fail if nested required fields are missing."""
+def test_raises_error_if_nested_required_fields_are_missing():
+    """Should raise errors if nested required fields are missing."""
     properties = PackageProperties(
         name="package-1",
         id="abc1",
@@ -107,8 +108,8 @@ def test_fails_if_nested_required_fields_missing():
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_mismatched_pattern(properties, check_required):
-    """Should fail if `name` violates the pattern."""
+def test_raises_error_for_mismatched_pattern(properties, check_required):
+    """Should raise an error if `name` violates the pattern."""
     properties["name"] = "a name with spaces"
 
     with raises(ExceptionGroup) as error_info:
@@ -121,8 +122,8 @@ def test_fails_with_mismatched_pattern(properties, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_with_mismatched_format(properties, check_required):
-    """Should fail if `homepage` violates the format."""
+def test_raises_error_for_mismatched_format(properties, check_required):
+    """Should raise an error if `homepage` violates the format."""
     properties["homepage"] = "not a URL"
 
     with raises(ExceptionGroup) as error_info:
@@ -136,8 +137,9 @@ def test_fails_with_mismatched_format(properties, check_required):
 
 @mark.parametrize("check_required", [True, False])
 @mark.parametrize("name,type", PACKAGE_SPROUT_REQUIRED_FIELDS.items())
-def test_fails_if_fields_blank(properties, name, type, check_required):
-    """Should fail if there is one required field that is present but blank."""
+def test_raises_error_if_fields_are_blank(properties, name, type, check_required):
+    """Should raise an error if there is one required field that is present but
+    blank."""
     properties[name] = get_blank_value_for_type(type)
 
     with raises(ExceptionGroup) as error_info:
@@ -152,8 +154,8 @@ def test_fails_if_fields_blank(properties, name, type, check_required):
 
 
 @mark.parametrize("check_required", [True, False])
-def test_fails_if_nested_fields_blank(check_required):
-    """Should fail if required nested fields are present but blank."""
+def test_raises_error_if_nested_fields_are_blank(check_required):
+    """Should raise errors if required nested fields are present but blank."""
     properties = PackageProperties(
         name="package-1",
         id="abc1",
