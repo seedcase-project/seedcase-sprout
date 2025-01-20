@@ -6,7 +6,7 @@ from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
 )
 
 
-def check_resource_id_in_data_path(
+def check_id_in_resource_path(
     properties: dict, index: int | None = None
 ) -> list[CheckError]:
     """Checks if the data path in resource properties is well-formed.

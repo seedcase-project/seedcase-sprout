@@ -22,8 +22,8 @@ def check_no_inline_data(
     return [
         CheckError(
             message=(
-                "'data' should not be set. Sprout expects data in separate "
-                "data files specified by 'path'."
+                "Sprout doesn't use the 'data' field, instead it expects data "
+                "in separate files that are given in the 'path' field."
             ),
             json_path=get_json_path_to_resource_field("data", index),
             validator="inline-data",
