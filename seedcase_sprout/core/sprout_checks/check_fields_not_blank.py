@@ -7,6 +7,8 @@ from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
 
+SPROUT_BLANK_ERROR_MESSAGE = "The '{field_name}' field is blank, please fill it in."
+
 
 def check_fields_not_blank(
     properties: dict, fields: dict[str, RequiredFieldType], index: int | None = None
@@ -28,7 +30,7 @@ def check_fields_not_blank(
     """
     return [
         CheckError(
-            message=f"'{field}' should not be blank",
+            message=SPROUT_BLANK_ERROR_MESSAGE.format(field_name=field),
             json_path=get_json_path_to_resource_field(field, index),
             validator="blank",
         )

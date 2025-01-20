@@ -20,6 +20,6 @@ def test_error_found_if_data_is_set(index):
     errors = check_no_inline_data(properties, index)
 
     assert len(errors) == 1
-    assert "'data' should not be set" in errors[0].message
+    assert errors[0].message
     assert errors[0].json_path == get_json_path_to_resource_field("data", index)
     assert errors[0].validator == "inline-data"

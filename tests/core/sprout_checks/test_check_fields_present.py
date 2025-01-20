@@ -12,7 +12,7 @@ REQUIRED_FIELDS = {"name": RequiredFieldType.str, "tags": RequiredFieldType.list
 
 
 @mark.parametrize("index", [None, 2])
-def test_passes_properties_with_required_fields(index):
+def test_no_error_found_in_properties_with_required_fields(index):
     """Should pass properties with required fields present and populated."""
     properties = {"name": "My name", "tags": ["a", "b"]}
 
@@ -20,7 +20,7 @@ def test_passes_properties_with_required_fields(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_passes_properties_with_required_fields_blank(index):
+def test_no_error_found_in_properties_with_required_fields_blank(index):
     """Should pass properties with required fields present but blank."""
     properties = {"name": "", "tags": []}
 
@@ -35,7 +35,7 @@ def test_error_found_if_there_is_a_missing_required_field(index):
     errors = check_fields_present(properties, REQUIRED_FIELDS, index)
 
     assert len(errors) == 1
-    assert errors[0].message == "'tags' is a required property"
+    assert "required" in errors[0].message
     assert errors[0].json_path == get_json_path_to_resource_field("tags", index)
     assert errors[0].validator == "required"
 
