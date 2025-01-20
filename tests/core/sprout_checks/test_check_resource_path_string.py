@@ -30,6 +30,6 @@ def test_error_found_if_path_not_string(index):
     errors = check_resource_path_string(properties, index)
 
     assert len(errors) == 1
-    assert errors[0].message
+    assert "string" in errors[0].message
     assert errors[0].json_path == get_json_path_to_resource_field("path", index)
     assert errors[0].validator == "type"

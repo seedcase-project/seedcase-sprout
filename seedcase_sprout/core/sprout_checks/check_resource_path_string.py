@@ -3,6 +3,8 @@ from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
 
+CHECKS_TYPE_ERROR_MESSAGE = "{field_value} is not of type '{field_type}'"
+
 
 def check_resource_path_string(
     properties: dict, index: int | None = None
@@ -22,7 +24,9 @@ def check_resource_path_string(
 
     return [
         CheckError(
-            message=f"{path} is not of type 'string'",
+            message=CHECKS_TYPE_ERROR_MESSAGE.format(
+                field_value=path, field_type="string"
+            ),
             json_path=get_json_path_to_resource_field("path", index),
             validator="type",
         )
