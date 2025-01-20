@@ -4,7 +4,7 @@ from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
 )
 
 
-def check_data_path_string(
+def check_resource_path_string(
     properties: dict, index: int | None = None
 ) -> list[CheckError]:
     """Checks that the `path` field of a set of resource properties is of type string.
