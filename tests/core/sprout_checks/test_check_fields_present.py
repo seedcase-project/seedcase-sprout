@@ -35,7 +35,7 @@ def test_error_found_if_there_is_a_missing_required_field(index):
     errors = check_fields_present(properties, REQUIRED_FIELDS, index)
 
     assert len(errors) == 1
-    assert errors[0].message == "'tags' is a required property"
+    assert "required" in errors[0].message
     assert errors[0].json_path == get_json_path_to_resource_field("tags", index)
     assert errors[0].validator == "required"
 

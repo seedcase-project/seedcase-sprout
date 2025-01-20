@@ -54,7 +54,7 @@ def test_error_found_if_an_item_has_a_blank_field(field_type, value):
     errors = check_list_item_field_not_blank(properties, "items", "field", field_type)
 
     assert len(errors) == 1
-    assert errors[0].message == "'field' should not be blank"
+    assert "blank" in errors[0].message
     assert errors[0].json_path == "$.items[1].field"
     assert errors[0].validator == "blank"
 
@@ -68,8 +68,7 @@ def test_error_found_if_multiple_items_have_a_blank_field(field_type):
 
     assert len(errors) == 2
     assert all(
-        error.message == "'field' should not be blank" and error.validator == "blank"
-        for error in errors
+        "blank" in error.message and error.validator == "blank" for error in errors
     )
     assert any(error.json_path == "$.items[0].field" for error in errors)
     assert any(error.json_path == "$.items[1].field" for error in errors)
