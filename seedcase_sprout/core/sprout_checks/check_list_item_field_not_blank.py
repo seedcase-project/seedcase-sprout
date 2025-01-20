@@ -1,5 +1,8 @@
 from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.checks.required_fields import RequiredFieldType
+from seedcase_sprout.core.sprout_checks.check_fields_not_blank import (
+    SPROUT_BLANK_ERROR_MESSAGE,
+)
 from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
@@ -21,7 +24,7 @@ def check_list_item_field_not_blank(
     """
     return [
         CheckError(
-            message=f"'{field_name}' should not be blank",
+            message=SPROUT_BLANK_ERROR_MESSAGE.format(field_name=field_name),
             json_path=f"$.{list_name}[{index}].{field_name}",
             validator="blank",
         )

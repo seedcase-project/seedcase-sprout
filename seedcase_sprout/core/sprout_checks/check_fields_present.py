@@ -4,6 +4,8 @@ from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
 
+CHECKS_REQUIRED_ERROR_MESSAGE = "'{field_name}' is a required property"
+
 
 def check_fields_present(
     properties: dict,
@@ -25,7 +27,7 @@ def check_fields_present(
     """
     return [
         CheckError(
-            message=f"'{field}' is a required property",
+            message=CHECKS_REQUIRED_ERROR_MESSAGE.format(field_name=field),
             json_path=get_json_path_to_resource_field(field, index),
             validator="required",
         )

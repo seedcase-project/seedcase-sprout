@@ -26,12 +26,12 @@ def properties():
     }
 
 
-def test_passes_if_all_required_fields_populated(properties):
+def test_no_error_found_if_all_required_fields_populated(properties):
     """Should pass if all required fields are present and populated."""
     assert check_required_package_properties_not_blank(properties) == []
 
 
-def test_passes_if_all_required_fields_missing():
+def test_no_error_found_if_all_required_fields_missing():
     """Should pass if all required fields are missing."""
     assert check_required_package_properties_not_blank({}) == []
 
