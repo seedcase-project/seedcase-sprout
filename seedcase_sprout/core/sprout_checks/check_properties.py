@@ -42,7 +42,7 @@ def check_properties(properties: dict, check_required=True) -> dict:
 
     if errors:
         raise ExceptionGroup(
-            f"Properties check failed on properties\n{properties}", errors
+            f"The follow checks failed on the properties:\n{properties}", errors
         )
 
     return properties
