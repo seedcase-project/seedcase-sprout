@@ -1,6 +1,6 @@
 from pytest import mark
 
-from seedcase_sprout.core.sprout_checks.check_data_path_string import (
+from seedcase_sprout.core.sprout_checks.check_resource_path_string import (
     check_resource_path_string,
 )
 from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (

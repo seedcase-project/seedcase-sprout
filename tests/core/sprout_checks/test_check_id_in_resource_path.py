@@ -2,7 +2,7 @@ from pathlib import Path
 
 from pytest import mark
 
-from seedcase_sprout.core.sprout_checks.check_resource_id_in_data_path import (
+from seedcase_sprout.core.sprout_checks.check_id_in_resource_path import (
     check_id_in_resource_path,
 )
 from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
