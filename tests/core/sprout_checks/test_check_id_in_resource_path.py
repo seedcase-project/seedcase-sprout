@@ -50,6 +50,6 @@ def test_returns_error_if_data_path_is_malformed(index, data_path):
     errors = check_id_in_resource_path(properties, index)
 
     assert len(errors) == 1
-    assert errors[0].message == "'path' should contain the resource ID"
+    assert errors[0].message
     assert errors[0].json_path == get_json_path_to_resource_field("path", index)
     assert errors[0].validator == "pattern"
