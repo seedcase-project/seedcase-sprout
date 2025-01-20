@@ -12,7 +12,7 @@ FIELDS = {"name": RequiredFieldType.str, "tags": RequiredFieldType.list}
 
 
 @mark.parametrize("index", [None, 2])
-def test_passes_properties_with_populated_fields(index):
+def test_no_error_found_in_properties_with_populated_fields(index):
     """Should pass properties with fields populated."""
     properties = {"name": "My name", "tags": ["a", "b"]}
 
@@ -20,7 +20,7 @@ def test_passes_properties_with_populated_fields(index):
 
 
 @mark.parametrize("index", [None, 2])
-def test_passes_properties_with_fields_missing(index):
+def test_no_error_found_in_properties_with_fields_missing(index):
     """Should pass properties without the specified fields."""
     assert check_fields_not_blank({}, FIELDS, index) == []
 

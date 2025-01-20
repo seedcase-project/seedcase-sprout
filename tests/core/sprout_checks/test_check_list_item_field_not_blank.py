@@ -9,27 +9,27 @@ from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
 )
 
 
-def test_passes_properties_without_list():
+def test_no_error_found_in_properties_without_list():
     """Should pass if the properties do not contain the specified list."""
     assert check_list_item_field_not_blank({}, "items", "field") == []
 
 
 @mark.parametrize("items", [[], [{}, {}], [{"a": 1}, {"a": 2}]])
-def test_passes_list_without_field(items):
+def test_no_error_found_when_list_does_not_contain_field(items):
     """Should pass if list items do not contain the field."""
     properties = {"items": items}
 
     assert check_list_item_field_not_blank(properties, "items", "field") == []
 
 
-def test_passes_with_fields_populated():
+def test_no_error_found_when_fields_populated():
     """Should pass if all fields are populated."""
     properties = {"items": [{"field": "value"}, {"field": "value"}]}
 
     assert check_list_item_field_not_blank(properties, "items", "field") == []
 
 
-def test_passes_with_fields_of_wrong_type():
+def test_no_error_found_when_fields_are_of_wrong_type():
     """Should pass if the fields are present but of the wrong type."""
     properties = {"items": [{"field": "value"}, {"field": ""}]}
 
