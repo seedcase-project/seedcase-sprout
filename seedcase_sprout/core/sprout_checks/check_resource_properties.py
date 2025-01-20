@@ -48,7 +48,8 @@ def check_resource_properties(
 
     if errors:
         raise ExceptionGroup(
-            f"Resource properties check failed on properties\n{properties}", errors
+            f"The following checks failed for the resource properties:\n{properties}",
+            errors,
         )
 
     return properties

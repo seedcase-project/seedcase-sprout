@@ -36,7 +36,8 @@ def check_package_properties(
 
     if errors:
         raise ExceptionGroup(
-            f"Package properties check failed on properties\n{properties}", errors
+            f"The following checks failed on the package properties:\n{properties}",
+            errors,
         )
 
     return properties

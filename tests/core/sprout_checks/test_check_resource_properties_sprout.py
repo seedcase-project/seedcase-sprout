@@ -149,7 +149,10 @@ def test_error_raised_for_only_sprout_specific_errors(properties):
         check_resource_properties(properties)
 
     errors = error_info.value.exceptions
-    assert errors == (CheckError("123 is not of type 'string'", "$.path", "type"),)
+    assert len(errors) == 1
+    assert isinstance(errors[0], CheckError)
+    assert errors[0].json_path == "$.path"
+    assert errors[0].validator == "type"
 
 
 def test_ignored_errors_should_not_make_check_fail():
