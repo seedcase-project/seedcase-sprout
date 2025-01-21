@@ -28,6 +28,19 @@ def create_resource_structure(path: Path) -> list[Path]:
 
     Raises:
        NotADirectoryError: If path is not an existing directory.
+
+    Examples:
+         ```{python}
+         #| output: true
+         import os
+
+         import seedcase_sprout.core as sp
+
+         # Set global path for the example
+         os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+         sp.create_resource_structure(path=sp.path_resources(package_id=1))
+         ```
     """
     check_is_dir(path)
 

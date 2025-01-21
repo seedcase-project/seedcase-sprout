@@ -15,6 +15,19 @@ def path_package(package_id: int) -> Path:
 
     Returns:
         The absolute path to the specified package.
+
+    Examples:
+        ```{python}
+        #| output: true
+        import os
+
+        import seedcase_sprout.core as sp
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        sp.path_package(package_id=1)
+        ```
     """
     path = path_packages() / str(package_id)
     return check_is_package_dir(path)
@@ -28,6 +41,19 @@ def path_package_database(package_id: int) -> Path:
 
     Returns:
         The absolute path to the specified package's database.
+
+    Examples:
+        ```{python}
+        #| output: true
+        import os
+
+        import seedcase_sprout.core as sp
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        # sp.path_package_database(package_id=1)
+        ```
     """
     path = path_package(package_id) / "database.sql"
     return check_is_file(path)
@@ -41,6 +67,19 @@ def path_package_properties(package_id: int) -> Path:
 
     Returns:
         The absolute path to the specified package's properties file.
+
+    Examples:
+        ```{python}
+        #| output: true
+        import os
+
+        import seedcase_sprout.core as sp
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        sp.path_package_properties(package_id=1)
+        ```
     """
     path = path_package(package_id) / "datapackage.json"
     return check_is_file(path)
@@ -54,6 +93,19 @@ def path_packages() -> Path:
 
     Raises:
         NotADirectoryError: If the packages folder doesn't exist.
+
+    Examples:
+        ```{python}
+        #| output: true
+        import os
+
+        import seedcase_sprout.core as sp
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        sp.path_packages()
+        ```
     """
     path = path_sprout_global() / "packages"
     return create_dir(path) if not path.exists() else check_is_dir(path)

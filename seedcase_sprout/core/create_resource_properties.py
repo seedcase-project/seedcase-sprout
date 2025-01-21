@@ -39,6 +39,25 @@ def create_resource_properties(
         NotADirectoryError: If path does not point to a directory.
         NotPropertiesError: If properties are not correct Frictionless
             resource properties.
+
+    Examples:
+        ```{python}
+        #| output: true
+        import os
+
+        import seedcase_sprout.core as sp
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        sp.create_resource_properties(
+            path=sp.path_resource(package_id=1, resource_id=1),
+            properties=sp.ResourceProperties(
+                name="new-resource-name",
+                path="data.parquet"
+            ),
+        )
+        ```
     """
     properties = properties.compact_dict
     check_is_dir(path)

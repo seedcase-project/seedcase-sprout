@@ -31,6 +31,50 @@ def write_resource_properties(
         NotPropertiesError: If the resource or package properties are not correct, i.e.,
             they are incomplete or don't follow the Data Package specification.
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
+
+    Examples:
+        ```{python}
+        #| output: false
+        #| echo: false
+        import os
+
+        import seedcase_sprout.core as sp
+        from seedcase_sprout.core.write_json import write_json
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        edited_properties = sp.edit_package_properties(
+            path=sp.path_package_properties(package_id=1),
+            properties=sp.PackageProperties(
+                name="new-package-name",
+                title="New Package Title",
+                description="This is a package description",
+            ),
+        ).compact_dict
+
+        write_json(edited_properties, path=sp.path_package_properties(package_id=1))
+        ```
+
+        ```{python}
+        #| output: true
+        import os
+
+        import seedcase_sprout.core as sp
+
+        # Set global path for the example
+        os.environ["SPROUT_GLOBAL"] = ".storage/"
+
+        sp.write_resource_properties(
+            path=sp.path_package_properties(package_id=1),
+            resource_properties=sp.ResourceProperties(
+                name="new-resource-name",
+                title="New resource name",
+                description="This is a new resource",
+                path="resources/1/data.parquet",
+            ),
+        )
+        ```
     """
     resource_properties = resource_properties.compact_dict
     check_is_file(path)
