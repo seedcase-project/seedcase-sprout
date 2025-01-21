@@ -13,8 +13,6 @@ we create for Sprout should strongly follow the same design principles
 and patterns described there. Unless explicitly stated otherwise,
 Sprout's design adds to but does not replace the overall design.
 
-Below
-
 There are two main sections of this design documentation:
 
 -   [Architecture](architecture/index.qmd): The architecture section
@@ -47,8 +45,8 @@ re-used
 The aim of *Sprout Core* (this package) is to:
 
 1.  Build a flexible, extensible, and fine-grained set of
-    functionalities that implement the Sprout's overall design, that way
-    users can easily configure and customize Sprout to their own needs.
+    functionalities that implement Sprout's overall design, enabling
+    users to configure and customize Sprout to their own needs.
     Specifically, to build functionality that supports us in building
     more opinionated interfaces and extensions of Sprout.
 
@@ -58,14 +56,14 @@ Overall, Sprout must:
 
 -   Run on Windows, MacOS, and Linux: Our potential users work on any of
     these systems (including servers), so we need to ensure
-    compatibility across most commonly used operating systems.
+    compatibility across the most commonly used operating systems.
 -   Integrate GDPR, privacy, and security compliance: Many of our users
     work with health or personally sensitive data.
 -   Run remotely on servers and locally on computers: The location where
     data are stored should be flexible based on the needs and
     restrictions of the user.
 -   Be able to handle a variety of data file sizes: While the size of
-    research data does not compare to those found in industry, it can
+    research data does not compare to that found in industry, it can
     still become large enough that it requires special care and
     handling.
 -   Store data in a format that is open source, integrates with many
@@ -76,7 +74,7 @@ Overall, Sprout must:
     or group of users (for example in a server setting): Researchers
     rarely collect and work on one data source at any given time. So,
     Sprout must be able to handle multiple distinct data sources.
--   Upload and update data: Data can be added to Sprout could happen in
+-   Upload and update data: Data can be added to Sprout in
     batches or on a more frequent basis. We anticipate that batch
     uploads will be the most common.
 -   Store, organize, and manage metadata connected to the data: Metadata
@@ -86,7 +84,7 @@ Overall, Sprout must:
 -   Track changes to the data in a changelog and versioning system: Data
     are not static and can change over time. Sprout must track these
     changes and provide a way to show, track, and manage versions of the
-    data. This is also necessary for legal compliance for auditing and
+    data. This is also necessary for legal compliance, auditing and
     record-keeping.
 
 In general, Sprout will not:
