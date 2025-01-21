@@ -45,7 +45,6 @@ def path_resource_data(package_id: int, resource_id: int) -> Path:
 
     Examples:
         ```{python}
-        #| output: false
         #| echo: false
         f = open(".storage/packages/1/resources/1/data.parquet", "x")
         ```
