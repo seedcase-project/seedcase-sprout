@@ -40,9 +40,7 @@ research contexts. Specifically, Sprout aims to:
 
 Aligning with our modular design pattern to build software that has a
 focused and narrow scope as well as that can be easily extended or
-re-used
-
-The aim of *Sprout Core* (this package) is to:
+customized, *Sprout Core* (this package) has an additional aim to:
 
 1.  Build a flexible, extensible, and fine-grained set of
     functionalities that implement Sprout's overall design, enabling
@@ -74,9 +72,9 @@ Overall, Sprout must:
     or group of users (for example in a server setting): Researchers
     rarely collect and work on one data source at any given time. So,
     Sprout must be able to handle multiple distinct data sources.
--   Upload and update data: Data can be added to Sprout in
-    batches or on a more frequent basis. We anticipate that batch
-    uploads will be the most common.
+-   Upload and update data: Data can be added to Sprout in batches or on
+    a more frequent basis. We anticipate that batch uploads will be the
+    most common.
 -   Store, organize, and manage metadata connected to the data: Metadata
     are vital to understanding the data and its context, without which
     data can be near useless. Sprout needs to make managing and
@@ -96,10 +94,9 @@ In general, Sprout will not:
 Aside from the overall requirements for Sprout, the requirements for
 this *core* module of Sprout are:
 
--   Any individual functionality be as independent as possible: To keep
-    it flexible and extensible, each functionality should (ideally) be
-    able to run on its own without needing to depend on other
-    functionality.
+-   Individual pieces of functionality should be independent: To keep it
+    flexible and extensible, each functionality should (ideally) be able
+    to run on its own without needing to depend on other functionality.
 -   Assume as little as possible about the environment: For each
     functionality, ideally assume as little about the current state of
     the environment as possible. For instance, what the exact path is on
