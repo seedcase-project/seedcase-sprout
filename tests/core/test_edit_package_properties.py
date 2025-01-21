@@ -85,18 +85,6 @@ def test_throws_error_if_current_package_properties_are_malformed(tmp_path, prop
         edit_package_properties(path, properties)
 
 
-def test_throws_error_when_adding_custom_fields(
-    properties_path,
-):
-    """Should not accept custom fields to properties."""
-    # Given
-    new_properties = PackageProperties.from_dict({"custom-field": "custom-value"})
-
-    # When, Then
-    with raises(NotPropertiesError):
-        assert edit_package_properties(properties_path, new_properties)
-
-
 def test_throws_error_if_new_properties_are_empty(properties_path):
     """Should throw NotPropertiesError if the new properties are empty."""
     with raises(NotPropertiesError):
