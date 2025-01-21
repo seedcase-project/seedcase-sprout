@@ -26,7 +26,7 @@ def check_package_properties(
         `properties` if all checks pass.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, one for each check that failed.
+        ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
     errors = checks.check_package_properties(properties) + get_sprout_package_errors(
         properties

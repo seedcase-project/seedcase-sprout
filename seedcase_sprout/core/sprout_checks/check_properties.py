@@ -23,7 +23,7 @@ def check_properties(properties: dict, ignore: list[CheckErrorMatcher] = []) -> 
         `properties`, if all checks pass.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, one for each check that failed.
+        ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
     errors = checks.check_properties(properties)
     errors += get_sprout_package_errors(properties)
