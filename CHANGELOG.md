@@ -1,3 +1,39 @@
+## 0.11.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add `check_properties()` (#967)
+
+## 0.10.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add `check_package_properties()` (#966)
+
+## 0.9.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add `check_resource_properties()` (#965)
+
+## 0.8.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: collect all Sprout-specific property errors (#964)
+
+## 0.7.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add functions to check required and blank fields (#963)
+
+## 0.6.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add simple helper functions (#962)
+
 ## 0.5.0 (2025-01-20)
 
 ### Feat
