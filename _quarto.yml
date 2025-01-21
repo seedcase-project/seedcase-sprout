@@ -2,6 +2,10 @@ project:
   type: seedcase-theme
   pre-render: rm -rf .storage
   render:
+    - "docs/reference/create_package*.qmd"
+    # create_resource_structure must run after create_package_structure
+    # but before create_resource_properties for examples to run correctly
+    - "docs/reference/create_resource_structure.qmd"
     - "docs/*"
     - "index.qmd"
 
