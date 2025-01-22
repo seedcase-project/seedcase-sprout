@@ -60,6 +60,11 @@ object), built using the `Properties` object, that describe the package
 and resource(s) in the package. This metadata is stored in the
 `datapackage.json` file and follows the Frictionless Data specification.
 
+::: {.callout-important appearance="default" icon="true"}
+Functions shown in orange are not yet implemented while those in blue
+are implemented.
+:::
+
 ## Data package functions
 
 ::: {.callout-warning collapse="true"}
