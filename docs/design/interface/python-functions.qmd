@@ -62,19 +62,7 @@ and resource(s) in the package. This metadata is stored in the
 
 ## Data package functions
 
-::: {.callout-note collapse="true"}
-### `list_packages(path)`
-
-This function lists some basic details contained in the
-`datapackage.json` files of all data packages found in the `path`
-location. This would be a list, showing very basic information that
-would be allowed by privacy and legal regulations (e.g. the package ID
-as well as the name, description, and contact persons for each package).
-Use `path_packages()` to provide the path to the place packages are
-stored by default. Outputs a JSON object by default.
-:::
-
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `view_package_properties(path)`
 
 This will show the information contained within the `datapackage.json`
