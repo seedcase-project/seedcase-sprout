@@ -103,15 +103,14 @@ See the help documentation with `help(edit_package_properties())` for
 more details.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `delete_package(path, confirm)`
 
 Completely delete a specific package and all it's data resources.
 Because this action would be permanent, the `confirm` argument would
 default to `false` so that the user needs to explicitly provide `true`
 to the function argument as confirmation. This is done to prevent
-accidental deletion. Use `path_package()` function in the `path` to get
-the correct location. Outputs `true` if the deletion was successful.
+accidental deletion. Outputs `true` if the deletion was successful.
 :::
 
 ::: {.callout-note collapse="true"}
