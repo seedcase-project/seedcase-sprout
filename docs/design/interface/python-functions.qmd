@@ -72,20 +72,16 @@ and only basic details of the resources within the package. Use
 object.
 :::
 
-::: {.callout-note collapse="true"}
-### `create_package_structure(path)`
+::: {.callout-warning collapse="true"}
+### `create_package_properties(properties)`
 
 This is the first function to use to create a new data package. It
-assigns a package ID and then creates a package folder and all the
-necessary files for a package (excluding the resources), as described in
-the [Outputs](outputs.qmd) section. Creates the files and then outputs
-the file paths for the created files. Use `path_packages()` to provide
-the correct path location to create this structure.
-
-![Diagram showing the internal function flow of the
-`create_package_structure()`
-function.](images/core/create-package-structure.svg){#fig-create-package-structure
-fig-alt="A Plant UML schematic of the detailed code flow within the `create_package_structure()` function."}
+generates a template for the `datapackage.json` file that the user needs
+to fill in required fields by providing the `properties` argument using
+the helper `PackageProperties` class. Outputs a full Properties object.
+Use `write_package_properties()` to store the properties to the
+`datapackage.json` file.
+:::
 :::
 
 ::: {.callout-note collapse="true"}
