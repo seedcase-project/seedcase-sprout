@@ -5,33 +5,32 @@ callout-appearance: "minimal"
 ---
 
 ::: {.callout-important appearance="default" icon="true"}
-We created this document, and especially the function diagrams, mainly
-as a way to help us as a team all understand and agree on what we're
-making and what needs to be worked on. Which means that the descriptions
-and explanations of these functions, in particular the diagrams, will
-likely change quite a bit and may even be deleted later when they are no
-longer needed.
+We created this document mainly as a way to help us as a team all
+understand and agree on what we're making and what needs to be worked
+on. Which means that the descriptions and explanations of these
+functions will likely change quite a bit and may even be deleted later
+when they are no longer needed.
 :::
 
 Based on the [naming scheme](/docs/design/architecture/naming.qmd) and
 the [Frictionless Data Package standard](https://datapackage.org), these
-are the core external-facing functions in Sprout, which are stored in
-`sprout/core/`. See the [Outputs](outputs.qmd) section for an overview
-and explanation of the different outputs provided by Sprout.
+are the core external-facing functions in Sprout. See the
+[Outputs](outputs.qmd) section for an overview and explanation of the
+different outputs provided by Sprout.
 
 There are some small differences between the naming scheme and the
 functions described here:
 
 1.  Whenever `view` is used, it is always for one object (either a
     package or a resource). Whenever `list` is used, it is always to
-    show basic details of all existing objects of a given type (packages
-    or resources). Both `view` and `list` only ever show the information
+    show basic details of all existing objects of a given type (e.g.
+    resources). Both `view` and `list` only ever show the information
     contained in the `datapackage.json` and never show actual data. We
-    don't provide the ability to view data directly since it is [out of
-    scope](index.qmd#goals) of Sprout and we want to minimise any
-    security and privacy risks. The IT admin and data package admin
-    users can always view the data directly (outside of Sprout) as they
-    will have the appropriate IT and legal permissions.
+    don't provide the ability for Sprout to show personally-identifiable
+    data directly since it is [out of scope](index.qmd#goals) of Sprout
+    and we want to minimise any security and privacy risks. Those with
+    at least read access to the filesystem will still be able to see the
+    data directly.
 2.  `edit` only ever edits the `datapackage.json` which contains the
     properties/metadata of the package or resource(s) but never edits
     the data itself. If there is a need for updates to the data itself,
@@ -52,13 +51,14 @@ functions to get the correct path object for the specific function. It's
 designed this way to make it more flexible to where individual packages
 and resources are stored and to make it a bit easier to write tests for
 the functions. For a similar reason, most of the functions output either
-a JSON file or path object to make them easier to test.
+a `dict` Python object, a custom `Properties` dataclass, or a path
+object to make them easier to test.
 
-Several of the functions have an optional argument called `properties`.
-The properties argument is a list of key-value pairs (as a JSON object)
-that describe the package and resource(s) in the package. This metadata
-is stored in the `datapackage.json` file and follows the Frictionless
-Data specification.
+Several of the functions have an argument called `properties`. The
+properties argument is a list of key-value pairs (as a JSON-style `dict`
+object), built using the `Properties` object, that describe the package
+and resource(s) in the package. This metadata is stored in the
+`datapackage.json` file and follows the Frictionless Data specification.
 
 ## Data package functions
 
