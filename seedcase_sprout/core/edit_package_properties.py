@@ -2,6 +2,7 @@ from pathlib import Path
 
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_package_properties import (
     check_package_properties,
@@ -9,7 +10,9 @@ from seedcase_sprout.core.sprout_checks.check_package_properties import (
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
 
 
-def edit_package_properties(path: Path, properties: dict) -> dict:
+def edit_package_properties(
+    path: Path, properties: PackageProperties
+) -> PackageProperties:
     """Edits the properties of an existing package.
 
     Use this any time you want to edit the package's properties and particularly
@@ -45,6 +48,8 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
             package properties. A group of `CheckError`s, one error for each failed
             check.
     """
+    properties = properties.compact_dict
+
     check_is_file(path)
 
     properties.pop("resources", None)
@@ -60,7 +65,9 @@ def edit_package_properties(path: Path, properties: dict) -> dict:
 
     current_properties.update(properties)
 
-    return check_properties(
+    check_properties(
         current_properties,
         ignore=[CheckErrorMatcher(validator="required", json_path="resources")],
     )
+
+    return PackageProperties.from_dict(current_properties)
