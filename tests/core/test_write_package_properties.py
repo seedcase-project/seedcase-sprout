@@ -47,7 +47,7 @@ def test_writes_properties_when_file_does_not_exist(path, package_properties):
 
 
 def test_rewrites_package_properties_when_file_exists(path, package_properties):
-    """Should write properties to file when the file already exists, updating existing
+    """Should write properties to file when the file already exists, rewriting existing
     package properties."""
     old_properties = package_properties.compact_dict | {"name": "old-name"}
     write_json(old_properties, path)
@@ -57,7 +57,7 @@ def test_rewrites_package_properties_when_file_exists(path, package_properties):
 
 
 def test_rewrites_resource_properties_when_file_exists(path, package_properties):
-    """Should write properties to file when the file already exists, updating existing
+    """Should write properties to file when the file already exists, rewriting existing
     resource properties."""
     old_properties = replace(
         package_properties,

@@ -11,8 +11,7 @@ def write_package_properties(path: Path, properties: PackageProperties) -> Path:
 
     Writes a set of package properties (with or without resource properties) back to the
     `datapackage.json` file. The `path` argument is the location of the
-    `datapackage.json` file. Use the `path_properties()` function to provide this path
-    to the correct location. Returns the same path object as given in the `path`
+    `datapackage.json` file. Returns the same path object as given in the `path`
     argument.
 
     Args:
