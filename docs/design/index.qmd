@@ -40,7 +40,7 @@ research contexts. Specifically, Sprout aims to:
 
 Aligning with our modular design pattern to build software that has a
 focused and narrow scope as well as that can be easily extended or
-customized, *Sprout Core* (this package) has an additional aim to:
+customized, *Sprout core* (this package) has an additional aim to:
 
 1.  Build a flexible, extensible, and fine-grained set of
     functionalities that implement Sprout's overall design, enabling
@@ -61,7 +61,7 @@ Overall, Sprout must:
     data are stored should be flexible based on the needs and
     restrictions of the user.
 -   Be able to handle a variety of data file sizes: While the size of
-    research data does not compare to that found in industry, it can
+    research data usually does not compare to that found in industry, it can
     still become large enough that it requires special care and
     handling.
 -   Store data in a format that is open source, integrates with many
