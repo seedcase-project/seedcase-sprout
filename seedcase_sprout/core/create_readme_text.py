@@ -1,4 +1,7 @@
-def create_readme_text(properties: dict) -> str:
+from seedcase_sprout.core.properties import PackageProperties
+
+
+def create_readme_text(properties: PackageProperties) -> str:
     """Creates a string containing the README text.
 
     Args:
@@ -12,8 +15,8 @@ def create_readme_text(properties: dict) -> str:
     # a Markdown list.
 
     readme_text = (
-        f"# {properties["name"]}: {properties["title"]}\n\n"
-        f"{properties["description"]}\n\n"
-        f"There are {len(properties["resources"])} resources in this package."
+        f"# {properties.name}: {properties.title}\n\n"
+        f"{properties.description}\n\n"
+        f"There are {len(properties.resources or [])} resources in this package."
     )
     return readme_text
