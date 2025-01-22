@@ -662,14 +662,18 @@ class PackageProperties(Properties):
         import seedcase_sprout.core as sp
         print(sp.PackageProperties())
         print(sp.PackageProperties(name="diabetes-cohort", title="Diabetes Cohort"))
-        print(PackageProperties(licenses=[LicenseProperties(name="ODC-BY-1.0")]))
+        print(sp.PackageProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
+
+        # To allow multiline strings, use dedent.
+        from textwrap import dedent
         print(sp.PackageProperties(
             title="Birds of North America",
-            description='''
+            description=dedent('''
                 # Markdown header
 
                 A dataset of bird sightings. With some **bolding**.
-            '''
+                '''
+            )
         ))
         ```
     """
