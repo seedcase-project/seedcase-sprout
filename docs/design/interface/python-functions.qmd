@@ -99,12 +99,8 @@ Use `write_text()` to save the text to the `README.md` file.
 ::: {.callout-note collapse="true"}
 ### `edit_package_properties(path, properties)`
 
-See the help documentation with `help(edit_package_properties())` for more details.
-
-![Diagram showing the internal function flow of the
-`edit_package_properties()`
-function.](images/core/edit-package-properties.svg){#fig-edit-package-properties
-fig-alt="A Plant UML schematic of the detailed code flow within the `edit_package_properties()` function."}
+See the help documentation with `help(edit_package_properties())` for
+more details.
 :::
 
 ::: {.callout-note collapse="true"}
