@@ -2,7 +2,7 @@ from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
 
 
-def exclude_errors(
+def exclude_matching_errors(
     errors: list[CheckError], matchers: list[CheckErrorMatcher]
 ) -> list[CheckError]:
     """Returns a new list of errors, with errors matched by any `matchers` filtered out.
