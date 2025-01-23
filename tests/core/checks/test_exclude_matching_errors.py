@@ -1,6 +1,6 @@
 from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.checks.exclude_errors import exclude_matching_errors
+from seedcase_sprout.core.checks.exclude_matching_errors import exclude_matching_errors
 
 errors = [
     CheckError("'path' is a required property", "$.path", "required"),
