@@ -1,6 +1,6 @@
 from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.checks.exclude_errors import exclude_errors
+from seedcase_sprout.core.checks.exclude_errors import exclude_matching_errors
 
 errors = [
     CheckError("'path' is a required property", "$.path", "required"),
@@ -13,13 +13,13 @@ errors = [
 
 def test_empty_matchers_have_no_effect():
     """An empty list as a list of matchers should have no effect."""
-    assert exclude_errors(errors, []) == errors
+    assert exclude_matching_errors(errors, []) == errors
 
 
 def test_not_matching_matchers_have_no_effect():
     """If no matchers match, no errors should be excluded."""
     assert (
-        exclude_errors(
+        exclude_matching_errors(
             errors,
             [
                 CheckErrorMatcher(validator="no-match"),
@@ -38,7 +38,7 @@ def test_not_matching_matchers_have_no_effect():
 def test_matched_errors_are_excluded():
     """If any matchers match, the error should be excluded."""
     assert (
-        exclude_errors(
+        exclude_matching_errors(
             errors,
             [
                 CheckErrorMatcher(json_path="name", validator="required"),
