@@ -118,9 +118,9 @@ accidental deletion. Outputs `true` if the deletion was successful.
 
 Writes the properties object containing package properties (with or
 without resource properties) back to the `datapackage.json` file. The
-`path` argument is the path to the `datapackage.json` file. The `path`
+`path` argument is the path to the folder that will have or currently has the `datapackage.json` file. The `path`
 argument is to the existing but empty folder or to a folder that doesn't
-exist but will be created by this function. Will overwrite by default if
+exist but will be created by this function. Will overwrite the `datapackage.json` file by default if
 the file already exists. Returns the same path object as given in the
 `path` argument.
 :::
