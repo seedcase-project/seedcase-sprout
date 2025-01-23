@@ -1,6 +1,6 @@
 from seedcase_sprout.core import checks
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.checks.exclude_errors import exclude_errors
+from seedcase_sprout.core.checks.exclude_matching_errors import exclude_matching_errors
 from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
 )
@@ -31,7 +31,7 @@ def check_package_properties(
     errors = checks.check_package_properties(properties) + get_sprout_package_errors(
         properties
     )
-    errors = exclude_errors(errors, ignore)
+    errors = exclude_matching_errors(errors, ignore)
     errors = sorted(set(errors))
 
     if errors:
