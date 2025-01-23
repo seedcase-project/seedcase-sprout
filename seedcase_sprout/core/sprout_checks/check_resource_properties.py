@@ -1,6 +1,6 @@
 from seedcase_sprout.core import checks
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.checks.exclude_errors import exclude_errors
+from seedcase_sprout.core.checks.exclude_matching_errors import exclude_matching_errors
 from seedcase_sprout.core.sprout_checks.get_sprout_resource_errors import (
     get_sprout_resource_errors,
 )
@@ -34,7 +34,7 @@ def check_resource_properties(
     errors = checks.check_resource_properties(properties) + get_sprout_resource_errors(
         properties
     )
-    errors = exclude_errors(
+    errors = exclude_matching_errors(
         errors,
         [
             *ignore,
