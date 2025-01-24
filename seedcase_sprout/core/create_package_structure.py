@@ -35,15 +35,17 @@ def create_package_structure(path: Path) -> list[Path]:
 
     Examples:
         ```{python}
-        #| output: true
-        import os
+        import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
 
-        sp.create_package_structure(path=sp.path_packages())
+            # Create a package structure
+            sp.create_package_structure(path=temp_path)
         ```
     """
     check_is_dir(path)

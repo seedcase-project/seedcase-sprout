@@ -16,7 +16,6 @@ from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .edit_package_properties import edit_package_properties
 
-# from .write_resource_to_database import *
 # from .delete_resource_raw_file import *
 # from .delete_resource_data import *
 # from .delete_resource_properties import *
@@ -24,9 +23,8 @@ from .edit_package_properties import edit_package_properties
 # TODO: Consider having all these in one module.
 from .path_package_functions import (
     path_package,
-    path_package_database,
-    path_package_properties,
     path_packages,
+    path_properties,
 )
 from .path_resource_functions import (
     path_resource,
@@ -91,14 +89,12 @@ __all__ = [
     # "write_resource_data_to_raw",
     # "write_resource_parquet",
     "write_resource_properties",
-    # "write_resource_to_database",
     # "delete_resource_raw_file",
     # "delete_resource_data",
     # "delete_resource_properties",
     # Path -----
     "path_package",
-    "path_package_database",
-    "path_package_properties",
+    "path_properties",
     "path_packages",
     "path_resource",
     "path_resource_data",

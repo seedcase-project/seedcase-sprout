@@ -34,46 +34,39 @@ def write_resource_properties(
 
     Examples:
         ```{python}
-        #| output: false
-        #| echo: false
-        import os
-
-        import seedcase_sprout.core as sp
-        from seedcase_sprout.core.write_json import write_json
-
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
-
-        edited_properties = sp.edit_package_properties(
-            path=sp.path_package_properties(package_id=1),
-            properties=sp.PackageProperties(
-                name="new-package-name",
-                title="New Package Title",
-                description="This is a package description",
-            ),
-        ).compact_dict
-
-        write_json(edited_properties, path=sp.path_package_properties(package_id=1))
-        ```
-
-        ```{python}
-        #| output: true
-        import os
+        import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        temp_dir = Path(tempfile.TemporaryDirectory().name)
+        temp_dir.mkdir()
 
-        sp.write_resource_properties(
-            path=sp.path_package_properties(package_id=1),
-            resource_properties=sp.ResourceProperties(
-                name="new-resource-name",
-                title="New resource name",
-                description="This is a new resource",
-                path="resources/1/data.parquet",
-            ),
-        )
+        # Create package and resource structure first
+        sp.create_package_structure(path=temp_dir)
+        sp.create_resource_structure(path=temp_dir / "1" / "resources")
+
+        # TODO: Write package properties that passes checks
+        # Write package properties
+        # sp.write_package_properties(
+        #     path=temp_dir / "1" / "datapackage.json",
+        #     package_properties=sp.PackageProperties(
+        #         title="New Package Title",
+        #         name="new-package-name",
+        #         description="New Description",
+        #     ),
+
+        # Write resource properties
+        # sp.write_resource_properties(
+        #     path=temp_dir / "1" / "datapackage.json",
+        #     resource_properties=sp.ResourceProperties(
+        #         name="new-resource-name",
+        #         title="New resource name",
+        #         description="This is a new resource",
+        #         path="data.parquet",
+        #     ),
+        # )
         ```
     """
     resource_properties = resource_properties.compact_dict

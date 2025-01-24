@@ -1,3 +1,69 @@
+## 0.13.0 (2025-01-24)
+
+### Feat
+
+- ✨ output everything from code cells in Reference docs (#997)
+
+## 0.12.2 (2025-01-24)
+
+### Refactor
+
+- :recycle: `path_package_properties()` -> `path_properties()` (#996)
+
+## 0.12.1 (2025-01-23)
+
+### Refactor
+
+- :recycle: use `CheckErrorMatcher` in Sprout checks (#973)
+
+## 0.12.0 (2025-01-23)
+
+### Feat
+
+- :sparkles: add `CheckErrorMatcher` object (#972)
+
+## 0.11.1 (2025-01-22)
+
+### Refactor
+
+- ♻️  user `Properties` classes in user facing functions (#976)
+
+## 0.11.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add `check_properties()` (#967)
+
+## 0.10.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add `check_package_properties()` (#966)
+
+## 0.9.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add `check_resource_properties()` (#965)
+
+## 0.8.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: collect all Sprout-specific property errors (#964)
+
+## 0.7.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add functions to check required and blank fields (#963)
+
+## 0.6.0 (2025-01-21)
+
+### Feat
+
+- :sparkles: add simple helper functions (#962)
+
 ## 0.5.0 (2025-01-20)
 
 ### Feat
