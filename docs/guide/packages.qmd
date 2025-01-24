@@ -89,7 +89,7 @@ properties, you can use the `edit_package_properties()` function:
 
 ``` {python}
 package_properties = sp.edit_package_properties(
-  path=sp.path_package_properties(package_id=1),
+  path=sp.path_properties(package_id=1),
   properties=properties,
 )
 pprint(package_properties)
@@ -106,7 +106,7 @@ To save the package properties to the `datapackage.json` file, run:
 ``` {python}
 package_path = sp.write_package_properties(
   properties=package_properties,
-  path=sp.path_package_properties(package_id=1)
+  path=sp.path_properties(package_id=1)
 )
 pprint(package_path)
 ```
