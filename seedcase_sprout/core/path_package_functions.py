@@ -20,13 +20,20 @@ def path_package(package_id: int) -> Path:
         ```{python}
         #| output: true
         import os
+        import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_package(package_id=1)
+            # Create a package structure first
+            sp.create_package_structure(path=sp.path_packages())
+
+            # Get the path to the package
+            sp.path_package(package_id=1)
         ```
     """
     path = path_packages() / str(package_id)
@@ -46,13 +53,19 @@ def path_package_properties(package_id: int) -> Path:
         ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_package_properties(package_id=1)
+            # Create a package structure first
+            sp.create_package_structure(path=sp.path_packages())
+
+            # Get the path to the package properties
+            sp.path_package_properties(package_id=1)
         ```
     """
     path = path_package(package_id) / "datapackage.json"
@@ -72,13 +85,16 @@ def path_packages() -> Path:
         ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_packages()
+            # Get the path to the packages folder
+            sp.path_packages()
         ```
     """
     path = path_sprout_global() / "packages"

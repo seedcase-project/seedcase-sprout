@@ -20,13 +20,20 @@ def path_resource(package_id: int, resource_id: int) -> Path:
         ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_resource(package_id=1, resource_id=1)
+            # Create a package and resource structure first
+            sp.create_package_structure(path=sp.path_packages())
+            sp.create_resource_structure(path=sp.path_resources(package_id=1))
+
+            # Get the path to the resource
+            sp.path_resource(package_id=1, resource_id=1)
         ```
     """
     path = path_resources(package_id) / str(resource_id)
@@ -45,20 +52,32 @@ def path_resource_data(package_id: int, resource_id: int) -> Path:
 
     Examples:
         ```{python}
-        #| echo: false
-        f = open(".storage/packages/1/resources/1/data.parquet", "x")
-        ```
-
-        ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_resource_data(package_id=1, resource_id=1)
+            # Create a package and resource structure first
+            sp.create_package_structure(path=sp.path_packages())
+            sp.create_resource_structure(path=sp.path_resources(package_id=1))
+
+            # TODO: Add data to resource
+            # sp.write_resource_data_to_raw(
+            #   package_id=1,
+            #   resource_id=1,
+            #   data="path/to/data.csv")
+
+            # sp.write_resource_parquet(
+            #     raw_files=sp.path_resource_raw_files(package_id=1, resource_id=1),
+            #     path=sp.path_resource_data(package_id=1, resource_id=1))
+
+            # Get the path to the resource data
+            # sp.path_resource_data(package_id=1, resource_id=1)
         ```
     """
     path = path_resource(package_id, resource_id) / "data.parquet"
@@ -79,13 +98,20 @@ def path_resource_raw(package_id: int, resource_id: int) -> Path:
         ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_resource_raw(package_id=1, resource_id=1)
+            # Create a package and resource structure first
+            sp.create_package_structure(path=sp.path_packages())
+            sp.create_resource_structure(path=sp.path_resources(package_id=1))
+
+            # Get the path to the resource's raw folder
+            sp.path_resource_raw(package_id=1, resource_id=1)
         ```
     """
     path = path_resource(package_id, resource_id) / "raw"
@@ -108,21 +134,27 @@ def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
 
     Examples:
         ```{python}
-        #| echo: false
-        f = open(".storage/packages/1/resources/1/raw/file1.csv", "x")
-        f = open(".storage/packages/1/resources/1/raw/file2.csv", "x")
-        ```
-
-        ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_resource_raw_files(package_id=1, resource_id=1)
+            # Create a package and resource structure first
+            sp.create_package_structure(path=sp.path_packages())
+            sp.create_resource_structure(path=sp.path_resources(package_id=1))
+
+            # TODO: Add data/raw files to resource
+            # sp.write_resource_data_to_raw(
+            #     path=sp.path_resource_raw(package_id=1, resource_id=1),
+            #     data="path/to/data.csv")
+
+            # Get the path to the resource's raw files
+            sp.path_resource_raw_files(package_id=1, resource_id=1)
         ```
     """
     return list(path_resource_raw(package_id, resource_id).iterdir())
@@ -141,13 +173,19 @@ def path_resources(package_id: int) -> Path:
         ```{python}
         #| output: true
         import os
+        import tempfile
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_resources(package_id=1)
+            # Create a package structure first
+            sp.create_package_structure(path=sp.path_packages())
+
+            # Get the path to the resource's raw files
+            sp.path_resources(package_id=1)
         ```
     """
     path = path_package(package_id) / "resources"

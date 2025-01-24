@@ -53,21 +53,27 @@ def edit_package_properties(
     Examples:
         ```{python}
         #| output: true
-        import os
+        import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
 
-        sp.edit_package_properties(
-            path=sp.path_package_properties(package_id=1),
-            properties=sp.PackageProperties(
-                title="New Package Title",
-                name="new-package-name",
-                description="New Description",
-            ),
-        )
+            # Create a package structure first
+            sp.create_package_structure(path=temp_path)
+
+            # Edit package properties
+            sp.edit_package_properties(
+                path=temp_path / "1" / "datapackage.json",
+                properties=sp.PackageProperties(
+                    title="New Package Title",
+                    name="new-package-name",
+                    description="New Description",
+                ),
+            )
         ```
     """
     properties = properties.compact_dict

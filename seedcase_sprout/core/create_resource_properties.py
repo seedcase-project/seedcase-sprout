@@ -43,20 +43,27 @@ def create_resource_properties(
     Examples:
         ```{python}
         #| output: true
-        import os
+        import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
 
-        sp.create_resource_properties(
-            path=sp.path_resource(package_id=1, resource_id=1),
-            properties=sp.ResourceProperties(
-                name="new-resource-name",
-                path="data.parquet"
-            ),
-        )
+            # Create a package and resource structure first
+            sp.create_package_structure(path=temp_path)
+            sp.create_resource_structure(path=temp_path / "1" / "resources")
+
+            # Create resource properties
+            sp.create_resource_properties(
+                path=temp_path / "1" / "resources" / "1",
+                properties=sp.ResourceProperties(
+                    name="new-resource-name",
+                    path="data.parquet",
+                ),
+            )
         ```
     """
     properties = properties.compact_dict

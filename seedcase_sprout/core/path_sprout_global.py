@@ -13,14 +13,17 @@ def path_sprout_global() -> Path:
     Examples:
         ```{python}
         #| output: true
+        import tempfile
         import os
 
         import seedcase_sprout.core as sp
 
-        # Set global path for the example
-        os.environ["SPROUT_GLOBAL"] = ".storage/"
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
 
-        sp.path_sprout_global()
+            # Get the path to Sprout's global directory
+            sp.path_sprout_global()
         ```
     """
     return get_sprout_global_envvar() or create_sprout_global_path()
