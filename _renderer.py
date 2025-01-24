@@ -12,6 +12,8 @@ from tabulate import tabulate
 
 
 class Renderer(MdRenderer):
+    style = "seedcase"
+
     @dispatch
     def render_header(self, el: layout.Doc) -> str:
         """Render the header of a docstring, including any anchors."""
