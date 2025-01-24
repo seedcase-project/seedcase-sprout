@@ -1,3 +1,21 @@
+## 0.12.2 (2025-01-24)
+
+### Refactor
+
+- :recycle: `path_package_properties()` -> `path_properties()` (#996)
+
+## 0.12.1 (2025-01-23)
+
+### Refactor
+
+- :recycle: use `CheckErrorMatcher` in Sprout checks (#973)
+
+## 0.12.0 (2025-01-23)
+
+### Feat
+
+- :sparkles: add `CheckErrorMatcher` object (#972)
+
 ## 0.11.1 (2025-01-22)
 
 ### Refactor
