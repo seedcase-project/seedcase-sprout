@@ -7,7 +7,6 @@
 # from .view_package_properties import *
 from .create_package_structure import create_package_structure
 
-# from .write_package_properties import *
 # from .delete_package import *
 # Resources -----
 # from .list_resources import *
@@ -48,6 +47,7 @@ from .properties import (
     TableSchemaForeignKeyProperties,
     TableSchemaProperties,
 )
+from .write_package_properties import write_package_properties
 
 # from .extract_resource_properties import *
 # from .edit_resource_properties import *
@@ -77,13 +77,13 @@ __all__ = [
     # "view_package_properties",
     "create_package_structure",
     "edit_package_properties",
-    # "write_package_properties",
+    "write_package_properties",
     # "delete_package",
     # Resources -----
     # "list_resources",
     # "view_resource",
     "create_resource_structure",
-    # "create_resource_properties",
+    "create_resource_properties",
     # "extract_resource_properties",
     # "edit_resource_properties",
     # "write_resource_data_to_raw",
