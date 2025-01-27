@@ -72,7 +72,6 @@ def write_resource_properties(
         # )
         ```
     """
-    resource_properties = resource_properties.compact_dict
     check_is_file(path)
     check_resource_properties(resource_properties)
 
@@ -82,6 +81,7 @@ def write_resource_properties(
         ignore=[CheckErrorMatcher(validator="required", json_path="resources")],
     )
 
+    resource_properties = resource_properties.compact_dict
     resource_id = get_resource_id_from_properties(resource_properties)
     current_resource = get_resource_properties(package_properties, resource_id)
     if current_resource:
