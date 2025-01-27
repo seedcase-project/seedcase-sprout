@@ -4,7 +4,7 @@ title: "Input data"
 
 The types of data we expect or anticipate to be input into Sprout are
 described in this section. We design Sprout with these types of data and
-formats described below.
+formats in mind.
 
 ## Domain-specific types of data
 
@@ -21,10 +21,10 @@ Health research data tends to consist of these types of data:
     pipelines in place.
 -   **Register**: This type of data is highly dependent on the country
     or region. Generally, this data is collected for national or
-    regional administrative purposes, such as, recording employment
+    regional administrative purposes, such as recording employment
     status, income, address, medication purchases, and diagnoses. Like
-    the routine clinical data, the pipelines in place for processing and
-    storage of this data are usually very extensive and well
+    for routine clinical data, the pipelines in place for processing and
+    storing this data are usually very extensive and well
     established.
 -   **Biological sample data**: This type of data is generated from
     biological samples, like blood, saliva, semen, hair, or urine. Data
@@ -32,10 +32,10 @@ Health research data tends to consist of these types of data:
     volumes of data per person. Samples may be generated in larger
     established laboratories or in smaller research groups, depending on
     what analytic technology is used and how new it is. The structure
-    and format of the generated data also tends to be highly variable
-    and depends heavily on the technology used, sometimes requiring
+    and format of the generated data also tend to be highly variable
+    and depend heavily on the technology used, sometimes requiring
     specialized software to process and output.
--   **Survey or questionnaire**: This type of data is often done based
+-   **Survey or questionnaire**: This type of data is often collected based
     on a given study's aims and research questions. There are hundreds
     of different questionnaires that can have highly specific purposes
     and uses for their data. They are also highly variable in the volume
@@ -47,7 +47,7 @@ Health research data tends to consist of these types of data:
 While we aim to handle a wide variety of data types, we will start with
 the most common types of formats. We also have a limitation or
 restriction that the data format needs to be open source and not
-proprietary, since we can process it if we don't have the software to
+proprietary, since we cannot process it if we don't have the software to
 read it.
 
 The file formats we expect to work with are text (`.txt`) files, various
@@ -60,8 +60,8 @@ audio, XML, JSON, and potentially some SQL databases.
 In research (and even in most industry settings), we rarely encounter
 truly real-time data collection. Most data collection is done in
 "batches", with data being collected at irregular and inconsistent
-intervals time and then stored to be processed later. This batch
-collection can be breakdown into two categories based on their
+intervals and then stored to be processed later. This batch
+collection can be broken down into two categories based on its
 frequency:
 
 -   *Routine or continuous collection*, where data is collected on a
@@ -73,12 +73,12 @@ frequency:
 -   *Grouped collection*, where data is collected from many observational
     units during a short period of time at very irregular intervals or
     potentially only once. Data ingesting or processing occurs some time
-    after the all the data has been collected. Biological sample data
+    after all the data has been collected. Biological sample data
     would fall under this category, since laboratories usually run
     several samples at once and input data after internal quality
-    control checks and machine-specific data processing. And while
-    register-based and clinical data usually gets collected
-    continuously, direct access to it is only given on an batch and
+    control checks and machine-specific data processing. While
+    register-based and clinical data usually get collected
+    continuously, direct access to them is only given on a batch and
     infrequent basis, so they may also fall under this category. Survey
     data may also come in batches, depending on the questionnaire and
     software used for its collection.
@@ -91,6 +91,6 @@ Regardless of the flow or frequency of data generation and collection,
 the ability to automatically ingest the data into Sprout will vary wildly
 based on the data source, the organization who generates the data, and
 their technical expertise. Some data sources may have well-established,
-but not always programmatically or automatic, workflows and process.
+but not always programmatic or automatic, workflows and processes.
 Others may not have any workflow and it may be an extremely manual
 process.
