@@ -25,7 +25,7 @@ class Properties(ABC):
     def compact_dict(self) -> dict:
         """Converts the dataclass `*Properties` object to a dictionary.
 
-        Applies recursively to nested `*Properties` objects. Also removing any keys with
+        Applies recursively to nested `*Properties` objects. Also removes any keys with
         None values.
 
         Returns:
@@ -44,11 +44,11 @@ class Properties(ABC):
         """Creates a dataclass `*Properties` object filled with data from a dictionary.
 
         Args:
-            cls: The class to create the `*Properties` dataclass from.
-            data: The data to fill the `*Properties` dataclass with.
+            cls: The class to create the `*Properties` object from.
+            data: The data to fill the `*Properties` object with.
 
         Returns:
-            A `*Properties` dataclass with the properties from the dictionary.
+            A `*Properties` object with the properties from the dictionary.
         """
         return from_dict(data_class=cls, data=data)
 
@@ -93,7 +93,7 @@ class ContributorProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates a `ContributorProperties` dataclass with default values.
+        """Creates a `ContributorProperties` object with default values.
 
         Returns:
             A `ContributorProperties` object with default values.
@@ -136,7 +136,7 @@ class LicenseProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates a `LicenseProperties` dataclass with default values.
+        """Creates a `LicenseProperties` object with default values.
 
         Returns:
             A `LicenseProperties` object with default values.
