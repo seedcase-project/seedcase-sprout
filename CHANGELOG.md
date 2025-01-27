@@ -1,3 +1,15 @@
+## 0.13.0 (2025-01-24)
+
+### Feat
+
+- ✨ output everything from code cells in Reference docs (#997)
+
+## 0.12.2 (2025-01-24)
+
+### Refactor
+
+- :recycle: `path_package_properties()` -> `path_properties()` (#996)
+
 ## 0.12.1 (2025-01-23)
 
 ### Refactor

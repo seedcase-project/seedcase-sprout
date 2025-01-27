@@ -35,6 +35,33 @@ def create_resource_properties(
         NotADirectoryError: If path does not point to a directory.
         ExceptionGroup: If there is an error in the properties. A group of
             `CheckError`s, one error per failed check.
+        NotPropertiesError: If properties are not correct Frictionless
+            resource properties.
+
+    Examples:
+        ```{python}
+        import tempfile
+        from pathlib import Path
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+
+            # Create a package and resource structure first
+            sp.create_package_structure(path=temp_path)
+            sp.create_resource_structure(path=temp_path / "1" / "resources")
+
+            # Create resource properties
+            sp.create_resource_properties(
+                path=temp_path / "1" / "resources" / "1",
+                properties=sp.ResourceProperties(
+                    name="new-resource-name",
+                    path="data.parquet",
+                ),
+            )
+        ```
     """
     check_is_dir(path)
     properties.path = str(create_relative_resource_data_path(path))
