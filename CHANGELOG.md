@@ -1,3 +1,15 @@
+## 0.13.3 (2025-01-27)
+
+### Refactor
+
+- :recycle: use checks in `write_resource_properties()` (#990)
+
+## 0.13.2 (2025-01-27)
+
+### Refactor
+
+- :recycle: use new checks in `create_resource_properties()` (#988)
+
 ## 0.13.1 (2025-01-27)
 
 ### Refactor
