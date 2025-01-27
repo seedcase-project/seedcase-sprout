@@ -81,10 +81,10 @@ object.
 ### `create_package_properties(properties)`
 
 This is the first function to use to create a new data package. It
-generates a template for the `datapackage.json` file where the user needs
-to fill in required fields by providing the `properties` argument using
-the helper `PackageProperties` class. Outputs a full Properties object.
-Use `write_package_properties()` to store the properties to the
+generates a template for the `datapackage.json` file where the user
+needs to fill in required fields by providing the `properties` argument
+using the helper `PackageProperties` class. Outputs a full Properties
+object. Use `write_package_properties()` to store the properties to the
 `datapackage.json` file.
 :::
 
@@ -92,8 +92,8 @@ Use `write_package_properties()` to store the properties to the
 ### `build_readme_text(properties)`
 
 Using a template, this will build a README file with the contents of the
-properties object in a human-readable format. Outputs a text string.
-Use `write_text()` to save the text to the `README.md` file.
+properties object in a human-readable format. Outputs a text string. Use
+`write_text()` to save the text to the `README.md` file.
 :::
 
 ::: {.callout-note collapse="true"}
@@ -118,10 +118,11 @@ accidental deletion. Outputs `true` if the deletion was successful.
 
 Writes the properties object containing package properties (with or
 without resource properties) back to the `datapackage.json` file. The
-`path` argument is the path to the folder that will have or currently has the `datapackage.json` file. The `path`
-argument is to the existing but empty folder or to a folder that doesn't
-exist but will be created by this function. Will overwrite the `datapackage.json` file by default if
-the file already exists. Returns the same path object as given in the
+`path` argument is the path to the folder that will have or currently
+has the `datapackage.json` file. The `path` argument is to the existing
+but empty folder or to a folder that doesn't exist but will be created
+by this function. Will overwrite the `datapackage.json` file by default
+if the file already exists. Returns the same path object as given in the
 `path` argument.
 :::
 
@@ -493,12 +494,13 @@ print(path_package(10))
 ::: {.callout-note collapse="true"}
 ### `path_sprout_global()`
 
-If the `SPROUT_GLOBAL` environment variable isn't provided, this function
-will return the default path to where data packages will be stored. The
-default locations are dependent on the operating system. This function
-also creates the necessary directory if it doesn't exist.
+If the `SPROUT_GLOBAL` environment variable isn't provided, this
+function will return the default path to where data packages will be
+stored. The default locations are dependent on the operating system.
+This function also creates the necessary directory if it doesn't exist.
 
-![Diagram showing the internal function flow of the `path_sprout_global()`
+![Diagram showing the internal function flow of the
+`path_sprout_global()`
 function.](images/core/path-sprout-global.svg){#fig-path-sprout-global
 fig-alt="A Plant UML schematic of the detailed code flow within the `path_sprout_global()` function."}
 
