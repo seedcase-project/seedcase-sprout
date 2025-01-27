@@ -34,6 +34,43 @@ def write_resource_properties(
         ExceptionGroup: If there is an error in the properties. A group of
             `CheckError`s, one error per failed check.
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
+
+    Examples:
+        ```{python}
+        import tempfile
+        from pathlib import Path
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        temp_dir = Path(tempfile.TemporaryDirectory().name)
+        temp_dir.mkdir()
+
+        # Create package and resource structure first
+        sp.create_package_structure(path=temp_dir)
+        sp.create_resource_structure(path=temp_dir / "1" / "resources")
+
+        # TODO: Write package properties that passes checks
+        # Write package properties
+        # sp.write_package_properties(
+        #     path=temp_dir / "1" / "datapackage.json",
+        #     package_properties=sp.PackageProperties(
+        #         title="New Package Title",
+        #         name="new-package-name",
+        #         description="New Description",
+        #     ),
+
+        # Write resource properties
+        # sp.write_resource_properties(
+        #     path=temp_dir / "1" / "datapackage.json",
+        #     resource_properties=sp.ResourceProperties(
+        #         name="new-resource-name",
+        #         title="New resource name",
+        #         description="This is a new resource",
+        #         path="data.parquet",
+        #     ),
+        # )
+        ```
     """
     resource_properties = resource_properties.compact_dict
     check_is_file(path)

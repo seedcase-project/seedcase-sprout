@@ -1,15 +1,12 @@
 from pathlib import Path
 
-from frictionless.errors import ResourceError
-
 from seedcase_sprout.core.check_is_dir import check_is_dir
 from seedcase_sprout.core.create_relative_resource_data_path import (
     create_relative_resource_data_path,
 )
-from seedcase_sprout.core.edit_property_field import edit_property_field
 from seedcase_sprout.core.properties import ResourceProperties
-from seedcase_sprout.core.verify_properties_are_well_formed import (
-    verify_properties_are_well_formed,
+from seedcase_sprout.core.sprout_checks.check_resource_properties import (
+    check_resource_properties,
 )
 
 
@@ -27,23 +24,46 @@ def create_resource_properties(
             to provide the correct path or use the output of
             `create_resource_structure()`.
         properties: The properties of the resource; must be given as a
-            JSON object following the Data Package specification; use
-            the `ResourceProperties` class to provide the correct fields.
+            `ResourceProperties` object following the Data Package specification.
             See the `ResourceProperties` help documentation for details
             on what can or needs to be filled in.
 
     Returns:
-        The properties object, verified and updated
+        The properties object, verified and updated.
 
     Raises:
         NotADirectoryError: If path does not point to a directory.
+        ExceptionGroup: If there is an error in the properties. A group of
+            `CheckError`s, one error per failed check.
         NotPropertiesError: If properties are not correct Frictionless
             resource properties.
-    """
-    properties = properties.compact_dict
-    check_is_dir(path)
-    verify_properties_are_well_formed(properties, ResourceError.type)
-    data_path = create_relative_resource_data_path(path)
-    edited_properties = edit_property_field(properties, "path", str(data_path))
 
-    return ResourceProperties.from_dict(edited_properties)
+    Examples:
+        ```{python}
+        import tempfile
+        from pathlib import Path
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+
+            # Create a package and resource structure first
+            sp.create_package_structure(path=temp_path)
+            sp.create_resource_structure(path=temp_path / "1" / "resources")
+
+            # Create resource properties
+            sp.create_resource_properties(
+                path=temp_path / "1" / "resources" / "1",
+                properties=sp.ResourceProperties(
+                    name="new-resource-name",
+                    path="data.parquet",
+                ),
+            )
+        ```
+    """
+    check_is_dir(path)
+    properties.path = str(create_relative_resource_data_path(path))
+    check_resource_properties(properties.compact_dict)
+    return properties

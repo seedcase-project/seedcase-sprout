@@ -47,6 +47,31 @@ def edit_package_properties(
         ExceptionGroup: If there is an error in the current, incoming or resulting
             package properties. A group of `CheckError`s, one error for each failed
             check.
+
+    Examples:
+        ```{python}
+        import tempfile
+        from pathlib import Path
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+
+            # Create a package structure first
+            sp.create_package_structure(path=temp_path)
+
+            # Edit package properties
+            sp.edit_package_properties(
+                path=temp_path / "1" / "datapackage.json",
+                properties=sp.PackageProperties(
+                    title="New Package Title",
+                    name="new-package-name",
+                    description="New Description",
+                ),
+            )
+        ```
     """
     properties = properties.compact_dict
 
