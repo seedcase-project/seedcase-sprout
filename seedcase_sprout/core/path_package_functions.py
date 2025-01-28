@@ -80,7 +80,7 @@ def path_properties(package_id: int) -> Path:
 
 
 def path_packages() -> Path:
-    """Get the paths for all package in Sprout's global location.
+    """Get the paths for all packages in Sprout's global location.
 
     If you want to get the location of the global packages directory,
     see `path_sprout_global()`.

@@ -303,7 +303,7 @@ fig-alt="A Plant UML schematic of the detailed code flow within the `extract_res
 -   The paths returned by all of these functions are paths that exist,
     so all include a `check_is_dir()` or `check_is_file()` check.
 -   If the wrong `resource_id` is given, an error message will include a
-    list of all the actual `resource_id` for a specific package.
+    list of all the actual `resource_id`s for a specific package.
 
 ::: {.callout-note collapse="true"}
 ### `path_properties(path)`
@@ -393,7 +393,7 @@ Create a prettier, human readable version of a JSON object.
 ## Observational unit level functions
 
 Observational unit is the level of detail on the entity (e.g. human,
-animal, event) that the data was collected on. Example would be: A
+animal, event) that the data was collected on. An example would be: A
 person in a research study who came to the clinic in May 2024 to have
 their blood collected and to fill out a survey.
 
