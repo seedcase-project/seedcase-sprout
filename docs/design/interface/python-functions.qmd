@@ -313,7 +313,7 @@ details.
 :::
 
 ::: {.callout-note collapse="true"}
-### `path_resources(path)`
+### `path_resources()`
 
 See the help documentation with `help(path_resources)` for more details.
 :::
