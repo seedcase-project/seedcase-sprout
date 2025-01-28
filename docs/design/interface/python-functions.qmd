@@ -338,7 +338,13 @@ outputs a `PackageProperties` object.
 Create a prettier, human readable version of a JSON object.
 :::
 
-## Observational unit level functions
+::: {.callout-warning collapse="true"}
+### `write_text(text, path)`
+
+Writes a text string to a file at the given path. Outputs the path
+object of the created file.
+:::
+
 
 Observational unit is the level of detail on the entity (e.g. human,
 animal, event) that the data was collected on. An example would be: A
