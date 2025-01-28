@@ -32,8 +32,7 @@ Software developer/data engineer
 ## User personas
 
 These purely hypothetical personas help us and readers in understanding
-the different types of hypothetically real-world users and their needs
-with Sprout.
+the needs of real-world users and their expectations of Sprout.
 
 ### Software Developer
 
@@ -43,7 +42,7 @@ with Sprout.
     software that must connect with or use data pipelines. He works in a
     medium-sized company that started modernizing their data pipelines
     and infrastructure. He works on integrating various data sources and
-    ensuring the smooth flow of data, so that they can be feed into
+    ensuring the smooth flow of data, so that they can be fed into
     analytic platforms and dashboards that he helps build and maintain.
     He is using Sprout because he doesn't have the time to build a
     custom solution, nor does he have the expertise to know what the
@@ -105,7 +104,7 @@ with Sprout.
 
 -   Name: Dr. Maria Garcia
 -   Background: Dr. Garcia is a senior researcher within an academic
-    university. She has extensive experience in managing research
+    setting. She has extensive experience in managing research
     projects and is responsible for overseeing multiple research
     initiatives. While she has some familiarity with programming, she
     mainly understands the need to use these tools to work more
@@ -142,7 +141,7 @@ with Sprout.
     closely with research project owners to support the technical and
     administrative aspects of research projects. He wants to use Sprout
     to make it easier to manage all his assigned projects, while also
-    needing to balance specific needs of the different projects and how
+    balancing the specific needs of the different projects and how
     their data is structured and stored.
 -   Goals:
     -   To assist research project owners in managing the research
