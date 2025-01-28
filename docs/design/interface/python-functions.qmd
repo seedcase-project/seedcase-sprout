@@ -332,13 +332,7 @@ outputs a `PackageProperties` object.
 
 ## Helper functions
 
-::: {.callout-note collapse="true"}
-### `list_files(path)`
-
-List all files in a directory. Outputs a list of path objects.
-:::
-
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `pretty_json(json)`
 
 Create a prettier, human readable version of a JSON object.
