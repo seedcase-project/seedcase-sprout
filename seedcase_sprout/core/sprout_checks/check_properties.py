@@ -68,7 +68,7 @@ def check_properties(
 
     if errors:
         raise ExceptionGroup(
-            f"The follow checks failed on the properties:\n{properties_dict}", errors
+            f"The following checks failed on the properties:\n{properties}", errors
         )
 
     return properties
