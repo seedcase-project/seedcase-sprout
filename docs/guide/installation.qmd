@@ -26,7 +26,7 @@ pipx --version
 
 ## Use in a project in a virtual environment
 
-To install into a project, you can use any package dependency managers.
+To install into a project, you can use any package dependency manager.
 For this guide, we will use Poetry:
 
 -   [Poetry](https://python-poetry.org/docs/main/#installing-with-pipx)
@@ -41,7 +41,7 @@ poetry --version
 
 ### Creating a virtual environment
 
-Python packages are generally recommend to be installed in a virtual
+Python packages are generally recommended to be installed in a virtual
 environment. This is a way to isolate the packages you install for a
 specific project from the global system. To make this virtual
 environment, we need to create it with Poetry in any folder on the
