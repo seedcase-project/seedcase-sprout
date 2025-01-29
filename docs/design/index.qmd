@@ -19,7 +19,7 @@ There are two main sections of this design documentation:
     describes the high-level requirements, components, use cases,
     expected users, and how the system will be organized and structured.
 -   [Interface](interface/index.qmd): The interface section gives a much
-    more detailed description of the software interface for the design.
+    more detailed description of the design of the software interface.
     The detail is at the level of exact Python functions, as well as
     their arguments, inputs, and outputs.
 
