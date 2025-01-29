@@ -9,17 +9,36 @@ architecture of a software system. It breaks the system down into four
 levels of architectural abstraction: Context, Containers, Components, and Code. The
 last level is rarely used nor recommended for most software architecture
 since it is used to visualize a high degree of detail that most projects
-don't need. Below are the diagrams for the **Context**, **Containers**, and
-**Components** (the last of which includes three diagrams).
+don't need. For our needs, we only needed to create the **Context** and **Containers** diagrams.
+
+These diagrams and their content draw from our overall Seedcase [design documentation](https://design.seedcase-project.org/)
+and [design decisions](https://decisions.seedcase-project.org/). See those websites for more information.
 
 ::: panel-tabset
 ## Context
 
 The Context diagram shows the users and any external
-systems that interact with Sprout. This includes the three user roles *data contributor*, *project admin* and *project owner* described in the [users](user-roles.qmd) post.
+systems that interact with Sprout. This includes the user roles described in the [User Personas](user-personas.qmd) page.
 
-![C4 Context diagram showing a very basic overview of Sprout and its
-intended users.](images/c4/context.svg)
+```{mermaid}
+%%| fig-cap: "C4 Context diagram showing a very basic overview of Sprout and its anticipated users."
+flowchart TB
+    user_owner(["Owner/creator\n[person]\n\nCreates and owns a project\nthat generates data. Uses\nSprout Core for more\ncontrol."])
+    user_admin(["Admininstrator\n[person]\n\nManages data and metadata\n from a project for an owner. Uses\nSprout Core for more control."])
+    user_swe(["Software engineer\n[person]\n\nCreates and develops data\ninfrastructure. Uses Sprout\nCore to build extensions\nand customizations."])
+    user_de(["Data engineer\n[person]\n\nDevelops data pipelines and\ninfrastructures. Uses Sprout\nCore to build and customize\nthe pipelines."])
+    sprout["Seedcase Sprout\n[system]\n\nAllows users fine-grained control over building,\nmanaging, and structuring data in a way that\nmakes it easier to share with collaborators\nand to analyze. Structures data following\nthe Frictionless Data Package Standard."]
+    output[("Filesystem (local or server)\n[system]\n\nStructured data from Sprout that is\nstored in a filesystem for later use.\nThis can be on a server or on a local,\npersonal computer, depending on\nthe privacy of the data.")]
+
+    user_swe --> sprout:::system
+    user_de --> sprout
+    user_admin --> sprout
+    user_owner --> sprout
+    sprout --> output:::external
+
+    classDef system stroke-width:4pt
+    classDef external fill:lightgrey
+```
 
 ## Container
 
@@ -27,35 +46,30 @@ The Container diagram shows the larger parts of the system, what they
 are responsible for, and how they interact with each other. It also shows
 the technology choices for each container.
 
-![C4 Container diagram showing larger functional parts of Sprout and
-their connections.](images/c4/container.svg)
+```{mermaid}
+%%| fig-cap: "C4 Container diagram showing larger functional parts of Sprout and their connections."
+flowchart TB
+    user(["User\n[person]"])
+    subgraph sprout [Sprout]
+        package["Data package functions\n[Python]\n\nCreate, manage, and check\na data package and it's\n'properties' (metadata)."]
+        resource["Data resource functions\n[Python]\n\nCreate, manage, and check\ndata resources and their\n'properties' (metadata)\n in a data package."]
+        obs_unit["Observational unit functions\n[Python]\n\nManage and delete\nobservational units in a\nresource. An observational\nunit is an entity with data\ncollected at a specific time.\nNecessary for GDPR\n compliance."]
+        raw[("Raw data\n[gzipped CSV]")]
+        data[("Data\n[Parquet]")]
+        metadata[["Metadata ('properties')\n[[Frictionless Standard, JSON]"]]
+    end
+    output[("Filesystem\n\nStored data and metadata\non a local or server\nfilesystem.")]
 
-## Component
+    user --> sprout:::system
+    package --> resource
+    package --> metadata
+    resource --> raw
+    resource --> data
+    resource --> metadata
+    obs_unit --> data
+    sprout --> output:::external
 
-The Component model offers a more detailed view of the system into what
-the smaller parts are that make up an individual container and that
-allow it to fulfill its responsibilities. There are three diagrams for
-the components: the user interface, the (internal) management,
-and the databases and storage.
-
-### User interface
-
-This diagram shows the pages users interact with in the user interface container. In addition, it shows which user roles that can access them. Outside the container is the authentication container and the management container. The authentication container is needed to authenticate users and their access.
-
-![C4 Component diagram showing the parts that make up the user interface
-containers.](images/c4/component-ui.svg)
-
-### Management
-
-This diagram shows the actions and behaviours that happen internally between the user interface and the database and storage. This includes things like creating databases, updating data and metadata, and modifying user roles.
-
-![C4 Component diagram showing the parts that make up the management
-containers.](images/c4/component-management.svg)
-
-### Databases and storage
-
-This diagram shows the components that make up the database and storage container, and the types of actions and behaviours they have.
-
-![C4 Component diagram showing the parts that make up the database and
-storage containers.](images/c4/component-backend.svg)
+    classDef system stroke-width:3pt
+    classDef external fill:lightgrey
+```
 :::
