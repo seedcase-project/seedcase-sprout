@@ -152,11 +152,11 @@ more details.
 
 ```{mermaid}
 flowchart
-    in_data_path@{shape: lean-r, label: "data_path"}
-    in_path@{shape: lean-r, label: "path"}
-    in_properties@{shape: lean-r, label: "resource_properties"}
-    function@{shape: rect, label: "write_resource_data_to_raw()"}
-    out@{shape: lean-r, label: "{path}/{timestamp}-{uuid}.{ext}.csv"}
+    in_data_path[/data_path/]
+    in_path[/path/]
+    in_properties[/resource_properties/]
+    function("write_resource_data_to_raw()")
+    out[("{path}/{timestamp}-{uuid}.{ext}.csv")]
     in_data_path --> function
     in_path --> function
     in_properties --> function
