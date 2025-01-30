@@ -50,7 +50,7 @@ the technology choices for each container.
 flowchart TB
     user(["User\n[person]"])
     subgraph sprout [Sprout]
-        package["Data package functions\n[Python]\n\nCreate, manage, and check\na data package and it's\n'properties' (metadata)."]
+        package["Data package functions\n[Python]\n\nCreate, manage, and check\na data package and its\n'properties' (metadata)."]
         resource["Data resource functions\n[Python]\n\nCreate, manage, and check\ndata resources and their\n'properties' (metadata)\n in a data package."]
         obs_unit["Observational unit functions\n[Python]\n\nManage and delete\nobservational units in a\nresource. An observational\nunit is an entity with data\ncollected at a specific time.\nNecessary for GDPR\n compliance."]
         raw[("Raw data\n[gzipped CSV]")]
