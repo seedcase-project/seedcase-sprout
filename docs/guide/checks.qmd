@@ -13,16 +13,16 @@ its own structural and formatting requirements.
 
 To make it easy to check metadata against all these requirements, Sprout
 provides a set of check functions. Each check function takes a
-properties object (`PackageProperties` or
-`ResourceProperties`) as input, runs all necessary checks, and raises a group of
-`CheckError`s if any checks fail (run `help(CheckError)` for more
-details). Each `CheckError` corresponds to a specific violated
-requirement. If certain error types are not relevant to your use case,
-you can configure the check functions to ignore these.
+properties object (`PackageProperties` or `ResourceProperties`) as
+input, runs all necessary checks, and raises a group of `CheckError`s if
+any checks fail (run `help(CheckError)` for more details). Each
+`CheckError` corresponds to a specific violated requirement. If certain
+error types are not relevant to your use case, you can configure the
+check functions to ignore these.
 
-## Checking resource properties
+## Checking package properties
 
-A set of resource properties with only the required fields filled in
+A set of package properties with only the required fields filled in
 might look like:
 
 ```{python}
@@ -32,85 +32,74 @@ from textwrap import dedent
 # For pretty printing of output
 from pprint import pprint
 
-resource_properties = sp.ResourceProperties(
-    name="woolly-dormice-2015",
-    path="resources/1/data.parquet",
-    title="Body fat percentage in the hibernating woolly dormouse",
+package_properties = sp.PackageProperties(
+    name="woolly-dormice",
+    title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
     description=dedent('''
-        Data on the body fat percentage of woolly dormice
-        (*Dryomys laniger*) before and after hibernation.
-        Collected along the Taurus Mountain range in Turkey
-        in 2015.
+        This scoping review explores the hibernation physiology of the
+        woolly dormouse, drawing on data collected over a 10-year period
+        along the Taurus Mountain range in Turkey.
         '''
     ),
+    id="123-abc-123",
+    created="2014-05-14T05:00:01+00:00",
+    version="1.0.0",
+    licenses=[sp.LicenseProperties(name="odc-pddl")],
 )
 ```
 
-To check that these properties are indeed complete and well-formed, we use the
-`check_resource_properties()` function. The function will not raise any
-errors and will return the original input:
+To check that these properties are indeed complete and well-formed, we
+use the `check_package_properties()` function. The function will not
+raise any errors and will return the original input:
 
 ```{python}
-resource_properties = sp.check_resource_properties(resource_properties)
-pprint(resource_properties)
+package_properties = sp.check_package_properties(package_properties)
+pprint(package_properties)
 ```
 
-Now, let's say we didn't include a `description` in our resource
+Now, let's say we didn't include a `description` in our package
 properties. Running the check again, we see that an error is raised,
 alerting us that this is a required field. See the end of the output:
-
-```{python}
-#| error: true
-resource_properties = sp.ResourceProperties(
-    name="woolly-dormice-2015",
-    path="resources/1/data.parquet",
-    title="Body fat percentage in the hibernating woolly dormouse",
-)
-sp.check_resource_properties(resource_properties)
-```
-
-Finally, let's say there are multiple errors in our resource properties. For
-example, we forgot the `description` and gave a `name` containing
-special characters, which doesn't meet the expected format. In this
-case, both errors will be listed in the output:
-
-```{python}
-#| error: true
-resource_properties = sp.ResourceProperties(
-    name="Woolly Dormice (2015, Toros Dağları)",
-    path="resources/1/data.parquet",
-    title="Body fat percentage in the hibernating woolly dormouse",
-)
-sp.check_resource_properties(resource_properties)
-```
-
-## Checking package properties
-
-If we want to check that a set of package properties is well-formed
-without considering whether any associated resource properties are
-well-formed, we can use the `check_package_properties()` function. This
-will only run checks on package properties fields and not look at
-resource properties fields.
-
-In the package properties below, the required fields `id` and
-`description` are missing, and `created` doesn't contain a valid date.
-As all three problems relate to fields in the package properties, an
-error will be raised for each:
 
 ```{python}
 #| error: true
 package_properties = sp.PackageProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
-    created="a long time ago",
+    id="123-abc-123",
+    created="2014-05-14T05:00:01+00:00",
     version="1.0.0",
     licenses=[sp.LicenseProperties(name="odc-pddl")],
 )
 sp.check_package_properties(package_properties)
 ```
 
-However, if the error is in a field belonging to the resource properties
-(below, all required fields are missing), it is ignored when the check
+Finally, let's say there are multiple errors in our package properties.
+For example, we forgot the `description` and gave a `name` containing
+special characters, which doesn't meet the expected format. In this
+case, both errors will be listed in the output:
+
+```{python}
+#| error: true
+package_properties = sp.PackageProperties(
+    name="Woolly Dormice (Toros Dağları)",
+    title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
+    id="123-abc-123",
+    created="2014-05-14T05:00:01+00:00",
+    version="1.0.0",
+    licenses=[sp.LicenseProperties(name="odc-pddl")],
+)
+sp.check_package_properties(package_properties)
+```
+
+Note that `check_package_properties()` is for checking that a set of
+package properties is well-formed without considering whether any
+associated resource properties are well-formed. This function will only
+run checks on package properties fields and not look at resource
+properties fields.
+
+In the package properties below, there is a set of resource properties
+with all required fields missing. This will be ignored when the check
 runs:
 
 ```{python}
@@ -132,13 +121,31 @@ package_properties = sp.PackageProperties(
 pprint(sp.check_package_properties(package_properties))
 ```
 
+## Checking resource properties
+
+To check that a set of resource properties are complete and well-formed,
+we use the `check_resource_properties()` function.
+
+In the resource properties below, the required fields `title` and
+`description` are missing, and `name` doesn't match the expected format.
+An error will be raised for each problem:
+
+```{python}
+#| error: true
+resource_properties = sp.ResourceProperties(
+    name="Woolly Dormice (2015, Toros Dağları)",
+    path="resources/1/data.parquet",
+)
+sp.check_resource_properties(resource_properties)
+```
+
 ## Checking a full set of properties
 
 When we want to check both package and resource properties, we can use
-the `check_properties()` function. In the properties below, we have three
-errors: the required `description` field is missing in both the package
-and resource properties, and the resource `path` doesn't point to a data
-file. When we run the check, all three errors are listed:
+the `check_properties()` function. In the properties below, we have
+three errors: the required `description` field is missing in both the
+package and resource properties, and the resource `path` doesn't point
+to a data file. When we run the check, all three errors are listed:
 
 ```{python}
 #| error: true
