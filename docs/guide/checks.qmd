@@ -27,6 +27,7 @@ might look like:
 
 ```{python}
 import seedcase_sprout.core as sp
+from textwrap import dedent
 
 # For pretty printing of output
 from pprint import pprint
@@ -35,7 +36,13 @@ resource_properties = sp.ResourceProperties(
     name="woolly-dormice-2015",
     path="resources/1/data.parquet",
     title="Body fat percentage in the hibernating woolly dormouse",
-    description="Data on the body fat percentage of woolly dormice (*Dryomys laniger*) before and after hibernation. Collected along the Taurus Mountain range in Turkey in 2015.",
+    description=dedent('''
+        Data on the body fat percentage of woolly dormice
+        (*Dryomys laniger*) before and after hibernation.
+        Collected along the Taurus Mountain range in Turkey
+        in 2015.
+        '''
+    ),
 )
 ```
 
@@ -110,7 +117,12 @@ runs:
 package_properties = sp.PackageProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
-    description="This scoping review explores the hibernation physiology of the woolly dormouse, drawing on data collected over a 10-year period along the Taurus Mountain range in Turkey.",
+    description=dedent('''
+        This scoping review explores the hibernation physiology of the
+        woolly dormouse, drawing on data collected over a 10-year period
+        along the Taurus Mountain range in Turkey.
+        '''
+    ),
     id="123-abc-123",
     created="2014-05-14T05:00:01+00:00",
     version="1.0.0",
@@ -281,7 +293,12 @@ We can then add the matchers as the `ignore` argument of
 properties = sp.PackageProperties(
     name="Woolly Dormice ~~ Toros Dağları",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
-    description="This scoping review explores the hibernation physiology of the woolly dormouse, drawing on data collected over a 10-year period along the Taurus Mountain range in Turkey.",
+    description=dedent('''
+        This scoping review explores the hibernation physiology of the
+        woolly dormouse, drawing on data collected over a 10-year period
+        along the Taurus Mountain range in Turkey.
+        '''
+    ),
     id="123-abc-123",
     created="2014-05-14T05:00:01+00:00",
     version="1.0.0",
