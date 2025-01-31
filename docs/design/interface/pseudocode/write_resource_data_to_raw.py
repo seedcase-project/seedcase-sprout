@@ -1,5 +1,5 @@
 # ruff: noqa
-def write_resource_data_to_raw(data_path, path, resource_properties) -> Path:
+def write_resource_data_to_raw(data_path, resource_properties) -> Path:
     """Writes the raw data file into the resource's raw data folder.
 
     Copy the file from `data_path` over into the resource location given by
@@ -7,15 +7,12 @@ def write_resource_data_to_raw(data_path, path, resource_properties) -> Path:
     name to store it as a backup. See the
     [design](https://sprout.seedcase-project.org/docs/design/) docs for an
     explanation of this file. Data is always checked against the metadata
-    before saving into the raw folder. Use `path_resource_raw()` to provide the
-    correct `path` location. Copies and compresses the file, and outputs the
-    path object of the created file.
+    before saving into the raw folder. Copies and compresses the file, and
+    outputs the path object of the created file.
 
         Args:
             data_path: Path to a raw data file that you want Sprout to store
                 into the data package.
-            path: Path to the raw resources folder. Use `path_resources_raw()`
-                to help provide the correct path.
             resource_properties: The properties object for the specific resource.
                 Use `read_properties()` to read the properties for the resource
                 and `get_properties()` to get the correct resource properties.
@@ -28,13 +25,13 @@ def write_resource_data_to_raw(data_path, path, resource_properties) -> Path:
             #| eval: false
             ```
     """
-    check_is_dir(path)
     check_is_file(data_path)
     check_is_supported_format(data_path)
     check_data_basics(data_path, resource_properties)
     check_data_constraints(data_path, resource_properties)
+    raw_dir = Path(resource_properties.path / "raw")
 
-    raw_resource_path = Path(path / create_raw_file_name(data_path))
+    raw_resource_path = Path(raw_dir / create_raw_file_name(data_path))
     return write_compressed_file(data_path, raw_resource_path)
 
 
@@ -57,7 +54,7 @@ def create_raw_file_name(data_path: Path) -> str:
     timestamp = datetime.datetime.now().isoformat()
     uuid = str(uuid.uuid4())
     extension = data_path.suffix
-    return Path("{timestamp}-{uuid}.{extension}.gz")
+    return f"{timestamp}-{uuid}.{extension}.gz"
 
 
 def write_compressed_file(data_path: Path, path: Path) -> Path:
