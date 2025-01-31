@@ -1,5 +1,5 @@
 # ruff: noqa
-def write_resource_data_to_raw(data_path, path, resource_properties):
+def write_resource_data_to_raw(data_path, path, resource_properties) -> Path:
     """Writes the raw data file into the resource's raw data folder.
 
     Copy the file from `data_path` over into the resource location given by
@@ -37,7 +37,7 @@ def write_resource_data_to_raw(data_path, path, resource_properties):
     return write_compressed_file(data_path, raw_resource_path)
 
 
-def create_raw_file_name(data_path: Path) -> Error | None:
+def create_raw_file_name(data_path: Path) -> str:
     """Creates a timestamped, unique file name for the raw data file.
 
     This function creates a timestamped, unique file name for the raw data file
@@ -60,7 +60,7 @@ def create_raw_file_name(data_path: Path) -> Error | None:
 
 
 def write_compressed_file(data_path: Path, path: Path) -> Path:
-    """Write and compress the raw data file into the resource's raw data folder.
+    """Compress and write the raw data file into the resource's raw data folder.
 
     This function copies the raw data file from `data_path` to the resource's
     raw data folder, compressing it in the process. The compressed file is
@@ -79,7 +79,7 @@ def write_compressed_file(data_path: Path, path: Path) -> Path:
 
 def check_data_basics(
     data_path: Path, resource_properties: ResourceProperties
-) -> Error | None:
+) -> Path:
     """Basic checks on the data against the resource properties.
 
     Checks the data for basic things, including against the specific resource's
@@ -101,7 +101,7 @@ def check_data_basics(
 
 def check_data_constraints(
     data_path: Path, resource_properties: ResourceProperties
-) -> Error | None:
+) -> Path:
     """Check the data against the resource's constraints properties.
 
     The resource properties sometimes contains a `constraints` property
