@@ -22,12 +22,12 @@ systems that interact with Sprout. This includes the user roles described in the
 ```{mermaid}
 %%| fig-cap: "C4 Context diagram showing a very basic overview of Sprout and its anticipated users."
 flowchart TB
-    user_owner(["Owner/creator\n[person]\n\nCreates and owns a project\nthat generates data. Uses\nSprout Core for more\ncontrol."])
-    user_admin(["Admininstrator\n[person]\n\nManages data and metadata\n from a project for an owner. Uses\nSprout Core for more control."])
-    user_swe(["Software engineer\n[person]\n\nCreates and develops data\ninfrastructure. Uses Sprout\nCore to build extensions\nand customizations."])
-    user_de(["Data engineer\n[person]\n\nDevelops data pipelines and\ninfrastructures. Uses Sprout\nCore to build and customize\nthe pipelines."])
-    sprout["Seedcase Sprout\n[system]\n\nAllows users fine-grained control over building,\nmanaging, and structuring data in a way that\nmakes it easier to share with collaborators\nand to analyze. Structures data following\nthe Frictionless Data Package Standard."]
-    output[("Filesystem (local or server)\n[system]\n\nStructured data from Sprout that is\nstored in a filesystem for later use.\nThis can be on a server or on a local,\npersonal computer, depending on\nthe privacy of the data.")]
+    user_owner(["Owner/creator<br>[person]<br><br>Creates and owns a project that generates data. Uses Sprout Core for more control."])
+    user_admin(["Administrator<br>[person]<br><br>Manages data and metadata from a project for an owner. Uses Sprout Core for more control."])
+    user_swe(["Software engineer<br>[person]<br><br>Creates and develops data infrastructure. Uses Sprout Core to build extensions and customizations."])
+    user_de(["Data engineer<br>[person]<br><br>Develops data pipelines and infrastructures. Uses Sprout Core to build and customize the pipelines."])
+    sprout["Seedcase Sprout<br>[system]<br><br>Allows users fine-grained control over building, managing, and structuring data in a way that makes it easier to share with collaborators and to analyze. Structures data following the Frictionless Data Package Standard."]
+    output[("Filesystem (local or server)<br>[system]<br><br>Structured data from Sprout that is stored in a filesystem for later use. This can be on a server or on a local, personal computer, depending on the privacy of the data.")]
 
     user_swe --> sprout:::system
     user_de --> sprout
@@ -48,16 +48,16 @@ the technology choices for each container.
 ```{mermaid}
 %%| fig-cap: "C4 Container diagram showing larger functional parts of Sprout and their connections."
 flowchart TB
-    user(["User\n[person]"])
+    user(["User<br>[person]"])
     subgraph sprout [Sprout]
-        package["Data package functions\n[Python]\n\nCreate, manage, and check\na data package and its\n'properties' (metadata)."]
-        resource["Data resource functions\n[Python]\n\nCreate, manage, and check\ndata resources and their\n'properties' (metadata)\n in a data package."]
-        obs_unit["Observational unit functions\n[Python]\n\nManage and delete\nobservational units in a\nresource. An observational\nunit is an entity with data\ncollected at a specific time.\nNecessary for GDPR\n compliance."]
-        raw[("Raw data\n[gzipped CSV]")]
-        data[("Data\n[Parquet]")]
-        metadata[["Metadata ('properties')\n[[Frictionless Standard, JSON]"]]
+        package["Data package functions<br>[Python]<br><br>Create, manage, and check a data package and its 'properties' (metadata)."]
+        resource["Data resource functions<br>[Python]<br><br>Create, manage, and check data resources and their 'properties' (metadata) in a data package."]
+        obs_unit["Observational unit functions<br>[Python]<br><br>Manage and delete observational units in a resource. An observational unit is an entity with data collected at a specific time. Necessary for GDPR-compliance."]
+        raw[("Raw data<br>[gzipped CSV]")]
+        data[("Data<br>[Parquet]")]
+        metadata[["Metadata ('properties')<br>[Frictionless Standard, JSON]"]]
     end
-    output[("Filesystem\n\nStored data and metadata\non a local or server\nfilesystem.")]
+    output[("Filesystem<br><br>Stored data and metadata on a local or server filesystem.")]
 
     user --> sprout:::system
     package --> resource
