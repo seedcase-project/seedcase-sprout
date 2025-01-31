@@ -6,7 +6,8 @@ def write_resource_data_to_raw(data_path, path, resource_properties) -> Path:
     `path`. This will compress the file and use a timestamped, unique file
     name to store it as a backup. See the
     [design](https://sprout.seedcase-project.org/docs/design/) docs for an
-    explanation of this file. Use `path_resource_raw()` to provide the
+    explanation of this file. Data is always checked against the metadata
+    before saving into the raw folder. Use `path_resource_raw()` to provide the
     correct `path` location. Copies and compresses the file, and outputs the
     path object of the created file.
 
@@ -77,9 +78,7 @@ def write_compressed_file(data_path: Path, path: Path) -> Path:
     return path
 
 
-def check_data_basics(
-    data_path: Path, resource_properties: ResourceProperties
-) -> Path:
+def check_data_basics(data_path: Path, resource_properties: ResourceProperties) -> Path:
     """Basic checks on the data against the resource properties.
 
     Checks the data for basic things, including against the specific resource's
