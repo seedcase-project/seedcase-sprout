@@ -47,7 +47,7 @@ resource_properties = sp.ResourceProperties(
 ```
 
 To check that these properties are indeed complete and well-formed, we use the
-`check_resource_properties` function. The function will not raise any
+`check_resource_properties()` function. The function will not raise any
 errors and will return the original input:
 
 ```{python}
@@ -88,7 +88,7 @@ sp.check_resource_properties(resource_properties)
 
 If we want to check that a set of package properties is well-formed
 without considering whether any associated resource properties are
-well-formed, we can use the `check_package_properties` function. This
+well-formed, we can use the `check_package_properties()` function. This
 will only run checks on package properties fields and not look at
 resource properties fields.
 
@@ -135,7 +135,7 @@ pprint(sp.check_package_properties(package_properties))
 ## Checking a full set of properties
 
 When we want to check both package and resource properties, we can use
-the `check_properties` function. In the properties below, we have three
+the `check_properties()` function. In the properties below, we have three
 errors: the required `description` field is missing in both the package
 and resource properties, and the resource `path` doesn't point to a data
 file. When we run the check, all three errors are listed:
@@ -210,7 +210,7 @@ a check function will ignore an error if it matches **any**
 ### Simple example
 
 Below, we create `CheckErrorMatcher`s for required and type errors and
-pass them to `check_resource_properties`. This way, the check will not
+pass them to `check_resource_properties()`. This way, the check will not
 raise any errors, even though required fields are missing and `title`
 has the wrong type.
 
@@ -287,7 +287,7 @@ expression to see the match rule expressed by each section.
 :::
 
 We can then add the matchers as the `ignore` argument of
-`check_properties`. No errors will be raised when the check runs.
+`check_properties()`. No errors will be raised when the check runs.
 
 ```{python}
 properties = sp.PackageProperties(
