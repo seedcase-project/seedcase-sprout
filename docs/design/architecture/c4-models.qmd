@@ -5,23 +5,27 @@ title: "C4 Models"
 This section contains the [C4 Models](https://c4model.com/) for Sprout.
 The C4 Model is an established visualization approach to describe the
 architecture of a software system. It breaks the system down into four
-levels of architectural abstraction: Context, Containers, Components, and Code. The
-last level is rarely used nor recommended for most software architecture
-since it is used to visualize a high degree of detail that most projects
-don't need. For our needs, we only needed to create the **Context** and **Containers** diagrams.
+levels of architectural abstraction: Context, Containers, Components,
+and Code. The last level is rarely used nor recommended for most
+software architecture since it is used to visualize a high degree of
+detail that most projects don't need. For our needs, we only needed to
+create the **Context** and **Containers** diagrams.
 
-These diagrams and their content draw from our overall Seedcase [design documentation](https://design.seedcase-project.org/)
-and [design decisions](https://decisions.seedcase-project.org/). See those websites for more information.
+These diagrams and their content draw from our overall Seedcase [design
+documentation](https://design.seedcase-project.org/) and [design
+decisions](https://decisions.seedcase-project.org/). See those websites
+for more information.
 
-::: panel-tabset
 ## Context
 
-The Context diagram shows the users and any external
-systems that interact with Sprout. This includes the user roles described in the [User Personas](user-personas.qmd) page.
+The Context diagram shows the users and any external systems that
+interact with Sprout. This includes the user roles described in the
+[User Personas](user-personas.qmd) page.
 
+::: column-page
 ```{mermaid}
 %%| fig-cap: "C4 Context diagram showing a very basic overview of Sprout and its anticipated users."
-flowchart TB
+flowchart LR
     user_owner(["Owner/creator<br>[person]<br><br>Creates and owns a project that generates data. Uses Sprout Core for more control."])
     user_admin(["Administrator<br>[person]<br><br>Manages data and metadata from a project for an owner. Uses Sprout Core for more control."])
     user_swe(["Software engineer<br>[person]<br><br>Creates and develops data infrastructure. Uses Sprout Core to build extensions and customizations."])
@@ -38,13 +42,15 @@ flowchart TB
     classDef system stroke-width:4pt
     classDef external fill:lightgrey
 ```
+:::
 
 ## Container
 
 The Container diagram shows the larger parts of the system, what they
-are responsible for, and how they interact with each other. It also shows
-the technology choices for each container.
+are responsible for, and how they interact with each other. It also
+shows the technology choices for each container.
 
+::: column-page
 ```{mermaid}
 %%| fig-cap: "C4 Container diagram showing larger functional parts of Sprout and their connections."
 flowchart TB
@@ -68,7 +74,7 @@ flowchart TB
     obs_unit --> data
     sprout --> output:::external
 
-    classDef system stroke-width:3pt
+    classDef system fill:none
     classDef external fill:lightgrey
 ```
 :::
