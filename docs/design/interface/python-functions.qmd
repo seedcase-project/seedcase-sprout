@@ -145,7 +145,7 @@ fig-alt="A Plant UML schematic of the detailed code flow within the `create_reso
 :::
 
 ::: {.callout-note collapse="true"}
-### `write_resource_data_to_raw(data_path, path, resource_properties)`
+### `write_resource_data_to_raw(data_path, resource_properties)`
 
 See the help documentation with `help(write_resource_data_to_raw)` for
 more details.
@@ -153,12 +153,10 @@ more details.
 ```{mermaid}
 flowchart
     in_data_path[/data_path/]
-    in_path[/path/]
     in_properties[/resource_properties/]
     function("write_resource_data_to_raw()")
     out[("{path}/{timestamp}-{uuid}.{ext}.csv")]
     in_data_path --> function
-    in_path --> function
     in_properties --> function
     function --> out
 ```
