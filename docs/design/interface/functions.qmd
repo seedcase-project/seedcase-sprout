@@ -1,5 +1,5 @@
 ---
-title: "Core Python functions"
+title: "Functions and classes"
 callout-icon: false
 callout-appearance: "minimal"
 ---
@@ -93,17 +93,11 @@ to the function argument as confirmation. This is done to prevent
 accidental deletion. Outputs `true` if the deletion was successful.
 :::
 
-::: {.callout-warning collapse="true"}
+::: {.callout-note collapse="true"}
 ### `write_package_properties(properties, path)`
 
-Writes the properties object containing package properties (with or
-without resource properties) back to the `datapackage.json` file. The
-`path` argument is the path to the folder that will have or currently
-has the `datapackage.json` file. The `path` argument is to the existing
-but empty folder or to a folder that doesn't exist but will be created
-by this function. Will overwrite the `datapackage.json` file by default
-if the file already exists. Returns the same path object as given in the
-`path` argument.
+See the help documentation with `help(write_package_properties)` for more
+details.
 :::
 
 ## Data resource functions
@@ -111,40 +105,18 @@ if the file already exists. Returns the same path object as given in the
 ::: {.callout-note collapse="true"}
 ### `create_resource_structure(path)`
 
-This is the first function to use to set up the structure for a data
-resource. It creates the paths for a new data resource in a specific
-(existing) package by creating the folder setup described in the
-[Outputs](outputs.qmd) section. Use the `path_resources()` function to
-provide the correct path location. It creates two paths: the
-`resources/<id>/` path and the `resources/<id>/raw/` path. The output is
-a list of these two path objects.
-
-![Diagram showing the internal function flow of the
-`create_resource_structure()`
-function.](images/core/create-resource-structure.svg){#fig-create-resource-structure
-fig-alt="A Plant UML schematic of the detailed code flow within the `create_resource_structure()` function."}
+See the help documentation with `help(create_resource_structure)` for more
+details.
 :::
 
 ::: {.callout-note collapse="true"}
 ### `create_resource_properties(path, properties)`
 
-This function sets up and structures a new resource property by taking
-the fields given in the `properties` argument to fill them and prepare
-them to be added to the `datapackage.json` file. It must be given as a
-`ResourceProperties` object following the Data Package specification.
-The `path` argument provides the path to the resource `id` that the
-properties are for; use `path_resource()` to provide the correct path
-or use the output of `create_resource_structure()`. Outputs a
-`ResourceProperties` object; use `write_resource_properties()` to save
-the object to the `datapackage.json` file.
-
-![Diagram showing the internal function flow of the
-`create_resource_properties()`
-function.](images/core/create-resource-properties.svg){#fig-create-resource-properties
-fig-alt="A Plant UML schematic of the detailed code flow within the `create_resource_properties()` function."}
+see the help documentation with `help(create_resource_properties)` for more
+details.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `write_resource_data_to_raw(data_path, resource_properties)`
 
 See the help documentation with `help(write_resource_data_to_raw)` for
@@ -162,7 +134,7 @@ flowchart
 ```
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `write_resource_parquet(raw_files, path)`
 
 This function takes the files provided by `raw_files` and merges them
@@ -172,7 +144,7 @@ and `path_resource_raw_files()` for the `raw_files` argument. Outputs
 the path object of the created file.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `edit_resource_properties(path, properties)`
 
 Edit the properties of a resource in a package. The `properties`
@@ -183,7 +155,7 @@ correct path location. Outputs a JSON object only; use
 `datapackage.json` file.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `delete_resource_raw_file(path, confirm)`
 
 Use this to delete a raw file in the `raw/` folder of a resource. This
@@ -196,20 +168,19 @@ to the function argument as confirmation. This is done to prevent
 accidental deletion. Outputs `true` if the deletion was successful.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `delete_resource_data(path, confirm)`
 
-Delete all data (Parquet) and raw data of a specific
-resource. Use `path_resource_raw()` to provide the correct path
-location. The `confirm` argument defaults to `false` so that the user
-needs to explicitly provide `true` to the function argument as
-confirmation. This is done to prevent accidental deletion. Outputs
-`true` if the deletion was successful. Use
-`delete_resource_properties()` to delete the the associated
-properties/metadata for the resource.
+Delete all data (Parquet) and raw data of a specific resource. Use
+`path_resource_raw()` to provide the correct path location. The
+`confirm` argument defaults to `false` so that the user needs to
+explicitly provide `true` to the function argument as confirmation. This
+is done to prevent accidental deletion. Outputs `true` if the deletion
+was successful. Use `delete_resource_properties()` to delete the the
+associated properties/metadata for the resource.
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `delete_resource_properties(path, confirm)`
 
 Deletes all properties for a resource within the `datapackage.json`
@@ -223,41 +194,15 @@ confirmation. This is done to prevent accidental deletion. Outputs
 ::: {.callout-note collapse="true"}
 ### `write_resource_properties(properties, path)`
 
-Use to write the resource JSON object back to the `datapackage.json`
-file. This function validates whether the JSON object follows the Data
-Package resource specification. The `properties` argument must be given
-as a `ResourceProperties` object following the Data Package specification.
-The `path` argument is the location of the `datapackage.json` file. Use
-the `path_properties()` function to provide this path to the correct
-location. Returns the same path object as given in the `path` argument.
-
-![Diagram showing the internal function flow of the
-`write_resource_properties()`
-function.](images/core/write-resource-properties.svg){#fig-write-resource-properties
-fig-alt="A Plant UML schematic of the detailed code flow within the `write_resource_properties()` function."}
+See the help documentation with `help(write_resource_properties)` for more
+details.
 :::
 
 ::: {.callout-note collapse="true"}
-### `extract_resource_properties(path, data_path)`
+### `extract_resource_properties(data_path)`
 
-This takes the data found at the `data_path` location and creates a JSON
-object following the Frictionless Data standard. Internally it uses the
-frictionless Python package to guess and fill in some of the property
-fields required by the Frictionless Data resource specification. This
-function is often followed by `edit_resource_properties()` to fill in
-any remaining missing fields and then the `verify_resource_properties()`
-function. Usually, you use either this function or the
-`create_resource_properties()` function to create the resource
-properties for the specific data resource given. The `path` argument
-points to the resource `id` folder; use `path_resource()` to help give
-the correct path. Outputs a JSON object. Use
-`write_resource_properties()` to save the JSON object to the
-`datapackage.json` file.
-
-![Diagram showing the internal function flow of the
-`extract_resource_properties()`
-function.](images/core/extract-resource-properties.svg){#fig-extract-resource-properties
-fig-alt="A Plant UML schematic of the detailed code flow within the `extract_resource_properties()` function."}
+See the help documentation with `help(extract_resource_properties)` for more
+details.
 :::
 
 ## Path functions
@@ -334,26 +279,27 @@ outputs a `PackageProperties` object.
 
 ## Helper functions
 
-::: {.callout-note collapse="true"}
-### `list_files(path)`
-
-List all files in a directory. Outputs a list of path objects.
-:::
-
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `pretty_json(json)`
 
 Create a prettier, human readable version of a JSON object.
 :::
 
-## Observational unit level functions
+::: {.callout-warning collapse="true"}
+### `write_text(text, path)`
+
+Writes a text string to a file at the given path. Outputs the path
+object of the created file.
+:::
+
+## Observational unit functions
 
 Observational unit is the level of detail on the entity (e.g. human,
 animal, event) that the data was collected on. An example would be: A
 person in a research study who came to the clinic in May 2024 to have
 their blood collected and to fill out a survey.
 
-::: {.callout-note collapse="true"}
+::: {.callout-warning collapse="true"}
 ### `delete_participant_data()`
 
 TODO.

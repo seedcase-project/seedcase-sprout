@@ -5,11 +5,6 @@ project:
     - "docs/*"
     - "index.qmd"
 
-glossary:
-  path: _extensions/seedcase-project/seedcase-theme/glossary.yml
-  popup: none
-  show: true
-
 website:
   title: "Seedcase Sprout"
   site-url: "https://sprout.seedcase-project.org/"
@@ -52,15 +47,15 @@ website:
         - section: "Architecture"
           href: docs/design/architecture/index.qmd
           contents:
-            - docs/design/architecture/requirements.qmd
             - docs/design/architecture/user-personas.qmd
             - docs/design/architecture/input-data.qmd
+            - docs/design/architecture/c4-models.qmd
             - docs/design/architecture/naming.qmd
         - section: "Interface"
           href: docs/design/interface/index.qmd
           contents:
             - docs/design/interface/outputs.qmd
-            - docs/design/interface/python-functions.qmd
+            - docs/design/interface/functions.qmd
     - id: guide
       contents:
         - section: "Guide"
