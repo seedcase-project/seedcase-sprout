@@ -29,7 +29,8 @@ def write_resource_data_to_raw(data_path, resource_properties) -> Path:
     check_is_supported_format(data_path)
     check_data_basics(data_path, resource_properties)
     check_data_constraints(data_path, resource_properties)
-    raw_dir = Path(resource_properties.path / "raw")
+    # Since `path` is to the `data.parquet` file.
+    raw_dir = Path(resource_properties.path.parent / "raw")
 
     raw_resource_path = Path(raw_dir / create_raw_file_name(data_path))
     return write_compressed_file(data_path, raw_resource_path)
