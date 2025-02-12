@@ -8,42 +8,41 @@ from seedcase_sprout.core import (
 from seedcase_sprout.core.create_package_properties import create_package_properties
 from seedcase_sprout.core.read_json import read_json
 
+package_properties = PackageProperties(
+    name="test-package",
+    title="Test of data package",
+    description="Data for a test data package.",
+    contributors=[
+        ContributorProperties(
+            title="Luke",
+            email="luke@example.com",
+            roles=["creator"],
+        )
+    ],
+    licenses=[
+        LicenseProperties(
+            name="ODC-BY-1.0",
+            path="https://opendatacommons.org/licenses/by",
+            title="Open Data Commons Attribution License 1.0",
+        )
+    ],
+)
 
-def test_creates_folder_structure_correctly(tmp_path):
-    """Given a path, should create the correct folders and files."""
+
+def test_creates_folder_and_file_correctly(tmp_path):
+    """Given a path, should create the correct folder and file."""
     # given
     expected_package_path = tmp_path / "test-package"
     expected_properties_path = expected_package_path / "datapackage.json"
 
     # when
-    package_properties = PackageProperties(
-        name="test-package",
-        title="Test of data package",
-        description="Data for a test data package.",
-        contributors=[
-            ContributorProperties(
-                title="Luke",
-                email="luke@example.com",
-                roles=["creator"],
-            )
-        ],
-        licenses=[
-            LicenseProperties(
-                name="ODC-BY-1.0",
-                path="https://opendatacommons.org/licenses/by",
-                title="Open Data Commons Attribution License 1.0",
-            )
-        ],
-    )
     path = create_package_properties(package_properties, tmp_path)
 
     # then
     assert len(list(tmp_path.iterdir())) == 1
     assert expected_package_path.is_dir()
     assert len(list(expected_package_path.iterdir())) == 1
-    assert path == [
-        expected_properties_path,
-    ]
+    assert path == expected_properties_path
     assert expected_properties_path.is_file()
 
 
