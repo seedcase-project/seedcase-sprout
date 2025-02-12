@@ -49,23 +49,15 @@ def test_creates_folder_and_file_correctly(tmp_path):
 def test_writes_nonempty_files(tmp_path):
     """The files written should not be empty. The properties file should be parsable as
     JSON."""
-    properties_path, readme_path, resource_dir = create_package_properties(tmp_path)
+    properties_path = create_package_properties(package_properties, tmp_path)
 
     assert read_json(properties_path)
-    assert readme_path.read_text()
-    assert resource_dir.is_dir()
-
-
-def test_throws_error_if_directory_does_not_exist(tmp_path):
-    """Raises NotADirectoryError if the input path points to a nonexistent folder."""
-    with raises(NotADirectoryError):
-        create_package_properties(tmp_path / "nonexistent")
 
 
 def test_throws_error_if_path_points_to_file(tmp_path):
     """Raises NotADirectoryError if the input path points to a file."""
-    file_path = tmp_path / "test.txt"
+    file_path = tmp_path / "datapackage.json"
     file_path.touch()
 
     with raises(NotADirectoryError):
-        create_package_properties(file_path)
+        create_package_properties(package_properties, file_path)
