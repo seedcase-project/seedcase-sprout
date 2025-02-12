@@ -57,9 +57,12 @@ def create_package_properties(
             )
         ```
     """
+    default_properties = PackageProperties.default()
+    properties = properties.compact_dict
+    properties.update(default_properties.compact_dict)
     check_package_properties(
-        properties.compact_dict,
+        properties,
     )
-    properties_path = create_properties_path(path / properties.name)
-    Path(properties_path).mkdir(parents=True)
-    return [write_json(properties.compact_dict, properties_path)]
+    properties_path = create_properties_path(path / properties["name"])
+    Path(properties_path.parent).mkdir(parents=True)
+    return write_json(properties, properties_path)
