@@ -18,6 +18,10 @@ def create_package_properties(
     argument. You can use the `PackageProperties` class to help create a valid
     properties object that has the correct fields.
 
+    By default, the function will add `id`, `version`, and `created` fields to the
+    properties object. See the `PackageProperties` class documentation for more
+    information.
+
     Args:
         properties: A `PackageProperties` object containing the properties for the
             package.
