@@ -1,3 +1,6 @@
+from uuid import uuid4
+
+from seedcase_sprout.core.get_iso_timestamp import get_iso_timestamp
 from seedcase_sprout.core.properties import (
     ContributorProperties,
     LicenseProperties,
@@ -20,9 +23,11 @@ def example_package_properties() -> PackageProperties:
         sp.example_package_properties()
         ```
     """
-    default_properties = PackageProperties.default()
-    update_properties = PackageProperties(
+    properties = PackageProperties(
         name="example-package",
+        version="0.1.0",
+        created=get_iso_timestamp(),
+        id=str(uuid4()),
         title="Example fake data package",
         description="Data from a fake data package on something.",
         contributors=[
@@ -39,10 +44,8 @@ def example_package_properties() -> PackageProperties:
                 title="Open Data Commons Attribution License 1.0",
             )
         ],
-    ).compact_dict
+    )
 
-    update_properties.update(default_properties.compact_dict)
+    check_package_properties(properties)
 
-    check_package_properties(update_properties)
-
-    return PackageProperties.from_dict(update_properties)
+    return properties
