@@ -12,7 +12,7 @@ def example_package_properties() -> PackageProperties:
     """Generate an example package properties object.
 
     Returns:
-        Outputs a correctly formatted, `PackageProperties` object.
+        Outputs a correctly formatted example `PackageProperties` object.
 
     Examples:
         ```{python}
