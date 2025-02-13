@@ -1,40 +1,89 @@
 from pathlib import Path
 
+from seedcase_sprout.core.check_is_file import check_is_file
+from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.properties import ResourceProperties
 from seedcase_sprout.core.read_json import read_json
-from seedcase_sprout.core.verify_data_path import verify_data_path
-from seedcase_sprout.core.verify_is_file import verify_is_file
-from seedcase_sprout.core.verify_package_properties import verify_package_properties
-from seedcase_sprout.core.verify_resource_properties import verify_resource_properties
+from seedcase_sprout.core.sprout_checks.check_properties import check_properties
+from seedcase_sprout.core.sprout_checks.check_resource_properties import (
+    check_resource_properties,
+)
 from seedcase_sprout.core.write_json import write_json
 
 
-def write_resource_properties(path: Path, resource_properties: dict) -> Path:
-    """Adds the specified resource properties to the `datapackage.json` file.
+def write_resource_properties(
+    path: Path, resource_properties: ResourceProperties
+) -> Path:
+    """Writes the specified resource properties to the `datapackage.json` file.
 
     This functions verifies `resource_properties`, and if a
-    resource with that ID is already present on the package, the properties of the
-    resource with that ID are updated, with values in `resource_properties` overwriting
+    resource with that ID is already present on the package, the properties of that
+    resource are updated. The values in `resource_properties` overwrite
     preexisting values. Otherwise, `resource_properties` is added as a new resource.
 
+
     Args:
-        path: The path to the `datapackage.json` file.
-        resource_properties: The resource properties to add.
+        path: The path to the `datapackage.json` file. Use `path_properties()`
+            to help give the correct path.
+        resource_properties: The resource properties to add. Use
+            `ResourceProperties` to help create this object.
 
     Returns:
         The path to the updated `datapackage.json` file.
 
     Raises:
         FileNotFound: If the `datapackage.json` file doesn't exist.
-        NotPropertiesError: If the resource or package properties are not correct, i.e.,
-            they are incomplete or don't follow the Data Package specification.
+        ExceptionGroup: If there is an error in the properties. A group of
+            `CheckError`s, one error per failed check.
         JSONDecodeError: If the `datapackage.json` file couldn't be read.
+
+    Examples:
+        ```{python}
+        import tempfile
+        from pathlib import Path
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        temp_dir = Path(tempfile.TemporaryDirectory().name)
+        temp_dir.mkdir()
+
+        # Create package and resource structure first
+        sp.create_package_structure(path=temp_dir)
+        sp.create_resource_structure(path=temp_dir / "1" / "resources")
+
+        # TODO: Write package properties that passes checks
+        # Write package properties
+        # sp.write_package_properties(
+        #     path=temp_dir / "1" / "datapackage.json",
+        #     package_properties=sp.PackageProperties(
+        #         title="New Package Title",
+        #         name="new-package-name",
+        #         description="New Description",
+        #     ),
+
+        # Write resource properties
+        # sp.write_resource_properties(
+        #     path=temp_dir / "1" / "datapackage.json",
+        #     resource_properties=sp.ResourceProperties(
+        #         name="new-resource-name",
+        #         title="New resource name",
+        #         description="This is a new resource",
+        #         path="data.parquet",
+        #     ),
+        # )
+        ```
     """
-    verify_is_file(path)
-    verify_resource_properties(resource_properties)
+    check_is_file(path)
+    check_resource_properties(resource_properties)
 
     package_properties = read_json(path)
-    verify_package_properties(package_properties)
+    check_properties(
+        package_properties,
+        ignore=[CheckErrorMatcher(validator="required", json_path="resources")],
+    )
 
+    resource_properties = resource_properties.compact_dict
     resource_id = get_resource_id_from_properties(resource_properties)
     current_resource = get_resource_properties(package_properties, resource_id)
     if current_resource:
@@ -68,10 +117,5 @@ def get_resource_id_from_properties(resource_properties: dict) -> int:
 
     Returns:
         The ID of the resource.
-
-    Raises:
-        NotPropertiesError: If the resource properties have a malformed or missing
-            data path.
     """
-    verify_data_path(resource_properties)
     return int(Path(resource_properties["path"]).parts[1])

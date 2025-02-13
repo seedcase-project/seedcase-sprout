@@ -5,11 +5,6 @@ project:
     - "docs/*"
     - "index.qmd"
 
-glossary:
-  path: _extensions/seedcase-project/seedcase-theme/glossary.yml
-  popup: none
-  show: true
-
 website:
   title: "Seedcase Sprout"
   site-url: "https://sprout.seedcase-project.org/"
@@ -52,17 +47,15 @@ website:
         - section: "Architecture"
           href: docs/design/architecture/index.qmd
           contents:
-            - docs/design/architecture/requirements.qmd
+            - docs/design/architecture/user-personas.qmd
+            - docs/design/architecture/input-data.qmd
             - docs/design/architecture/c4-models.qmd
             - docs/design/architecture/naming.qmd
-            - docs/design/architecture/modular-design.qmd
-            - docs/design/architecture/user-roles.qmd
-        - section: "Implementation"
-          href: docs/design/implementation/index.qmd
+        - section: "Interface"
+          href: docs/design/interface/index.qmd
           contents:
-            - docs/design/implementation/outputs.qmd
-            - docs/design/implementation/python-functions.qmd
-            - docs/design/implementation/app-urls.qmd
+            - docs/design/interface/outputs.qmd
+            - docs/design/interface/functions.qmd
     - id: guide
       contents:
         - section: "Guide"
@@ -77,54 +70,60 @@ quartodoc:
   dir: "docs/reference"
   package: "seedcase_sprout"
   parser: google
+  dynamic: true
   renderer:
-    style: markdown
+    style: _renderer.py
     table_style: description-list
+    show_signature_annotations: true
   sections:
     - title: "Core functions"
+      desc: "Core functions that support the creation and management of data packages and data resources."
 
     - subtitle: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
+      package: "seedcase_sprout.core"
       contents:
-        - core.create_package_structure
-        - core.edit_package_properties
+        - create_package_structure
+        - edit_package_properties
 
     - subtitle: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
+      package: "seedcase_sprout.core"
       contents:
-        - core.write_resource_properties
-        - core.create_resource_properties
-        - core.create_resource_structure
+        - create_resource_properties
+        - create_resource_structure
+        - write_resource_properties
 
     - subtitle: "Property dataclasses"
       desc: "Dataclasses that support creating correct data package properties."
+      package: "seedcase_sprout.core"
       contents:
-        - core.ConstraintsProperties
-        - core.ContributorProperties
-        - core.FieldProperties
-        - core.LicenseProperties
-        - core.MissingValueProperties
-        - core.PackageProperties
-        - core.ReferenceProperties
-        - core.ResourceProperties
-        - core.SourceProperties
-        - core.TableDialectProperties
-        - core.TableSchemaForeignKeyProperties
-        - core.TableSchemaProperties
+        - ConstraintsProperties
+        - ContributorProperties
+        - FieldProperties
+        - LicenseProperties
+        - MissingValueProperties
+        - PackageProperties
+        - ReferenceProperties
+        - ResourceProperties
+        - SourceProperties
+        - TableDialectProperties
+        - TableSchemaForeignKeyProperties
+        - TableSchemaProperties
 
     - subtitle: "Path functions"
       desc: "Functions to support providing the correct file paths to data package and data resource functions."
+      package: "seedcase_sprout.core"
       contents:
-        - core.path_package
-        - core.path_package_database
-        - core.path_package_properties
-        - core.path_packages
-        - core.path_resource
-        - core.path_resource_data
-        - core.path_resource_raw
-        - core.path_resource_raw_files
-        - core.path_resources
-        - core.path_sprout_root
+        - path_package
+        - path_properties
+        - path_packages
+        - path_resource
+        - path_resource_data
+        - path_resource_raw
+        - path_resource_raw_files
+        - path_resources
+        - path_sprout_global
 
 metadata-files:
   - docs/reference/_sidebar.yml

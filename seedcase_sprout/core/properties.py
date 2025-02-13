@@ -1,3 +1,9 @@
+"""This module includes the dataclasses for the properties of a data package.
+
+The properties are based on the Frictionless Data Package specification. They are used
+as input for creating and editing the properties of data packages and data resources and
+are intended to help users with the correct structure and content of the properties.
+"""
 # NOTE: This content is modified from the auto-generated
 # `generate_properties/generated_properties.py` file. Update the auto-generated
 # properties file to add more dataclasses and move them into this file.
@@ -7,45 +13,80 @@ from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
 from uuid import uuid4
 
+from dacite import from_dict
+
 from seedcase_sprout.core.get_iso_timestamp import get_iso_timestamp
 
 
 class Properties(ABC):
-    """An abstract base class for all *Properties classes holding common logic."""
+    """An abstract base class for all `*Properties` classes holding common logic."""
 
     @classmethod
     @abstractmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values."""
+        """Creates a dataclass `*Properties` object with default values."""
         pass
 
     @property
     def compact_dict(self) -> dict:
-        """Convert the object to a dictionary, removing any keys with None values.
+        """Converts the dataclass `*Properties` object to a dictionary.
+
+        Applies recursively to nested `*Properties` objects. Also removes any keys with
+        None values.
 
         Returns:
-            A dictionary representation of the object with only non-None values.
+            A dictionary representation of the `*Properties` object with only non-None
+                values.
         """
-        return {key: value for key, value in asdict(self).items() if value is not None}
+        return asdict(
+            obj=self,
+            dict_factory=lambda tuples: {
+                key: value for key, value in tuples if value is not None
+            },
+        )
+
+    @classmethod
+    def from_dict(cls: type[Self], data: dict) -> Self:
+        """Creates a dataclass `*Properties` object filled with data from a dictionary.
+
+        Args:
+            cls: The class to create the `*Properties` object from.
+            data: The data to fill the `*Properties` object with.
+
+        Returns:
+            A `*Properties` object with the properties from the dictionary.
+        """
+        return from_dict(data_class=cls, data=data)
 
 
 @dataclass
 class ContributorProperties(Properties):
     """The people or organizations who contributed to this data package.
 
+    Creates a dataclass object with all the necessary properties for a
+    contributor. This would be given in the `contributors` field of a
+    `PackageProperties` object.
+
     Attributes:
         title (str | None): The name of the contributor.
         path (str | None): A fully qualified URL pointing to a relevant
             location online for the contributor.
         email (str | None): An email address.
-        given_name (str | None): A string containing the name a person has been
+        given_name (str | None): The name a person has been
             given, if the contributor is a person.
-        family_name (str | None): A string containing the familial name that a person
+        family_name (str | None): The familial name that a person
             inherits, if the contributor is a person.
         organization (str | None): An organizational affiliation for this
             contributor.
         roles (list[str] | None): An array of strings describing the roles of the
             contributor.
+
+    Examples:
+        ```{python}
+        import seedcase_sprout.core as sp
+        print(sp.ContributorProperties())
+        print(sp.ContributorProperties(title="Amir Smith"))
+        ```
     """
 
     title: str | None = None
@@ -58,10 +99,10 @@ class ContributorProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `ContributorProperties` object with default values.
 
         Returns:
-            A ContributorProperties object with default values
+            A `ContributorProperties` object with default values.
         """
         return cls(
             title="",
@@ -78,11 +119,21 @@ class ContributorProperties(Properties):
 class LicenseProperties(Properties):
     """The license(s) under which the package or resource is provided.
 
+    Creates a dataclass object with all the necessary properties for a
+    license, so that it can be added to the `licenses` field of a
+    `PackageProperties` object.
+
     Attributes:
         name (str | None): Must be an Open Definition license identifier,
             see http://licenses.opendefinition.org/
         path (str | None): A fully qualified URL, or a POSIX file path.
         title (str | None): A human-readable title.
+
+    Examples:
+        ```{python}
+        import seedcase_sprout.core as sp
+        print(sp.LicenseProperties())
+        ```
     """
 
     name: str | None = None
@@ -91,10 +142,10 @@ class LicenseProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `LicenseProperties` object with default values.
 
         Returns:
-            A LicenseProperties object with default values
+            A `LicenseProperties` object with default values.
         """
         return cls(name="", path="", title="")
 
@@ -117,10 +168,10 @@ class SourceProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `SourceProperties` dataclass with default values.
 
         Returns:
-            A SourceProperties object with default values
+            A `SourceProperties` object with default values.
         """
         return cls(title="", path="", email="", version="")
 
@@ -193,10 +244,10 @@ class TableDialectProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `TableDialectProperties` dataclass with default values.
 
         Returns:
-            A TableDialectProperties object with default values
+            A `TableDialectProperties` dataclass with default values.
         """
         return cls(
             header=True,
@@ -237,10 +288,10 @@ class ReferenceProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `ReferenceProperties` dataclass with default values.
 
         Returns:
-            A ReferenceProperties object with default values
+            A `ReferenceProperties` dataclass with default values.
         """
         return cls(resource="", fields=[])
 
@@ -265,10 +316,10 @@ class TableSchemaForeignKeyProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `TableSchemaForeignKeyProperties` dataclass with default values.
 
         Returns:
-            A TableSchemaForeignKeyProperties object with default values
+            A `TableSchemaForeignKeyProperties` dataclass with default values.
         """
         return cls(fields=[])
 
@@ -287,10 +338,10 @@ class MissingValueProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `MissingValueProperties` dataclass with default values.
 
         Returns:
-            A MissingValueProperties object with default values
+            A `MissingValueProperties` dataclass with default values.
         """
         return cls(value="", label="")
 
@@ -318,7 +369,11 @@ FieldType = Literal[
 
 @dataclass
 class ConstraintsProperties(Properties):
-    """A class that expresses constraints for validating field values.
+    """A dataclass that expresses constraints for validating field values.
+
+    A constraint is a rule that dictates the given values, or range of values,
+    that a variable or column can have in a dataset. For instance, a constraint
+    for an "age" column could be that it must be greater than 0 but less than 120.
 
     Attributes:
         required (bool | None): Indicates whether a property must have a
@@ -359,10 +414,10 @@ class ConstraintsProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `ConstraintsProperties` dataclass with default values.
 
         Returns:
-            A ConstraintsProperties object with default values
+            A `ConstraintsProperties` dataclass with default values.
         """
         return cls(
             required=False,
@@ -414,10 +469,10 @@ class FieldProperties(Properties):
 
     @classmethod
     def default(cls: "type[Self]") -> Self:
-        """Creates an instance with default values.
+        """Creates a `FieldProperties` dataclass with default values.
 
         Returns:
-            A FieldProperties object with default values
+            A `FieldProperties` dataclass with default values.
         """
         return cls(
             name="",
@@ -461,6 +516,12 @@ class TableSchemaProperties(Properties):
             table (resource).
         missing_values (list[str] | list[MissingValueProperties] | None): Values that,
             when encountered in the source, should be considered as not present.
+
+    Examples:
+        ```{python}
+        import seedcase_sprout.core as sp
+        print(sp.TableSchemaProperties(primary_key="id"))
+        ```
     """
 
     fields: list[FieldProperties] | None = None
@@ -472,10 +533,10 @@ class TableSchemaProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `TableSchemaProperties` dataclass with default values.
 
         Returns:
-            A TableSchemaProperties object with default values
+            A `TableSchemaProperties` dataclass with default values.
         """
         return cls(
             fields=[],
@@ -495,6 +556,10 @@ class ResourceProperties(Properties):
     individual table or file. The essence of a data resource is a locator for
     the data it describes. A range of other properties can be declared to provide a
     richer set of metadata.
+
+    Creates a dataclass object with all the necessary properties for a resource,
+    which would be given in the `resources` field of a `PackageProperties`
+    dataclass.
 
     Attributes:
         name (str | None): A simple name or identifier to be used for this resource.
@@ -520,6 +585,13 @@ class ResourceProperties(Properties):
             data.
         schema (TableSchemaProperties | None): A table schema for the resource data,
             compliant with the table schema specification.
+
+    Examples:
+        ```{python}
+        import seedcase_sprout.core as sp
+        print(sp.ResourceProperties())
+        print(sp.ResourceProperties(name="Blood samples", path="data.csv"))
+        ```
     """
 
     name: str | None = None
@@ -539,10 +611,10 @@ class ResourceProperties(Properties):
 
     @classmethod
     def default(cls: "type[Self]") -> Self:
-        """Creates an instance with default values.
+        """Creates a `ResourcesProperties` dataclass with default values.
 
         Returns:
-            A ResourceProperties object with default values
+            A `ResourceProperties` dataclass with default values.
         """
         return cls(
             name="",
@@ -562,11 +634,13 @@ class ResourceProperties(Properties):
 
 @dataclass
 class PackageProperties(Properties):
-    """A data package.
+    """Properties for a data package.
 
     A simple container format for describing a coherent collection of data in a single
     "package". It provides the basis for convenient delivery, installation and
     management of datasets.
+
+    Creates a dataclass object with all the necessary properties for the package.
 
     Attributes:
         name (str | None): A simple name or identifier to be used for this package.
@@ -588,6 +662,26 @@ class PackageProperties(Properties):
             in this data package, each compliant with the data resource specification.
         sources (list[SourceProperties] | None): The raw sources for this data
             package.
+
+    Examples:
+        ```{python}
+        import seedcase_sprout.core as sp
+        print(sp.PackageProperties())
+        print(sp.PackageProperties(name="diabetes-cohort", title="Diabetes Cohort"))
+        print(sp.PackageProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
+
+        # To allow multiline strings, use dedent.
+        from textwrap import dedent
+        print(sp.PackageProperties(
+            title="Birds of North America",
+            description=dedent('''
+                # Markdown header
+
+                A dataset of bird sightings. With some **bolding**.
+                '''
+            )
+        ))
+        ```
     """
 
     name: str | None = None
@@ -606,23 +700,13 @@ class PackageProperties(Properties):
 
     @classmethod
     def default(cls: type[Self]) -> Self:
-        """Creates an instance with default values.
+        """Creates a `PackageProperties` dataclass with default values.
 
         Returns:
-            A PackageProperties object with default values
+            A `PackageProperties` dataclass with default values.
         """
         return cls(
-            name="",
             id=str(uuid4()),
-            title="",
-            description="",
-            homepage="",
             version="0.1.0",
             created=get_iso_timestamp(),
-            contributors=[],
-            keywords=[],
-            image="",
-            licenses=[],
-            resources=[],
-            sources=[],
         )

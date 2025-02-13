@@ -4,9 +4,8 @@ from pytest import fixture, mark, raises
 
 from seedcase_sprout.core import (
     path_package,
-    path_package_database,
-    path_package_properties,
     path_packages,
+    path_properties,
 )
 from tests.core.directory_structure_setup import (
     create_test_package_structure,
@@ -15,9 +14,9 @@ from tests.core.directory_structure_setup import (
 
 # Given one package
 @fixture
-def tmp_sprout_root(monkeypatch, tmp_path):
-    """Set up test package folder structure and return temp root directory"""
-    monkeypatch.setenv("SPROUT_ROOT", str(tmp_path))
+def tmp_sprout_global(monkeypatch, tmp_path):
+    """Set up test package folder structure and return temp global directory"""
+    monkeypatch.setenv("SPROUT_GLOBAL", str(tmp_path))
     create_test_package_structure(tmp_path, "1")
 
     return tmp_path
@@ -27,40 +26,39 @@ def tmp_sprout_root(monkeypatch, tmp_path):
     "function, expected_path",
     [
         (path_package, "packages/1"),
-        (path_package_database, "packages/1/database.sql"),
-        (path_package_properties, "packages/1/datapackage.json"),
+        (path_properties, "packages/1/datapackage.json"),
     ],
 )
 def test_path_package_functions_return_expected_path(
-    tmp_sprout_root, function, expected_path
+    tmp_sprout_global, function, expected_path
 ):
     # When, then
-    assert function(package_id=1) == tmp_sprout_root / expected_path
+    assert function(package_id=1) == tmp_sprout_global / expected_path
     assert function(package_id=1).is_file() or function(package_id=1).is_dir()
 
 
 @mark.parametrize(
     "function",
-    [path_package, path_package_database, path_package_properties],
+    [path_package, path_properties],
 )
 def test_path_package_functions_raise_error_if_package_id_does_not_exist(
-    tmp_sprout_root, function
+    tmp_sprout_global, function
 ):
     # When, then
     with raises(NotADirectoryError, match=escape("[1]")):
         function(package_id=2)
 
 
-def test_path_packages_returns_expected_path(tmp_sprout_root):
+def test_path_packages_returns_expected_path(tmp_sprout_global):
     # When, then
-    assert path_packages() == tmp_sprout_root / "packages"
+    assert path_packages() == tmp_sprout_global / "packages"
 
 
 def test_path_packages_creates_and_returns_expected_path_when_no_packages_exist(
     monkeypatch, tmp_path
 ):
     # When
-    monkeypatch.setenv("SPROUT_ROOT", str(tmp_path))
+    monkeypatch.setenv("SPROUT_GLOBAL", str(tmp_path))
 
     # Then
     assert path_packages() == tmp_path / "packages"

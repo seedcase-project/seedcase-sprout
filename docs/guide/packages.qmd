@@ -4,33 +4,33 @@ order: 1
 jupyter: python3
 ---
 
-At the core of Sprout is the [{{< glossary "data package">}}](../glossary.qmd), which is a standardized way of structuring and sharing data. This guide will show you how to create and manage data packages using Sprout.
+At the core of Sprout is the
+[{{< glossary "data package">}}](../glossary.qmd), which is a
+standardized way of structuring and sharing data. This guide will show
+you how to create and manage data packages using Sprout.
 
 {{< include _preamble.qmd >}}
 
 ## Creating a data package
 
-::::: panel-tabset
-### Python
-
 The first thing you'll need to decide is where you want to store your
 data packages. By default, Sprout will create it in `~/sprout/packages/`
-on Linux (see [Outputs](/docs/design/implementation/outputs.qmd) for
+on Linux (see [Outputs](/docs/design/interface/outputs.qmd) for
 operating system specific locations), but you can change this by setting
-the `SPROUT_ROOT` environment variable. For instance, maybe you want the
-location to be `~/Desktop/sprout/` or `~/Documents`. For our example, we
-will store it in our current working directory in the hidden folder
-`.storage/`.
+the `SPROUT_GLOBAL` environment variable. For instance, maybe you want
+the location to be `~/Desktop/sprout/` or `~/Documents`. For our
+example, we will store it in our current working directory in the hidden
+folder `.storage/`.
 
 ```{python}
-import sprout.core as sp
+import seedcase_sprout.core as sp
 import os
 import pathlib
 
 # For pretty printing of output
 from pprint import pprint
 
-os.environ["SPROUT_ROOT"] = ".storage/"
+os.environ["SPROUT_GLOBAL"] = ".storage/"
 ```
 
 ```{python}
@@ -42,8 +42,8 @@ Afterwards, you can create the structure for your first data package by
 using:
 
 ```{python}
-new_package = sp.create_package_structure(path=sp.path_packages())
-pprint(new_package)
+package_paths = sp.create_package_structure(path=sp.path_packages())
+pprint(package_paths)
 ```
 
 This creates the initial structure of your new package with the ID `1`.
@@ -65,24 +65,32 @@ properties = sp.PackageProperties(
     name="diabetes-hypertension-study",
     title="Diabetes and Hypertension Study",
     description="Data from the 2021 study on diabetes and hypertension",
-    contributors=[sp.ContributorProperties(
-        given_name="Jamie",
-        family_name="Jones",
-        email="jamie_jones@example.com",
-        roles=["creator"]
-    )],
-    licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]
+    contributors=[
+        sp.ContributorProperties(
+            title="Jamie Jones",
+            email="jamie_jones@example.com",
+            path="example.com/jamie_jones",
+            roles=["creator"],
+        )
+    ],
+    licenses=[
+        sp.LicenseProperties(
+            name="ODC-BY-1.0",
+            path="https://opendatacommons.org/licenses/by",
+            title="Open Data Commons Attribution License 1.0",
+        )
+    ],
 )
 pprint(properties)
 ```
 
-Then, to update the current `datapackage.json` file with these
-properties, you can use the `update_package_properties()` function:
+Now, to update the current `datapackage.json` file with these
+properties, you can use the `edit_package_properties()` function:
 
-``` python
+```{python}
 package_properties = sp.edit_package_properties(
-  path=sp.path_package_properties(package_id=1),
-  properties=properties.asdict
+  path=sp.path_properties(package_id=1),
+  properties=properties,
 )
 pprint(package_properties)
 ```
@@ -95,11 +103,12 @@ file.
 
 To save the package properties to the `datapackage.json` file, run:
 
-``` python
-sp.write_package_properties(
+``` {python}
+package_path = sp.write_package_properties(
   properties=package_properties,
   path=sp.path_properties(package_id=1)
 )
+pprint(package_path)
 ```
 
 If you need help with filling in the right properties, see the
@@ -109,54 +118,3 @@ fill in for a package.
 
 You now have the basic starting point for adding data resources to your
 data package.
-
-### CLI
-
-The CLI is a bit more straightforward as long as you are comfortable
-using the Terminal. You can set the `SPROUT_ROOT` environment variable
-to change the location of the data packages. For instance, maybe you
-want the location to be `~/Documents/data-packages/`. You can set this
-in your terminal like so:
-
-``` bash
-export SPROUT_ROOT=~/Documents/data-packages/
-```
-
-Then creating a new package would be as simple as:
-
-``` bash
-sprout package create
-```
-
-This will prompt you for some required fields you need to fill in, like
-the title and description of the data package. If you want to skip the
-prompt, you can provide the information directly in the command:
-
-``` bash
-sprout package create \
-  --title "Diabetes and Hypertension Study" \
-  --description "Data from the 2021 study on diabetes and hypertension"
-```
-
-This creates the initial structure of your new package with the ID `1`.
-The output above shows that the folder of your data package `1` has been
-created. This folder consists of two files: `datapackage.json` and
-`README.md`. The `datapackage.json` file is empty initially, but it will
-contain the metadata, a.k.a. the `properties`, of your data package.
-`README.md` is a prettified, human-readable version of the content of
-the `datapackage.json`.
-
-You now have the basic starting point for adding data resources to your
-data package in the location you specified:
-
-```
-~/Documents/data-packages/1/datapackage.json
-~/Documents/data-packages/1/README.md
-```
-
-### Web App
-
-::: callout-warning
-In development.
-:::
-:::::
