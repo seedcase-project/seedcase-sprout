@@ -18,7 +18,7 @@ def create_package_properties(
     argument. You can use the `PackageProperties` class to help create a valid
     properties object that has the correct fields.
 
-    By default, the function will add `id`, `version`, and `created` fields to the
+    By default, the function will add the `id`, `version`, and `created` fields to the
     properties object. See the `PackageProperties` class documentation for more
     information.
 
@@ -49,9 +49,9 @@ def create_package_properties(
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
 
-            # Create a package structure
+            # Create package properties
             sp.create_package_properties(
-                # Using a built-in properties object
+                # Using a built-in example properties object
                 properties=sp.example_package_properties,
                 path=temp_path
             )
