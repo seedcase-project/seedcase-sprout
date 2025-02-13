@@ -11,7 +11,7 @@ from seedcase_sprout.core.write_json import write_json
 def create_package_properties(
     properties: PackageProperties, path: Path = Path.cwd()
 ) -> list[Path]:
-    """Creates a folder and `datapackage.json` file with properties for a new package.
+    """Creates a new `datapackage.json` file with properties for a new package.
 
     This is the first function to use to create a new data package. It creates a
     `datapackage.json` file based on the values you give it with the `properties`
@@ -26,13 +26,10 @@ def create_package_properties(
         properties: A `PackageProperties` object containing the properties for the
             package.
         path: The path to the folder where the data package will be created.
-            A folder within the `path` folder is created using `PackageProperties.name`.
             Defaults to the working directory.
 
     Returns:
-        A path to the created folder and `datapackage.json` file. The newly created
-            folder is the name provided by the value in the `PackageProperties.name`
-            field.
+        A path to the created folder and `datapackage.json` file.
 
     Raises:
         ExceptionGroup: If there is an error in the properties. A group of
@@ -57,12 +54,14 @@ def create_package_properties(
             )
         ```
     """
+		# The path should already exist as a directory.
+		check_is_dir(path)
     default_properties = PackageProperties.default()
     properties = properties.compact_dict
     properties.update(default_properties.compact_dict)
     check_package_properties(
         properties,
     )
-    properties_path = create_properties_path(path / properties["name"])
-    Path(properties_path.parent).mkdir(parents=True)
+		# Creates a path to the properties files.
+    properties_path = create_properties_path(path)
     return write_json(properties, properties_path)

@@ -32,7 +32,7 @@ package_properties = PackageProperties(
 def test_creates_folder_and_file_correctly(tmp_path):
     """Given a path, should create the correct folder and file."""
     # given
-    expected_package_path = tmp_path / "test-package"
+    expected_package_path = tmp_path
     expected_properties_path = expected_package_path / "datapackage.json"
 
     # when
