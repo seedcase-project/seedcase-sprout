@@ -1,5 +1,4 @@
 import pandera.polars as pa
-from pandera import Check
 from xmlschema.names import (
     XSD_DATE,
     XSD_DATETIME,
@@ -41,7 +40,7 @@ STRING_FORMAT_CHECKS = {
 }
 
 
-def get_pandera_checks(field: FieldProperties) -> list[Check]:
+def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
     """Returns the Pandera checks appropriate for the field's format and data type.
 
     Args:
