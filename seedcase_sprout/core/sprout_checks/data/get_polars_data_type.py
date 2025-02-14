@@ -42,4 +42,4 @@ def get_polars_data_type(field_type: FieldType | None) -> pl.DataType:
         case "integer":
             return pl.Int64
         case _:
-            return pl.Unknown
+            return pl.Object
