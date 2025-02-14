@@ -33,6 +33,7 @@ from seedcase_sprout.core.sprout_checks.data.data_type_checks import (
         ("2014-13", XSD_GYEAR_MONTH, False),
         ("P1Y2M3DT10H30M45.343S", XSD_DURATION, True),
         ("0Y1347M0D", XSD_DURATION, False),
+        ("2022", "unknown_type", False),
     ],
 )
 def test_checks_xml_type(value, xml_type, expected):
