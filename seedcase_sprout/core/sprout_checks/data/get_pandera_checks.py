@@ -1,5 +1,6 @@
 import pandera.polars as pa
 from xmlschema.names import (
+    XSD_BASE64_BINARY,
     XSD_DATE,
     XSD_DATETIME,
     XSD_DURATION,
@@ -10,7 +11,6 @@ from xmlschema.names import (
 
 from seedcase_sprout.core.properties import FieldProperties
 from seedcase_sprout.core.sprout_checks.data.data_type_checks import (
-    check_binary,
     check_email,
     check_geopoint,
     check_json,
@@ -28,7 +28,7 @@ STRING_FORMAT_CHECKS = {
         error="Invalid email address.",
     ),
     "binary": pa.Check(
-        check_binary,
+        lambda value: check_xml_type(value, XSD_BASE64_BINARY),
         element_wise=True,
         error="Invalid data format. Expected a Base64-encoded string.",
     ),

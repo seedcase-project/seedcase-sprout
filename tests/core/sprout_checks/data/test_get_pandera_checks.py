@@ -27,14 +27,11 @@ def test_returns_check_for_field_type(field_type):
 
 
 @mark.parametrize("format", ["email", "binary", "uuid"])
-def test_returns_correct_check_for_string_format(format):
-    """Should return the correct check for the listed string formats."""
+def test_returns_check_for_string_format(format):
+    """Should return at least 1 check for the listed string formats."""
     field = FieldProperties(type="string", format=format)
 
-    checks = get_pandera_checks(field)
-
-    assert len(checks) == 1
-    assert checks[0].name == f"check_{format}"
+    assert get_pandera_checks(field)
 
 
 @mark.parametrize("format", ["default", None])

@@ -78,22 +78,6 @@ def check_email(value: str) -> bool:
     return bool(re.match(EMAIL_PATTERN, value)) and len(value) <= 254
 
 
-# https://stackoverflow.com/q/475074
-BASE64_PATTERN = r"^[-A-Za-z0-9+/]*={0,3}$"
-
-
-def check_binary(value: str) -> bool:
-    """Checks if `value` looks like a Base64-encoded string.
-
-    Args:
-        value: The value to check.
-
-    Returns:
-        True if the value looks like a Base64-encoded string, False otherwise.
-    """
-    return bool(re.match(BASE64_PATTERN, value))
-
-
 def check_uuid(value: str) -> bool:
     """Checks if `value` can be parsed as a valid UUID.
 

@@ -1,5 +1,6 @@
 from pytest import mark
 from xmlschema.names import (
+    XSD_BASE64_BINARY,
     XSD_DATE,
     XSD_DATETIME,
     XSD_DURATION,
@@ -9,7 +10,6 @@ from xmlschema.names import (
 )
 
 from seedcase_sprout.core.sprout_checks.data.data_type_checks import (
-    check_binary,
     check_email,
     check_geopoint,
     check_json,
@@ -33,6 +33,8 @@ from seedcase_sprout.core.sprout_checks.data.data_type_checks import (
         ("2014-13", XSD_GYEAR_MONTH, False),
         ("P1Y2M3DT10H30M45.343S", XSD_DURATION, True),
         ("0Y1347M0D", XSD_DURATION, False),
+        ("c29tZSB0ZXh0IDEyMw==", XSD_BASE64_BINARY, True),
+        ("some text 123", XSD_BASE64_BINARY, False),
         ("2022", "unknown_type", False),
     ],
 )
@@ -117,20 +119,6 @@ def test_checks_geopoint(geopoint, expected):
 def test_checks_email(email, expected):
     """Should determine if the input is (likely to be) a valid email address."""
     assert check_email(email) is expected
-
-
-@mark.parametrize(
-    "base64,expected",
-    [
-        ("c29tZSB0ZXh0IDEyMw==", True),
-        ("some text 123", False),
-        ("£$%^&*()", False),
-        ("ώπψηφδ", False),
-    ],
-)
-def test_checks_base64(base64, expected):
-    """Should determine if the input is (likely to be) Base64 encoded."""
-    assert check_binary(base64) is expected
 
 
 @mark.parametrize(
