@@ -93,6 +93,7 @@ def test_checks_json_array(json_array, expected):
         ("180, 90", False),
         ("91, 181", False),
         ("-91, -181", False),
+        ("A, B", False),
     ],
 )
 def test_checks_geopoint(geopoint, expected):
