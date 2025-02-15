@@ -52,8 +52,8 @@ def test_converts_properties_without_fields(resource_properties):
         ("yearmonth", pl.String, 1),
         ("duration", pl.String, 1),
         ("geopoint", pl.String, 1),
-        ("any", pl.Object, 0),
-        (None, pl.Object, 0),
+        ("any", pl.String, 0),
+        (None, pl.String, 0),
     ],
 )
 def test_converts_individual_fields_correctly(field_type, data_type, num_checks):
