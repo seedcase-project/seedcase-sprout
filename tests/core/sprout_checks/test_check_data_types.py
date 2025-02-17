@@ -9,7 +9,7 @@ from xmlschema.names import (
     XSD_TIME,
 )
 
-from seedcase_sprout.core.sprout_checks.data_type_checks import (
+from seedcase_sprout.core.sprout_checks.check_data_types import (
     check_email,
     check_geopoint,
     check_json,
