@@ -61,3 +61,19 @@ def test_throws_error_if_path_points_to_file(tmp_path):
 
     with raises(NotADirectoryError):
         create_package_properties(package_properties, file_path)
+
+
+def test_defaults_not_overwritten(tmp_path):
+    """Give non-default fields that aren't overwritten."""
+    this_uuid = "123e4567-e89b-12d3-a456-426614174000"
+    random_timestamp = "2021-09-01T12:00:00Z"
+    package_properties.id = this_uuid
+    package_properties.version = "0.2.0"
+    package_properties.created = random_timestamp
+
+    properties_path = create_package_properties(package_properties, tmp_path)
+    properties = read_json(properties_path)
+
+    assert properties["version"] == "0.2.0"
+    assert properties["created"] == random_timestamp
+    assert properties["id"] == this_uuid
