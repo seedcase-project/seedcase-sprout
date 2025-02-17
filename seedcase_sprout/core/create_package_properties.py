@@ -1,6 +1,9 @@
 from pathlib import Path
+from uuid import uuid4
 
+from seedcase_sprout.core.check_is_dir import check_is_dir
 from seedcase_sprout.core.create_properties_path import create_properties_path
+from seedcase_sprout.core.get_iso_timestamp import get_iso_timestamp
 from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.sprout_checks.check_package_properties import (
     check_package_properties,
@@ -56,12 +59,12 @@ def create_package_properties(
     """
     # The path should already exist as a directory.
     check_is_dir(path)
-    default_properties = PackageProperties.default()
-    properties = properties.compact_dict
-    properties.update(default_properties.compact_dict)
+    properties.id = properties.id or str(uuid4())
+    properties.version = properties.version or "0.1.0"
+    properties.created = properties.created or get_iso_timestamp()
     check_package_properties(
         properties,
     )
-		# Creates a path to the properties files.
+    # Creates a path to the properties files.
     properties_path = create_properties_path(path)
-    return write_json(properties, properties_path)
+    return write_json(properties.compact_dict, properties_path)
