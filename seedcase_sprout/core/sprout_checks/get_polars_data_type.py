@@ -4,17 +4,17 @@ from seedcase_sprout.core.properties import FieldType
 
 
 def get_polars_data_type(field_type: FieldType | None) -> pl.DataType:
-    """Maps Frictionless field types to polars data types.
+    """Maps Frictionless field types to Polars data types.
 
     If the Frictionless field type has formatting constraints that are not included
-    in any specialised polars data type, the mapping is to string. The formatting
-    constraints are then checked without polars.
+    in any specialised Polars data type, the mapping is to string. The formatting
+    constraints are then checked without Polars.
 
     Args:
         field_type: The Frictionless field type to map.
 
     Returns:
-        The polars data type the field is mapped to.
+        The Polars data type the field is mapped to.
 
     Raises:
         NotImplementedError: If Sprout doesn't yet support the Frictionless field type.
