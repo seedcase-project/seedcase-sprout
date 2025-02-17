@@ -10,7 +10,7 @@ from xmlschema.names import (
 )
 
 from seedcase_sprout.core.properties import FieldProperties
-from seedcase_sprout.core.sprout_checks.data.data_type_checks import (
+from seedcase_sprout.core.sprout_checks.data_type_checks import (
     check_email,
     check_geopoint,
     check_json,
