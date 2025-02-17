@@ -16,9 +16,9 @@ def edit_package_properties(
     """Edits the properties of an existing package.
 
     Use this any time you want to edit the package's properties.  When you need
-    to edit the `datapackage.json` properties, use this function to ensure the
-    properties are correctly structured before it's written. It only edits the
-    properties of the package itself, not on the data resources contained within
+    to edit the `datapackage.json` file, use this function to ensure the
+    properties are correctly structured before they're written. It only edits the
+    properties of the package itself, not of the data resources contained within
     the package.
 
     If the values in `properties` are well-formed, they will overwrite any preexisting

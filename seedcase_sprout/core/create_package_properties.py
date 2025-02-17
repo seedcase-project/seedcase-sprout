@@ -29,7 +29,7 @@ def create_package_properties(
             Defaults to the working directory.
 
     Returns:
-        A path to the created folder and `datapackage.json` file.
+        The path to the `datapackage.json` file in the created folder.
 
     Raises:
         ExceptionGroup: If there is an error in the properties. A group of
@@ -54,8 +54,8 @@ def create_package_properties(
             )
         ```
     """
-		# The path should already exist as a directory.
-		check_is_dir(path)
+    # The path should already exist as a directory.
+    check_is_dir(path)
     default_properties = PackageProperties.default()
     properties = properties.compact_dict
     properties.update(default_properties.compact_dict)
