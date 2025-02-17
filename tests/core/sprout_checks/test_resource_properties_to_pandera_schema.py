@@ -7,7 +7,7 @@ from seedcase_sprout.core.properties import (
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.sprout_checks.data.resource_properties_to_pandera_schema import (  # noqa: E501
+from seedcase_sprout.core.sprout_checks.resource_properties_to_pandera_schema import (
     resource_properties_to_pandera_schema,
 )
 

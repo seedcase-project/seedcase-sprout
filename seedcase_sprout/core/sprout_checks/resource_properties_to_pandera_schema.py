@@ -2,10 +2,10 @@ import pandera.polars as pap
 
 from seedcase_sprout.core.get_nested_attr import get_nested_attr
 from seedcase_sprout.core.properties import FieldProperties, ResourceProperties
-from seedcase_sprout.core.sprout_checks.data.get_pandera_checks import (
+from seedcase_sprout.core.sprout_checks.get_pandera_checks import (
     get_pandera_checks,
 )
-from seedcase_sprout.core.sprout_checks.data.get_polars_data_type import (
+from seedcase_sprout.core.sprout_checks.get_polars_data_type import (
     get_polars_data_type,
 )
 

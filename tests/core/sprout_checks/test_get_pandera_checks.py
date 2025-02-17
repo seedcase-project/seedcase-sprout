@@ -1,7 +1,7 @@
 from pytest import mark
 
 from seedcase_sprout.core.properties import FieldProperties
-from seedcase_sprout.core.sprout_checks.data.get_pandera_checks import (
+from seedcase_sprout.core.sprout_checks.get_pandera_checks import (
     get_pandera_checks,
 )
 
