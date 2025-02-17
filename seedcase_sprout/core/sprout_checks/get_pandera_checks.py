@@ -25,17 +25,20 @@ STRING_FORMAT_CHECKS = {
     "email": pa.Check(
         check_is_email,
         element_wise=True,
-        error="Invalid email address.",
+        error="The given value doesn't seem to be a correctly formatted email address.",
     ),
     "binary": pa.Check(
         lambda value: check_is_xml_type(value, XSD_BASE64_BINARY),
         element_wise=True,
-        error="Invalid data format. Expected a Base64-encoded string.",
+        error=(
+            "The given value doesn't seem to be formatted correctly as binary data. "
+            "Binary data is expected to be Base64-encoded."
+        ),
     ),
     "uuid": pa.Check(
         check_is_uuid,
         element_wise=True,
-        error="Invalid UUID format. Expected a valid UUID.",
+        error="The given value doesn't seem to be a correctly formatted UUID.",
     ),
 }
 
@@ -60,7 +63,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: value in BOOLEAN_VALUES,
                     element_wise=True,
-                    error=f"Invalid boolean value. Must be one of {BOOLEAN_VALUES}.",
+                    error=f"The given value needs to be one of {BOOLEAN_VALUES}.",
                 )
             ]
 
@@ -69,7 +72,12 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_xml_type(value, XSD_TIME),
                     element_wise=True,
-                    error="Invalid time format. Expected HH:MM:SS.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "time value. The expected format for time values is HH:MM:SS. "
+                        "See https://www.w3.org/TR/xmlschema-2/#time for more "
+                        "information."
+                    ),
                 )
             ]
 
@@ -79,8 +87,11 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                     lambda value: check_is_xml_type(value, XSD_DATETIME),
                     element_wise=True,
                     error=(
-                        "Invalid datetime format. Expected YYYY-MM-DDTHH:MM:SS with "
-                        "optional milliseconds and time zone information."
+                        "The given value doesn't seem to be a correctly formatted "
+                        "datetime value. The expected format for datetime values is "
+                        "YYYY-MM-DDTHH:MM:SS with optional milliseconds and time zone "
+                        "information. See https://www.w3.org/TR/xmlschema-2/#dateTime "
+                        "for more information."
                     ),
                 )
             ]
@@ -90,7 +101,12 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_xml_type(value, XSD_DATE),
                     element_wise=True,
-                    error="Invalid date format. Expected YYYY-MM-DD.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "date value. The expected format for date values is YYYY-MM-DD."
+                        " See https://www.w3.org/TR/xmlschema-2/#date for more "
+                        "information."
+                    ),
                 )
             ]
 
@@ -99,7 +115,12 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_xml_type(value, XSD_GYEAR),
                     element_wise=True,
-                    error="Invalid year format. Expected YYYY.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "year value. The expected format for year values is YYYY. "
+                        "See https://www.w3.org/TR/xmlschema-2/#gYear for more "
+                        "information."
+                    ),
                 )
             ]
 
@@ -108,7 +129,12 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_xml_type(value, XSD_GYEAR_MONTH),
                     element_wise=True,
-                    error="Invalid yearmonth format. Expected YYYY-MM.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "yearmonth value. The expected format for yearmonth values is "
+                        "YYYY-MM. See https://www.w3.org/TR/xmlschema-2/#gYearMonth "
+                        "for more information."
+                    ),
                 )
             ]
 
@@ -117,7 +143,12 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_xml_type(value, XSD_DURATION),
                     element_wise=True,
-                    error="Invalid duration format. Expected PnYnMnDTnHnMnS.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "duration value. The expected format for duration values is "
+                        "PnYnMnDTnHnMnS. See https://www.w3.org/TR/xmlschema-2/#duration"
+                        " for more information."
+                    ),
                 )
             ]
 
@@ -126,7 +157,10 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_json(value, dict),
                     element_wise=True,
-                    error="Could not parse JSON object. Expected a valid JSON object.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "JSON object."
+                    ),
                 )
             ]
 
@@ -135,7 +169,10 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     lambda value: check_is_json(value, list),
                     element_wise=True,
-                    error="Could not parse JSON array. Expected a valid JSON array.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "JSON array."
+                    ),
                 )
             ]
 
@@ -144,7 +181,11 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
                 pa.Check(
                     check_is_geopoint,
                     element_wise=True,
-                    error="Invalid geopoint data. Expected LAT, LONG.",
+                    error=(
+                        "The given value doesn't seem to be a correctly formatted "
+                        "geographical point. The expected format for geographical "
+                        "points is LAT, LONG."
+                    ),
                 )
             ]
 
