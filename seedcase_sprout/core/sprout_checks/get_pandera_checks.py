@@ -11,11 +11,11 @@ from xmlschema.names import (
 
 from seedcase_sprout.core.properties import FieldProperties
 from seedcase_sprout.core.sprout_checks.check_data_types import (
-    check_email,
-    check_geopoint,
-    check_json,
-    check_uuid,
-    check_xml_type,
+    check_is_email,
+    check_is_geopoint,
+    check_is_json,
+    check_is_uuid,
+    check_is_xml_type,
 )
 
 # https://datapackage.org/standard/table-schema/#boolean
@@ -23,17 +23,17 @@ BOOLEAN_VALUES = {"false", "False", "FALSE", "0", "true", "True", "TRUE", "1"}
 
 STRING_FORMAT_CHECKS = {
     "email": pa.Check(
-        check_email,
+        check_is_email,
         element_wise=True,
         error="Invalid email address.",
     ),
     "binary": pa.Check(
-        lambda value: check_xml_type(value, XSD_BASE64_BINARY),
+        lambda value: check_is_xml_type(value, XSD_BASE64_BINARY),
         element_wise=True,
         error="Invalid data format. Expected a Base64-encoded string.",
     ),
     "uuid": pa.Check(
-        check_uuid,
+        check_is_uuid,
         element_wise=True,
         error="Invalid UUID format. Expected a valid UUID.",
     ),
@@ -67,7 +67,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "time":
             return [
                 pa.Check(
-                    lambda value: check_xml_type(value, XSD_TIME),
+                    lambda value: check_is_xml_type(value, XSD_TIME),
                     element_wise=True,
                     error="Invalid time format. Expected HH:MM:SS.",
                 )
@@ -76,7 +76,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "datetime":
             return [
                 pa.Check(
-                    lambda value: check_xml_type(value, XSD_DATETIME),
+                    lambda value: check_is_xml_type(value, XSD_DATETIME),
                     element_wise=True,
                     error=(
                         "Invalid datetime format. Expected YYYY-MM-DDTHH:MM:SS with "
@@ -88,7 +88,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "date":
             return [
                 pa.Check(
-                    lambda value: check_xml_type(value, XSD_DATE),
+                    lambda value: check_is_xml_type(value, XSD_DATE),
                     element_wise=True,
                     error="Invalid date format. Expected YYYY-MM-DD.",
                 )
@@ -97,7 +97,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "year":
             return [
                 pa.Check(
-                    lambda value: check_xml_type(value, XSD_GYEAR),
+                    lambda value: check_is_xml_type(value, XSD_GYEAR),
                     element_wise=True,
                     error="Invalid year format. Expected YYYY.",
                 )
@@ -106,7 +106,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "yearmonth":
             return [
                 pa.Check(
-                    lambda value: check_xml_type(value, XSD_GYEAR_MONTH),
+                    lambda value: check_is_xml_type(value, XSD_GYEAR_MONTH),
                     element_wise=True,
                     error="Invalid yearmonth format. Expected YYYY-MM.",
                 )
@@ -115,7 +115,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "duration":
             return [
                 pa.Check(
-                    lambda value: check_xml_type(value, XSD_DURATION),
+                    lambda value: check_is_xml_type(value, XSD_DURATION),
                     element_wise=True,
                     error="Invalid duration format. Expected PnYnMnDTnHnMnS.",
                 )
@@ -124,7 +124,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "object":
             return [
                 pa.Check(
-                    lambda value: check_json(value, dict),
+                    lambda value: check_is_json(value, dict),
                     element_wise=True,
                     error="Could not parse JSON object. Expected a valid JSON object.",
                 )
@@ -133,7 +133,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "array":
             return [
                 pa.Check(
-                    lambda value: check_json(value, list),
+                    lambda value: check_is_json(value, list),
                     element_wise=True,
                     error="Could not parse JSON array. Expected a valid JSON array.",
                 )
@@ -142,7 +142,7 @@ def get_pandera_checks(field: FieldProperties) -> list[pa.Check]:
         case "geopoint":
             return [
                 pa.Check(
-                    check_geopoint,
+                    check_is_geopoint,
                     element_wise=True,
                     error="Invalid geopoint data. Expected LAT, LONG.",
                 )

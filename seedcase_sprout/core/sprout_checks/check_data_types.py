@@ -10,7 +10,7 @@ XML_SCHEMA_TYPES = xmlschema.XMLSchema11(
 ).types
 
 
-def check_xml_type(value: str, xml_type: str) -> bool:
+def check_is_xml_type(value: str, type: str) -> bool:
     """Checks if the given `value` is formatted as a valid XML data type.
 
     The Frictionless Data Package standard follows the definitions at
@@ -19,19 +19,19 @@ def check_xml_type(value: str, xml_type: str) -> bool:
 
     Args:
         value: The value to check.
-        xml_type: The XML data type to check against.
+        type: The XML data type to check against.
 
     Returns:
         True if the value is valid as the given type, False otherwise.
     """
     try:
-        XML_SCHEMA_TYPES[xml_type].decode(value)
+        XML_SCHEMA_TYPES[type].decode(value)
         return True
     except (xmlschema.XMLSchemaDecodeError, KeyError):
         return False
 
 
-def check_json(value: str, expected_type: type[list | dict]) -> bool:
+def check_is_json(value: str, expected_type: type[list | dict]) -> bool:
     """Checks if the given `value` is formatted as a valid JSON object or array.
 
     Args:
@@ -47,7 +47,7 @@ def check_json(value: str, expected_type: type[list | dict]) -> bool:
         return False
 
 
-def check_geopoint(value: str) -> bool:
+def check_is_geopoint(value: str) -> bool:
     """Checks if the given `value` is a valid geographic point.
 
     Args:
@@ -66,7 +66,7 @@ def check_geopoint(value: str) -> bool:
 EMAIL_PATTERN = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 
 
-def check_email(value: str) -> bool:
+def check_is_email(value: str) -> bool:
     """Checks if `value` meets the main format constraints of email addresses.
 
     Args:
@@ -78,7 +78,7 @@ def check_email(value: str) -> bool:
     return bool(re.match(EMAIL_PATTERN, value)) and len(value) <= 254
 
 
-def check_uuid(value: str) -> bool:
+def check_is_uuid(value: str) -> bool:
     """Checks if `value` can be parsed as a valid UUID.
 
     Args:

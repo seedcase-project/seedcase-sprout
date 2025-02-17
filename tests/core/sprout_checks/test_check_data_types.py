@@ -10,11 +10,11 @@ from xmlschema.names import (
 )
 
 from seedcase_sprout.core.sprout_checks.check_data_types import (
-    check_email,
-    check_geopoint,
-    check_json,
-    check_uuid,
-    check_xml_type,
+    check_is_email,
+    check_is_geopoint,
+    check_is_json,
+    check_is_uuid,
+    check_is_xml_type,
 )
 
 
@@ -40,7 +40,7 @@ from seedcase_sprout.core.sprout_checks.check_data_types import (
 )
 def test_checks_xml_type(value, xml_type, expected):
     """Should determine if values are valid XML data types."""
-    assert check_xml_type(value, xml_type) is expected
+    assert check_is_xml_type(value, xml_type) is expected
 
 
 @mark.parametrize(
@@ -61,7 +61,7 @@ def test_checks_xml_type(value, xml_type, expected):
 )
 def test_checks_json_object(json_object, expected):
     """Should determine if the input is a valid JSON object."""
-    assert check_json(json_object, dict) is expected
+    assert check_is_json(json_object, dict) is expected
 
 
 @mark.parametrize(
@@ -76,7 +76,7 @@ def test_checks_json_object(json_object, expected):
 )
 def test_checks_json_array(json_array, expected):
     """Should determine if the input is a valid JSON array."""
-    assert check_json(json_array, list) is expected
+    assert check_is_json(json_array, list) is expected
 
 
 @mark.parametrize(
@@ -100,7 +100,7 @@ def test_checks_json_array(json_array, expected):
 )
 def test_checks_geopoint(geopoint, expected):
     """Should determine if the input is a valid geopoint."""
-    assert check_geopoint(geopoint) is expected
+    assert check_is_geopoint(geopoint) is expected
 
 
 @mark.parametrize(
@@ -118,7 +118,7 @@ def test_checks_geopoint(geopoint, expected):
 )
 def test_checks_email(email, expected):
     """Should determine if the input is (likely to be) a valid email address."""
-    assert check_email(email) is expected
+    assert check_is_email(email) is expected
 
 
 @mark.parametrize(
@@ -131,4 +131,4 @@ def test_checks_email(email, expected):
 )
 def test_checks_uuid(uuid, expected):
     """Should determine if the input can be parsed as a UUID."""
-    assert check_uuid(uuid) is expected
+    assert check_is_uuid(uuid) is expected
