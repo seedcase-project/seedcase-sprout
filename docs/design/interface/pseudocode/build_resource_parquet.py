@@ -7,16 +7,15 @@ def build_resource_parquet(
     This function takes the file(s) provided by `raw_files_path` and merges them into
     a `data.parquet` file. The Parquet file will be stored at the path found in `ResourceProperties.path`.
     While Sprout generally assumes
-    that the files stored in the `resources/raw/` folder have already been
-    verified and validated, this function does some quick verification checks
-    of the data after reading it into Python from the raw file(s) by comparing
-    with the current properties given by the `resource_properties`. All data in the
+    that the files stored in the `resources/raw/` folder are already correctly
+    structured and tidy, it still runs checks to ensure the data are correct
+    by comparing to the properties. All data in the
     `resources/raw/` folder will be merged into one single data object and then
     written back to the Parquet file. The Parquet file will be overwritten.
 
     If there are any duplicate observation units in the data, only the most recent
     observation unit will be kept. This way, if there are any errors or mistakes
-    in older raw files that has been corrected in later files, the mistake can still
+    in older raw files that have been corrected in later files, the mistake can still
     be kept, but won't impact the data that will actually be used.
 
     Examples:
@@ -24,10 +23,9 @@ def build_resource_parquet(
         ``` python
         import seedcase_sprout.core as sp
 
-        sp.write_resource_parquet(
-            raw_files_path=sp.path_resources_raw_files(1, 1),
-            parquet_path=sp.path_resource_data(1, 1),
-            properties_path=sp.path_package_properties(1, 1),
+        sp.build_resource_parquet(
+            raw_files_path=sp.path_resources_raw_files(1),
+            resource_properties=sp.example_resource_properties,
         )
         ```
 
