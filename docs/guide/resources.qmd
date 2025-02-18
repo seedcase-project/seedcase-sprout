@@ -1,25 +1,314 @@
 ---
 title: "Creating and managing data resources"
 order: 2
+jupyter: python3
+execute:
+  eval: false
 ---
 
-In each [data package](/docs/design/implementation/outputs.qmd) are [data resources](/docs/design/implementation/outputs.qmd),
-which contain a conceptually standalone set of data. This page shows
-you how to create and manage data resources inside a data package using Sprout.
-We assume that a data package has already been [created](packages.qmd).
+In each [data package](/docs/design/interface/outputs.qmd) are [data
+resources](/docs/design/interface/outputs.qmd), which contain a
+conceptually standalone set of data. This page shows you how to create
+and manage data resources inside a data package using Sprout. We assume
+that a data package has already been [created](packages.qmd).
 
-<!-- {{< include _preamble.qmd >}} -->
+{{< include _preamble.qmd >}}
+
+::: callout-important
+Data resources can only be created from [tidy
+data](https://design.seedcase-project.org/data/). Before you can store
+it, you need to process it into a tidy format, ideally using Python so
+that you have a record of the steps taken to clean and transform the
+data.
+:::
+
+```{python setup}
+#| include: false
+# This `setup` code chunk loads packages and prepares the data.
+import seedcase_sprout.core as sp
+import tempfile
+from urllib.request import urlretrieve
+
+temp_path = tempfile.TemporaryDirectory()
+package_path = sp.create_package_properties(
+    properties=sp.example_package_properties(),
+    path=temp_path / "diabetes-study"
+)
+readme = sp.build_readme_text(sp.example_package_properties())
+sp.write_text(readme, package_path.parent)
+
+# Since the path leads to the datapackage.json file, for later functions we need the folder instead.
+package_path = package_path.parent
+
+# TODO: Maybe eventually move this over into Sprout as an example dataset, rather than via a URL.
+# Download the example data and save to a data-raw folder in the temp path.
+url = "https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv"
+raw_data_path = temp_path / "patients.csv"
+urlretrieve(
+    url,
+    raw_data_path
+)
+```
+
+Making a data resource requires that you actually have data that can be
+a resource in the first place. Generated or collected data always starts
+out in a bit of a "raw" shape that needs some working. For this guide,
+we have a raw (but fake) data file that we've already made tidy and that
+looks like:
+
+```{python}
+#| echo: false
+with open(raw_data_path, "r") as f:
+    print(f.read())
+```
+
+We've saved this data file in a path object called `raw_data_path`:
+
+```{python}
+print(raw_data_path)
+```
+
+The thing you want to do to your raw data is get it into the data
+package to make it easier for yourself and others to use later one. So
+the steps we'll take to get this raw data into the structure offered by
+Sprout are:
+
+1.  Create the properties for the resource, using the original raw data
+    as a starting point and edit as needed.
+2.  Create a folder to store the (processed) data resource in our
+    package, as well as having a folder for the (tidy) raw data.
+3.  Save the properties information and path to the new data resource
+    into the `datapackage.json` file.
+4.  Re-build the data package's `README.md` file from the updated
+    `datapackage.json` file.
+5.  If you need to edit the properties at a later point, ideally you do
+    it using `edit_resource_properties()` and then re-build the
+    `datapackage.json` file.
+
+Before we start, we need to import the Sprout package as well as other
+helper packages:
+
+```{python}
+import seedcase_sprout.core as sp
+
+# For pretty printing of output
+from pprint import pprint
+
+# TODO: This could be a wrapper helper function instead
+# To be able to write multiline strings without indentation
+from textwrap import dedent
+```
+
+## Extract, then edit resource properties from raw data
+
+Because the resource's properties are useful for many later functions,
+let's first get that created and ready to go. While you can create a
+resource properties object manually using `ResourceProperties`, it is
+quite intensive and time-consuming. The better and easier approach is to
+extract as much information as possible from the raw data to create an
+initial resource properties object by using
+`extract_resource_properties()`. Then, you can edit the properties as
+needed.
+
+Let's start with extracting the resource properties from the raw data.
+The function is fairly good at getting and guessing the right
+information, but it is very far from perfect and it just cannot guess
+certain things from the data.
+
+```{python}
+# Location where the raw data is stored:
+print(raw_data_path)
+resource_properties = extract_resource_properties(
+    data_path=raw_data_path
+)
+pprint(resource_properties)
+```
+
+You may be able to see that some things are missing, for instance, the
+individual columns (called fields) don't have any descriptions. This we
+have to manually add ourselves. Let's fill in the description for all
+the fields in the resource:
+
+```{python}
+# TODO: Need to consider/design how editing can be done in an easier, user-friendly way.
+# TODO: Add more detail when we know what can and can't be extracted.
+```
 
 ## Creating a data resource
 
-::::: panel-tabset
-### Python
+Now that we have the properties for the resource, we can create the
+resource itself within the data package. What this means is that we want
+a folder for the specific resource (since we may have many more data
+resources to add).
 
-### CLI
+Our package has already been created (using the steps from the [package
+guide](packages.qmd)), with the path set as the variable:
 
-### Web App
+```{python}
+print(package_path)
+```
 
-::: callout-warning
-In development.
+We can look inside that path to see:
+
+```{python}
+print(list(package_path.glob("*")))
+```
+
+Which shows that the `datapackage.json` file and the `README.md` file
+have already been created. So we will create the resource structure in
+this package.
+
+```{python}
+resource_paths=sp.create_resource_structure(
+    path=package_path
+)
+print(resource_paths)
+```
+
+This now has created the folder structure needed and is ready to fill it
+with our raw data! Next, we'll setup the resource properties so that it
+is ready to be saved into the `datapackage.json` file. We can use the
+`path_resource()` helper function to always give us the correct location
+to the specific resource's folder path. In this case, our resource is
+the first one in the package, so we can use `path_resource(1)`.
+
+```{python}
+resource_properties = sp.create_resource_properties(
+    properties=resource_properties,
+    path=package_path / sp.path_resource(1)
+)
+pprint(resource_properties)
+```
+
+::: callout-tip
+If you want to see the list of resources available in your data package
+via Python code (rather than looking at it directly in the file system),
+you can use the `list_resources()` function.
+
+```{python}
+#| eval: false
+print(sp.list_resources())
+```
 :::
-:::::
+
+This has setup the properties to be ready to add to the
+`datapackage.json` file. Next, we save that properties file into the
+`datapackage.json` file by writing it to the `datapackage.json` file:
+
+```{python}
+sp.write_resource_properties(
+    properties=resource_properties,
+    path=sp.path_properties()
+)
+```
+
+We can check the contents of the `datapackage.json` file to see that the
+resource properties have been added:
+
+```{python}
+pprint(sp.read_properties(package_path / sp.path_properties()))
+```
+
+## Storing a backup of the raw data
+
+Before we start processing the raw data into a Parquet file, it is a
+good idea to store a backup of the raw data. This is useful if you need
+to re-process the data at a later point, troubleshoot any issues, update
+incorrect values, or if you need to compare the stored raw data to your
+original raw data.
+
+As we showed above, the data is stored in the path that we've set as
+`raw_data_path`. We can store this data in the resource's folder by
+using:
+
+```{python}
+sp.write_resource_data_to_raw(
+    data_path=raw_data_path,
+    resource_properties=resource_properties
+)
+```
+
+This function uses the properties object to determine where to store the
+raw data, which is in the `raw/` folder of the resource's folder. We can
+check the newly added file by using:
+
+```{python}
+print(sp.path_resource_raw_files(1))
+```
+
+## Building the Parquet data resource file
+
+Now that we've stored the raw data file, we can build the Parquet file
+that will be used as the data resource. This Parquet file is built from
+the raw data file that we've stored in the resource's folder.
+
+```{python}
+parquet_path = sp.build_resource_parquet(
+    raw_files=sp.path_resource_raw_files(1),
+    path=sp.path_resource_data(1)
+)
+print(parquet_path)
+```
+
+## Re-building the README file
+
+One of the last steps to finish with adding a new data resource is to
+re-build the `README.md` file for the data package. To allow some
+flexibility with what gets added to the README text, this next function
+will only *build the text*, but not write it to the file. This allows
+you to add additional information to the README text before writing it
+to the file.
+
+```{python}
+readme_text = sp.build_readme_text(
+    properties=sp.read_properties(package_path / sp.path_properties())
+)
+```
+
+In this case, we don't want to add anything else, so we'll write the
+README text to the `README.md` file:
+
+```{python}
+sp.write_text(
+    text=readme_text,
+    # TODO: Make a helper function for this path?
+    path=package_path / "README.md"
+)
+```
+
+## Edit resource properties
+
+After having created a resource, you may need to make edits to the
+properties. While technically you can do this manually by opening up the
+`datapackage.json` file and editing it, we've made these functions to
+help do it in an easier and correct way. Using the
+`edit_resource_properties()` function, you give it the path to the
+current properties and then create a new `ResourceProperties` object
+with any changes you want to make. Anything in the new properties object
+will overwrite fields in the old properties object. This function does
+not write back, it only returns the new properties object.
+
+```{python}
+resource_properties = sp.edit_resource_properties(
+    # Helper function
+    path=sp.path_properties(),
+    properties=sp.ResourceProperties(
+        title="Basic characteristics of patients"
+    )
+)
+pprint(resource_properties)
+```
+
+To write back, you use the `write_resource_properties()` function:
+
+```{python}
+sp.write_resource_properties(
+    properties=resource_properties,
+    path=sp.path_properties()
+)
+```
+
+```{python}
+#| include: false
+temp_path.cleanup()
+```
