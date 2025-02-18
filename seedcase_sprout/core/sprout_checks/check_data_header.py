@@ -20,6 +20,7 @@ def check_data_header(data_path: Path, expected_columns: list[str]) -> Path:
     header = pl.read_csv(data_path, n_rows=1).columns
     if header != expected_columns:
         raise pl.exceptions.ShapeError(
-            f"Column names do not match. Found: {header}, Expected: {expected_columns}"
+            "Column names in the data file do not match column names in the resource "
+            f"properties. Expected {expected_columns}, but found: {header}."
         )
     return data_path
