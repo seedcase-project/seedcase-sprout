@@ -22,7 +22,7 @@ def get_polars_data_type(field_type: FieldType | None) -> pl.DataType:
     match field_type:
         case "geojson":
             raise NotImplementedError()
-        # While Polars does have all these data types, there isn't a
+        # While Polars does have most of these data types, there isn't a
         # perfect overlap between them and what Frictionless has, even
         # if they have similar/same names for the types. For example,
         # checks against date/datetimes/times types are different between
