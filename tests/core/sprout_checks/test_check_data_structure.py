@@ -97,19 +97,19 @@ def test_pads_out_missing_values_when_column_not_empty_with_header(
     resource_properties.dialect = TableDialectProperties(header=True)
     resource_properties.schema.fields = [string_field, number_field]
 
-    check_data(data_path, resource_properties)
+    assert check_data(data_path, resource_properties) == data_path
 
 
-def test_throws_error_if_number_of_data_columns_less_than_in_properties(
+def test_no_error_if_number_of_data_columns_less_than_in_properties(
     data_path, resource_properties
 ):
-    """Should throw an error if the data has fewer columns than the properties."""
+    """If the data has fewer columns than the properties, and these columns are not
+    required, missing columns are padded with null and no error is thrown."""
     data_path.write_text("value\nvalue\nvalue")
     resource_properties.dialect = TableDialectProperties(header=False)
     resource_properties.schema.fields = [string_field, date_field]
 
-    with raises(pl.exceptions.ShapeError):
-        check_data(data_path, resource_properties)
+    assert check_data(data_path, resource_properties) == data_path
 
 
 def test_throws_error_if_number_of_data_columns_more_than_in_properties(
@@ -170,7 +170,3 @@ def test_accepts_data_without_header(data_path, resource_properties):
     resource_properties.schema.fields = [string_field, date_field, number_field]
 
     assert check_data(data_path, resource_properties) == data_path
-
-
-# duplicate col names?
-# what if properties empty

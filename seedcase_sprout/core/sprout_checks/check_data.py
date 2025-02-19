@@ -4,7 +4,6 @@ import polars as pl
 
 from seedcase_sprout.core.get_nested_attr import get_nested_attr
 from seedcase_sprout.core.properties import FieldProperties, ResourceProperties
-from seedcase_sprout.core.sprout_checks.check_data_columns import check_data_columns
 from seedcase_sprout.core.sprout_checks.check_data_header import check_data_header
 from seedcase_sprout.core.sprout_checks.check_resource_properties import (
     check_resource_properties,
@@ -55,20 +54,16 @@ def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path
         data_path,
         has_header=has_header,
         infer_schema=False,
-        missing_utf8_is_empty_string=False,
+        missing_utf8_is_empty_string=True,
         schema={name: pl.String for name in column_names},
     )
-
-    check_data_columns(lazy_frame)
 
     # Set missing values to null
     schema_missing_values = get_nested_attr(
         resource_properties, "schema.missing_values", default=[""]
     )
     lazy_frame = lazy_frame.with_columns(
-        pl.col(field.name)
-        .fill_null("")
-        .replace(
+        pl.col(field.name).replace(
             schema_missing_values
             if field.missing_values is None
             else field.missing_values,
@@ -77,8 +72,18 @@ def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path
         for field in fields
     )
 
+    # Try to match data columns with metadata columns
+    try:
+        data_frame = lazy_frame.collect()
+    except pl.exceptions.ComputeError as error:
+        if "found more fields than defined" in str(error):
+            raise pl.exceptions.ShapeError(
+                "The data file contains more columns than the resource properties."
+            ) from error
+        raise error
+
     # Check data against resource properties
     schema = resource_properties_to_pandera_schema(resource_properties)
-    schema.validate(lazy_frame.collect(), lazy=True)
+    schema.validate(data_frame, lazy=True)
 
     return data_path
