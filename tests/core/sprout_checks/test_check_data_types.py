@@ -39,7 +39,7 @@ from seedcase_sprout.core.sprout_checks.check_data_types import (
     ],
 )
 def test_checks_xml_type(value, xml_type, expected):
-    """Should determine if values are valid XML data types."""
+    """Should determine if values is a XML data types."""
     assert check_is_xml_type(value, xml_type) is expected
 
 
@@ -60,7 +60,7 @@ def test_checks_xml_type(value, xml_type, expected):
     ],
 )
 def test_checks_json_object(json_object, expected):
-    """Should determine if the input is a valid JSON object."""
+    """Should determine if the input is a JSON object."""
     assert check_is_json(json_object, dict) is expected
 
 
@@ -75,7 +75,7 @@ def test_checks_json_object(json_object, expected):
     ],
 )
 def test_checks_json_array(json_array, expected):
-    """Should determine if the input is a valid JSON array."""
+    """Should determine if the input is a JSON array."""
     assert check_is_json(json_array, list) is expected
 
 
@@ -99,7 +99,7 @@ def test_checks_json_array(json_array, expected):
     ],
 )
 def test_checks_geopoint(geopoint, expected):
-    """Should determine if the input is a valid geopoint."""
+    """Should determine if the input is a geopoint."""
     assert check_is_geopoint(geopoint) is expected
 
 
@@ -117,7 +117,7 @@ def test_checks_geopoint(geopoint, expected):
     ],
 )
 def test_checks_email(email, expected):
-    """Should determine if the input is (likely to be) a valid email address."""
+    """Should determine if the input is (likely to be) an email address."""
     assert check_is_email(email) is expected
 
 
