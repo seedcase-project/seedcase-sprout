@@ -33,7 +33,7 @@ def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path
         The `data_path` if all checks are successful.
 
     Raises:
-        ExceptionGroup[CheckError]: If the resource properties are invalid.
+        ExceptionGroup[CheckError]: If the resource properties are incorrect.
         polars.exceptions.ComputeError: If the data file cannot be parsed as CSV.
         polars.exceptions.ShapeError: If the columns in the data file cannot
             be matched with the columns in the resource properties.

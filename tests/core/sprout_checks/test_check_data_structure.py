@@ -34,7 +34,7 @@ def resource_properties() -> ResourceProperties:
 
 
 @mark.parametrize("fields", [None, [], ["not", "fields"]])
-def test_throws_error_if_resource_properties_invalid(
+def test_throws_error_if_resource_properties_incorrect(
     data_path, resource_properties, fields
 ):
     """Should throw an error if the resource properties are not correct."""
