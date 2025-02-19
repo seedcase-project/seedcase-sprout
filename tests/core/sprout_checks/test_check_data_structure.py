@@ -36,6 +36,9 @@ def resource_properties() -> ResourceProperties:
     )
 
 
+# what if props empty
+
+
 def test_throws_error_if_resource_properties_invalid(data_path, resource_properties):
     """Should throw an error if the resource properties are invalid."""
     resource_properties.name = "an invalid name"
@@ -72,12 +75,12 @@ def test_throws_error_if_file_cannot_be_read_as_csv(data_path, resource_properti
         check_data(data_path, resource_properties)
 
 
-@mark.parametrize("data", ["value\nvalue,12\nvalue", "value,12\nvalue\nvalue"])
-def test_pads_out_missing_values_when_column_not_empty(
-    data_path, resource_properties, data
-):
-    """When the data has no header, the row with the most columns should determine the
-    number of columns. Rows with fewer columns should be padded out with null. Column
+@mark.parametrize(
+    "data", ["value\nvalue,12\nvalue", "value,12\nvalue\nvalue", "value\nvalue\nvalue"]
+)
+def test_pads_out_missing_columns_without_header(data_path, resource_properties, data):
+    """When the data has no header, the number of columns should be determined by the
+    resource properties. Rows with fewer columns should be padded out with null. Column
     names should be inferred from the properties and the check should pass."""
     data_path.write_text(data)
     resource_properties.dialect = TableDialectProperties(header=False)
@@ -86,28 +89,16 @@ def test_pads_out_missing_values_when_column_not_empty(
     assert check_data(data_path, resource_properties) == data_path
 
 
-@mark.parametrize("data", ["value\nvalue,12\nvalue", "value,12\nvalue\nvalue"])
-def test_pads_out_missing_values_when_column_not_empty_with_header(
-    data_path, resource_properties, data
-):
+@mark.parametrize(
+    "data", ["value\nvalue,12\nvalue", "value,12\nvalue\nvalue", "value\nvalue\nvalue"]
+)
+def test_pads_out_missing_columns_with_header(data_path, resource_properties, data):
     """When the data has a header, the header row should determine the number of
     columns. Rows with fewer columns should be padded out with null. When the
     header matches column names in the properties, the check should pass."""
     data_path.write_text(f"{string_field.name},{number_field.name}\n{data}")
     resource_properties.dialect = TableDialectProperties(header=True)
     resource_properties.schema.fields = [string_field, number_field]
-
-    assert check_data(data_path, resource_properties) == data_path
-
-
-def test_no_error_if_number_of_data_columns_less_than_in_properties(
-    data_path, resource_properties
-):
-    """If the data has fewer columns than the properties, and these columns are not
-    required, missing columns are padded with null and no error is thrown."""
-    data_path.write_text("value\nvalue\nvalue")
-    resource_properties.dialect = TableDialectProperties(header=False)
-    resource_properties.schema.fields = [string_field, date_field]
 
     assert check_data(data_path, resource_properties) == data_path
 
