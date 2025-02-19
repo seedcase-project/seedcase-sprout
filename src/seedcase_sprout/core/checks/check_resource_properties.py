@@ -5,7 +5,10 @@ from seedcase_sprout.core.checks.check_error import CheckError
 from seedcase_sprout.core.checks.check_object_against_json_schema import (
     check_object_against_json_schema,
 )
-from seedcase_sprout.core.checks.config import DATA_PACKAGE_SCHEMA_PATH
+from seedcase_sprout.core.checks.config import (
+    DATA_PACKAGE_SCHEMA_PATH,
+    LIST_FIELD_SCHEMA_PATH,
+)
 from seedcase_sprout.core.read_json import read_json
 
 
@@ -38,4 +41,11 @@ def check_resource_properties(
 
     # Consider only Data Resource schema
     schema = schema["properties"]["resources"]["items"]
+
+    # Add list field schema
+    list_field_schema = read_json(LIST_FIELD_SCHEMA_PATH)
+    schema["properties"]["schema"]["properties"]["fields"]["items"]["oneOf"].append(
+        list_field_schema
+    )
+
     return check_object_against_json_schema(properties, schema)

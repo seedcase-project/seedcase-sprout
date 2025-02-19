@@ -1,0 +1,120 @@
+{
+    "type": "object",
+    "title": "List Field",
+    "description": "The field contains data that is an ordered one-level depth collection of primitive values with a fixed item type.",
+    "required": [
+        "name",
+        "type"
+    ],
+    "properties": {
+        "name": {
+            "title": "Name",
+            "description": "A name for this field.",
+            "type": "string"
+        },
+        "title": {
+            "title": "Title",
+            "description": "A human-readable title.",
+            "type": "string",
+            "examples": [
+                "{\n  \"title\": \"My Package Title\"\n}\n"
+            ]
+        },
+        "description": {
+            "title": "Description",
+            "description": "A text description. Markdown is encouraged.",
+            "type": "string",
+            "examples": [
+                "{\n  \"description\": \"# My Package description\\nAll about my package.\"\n}\n"
+            ]
+        },
+        "example": {
+            "title": "Example",
+            "description": "An example value for the field.",
+            "type": "string",
+            "examples": [
+                "{\n  \"example\": \"Put here an example value for your field\"\n}\n"
+            ]
+        },
+        "missingValues": {
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "value"
+                        ],
+                        "properties": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "label": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            ],
+            "default": [
+                ""
+            ],
+            "description": "Values that when encountered in the source, should be considered as `null`, 'not present', or 'blank' values.",
+            "context": "Many datasets arrive with missing data values, either because a value was not collected or it never existed.\nMissing values may be indicated simply by the value being empty in other cases a special value may have been used e.g. `-`, `NaN`, `0`, `-9999` etc.\nThe `missingValues` property provides a way to indicate that these values should be interpreted as equivalent to null.\n\n`missingValues` are strings rather than being the data type of the particular field. This allows for comparison prior to casting and for fields to have missing value which are not of their type, for example a `number` field to have missing values indicated by `-`.\n\nThe default value of `missingValue` for a non-string type field is the empty string `''`. For string type fields there is no default for `missingValue` (for string fields the empty string `''` is a valid value and need not indicate null).",
+            "examples": [
+                "{\n  \"missingValues\": [\n    \"-\",\n    \"NaN\",\n    \"\"\n  ]\n}\n",
+                "{\n  \"missingValues\": []\n}\n"
+            ]
+        },
+        "type": {
+            "description": "The type keyword, which `MUST` be a value of `geopoint`.",
+            "enum": [
+                "list"
+            ]
+        },
+        "format": {
+            "description": "There are no format keyword options for `list`: only `default` is allowed.",
+            "enum": [
+                "default"
+            ],
+            "default": "default"
+        },
+        "constraints": {
+            "title": "Constraints",
+            "description": "The following constraints are supported for `list` fields.",
+            "type": "object",
+            "properties": {
+                "required": {
+                    "type": "boolean",
+                    "description": "Indicates whether a property must have a value for each instance.",
+                    "context": "An empty string is considered to be a missing value."
+                },
+                "unique": {
+                    "type": "boolean",
+                    "description": "When `true`, each value for the property `MUST` be unique."
+                },
+                "minLength": {
+                    "type": "integer",
+                    "description": "An integer that specifies the minimum length of a value."
+                },
+                "maxLength": {
+                    "type": "integer",
+                    "description": "An integer that specifies the maximum length of a value."
+                }
+            }
+        },
+        "rdfType": {
+            "type": "string",
+            "description": "The RDF type for this field."
+        }
+    },
+    "examples": [
+        "{\n  \"name\": \"temperatures\"\n  \"type\": \"list\"\n}\n"
+    ]
+}
