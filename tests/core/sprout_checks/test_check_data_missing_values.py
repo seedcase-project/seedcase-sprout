@@ -7,7 +7,6 @@ from seedcase_sprout.core.properties import (
     ConstraintsProperties,
     FieldProperties,
     ResourceProperties,
-    TableDialectProperties,
     TableSchemaProperties,
 )
 from seedcase_sprout.core.sprout_checks.check_data import (
@@ -27,7 +26,6 @@ def resource_properties() -> ResourceProperties:
         title="data",
         path=str(Path("resources", "1", "data.csv")),
         description="My data...",
-        dialect=TableDialectProperties(header=False),
         schema=TableSchemaProperties(),
     )
 
@@ -47,7 +45,7 @@ def test_no_error_for_schema_missing_values_when_field_not_required(
     ]
     resource_properties.schema.missing_values = ["None", "NA", "*", "some text"]
     data_path.write_text(
-        "1234-11-11\n" + "\n".join(resource_properties.schema.missing_values)
+        "my_date\n1234-11-11\n" + "\n".join(resource_properties.schema.missing_values)
     )
 
     assert check_data(data_path, resource_properties) == data_path
@@ -66,7 +64,7 @@ def test_error_for_schema_missing_values_when_field_required(
         )
     ]
     resource_properties.schema.missing_values = ["None"]
-    data_path.write_text("1234-11-11\nNone")
+    data_path.write_text("my_any\n1234-11-11\nNone")
 
     with raises(pa.errors.SchemaErrors):
         check_data(data_path, resource_properties)
@@ -87,7 +85,8 @@ def test_no_error_for_field_missing_values_when_field_not_required(
         )
     ]
     data_path.write_text(
-        "1234-11-11\n" + "\n".join(resource_properties.schema.fields[0].missing_values)
+        "my_date\n1234-11-11\n"
+        + "\n".join(resource_properties.schema.fields[0].missing_values)
     )
 
     assert check_data(data_path, resource_properties) == data_path
@@ -106,7 +105,7 @@ def test_error_for_field_missing_values_when_field_required(
             missing_values=["None"],
         )
     ]
-    data_path.write_text("1234-11-11\nNone")
+    data_path.write_text("my_any\n1234-11-11\nNone")
 
     with raises(pa.errors.SchemaErrors):
         check_data(data_path, resource_properties)
@@ -138,7 +137,7 @@ def test_field_missing_values_override_schema_missing_values_error_case(
         ),
     ]
     resource_properties.schema.missing_values = schema_missing_values
-    data_path.write_text(f"123,value\n{data}")
+    data_path.write_text(f"my_integer,my_string\n123,value\n{data}")
 
     with raises(pa.errors.SchemaErrors):
         check_data(data_path, resource_properties)
@@ -159,7 +158,7 @@ def test_field_missing_values_override_schema_missing_values_pass_case(
         )
     ]
     resource_properties.schema.missing_values = schema_missing_values
-    data_path.write_text("1234-11-11\nfield-missing-value")
+    data_path.write_text("my_date\n1234-11-11\nfield-missing-value")
 
     assert check_data(data_path, resource_properties) == data_path
 
@@ -186,7 +185,7 @@ def test_all_values_count_as_present_when_field_missing_values_empty(
         ),
     ]
     resource_properties.schema.missing_values = schema_missing_values
-    data_path.write_text("value1,value2\n,value2")
+    data_path.write_text("col1,col2\nvalue1,value2\n,value2")
 
     assert check_data(data_path, resource_properties) == data_path
 
@@ -210,7 +209,7 @@ def test_all_values_count_as_present_when_schema_missing_values_empty(
         ),
     ]
     resource_properties.schema.missing_values = []
-    data_path.write_text("value1,value2\n,value2")
+    data_path.write_text("col1,col2\nvalue1,value2\n,value2")
 
     assert check_data(data_path, resource_properties) == data_path
 
@@ -229,7 +228,7 @@ def test_no_error_for_missing_values_when_field_not_required_and_no_missing_valu
         ),
         FieldProperties(name="my_string", type="string"),
     ]
-    data_path.write_text("1234-11-11,value\n,value")
+    data_path.write_text("my_date,my_string\n1234-11-11,value\n,value")
 
     assert check_data(data_path, resource_properties) == data_path
 
@@ -247,7 +246,7 @@ def test_error_for_missing_values_when_field_required_and_no_missing_values_set(
         ),
         FieldProperties(name="my_string", type="string"),
     ]
-    data_path.write_text("1234-11-11,value\n,value")
+    data_path.write_text("my_any,my_string\n1234-11-11,value\n,value")
 
     with raises(pa.errors.SchemaErrors):
         check_data(data_path, resource_properties)
@@ -263,7 +262,7 @@ def test_makes_value_null_only_if_full_match(data_path, resource_properties):
         )
     ]
     resource_properties.schema.missing_values = ["11-11"]
-    data_path.write_text("1234-11-11\n11-11")
+    data_path.write_text("my_date\n1234-11-11\n11-11")
 
     assert check_data(data_path, resource_properties) == data_path
 
@@ -284,6 +283,8 @@ def test_field_missing_values_can_be_set_separately_for_each_field(
             missing_values=["field-2-missing"],
         ),
     ]
-    data_path.write_text("field-1-missing,1234-11-11\n1010-05-05,field-2-missing")
+    data_path.write_text(
+        "col1,col2\nfield-1-missing,1234-11-11\n1010-05-05,field-2-missing"
+    )
 
     assert check_data(data_path, resource_properties) == data_path

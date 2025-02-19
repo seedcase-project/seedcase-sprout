@@ -4,7 +4,9 @@ import polars as pl
 
 from seedcase_sprout.core.get_nested_attr import get_nested_attr
 from seedcase_sprout.core.properties import FieldProperties, ResourceProperties
-from seedcase_sprout.core.sprout_checks.check_data_header import check_data_header
+from seedcase_sprout.core.sprout_checks.check_data_header import (
+    check_data_header,
+)
 from seedcase_sprout.core.sprout_checks.check_resource_properties import (
     check_resource_properties,
 )
@@ -14,10 +16,11 @@ from seedcase_sprout.core.sprout_checks.resource_properties_to_pandera_schema im
 
 
 def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path:
-    """Checks that the data file at `data_path` matches the resource properties.
+    """Checks that the CSV data file at `data_path` matches the resource properties.
 
     Runs the following checks:
     - Can the data file be read as a CSV file?
+    - Does the data file have a header row that matches column names in the properties?
     - Do the columns in the data file match those in the properties?
     - Do the data types in the data file match those in the properties?
     TODO: - Does the data in the data file meet the constraints in the properties?
@@ -40,23 +43,20 @@ def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path
     """
     check_resource_properties(resource_properties)
 
-    has_header = get_nested_attr(resource_properties, "dialect.header", default=True)
+    # Prepare for reading the data file
+    lazy_frame = pl.scan_csv(
+        data_path,
+        has_header=True,
+        infer_schema=False,
+        missing_utf8_is_empty_string=True,
+    )
+
+    # Check data header against resource properties
     fields: list[FieldProperties] = get_nested_attr(
         resource_properties, "schema.fields", default=[]
     )
-    column_names = [field.name for field in fields]
-
-    # Check data header and columns
-    if has_header:
-        check_data_header(data_path, column_names)
-
-    lazy_frame = pl.scan_csv(
-        data_path,
-        has_header=has_header,
-        infer_schema=False,
-        missing_utf8_is_empty_string=True,
-        schema={name: pl.String for name in column_names},
-    )
+    expected_columns = [field.name for field in fields]
+    check_data_header(lazy_frame, expected_columns)
 
     # Set missing values to null
     schema_missing_values = get_nested_attr(
@@ -72,15 +72,16 @@ def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path
         for field in fields
     )
 
-    # Try to match data columns with metadata columns
+    # Check the number of columns in each data row
     try:
         data_frame = lazy_frame.collect()
     except pl.exceptions.ComputeError as error:
         if "found more fields than defined" in str(error):
             raise pl.exceptions.ShapeError(
-                "The data file contains more columns than the resource properties."
+                "At least one data row contains more items than the expected number of"
+                f"columns. Expected columns: {expected_columns}."
             ) from error
-        raise error
+        raise
 
     # Check data against resource properties
     schema = resource_properties_to_pandera_schema(resource_properties)
