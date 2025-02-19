@@ -22,6 +22,13 @@ def get_polars_data_type(field_type: FieldType | None) -> pl.DataType:
     match field_type:
         case "geojson":
             raise NotImplementedError()
+        # While Polars does have all these data types, there isn't a
+        # perfect overlap between them and what Frictionless has, even
+        # if they have similar/same names for the types. For example,
+        # checks against date/datetimes/times types are different between
+        # Polars and Frictionless. Or the way booleans get treated. Polars
+        # may cast `123` to True, but Frictionless will indicate it is not
+        # a boolean. We'll slowly improve on this as we use Sprout.
         case (
             "string"
             | "boolean"
