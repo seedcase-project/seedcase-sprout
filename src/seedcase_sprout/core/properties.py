@@ -354,7 +354,6 @@ FieldType = Literal[
     "boolean",
     "object",
     "array",
-    "list",
     "datetime",
     "date",
     "time",
