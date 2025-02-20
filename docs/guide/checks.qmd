@@ -6,10 +6,10 @@ jupyter: python3
 
 The structure and content of package and resource properties follow the
 [Frictionless Data Package standard](https://datapackage.org). This
-standard defines the available fields for each type of metadata (called properties),
-specifies which fields are required, and describes the allowed values
-for each field. In addition to these specifications, Sprout introduces
-its own structural and formatting requirements.
+standard defines the available fields for each type of metadata (called
+properties), specifies which fields are required, and describes the
+allowed values for each field. In addition to these specifications,
+Sprout introduces its own structural and formatting requirements.
 
 To make it easy to check metadata against all these requirements, Sprout
 provides a set of check functions. Each check function takes a
@@ -49,8 +49,10 @@ package_properties = sp.PackageProperties(
 ```
 
 To check that these properties are indeed complete and well-formed, we
-use the `check_package_properties()` function. Since all required fields (e.g. `name`, `description`, and `title`) are filled out and have the correct format, the function will not
-raise any errors and will return the original input:
+use the `check_package_properties()` function. Since all required fields
+(e.g. `name`, `description`, and `title`) are filled out and have the
+correct format, the function will not raise any errors and will return
+the original input:
 
 ```{python}
 package_properties = sp.check_package_properties(package_properties)
@@ -98,9 +100,17 @@ associated resource properties are well-formed. This function will only
 run checks on package properties fields and not look at resource
 properties fields.
 
-As an example, in the package properties below, there is a set of resource properties
-with all required fields missing. This will be ignored when the check
-runs:
+::: callout-warning
+If your aim is to check whether your properties as a whole meet the
+[Frictionless Data Package standard](https://datapackage.org), you need
+to check both your package and resource properties. See the [Checking a
+full set of properties](#checking-a-full-set-of-properties) section for
+detailed instructions.
+:::
+
+As an example, in the package properties below, there is a set of
+resource properties with all required fields missing. This will be
+ignored when the check runs:
 
 ```{python}
 package_properties = sp.PackageProperties(
@@ -139,13 +149,14 @@ resource_properties = sp.ResourceProperties(
 sp.check_resource_properties(resource_properties)
 ```
 
-## Checking a full set of properties
+## Checking a full set of properties {#checking-a-full-set-of-properties}
 
 When we want to check both package and resource properties, we can use
 the `check_properties()` function. In the properties below, we expect
-three checks to fail: the required `description` field is missing in both the
-package and resource properties, and the resource `path` doesn't point
-to a data file. When we run the check, all three errors are listed:
+three checks to fail: the required `description` field is missing in
+both the package and resource properties, and the resource `path`
+doesn't point to a data file. When we run the check, all three errors
+are listed:
 
 ```{python}
 #| error: true
@@ -294,7 +305,8 @@ expression to see the match rule expressed by each section.
 :::
 
 We can then add the matchers as the `ignore` argument of
-`check_properties()`. No errors will be raised when the check runs on a properties object with the listed errors.
+`check_properties()`. No errors will be raised when the check runs on a
+properties object with the listed errors.
 
 ```{python}
 properties = sp.PackageProperties(
