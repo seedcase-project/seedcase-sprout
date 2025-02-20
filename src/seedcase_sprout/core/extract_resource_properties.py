@@ -30,5 +30,24 @@ def extract_resource_properties(data_path: Path) -> ResourceProperties:
 
     properties = describe(data_path).to_dict()
 
+    if properties["format"] == "tsv":
+        _clean_tsv_properties(properties)
+
     check_resource_properties(properties)
     return ResourceProperties.from_dict(properties)
+
+
+def _clean_tsv_properties(properties: dict) -> dict:
+    """Cleans up the extracted properties from a tsv file.
+
+    The Frictionless library returns a nested dictionary in the `dialects` field that
+    needs to be flattened to match the format of the `ResourceProperties` class.
+
+    Args:
+        properties: Properties extracted from a tsv file.
+
+    Returns:
+        The cleaned properties from the tsv file.
+    """
+    properties["dialect"] = properties["dialect"]["csv"]
+    return properties
