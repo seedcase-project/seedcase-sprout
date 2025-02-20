@@ -1,11 +1,10 @@
 from pathlib import Path
 
+from frictionless import describe
+
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.check_is_supported_format import check_is_supported_format
 from seedcase_sprout.core.checks import check_resource_properties
-from seedcase_sprout.core.extract_properties_from_file import (
-    extract_properties_from_file,
-)
 from seedcase_sprout.core.properties import ResourceProperties
 
 
@@ -29,6 +28,7 @@ def extract_resource_properties(data_path: Path) -> ResourceProperties:
     check_is_file(data_path)
     check_is_supported_format(data_path)
 
-    properties = extract_properties_from_file(data_path)
+    properties = describe(data_path).to_dict()
+
     check_resource_properties(properties)
     return ResourceProperties.from_dict(properties)
