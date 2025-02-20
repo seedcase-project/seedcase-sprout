@@ -1,3 +1,21 @@
+## 0.17.0 (2025-02-19)
+
+### Feat
+
+- :sparkles: add Pandera checks on the data (#1050)
+
+## 0.16.0 (2025-02-12)
+
+### Feat
+
+- :sparkles: add an `example_package_properties` object (#1044)
+
+## 0.15.0 (2025-02-12)
+
+### Feat
+
+- :sparkles: add `get_nested_attr()` (#1039)
+
 ## 0.14.3 (2025-01-28)
 
 ### Refactor
