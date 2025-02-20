@@ -68,11 +68,12 @@ def test_explicitly_set_values_not_overwritten_by_defaults(tmp_path):
     not overwritten by default values."""
     this_uuid = "123e4567-e89b-12d3-a456-426614174000"
     random_timestamp = "2021-09-01T12:00:00Z"
-    package_properties.id = this_uuid
-    package_properties.version = "0.2.0"
-    package_properties.created = random_timestamp
+    properties_with_defaults = package_properties
+    properties_with_defaults.id = this_uuid
+    properties_with_defaults.version = "0.2.0"
+    properties_with_defaults.created = random_timestamp
 
-    properties_path = create_package_properties(package_properties, tmp_path)
+    properties_path = create_package_properties(properties_with_defaults, tmp_path)
     properties = read_json(properties_path)
 
     assert properties["version"] == "0.2.0"
