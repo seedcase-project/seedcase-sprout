@@ -124,7 +124,7 @@ pprint(resource_properties)
 
 You may be able to see that some things are missing, for instance, the
 individual columns (called fields) don't have any descriptions. We have to
-manually add this ourselves. 
+manually add this ourselves.
 
 Let's fill in the description for all
 the fields in the resource:
