@@ -64,10 +64,21 @@ Using a template, this will build a README file with the contents of the
 properties object in a human-readable format. Outputs a text string. Use
 `write_text()` to save the text to the `README.md` file.
 
-### {{< var done >}} `edit_package_properties(path, properties)`
+### {{< var done >}} `update_package_properties(path, properties)`
 
-See the help documentation with `help(edit_package_properties())` for
+See the help documentation with `help(update_package_properties())` for
 more details.
+
+```{mermaid}
+flowchart
+    in_path[/path/]
+    in_properties[/properties/]
+    function("update_package_properties()")
+    out[("PackageProperties")]
+    in_path --> function
+    in_properties --> function
+    function --> out
+```
 
 ### {{< var wip >}} `delete_package(path, confirm)`
 
@@ -126,14 +137,25 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `edit_resource_properties(path, properties)`
+### {{< var wip >}} `update_resource_properties(path, resource_properties)`
 
 Edit the properties of a resource in a package. The `properties`
-argument must be a JSON object that follows the Frictionless Data
-specification. Use the `path_properties()` function to provide the
-correct path location. Outputs a JSON object only; use
-`write_resource_properties()` to save the JSON object to the
+argument must be a `ResourceProperties` object. Use the
+`path_properties()` function to provide the
+correct path location. Outputs a `ResourceProperties` object; use
+`write_resource_properties()` to save the properties object to the
 `datapackage.json` file.
+
+```{mermaid}
+flowchart
+    in_path[/path/]
+    in_properties[/resource_properties/]
+    function("update_resource_properties()")
+    out[("ResourceProperties")]
+    in_path --> function
+    in_properties --> function
+    function --> out
+```
 
 ### {{< var wip >}} `delete_resource_raw_file(path, confirm)`
 
