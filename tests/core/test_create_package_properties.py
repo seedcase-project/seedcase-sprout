@@ -63,8 +63,9 @@ def test_throws_error_if_path_points_to_file(tmp_path):
         create_package_properties(package_properties, file_path)
 
 
-def test_defaults_not_overwritten(tmp_path):
-    """Give non-default fields that aren't overwritten."""
+def test_explicitly_set_values_not_overwritten_by_defaults(tmp_path):
+    """When the properties have non-empty values set for the listed fields, these are
+    not overwritten by default values."""
     this_uuid = "123e4567-e89b-12d3-a456-426614174000"
     random_timestamp = "2021-09-01T12:00:00Z"
     package_properties.id = this_uuid
