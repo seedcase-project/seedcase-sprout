@@ -6,7 +6,7 @@ jupyter: python3
 
 The structure and content of package and resource properties follow the
 [Frictionless Data Package standard](https://datapackage.org). This
-standard defines the available fields for each type of metadata,
+standard defines the available fields for each type of metadata (called properties),
 specifies which fields are required, and describes the allowed values
 for each field. In addition to these specifications, Sprout introduces
 its own structural and formatting requirements.
@@ -49,7 +49,7 @@ package_properties = sp.PackageProperties(
 ```
 
 To check that these properties are indeed complete and well-formed, we
-use the `check_package_properties()` function. The function will not
+use the `check_package_properties()` function. Since all required fields (e.g. `name`, `description`, and `title`) are filled out and have the correct format, the function will not
 raise any errors and will return the original input:
 
 ```{python}
@@ -98,7 +98,7 @@ associated resource properties are well-formed. This function will only
 run checks on package properties fields and not look at resource
 properties fields.
 
-In the package properties below, there is a set of resource properties
+As an example, in the package properties below, there is a set of resource properties
 with all required fields missing. This will be ignored when the check
 runs:
 
@@ -142,8 +142,8 @@ sp.check_resource_properties(resource_properties)
 ## Checking a full set of properties
 
 When we want to check both package and resource properties, we can use
-the `check_properties()` function. In the properties below, we have
-three errors: the required `description` field is missing in both the
+the `check_properties()` function. In the properties below, we expect
+three checks to fail: the required `description` field is missing in both the
 package and resource properties, and the resource `path` doesn't point
 to a data file. When we run the check, all three errors are listed:
 
@@ -189,7 +189,7 @@ errors. Error messages are composed of the following parts:
 
 -   "seedcase_sprout.core.checks.check_error.CheckError": the class
     representing the error. Check functions will always throw
-    `CheckError`s.
+    `CheckError`s for failing checks.
 -   "Error at `$.resources[0].description`": the location of the error
     in the properties object. `$` corresponds to the topmost layer of
     the object (the root); `.resources` points to the `resources` field
@@ -207,7 +207,7 @@ errors. Error messages are composed of the following parts:
 
 In a scenario where we expect a set of properties to trigger certain
 types of errors and want to ignore these during checks, we can configure
-the check function not to raise errors for these violations.
+the check functions not to raise errors for these violations.
 
 For each type of error we want to ignore, we will construct a
 `CheckErrorMatcher` object. Given a list of these `CheckErrorMatcher`s,
@@ -280,7 +280,7 @@ resource properties. Therefore, we are looking for errors whose
 matcher, we are looking for pattern errors with a `json_path` that ends
 in `.name`.
 
-::: callout-note
+::: callout-tip
 As the `json_path` of a matcher is interpreted as a regular expression,
 characters with a special meaning in regular expressions (e.g., `.` or
 `[...]`) must be escaped (hence `\.` and `\[...\]`) if you want them to
@@ -294,7 +294,7 @@ expression to see the match rule expressed by each section.
 :::
 
 We can then add the matchers as the `ignore` argument of
-`check_properties()`. No errors will be raised when the check runs.
+`check_properties()`. No errors will be raised when the check runs on a properties object with the listed errors.
 
 ```{python}
 properties = sp.PackageProperties(
