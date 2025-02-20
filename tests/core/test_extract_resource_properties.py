@@ -56,3 +56,34 @@ def test_returns_expected_resource_properties_from_csv_file(
 
     # Then
     assert properties.compact_dict == expected_properties_compact_dict
+
+
+@mark.parametrize(
+    "file, expected_schema",
+    [(data, expected_schema), (pl.DataFrame([]), {"fields": []})],
+)
+def test_returns_expected_resource_properties_from_tsv_file(
+    tmp_path, file, expected_schema
+):
+    """Returns expected resource properties from a non-empty tsv file."""
+    # Given
+    file_path = tmp_path / "data.tsv"
+    file.write_csv(file_path, separator="\t")
+
+    expected_properties_compact_dict = {
+        "name": "data",
+        "path": str(file_path),
+        "type": "table",
+        "format": "tsv",
+        "mediatype": "text/tsv",
+        "encoding": "utf-8",
+        "dialect": {"delimiter": "\t"},
+        "schema": expected_schema,
+    }
+    # When
+    properties = extract_resource_properties(file_path)
+
+    # Then
+    assert properties.compact_dict == expected_properties_compact_dict
+
+
