@@ -188,16 +188,6 @@ def test_rejects_badly_formatted_date_or_time_related_field(
         check_data(data_path, resource_properties)
 
 
-@mark.parametrize("value", ["one", '"one,two,three"'])
-def xtest_accepts_list_field(data_path, resource_properties, value):
-    """Should accept valid values for list fields."""
-    data_path.write_text(f"my_list\n{value}")
-    fields = [FieldProperties(name="my_list", type="list")]
-    resource_properties.schema.fields = fields
-
-    assert check_data(data_path, resource_properties) == data_path
-
-
 @mark.parametrize(
     "json_object",
     [
