@@ -3,7 +3,6 @@ from pytest import mark
 
 from seedcase_sprout.core.extract_resource_properties import extract_resource_properties
 
-
 empty_data = pl.DataFrame([])
 schema_empty_data = {"fields": []}
 
