@@ -93,3 +93,32 @@ def test_returns_expected_resource_properties_from_tsv_file(
     assert properties.compact_dict == expected_properties_compact_dict
 
 
+@mark.parametrize(
+    "data, expected_schema, extension",
+    [
+        (non_empty_data, expected_non_empty_schema, "parquet"),
+        (empty_data, expected_empty_schema, "parq"),
+    ],
+)
+def test_returns_expected_resource_properties_from_parquet_file(
+    tmp_path, data, expected_schema, extension
+):
+    """Returns expected resource properties from a non-empty parquet file."""
+    # Given
+    file_path = tmp_path / f"data.{extension}"
+    data.write_parquet(file_path)
+
+    expected_properties_compact_dict = {
+        "name": "data",
+        "path": str(file_path),
+        "type": "table",
+        "format": f"{extension}",
+        "mediatype": "application/parquet",
+        # Note that the Frictionless library doesn't return encoding for parquet files
+        "schema": expected_schema,
+    }
+    # When
+    properties = extract_resource_properties(file_path)
+
+    # Then
+    assert properties.compact_dict == expected_properties_compact_dict
