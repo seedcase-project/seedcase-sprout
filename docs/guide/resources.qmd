@@ -99,7 +99,7 @@ from pprint import pprint
 from textwrap import dedent
 ```
 
-## Extract, then edit resource properties from raw data
+## Extract resource properties from raw data
 
 Because the resource's properties are useful for many later functions,
 let's first get that created and ready to go. While you can create a
@@ -124,6 +124,12 @@ pprint(resource_properties)
 You may be able to see that some things are missing, for instance, the
 individual columns (called fields) don't have any descriptions. We have to
 manually add this ourselves.
+We can run a check on the properties to confirm what is missing:
+
+```{python}
+#| error: true
+print(sp.check_resource_properties(resource_properties))
+```
 
 Let's fill in the description for all
 the fields in the resource:
