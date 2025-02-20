@@ -103,17 +103,16 @@ from textwrap import dedent
 
 Because the resource's properties are useful for many later functions,
 let's first get that created and ready to go. While you can create a
-resource properties object manually using `ResourceProperties`, it is
-quite intensive and time-consuming. The better and easier approach is to
+resource properties object manually using `ResourceProperties`, it can be
+quite intensive and time-consuming if you for example have many columns in your data. The better and easier approach is to
 extract as much information as possible from the raw data to create an
-initial resource properties object by using
+initial resource properties object with
 `extract_resource_properties()`. Then, you can edit the properties as
 needed.
 
 Let's start with extracting the resource properties from the raw data.
 The function is fairly good at getting and guessing the right
-information, but it is very far from perfect and it just cannot guess
-certain things from the data.
+information, but it is very far from perfect and it cannot guess things that are not in the data itself, like a description of what the data contains or the unit of the data.
 
 ```{python}
 resource_properties = extract_resource_properties(
