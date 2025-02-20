@@ -3,7 +3,11 @@ from pytest import mark
 
 from seedcase_sprout.core.extract_resource_properties import extract_resource_properties
 
-non_empty_data = pl.DataFrame(
+
+empty_data = pl.DataFrame([])
+schema_empty_data = {"fields": []}
+
+tidy_data = pl.DataFrame(
     {
         "id": [1, 2, 3],
         "name": ["Alice", "Bob", "Charlie"],
@@ -17,7 +21,7 @@ non_empty_data = pl.DataFrame(
         "completed": [True, False, True],
     }
 )
-expected_non_empty_schema = {
+schema_tidy_data = {
     "fields": [
         {"name": "id", "type": "integer"},
         {"name": "name", "type": "string"},
@@ -28,14 +32,40 @@ expected_non_empty_schema = {
     ]
 }
 
-empty_data = pl.DataFrame([])
-
-expected_empty_schema = {"fields": []}
+non_tidy_data = pl.DataFrame(
+    {
+        "id": [1, 2, "NA"],
+        "name": ["Alice", 10, "Charlie"],
+        "dob": ["2000-09-22", "1996-11-12", "1998-03-15 00:00:00"],
+        "height": [1.7, 1.6, 1],
+        "survey_datetime": [
+            "2020-01-02 08:00:00",
+            "2021-02-03",
+            "2022-03-04 10:00:00",
+        ],
+        "completed": [True, False, True],
+    },
+    strict=False,
+)
+schema_non_tidy_data = {
+    "fields": [
+        {"name": "id", "type": "string"},
+        {"name": "name", "type": "string"},
+        {"name": "dob", "type": "string"},
+        {"name": "height", "type": "number"},
+        {"name": "survey_datetime", "type": "string"},
+        {"name": "completed", "type": "boolean"},
+    ]
+}
 
 
 @mark.parametrize(
     "data, expected_schema",
-    [(non_empty_data, expected_non_empty_schema), (empty_data, expected_empty_schema)],
+    [
+        (empty_data, schema_empty_data),
+        (tidy_data, schema_tidy_data),
+        (non_tidy_data, schema_non_tidy_data),
+    ],
 )
 def test_returns_expected_resource_properties_from_csv_file(
     tmp_path, data, expected_schema
@@ -64,8 +94,9 @@ def test_returns_expected_resource_properties_from_csv_file(
 @mark.parametrize(
     "data, expected_schema",
     [
-        (non_empty_data, expected_non_empty_schema),
-        (empty_data, expected_empty_schema),
+        (empty_data, schema_empty_data),
+        (tidy_data, schema_tidy_data),
+        (non_tidy_data, schema_non_tidy_data),
     ],
 )
 def test_returns_expected_resource_properties_from_tsv_file(
@@ -96,8 +127,12 @@ def test_returns_expected_resource_properties_from_tsv_file(
 @mark.parametrize(
     "data, expected_schema, extension",
     [
-        (non_empty_data, expected_non_empty_schema, "parquet"),
-        (empty_data, expected_empty_schema, "parq"),
+        (empty_data, schema_empty_data, "parq"),
+        (tidy_data, schema_tidy_data, "parq"),
+        (non_tidy_data, schema_non_tidy_data, "parq"),
+        (empty_data, schema_empty_data, "parquet"),
+        (tidy_data, schema_tidy_data, "parquet"),
+        (non_tidy_data, schema_non_tidy_data, "parquet"),
     ],
 )
 def test_returns_expected_resource_properties_from_parquet_file(
