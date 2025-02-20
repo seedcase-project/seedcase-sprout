@@ -27,23 +27,6 @@ are the core external-facing functions in Sprout. See the
 [Outputs](outputs.qmd) section for an overview and explanation of the
 different outputs provided by Sprout.
 
-There are some small differences between the naming scheme and the
-functions described here:
-
-1.  `edit` only ever edits the `datapackage.json` which contains the
-    properties/metadata of the package or resource(s) but never edits
-    the data itself. If there is a need for updates to the data itself,
-    the user can update it by uploading a new file with the updates (as
-    long as the primary keys like participant ID and time of collection
-    are the same). We don't provide access for users to directly edit
-    the data because we want to limit security risks as well as to
-    maintain privacy and legal compliance.
-2.  `add` only ever adds more data to an existing data resource and does
-    not add any new metadata to the `datapackage.json`. Since Sprout
-    contains the full Frictionless Data specification, using `edit` is
-    enough to make updates to the existing properties found in the
-    `datapackage.json` file.
-
 Nearly all functions have a `path` argument. Depending on what the
 function does, the path object will be different. Use the `path_*()`
 functions to get the correct path object for the specific function. It's
