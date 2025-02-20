@@ -103,9 +103,9 @@ properties fields.
 ::: callout-warning
 If your aim is to check whether your properties as a whole meet the
 [Frictionless Data Package standard](https://datapackage.org), you need
-to check both your package and resource properties. See the [Checking a
-full set of properties](#checking-a-full-set-of-properties) section for
-detailed instructions.
+to check your package and resource properties as a unit. See the
+[Checking a full set of properties](#checking-a-full-set-of-properties)
+section for detailed instructions.
 :::
 
 As an example, in the package properties below, there is a set of
