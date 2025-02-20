@@ -3,7 +3,7 @@ from pytest import mark
 
 from seedcase_sprout.core.extract_resource_properties import extract_resource_properties
 
-data = pl.DataFrame(
+non_empty_data = pl.DataFrame(
     {
         "id": [1, 2, 3],
         "name": ["Alice", "Bob", "Charlie"],
@@ -17,8 +17,7 @@ data = pl.DataFrame(
         "completed": [True, False, True],
     }
 )
-
-expected_schema = {
+expected_non_empty_schema = {
     "fields": [
         {"name": "id", "type": "integer"},
         {"name": "name", "type": "string"},
@@ -29,18 +28,22 @@ expected_schema = {
     ]
 }
 
+empty_data = pl.DataFrame([])
+
+expected_empty_schema = {"fields": []}
+
 
 @mark.parametrize(
-    "file, expected_schema",
-    [(data, expected_schema), (pl.DataFrame([]), {"fields": []})],
+    "data, expected_schema",
+    [(non_empty_data, expected_non_empty_schema), (empty_data, expected_empty_schema)],
 )
 def test_returns_expected_resource_properties_from_csv_file(
-    tmp_path, file, expected_schema
+    tmp_path, data, expected_schema
 ):
     """Returns expected resource properties from a non-empty csv file."""
     # Given
     file_path = tmp_path / "data.csv"
-    file.write_csv(file_path)
+    data.write_csv(file_path)
 
     expected_properties_compact_dict = {
         "name": "data",
@@ -59,16 +62,19 @@ def test_returns_expected_resource_properties_from_csv_file(
 
 
 @mark.parametrize(
-    "file, expected_schema",
-    [(data, expected_schema), (pl.DataFrame([]), {"fields": []})],
+    "data, expected_schema",
+    [
+        (non_empty_data, expected_non_empty_schema),
+        (empty_data, expected_empty_schema),
+    ],
 )
 def test_returns_expected_resource_properties_from_tsv_file(
-    tmp_path, file, expected_schema
+    tmp_path, data, expected_schema
 ):
     """Returns expected resource properties from a non-empty tsv file."""
     # Given
     file_path = tmp_path / "data.tsv"
-    file.write_csv(file_path, separator="\t")
+    data.write_csv(file_path, separator="\t")
 
     expected_properties_compact_dict = {
         "name": "data",
