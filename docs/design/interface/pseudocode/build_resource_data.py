@@ -1,20 +1,22 @@
 # ruff: noqa
-def build_resource_parquet(
+def build_resource_data(
     raw_files_path: list[Path], resource_properties: ResourceProperties
-) -> Path:
-    """Merge all raw resource file(s) and write into a Parquet file.
+) -> DataFrame:
+    """Merge all raw resource file(s) into a single DataFrame file.
 
-    This function takes the file(s) provided by `raw_files_path` and merges them into
-    a `data.parquet` file. The Parquet file will be stored at the path found in `ResourceProperties.path`.
-    While Sprout generally assumes
-    that the files stored in the `resources/raw/` folder are already correctly
-    structured and tidy, it still runs checks to ensure the data are correct
-    by comparing to the properties. All data in the
-    `resources/raw/` folder will be merged into one single data object and then
-    written back to the Parquet file. The Parquet file will be overwritten.
+    This function takes the file(s) given by `raw_files_path`, merges them
+    together, does some checks and minor processing before outputting them as a
+    single DataFrame. The `resource_properties` object is used to check the data
+    and ensure it is correct. This function can be used to apply any additional
+    processing to the data before saving it as a Parquet file.  While Sprout
+    generally assumes that the files stored in the `resources/<id>/raw/` folder
+    are already correctly structured and tidy, it still runs checks to ensure
+    the data are correct by comparing to the properties. All data in the
+    `resources/<id>/raw/` folder will be merged into one single DataFrame object
+    for either continued processing or to write to the Parquet file.
 
-    If there are any duplicate observation units in the data, only the most recent
-    observation unit will be kept. This way, if there are any errors or mistakes
+    If there are any duplicate observational units in the data, only the most recent
+    observational unit will be kept. This way, if there are any errors or mistakes
     in older raw files that have been corrected in later files, the mistake can still
     be kept, but won't impact the data that will actually be used.
 
@@ -23,21 +25,21 @@ def build_resource_parquet(
         ``` python
         import seedcase_sprout.core as sp
 
-        sp.build_resource_parquet(
+        sp.build_resource_data(
             raw_files_path=sp.path_resources_raw_files(1),
             resource_properties=sp.example_resource_properties,
         )
         ```
 
     Args:
-        raw_files_path: A list of paths for all the raw files, mostly commonly stored in the
-            `.csv.gz` format. Use `path_resource_raw_files()` to help provide the
-            correct paths to the raw files.
+        raw_files_path: A list of paths for all the raw files, mostly commonly
+            stored in the `.csv.gz` format. Use `path_resource_raw_files()` to help
+            provide the correct paths to the raw files.
         resource_properties: The `ResourceProperties` object that contains the properties
-            of the resource you want to create the Parquet file for.
+            of the resource you want to check the data against.
 
     Returns:
-        Outputs the path object of the created Parquet file.
+        Outputs a single DataFrame object of all the merged raw files.
     """
     # Not sure if this is the correct way to verify multiple files.
     [check_is_file(path) for path in raw_files_path]
@@ -49,11 +51,7 @@ def build_resource_parquet(
     # This function could be several functions or the one full function.
     check_data(data, resource_properties)
 
-    return write_parquet(data, resource_properties["path"])
-
-
-def write_parquet(data: DataFrame, path: Path) -> Path:
-    return path
+    return data
 
 
 def read_raw_files(paths: list[Path]) -> DataFrame:
