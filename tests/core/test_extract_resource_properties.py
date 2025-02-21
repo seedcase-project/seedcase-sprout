@@ -23,6 +23,11 @@ tidy_data = pl.DataFrame(
         "survey_duration": ["PT1M30S", "PT1H30M", "PT1H"],
         "survey_yearmonth": ["2020-01", "2021-02", "2022-03"],
         "survey_geopoint": ["1.0,2.0", "3.0,4.0", "5.0,6.0"],
+        "survey_array": [
+            '[{"name":"value1", "details": {"subfield1": "1", "subfield2": "2"}}]',
+            '[{"name":"value2", "details": {"subfield1": "5", "subfield2": "6"}}]',
+            '[{"name":"value3", "details": {"subfield1": "7", "subfield2": "8"}}]',
+        ],
     }
 )
 schema_tidy_data = {
@@ -41,6 +46,7 @@ schema_tidy_data = {
         {"name": "survey_duration", "type": "duration"},
         {"name": "survey_yearmonth", "type": "yearmonth"},
         {"name": "survey_geopoint", "type": "geopoint"},
+        {"name": "survey_array", "type": "array"},
     ]
 }
 
@@ -61,6 +67,11 @@ non_tidy_data = pl.DataFrame(
         "survey_duration": ["1:00", "PT1H30M", "PT1H"],
         "survey_yearmonth": ["2020 01", "02-2021", "2022-03"],
         "survey_geopoint": ["1.0,2.0", "3.0", "5.0,6.0"],
+        "survey_array": [
+            '[{"name":"value1", "details": {"subfield1": "1", "subfield2": "2"}}]',
+            "",
+            '[{"name":"value3"}]',
+        ],
     },
     strict=False,
 )
@@ -81,6 +92,7 @@ schema_non_tidy_data = {
         {"name": "survey_duration", "type": "string"},
         {"name": "survey_yearmonth", "type": "string"},
         {"name": "survey_geopoint", "type": "string"},
+        {"name": "survey_array", "type": "array"},
     ]
 }
 
