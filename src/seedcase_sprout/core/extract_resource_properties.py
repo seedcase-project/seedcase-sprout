@@ -30,8 +30,7 @@ def extract_resource_properties(data_path: Path) -> ResourceProperties:
 
     properties = describe(data_path).to_dict()
 
-    if properties["format"] == "tsv":
-        _clean_tsv_properties(properties)
+    properties.pop("dialect", None)
 
     check_resource_properties(properties)
     return ResourceProperties.from_dict(properties)
