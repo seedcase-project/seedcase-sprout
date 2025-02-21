@@ -18,6 +18,11 @@ tidy_data = pl.DataFrame(
             "2022-03-04 10:00:00",
         ],
         "completed": [True, False, True],
+        "survey_year": [2020, 2021, 2022],
+        "survey_starttime": ["08:00:00", "09:00:00", "10:00:00"],
+        "survey_duration": ["PT1M30S", "PT1H30M", "PT1H"],
+        "survey_yearmonth": ["2020-01", "2021-02", "2022-03"],
+        "survey_geopoint": ["1.0,2.0", "3.0,4.0", "5.0,6.0"],
     }
 )
 schema_tidy_data = {
@@ -28,6 +33,14 @@ schema_tidy_data = {
         {"name": "height", "type": "number"},
         {"name": "survey_datetime", "type": "datetime"},
         {"name": "completed", "type": "boolean"},
+        {
+            "name": "survey_year",
+            "type": "integer",
+        },  # Frictionless detects year as integer
+        {"name": "survey_starttime", "type": "time"},
+        {"name": "survey_duration", "type": "duration"},
+        {"name": "survey_yearmonth", "type": "yearmonth"},
+        {"name": "survey_geopoint", "type": "geopoint"},
     ]
 }
 
@@ -42,10 +55,16 @@ non_tidy_data = pl.DataFrame(
             "2021-02-03",
             "2022-03-04 10:00:00",
         ],
-        "completed": [True, False, True],
+        "completed": [True, False, 1],
+        "survey_year": [20, 21, 2022],
+        "survey_starttime": ["08:00", "09:00:00", "10"],
+        "survey_duration": ["1:00", "PT1H30M", "PT1H"],
+        "survey_yearmonth": ["2020 01", "02-2021", "2022-03"],
+        "survey_geopoint": ["1.0,2.0", "3.0", "5.0,6.0"],
     },
     strict=False,
 )
+# With mixed data types, the Frictionless library mostly defaults to string
 schema_non_tidy_data = {
     "fields": [
         {"name": "id", "type": "string"},
@@ -53,7 +72,15 @@ schema_non_tidy_data = {
         {"name": "dob", "type": "string"},
         {"name": "height", "type": "number"},
         {"name": "survey_datetime", "type": "string"},
-        {"name": "completed", "type": "boolean"},
+        {
+            "name": "completed",
+            "type": "integer",
+        },  # Frictionless detects Boolean as integer when an integer is present
+        {"name": "survey_year", "type": "integer"},
+        {"name": "survey_starttime", "type": "string"},
+        {"name": "survey_duration", "type": "string"},
+        {"name": "survey_yearmonth", "type": "string"},
+        {"name": "survey_geopoint", "type": "string"},
     ]
 }
 
@@ -145,7 +172,6 @@ def test_returns_expected_resource_properties_from_parquet_file(
         "type": "table",
         "format": f"{extension}",
         "mediatype": "application/parquet",
-        # Note that the Frictionless library doesn't return encoding for parquet files
         "schema": expected_schema,
     }
     # When
