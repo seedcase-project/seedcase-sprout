@@ -113,7 +113,6 @@ def test_returns_expected_resource_properties_from_tsv_file(
         "format": "tsv",
         "mediatype": "text/tsv",
         "encoding": "utf-8",
-        "dialect": {"delimiter": "\t"},
         "schema": expected_schema,
     }
     # When
