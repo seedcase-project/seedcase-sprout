@@ -28,6 +28,17 @@ tidy_data = pl.DataFrame(
             '[{"name":"value2", "details": {"subfield1": "5", "subfield2": "6"}}]',
             '[{"name":"value3", "details": {"subfield1": "7", "subfield2": "8"}}]',
         ],
+        "survey_geojson": [
+            '{"type": "Feature", '
+            '"geometry": {"type": "Point", "coordinates": [102.0, 0.5]}, '
+            '"properties": {"name": "value1"}}',
+            '{"type": "Feature", '
+            '"geometry": {"type": "Point", "coordinates": [103.0, 1.0]}, '
+            '"properties": {"name": "value1"}}',
+            '{"type": "Feature", '
+            '"geometry": {"type": "Point", "coordinates": [104.0, 0.0]}, '
+            '"properties": {"name": "value1"}}',
+        ],
     }
 )
 schema_tidy_data = {
@@ -47,6 +58,7 @@ schema_tidy_data = {
         {"name": "survey_yearmonth", "type": "yearmonth"},
         {"name": "survey_geopoint", "type": "geopoint"},
         {"name": "survey_array", "type": "array"},
+        {"name": "survey_geojson", "type": "geojson"},
     ]
 }
 
@@ -72,6 +84,14 @@ non_tidy_data = pl.DataFrame(
             "",
             '[{"name":"value3"}]',
         ],
+        "survey_geojson": [
+            '{"type": "Feature", '
+            '"geometry": {"type": "Point", "coordinates": [102.0, 0.5]}, '
+            '{"type": "Feature"}',
+            '{"type": "Feature", ',
+            '"geometry": {"type": "Point", "coordinates": [104.0, 0.0]}, '
+            '"properties": {"name": "value1"}}',
+        ],
     },
     strict=False,
 )
@@ -93,6 +113,7 @@ schema_non_tidy_data = {
         {"name": "survey_yearmonth", "type": "string"},
         {"name": "survey_geopoint", "type": "string"},
         {"name": "survey_array", "type": "array"},
+        {"name": "survey_geojson", "type": "string"},
     ]
 }
 
