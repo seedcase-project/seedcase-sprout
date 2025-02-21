@@ -123,15 +123,13 @@ def test_returns_expected_resource_properties_from_tsv_file(
     assert properties.compact_dict == expected_properties_compact_dict
 
 
+@mark.parametrize("extension", ["parq", "parquet"])
 @mark.parametrize(
-    "data, expected_schema, extension",
+    "data, expected_schema",
     [
-        (empty_data, schema_empty_data, "parq"),
-        (tidy_data, schema_tidy_data, "parq"),
-        (non_tidy_data, schema_non_tidy_data, "parq"),
-        (empty_data, schema_empty_data, "parquet"),
-        (tidy_data, schema_tidy_data, "parquet"),
-        (non_tidy_data, schema_non_tidy_data, "parquet"),
+        (empty_data, schema_empty_data),
+        (tidy_data, schema_tidy_data),
+        (non_tidy_data, schema_non_tidy_data),
     ],
 )
 def test_returns_expected_resource_properties_from_parquet_file(
