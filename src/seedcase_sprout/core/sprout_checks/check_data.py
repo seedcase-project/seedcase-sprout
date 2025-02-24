@@ -19,7 +19,7 @@ def check_data(data_path: Path, resource_properties: ResourceProperties) -> Path
     """Checks that the CSV data file at `data_path` matches the resource properties.
 
     Runs the following checks:
-    
+
     - Can the data file be read as a CSV file?
     - Does the data file have a header row that matches column names in the properties?
     - Do the columns in the data file match those in the properties?
