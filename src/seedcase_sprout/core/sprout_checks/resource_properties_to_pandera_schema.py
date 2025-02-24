@@ -1,4 +1,4 @@
-import pandera.polars as pap
+import pandera.polars as pa
 
 from seedcase_sprout.core.get_nested_attr import get_nested_attr
 from seedcase_sprout.core.properties import FieldProperties, ResourceProperties
@@ -12,7 +12,7 @@ from seedcase_sprout.core.sprout_checks.get_polars_data_type import (
 
 def resource_properties_to_pandera_schema(
     resource_properties: ResourceProperties,
-) -> pap.DataFrameSchema:
+) -> pa.DataFrameSchema:
     """Converts a set of resource properties to a Pandera schema.
 
     Args:
@@ -28,7 +28,7 @@ def resource_properties_to_pandera_schema(
     )
 
     columns = {
-        field.name: pap.Column(
+        field.name: pa.Column(
             dtype=get_polars_data_type(field.type),
             checks=get_pandera_checks(field),
             nullable=not get_nested_attr(field, "constraints.required", default=False),
@@ -37,4 +37,4 @@ def resource_properties_to_pandera_schema(
         for field in fields
     }
 
-    return pap.DataFrameSchema(columns, strict=True)
+    return pa.DataFrameSchema(columns, strict=True)

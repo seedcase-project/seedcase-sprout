@@ -90,9 +90,9 @@ def test_converts_multiple_fields():
 
     schema = resource_properties_to_pandera_schema(resource_properties)
 
-    assert [column.name for column in schema.columns.values()] == [
-        "my_date",
-        "my_boolean",
+    assert [(column.name, column.dtype.type) for column in schema.columns.values()] == [
+        ("my_date", pl.String),
+        ("my_boolean", pl.String),
     ]
 
 
