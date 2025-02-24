@@ -41,6 +41,12 @@ command in your Terminal:
 poetry --version
 ```
 
+If you don't have Poetry installed, you can install it using `pipx`:
+
+``` {.bash filename="Terminal"}
+pipx install poetry
+```
+
 ::: callout-important
 We assume you've already created a Python project using `poetry new` and
 your working directory in the Terminal is the project folder, which you
