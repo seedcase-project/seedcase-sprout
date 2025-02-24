@@ -6,9 +6,6 @@ from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
 )
-from seedcase_sprout.core.sprout_checks.check_package_properties import (
-    check_package_properties,
-)
 
 
 def example_package_properties() -> PackageProperties:
