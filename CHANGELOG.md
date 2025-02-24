@@ -1,3 +1,21 @@
+## 0.18.2 (2025-02-24)
+
+### Refactor
+
+- :recycle: switch `create_package_structure()` to make properties only (#1047)
+
+## 0.18.1 (2025-02-24)
+
+### Refactor
+
+- :recycle: convert `example_package_properties` to function (#1046)
+
+## 0.18.0 (2025-02-21)
+
+### Feat
+
+- ✨ add initial `extract_resource_properties()` (csv, tsv, and parquet files) (#1067)
+
 ## 0.17.0 (2025-02-19)
 
 ### Feat

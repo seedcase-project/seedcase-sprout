@@ -38,10 +38,14 @@ def path_package(package_id: int) -> Path:
             os.environ["SPROUT_GLOBAL"] = temp_dir
 
             # Create a package structure first
-            sp.create_package_structure(path=sp.path_packages())
+            sp.create_package_properties(
+                properties=sp.example_package_properties(),
+                path=sp.path_packages()
+            )
 
+            # TODO: Update after converting to "local-first"
             # Get the path to the package
-            sp.path_package(package_id=1)
+            # sp.path_package(package_id=1)
         ```
     """
     path = path_packages() / str(package_id)
@@ -69,10 +73,14 @@ def path_properties(package_id: int) -> Path:
             os.environ["SPROUT_GLOBAL"] = temp_dir
 
             # Create a package structure first
-            sp.create_package_structure(path=sp.path_packages())
+            sp.create_package_properties(
+                properties=sp.example_package_properties(),
+                path=sp.path_packages()
+            )
 
+            # TODO: Need to modify after revising to "local-first"
             # Get the path to the package properties
-            sp.path_properties(package_id=1)
+            # sp.path_properties(package_id=1)
         ```
     """
     path = path_package(package_id) / "datapackage.json"
