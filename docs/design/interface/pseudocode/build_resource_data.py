@@ -2,7 +2,7 @@
 def build_resource_data(
     raw_files_path: list[Path], resource_properties: ResourceProperties
 ) -> DataFrame:
-    """Merge all raw resource file(s) into a single DataFrame file.
+    """Merge all raw resource file(s) into a single (Polars) DataFrame.
 
     This function takes the file(s) given by `raw_files_path`, merges them
     together, does some checks and minor processing before outputting them as a
@@ -10,7 +10,7 @@ def build_resource_data(
     and ensure it is correct. This function can be used to apply any additional
     processing to the data before saving it as a Parquet file.  While Sprout
     generally assumes that the files stored in the `resources/<id>/raw/` folder
-    are already correctly structured and tidy, it still runs checks to ensure
+    are already correctly structured and tidy, this function still runs checks to ensure
     the data are correct by comparing to the properties. All data in the
     `resources/<id>/raw/` folder will be merged into one single DataFrame object
     for either continued processing or to write to the Parquet file.
