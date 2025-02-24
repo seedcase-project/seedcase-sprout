@@ -81,6 +81,9 @@ pprint(properties)
 Now, let's create our data package with these properties:
 
 ```{python}
+# Create the path to the package
+package_path = sp.path_sprout_global() / "diabetes-study"
+package_path.mkdir()
 package_path = sp.create_package_properties(
     properties = properties,
     path=sp.path_sprout_global() / "diabetes-study"

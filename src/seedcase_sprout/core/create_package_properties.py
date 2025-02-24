@@ -52,7 +52,7 @@ def create_package_properties(
             # Create package properties
             sp.create_package_properties(
                 # Using a built-in example properties object
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=temp_path
             )
         ```
