@@ -6,8 +6,8 @@ def build_resource_data(
 
     This function takes the file(s) given by `raw_files_path`, merges them
     together, does some checks and minor processing before outputting them as a
-    single DataFrame. The `resource_properties` object is used to check the data
-    and ensure it is correct. This function can be used to apply any additional
+    single (Polars) DataFrame. The `resource_properties` object is used to check the data
+    and ensure it is correct. This function doesn't write to Parquet, so that you can apply any additional
     processing to the data before saving it as a Parquet file.  While Sprout
     generally assumes that the files stored in the `resources/<id>/raw/` folder
     are already correctly structured and tidy, this function still runs checks to ensure

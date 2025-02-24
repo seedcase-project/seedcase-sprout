@@ -137,7 +137,7 @@ flowchart
     in_raw_files_path[/raw_files_path/]
     in_properties[/resource_properties/]
     function("build_resource_data()")
-    out[("DataFrame")]
+    out[("Polars<br>DataFrame")]
     in_raw_files_path --> function
     in_properties --> function
     function --> out
