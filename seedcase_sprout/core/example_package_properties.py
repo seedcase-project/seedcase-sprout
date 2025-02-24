@@ -46,6 +46,4 @@ def example_package_properties() -> PackageProperties:
         ],
     )
 
-    check_package_properties(properties)
-
     return properties
