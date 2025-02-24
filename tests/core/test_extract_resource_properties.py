@@ -220,3 +220,37 @@ def test_returns_expected_resource_properties_from_parquet_file(
 
     # Then
     assert properties.compact_dict == expected_properties_compact_dict
+
+
+@mark.parametrize(
+    "data, expected_schema",
+    [
+        (empty_data, schema_empty_data),
+        (tidy_data, schema_tidy_data),
+        (non_tidy_data, schema_non_tidy_data),
+    ],
+)
+def test_returns_expected_resource_properties_from_xlsx_file(
+    tmp_path, data, expected_schema
+):
+    """Returns expected resource properties from an xlsx file."""
+    # Given
+    file_path = tmp_path / "data.xlsx"
+    data.write_excel(file_path)
+
+    expected_properties_compact_dict = {
+        "name": "data",
+        "path": str(file_path),
+        "type": "table",
+        "format": "xlsx",
+        "mediatype": "application/vnd.ms-excel",
+        "encoding": "utf-8",
+        "schema": expected_schema,
+    }
+    # When
+    properties = extract_resource_properties(file_path)
+
+    # Then
+    assert properties.compact_dict == expected_properties_compact_dict
+
+
