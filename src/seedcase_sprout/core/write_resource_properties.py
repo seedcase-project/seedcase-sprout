@@ -50,7 +50,7 @@ def write_resource_properties(
 
         # Create package and resource structure first
         sp.create_package_properties(
-            properties=sp.example_package_properties,
+            properties=sp.example_package_properties(),
             path=temp_dir
         )
 

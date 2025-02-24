@@ -49,12 +49,12 @@ def create_resource_properties(
 
             # Create a package and resource structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=temp_path
             )
+
             # TODO: Update after converting to "local-first"
             # sp.create_resource_structure(path=temp_path / "1" / "resources")
-
             # Create resource properties
             # sp.create_resource_properties(
             #     path=temp_path / "1" / "resources" / "1",

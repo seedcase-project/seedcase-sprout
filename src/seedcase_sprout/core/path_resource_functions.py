@@ -35,7 +35,7 @@ def path_resource(package_id: int, resource_id: int) -> Path:
 
             # Create a package and resource structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
             # TODO: Update these after converting to "local-first"
@@ -72,7 +72,7 @@ def path_resource_data(package_id: int, resource_id: int) -> Path:
 
             # Create a package and resource structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
 
@@ -118,7 +118,7 @@ def path_resource_raw(package_id: int, resource_id: int) -> Path:
 
             # Create a package and resource structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
             # TODO: Update after converting to "local-first"
@@ -159,7 +159,7 @@ def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
 
             # Create a package and resource structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
             # TODO: Update after converting to "local-first"
@@ -199,7 +199,7 @@ def path_resources(package_id: int) -> Path:
 
             # Create a package structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
 

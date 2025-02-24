@@ -56,9 +56,9 @@ def edit_package_properties(
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
 
-            # Create a package properties file first
+            # Create a package structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=temp_path
             )
 

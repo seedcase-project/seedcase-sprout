@@ -39,7 +39,7 @@ def path_package(package_id: int) -> Path:
 
             # Create a package structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
 
@@ -74,7 +74,7 @@ def path_properties(package_id: int) -> Path:
 
             # Create a package structure first
             sp.create_package_properties(
-                properties=sp.example_package_properties,
+                properties=sp.example_package_properties(),
                 path=sp.path_packages()
             )
 

@@ -42,7 +42,7 @@ def create_resource_structure(path: Path) -> list[Path]:
 
          # Create a package structure first
          sp.create_package_properties(
-            properties=sp.example_package_properties,
+            properties=sp.example_package_properties(),
             path=temp_path
         )
 
