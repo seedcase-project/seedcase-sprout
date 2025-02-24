@@ -293,5 +293,3 @@ def test_returns_expected_resource_properties_from_xls_file(
 
     # Then
     assert properties.compact_dict == expected_properties_compact_dict
-
-
