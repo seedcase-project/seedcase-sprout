@@ -38,8 +38,9 @@ def extract_resource_properties(data_path: Path) -> ResourceProperties:
         # ResourceProperties, so we'll change the value here.
         properties["type"] = "table"
 
-        schema = describe(JsonResource(data_path).read_data(), type="schema").to_dict()
-        properties["schema"] = schema
+        properties["schema"] = describe(
+            JsonResource(data_path).read_data(), type="schema"
+        ).to_dict()
 
     check_resource_properties(properties)
     return ResourceProperties.from_dict(properties)
