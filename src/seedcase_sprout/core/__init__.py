@@ -40,10 +40,12 @@ from .properties import (
     ReferenceProperties,
     ResourceProperties,
     SourceProperties,
-    TableDialectProperties,
     TableSchemaForeignKeyProperties,
     TableSchemaProperties,
 )
+from .sprout_checks.check_package_properties import check_package_properties
+from .sprout_checks.check_properties import check_properties
+from .sprout_checks.check_resource_properties import check_resource_properties
 from .write_package_properties import write_package_properties
 
 # from .extract_resource_properties import *
@@ -66,7 +68,6 @@ __all__ = [
     "ReferenceProperties",
     "ResourceProperties",
     "SourceProperties",
-    "TableDialectProperties",
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
     # Example properties -----
@@ -99,4 +100,8 @@ __all__ = [
     "path_sprout_global",
     # Helpers -----
     # "pretty_json",
+    # Checks -----
+    "check_package_properties",
+    "check_properties",
+    "check_resource_properties",
 ]
