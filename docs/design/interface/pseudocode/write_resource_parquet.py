@@ -7,7 +7,7 @@ def write_resource_parquet(
     This function takes the `data` built from `build_resource_data()`, checks it
     against the `resource_properties`, and then writes the data to the resources
     `data.parquet` file .  The Parquet file is saved based on the path found in
-    `ResourceProperties.path` and it always overwritten.  Before writing, this
+    `ResourceProperties.path` and is always overwritten.  Before writing, this
     function does a check against the `resource_properties` to ensure that the
     data is correctly structured and tidy.
 
@@ -31,7 +31,7 @@ def write_resource_parquet(
             properties of the resource you want to create the Parquet file for.
 
     Returns:
-        Outputs the path object of the created Parquet file.
+        Outputs the path of the created Parquet file.
     """
     check_resource_properties(resource_properties)
 
