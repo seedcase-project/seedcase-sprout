@@ -30,9 +30,11 @@ import tempfile
 from urllib.request import urlretrieve
 
 temp_path = tempfile.TemporaryDirectory()
+package_path = temp_path / "diabetes-study"
+package_path.mkdir()
 package_path = sp.create_package_properties(
     properties=sp.example_package_properties(),
-    path=temp_path / "diabetes-study"
+    path=package_path
 )
 readme = sp.build_readme_text(sp.example_package_properties())
 sp.write_text(readme, package_path.parent)
