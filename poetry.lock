@@ -1038,6 +1038,7 @@ jsonlines = {version = ">=1.2", optional = true, markers = "extra == \"json\""}
 jsonschema = ">=4.20"
 marko = ">=1.0"
 openpyxl = {version = ">=3.0", optional = true, markers = "extra == \"excel\""}
+openpyxl = {version = ">=3.0", optional = true, markers = "extra == \"excel\""}
 petl = ">=1.6"
 pydantic = ">=2.0"
 python-dateutil = ">=2.8"
@@ -1048,10 +1049,13 @@ rfc3986 = ">=1.4"
 simpleeval = ">=0.9.11"
 stringcase = ">=1.2"
 tableschema-to-template = {version = ">=0.0", optional = true, markers = "extra == \"excel\""}
+tableschema-to-template = {version = ">=0.0", optional = true, markers = "extra == \"excel\""}
 tabulate = ">=0.8.10"
 typer = ">=0.12"
 typing-extensions = ">=4.3"
 validators = ">=0.18"
+xlrd = {version = ">=1.2", optional = true, markers = "extra == \"excel\""}
+xlwt = {version = ">=1.2", optional = true, markers = "extra == \"excel\""}
 xlrd = {version = ">=1.2", optional = true, markers = "extra == \"excel\""}
 xlwt = {version = ">=1.2", optional = true, markers = "extra == \"excel\""}
 
@@ -3697,6 +3701,23 @@ pyyaml = ">=3.13"
 xlsxwriter = ">=1.2.8"
 
 [[package]]
+name = "tableschema-to-template"
+version = "0.0.13"
+description = "Given a Frictionless Table Schema, generates an Excel template with input validation"
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "tableschema-to-template-0.0.13.tar.gz", hash = "sha256:2d8d2250efb840e0ecb9012c5e879a82ef68f65dd86bdff574200fdfc978ff1c"},
+    {file = "tableschema_to_template-0.0.13-py3-none-any.whl", hash = "sha256:4905500a4235740654230c3223629d26fdccb7a0457ec1d0110ea102c4f1146c"},
+]
+
+[package.dependencies]
+jsonschema = ">=1.0.0"
+pyyaml = ">=3.13"
+xlsxwriter = ">=1.2.8"
+
+[[package]]
 name = "tabulate"
 version = "0.9.0"
 description = "Pretty-print tabular data"
@@ -4161,6 +4182,47 @@ groups = ["docs"]
 files = [
     {file = "widgetsnbextension-4.0.13-py3-none-any.whl", hash = "sha256:74b2692e8500525cc38c2b877236ba51d34541e6385eeed5aec15a70f88a6c71"},
     {file = "widgetsnbextension-4.0.13.tar.gz", hash = "sha256:ffcb67bc9febd10234a362795f643927f4e0c05d9342c727b65d2384f8feacb6"},
+]
+
+[[package]]
+name = "xlrd"
+version = "2.0.1"
+description = "Library for developers to extract data from Microsoft Excel (tm) .xls spreadsheet files"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+groups = ["main"]
+files = [
+    {file = "xlrd-2.0.1-py2.py3-none-any.whl", hash = "sha256:6a33ee89877bd9abc1158129f6e94be74e2679636b8a205b43b85206c3f0bbdd"},
+    {file = "xlrd-2.0.1.tar.gz", hash = "sha256:f72f148f54442c6b056bf931dbc34f986fd0c3b0b6b5a58d013c9aef274d0c88"},
+]
+
+[package.extras]
+build = ["twine", "wheel"]
+docs = ["sphinx"]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
+name = "xlsxwriter"
+version = "3.2.2"
+description = "A Python module for creating Excel XLSX files."
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "XlsxWriter-3.2.2-py3-none-any.whl", hash = "sha256:272ce861e7fa5e82a4a6ebc24511f2cb952fde3461f6c6e1a1e81d3272db1471"},
+    {file = "xlsxwriter-3.2.2.tar.gz", hash = "sha256:befc7f92578a85fed261639fb6cde1fd51b79c5e854040847dde59d4317077dc"},
+]
+
+[[package]]
+name = "xlwt"
+version = "1.3.0"
+description = "Library to create spreadsheet files compatible with MS Excel 97/2000/XP/2003 XLS files, on any platform, with Python 2.6, 2.7, 3.3+"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "xlwt-1.3.0-py2.py3-none-any.whl", hash = "sha256:a082260524678ba48a297d922cc385f58278b8aa68741596a87de01a9c628b2e"},
+    {file = "xlwt-1.3.0.tar.gz", hash = "sha256:c59912717a9b28f1a3c2a98fd60741014b06b043936dcecbc113eaaada156c88"},
 ]
 
 [[package]]

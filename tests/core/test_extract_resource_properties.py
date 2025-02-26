@@ -266,7 +266,7 @@ def test_returns_expected_resource_properties_from_xlsx_file(
 def test_returns_expected_resource_properties_from_xls_file(
     tmp_path, data, expected_schema
 ):
-    """Returns expected resource properties from a non-empty Excel file."""
+    """Returns expected resource properties from an xls file."""
     # Given
     file_path = tmp_path / "data.xls"
 
