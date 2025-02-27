@@ -1,0 +1,219 @@
+---
+title: "Data types supported by Sprout"
+---
+
+### Overview
+
+Sprout implements the Frictionless Data Package standard and aims to support the [data types](https://datapackage.org/standard/table-schema/#field-types) it defines. However, Sprout not only describes data with metadata but also transforms it into a tidy Parquet file, ready for querying (see [Outputs](/docs/design/interface/outputs.qmd#files) and [Why Parquet](https://decisions.seedcase-project.org/why-parquet/) for more details). As a result, Sprout supports only data types that are compatible (or can be made compatible) with Parquet storage.
+
+Below, we list Frictionless data types as used in Sprout and give a precise definition for each. Any differences from the Frictionless specification are noted.
+
+| Frictionless | Polars              | Arrow                        | Parquet                |
+|--------------|---------------------|------------------------------|------------------------|
+| `string`     | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
+| `number`     | `Float64`           | `float64`                    | `DOUBLE`               |
+| `integer`    | `Int64`             | `int64`                      | `INT64`                |
+| `boolean`    | `Boolean`           | `bool_`                      | `BOOLEAN`              |
+| `datetime`   | `Datetime`          | `timestamp[ms, tz]`          | `INT64` (Timestamp)    |
+| `date`       | `Date`              | `date32[day]`                | `INT32` (Date)         |
+| `time`       | `Time`              | `time64[ns]`                 | `INT64` (Time)         |
+| `year`       | `Int32`             | `int32`                      | `INT32`                |
+| `yearmonth`  | `Date`              | `date32[day]`                | `INT32` (Date)         |
+| `duration`   | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
+| `geopoint`   | `Array[Float64, 2]` | `fixed_size_list[double, 2]` | `FIXED_LEN_BYTE_ARRAY` |
+| `geojson`    | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
+| `object`     | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
+| `array`      | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
+| `any`        | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
+
+: Mappings of Frictionless data types in Sprout
+
+### String
+
+A sequence of UTF-8 encoded characters.
+
+Supported formats: `default`, `email`, `uri`, `binary`, `uuid`.
+
+### Number
+
+A number with or without a decimal part. Precision is not reflected in the number of digits specified in the decimal part (`2.0` is not distinct from `2.00` ).
+
+Precision of up to 16 significant digits.
+
+| Name                       | Allowed values                          | Examples                   |
+|----------------------------|-----------------------------------------|----------------------------|
+| decimal indicator          | `.`                                     | `12.56`, `50.000`          |
+| leading sign               | `+`(default) or `-`                     | `12.56`, `+5.00`, `-12`    |
+| leading and trailing zeros | `0` (optional)                          | `12.56`, `0012`, `12.5600` |
+| exponent                   | `E<sign><decimal digits>`               | `5E10`, `12.56E-3`         |
+| special values             | `NaN`, `inf`, `-inf` (case-insensitive) |                            |
+
+: `number` format options
+
+The configuration options `decimalChar`, `groupChar` and `bareNumber` are not yet supported.
+
+### Integer
+
+A whole number with no decimal part.
+
+| Name          | Allowed values | Examples   |
+|---------------|----------------|------------|
+| leading sign  | no sign or `-` | `5`, `-12` |
+| leading zeros | `0` (optional) | `005`      |
+
+: `integer` format options
+
+The configuration options `groupChar` and `bareNumber` are not yet supported.
+
+### Boolean
+
+One of two possible values: true or false.
+
+Sprout supports the default notation for truth values in Frictionless:
+
+-   All values in `["true", "True", "TRUE", "1"]` are interpreted as true.
+-   All values in `["false", "False", "FALSE", "0"]` are interpreted as false.
+
+Setting custom `trueValues` and `falseValues` is not yet supported.
+
+### Datetime
+
+A date with a time and optional timezone.
+
+| Name     | Allowed values                               | Examples                                      |
+|----------|----------------------------------------------|-----------------------------------------------|
+| without milliseconds or timezone | `YYYY-MM-DDTHH:MM:SS`                | `2002-10-12T12:04:15`, `0202-10-10T02:30:00`                   |
+| with milliseconds                | `YYYY-MM-DDTHH:MM:SS.sss`            | `2002-10-12T12:04:15.3`, `0202-10-10T02:30:00.345`             |
+| with timezone                    | `YYYY-MM-DDTHH:MM:SS<sign>HH:MM`     | `2002-10-12T12:04:15+05:00`, `0202-10-10T02:30:00-01:00`       |
+| with milliseconds and timezone   | `YYYY-MM-DDTHH:MM:SS.sss<sign>HH:MM` | `2002-10-12T12:04:15.3+05:00`, `0202-10-10T02:30:00.345-01:00` |
+| shorthand for UTC                | `YYYY-MM-DDTHH:MM:SS(.sss)Z`         | `2002-10-12T12:04:15Z`, `0202-10-10T02:30:00.345Z`             |
+
+: `datetime` format options
+
+**Restrictions:**
+
+-   Setting a custom `datetime` pattern in the `format` property is not yet supported. The `any` format is not supported.
+-   Negative `datetime` values are not supported.
+-   Years with more than 4 digits are not supported.
+-   Mixing `datetime` values with and without a timezone in one column is not allowed.
+-   When `datetime` values in a column have a timezone, they must all have the same timezone.
+
+### Date
+
+A date without a time.
+
+Expected format: `YYYY-MM-DD`.
+
+Example: `2022-12-09`.
+
+**Restrictions:**
+
+-   Setting a custom `date` pattern in the `format` property is not yet supported. The `any` format is not supported.
+-   Negative `date` values are not supported.
+-   Years with more than 4 digits are not supported.
+-   `date` values with a timezone are not supported.
+
+### Time
+
+A time without a date.
+
+| Name                 | Allowed values    | Examples                        |
+|----------------------|-------------------|---------------------------------|
+| without microseconds | `HH:MM:SS`        | `12:04:15`                      |
+| with microseconds    | `HH:MM:SS.ssssss` | `12:04:15.3`, `02:30:00.345345` |
+
+: `time` format options
+
+**Restrictions:**
+
+-   Setting a custom `time` pattern in the `format` property is not yet supported. The `any` format is not supported.
+-   `time` values with a timezone are not supported.
+
+### Year
+
+A calendar year without month or day.
+
+Expected format: `YYYY`. Negative `year` values are allowed.
+
+Examples: `2022`, `-1000`, `0005`.
+
+**Restrictions:**
+
+-   `year` values with a timezone are not supported.
+
+### Yearmonth
+
+A specific month in a specific year.
+
+Expected format: `YYYY-MM`.
+
+Example: `2022-12`.
+
+The underlying representation of `yearmonth` is `date`.
+
+**Restrictions:**
+
+-   Negative `yearmonth` values are not supported.
+-   Years with more than 4 digits are not supported.
+-   `yearmonth` values with a timezone are not supported.
+
+### Duration
+
+A duration of time.
+
+Expected pattern: `PnYnMnDTnHnMnS`. See the [definition of the Frictionless type](https://datapackage.org/standard/table-schema/#duration) for more information.
+
+Example: `P1Y2M3DT10H30M45.343S`.
+
+The number of seconds may include decimal digits to arbitrary precision.
+
+**Restrictions:**
+
+-   The underlying representation of `duration` is `string`. Sprout does not attempt to parse `duration` values into a data type that is aware of the various time units contained within a `duration` value.
+-   As a consequence, constraints relying on the numeric comparison of `duration` values are not supported. These constraints are: `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`.
+
+### Geopoint
+
+A geographic point.
+
+Expected format: `LAT, LONG`. The space is optional.
+
+Examples: `45.50, 90.50`, `45.50,90.50`, `-45.50, -90.50`.
+
+The underlying representation is an array of two `number`s.
+
+**Restrictions:**
+
+-   Other `geopoint` formats are not yet supported.
+
+### Array
+
+A JSON array. Must be well-formed [JSON](http://json.org/).
+
+The underlying representation is `string`.
+
+### Object
+
+A JSON object. Must be well-formed [JSON](http://json.org/).
+
+The underlying representation is `string`.
+
+### Geojson
+
+A JSON object compliant with the [GeoJSON](http://geojson.org/) or [TopoJSON](https://github.com/topojson/topojson-specification/blob/master/README.md) specification.
+
+The underlying representation is `string`.
+
+**Restrictions:**
+
+-   `geojson` values are treated as plain `object`s. They are not checked against the GeoJSON or TopoJSON specification.
+
+### Any
+
+Unspecified or mixed values.
+
+The underlying representation is `string`.
+
+### List
+
+Not supported.
