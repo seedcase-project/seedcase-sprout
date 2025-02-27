@@ -1,0 +1,4 @@
+id,name,salary,avc,yearmonth,date
+2,paul,2.3,true,error,2023-12-12
+3,paul,-inf,1,error,1001-03-09
+4,paul,nan,true,error,-0001-01-01
