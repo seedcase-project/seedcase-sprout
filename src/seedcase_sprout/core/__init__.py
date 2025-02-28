@@ -20,6 +20,7 @@ from .path_package_functions import (
     path_package,
     path_packages,
     path_properties,
+    path_readme,
 )
 from .path_resource_functions import (
     path_resource,
@@ -88,9 +89,10 @@ __all__ = [
     # "delete_resource_data",
     # "delete_resource_properties",
     # Path -----
-    "path_package",
-    "path_properties",
-    "path_packages",
+    path_package,
+    path_packages,
+    path_properties,
+    path_readme,
     "path_resource",
     "path_resource_data",
     "path_resource_raw",
