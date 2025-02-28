@@ -1,8 +1,8 @@
 ---
-title: "Data types supported by Sprout"
+title: "Data types"
+description: "The data types Sprout supports"
 ---
 
-### Overview
 
 Sprout implements the Frictionless Data Package standard and aims to support the [data types](https://datapackage.org/standard/table-schema/#field-types) it defines. However, Sprout not only describes data with metadata but also transforms it into a tidy Parquet file, ready for querying (see [Outputs](/docs/design/interface/outputs.qmd#files) and [Why Parquet](https://decisions.seedcase-project.org/why-parquet/) for more details). As a result, Sprout supports only data types that are compatible (or can be made compatible) with Parquet storage.
 
@@ -28,13 +28,13 @@ Below, we list Frictionless data types as used in Sprout and give a precise defi
 
 : Mappings of Frictionless data types in Sprout
 
-### String
+## String
 
 A sequence of UTF-8 encoded characters.
 
 Supported formats: `default`, `email`, `uri`, `binary`, `uuid`.
 
-### Number
+## Number
 
 A number with or without a decimal part. Precision is not reflected in the number of digits specified in the decimal part (`2.0` is not distinct from `2.00` ).
 
@@ -52,7 +52,7 @@ Precision of up to 16 significant digits.
 
 The configuration options `decimalChar`, `groupChar` and `bareNumber` are not yet supported.
 
-### Integer
+## Integer
 
 A whole number with no decimal part.
 
@@ -65,7 +65,7 @@ A whole number with no decimal part.
 
 The configuration options `groupChar` and `bareNumber` are not yet supported.
 
-### Boolean
+## Boolean
 
 One of two possible values: true or false.
 
@@ -76,7 +76,7 @@ Sprout supports the default notation for truth values in Frictionless:
 
 Setting custom `trueValues` and `falseValues` is not yet supported.
 
-### Datetime
+## Datetime
 
 A date with a time and optional timezone.
 
@@ -98,13 +98,12 @@ A date with a time and optional timezone.
 -   Mixing `datetime` values with and without a timezone in one column is not allowed.
 -   When `datetime` values in a column have a timezone, they must all have the same timezone.
 
-### Date
+## Date
 
 A date without a time.
 
-Expected format: `YYYY-MM-DD`.
-
-Example: `2022-12-09`.
+- Expected format: `YYYY-MM-DD`.
+- Example: `2022-12-09`.
 
 **Restrictions:**
 
@@ -113,7 +112,7 @@ Example: `2022-12-09`.
 -   Years with more than 4 digits are not supported.
 -   `date` values with a timezone are not supported.
 
-### Time
+## Time
 
 A time without a date.
 
@@ -129,25 +128,23 @@ A time without a date.
 -   Setting a custom `time` pattern in the `format` property is not yet supported. The `any` format is not supported.
 -   `time` values with a timezone are not supported.
 
-### Year
+## Year
 
 A calendar year without month or day.
 
-Expected format: `YYYY`. Negative `year` values are allowed.
-
-Examples: `2022`, `-1000`, `0005`.
+- Expected format: `YYYY`. Negative `year` values are allowed.
+- Examples: `2022`, `-1000`, `0005`.
 
 **Restrictions:**
 
 -   `year` values with a timezone are not supported.
 
-### Yearmonth
+## Yearmonth
 
 A specific month in a specific year.
 
-Expected format: `YYYY-MM`.
-
-Example: `2022-12`.
+- Expected format: `YYYY-MM`.
+- Example: `2022-12`.
 
 The underlying representation of `yearmonth` is `date`.
 
@@ -157,13 +154,12 @@ The underlying representation of `yearmonth` is `date`.
 -   Years with more than 4 digits are not supported.
 -   `yearmonth` values with a timezone are not supported.
 
-### Duration
+## Duration
 
 A duration of time.
 
-Expected pattern: `PnYnMnDTnHnMnS`. See the [definition of the Frictionless type](https://datapackage.org/standard/table-schema/#duration) for more information.
-
-Example: `P1Y2M3DT10H30M45.343S`.
+- Expected pattern: `PnYnMnDTnHnMnS`. See the [definition of the Frictionless type](https://datapackage.org/standard/table-schema/#duration) for more information.
+- Example: `P1Y2M3DT10H30M45.343S`.
 
 The number of seconds may include decimal digits to arbitrary precision.
 
@@ -172,13 +168,12 @@ The number of seconds may include decimal digits to arbitrary precision.
 -   The underlying representation of `duration` is `string`. Sprout does not attempt to parse `duration` values into a data type that is aware of the various time units contained within a `duration` value.
 -   As a consequence, constraints relying on the numeric comparison of `duration` values are not supported. These constraints are: `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`.
 
-### Geopoint
+## Geopoint
 
 A geographic point.
 
-Expected format: `LAT, LONG`. The space is optional.
-
-Examples: `45.50, 90.50`, `45.50,90.50`, `-45.50, -90.50`.
+- Expected format: `LAT, LONG`. The space is optional.
+- Examples: `45.50, 90.50`, `45.50,90.50`, `-45.50, -90.50`.
 
 The underlying representation is an array of two `number`s.
 
@@ -186,19 +181,19 @@ The underlying representation is an array of two `number`s.
 
 -   Other `geopoint` formats are not yet supported.
 
-### Array
+## Array
 
 A JSON array. Must be well-formed [JSON](http://json.org/).
 
 The underlying representation is `string`.
 
-### Object
+## Object
 
 A JSON object. Must be well-formed [JSON](http://json.org/).
 
 The underlying representation is `string`.
 
-### Geojson
+## Geojson
 
 A JSON object compliant with the [GeoJSON](http://geojson.org/) or [TopoJSON](https://github.com/topojson/topojson-specification/blob/master/README.md) specification.
 
@@ -208,12 +203,12 @@ The underlying representation is `string`.
 
 -   `geojson` values are treated as plain `object`s. They are not checked against the GeoJSON or TopoJSON specification.
 
-### Any
+## Any
 
 Unspecified or mixed values.
 
 The underlying representation is `string`.
 
-### List
+## List
 
 Not supported.
