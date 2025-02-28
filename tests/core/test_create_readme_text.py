@@ -1,4 +1,4 @@
-from seedcase_sprout.core.create_readme_text import build_readme_text
+from seedcase_sprout.core.build_readme_text import build_readme_text
 from seedcase_sprout.core.properties import (
     ContributorProperties,
     LicenseProperties,
