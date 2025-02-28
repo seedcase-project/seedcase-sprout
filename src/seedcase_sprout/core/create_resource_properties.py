@@ -48,19 +48,23 @@ def create_resource_properties(
             temp_path = Path(temp_dir)
 
             # Create a package and resource structure first
-            sp.create_package_structure(path=temp_path)
-            sp.create_resource_structure(path=temp_path / "1" / "resources")
-
-            # Create resource properties
-            sp.create_resource_properties(
-                path=temp_path / "1" / "resources" / "1",
-                properties=sp.ResourceProperties(
-                    name="new-resource-name",
-                    path="data.parquet",
-                    title="Resource Title",
-                    description="This resource contains data about...",
-                ),
+            sp.create_package_properties(
+                properties=sp.example_package_properties(),
+                path=temp_path
             )
+
+            # TODO: Update after converting to "local-first"
+            # sp.create_resource_structure(path=temp_path / "1" / "resources")
+            # Create resource properties
+            # sp.create_resource_properties(
+            #     path=temp_path / "1" / "resources" / "1",
+            #     properties=sp.ResourceProperties(
+            #         name="new-resource-name",
+            #         path="data.parquet",
+            #         title="Resource Title",
+            #         description="This resource contains data about...",
+            #     ),
+            # )
         ```
     """
     check_is_dir(path)

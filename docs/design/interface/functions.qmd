@@ -27,23 +27,6 @@ are the core external-facing functions in Sprout. See the
 [Outputs](outputs.qmd) section for an overview and explanation of the
 different outputs provided by Sprout.
 
-There are some small differences between the naming scheme and the
-functions described here:
-
-1.  `edit` only ever edits the `datapackage.json` which contains the
-    properties/metadata of the package or resource(s) but never edits
-    the data itself. If there is a need for updates to the data itself,
-    the user can update it by uploading a new file with the updates (as
-    long as the primary keys like participant ID and time of collection
-    are the same). We don't provide access for users to directly edit
-    the data because we want to limit security risks as well as to
-    maintain privacy and legal compliance.
-2.  `add` only ever adds more data to an existing data resource and does
-    not add any new metadata to the `datapackage.json`. Since Sprout
-    contains the full Frictionless Data specification, using `edit` is
-    enough to make updates to the existing properties found in the
-    `datapackage.json` file.
-
 Nearly all functions have a `path` argument. Depending on what the
 function does, the path object will be different. Use the `path_*()`
 functions to get the correct path object for the specific function. It's
@@ -64,16 +47,28 @@ Functions shown with a {{< var wip >}} icon are not yet implemented
 while those with a {{< var done >}} icon are implemented.
 :::
 
+::: callout-caution
+For some reason, the diagrams below don't display well on some browsers like
+Firefox. To see them, try using a different browser like Chrome or Edge.
+:::
+
 ## Data package functions
 
 ### {{< var wip >}} `create_package_properties(properties, path)`
 
-This is the first function to use to create a new data package. It
-generates a template for the `datapackage.json` file where the user
-needs to fill in required fields by providing the `properties` argument
-using the helper `PackageProperties` class. Outputs a full Properties
-object. Use `write_package_properties()` to store the properties to the
-`datapackage.json` file.
+See the help documentation with `help(create_package_properties)` for
+more details.
+
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    in_path[/path/]
+    function("create_package_properties()")
+    out[("{path}/datapackage.json")]
+    in_properties --> function
+    in_path --> function
+    function --> out
+```
 
 ### {{< var wip >}} `build_readme_text(properties)`
 
@@ -81,10 +76,30 @@ Using a template, this will build a README file with the contents of the
 properties object in a human-readable format. Outputs a text string. Use
 `write_text()` to save the text to the `README.md` file.
 
-### {{< var done >}} `edit_package_properties(path, properties)`
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    function("build_readme_text()")
+    out[("str")]
+    in_properties --> function
+    function --> out
+```
 
-See the help documentation with `help(edit_package_properties())` for
+### {{< var done >}} `update_package_properties(path, properties)`
+
+See the help documentation with `help(update_package_properties())` for
 more details.
+
+```{mermaid}
+flowchart
+    in_path[/path/]
+    in_properties[/properties/]
+    function("update_package_properties()")
+    out[("PackageProperties")]
+    in_path --> function
+    in_properties --> function
+    function --> out
+```
 
 ### {{< var wip >}} `delete_package(path, confirm)`
 
@@ -101,15 +116,35 @@ more details.
 
 ## Data resource functions
 
-### {{< var done >}} `create_resource_structure(path)`
+### {{< var done >}} `create_resource_dirs(path)`
 
-See the help documentation with `help(create_resource_structure)` for
+See the help documentation with `help(create_resource_dirs)` for
 more details.
 
-### {{< var done >}} `create_resource_properties(path, properties)`
+```{mermaid}
+flowchart
+    in_path[/path/]
+    function("create_resource_dirs()")
+    out[("{path}/resources/{id}/<br>{path}/resources/{id}/raw/")]
+    in_path --> function
+    function --> out
+```
+
+### {{< var done >}} `create_resource_properties(resource_properties, path)`
 
 See the help documentation with `help(create_resource_properties)` for
 more details.
+
+```{mermaid}
+flowchart
+    in_properties[/resource_properties/]
+    in_path[/path/]
+    function("create_resource_properties()")
+    out[("{path}/datapackage.json")]
+    in_properties --> function
+    in_path --> function
+    function --> out
+```
 
 ### {{< var wip >}} `write_resource_data_to_raw(data_path, resource_properties)`
 
@@ -127,30 +162,57 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `build_resource_parquet(raw_files_path, resource_properties)`
+### {{< var wip >}} `build_resource_data(raw_files_path, resource_properties)`
 
-See the help documentation with `help(build_resource_parquet)` for more
+See the help documentation with `help(build_resource_data)` for more
 details.
 
 ```{mermaid}
 flowchart
     in_raw_files_path[/raw_files_path/]
     in_properties[/resource_properties/]
-    function("build_resource_parquet()")
-    out[("./resources/{id}/data.parquet")]
+    function("build_resource_data()")
+    out[("Polars<br>DataFrame")]
     in_raw_files_path --> function
     in_properties --> function
     function --> out
 ```
 
-### {{< var wip >}} `edit_resource_properties(path, properties)`
+### {{< var wip >}} `write_resource_parquet(data, resource_properties)`
+
+See the help documentation with `help(write_parquet)` for more
+details.
+
+```{mermaid}
+flowchart
+    in_data[/data/]
+    in_properties[/resource_properties/]
+    function("write_resource_parquet()")
+    out[("./resources/{id}/data.parquet")]
+    in_data --> function
+    in_properties --> function
+    function --> out
+```
+
+### {{< var wip >}} `update_resource_properties(path, resource_properties)`
 
 Edit the properties of a resource in a package. The `properties`
-argument must be a JSON object that follows the Frictionless Data
-specification. Use the `path_properties()` function to provide the
-correct path location. Outputs a JSON object only; use
-`write_resource_properties()` to save the JSON object to the
+argument must be a `ResourceProperties` object. Use the
+`path_properties()` function to provide the
+correct path location. Outputs a `ResourceProperties` object; use
+`write_resource_properties()` to save the properties object to the
 `datapackage.json` file.
+
+```{mermaid}
+flowchart
+    in_path[/path/]
+    in_properties[/resource_properties/]
+    function("update_resource_properties()")
+    out[("ResourceProperties")]
+    in_path --> function
+    in_properties --> function
+    function --> out
+```
 
 ### {{< var wip >}} `delete_resource_raw_file(path, confirm)`
 
@@ -173,7 +235,7 @@ is done to prevent accidental deletion. Outputs `true` if the deletion
 was successful. Use `delete_resource_properties()` to delete the the
 associated properties/metadata for the resource.
 
-### {{< var wip >}} `delete_resource_properties(path, confirm)`
+### {{< var wip >}} `delete_resource_properties(path, resource_id, confirm)`
 
 Deletes all properties for a resource within the `datapackage.json`
 file. Use `path_properties()` to provide the correct location for
@@ -182,15 +244,35 @@ needs to explicitly provide `true` to the function argument as
 confirmation. This is done to prevent accidental deletion. Outputs
 `true` if the deletion was successful.
 
-### {{< var done >}} `write_resource_properties(properties, path)`
+### {{< var done >}} `write_resource_properties(resource_properties, path)`
 
 See the help documentation with `help(write_resource_properties)` for
 more details.
+
+```{mermaid}
+flowchart
+    in_properties[/resource_properties/]
+    in_path[/path/]
+    function("write_resource_properties()")
+    out[("{path}/datapackage.json")]
+    in_properties --> function
+    in_path --> function
+    function --> out
+```
 
 ### {{< var done >}} `extract_resource_properties(data_path)`
 
 See the help documentation with `help(extract_resource_properties)` for
 more details.
+
+```{mermaid}
+flowchart
+    in_data_path[/data_path/]
+    function("extract_resource_properties()")
+    out[("ResourceProperties")]
+    in_data_path --> function
+    function --> out
+```
 
 ## Path functions
 
