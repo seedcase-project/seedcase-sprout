@@ -26,19 +26,15 @@ Below, we list Frictionless data types as used in Sprout and give a precise defi
 | `array`      | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
 | `any`        | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
 
-: Mappings of Frictionless data types in Sprout
+: Mappings of Frictionless data types in Sprout.
 
 ## String
 
-A sequence of UTF-8 encoded characters.
-
-Supported formats: `default`, `email`, `uri`, `binary`, `uuid`.
+A sequence of UTF-8 encoded characters. Supported formats: `default`, `email`, `uri`, `binary`, `uuid`.
 
 ## Number
 
-A number with or without a decimal part. Precision is not reflected in the number of digits specified in the decimal part (`2.0` is not distinct from `2.00` ).
-
-Precision of up to 16 significant digits.
+A number with or without a decimal part. Precision is not reflected in the number of digits specified in the decimal part (`2.0` is not distinct from `2.00` ). Precision goes up to 16 significant digits.
 
 | Name                       | Allowed values                          | Examples                   |
 |----------------------------|-----------------------------------------|----------------------------|
@@ -48,7 +44,7 @@ Precision of up to 16 significant digits.
 | exponent                   | `E<sign><decimal digits>`               | `5E10`, `12.56E-3`         |
 | special values             | `NaN`, `inf`, `-inf` (case-insensitive) |                            |
 
-: `number` format options
+: `number` format options.
 
 The configuration options `decimalChar`, `groupChar` and `bareNumber` are not yet supported.
 
@@ -61,15 +57,13 @@ A whole number with no decimal part.
 | leading sign  | no sign or `-` | `5`, `-12` |
 | leading zeros | `0` (optional) | `005`      |
 
-: `integer` format options
+: `integer` format options.
 
 The configuration options `groupChar` and `bareNumber` are not yet supported.
 
 ## Boolean
 
-One of two possible values: true or false.
-
-Sprout supports the default notation for truth values in Frictionless:
+One of two possible values: true or false. Sprout supports the default notation for truth values in Frictionless:
 
 -   All values in `["true", "True", "TRUE", "1"]` are interpreted as true.
 -   All values in `["false", "False", "FALSE", "0"]` are interpreted as false.
@@ -88,7 +82,7 @@ A date with a time and optional timezone.
 | with milliseconds and timezone   | `YYYY-MM-DDTHH:MM:SS.sss<sign>HH:MM` | `2002-10-12T12:04:15.3+05:00`, `0202-10-10T02:30:00.345-01:00` |
 | shorthand for UTC                | `YYYY-MM-DDTHH:MM:SS(.sss)Z`         | `2002-10-12T12:04:15Z`, `0202-10-10T02:30:00.345Z`             |
 
-: `datetime` format options
+: `datetime` format options.
 
 **Restrictions:**
 
@@ -121,7 +115,7 @@ A time without a date.
 | without microseconds | `HH:MM:SS`        | `12:04:15`                      |
 | with microseconds    | `HH:MM:SS.ssssss` | `12:04:15.3`, `02:30:00.345345` |
 
-: `time` format options
+: `time` format options.
 
 **Restrictions:**
 
@@ -183,21 +177,15 @@ The underlying representation is an array of two `number`s.
 
 ## Array
 
-A JSON array. Must be well-formed [JSON](http://json.org/).
-
-The underlying representation is `string`.
+A JSON array. Must be well-formed [JSON](http://json.org/). The underlying representation is `string`.
 
 ## Object
 
-A JSON object. Must be well-formed [JSON](http://json.org/).
-
-The underlying representation is `string`.
+A JSON object. Must be well-formed [JSON](http://json.org/). The underlying representation is `string`.
 
 ## Geojson
 
-A JSON object compliant with the [GeoJSON](http://geojson.org/) or [TopoJSON](https://github.com/topojson/topojson-specification/blob/master/README.md) specification.
-
-The underlying representation is `string`.
+A JSON object compliant with the [GeoJSON](http://geojson.org/) or [TopoJSON](https://github.com/topojson/topojson-specification/blob/master/README.md) specification. The underlying representation is `string`.
 
 **Restrictions:**
 
@@ -205,9 +193,7 @@ The underlying representation is `string`.
 
 ## Any
 
-Unspecified or mixed values.
-
-The underlying representation is `string`.
+Unspecified or mixed values. The underlying representation is `string`.
 
 ## List
 
