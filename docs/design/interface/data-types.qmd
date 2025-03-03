@@ -26,7 +26,7 @@ Below, we list Frictionless data types as used in Sprout and give a precise defi
 | `array`      | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
 | `any`        | `String`            | `string`                     | `BYTE_ARRAY` (String)  |
 
-: Mappings of Frictionless data types in Sprout.
+: Mappings of Frictionless data types in Sprout. In the Parquet column, first the [primitive type](https://parquet.apache.org/docs/file-format/types/) is given, then the [logical type](https://github.com/apache/parquet-format/blob/master/LogicalTypes.md) in brackets, if relevant.
 
 ## String
 
@@ -161,6 +161,13 @@ The number of seconds may include decimal digits to arbitrary precision.
 
 -   The underlying representation of `duration` is `string`. Sprout does not attempt to parse `duration` values into a data type that is aware of the various time units contained within a `duration` value.
 -   As a consequence, constraints relying on the numeric comparison of `duration` values are not supported. These constraints are: `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`.
+
+::: callout-tip
+If you are working with duration or interval values, you could consider converting them to a form that Sprout can parse and compare numerically. Here are some suggestions:
+
+-   If your intervals have start and end points, you could represent them using two `date`, `time` or `datetime` columns. For example, a column called `<column_name>_start` for the beginning of the interval and a column called `<column_name>_end` for the end of the interval.
+-   If it doesn't make sense to represent your duration values as intervals between start and end points, you could represent them as plain `integer`s or `number`s. For example, by calculating the number of days, hours, seconds, milliseconds, etc. that make up your durations.
+:::
 
 ## Geopoint
 
