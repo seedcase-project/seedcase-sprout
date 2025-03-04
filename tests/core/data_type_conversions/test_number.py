@@ -51,6 +51,8 @@ arrow_contents = pq.read_table(parquet_path).column(col_name).to_pylist()
 polars_schema = {col_name: pl.Float64}
 polars_df = pl.DataFrame({col_name: values}).cast(polars_schema)
 polars_df.write_parquet(parquet_path)
+
+# Check contents
 parquet_file = pq.ParquetFile(parquet_path)
 print(parquet_file.schema)
 polars_contents = pq.read_table(parquet_path).column(col_name).to_pylist()

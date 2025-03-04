@@ -52,6 +52,8 @@ polars_df = polars_df.with_columns(
     # .dt.convert_time_zone(time_zone="Africa/Algiers")
 )
 polars_df.write_parquet(parquet_path)
+
+# Check contents
 parquet_file = pq.ParquetFile(parquet_path)
 print(parquet_file.schema)
 polars_contents = pq.read_table(parquet_path).column(col_name).to_pylist()
@@ -59,4 +61,3 @@ polars_contents = [str(d) for d in polars_contents]
 print(polars_contents)
 
 print(str(arrow_contents) == str(polars_contents))
-# print(differ)

@@ -34,11 +34,10 @@ print(arrow_contents)
 # via Polars
 polars_schema = {col_name: pl.String}
 polars_df = pl.DataFrame({col_name: values}).cast(polars_schema)
-# polars_df = polars_df.with_columns(
-#     pl.col(col_name).str.replace(", ", ",").str.split(",")
-# ).cast(polars_schema)
 print(polars_df)
 polars_df.write_parquet(parquet_path)
+
+# Check contents
 parquet_file = pq.ParquetFile(parquet_path)
 print(parquet_file.schema)
 polars_contents = pq.read_table(parquet_path).column(col_name).to_pylist()

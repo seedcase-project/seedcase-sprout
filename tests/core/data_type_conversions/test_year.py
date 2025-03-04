@@ -6,16 +6,17 @@ import pyarrow.parquet as pq
 
 parquet_path = "test.parquet"
 values = [
-    "abc",
-    "Ἔργα καὶ Ἡμέραι",
-    "0xC0",
-    "🔥",
+    "0005",
+    "5000",
+    "500099",
+    "-500099",
+    # "5", << need to check this if you want to disallow
 ]
-fr_type = "integer"
+fr_type = "year"
 col_name = f"my_{fr_type}"
 
 # Direct to arrow
-arrow_type = pa.string()
+arrow_type = pa.int32()
 
 schema = pa.schema([(col_name, arrow_type)])
 arrow_table = pa.table({col_name: values}).cast(schema)
@@ -28,9 +29,11 @@ arrow_contents = pq.read_table(parquet_path).column(col_name).to_pylist()
 print(arrow_contents)
 
 # via Polars
-polars_schema = {col_name: pl.String}
+polars_schema = {col_name: pl.Int32}
 polars_df = pl.DataFrame({col_name: values}).cast(polars_schema)
 polars_df.write_parquet(parquet_path)
+
+# Check contents
 parquet_file = pq.ParquetFile(parquet_path)
 print(parquet_file.schema)
 polars_contents = pq.read_table(parquet_path).column(col_name).to_pylist()
