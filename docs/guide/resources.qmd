@@ -66,7 +66,7 @@ with open(raw_data_path, "r") as f:
     print(f.read())
 ```
 
-If you want to follow this guide with the same data, you can find it [here](). 
+If you want to follow this guide with the same data, you can find it [here]().
 We'll save this data in a path called `raw_data_path`:
 
 ```{python}
