@@ -19,11 +19,11 @@ from .example_package_properties import example_package_properties
 from .path_global import (
     path_package,
     path_packages,
-    path_properties,
-    path_readme,
     path_sprout_global,
 )
 from .path_local import (
+    path_properties,
+    path_readme,
     path_resource,
     path_resource_data,
     path_resource_raw,

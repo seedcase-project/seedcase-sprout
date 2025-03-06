@@ -12,7 +12,6 @@ from pathlib import Path
 from platformdirs import user_data_path
 
 from seedcase_sprout.core.check_is_dir import check_is_dir
-from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.check_is_package_dir import check_is_package_dir
 from seedcase_sprout.core.create_dirs import create_dir
 
@@ -56,41 +55,6 @@ def path_package(package_id: int) -> Path:
     return check_is_package_dir(path)
 
 
-def path_properties(package_id: int) -> Path:
-    """Gets the absolute path to the specified package's properties file.
-
-    Args:
-        package_id: The ID of the package.
-
-    Returns:
-        The absolute path to the specified package's properties file.
-
-    Examples:
-        ```{python}
-        import os
-        import tempfile
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
-
-            # Create a package structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=sp.path_packages()
-            )
-
-            # TODO: Need to modify after revising to "local-first"
-            # Get the path to the package properties
-            # sp.path_properties(package_id=1)
-        ```
-    """
-    path = path_package(package_id) / "datapackage.json"
-    return check_is_file(path)
-
-
 def path_packages() -> Path:
     """Get the paths for all packages in Sprout's global location.
 
@@ -120,41 +84,6 @@ def path_packages() -> Path:
     """
     path = path_sprout_global() / "packages"
     return create_dir(path) if not path.exists() else check_is_dir(path)
-
-
-def path_readme(package_id: int) -> Path:
-    """Get the path to the README file for the specified package.
-
-    Args:
-        package_id: The ID of the package.
-
-    Returns:
-        The absolute path to the README file.
-
-    Examples:
-        ```{python}
-        import os
-        import tempfile
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
-
-            # Create a package structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=sp.path_packages()
-            )
-
-            # TODO: Need to modify after revising to "local-first"
-            # Get the path to the package README
-            # sp.path_readme(package_id=1)
-        ```
-    """
-    path = path_package(package_id=package_id) / "README.md"
-    return check_is_file(path)
 
 
 def path_sprout_global() -> Path:

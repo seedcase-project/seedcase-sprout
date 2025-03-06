@@ -1,7 +1,9 @@
-"""This module contains functions to get the paths to data resources and their files.
+"""This module contains functions to get the paths to various data package files.
 
 They are intended to be used in conjunction with other functions to read, write, and
-edit the contents and properties of resources.
+edit the contents and properties of various files within a data package. Specifically,
+they are used in the context of a data package stored in the working directory ("local"
+first approach).
 """
 
 from pathlib import Path
@@ -10,6 +12,76 @@ from seedcase_sprout.core import path_package
 from seedcase_sprout.core.check_is_dir import check_is_dir
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.check_is_resource_dir import check_is_resource_dir
+
+
+def path_properties(package_id: int) -> Path:
+    """Gets the absolute path to the specified package's properties file.
+
+    Args:
+        package_id: The ID of the package.
+
+    Returns:
+        The absolute path to the specified package's properties file.
+
+    Examples:
+        ```{python}
+        import os
+        import tempfile
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
+
+            # Create a package structure first
+            sp.create_package_properties(
+                properties=sp.example_package_properties(),
+                path=sp.path_packages()
+            )
+
+            # TODO: Need to modify after revising to "local-first"
+            # Get the path to the package properties
+            # sp.path_properties(package_id=1)
+        ```
+    """
+    path = path_package(package_id) / "datapackage.json"
+    return check_is_file(path)
+
+
+def path_readme(package_id: int) -> Path:
+    """Get the path to the README file for the specified package.
+
+    Args:
+        package_id: The ID of the package.
+
+    Returns:
+        The absolute path to the README file.
+
+    Examples:
+        ```{python}
+        import os
+        import tempfile
+
+        import seedcase_sprout.core as sp
+
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.environ["SPROUT_GLOBAL"] = temp_dir
+
+            # Create a package structure first
+            sp.create_package_properties(
+                properties=sp.example_package_properties(),
+                path=sp.path_packages()
+            )
+
+            # TODO: Need to modify after revising to "local-first"
+            # Get the path to the package README
+            # sp.path_readme(package_id=1)
+        ```
+    """
+    path = path_package(package_id=package_id) / "README.md"
+    return check_is_file(path)
 
 
 def path_resource(package_id: int, resource_id: int) -> Path:

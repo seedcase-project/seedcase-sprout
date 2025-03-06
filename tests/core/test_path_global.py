@@ -6,8 +6,6 @@ from pytest import fixture, mark, raises
 from seedcase_sprout.core import (
     path_package,
     path_packages,
-    path_properties,
-    path_readme,
     path_sprout_global,
 )
 from seedcase_sprout.core.path_global import (
@@ -33,8 +31,6 @@ def tmp_sprout_global(monkeypatch, tmp_path):
     "function, expected_path",
     [
         (path_package, "packages/1"),
-        (path_properties, "packages/1/datapackage.json"),
-        (path_readme, "packages/1/README.md"),
     ],
 )
 def test_path_package_functions_return_expected_path(
@@ -47,7 +43,7 @@ def test_path_package_functions_return_expected_path(
 
 @mark.parametrize(
     "function",
-    [path_package, path_properties, path_readme],
+    [path_package],
 )
 def test_path_package_functions_raise_error_if_package_id_does_not_exist(
     tmp_sprout_global, function
