@@ -6,14 +6,7 @@ from seedcase_sprout.core.properties import (
     ResourceProperties,
 )
 from seedcase_sprout.core.sprout_checks.check_column_data_types import (
-    check_is_boolean,
-    check_is_castable_type,
-    check_is_date,
-    check_is_datetime,
-    check_is_geopoint,
-    check_is_json,
-    check_is_time,
-    check_is_yearmonth,
+    FRICTIONLESS_TO_COLUMN_CHECK,
 )
 from seedcase_sprout.core.sprout_checks.get_field_error_message import (
     get_field_error_message,
@@ -22,7 +15,7 @@ from seedcase_sprout.core.sprout_checks.get_field_error_message import (
 # Column name for column containing the row index
 INDEX_COLUMN = "__row_index__"
 # Column name for column containing the result of the check
-CHECK_COLUMN_NAME = "{column}_error"
+CHECK_COLUMN_NAME = "{column}_correct"
 
 
 def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProperties):
@@ -77,35 +70,35 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
     return data_frame
 
 
-def extract_failed_values(this_column: pl.Expr, field_name: str) -> pl.Expr:
+def extract_failed_values(check_result: pl.Expr, field_name: str) -> pl.Expr:
     """Adds a short error message for each value that failed the data type check.
 
     The error message includes the index of the row and the incorrect value itself.
 
     Args:
-        this_column: The column being operated on.
+        check_result: The column containing the result of the check.
         field_name: The name of the field to check.
 
     Returns:
         A Polars expression.
     """
     return (
-        pl.when(this_column.is_null())
-        .then(
+        pl.when(check_result)
+        .then(pl.lit(None))
+        .otherwise(
             pl.format(
                 "[{}]: '{}'",
                 pl.col(INDEX_COLUMN),
                 pl.col(field_name),
             )
         )
-        .otherwise(pl.lit(None))
     )
 
 
 def check_column(data_frame: pl.DataFrame, field: FieldProperties) -> pl.Expr:
     """Checks that the values in the given column/field are of the correct type.
 
-    This function selects and returns the appropriate check expression for the field
+    This function constructs the appropriate check expression for the field
     based on the field's type.
 
     Args:
@@ -116,34 +109,14 @@ def check_column(data_frame: pl.DataFrame, field: FieldProperties) -> pl.Expr:
         A Polars expression for checking the data type of values in the column.
     """
     field_name, field_type = field.name, field.type
-    match field_type:
-        case "boolean":
-            return check_is_boolean(field_name)
-
-        case "integer" | "number" | "year":
-            return check_is_castable_type(field_name, field.type)
-
-        case "yearmonth":
-            return check_is_yearmonth(field_name)
-
-        case "datetime":
-            return check_is_datetime(data_frame, field_name)
-
-        case "date":
-            return check_is_date(field_name)
-
-        case "time":
-            return check_is_time(field_name)
-
-        case "geopoint":
-            return check_is_geopoint(field_name)
-
-        case "array":
-            return check_is_json(field_name, list)
-
-        case "object" | "geojson":
-            return check_is_json(field_name, dict)
-
-        # Catches: string, any, duration
-        case _:
-            return pl.col(field_name)
+    check = FRICTIONLESS_TO_COLUMN_CHECK[field_type]
+    return (
+        pl.col(field_name)
+        .is_null()
+        .or_(
+            check(data_frame, field_name)
+            if field_type == "datetime"
+            else check(field_name)
+        )
+        .cast(pl.Boolean)
+    )
