@@ -159,7 +159,7 @@ data package.
 
 If you are making and managing data packages in a multi-user server
 environment that will have or has multiple data packages, there are some
-very small changes you can make to creating and managing packages. Since 
+very small changes you can make to creating and managing packages. Since
 all the functions to create and manage data packages in Sprout take the `path` as an argument, they can run in any directory. With that in
 mind, we have a series of helper path functions that can be used to
 point to a "global" Sprout storage location.
