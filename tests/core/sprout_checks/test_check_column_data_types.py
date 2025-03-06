@@ -14,11 +14,11 @@ from seedcase_sprout.core.sprout_checks.check_column_data_types import (
 )
 
 # Boolean
-boolean_bad_values = ["", "yes", "maybe", "99"]
-boolean_good_values = list(BOOLEAN_VALUES)
+BOOLEAN_BAD_VALUES = ["", "yes", "maybe", "99"]
+BOOLEAN_GOOD_VALUES = list(BOOLEAN_VALUES)
 
 # Yearmonth
-yearmonth_bad_values = [
+YEARMONTH_BAD_VALUES = [
     "",
     "2002/10",
     "2002-10-10",
@@ -31,10 +31,10 @@ yearmonth_bad_values = [
     "10001-11",
     "10-13",
 ]
-yearmonth_good_values = ["2014-12", "0001-01", "0000-01"]
+YEARMONTH_GOOD_VALUES = ["2014-12", "0001-01", "0000-01"]
 
 # Date
-date_bad_values = [
+DATE_BAD_VALUES = [
     "",
     "-0001-01-01",
     "--0001-01-01",
@@ -47,10 +47,10 @@ date_bad_values = [
     "20022-02-02",
     "2002-02-02T06:00:00",
 ]
-date_good_values = ["2002-10-10", "0001-01-01", "0000-01-01"]
+DATE_GOOD_VALUES = ["2002-10-10", "0001-01-01", "0000-01-01"]
 
 # Time
-time_bad_values = [
+TIME_BAD_VALUES = [
     "15:00:69",
     "-15:00:00",
     "2002-10-10T12:00:00",
@@ -61,7 +61,7 @@ time_bad_values = [
     "12:00:00-05:00",
     "12:00:00.34-05:00",
 ]
-time_good_values = [
+TIME_GOOD_VALUES = [
     "15:00:59",
     "00:00:00",
     "12:00:00.3",
@@ -69,12 +69,12 @@ time_good_values = [
 ]
 
 # Integer, Year
-integer_bad_values = ["", "12.23", "abc", "2E3", "INF", "NAN"]
-integer_good_values = ["12223", "-123", "+4", "000"]
+INTEGER_BAD_VALUES = ["", "12.23", "abc", "2E3", "INF", "NAN"]
+INTEGER_GOOD_VALUES = ["12223", "-123", "+4", "000"]
 
 # Number
-number_bad_values = ["", "abc", "++4", "2,00"]
-number_good_values = [
+NUMBER_BAD_VALUES = ["", "abc", "++4", "2,00"]
+NUMBER_GOOD_VALUES = [
     "123",
     "123.123",
     "-23",
@@ -93,7 +93,7 @@ number_good_values = [
 ]
 
 # Geopoint
-geopoint_bad_values = [
+GEOPOINT_BAD_VALUES = [
     "",
     "45",
     "5 45",
@@ -106,7 +106,7 @@ geopoint_bad_values = [
     "NAN",
     "INF",
 ]
-geopoint_good_values = [
+GEOPOINT_GOOD_VALUES = [
     "90, 180",
     "-90, -180",
     "0, 0",
@@ -116,49 +116,49 @@ geopoint_good_values = [
 ]
 
 # Array, Object, Geojson
-array_good_values = [
+ARRAY_GOOD_VALUES = [
     "[]",
     '[{"prop1": "value"}, {"prop2": 123}]',
 ]
-object_good_values = [
+OBJECT_GOOD_VALUES = [
     "{}",
     '{"outer": "value", "inner": {"prop1": 123, "prop2": [1, 2, null], "prop3": true}}',
 ]
-object_bad_values = ["not,json,,"] + array_good_values
-array_bad_values = ["not,json,,"] + object_good_values
+OBJECT_BAD_VALUES = ["not,json,,"] + ARRAY_GOOD_VALUES
+ARRAY_BAD_VALUES = ["not,json,,"] + OBJECT_GOOD_VALUES
 
 
 @mark.parametrize(
     "bad_values, good_values, check_fn",
     [
-        (boolean_bad_values, boolean_good_values, check_is_boolean),
-        (yearmonth_bad_values, yearmonth_good_values, check_is_yearmonth),
-        (date_bad_values, date_good_values, check_is_date),
-        (time_bad_values, time_good_values, check_is_time),
-        (geopoint_bad_values, geopoint_good_values, check_is_geopoint),
+        (BOOLEAN_BAD_VALUES, BOOLEAN_GOOD_VALUES, check_is_boolean),
+        (YEARMONTH_BAD_VALUES, YEARMONTH_GOOD_VALUES, check_is_yearmonth),
+        (DATE_BAD_VALUES, DATE_GOOD_VALUES, check_is_date),
+        (TIME_BAD_VALUES, TIME_GOOD_VALUES, check_is_time),
+        (GEOPOINT_BAD_VALUES, GEOPOINT_GOOD_VALUES, check_is_geopoint),
         (
-            integer_bad_values,
-            integer_good_values,
+            INTEGER_BAD_VALUES,
+            INTEGER_GOOD_VALUES,
             lambda col: check_is_castable_type(col, "integer"),
         ),
         (
-            integer_bad_values,
-            integer_good_values,
+            INTEGER_BAD_VALUES,
+            INTEGER_GOOD_VALUES,
             lambda col: check_is_castable_type(col, "year"),
         ),
         (
-            number_bad_values,
-            number_good_values,
+            NUMBER_BAD_VALUES,
+            NUMBER_GOOD_VALUES,
             lambda col: check_is_castable_type(col, "number"),
         ),
         (
-            array_bad_values,
-            array_good_values,
+            ARRAY_BAD_VALUES,
+            ARRAY_GOOD_VALUES,
             lambda col: check_is_json(col, list),
         ),
         (
-            object_bad_values,
-            object_good_values,
+            OBJECT_BAD_VALUES,
+            OBJECT_GOOD_VALUES,
             lambda col: check_is_json(col, dict),
         ),
     ],
@@ -183,7 +183,7 @@ def test_check_data_type(bad_values, good_values, check_fn):
 
 
 # Datetime
-datetime_bad_values_when_timezone = [
+DATETIME_BAD_VALUES_WHEN_TIMEZONE = [
     "",
     "2002-10-10T12:00:00",
     "2002-10-10T12:00:00",
@@ -200,7 +200,7 @@ datetime_bad_values_when_timezone = [
     "4",
     "abc",
 ]
-datetime_good_values_when_timezone = [
+DATETIME_GOOD_VALUES_WHEN_TIMEZONE = [
     "2002-10-10T12:00:00+01:00",
     "2002-10-10T12:00:40-05:00",
     "2002-10-10T12:00:00.34Z",
@@ -209,7 +209,7 @@ datetime_good_values_when_timezone = [
     "0000-01-01T00:00:00Z",
 ]
 
-datetime_bad_values_when_no_timezone = [
+DATETIME_BAD_VALUES_WHEN_NO_TIMEZONE = [
     "",
     "2002-10-10T12:00:00+01:00",
     "2002-10-10T12:00:40-05:00",
@@ -227,7 +227,7 @@ datetime_bad_values_when_no_timezone = [
     "4",
     "abc",
 ]
-datetime_good_values_when_no_timezone = [
+DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE = [
     "2002-10-10T12:44:10",
     "2002-10-10T12:00:00.34",
     "0000-01-01T00:00:00",
@@ -239,24 +239,24 @@ datetime_good_values_when_no_timezone = [
     [
         (None, [None], []),
         (
-            datetime_good_values_when_timezone[0],
-            datetime_good_values_when_timezone,
-            datetime_bad_values_when_timezone,
+            DATETIME_GOOD_VALUES_WHEN_TIMEZONE[0],
+            DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
+            DATETIME_BAD_VALUES_WHEN_TIMEZONE,
         ),
         (
-            datetime_good_values_when_no_timezone[0],
-            datetime_good_values_when_no_timezone,
-            datetime_bad_values_when_no_timezone,
+            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE[0],
+            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
+            DATETIME_BAD_VALUES_WHEN_NO_TIMEZONE,
         ),
         (
             None,
-            datetime_good_values_when_no_timezone,
-            datetime_good_values_when_timezone,
+            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
+            DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
         ),
         (
             "abc",
-            datetime_good_values_when_no_timezone,
-            datetime_good_values_when_timezone,
+            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
+            DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
         ),
     ],
 )
