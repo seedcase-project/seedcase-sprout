@@ -29,9 +29,9 @@ print(arrow_contents)
 # via Polars
 polars_schema = {col_name: pl.Int64}
 polars_df = pl.DataFrame({col_name: values}).cast(polars_schema)
+polars_df.write_parquet(parquet_path)
 
 # Check contents
-polars_df.write_parquet(parquet_path)
 parquet_file = pq.ParquetFile(parquet_path)
 print(parquet_file.schema)
 polars_contents = pq.read_table(parquet_path).column(col_name).to_pylist()
