@@ -6,7 +6,7 @@ jupyter: python3
 
 At the core of Sprout is the
 [{{< glossary "data package">}}](../glossary.qmd), which is a
-standardized way of structuring and sharing data. This guide will show
+standardized way of structuring and documenting data. This guide will show
 you how to create and manage data packages using Sprout.
 
 {{< include _preamble.qmd >}}
