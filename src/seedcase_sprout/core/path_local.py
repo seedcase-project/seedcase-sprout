@@ -8,278 +8,283 @@ first approach).
 
 from pathlib import Path
 
-from seedcase_sprout.core import path_package
 from seedcase_sprout.core.check_is_dir import check_is_dir
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.check_is_resource_dir import check_is_resource_dir
 
 
-def path_properties(package_id: int) -> Path:
+def path_properties(path: Path = Path.cwd()) -> Path:
     """Gets the absolute path to the specified package's properties file.
 
     Args:
-        package_id: The ID of the package.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        The absolute path to the specified package's properties file.
+        The absolute path to the data package's properties file.
 
     Examples:
         ```{python}
         import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
-
+            temp_path = Path(temp_dir)
             # Create a package structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
 
-            # TODO: Need to modify after revising to "local-first"
-            # Get the path to the package properties
-            # sp.path_properties(package_id=1)
+            sp.path_properties(path = temp_path)
         ```
     """
-    path = path_package(package_id) / "datapackage.json"
+    path = path / "datapackage.json"
     return check_is_file(path)
 
 
-def path_readme(package_id: int) -> Path:
-    """Get the path to the README file for the specified package.
+def path_readme(path: Path = Path.cwd) -> Path:
+    """Get the path to the README file for the data package.
 
     Args:
-        package_id: The ID of the package.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        The absolute path to the README file.
+        The absolute path to the data package's README file.
 
     Examples:
         ```{python}
         import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
+            temp_path = Path(temp_dir)
 
             # Create a package structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
 
-            # TODO: Need to modify after revising to "local-first"
-            # Get the path to the package README
-            # sp.path_readme(package_id=1)
+            sp.path_readme(path = temp_path)
         ```
     """
-    path = path_package(package_id=package_id) / "README.md"
+    path = path / "README.md"
     return check_is_file(path)
 
 
-def path_resource(package_id: int, resource_id: int) -> Path:
+def path_resource(resource_id: int, path: Path = Path.cwd()) -> Path:
     """Gets the absolute path to the specified resource.
 
     Args:
-        package_id: The ID of the package.
         resource_id: The ID of the resource.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        The absolute path to the specified resource.
+        The absolute path to a specific resource in the data package.
 
     Examples:
         ```{python}
-        import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
+            temp_path = Path(temp_dir)
 
             # Create a package and resource structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
-            # TODO: Update these after converting to "local-first"
-            # sp.create_resource_structure(path=sp.path_resources(package_id=1))
+
+            resource_path = Path(temp_path / "resources")
+            resource_path.mkdir()
+            sp.create_resource_structure(path=resource_path)
 
             # Get the path to the resource
-            # sp.path_resource(package_id=1, resource_id=1)
+            sp.path_resource(resource_id=1, path=temp_path)
         ```
     """
-    path = path_resources(package_id) / str(resource_id)
+    path = path_resources(path=path) / str(resource_id)
     return check_is_resource_dir(path)
 
 
-def path_resource_data(package_id: int, resource_id: int) -> Path:
-    """Gets the absolute path to the specified resource's data (i.e., parquet) file.
+def path_resource_data(resource_id: int, path: Path = Path.cwd()) -> Path:
+    """Gets the absolute path to a specific resource's data (i.e., Parquet) file.
 
     Args:
-        package_id: ID of the package.
         resource_id: ID of the resource.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        The absolute path the specified resource's data file.
+        The absolute path the specific resource's data file in a data package.
 
     Examples:
         ```{python}
-        import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
+            temp_path = Path(temp_dir)
 
             # Create a package and resource structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
 
-            # TODO: Update after converting to "local-first"
-            # sp.create_resource_structure(path=sp.path_resources(package_id=1))
+            # TODO: Update after writing data to resource
+            # resource_path = Path(temp_path / "resources")
+            # resource_path.mkdir()
+            # sp.create_resource_structure(path=resource_path)
             # sp.write_resource_data_to_raw(
             #   package_id=1,
             #   resource_id=1,
             #   data="path/to/data.csv")
 
             # sp.write_resource_parquet(
-            #     raw_files=sp.path_resource_raw_files(package_id=1, resource_id=1),
-            #     path=sp.path_resource_data(package_id=1, resource_id=1))
+            #     raw_files=sp.path_resource_raw_files(resource_id=1, path=temp_path),
+            #     path=sp.path_resource_data(resource_id=1, path=temp_path))
 
             # Get the path to the resource data
-            # sp.path_resource_data(package_id=1, resource_id=1)
+            # sp.path_resource_data(resource_id=1, path=temp_path)
         ```
     """
-    path = path_resource(package_id, resource_id) / "data.parquet"
+    path = path_resource(resource_id, path=path) / "data.parquet"
     return check_is_file(path)
 
 
-def path_resource_raw(package_id: int, resource_id: int) -> Path:
-    """Gets the absolute path to the specified resource's raw folder.
+def path_resource_raw(resource_id: int, path: Path = Path.cwd()) -> Path:
+    """Gets the absolute path to a specific resource's raw folder.
 
     Args:
-        package_id: The ID of the package.
         resource_id: The ID of the resource.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        The absolute path to the specified resource's raw folder.
+        The absolute path to a specific resource's raw folder in a data package.
 
     Examples:
         ```{python}
-        import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
+            temp_path = Path(temp_dir)
 
             # Create a package and resource structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
-            # TODO: Update after converting to "local-first"
-            # sp.create_resource_structure(path=sp.path_resources(package_id=1))
+
+            resource_path = Path(temp_path / "resources")
+            resource_path.mkdir()
+            sp.create_resource_structure(path=resource_path)
 
             # Get the path to the resource's raw folder
-            # sp.path_resource_raw(package_id=1, resource_id=1)
+            sp.path_resource_raw(resource_id=1, path=temp_path)
         ```
     """
-    path = path_resource(package_id, resource_id) / "raw"
+    path = path_resource(resource_id, path=path) / "raw"
     return check_is_dir(path)
 
 
-def path_resource_raw_files(package_id: int, resource_id: int) -> list[Path]:
-    """Gets the absolute path to the raw files of the specified resource.
+def path_resource_raw_files(resource_id: int, path: Path = Path.cwd()) -> list[Path]:
+    """Gets the absolute path to the raw files of a specific resource.
 
     Args:
-        package_id: The ID of the package.
         resource_id: The ID of the resource.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        A list of paths to the specified resource's raw files.
-
-    Raises:
-        NotADirectoryError: If the package_id doesn't exist or the resource_id doesn't
-            exist within the package.
+        A list of paths to a specific resource's raw files in a data package.
 
     Examples:
         ```{python}
-        import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
+            temp_path = Path(temp_dir)
 
             # Create a package and resource structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
-            # TODO: Update after converting to "local-first"
-            # sp.create_resource_structure(path=sp.path_resources(package_id=1))
 
+            resource_path = Path(temp_path / "resources")
+            resource_path.mkdir()
+            sp.create_resource_structure(path=resource_path)
             # TODO: Add data/raw files to resource
             # sp.write_resource_data_to_raw(
-            #     path=sp.path_resource_raw(package_id=1, resource_id=1),
+            #     path=sp.path_resource_raw(resource_id=1, path=temp_dir),
             #     data="path/to/data.csv")
 
             # Get the path to the resource's raw files
-            # sp.path_resource_raw_files(package_id=1, resource_id=1)
+            # sp.path_resource_raw_files(resource_id=1, path=temp_dir)
         ```
     """
-    return list(path_resource_raw(package_id, resource_id).iterdir())
+    return list(path_resource_raw(resource_id, path=path).iterdir())
 
 
-def path_resources(package_id: int) -> Path:
-    """Gets the absolute path to the resources of the specified package.
+def path_resources(path: Path = Path.cwd()) -> Path:
+    """Gets the absolute path to the resources of a data package.
 
     Args:
-        package_id: The ID of the package.
+        path: Provide a path to the package directory. Defaults to the current working
+            directory.
 
     Returns:
-        The absolute path to the resources within the specified package.
+        The absolute path to the resource in a data package.
 
     Examples:
         ```{python}
-        import os
         import tempfile
+        from pathlib import Path
 
         import seedcase_sprout.core as sp
 
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
-            os.environ["SPROUT_GLOBAL"] = temp_dir
+            temp_path = Path(temp_dir)
 
             # Create a package structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=temp_path
             )
 
-            # TODO: Update after converting to "local-first"
-            # Get the path to the resource's raw files
-            # sp.path_resources(package_id=1)
+            Path(temp_path / "resources").mkdir()
+            # Get the path to the resource folders
+            sp.path_resources(path=temp_path)
         ```
     """
-    path = path_package(package_id) / "resources"
-    check_is_dir(path)
-    return path
+    path = path / "resources"
+    return check_is_dir(path)

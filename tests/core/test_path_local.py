@@ -1,5 +1,4 @@
 from pathlib import Path
-from re import escape
 
 from pytest import fixture, mark, raises
 
@@ -13,50 +12,18 @@ from seedcase_sprout.core import (
     path_resources,
 )
 from tests.core.directory_structure_setup import (
-    create_test_package_structure,
+    create_test_data_package,
     create_test_resource_structure,
 )
 
 
-@mark.parametrize(
-    "function, expected_path",
-    [
-        (path_properties, "packages/1/datapackage.json"),
-        (path_readme, "packages/1/README.md"),
-    ],
-)
-def test_path_package_functions_return_expected_path(
-    tmp_sprout_global, function, expected_path
-):
-    # When, then
-    assert function(package_id=1) == tmp_sprout_global / expected_path
-    assert function(package_id=1).is_file() or function(package_id=1).is_dir()
-
-
-@mark.parametrize(
-    "function",
-    [path_properties, path_readme],
-)
-def test_path_package_functions_raise_error_if_package_id_does_not_exist(
-    tmp_sprout_global, function
-):
-    # When, then
-    with raises(NotADirectoryError, match=escape("[1]")):
-        function(package_id=2)
-
-
-# Given a package with two resources
 @fixture
-def tmp_sprout_global(monkeypatch, tmp_path):
-    """Set up test package folder structure return temp global directory"""
-    monkeypatch.setenv("SPROUT_GLOBAL", str(tmp_path))
+def tmp_package(tmp_path):
+    """Set up a test data package with two resources."""
+    create_test_data_package(tmp_path)
 
-    path_package_1 = create_test_package_structure(tmp_path, "1")
-
-    create_test_resource_structure(path_package_1, ["raw_file_1.csv.gz"])
-    create_test_resource_structure(
-        path_package_1, ["raw_file_2.csv.gz", "raw_file_3.csv.gz"]
-    )
+    create_test_resource_structure(tmp_path, ["raw_file_1.csv.gz"])
+    create_test_resource_structure(tmp_path, ["raw_file_2.csv.gz", "raw_file_3.csv.gz"])
 
     return tmp_path
 
@@ -64,51 +31,67 @@ def tmp_sprout_global(monkeypatch, tmp_path):
 @mark.parametrize(
     "function, expected_path",
     [
-        (path_resource, "packages/1/resources/2"),
-        (path_resource_data, "packages/1/resources/2/data.parquet"),
-        (path_resource_raw, "packages/1/resources/2/raw"),
+        (path_properties, "datapackage.json"),
+        (path_readme, "README.md"),
+    ],
+)
+def test_path_local_root_files_return_expected_path(
+    tmp_path, tmp_package, function, expected_path
+):
+    path = function(path=tmp_path)
+    # When, then
+    assert path == tmp_package / expected_path
+    assert path.is_file()
+
+
+@mark.parametrize(
+    "function, expected_path",
+    [
+        (path_resource, "resources/2"),
+        (path_resource_data, "resources/2/data.parquet"),
+        (path_resource_raw, "resources/2/raw"),
     ],
 )
 def test_path_resource_functions_return_expected_path(
-    tmp_sprout_global, function, expected_path
+    tmp_path, tmp_package, function, expected_path
 ):
+    """Test that the path to the resource is returned correctly and exists."""
+    path = function(resource_id=2, path=tmp_path)
     # When, then
-    assert function(package_id=1, resource_id=2) == tmp_sprout_global / expected_path
+    assert path == tmp_package / expected_path
+    assert path.is_file() or path.is_dir()
 
 
-def test_path_resources_returns_expected_path(tmp_sprout_global):
+@mark.parametrize(
+    "function",
+    [path_properties, path_readme],
+)
+def test_path_local_root_files_raise_error_if_files_not_exist(tmp_package, function):
+    """Test that an error is raised if the file does not exist"""
+    # Given
+    function(path=tmp_package).unlink()
     # When, then
-    assert (
-        path_resources(package_id=1)
-        == tmp_sprout_global / "packages" / "1" / "resources"
-    )
+    with raises(FileNotFoundError):
+        function(path=tmp_package)
 
 
-def test_path_resource_raw_files_returns_expected_list_of_paths(tmp_sprout_global):
+def test_path_resources_returns_expected_path(tmp_path, tmp_package):
+    """Test that the path to the resources directory is returned correctly"""
+    # When, then
+    assert path_resources(path=tmp_path) == tmp_package / "resources"
+
+
+def test_path_resource_raw_files_returns_expected_list_of_paths(tmp_package):
+    """Test that raw files are listed correctly"""
     # When
-    resource_raw_path = (
-        Path(tmp_sprout_global) / "packages" / "1" / "resources" / "2" / "raw"
-    )
+    resource_raw_path = Path(tmp_package) / "resources" / "2" / "raw"
     # Then
-    assert set(path_resource_raw_files(package_id=1, resource_id=2)) == set(
+    assert set(path_resource_raw_files(resource_id=2, path=tmp_package)) == set(
         [
             resource_raw_path / "raw_file_2.csv.gz",
             resource_raw_path / "raw_file_3.csv.gz",
         ]
     )
-
-
-@mark.parametrize(
-    "function",
-    [path_resource, path_resource_data, path_resource_raw, path_resource_raw_files],
-)
-def test_path_resource_functions_raise_error_if_res_id_does_not_exist(
-    tmp_sprout_global, function
-):
-    """Raises error if package ID exists but resource ID does not"""
-    # When, then
-    with raises(NotADirectoryError, match=r"resource.+\[1, 2\]"):
-        function(package_id=1, resource_id=3)
 
 
 @mark.parametrize(
@@ -120,18 +103,10 @@ def test_path_resource_functions_raise_error_if_res_id_does_not_exist(
         path_resource_raw_files,
     ],
 )
-def test_raises_error_if_package_id_does_not_exist(
-    tmp_sprout_global,
-    function,
+def test_path_resource_functions_raise_error_if_res_id_does_not_exist(
+    tmp_package, function
 ):
-    """Raises error if package ID doesn't exist but resource ID does
-    in another package"""
+    """Raises error if resource ID doesn't exist"""
     # When, then
-    with raises(NotADirectoryError, match=r"package.+\[1\]"):
-        function(package_id=2, resource_id=1)
-
-
-def test_path_resources_raises_error_when_package_does_not_exist(tmp_sprout_global):
-    # When, then
-    with raises(NotADirectoryError, match=escape("[1]")):
-        path_resources(package_id=2)
+    with raises(NotADirectoryError):
+        function(resource_id=3, path=tmp_package)

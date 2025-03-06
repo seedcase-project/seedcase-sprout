@@ -13,7 +13,7 @@ from seedcase_sprout.core.path_global import (
     _get_sprout_global_envvar,
 )
 from tests.core.directory_structure_setup import (
-    create_test_package_structure,
+    create_test_global_data_package,
 )
 
 
@@ -22,7 +22,7 @@ from tests.core.directory_structure_setup import (
 def tmp_sprout_global(monkeypatch, tmp_path):
     """Set up test package folder structure and return temp global directory"""
     monkeypatch.setenv("SPROUT_GLOBAL", str(tmp_path))
-    create_test_package_structure(tmp_path, "1")
+    create_test_global_data_package(tmp_path, "1")
 
     return tmp_path
 

@@ -40,15 +40,16 @@ def path_package(package_id: int) -> Path:
         with tempfile.TemporaryDirectory() as temp_dir:
             os.environ["SPROUT_GLOBAL"] = temp_dir
 
+            package_path = sp.path_packages() / "1"
+            package_path.mkdir()
             # Create a package structure first
             sp.create_package_properties(
                 properties=sp.example_package_properties(),
-                path=sp.path_packages()
+                path=package_path
             )
 
-            # TODO: Update after converting to "local-first"
             # Get the path to the package
-            # sp.path_package(package_id=1)
+            sp.path_package(package_id=1)
         ```
     """
     path = path_packages() / str(package_id)
