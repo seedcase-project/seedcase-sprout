@@ -15,23 +15,23 @@ you how to create and manage data packages using Sprout.
 
 We've designed Sprout to be used in a similar way that Git repositories
 or Python virtual environments are used (for instance, as we recommend
-in the [installation guide](installation.qmd)). What that means is, we
+in the [installation guide](installation.qmd)). This means that we
 assume and expect that you will be creating and managing a data package
 in the root of your Python (or Git) project. The same folder where your
-`.git/` folder is or your `pyproject.toml` file is will also be the same
-folder that has your `datapackage.json` file. With this expectation and
+`.git/` folder or `pyproject.toml` file is will also contain
+your `datapackage.json` file. With this
 design, many of Sprout's helper path functions assume that the working
-directory is the same directory where the `datapackage.json` file is (or
-will be) stored and where the `pyproject.toml` file (or `.git/` folder)
-is.
+directory is where the `datapackage.json` file is (or
+will be) and where the `pyproject.toml` file (or `.git/` folder)
+is stored.
 
 With that in mind, let's make our first data package! A data package
 always needs a `datapackage.json` file. This file contains a set of
 properties, or metadata, about the data package and, eventually, about
 the data resources within it. To set up this `datapackage.json` file, we
-start with the `create_package_properties()` function. This function
-takes the properties you want to add to the data package and the path
-where you want to store the data package as arguments. So first, we need
+first need a set of properties you want to add to the data package. Then, you can use the `create_package_properties()` function that
+takes the properties and the path
+where you want to store the data package as arguments. So first, you need
 to establish our properties.
 
 We have several helper classes, such as `PackageProperties`,
@@ -49,7 +49,7 @@ import seedcase_sprout.core as sp
 from pprint import pprint
 ```
 
-Then we can create the new data package with some basic properties:
+Then we can create some basic properties:
 
 ```{python}
 properties = sp.PackageProperties(
@@ -83,7 +83,7 @@ In a real project, you would create the data package in the root of your
 project. We'll make this temporary folder using:
 
 ```{python}
-import tempfile
+from tempfile import TemporaryDirectory
 from pathlib import Path
 
 temp_path = tempfile.TemporaryDirectory()
@@ -155,14 +155,12 @@ fill in for a package.
 You now have the basic starting point for adding data resources to your
 data package.
 
-## Making a package in a multi-user environment
+## Creating a data package in a multi-user server environment
 
 If you are making and managing data packages in a multi-user server
 environment that will have or has multiple data packages, there are some
-very small changes you can make to creating and managing packages. While
-Sprout assumes the functions are being used to create and manage a data
-package in the working directory, all the functions take the `path` as
-an argument. Which means, they can run in any directory. With that in
+very small changes you can make to creating and managing packages. Since 
+all the functions to create and manage data packages in Sprout take the `path` as an argument, they can run in any directory. With that in
 mind, we have a series of helper path functions that can be used to
 point to a "global" Sprout storage location.
 
@@ -173,7 +171,7 @@ create it in `~/sprout/packages/` on Linux (see
 specific locations), but you can change this by setting the
 `SPROUT_GLOBAL` environment variable. For instance, maybe you want the
 location to be `~/Desktop/sprout/` or `~/Documents`. For our example, we
-will store it in our current working directory in the hidden folder
+will store our data package in the current working directory in a hidden folder called
 `.storage/`.
 
 ```{python}
@@ -181,7 +179,7 @@ import os
 os.environ["SPROUT_GLOBAL"] = ".storage/"
 ```
 
-Now, we can create a new data package in this global location, with only
+Now, we can create a new data package using this global variable, with only
 one change:
 
 ```{python}
