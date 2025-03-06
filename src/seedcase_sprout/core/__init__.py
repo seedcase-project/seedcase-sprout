@@ -21,6 +21,7 @@ from .path_package_functions import (
     path_packages,
     path_properties,
     path_readme,
+    path_sprout_global,
 )
 from .path_resource_functions import (
     path_resource,
@@ -29,7 +30,6 @@ from .path_resource_functions import (
     path_resource_raw_files,
     path_resources,
 )
-from .path_sprout_global import path_sprout_global
 from .properties import (
     ConstraintsProperties,
     ContributorProperties,

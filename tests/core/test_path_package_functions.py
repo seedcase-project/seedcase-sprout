@@ -1,3 +1,4 @@
+from pathlib import Path
 from re import escape
 
 from pytest import fixture, mark, raises
@@ -7,6 +8,11 @@ from seedcase_sprout.core import (
     path_packages,
     path_properties,
     path_readme,
+    path_sprout_global,
+)
+from seedcase_sprout.core.path_package_functions import (
+    _create_sprout_global_path,
+    _get_sprout_global_envvar,
 )
 from tests.core.directory_structure_setup import (
     create_test_package_structure,
@@ -65,3 +71,33 @@ def test_path_packages_creates_and_returns_expected_path_when_no_packages_exist(
     # Then
     assert path_packages() == tmp_path / "packages"
     assert path_packages().is_dir()
+
+
+def test_returns_global_envvar_if_set(monkeypatch):
+    """Returns Sprout's global path when SPROUT_GLOBAL is set."""
+    # Given
+    SPROUT_GLOBAL = "my/sprout/global"
+    monkeypatch.setenv("SPROUT_GLOBAL", SPROUT_GLOBAL)
+
+    # When
+    path_global = path_sprout_global()
+
+    # Then
+    assert _get_sprout_global_envvar() == Path(SPROUT_GLOBAL)
+    assert path_global == Path(SPROUT_GLOBAL)
+    assert path_global.name == "global"
+
+
+def test_returns_global_path_when_SPROUT_GLOBAL_is_not_set():
+    """Returns Sprout's global path when SPROUT_GLOBAL isn't set."""
+    assert path_sprout_global().name == "sprout"
+
+
+def test_returns_global_path():
+    """Returns global path."""
+    assert _create_sprout_global_path().name == "sprout"
+
+
+def test_returns_none_if_global_envvar_is_not_set():
+    """Returns None if SPROUT_GLOBAL isn't set."""
+    assert _get_sprout_global_envvar() is None
