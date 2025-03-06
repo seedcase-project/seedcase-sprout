@@ -10,7 +10,7 @@ from seedcase_sprout.core import (
     path_readme,
     path_sprout_global,
 )
-from seedcase_sprout.core.path_package_functions import (
+from seedcase_sprout.core.path_global import (
     _create_sprout_global_path,
     _get_sprout_global_envvar,
 )

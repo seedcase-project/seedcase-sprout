@@ -16,14 +16,14 @@ from .example_package_properties import example_package_properties
 # from .delete_resource_properties import *
 # Path -----
 # TODO: Consider having all these in one module.
-from .path_package_functions import (
+from .path_global import (
     path_package,
     path_packages,
     path_properties,
     path_readme,
     path_sprout_global,
 )
-from .path_resource_functions import (
+from .path_local import (
     path_resource,
     path_resource_data,
     path_resource_raw,
