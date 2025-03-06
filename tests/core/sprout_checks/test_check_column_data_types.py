@@ -166,7 +166,7 @@ ARRAY_BAD_VALUES = ["not,json,,"] + OBJECT_GOOD_VALUES
 def test_check_data_type(bad_values, good_values, check_fn):
     """Given a column with both correct and incorrect values, it should mark incorrect
     values with False in another column."""
-    values = bad_values + [None] + good_values
+    values = bad_values + good_values
     expected_fails = list(range(len(bad_values)))
     df = pl.DataFrame({"my_values": values})
 
@@ -250,7 +250,7 @@ DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE = [
         ),
         (
             None,
-            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
+            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE + [None],
             DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
         ),
         (
@@ -264,7 +264,6 @@ def test_check_is_datetime(first_value, good_values, bad_values):
     """Given a column with both correct and incorrect datetimes, it should mark
     incorrect datetimes with False in another column. The first value should decide if
     the column is treated as timezone-aware or timezone-naive."""
-    good_values.append(None)
     values = [first_value] + good_values + bad_values
     expected_fails = [i for i, value in enumerate(values) if value not in good_values]
     df = pl.DataFrame({"my_values": values}, schema={"my_values": pl.String})
