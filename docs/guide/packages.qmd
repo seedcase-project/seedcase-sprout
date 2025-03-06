@@ -13,46 +13,43 @@ you how to create and manage data packages using Sprout.
 
 ## Creating a data package
 
-The first thing you'll need to decide is where you want to store your
-data packages. By default, Sprout will create it in `~/sprout/packages/`
-on Linux (see [Outputs](/docs/design/interface/outputs.qmd) for
-operating system specific locations), but you can change this by setting
-the `SPROUT_GLOBAL` environment variable. For instance, maybe you want
-the location to be `~/Desktop/sprout/` or `~/Documents`. For our
-example, we will store it in our current working directory in the hidden
-folder `.storage/`.
+We've designed Sprout to be used in a similar way that Git repositories
+or Python virtual environments are used (for instance, as we recommend
+in the [installation guide](installation.qmd)). What that means is, we
+assume and expect that you will be creating and managing a data package
+in the root of your Python (or Git) project. The same folder where your
+`.git/` folder is or your `pyproject.toml` file is will also be the same
+folder that has your `datapackage.json` file. With this expectation and
+design, many of Sprout's helper path functions assume that the working
+directory is the same directory where the `datapackage.json` file is (or
+will be) stored and where the `pyproject.toml` file (or `.git/` folder)
+is.
 
-```{python}
-import seedcase_sprout.core as sp
-import os
-import pathlib
-
-# For pretty printing of output
-from pprint import pprint
-
-os.environ["SPROUT_GLOBAL"] = ".storage/"
-```
-
-```{python}
-#| include: false
-pathlib.Path(".storage").mkdir(exist_ok=True)
-```
-
-Now we can make our first data package. A data package always needs a
-`datapackage.json` file, which is a file that contains a set of
-properties, or metadata, about the data package and later about the data
-resources within. To set up this `datapackage.json` file as well as the
-new package folder, we start with the `create_package_properties()`
-function. This function takes the properties you want to add to the data
-package and the path where you want to store the data package as
-arguments. So first, we need to establish our properties.
+With that in mind, let's make our first data package! A data package
+always needs a `datapackage.json` file. This file contains a set of
+properties, or metadata, about the data package and, eventually, about
+the data resources within it. To set up this `datapackage.json` file, we
+start with the `create_package_properties()` function. This function
+takes the properties you want to add to the data package and the path
+where you want to store the data package as arguments. So first, we need
+to establish our properties.
 
 We have several helper classes, such as `PackageProperties`,
 `LicenseProperties`, and `ContributorProperties`, to make it easier for
 you to make properties with the correct fields filled in. See the guide
 on [properties](/docs/guide/properties.qmd) for more information about
-these classes. Let's create a new data package with some basic
-properties:
+these classes.
+
+First, let's import the necessary modules and set up the environment:
+
+```{python}
+import seedcase_sprout.core as sp
+
+# For pretty printing of output
+from pprint import pprint
+```
+
+Then we can create the new data package with some basic properties:
 
 ```{python}
 properties = sp.PackageProperties(
@@ -78,17 +75,31 @@ properties = sp.PackageProperties(
 pprint(properties)
 ```
 
-Now, let's create our data package with these properties:
+Now, let's create our data package with these properties.
+
+::: callout-note
+For this guide, we will create this data package in a temporary folder.
+In a real project, you would create the data package in the root of your
+project. We'll make this temporary folder using:
 
 ```{python}
+import tempfile
+from pathlib import Path
+
+temp_path = tempfile.TemporaryDirectory()
+package_path = Path(temp_path.name) / "diabetes-study"
+
 # Create the path to the package
-package_path = sp.path_sprout_global() / "diabetes-study"
-package_path.mkdir()
+package_path.mkdir(parents=True)
+```
+:::
+
+```{python}
 package_path = sp.create_package_properties(
     properties = properties,
-    path=sp.path_sprout_global() / "diabetes-study"
+    path = package_path
 )
-pprint(package_path)
+print(package_path)
 ```
 
 ::: callout-important
@@ -97,10 +108,10 @@ required fields are not filled in correctly from the `PackageProperties`
 object and will not create the `datapackage.json` file.
 :::
 
-This creates the initial structure of your new package. The output above
-shows that the folder of your data package `diabetes-study` has been
-created. This folder contains one file so far: `datapackage.json`. The
-`datapackage.json` file contains the fields we wrote from above.
+This creates the initial structure of your new package. The
+`create_package_properties()` function created the `datapackage.json`
+file in your data package `diabetes-study` folder, which contains the
+properties you added to it.
 
 <!-- TODO: Add section on building the README -->
 
@@ -143,3 +154,55 @@ fill in for a package.
 
 You now have the basic starting point for adding data resources to your
 data package.
+
+## Making a package in a multi-user environment
+
+If you are making and managing data packages in a multi-user server
+environment that will have or has multiple data packages, there are some
+very small changes you can make to creating and managing packages. While
+Sprout assumes the functions are being used to create and manage a data
+package in the working directory, all the functions take the `path` as
+an argument. Which means, they can run in any directory. With that in
+mind, we have a series of helper path functions that can be used to
+point to a "global" Sprout storage location.
+
+The first thing you'll need to decide is where you want to store your
+data packages in this type of environment. By default, Sprout will
+create it in `~/sprout/packages/` on Linux (see
+[Outputs](/docs/design/interface/outputs.qmd) for operating system
+specific locations), but you can change this by setting the
+`SPROUT_GLOBAL` environment variable. For instance, maybe you want the
+location to be `~/Desktop/sprout/` or `~/Documents`. For our example, we
+will store it in our current working directory in the hidden folder
+`.storage/`.
+
+```{python}
+import os
+os.environ["SPROUT_GLOBAL"] = ".storage/"
+```
+
+Now, we can create a new data package in this global location, with only
+one change:
+
+```{python}
+# TODO: Update this after fixing the path_package() function
+package_path=sp.path_sprout_global() / "diabetes-study"
+package_path.mkdir(parents=True)
+sp.create_package_properties(
+    properties = properties,
+    path=package_path
+)
+```
+
+After creating the package, you can use functions like `path_package()`
+to point to the correct package or `path_packages()` to list all the
+package in the storage:
+
+```{python}
+print(sp.path_packages())
+```
+
+```{python}
+#| include: false
+temp_path.cleanup()
+```
