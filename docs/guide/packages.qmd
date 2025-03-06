@@ -6,8 +6,8 @@ jupyter: python3
 
 At the core of Sprout is the
 [{{< glossary "data package">}}](../glossary.qmd), which is a
-standardized way of structuring and documenting data. This guide will show
-you how to create and manage data packages using Sprout.
+standardized way of structuring and documenting data. This guide will
+show you how to create and manage data packages using Sprout.
 
 {{< include _preamble.qmd >}}
 
@@ -18,38 +18,34 @@ or Python virtual environments are used (for instance, as we recommend
 in the [installation guide](installation.qmd)). This means that we
 assume and expect that you will be creating and managing a data package
 in the root of your Python (or Git) project. The same folder where your
-`.git/` folder or `pyproject.toml` file is will also contain
-your `datapackage.json` file. With this
-design, many of Sprout's helper path functions assume that the working
-directory is where the `datapackage.json` file is (or
-will be) and where the `pyproject.toml` file (or `.git/` folder)
-is stored.
+`.git/` folder or `pyproject.toml` file is will also contain your
+`datapackage.json` file. With this design, many of Sprout's helper path
+functions assume that the working directory is where the
+`datapackage.json` file is (or will be) and where the `pyproject.toml`
+file (or `.git/` folder) is stored.
 
-With that in mind, let's make our first data package! A data package
-always needs a `datapackage.json` file. This file contains a set of
-properties, or metadata, about the data package and, eventually, about
-the data resources within it. To set up this `datapackage.json` file, we
-first need a set of properties you want to add to the data package. Then, you can use the `create_package_properties()` function that
-takes the properties and the path
-where you want to store the data package as arguments. So first, you need
-to establish our properties.
+With that in mind, let's make a data package! A data package always
+needs a `datapackage.json` file. This file contains a set of properties,
+or metadata, about the data package and, eventually, about the data
+resources within it. To set up this `datapackage.json` file, you first
+need a set of properties you want to add to the data package. Then, you
+can use the `create_package_properties()` function that takes the
+properties and the path where you want to store the data package as
+arguments. So first, you need to establish our properties.
 
-We have several helper classes, such as `PackageProperties`,
+Sprout has several helper classes, such as `PackageProperties`,
 `LicenseProperties`, and `ContributorProperties`, to make it easier for
 you to make properties with the correct fields filled in. See the guide
 on [properties](/docs/guide/properties.qmd) for more information about
 these classes.
 
-First, let's import the necessary modules and set up the environment:
+First, import the necessary modules and set up the environment:
 
 ```{python}
 import seedcase_sprout.core as sp
-
-# For pretty printing of output
-from pprint import pprint
 ```
 
-Then we can create some basic properties:
+Then you can create some basic properties:
 
 ```{python}
 properties = sp.PackageProperties(
@@ -72,21 +68,22 @@ properties = sp.PackageProperties(
         )
     ],
 )
-pprint(properties)
 ```
 
-Now, let's create our data package with these properties.
+Now, time to create your data package with these properties.
 
 ::: callout-note
-For this guide, we will create this data package in a temporary folder.
+For this guide, you will create this data package in a temporary folder.
 In a real project, you would create the data package in the root of your
-project. We'll make this temporary folder using:
+project. You do not need to do this below code. Yours may use something
+like `pathlib.Path().cwd()` to get the current working directory of your
+Python or Git project.
 
 ```{python}
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
-temp_path = tempfile.TemporaryDirectory()
+temp_path = TemporaryDirectory()
 package_path = Path(temp_path.name) / "diabetes-study"
 
 # Create the path to the package
@@ -95,44 +92,51 @@ package_path.mkdir(parents=True)
 :::
 
 ```{python}
-package_path = sp.create_package_properties(
+sp.create_package_properties(
     properties = properties,
     path = package_path
 )
-print(package_path)
 ```
 
 ::: callout-important
 The `create_package_properties()` function will give an error if the
-required fields are not filled in correctly from the `PackageProperties`
-object and will not create the `datapackage.json` file.
+`PackageProperties` object is missing some of its required fields or if
+they are not filled in correctly. In that case, a `datapackage.json`
+file won't be created.
 :::
 
 This creates the initial structure of your new package. The
 `create_package_properties()` function created the `datapackage.json`
 file in your data package `diabetes-study` folder, which contains the
-properties you added to it.
+properties you added to it. The newly created file would be:
+
+```{python}
+#| echo: false
+print(package_path.glob("**/*"))
+```
 
 <!-- TODO: Add section on building the README -->
 
 ## Editing package properties
 
-If we made a mistake and want to update the properties in the current
-`datapackage.json`, you can use the `edit_package_properties()`
-function:
+If you made a mistake and want to update the properties in the current
+`datapackage.json`, you can use the `edit_package_properties()` function
+while using the helper `path_properties()` function to point to the
+`datapackage.json` file. The default behavior of the `path_properties()`
+function is to look in the current working directory, but for this
+guide, it is pointing to the temporary folder created from above.
 
 ```{python}
-updated_package_properties = sp.edit_package_properties(
-  path=package_path,
+sp.edit_package_properties(
+  path=sp.path_properties(path=package_path),
   properties=sp.PackageProperties(name="diabetes-study"),
 )
-pprint(updated_package_properties)
 ```
 
 ::: callout-important
 The `edit_package_properties()` function will give an error if the
-required fields are not filled in to create a valid `datapackage.json`
-file.
+required fields are not filled in correctly and so will not create a
+`datapackage.json` file.
 :::
 
 This function only takes the properties and updates them, but does not
@@ -140,11 +144,10 @@ save it back to the `datapackage.json` file. To save it back to the
 file, run:
 
 ```{python}
-package_path = sp.write_package_properties(
+sp.write_package_properties(
   properties=updated_package_properties,
-  path=package_path
+  path=sp.path_properties(path=package_path),
 )
-pprint(package_path)
 ```
 
 If you need help with filling in the right properties, see the
@@ -160,27 +163,33 @@ data package.
 If you are making and managing data packages in a multi-user server
 environment that will have or has multiple data packages, there are some
 very small changes you can make to creating and managing packages. Since
-all the functions to create and manage data packages in Sprout take the `path` as an argument, they can run in any directory. With that in
-mind, we have a series of helper path functions that can be used to
-point to a "global" Sprout storage location.
+all the functions to create and manage data packages in Sprout take the
+`path` as an argument, they can run in any directory. With that in mind,
+Sprout has a series of helper path functions that can be used to point
+to a "global" Sprout storage location.
 
 The first thing you'll need to decide is where you want to store your
 data packages in this type of environment. By default, Sprout will
 create it in `~/sprout/packages/` on Linux (see
 [Outputs](/docs/design/interface/outputs.qmd) for operating system
-specific locations), but you can change this by setting the
+specific locations).
+
+::: callout-note
+You can change the location of the global storage by setting the
 `SPROUT_GLOBAL` environment variable. For instance, maybe you want the
-location to be `~/Desktop/sprout/` or `~/Documents`. For our example, we
-will store our data package in the current working directory in a hidden folder called
-`.storage/`.
+location to be `~/Desktop/sprout/` or `~/Documents`. For this guide, you
+can try storing your data packages in the current working directory in a
+hidden folder called `.storage/`. It's hidden so it doesn't clutter up
+the directory.
 
 ```{python}
 import os
 os.environ["SPROUT_GLOBAL"] = ".storage/"
 ```
+:::
 
-Now, we can create a new data package using this global variable, with only
-one change:
+Now, you can create a new data package using this global variable, with
+only one change:
 
 ```{python}
 # TODO: Update this after fixing the path_package() function
