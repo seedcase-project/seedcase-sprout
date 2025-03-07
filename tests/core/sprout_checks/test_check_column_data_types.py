@@ -3,14 +3,7 @@ from pytest import mark
 
 from seedcase_sprout.core.sprout_checks.check_column_data_types import (
     BOOLEAN_VALUES,
-    check_is_boolean,
-    check_is_castable_type,
-    check_is_date,
-    check_is_datetime,
-    check_is_geopoint,
-    check_is_json,
-    check_is_time,
-    check_is_yearmonth,
+    FRICTIONLESS_TO_COLUMN_CHECK,
 )
 
 # Boolean
@@ -127,48 +120,42 @@ OBJECT_GOOD_VALUES = [
 OBJECT_BAD_VALUES = ["not,json,,"] + ARRAY_GOOD_VALUES
 ARRAY_BAD_VALUES = ["not,json,,"] + OBJECT_GOOD_VALUES
 
+# Any
+ANY_VALUES = ["some text", 99, "[]", "2030-12-12", True]
+
+# String
+STRING_VALUES = ["some_text", "£$%^&*()\\''", "μῆνιν ἄειδε θεὰ", "æøåäöü"]
+
+# Duration
+DURATION_VALUES = ["P1Y2M3DT10H30M45.343S"]
+
 
 @mark.parametrize(
-    "bad_values, good_values, check_fn",
+    "bad_values, good_values, field_type",
     [
-        (BOOLEAN_BAD_VALUES, BOOLEAN_GOOD_VALUES, check_is_boolean),
-        (YEARMONTH_BAD_VALUES, YEARMONTH_GOOD_VALUES, check_is_yearmonth),
-        (DATE_BAD_VALUES, DATE_GOOD_VALUES, check_is_date),
-        (TIME_BAD_VALUES, TIME_GOOD_VALUES, check_is_time),
-        (GEOPOINT_BAD_VALUES, GEOPOINT_GOOD_VALUES, check_is_geopoint),
-        (
-            INTEGER_BAD_VALUES,
-            INTEGER_GOOD_VALUES,
-            lambda col: check_is_castable_type(col, "integer"),
-        ),
-        (
-            INTEGER_BAD_VALUES,
-            INTEGER_GOOD_VALUES,
-            lambda col: check_is_castable_type(col, "year"),
-        ),
-        (
-            NUMBER_BAD_VALUES,
-            NUMBER_GOOD_VALUES,
-            lambda col: check_is_castable_type(col, "number"),
-        ),
-        (
-            ARRAY_BAD_VALUES,
-            ARRAY_GOOD_VALUES,
-            lambda col: check_is_json(col, list),
-        ),
-        (
-            OBJECT_BAD_VALUES,
-            OBJECT_GOOD_VALUES,
-            lambda col: check_is_json(col, dict),
-        ),
+        (BOOLEAN_BAD_VALUES, BOOLEAN_GOOD_VALUES, "boolean"),
+        (YEARMONTH_BAD_VALUES, YEARMONTH_GOOD_VALUES, "yearmonth"),
+        (DATE_BAD_VALUES, DATE_GOOD_VALUES, "date"),
+        (TIME_BAD_VALUES, TIME_GOOD_VALUES, "time"),
+        (GEOPOINT_BAD_VALUES, GEOPOINT_GOOD_VALUES, "geopoint"),
+        (INTEGER_BAD_VALUES, INTEGER_GOOD_VALUES, "integer"),
+        (INTEGER_BAD_VALUES, INTEGER_GOOD_VALUES, "year"),
+        (NUMBER_BAD_VALUES, NUMBER_GOOD_VALUES, "number"),
+        (ARRAY_BAD_VALUES, ARRAY_GOOD_VALUES, "array"),
+        (OBJECT_BAD_VALUES, OBJECT_GOOD_VALUES, "object"),
+        (OBJECT_BAD_VALUES, OBJECT_GOOD_VALUES, "geojson"),
+        ([], STRING_VALUES, "string"),
+        ([], DURATION_VALUES, "duration"),
+        ([], ANY_VALUES, "any"),
     ],
 )
-def test_check_data_type(bad_values, good_values, check_fn):
+def test_check_data_type(bad_values, good_values, field_type):
     """Given a column with both correct and incorrect values, it should mark incorrect
     values with False in another column."""
     values = bad_values + good_values
     expected_fails = list(range(len(bad_values)))
-    df = pl.DataFrame({"my_values": values})
+    df = pl.DataFrame({"my_values": values}, strict=False)
+    check_fn = FRICTIONLESS_TO_COLUMN_CHECK[field_type]
 
     df = df.with_columns(check_fn("my_values").alias("result"))
 
@@ -260,9 +247,10 @@ def test_check_is_datetime(first_value, good_values, bad_values):
     the column is treated as timezone-aware or timezone-naive."""
     values = [first_value] + good_values + bad_values
     expected_fails = [i for i, value in enumerate(values) if value not in good_values]
-    df = pl.DataFrame({"my_values": values}, schema={"my_values": pl.String})
+    df = pl.DataFrame({"my_values": values})
+    check_fn = FRICTIONLESS_TO_COLUMN_CHECK["datetime"]
 
-    df = df.with_columns(check_is_datetime(df, "my_values").alias("result"))
+    df = df.with_columns(check_fn(df, "my_values").alias("result"))
 
     fails = (
         df.with_row_index()
