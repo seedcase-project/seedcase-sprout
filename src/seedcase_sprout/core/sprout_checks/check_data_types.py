@@ -59,7 +59,7 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
             .to_list()
         )
         if failed_values:
-            errors.append(ValueError(get_field_error_message(field, failed_values)))
+            errors.append(TypeError(get_field_error_message(field, failed_values)))
 
     if errors:
         raise ExceptionGroup(
