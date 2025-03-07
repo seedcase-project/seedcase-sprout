@@ -11,6 +11,7 @@ from seedcase_sprout.core.properties import (
 )
 from seedcase_sprout.core.sprout_checks.check_data_types import check_data_types
 from tests.core.sprout_checks.test_check_column_data_types import (
+    ANY_VALUES,
     ARRAY_BAD_VALUES,
     ARRAY_GOOD_VALUES,
     BOOLEAN_BAD_VALUES,
@@ -21,6 +22,7 @@ from tests.core.sprout_checks.test_check_column_data_types import (
     DATETIME_BAD_VALUES_WHEN_TIMEZONE,
     DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
     DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
+    DURATION_VALUES,
     GEOPOINT_BAD_VALUES,
     GEOPOINT_GOOD_VALUES,
     INTEGER_BAD_VALUES,
@@ -29,6 +31,7 @@ from tests.core.sprout_checks.test_check_column_data_types import (
     NUMBER_GOOD_VALUES,
     OBJECT_BAD_VALUES,
     OBJECT_GOOD_VALUES,
+    STRING_VALUES,
     TIME_BAD_VALUES,
     TIME_GOOD_VALUES,
     YEARMONTH_BAD_VALUES,
@@ -98,9 +101,9 @@ def data():
         "my_array": ARRAY_GOOD_VALUES,
         "my_object": OBJECT_GOOD_VALUES,
         "my_geojson": OBJECT_GOOD_VALUES,
-        "my_string": ["some text"],
-        "my_duration": ["P1Y2M3DT10H30M45.343S"],
-        "my_any": ["some text", 99, "[]", "2030-12-12", True],
+        "my_string": STRING_VALUES,
+        "my_duration": DURATION_VALUES,
+        "my_any": ANY_VALUES,
     }
 
     # Make all columns have the same number of rows
