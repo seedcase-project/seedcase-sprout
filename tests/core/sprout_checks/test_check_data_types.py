@@ -152,10 +152,12 @@ def test_error_raised_when_data_types_do_not_match_properties(data):
 
     # Each column should have the incorrect values listed in the corresponding error
     for col_name, column in bad_data.items():
-        error_message = next(str(err) for err in errors if f"'{col_name}'" in str(err))
+        error_message = next(
+            str(error) for error in errors if f"'{col_name}'" in str(error)
+        )
         # Find all incorrect values, e.g. [11]: 'not a date'
         flagged_values = re.findall(r"\[(\d+)\]: '([^']*)'", error_message)
         expected_flagged_values = [
-            (str(r), str(bad_value)) for r, bad_value in zip(bad_rows, column[:3])
+            (str(row), str(value)) for row, value in zip(bad_rows, column[:3])
         ]
         assert flagged_values == expected_flagged_values
