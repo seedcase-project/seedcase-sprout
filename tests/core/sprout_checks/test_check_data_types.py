@@ -50,6 +50,7 @@ resource_properties = ResourceProperties(
             FieldProperties(name="my_date", type="date"),
             FieldProperties(name="my_datetime_tz", type="datetime"),
             FieldProperties(name="my_datetime_no_tz", type="datetime"),
+            FieldProperties(name="my_datetime_null_start", type="datetime"),
             FieldProperties(name="my_time", type="time"),
             FieldProperties(name="my_year", type="year"),
             FieldProperties(name="my_integer", type="integer"),
@@ -76,6 +77,7 @@ bad_data = {
     "my_geojson": OBJECT_BAD_VALUES,
     "my_datetime_tz": DATETIME_BAD_VALUES_WHEN_TIMEZONE,
     "my_datetime_no_tz": DATETIME_BAD_VALUES_WHEN_NO_TIMEZONE,
+    "my_datetime_null_start": DATETIME_BAD_VALUES_WHEN_NO_TIMEZONE,
 }
 
 
@@ -89,6 +91,7 @@ def data():
         "my_yearmonth": YEARMONTH_GOOD_VALUES,
         "my_datetime_tz": DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
         "my_datetime_no_tz": DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
+        "my_datetime_null_start": [None] + DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
         "my_date": DATE_GOOD_VALUES,
         "my_time": TIME_GOOD_VALUES,
         "my_geopoint": GEOPOINT_GOOD_VALUES,
