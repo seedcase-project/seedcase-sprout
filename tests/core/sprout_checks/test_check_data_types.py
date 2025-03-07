@@ -47,6 +47,7 @@ resource_properties = ResourceProperties(
         fields=[
             FieldProperties(name="my_string", type="string"),
             FieldProperties(name="my_any", type="any"),
+            FieldProperties(name="my_none", type=None),
             FieldProperties(name="my_duration", type="duration"),
             FieldProperties(name="my_boolean", type="boolean"),
             FieldProperties(name="my_yearmonth", type="yearmonth"),
@@ -104,6 +105,7 @@ def data():
         "my_string": STRING_VALUES,
         "my_duration": DURATION_VALUES,
         "my_any": ANY_VALUES,
+        "my_none": ANY_VALUES,
     }
 
     # Make all columns have the same number of rows
