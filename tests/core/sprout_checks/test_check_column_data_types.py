@@ -237,7 +237,6 @@ DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE = [
 @mark.parametrize(
     "first_value, good_values, bad_values",
     [
-        (None, [None], []),
         (
             DATETIME_GOOD_VALUES_WHEN_TIMEZONE[0],
             DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
@@ -247,11 +246,6 @@ DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE = [
             DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE[0],
             DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE,
             DATETIME_BAD_VALUES_WHEN_NO_TIMEZONE,
-        ),
-        (
-            None,
-            DATETIME_GOOD_VALUES_WHEN_NO_TIMEZONE + [None],
-            DATETIME_GOOD_VALUES_WHEN_TIMEZONE,
         ),
         (
             "abc",

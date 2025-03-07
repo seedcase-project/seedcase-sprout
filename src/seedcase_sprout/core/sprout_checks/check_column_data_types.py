@@ -57,7 +57,6 @@ def check_is_yearmonth(field_name: str) -> pl.Expr:
     return (
         pl.col(field_name).str.starts_with("-").not_()
         & (pl.col(field_name) + "-01")
-        .fill_null("0001-01-01")
         .str.to_date(format="%Y-%m-%d", strict=False)
         .is_not_null()
     )
@@ -86,13 +85,11 @@ def check_is_datetime(data_frame: pl.DataFrame, field_name: str) -> pl.Expr:
         .first()
     )
     has_timezone = bool(first_datetime.tzinfo) if first_datetime else False
-    default_datetime = "0001-01-01T00:00:00" + ("Z" if has_timezone else "")
     datetime_format = "%Y-%m-%dT%H:%M:%S%.f" + ("%z" if has_timezone else "")
 
     return (
         pl.col(field_name).str.starts_with("-").not_()
         & pl.col(field_name)
-        .fill_null(default_datetime)
         .str.replace("Z", "+00:00")
         .str.to_datetime(time_unit="ms", format=datetime_format, strict=False)
         .dt.convert_time_zone(time_zone="UTC")
@@ -113,10 +110,7 @@ def check_is_date(field_name: str) -> pl.Expr:
     """
     return (
         pl.col(field_name).str.starts_with("-").not_()
-        & pl.col(field_name)
-        .fill_null("0001-01-01")
-        .str.to_date(format="%Y-%m-%d", strict=False)
-        .is_not_null()
+        & pl.col(field_name).str.to_date(format="%Y-%m-%d", strict=False).is_not_null()
     )
 
 
@@ -132,10 +126,7 @@ def check_is_time(field_name: str) -> pl.Expr:
         A Polars expression for checking the column.
     """
     return (
-        pl.col(field_name)
-        .fill_null("00:00:00")
-        .str.to_time(format="%H:%M:%S%.f", strict=False)
-        .is_not_null()
+        pl.col(field_name).str.to_time(format="%H:%M:%S%.f", strict=False).is_not_null()
     )
 
 
