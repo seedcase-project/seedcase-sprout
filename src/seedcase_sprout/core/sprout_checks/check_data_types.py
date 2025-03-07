@@ -108,7 +108,7 @@ def check_column(data_frame: pl.DataFrame, field: FieldProperties) -> pl.Expr:
     Returns:
         A Polars expression for checking the data type of values in the column.
     """
-    field_name, field_type = field.name, field.type
+    field_name, field_type = field.name, (field.type or "any")
     check = FRICTIONLESS_TO_COLUMN_CHECK[field_type]
     return (
         pl.col(field_name)
