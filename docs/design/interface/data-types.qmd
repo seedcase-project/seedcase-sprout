@@ -4,7 +4,7 @@ description: "The data types Sprout supports"
 ---
 
 
-Sprout implements the Frictionless Data Package standard and aims to support the [data types](https://datapackage.org/standard/table-schema/#field-types) it defines. However, Sprout not only describes data with metadata but also transforms it into a tidy Parquet file, ready for querying (see [Outputs](/docs/design/interface/outputs.qmd#files) and [Why Parquet](https://decisions.seedcase-project.org/why-parquet/) for more details). As a result, Sprout supports only data types that are compatible (or can be made compatible) with Parquet storage.
+Sprout implements the Frictionless Data Package standard and aims to support the [data types](https://datapackage.org/standard/table-schema/#field-types) it defines. However, Sprout not only describes data with its properties (i.e., metadata) but also transforms it into a tidy Parquet file, ready for querying (see [Outputs](/docs/design/interface/outputs.qmd#files) and [Why Parquet](https://decisions.seedcase-project.org/why-parquet/) for more details). As a result, Sprout supports only data types that are compatible (or can be made compatible) with Parquet storage.
 
 Below, we list Frictionless data types as used in Sprout and give a precise definition for each. Any differences from the Frictionless specification are noted.
 
@@ -30,7 +30,7 @@ Below, we list Frictionless data types as used in Sprout and give a precise defi
 
 ## String
 
-A sequence of UTF-8 encoded characters. Supported formats: `default`, `email`, `uri`, `binary`, `uuid`.
+A sequence of UTF-8 encoded characters. Sprout supports all Frictionless Data Package string formats: `default`, `email`, `uri`, `binary`, `uuid`.
 
 ## Number
 
@@ -59,7 +59,7 @@ A whole number with no decimal part.
 
 : `integer` format options.
 
-The configuration options `groupChar` and `bareNumber` are not yet supported.
+The Frictionless Data Package configuration options `groupChar` and `bareNumber` are not yet supported by Sprout.
 
 ## Boolean
 
@@ -68,7 +68,7 @@ One of two possible values: true or false. Sprout supports the default notation 
 -   All values in `["true", "True", "TRUE", "1"]` are interpreted as true.
 -   All values in `["false", "False", "FALSE", "0"]` are interpreted as false.
 
-Setting custom `trueValues` and `falseValues` is not yet supported.
+Setting custom `trueValues` and `falseValues` is not yet supported by Sprout.
 
 ## Datetime
 
@@ -80,13 +80,13 @@ A date with a time and optional timezone.
 | with milliseconds                | `YYYY-MM-DDTHH:MM:SS.sss`            | `2002-10-12T12:04:15.3`, `0202-10-10T02:30:00.345`             |
 | with timezone                    | `YYYY-MM-DDTHH:MM:SS<sign>HH:MM`     | `2002-10-12T12:04:15+05:00`, `0202-10-10T02:30:00-01:00`       |
 | with milliseconds and timezone   | `YYYY-MM-DDTHH:MM:SS.sss<sign>HH:MM` | `2002-10-12T12:04:15.3+05:00`, `0202-10-10T02:30:00.345-01:00` |
-| shorthand for UTC                | `YYYY-MM-DDTHH:MM:SS(.sss)Z`         | `2002-10-12T12:04:15Z`, `0202-10-10T02:30:00.345Z`             |
+| with shorthand for UTC           | `YYYY-MM-DDTHH:MM:SS(.sss)Z`         | `2002-10-12T12:04:15Z`, `0202-10-10T02:30:00.345Z`             |
 
 : `datetime` format options.
 
 **Restrictions:**
 
--   Setting a custom `datetime` pattern in the `format` property is not yet supported. The `any` format is not supported.
+-   Setting a custom `datetime` pattern in the `format` property in `datapackage.json` is not yet supported. The `any` format is not supported.
 -   Negative `datetime` values are not supported.
 -   Years with more than 4 digits are not supported.
 -   Mixing `datetime` values with and without a timezone in one column is not allowed.
@@ -166,7 +166,7 @@ The number of seconds may include decimal digits to arbitrary precision.
 If you are working with duration or interval values, you could consider converting them to a form that Sprout can parse and compare numerically. Here are some suggestions:
 
 -   If your intervals have start and end points, you could represent them using two `date`, `time` or `datetime` columns. For example, a column called `<column_name>_start` for the beginning of the interval and a column called `<column_name>_end` for the end of the interval.
--   If it doesn't make sense to represent your duration values as intervals between start and end points, you could represent them as plain `integer`s or `number`s. For example, by calculating the number of days, hours, seconds, milliseconds, etc. that make up your durations.
+-   If it doesn't make sense to represent your duration values as intervals between start and end points, you could represent them as plain `integer`s or `number`s. For example, by calculating the number of days, hours, seconds, milliseconds, etc. (depending on the level of precision you need) that make up your durations.
 :::
 
 ## Geopoint
