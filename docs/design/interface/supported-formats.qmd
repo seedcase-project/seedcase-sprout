@@ -1,0 +1,18 @@
+---
+title: "Supported data formats"
+---
+
+Currently, Sprout supports the extraction of properties from the
+following data formats:
+
+```{python}
+#| echo: false
+from seedcase_sprout.core.check_is_supported_format import SUPPORTED_FORMATS
+
+for format in sorted(SUPPORTED_FORMATS):
+    print(format)
+```
+
+For more information on how to extract properties from these formats,
+see the [Creating and managing data
+resources](/docs/guides/resources.qmd) guide.
