@@ -84,6 +84,7 @@ def check_is_datetime(data_frame: pl.DataFrame, field_name: str) -> pl.Expr:
     first_datetime = (
         data_frame.get_column(field_name)
         .drop_nulls()
+        # Strict is false means map to None if it fails rather than give an error.
         .str.to_datetime(strict=False)
         .first()
     )
