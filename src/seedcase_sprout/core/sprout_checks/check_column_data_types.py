@@ -27,7 +27,7 @@ def check_is_castable_type(field_name: str, field_type: FieldType) -> pl.Expr:
     """Checks if the column contains only values of the given type.
 
     The check is done by attempting to convert (cast) the column to the
-    appropriate Polars data type. If it fails, the values are marked with 
+    appropriate Polars data type. If it fails, the values are marked with
     False.
 
     Args:
