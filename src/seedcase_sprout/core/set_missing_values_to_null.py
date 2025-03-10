@@ -1,0 +1,40 @@
+import polars as pl
+
+from seedcase_sprout.core.get_nested_attr import get_nested_attr
+from seedcase_sprout.core.properties import (
+    FieldProperties,
+    ResourceProperties,
+)
+
+
+def set_missing_values_to_null(
+    data_frame: pl.DataFrame, resource_properties: ResourceProperties
+):
+    """Sets missing values to null.
+
+    Uses the resource properties to locate missing values in the data frame and sets
+    them to null.
+
+    Args:
+        data_frame: The data frame to process.
+        resource_properties: The resource properties describing the data.
+
+    Returns:
+        The updated data frame with missing values set to null.
+    """
+    fields: list[FieldProperties] = get_nested_attr(
+        resource_properties, "schema.fields", default=[]
+    )
+
+    schema_missing_values = get_nested_attr(
+        resource_properties, "schema.missing_values", default=[""]
+    )
+    return data_frame.with_columns(
+        pl.col(field.name).replace(
+            old=schema_missing_values
+            if field.missing_values is None
+            else field.missing_values,
+            new=None,
+        )
+        for field in fields
+    )
