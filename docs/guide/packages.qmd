@@ -25,7 +25,7 @@ functions assume that the working directory is where the
 file (or `.git/` folder) is stored.
 
 With that in mind, let's make a data package! A data package always
-needs a `datapackage.json` file. This file contains a set of properties,
+needs a `datapackage.json` file. This file contains a set of [{{< glossary "properties">}}](../glossary.qmd),
 or metadata, about the data package and, eventually, about the data
 resources within it. To set up this `datapackage.json` file, you first
 need a set of properties you want to add to the data package. Then, you
