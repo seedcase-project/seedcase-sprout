@@ -26,11 +26,12 @@ def check_is_boolean(field_name: str) -> pl.Expr:
 def check_is_castable_type(field_name: str, field_type: FieldType) -> pl.Expr:
     """Checks if the column contains only values of the given type.
 
-    The check is done by attempting to cast to the appropriate Polars data type.
-    Failed values are marked with False.
+    The check is done by attempting to convert (cast) the column to the
+    appropriate Polars data type. If it fails, the values are marked with 
+    False.
 
     Args:
-        field_name: The name of the column to check.
+        field_name: The name of the field to check.
         field_type: The type of the field.
 
     Returns:
@@ -38,6 +39,7 @@ def check_is_castable_type(field_name: str, field_type: FieldType) -> pl.Expr:
     """
     return (
         pl.col(field_name)
+        # Strict is false means map to None if it fails rather than give an error.
         .cast(FRICTIONLESS_TO_POLARS[field_type], strict=False)
         .is_not_null()
     )
@@ -57,6 +59,7 @@ def check_is_yearmonth(field_name: str) -> pl.Expr:
     return (
         pl.col(field_name).str.starts_with("-").not_()
         & (pl.col(field_name) + "-01")
+        # Strict is false means map to None if it fails rather than give an error.
         .str.to_date(format="%Y-%m-%d", strict=False)
         .is_not_null()
     )
