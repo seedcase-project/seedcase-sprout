@@ -38,6 +38,6 @@ def read_csv(data_path: Path) -> pl.DataFrame:
             raise ValueError(
                 f"At least one row in the data file at {data_path} contains more items "
                 "than the expected number of columns. Please make sure that all rows "
-                "are the same length."
+                “have the same number of items."
             ) from error
         raise

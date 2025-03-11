@@ -21,7 +21,7 @@ def test_throws_error_if_file_not_found(data_path):
 
 def test_throws_value_error_if_file_not_csv(tmp_path):
     """Should throw a ValueError if the file is not a CSV file."""
-    path = tmp_path / "not-data.txt"
+    path = tmp_path / "data.txt"
     path.write_text("id,name\n1,Cassidy\n2,James\n3,Björn\n")
 
     with raises(ValueError):
