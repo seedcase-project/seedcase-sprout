@@ -1,5 +1,5 @@
 ---
-title: "Supported data formats"
+title: "Inputs"
 ---
 
 Currently, Sprout supports the extraction of properties from the
