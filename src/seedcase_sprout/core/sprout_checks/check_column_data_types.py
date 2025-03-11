@@ -9,21 +9,21 @@ from seedcase_sprout.core.properties import FieldType
 BOOLEAN_VALUES = {"false", "False", "FALSE", "0", "true", "True", "TRUE", "1"}
 
 
-def check_is_boolean(field_name: str) -> pl.Expr:
+def check_is_boolean(column_name: str) -> pl.Expr:
     """Checks if the column contains only boolean values.
 
     Failed values are marked with False.
 
     Args:
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
 
     Returns:
         A Polars expression for checking the column.
     """
-    return pl.col(field_name).is_in(BOOLEAN_VALUES)
+    return pl.col(column_name).is_in(BOOLEAN_VALUES)
 
 
-def check_is_castable_type(field_name: str, field_type: FieldType) -> pl.Expr:
+def check_is_type_by_conversion(column_name: str, data_type: FieldType) -> pl.Expr:
     """Checks if the column contains only values of the given type.
 
     The check is done by attempting to convert (cast) the column to the
@@ -31,41 +31,42 @@ def check_is_castable_type(field_name: str, field_type: FieldType) -> pl.Expr:
     False.
 
     Args:
-        field_name: The name of the field to check.
-        field_type: The type of the field.
+        column_name: The name of the column to check.
+        data_type: The type of the column.
 
     Returns:
         A Polars expression for checking the column.
     """
     return (
-        pl.col(field_name)
+        pl.col(column_name)
         # Strict is false means map to None if it fails rather than give an error.
-        .cast(FRICTIONLESS_TO_POLARS[field_type], strict=False)
+        .cast(FRICTIONLESS_TO_POLARS[data_type], strict=False)
         .is_not_null()
     )
 
 
-def check_is_yearmonth(field_name: str) -> pl.Expr:
+def check_is_yearmonth(column_name: str) -> pl.Expr:
     """Checks if the column contains only yearmonth values.
 
     Failed values are marked with False.
 
     Args:
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
 
     Returns:
         A Polars expression for checking the column.
     """
     return (
-        pl.col(field_name).str.starts_with("-").not_()
-        & (pl.col(field_name) + "-01")
+        # Fail negative values starting with `-`.
+        pl.col(column_name).str.starts_with("-").not_()
+        & (pl.col(column_name) + "-01")
         # Strict is false means map to None if it fails rather than give an error.
         .str.to_date(format="%Y-%m-%d", strict=False)
         .is_not_null()
     )
 
 
-def check_is_datetime(data_frame: pl.DataFrame, field_name: str) -> pl.Expr:
+def check_is_datetime(data_frame: pl.DataFrame, column_name: str) -> pl.Expr:
     """Checks if the column contains only datetime values.
 
     Mixing values with and without timezone information is not allowed.
@@ -76,13 +77,13 @@ def check_is_datetime(data_frame: pl.DataFrame, field_name: str) -> pl.Expr:
 
     Args:
         data_frame: The data frame being operated on.
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
 
     Returns:
         A Polars expression for checking the column.
     """
     first_datetime = (
-        data_frame.get_column(field_name)
+        data_frame.get_column(column_name)
         .drop_nulls()
         # Strict is false means map to None if it fails rather than give an error.
         .str.to_datetime(strict=False)
@@ -92,8 +93,9 @@ def check_is_datetime(data_frame: pl.DataFrame, field_name: str) -> pl.Expr:
     datetime_format = "%Y-%m-%dT%H:%M:%S%.f" + ("%z" if has_timezone else "")
 
     return (
-        pl.col(field_name).str.starts_with("-").not_()
-        & pl.col(field_name)
+        # Fail negative values starting with `-`.
+        pl.col(column_name).str.starts_with("-").not_()
+        & pl.col(column_name)
         .str.replace("Z", "+00:00")
         .str.to_datetime(time_unit="ms", format=datetime_format, strict=False)
         .dt.convert_time_zone(time_zone="UTC")
@@ -101,36 +103,39 @@ def check_is_datetime(data_frame: pl.DataFrame, field_name: str) -> pl.Expr:
     )
 
 
-def check_is_date(field_name: str) -> pl.Expr:
+def check_is_date(column_name: str) -> pl.Expr:
     """Checks if the column contains only date values.
 
     Failed values are marked with False.
 
     Args:
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
 
     Returns:
         A Polars expression for checking the column.
     """
     return (
-        pl.col(field_name).str.starts_with("-").not_()
-        & pl.col(field_name).str.to_date(format="%Y-%m-%d", strict=False).is_not_null()
+        # Fail negative values starting with `-`.
+        pl.col(column_name).str.starts_with("-").not_()
+        & pl.col(column_name).str.to_date(format="%Y-%m-%d", strict=False).is_not_null()
     )
 
 
-def check_is_time(field_name: str) -> pl.Expr:
+def check_is_time(column_name: str) -> pl.Expr:
     """Checks if the column contains only time values.
 
     Failed values are marked with False.
 
     Args:
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
 
     Returns:
         A Polars expression for checking the column.
     """
     return (
-        pl.col(field_name).str.to_time(format="%H:%M:%S%.f", strict=False).is_not_null()
+        pl.col(column_name)
+        .str.to_time(format="%H:%M:%S%.f", strict=False)
+        .is_not_null()
     )
 
 
@@ -141,21 +146,21 @@ GEOPOINT_PATTERN = (
 )
 
 
-def check_is_geopoint(field_name: str) -> pl.Expr:
+def check_is_geopoint(column_name: str) -> pl.Expr:
     """Checks if the column contains only geopoint values.
 
     Failed values are marked with False.
 
     Args:
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
 
     Returns:
         A Polars expression for checking the column.
     """
-    return pl.col(field_name).str.contains(GEOPOINT_PATTERN)
+    return pl.col(column_name).str.contains(GEOPOINT_PATTERN)
 
 
-def check_is_json(field_name: str, expected_type: type[list | dict]) -> pl.Expr:
+def check_is_json(column_name: str, expected_type: type[list | dict]) -> pl.Expr:
     """Checks if the column contains only JSON values.
 
     Failed values are marked with False.
@@ -164,13 +169,13 @@ def check_is_json(field_name: str, expected_type: type[list | dict]) -> pl.Expr:
     slowly on large datasets.
 
     Args:
-        field_name: The name of the column to check.
+        column_name: The name of the column to check.
         expected_type: The expected JSON type: an object or an array.
 
     Returns:
         A Polars expression for checking the column.
     """
-    return pl.col(field_name).map_elements(
+    return pl.col(column_name).map_elements(
         lambda value: check_value_is_json(value, expected_type),
         return_dtype=pl.Boolean,
     )
@@ -194,9 +199,9 @@ def check_value_is_json(value: str, expected_type: type[list | dict]) -> bool:
 
 FRICTIONLESS_TO_COLUMN_CHECK = {
     "boolean": check_is_boolean,
-    "integer": lambda col_name: check_is_castable_type(col_name, "integer"),
-    "number": lambda col_name: check_is_castable_type(col_name, "number"),
-    "year": lambda col_name: check_is_castable_type(col_name, "year"),
+    "integer": lambda col_name: check_is_type_by_conversion(col_name, "integer"),
+    "number": lambda col_name: check_is_type_by_conversion(col_name, "number"),
+    "year": lambda col_name: check_is_type_by_conversion(col_name, "year"),
     "yearmonth": check_is_yearmonth,
     "datetime": check_is_datetime,
     "date": check_is_date,
