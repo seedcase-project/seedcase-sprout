@@ -57,7 +57,7 @@ website:
           contents:
             - docs/design/interface/outputs.qmd
             - docs/design/interface/functions.qmd
-            - docs/design/interface/supported-formats.qmd
+            - docs/design/interface/inputs.qmd
     - id: guide
       contents:
         - section: "Guide"
