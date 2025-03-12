@@ -23,13 +23,13 @@ data.
 :::
 
 Putting your raw data into a data package makes it easier for yourself
-and others to use later one. So the steps you'll take to get this raw
+and others to use later one. So the steps you'll take to get your
 data into the structure offered by Sprout are:
 
 1.  Create the properties for the resource, using the original raw data
     as a starting point and edit as needed.
 2.  Create a folder to store the (processed) data resource in your
-    package, as well as having a folder for the (tidy) raw data.
+    package, as well as having a folder for the (tidy) batch data.
 3.  Save the properties of and path to the new data resource into the
     `datapackage.json` file.
 4.  Re-build the data package's `README.md` file from the updated
@@ -110,7 +110,7 @@ from textwrap import dedent
 ## Extract resource properties from raw data
 
 You'll start by creating the resource's properties. Before you can have
-data stored in a data package, it needs metadata (called properties) on
+data stored in a data package, it needs properties (i.e., metadata) on
 the data. The resource's properties are what allow people to more easily
 use the data in the data package, as well as being used to check that
 the actual data matches the properties. While you can create a resource
@@ -159,9 +159,9 @@ resource itself within the data package. What this means is that you
 will create a folder for the specific resource (since you may have more
 data resources to add).
 
-We assume you've already create a package (either by using the steps
+We assume you've already created a package (either by using the steps
 from the [package guide](packages.qmd) or started making one for your
-own data), with the path set as the variable `package_path`:
+own data), with the path to the data package set as the variable `package_path`:
 
 ```{python}
 print(package_path)
@@ -175,8 +175,8 @@ print(package_path.glob("**/*"))
 ```
 
 This shows that the data package already includes a `datapackage.json`
-file and a `README.md` file. Now to create the resource structure in
-this package, using the helper `path_resources()` function to give the
+file and a `README.md` file. Now you'll add the resource structure to
+the package, using the helper function `path_resources()` to give the
 correct path to the resources folder. The default behaviour of
 `path_resources()` is to use the current working directory, but for this
 guide you'll have to use the `path` argument to point to where the
@@ -190,14 +190,15 @@ sp.create_resource_structure(
 )
 ```
 
-Next step is to set up the resource properties so that it gets checked
-and saved into the `datapackage.json` file. You can use the
-`path_properties()` helper function to always give you the correct
+The next step is to add the resource properties to the `datapackage.json` file.
+Before they are added, they will be checked to confirm that they are correctly
+filled in and that no required fields are missing. You can use the
+`path_properties()` helper function to give you the
 location to the `datapackage.json` path. Here, the `path` argument
 points to the temporary folder where the package is stored.
 
 ```{python}
-# TODO: This function needs to be updated to write to data package.
+# TODO: This function needs to be updated to write to datapackage.json
 sp.create_resource_properties(
     path=sp.path_properties(path=package_path),
     properties=resource_properties
