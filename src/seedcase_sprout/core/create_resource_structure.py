@@ -47,10 +47,10 @@ def create_resource_structure(path: Path) -> list[Path]:
                 path=temp_path
             )
 
-            resource_path = Path(temp_path / "resources")
-            resource_path.mkdir()
+            resources_path = Path(temp_path / "resources")
+            resources_path.mkdir()
             # Create a resource structure
-            sp.create_resource_structure(path=resource_path)
+            sp.create_resource_structure(path=resources_path)
         ```
     """
     check_is_dir(path)
