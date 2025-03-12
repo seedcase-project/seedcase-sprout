@@ -30,7 +30,9 @@ def read_csv(data_path: Path) -> pl.DataFrame:
         return pl.read_csv(
             data_path,
             has_header=True,
+            # Doesn't work all the time, and we want to use properties anyway.
             infer_schema=False,
+            # Set as empty string since it will be easier to match with Frictionless.
             missing_utf8_is_empty_string=True,
         )
     except pl.exceptions.ComputeError as error:
