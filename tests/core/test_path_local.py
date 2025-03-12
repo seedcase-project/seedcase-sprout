@@ -35,7 +35,7 @@ def tmp_package(tmp_path):
         (path_readme, "README.md"),
     ],
 )
-def test_path_local_root_files_return_expected_path(
+def test_path_local_root_functions_return_expected_path(
     tmp_path, tmp_package, function, expected_path
 ):
     path = function(path=tmp_path)
@@ -66,7 +66,7 @@ def test_path_resource_functions_return_expected_path(
     "function",
     [path_properties, path_readme],
 )
-def test_path_local_root_files_raise_error_if_files_not_exist(tmp_package, function):
+def test_path_local_root_functions_raise_error_if_files_not_exist(tmp_package, function):
     """Test that an error is raised if the file does not exist"""
     # Given
     function(path=tmp_package).unlink()

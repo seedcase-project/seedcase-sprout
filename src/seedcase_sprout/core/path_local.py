@@ -40,7 +40,7 @@ def path_properties(path: Path = Path.cwd()) -> Path:
                 path=temp_path
             )
 
-            sp.path_properties(path = temp_path)
+            sp.path_properties(path=temp_path)
         ```
     """
     path = path / "datapackage.json"
@@ -75,7 +75,7 @@ def path_readme(path: Path = Path.cwd) -> Path:
                 path=temp_path
             )
 
-            sp.path_readme(path = temp_path)
+            sp.path_readme(path=temp_path)
         ```
     """
     path = path / "README.md"
@@ -110,9 +110,9 @@ def path_resource(resource_id: int, path: Path = Path.cwd()) -> Path:
                 path=temp_path
             )
 
-            resource_path = Path(temp_path / "resources")
-            resource_path.mkdir()
-            sp.create_resource_structure(path=resource_path)
+            resources_path = Path(temp_path / "resources")
+            resources_path.mkdir()
+            sp.create_resource_structure(path=resources_path)
 
             # Get the path to the resource
             sp.path_resource(resource_id=1, path=temp_path)
@@ -171,7 +171,7 @@ def path_resource_data(resource_id: int, path: Path = Path.cwd()) -> Path:
     return check_is_file(path)
 
 
-def path_resource_raw(resource_id: int, path: Path = Path.cwd()) -> Path:
+def path_resource_batch(resource_id: int, path: Path = Path.cwd()) -> Path:
     """Gets the absolute path to a specific resource's raw folder.
 
     Args:
@@ -199,9 +199,9 @@ def path_resource_raw(resource_id: int, path: Path = Path.cwd()) -> Path:
                 path=temp_path
             )
 
-            resource_path = Path(temp_path / "resources")
-            resource_path.mkdir()
-            sp.create_resource_structure(path=resource_path)
+            resources_path = Path(temp_path / "resources")
+            resources_path.mkdir()
+            sp.create_resource_structure(path=resources_path)
 
             # Get the path to the resource's raw folder
             sp.path_resource_raw(resource_id=1, path=temp_path)
@@ -239,9 +239,9 @@ def path_resource_raw_files(resource_id: int, path: Path = Path.cwd()) -> list[P
                 path=temp_path
             )
 
-            resource_path = Path(temp_path / "resources")
-            resource_path.mkdir()
-            sp.create_resource_structure(path=resource_path)
+            resources_path = Path(temp_path / "resources")
+            resources_path.mkdir()
+            sp.create_resource_structure(path=resources_path)
             # TODO: Add data/raw files to resource
             # sp.write_resource_data_to_raw(
             #     path=sp.path_resource_raw(resource_id=1, path=temp_dir),
