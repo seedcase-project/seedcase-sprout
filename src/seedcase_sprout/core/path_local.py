@@ -172,7 +172,7 @@ def path_resource_data(resource_id: int, path: Path = Path.cwd()) -> Path:
 
 
 def path_resource_batch(resource_id: int, path: Path = Path.cwd()) -> Path:
-    """Gets the absolute path to a specific resource's raw folder.
+    """Gets the absolute path to a specific resource's batch folder.
 
     Args:
         resource_id: The ID of the resource.
@@ -180,7 +180,7 @@ def path_resource_batch(resource_id: int, path: Path = Path.cwd()) -> Path:
             directory.
 
     Returns:
-        The absolute path to a specific resource's raw folder in a data package.
+        The absolute path to a specific resource's batch folder in a data package.
 
     Examples:
         ```{python}
@@ -203,16 +203,16 @@ def path_resource_batch(resource_id: int, path: Path = Path.cwd()) -> Path:
             resources_path.mkdir()
             sp.create_resource_structure(path=resources_path)
 
-            # Get the path to the resource's raw folder
-            sp.path_resource_raw(resource_id=1, path=temp_path)
+            # Get the path to the resource's batch folder
+            sp.path_resource_batch(resource_id=1, path=temp_path)
         ```
     """
-    path = path_resource(resource_id, path=path) / "raw"
+    path = path_resource(resource_id, path=path) / "batch"
     return check_is_dir(path)
 
 
-def path_resource_raw_files(resource_id: int, path: Path = Path.cwd()) -> list[Path]:
-    """Gets the absolute path to the raw files of a specific resource.
+def path_resource_batch_files(resource_id: int, path: Path = Path.cwd()) -> list[Path]:
+    """Gets the absolute path to the batch files of a specific resource.
 
     Args:
         resource_id: The ID of the resource.
@@ -220,7 +220,7 @@ def path_resource_raw_files(resource_id: int, path: Path = Path.cwd()) -> list[P
             directory.
 
     Returns:
-        A list of paths to a specific resource's raw files in a data package.
+        A list of paths to a specific resource's batch files in a data package.
 
     Examples:
         ```{python}
@@ -242,13 +242,13 @@ def path_resource_raw_files(resource_id: int, path: Path = Path.cwd()) -> list[P
             resources_path = Path(temp_path / "resources")
             resources_path.mkdir()
             sp.create_resource_structure(path=resources_path)
-            # TODO: Add data/raw files to resource
-            # sp.write_resource_data_to_raw(
-            #     path=sp.path_resource_raw(resource_id=1, path=temp_dir),
+            # TODO: Add data/batch files to resource
+            # sp.write_resource_batch_data(
+            #     path=sp.path_resource_batch(resource_id=1, path=temp_dir),
             #     data="path/to/data.csv")
 
-            # Get the path to the resource's raw files
-            # sp.path_resource_raw_files(resource_id=1, path=temp_dir)
+            # Get the path to the resource's batch files
+            # sp.path_resource_batch_files(resource_id=1, path=temp_dir)
         ```
     """
     return list(path_resource_raw(resource_id, path=path).iterdir())

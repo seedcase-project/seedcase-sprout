@@ -39,7 +39,6 @@ def test_path_local_root_functions_return_expected_path(
     tmp_path, tmp_package, function, expected_path
 ):
     path = function(path=tmp_path)
-    # When, then
     assert path == tmp_package / expected_path
     assert path.is_file()
 
