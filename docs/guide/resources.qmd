@@ -23,8 +23,8 @@ data.
 :::
 
 Putting your raw data into a data package makes it easier for yourself
-and others to use later one. So the steps you'll take to get your
-data into the structure offered by Sprout are:
+and others to use later one. So the steps you'll take to get your data
+into the structure offered by Sprout are:
 
 1.  Create the properties for the resource, using the original raw data
     as a starting point and edit as needed.
@@ -161,7 +161,8 @@ data resources to add).
 
 We assume you've already created a package (either by using the steps
 from the [package guide](packages.qmd) or started making one for your
-own data), with the path to the data package set as the variable `package_path`:
+own data), with the path to the data package set as the variable
+`package_path`:
 
 ```{python}
 print(package_path)
@@ -190,12 +191,12 @@ sp.create_resource_structure(
 )
 ```
 
-The next step is to add the resource properties to the `datapackage.json` file.
-Before they are added, they will be checked to confirm that they are correctly
-filled in and that no required fields are missing. You can use the
-`path_properties()` helper function to give you the
-location to the `datapackage.json` path. Here, the `path` argument
-points to the temporary folder where the package is stored.
+The next step is to add the resource properties to the
+`datapackage.json` file. Before they are added, they will be checked to
+confirm that they are correctly filled in and that no required fields
+are missing. You can use the `path_properties()` helper function to give
+you the location to the `datapackage.json` path. Here, the `path`
+argument points to the temporary folder where the package is stored.
 
 ```{python}
 # TODO: This function needs to be updated to write to datapackage.json
@@ -224,53 +225,55 @@ resource properties have been added:
 pprint(sp.read_properties(sp.path_properties(path=package_path))
 ```
 
-## Storing a backup of the raw data
+## Storing a backup of the raw data as a "batch" file
 
 When you create a new data resource, or add data to an existing one,
-Sprout has been designed to always store a backup of each added raw
-data. All the raw data is stored in a folder called `raw/` within the
+Sprout has been designed to always store a backup of each time you add
+new (or modified) data to a specific resource as a "batch" file. All the
+batch data files are stored in a folder called `batch/` within the
 resource's folder and is processed into the final Parquet data resource
 file. This can be useful if you ever need to re-process the data at a
 later point, troubleshoot any issues, update incorrect values, or if you
-need to compare the stored raw data to your original raw data.
+need to compare the stored batch data to your original raw data (before
+it enters into the data resource).
 
 As shown above, the data is stored in the path that we've set as
 `raw_data_path`. Time to store this data in the resource's folder by
 using:
 
 ```{python}
-sp.write_resource_data_to_raw(
+sp.write_resource_batch_data(
     data_path=raw_data_path,
     resource_properties=resource_properties
 )
 ```
 
 This function uses the properties object to determine where to store the
-raw data, which is in the `raw/` folder of the resource's folder. You
-can check the newly added file by using:
+data as a batch file, which is in the `batch/` folder of the resource's
+folder. You can check the newly added file by using:
 
 ```{python}
-print(sp.path_resource_raw_files(1, path=package_path))
+print(sp.path_resource_batch_files(1, path=package_path))
 ```
 
 ## Building the Parquet data resource file
 
-Now that you've stored the raw data file, you can build the Parquet file
-that will be used as the data resource. This Parquet file is built from
-the all the data in the `raw/` folder. Since there is only one raw data
-file stored in the resource's folder, only this one will be used to
-build the data resource's parquet file:
+Now that you've stored the data as a batch file, you can build the
+Parquet file that will be used as the data resource. This Parquet file
+is built from the all the data in the `batch/` folder. Since there is
+only one batch data file stored in the resource's folder, only this one
+will be used to build the data resource's parquet file:
 
 ```{python}
 sp.build_resource_parquet(
-    raw_files=sp.path_resource_raw_files(1, path=package_path),
+    raw_files=sp.path_resource_batch_files(1, path=package_path),
     path=sp.path_resource_data(1, path=package_path)
 )
 ```
 
 ::: callout-tip
 If you add more raw data to the resource later on, you can update this
-Parquet file to include all data in the raw folder using the
+Parquet file to include all data in the batch folder using the
 `build_resource_parquet()` function like shown above.
 :::
 
