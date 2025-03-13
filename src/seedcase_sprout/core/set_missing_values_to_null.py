@@ -33,6 +33,8 @@ def set_missing_values_to_null(
         pl.col(field.name).replace(
             old=schema_missing_values
             if field.missing_values is None
+            # As per Frictionless standard, field-level missing values overrides
+            # the schema-level missing values.
             else field.missing_values,
             new=None,
         )
