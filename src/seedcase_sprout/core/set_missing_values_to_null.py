@@ -8,7 +8,7 @@ from seedcase_sprout.core.properties import (
 
 
 def set_missing_values_to_null(
-    data_frame: pl.DataFrame, resource_properties: ResourceProperties
+    data: pl.DataFrame, resource_properties: ResourceProperties
 ):
     """Sets missing values to null.
 
@@ -16,7 +16,7 @@ def set_missing_values_to_null(
     them to null.
 
     Args:
-        data_frame: The data frame to process.
+        data: The data frame to process.
         resource_properties: The resource properties describing the data.
 
     Returns:
@@ -29,7 +29,7 @@ def set_missing_values_to_null(
     schema_missing_values = get_nested_attr(
         resource_properties, "schema.missing_values", default=[""]
     )
-    return data_frame.with_columns(
+    return data.with_columns(
         pl.col(field.name).replace(
             old=schema_missing_values
             if field.missing_values is None
