@@ -87,6 +87,7 @@ def check_is_datetime(data_frame: pl.DataFrame, column_name: str) -> pl.Expr:
         .drop_nulls()
         # Strict is false means map to None if it fails rather than give an error.
         .str.to_datetime(strict=False)
+        # TODO: Consider other ways of doing this rather than use "first"
         .first()
     )
     has_timezone = bool(first_datetime.tzinfo) if first_datetime else False
