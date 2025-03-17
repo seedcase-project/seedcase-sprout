@@ -2,6 +2,7 @@ from pathlib import Path
 
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.deep_update import deep_update
 from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_package_properties import (
@@ -86,11 +87,11 @@ def edit_package_properties(
         ignore=[CheckErrorMatcher(validator="required")],
     )
 
-    current_properties.update(properties.compact_dict)
+    updated_properties = deep_update(current_properties, properties.compact_dict)
 
     check_properties(
-        current_properties,
+        updated_properties,
         ignore=[CheckErrorMatcher(validator="required", json_path="resources")],
     )
 
-    return PackageProperties.from_dict(current_properties)
+    return PackageProperties.from_dict(updated_properties)
