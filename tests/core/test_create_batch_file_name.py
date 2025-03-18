@@ -14,4 +14,4 @@ from seedcase_sprout.core.create_batch_file_name import create_batch_file_name
 def test_returns_expected_batch_file_name(mock_uuid, tmp_path):
     path = create_batch_file_name(Path(tmp_path) / "test.csv")
 
-    assert path == f"2024-05-14T050001Z-{mock_uuid()}.csv.gz"
+    assert path == f"2024-05-14T050001Z-{mock_uuid()}.csv"

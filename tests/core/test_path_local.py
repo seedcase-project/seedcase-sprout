@@ -22,10 +22,8 @@ def tmp_package(tmp_path):
     """Set up a test data package with two resources."""
     create_test_data_package(tmp_path)
 
-    create_test_resource_structure(tmp_path, ["batch_file_1.csv.gz"])
-    create_test_resource_structure(
-        tmp_path, ["batch_file_2.csv.gz", "batch_file_3.csv.gz"]
-    )
+    create_test_resource_structure(tmp_path, ["batch_file_1.csv"])
+    create_test_resource_structure(tmp_path, ["batch_file_2.csv", "batch_file_3.csv"])
 
     return tmp_path
 
@@ -91,8 +89,8 @@ def test_path_resource_batch_files_returns_expected_list_of_paths(tmp_package):
     # Then
     assert set(path_resource_batch_files(resource_id=2, path=tmp_package)) == set(
         [
-            resource_batch_path / "batch_file_2.csv.gz",
-            resource_batch_path / "batch_file_3.csv.gz",
+            resource_batch_path / "batch_file_2.csv",
+            resource_batch_path / "batch_file_3.csv",
         ]
     )
 

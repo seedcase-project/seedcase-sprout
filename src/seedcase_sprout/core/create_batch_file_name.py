@@ -11,6 +11,6 @@ def create_batch_file_name(path: Path) -> str:
         path: The path to the batch file to extract the original extension from.
 
     Returns:
-        The created batch file name in the format {timestamp}-{uuid}{ext}.gz
+        The created batch file name in the format {timestamp}-{uuid}{ext}
     """
-    return f"{get_compact_iso_timestamp()}-{uuid4()}{path.suffix}.gz"
+    return f"{get_compact_iso_timestamp()}-{uuid4()}{path.suffix}"
