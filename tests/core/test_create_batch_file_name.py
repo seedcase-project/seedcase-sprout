@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 
 import time_machine
 
-from seedcase_sprout.core.create_raw_file_name import create_batch_file_name
+from seedcase_sprout.core.create_batch_file_name import create_batch_file_name
 
 
 @patch("seedcase_sprout.core.create_raw_file_name.uuid4", return_value=UUID(int=1))

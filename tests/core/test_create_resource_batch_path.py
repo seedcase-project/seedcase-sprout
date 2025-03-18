@@ -1,4 +1,4 @@
-from seedcase_sprout.core.create_resource_raw_path import create_resource_batch_path
+from seedcase_sprout.core.create_resource_batch_path import create_resource_batch_path
 
 
 def test_outputs_correct_batch_directory_path(tmp_path):
