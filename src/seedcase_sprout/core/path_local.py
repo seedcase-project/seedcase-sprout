@@ -160,8 +160,11 @@ def path_resource_data(resource_id: int, path: Path = Path.cwd()) -> Path:
             #   data="path/to/data.csv")
 
             # sp.write_resource_parquet(
-            #     batch_files=sp.path_resource_batch_files(resource_id=1, path=temp_path),
-            #     path=sp.path_resource_data(resource_id=1, path=temp_path))
+            #         batch_files=sp.path_resource_batch_files(
+            #             resource_id=1, path=temp_path
+            #         ),
+            #         path=sp.path_resource_data(resource_id=1, path=temp_path),
+            #     )
 
             # Get the path to the resource data
             # sp.path_resource_data(resource_id=1, path=temp_path)
