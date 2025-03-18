@@ -1,4 +1,4 @@
-from seedcase_sprout.core.deep_update import deep_update
+from seedcase_sprout.core.deep_update import nested_update
 from seedcase_sprout.core.properties import (
     FieldProperties,
     ResourceProperties,
@@ -11,7 +11,7 @@ def test_original_dictionaries_not_modified():
     old = {"level1": {"level2": {"prop1": "old"}}}
     updates = {"level1": {"level2": {"prop1": "new"}}}
 
-    deep_update(old, updates)
+    nested_update(old, updates)
 
     assert old == {"level1": {"level2": {"prop1": "old"}}}
     assert updates == {"level1": {"level2": {"prop1": "new"}}}
@@ -23,7 +23,7 @@ def test_merges_nested_dictionaries():
     old = {"level1": {"level2": {"prop1": "a", "prop2": "b"}}}
     updates = {"level1": {"level2": {"prop1": "new"}}}
 
-    assert deep_update(old, updates) == {
+    assert nested_update(old, updates) == {
         "level1": {"level2": {"prop1": "new", "prop2": "b"}}
     }
 
@@ -33,7 +33,7 @@ def test_overrides_lists():
     old = {"level1": {"level2": [{"prop1": "a", "prop2": "b"}]}}
     updates = {"level1": {"level2": [{"prop1": "new"}]}}
 
-    assert deep_update(old, updates) == {"level1": {"level2": [{"prop1": "new"}]}}
+    assert nested_update(old, updates) == {"level1": {"level2": [{"prop1": "new"}]}}
 
 
 def test_overrides_other_types():
@@ -41,7 +41,7 @@ def test_overrides_other_types():
     old = {"level1": {"level2": ({"prop1": "a"}, {"prop2": "b"})}}
     updates = {"level1": {"level2": ({"prop1": "new"},)}}
 
-    assert deep_update(old, updates) == {"level1": {"level2": ({"prop1": "new"},)}}
+    assert nested_update(old, updates) == {"level1": {"level2": ({"prop1": "new"},)}}
 
 
 def test_overrides_conflicting_types():
@@ -49,7 +49,7 @@ def test_overrides_conflicting_types():
     old = {"level1": {"level2": {"prop1": "a", "prop2": "b"}}}
     updates = {"level1": {"level2": [{"prop1": "new"}]}}
 
-    assert deep_update(old, updates) == {"level1": {"level2": [{"prop1": "new"}]}}
+    assert nested_update(old, updates) == {"level1": {"level2": [{"prop1": "new"}]}}
 
 
 def test_updating_properties_preserves_unchanged_values():
@@ -74,7 +74,7 @@ def test_updating_properties_preserves_unchanged_values():
         ),
     )
 
-    assert deep_update(old, updates) == expected
+    assert nested_update(old, updates) == expected
 
 
 def test_updating_properties_overrides_lists():
@@ -99,7 +99,7 @@ def test_updating_properties_overrides_lists():
         ),
     )
 
-    assert deep_update(old, updates) == expected
+    assert nested_update(old, updates) == expected
 
 
 def test_updating_properties_overrides_conflicting_types():
@@ -124,4 +124,4 @@ def test_updating_properties_overrides_conflicting_types():
         ),
     )
 
-    assert deep_update(old, updates) == expected
+    assert nested_update(old, updates) == expected

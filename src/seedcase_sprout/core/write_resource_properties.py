@@ -2,7 +2,7 @@ from pathlib import Path
 
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.deep_update import deep_update
+from seedcase_sprout.core.deep_update import nested_update
 from seedcase_sprout.core.properties import ResourceProperties
 from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
@@ -91,7 +91,7 @@ def write_resource_properties(
     resource_id = get_resource_id_from_properties(resource_properties)
     current_resource = get_resource_properties(package_properties, resource_id)
     if current_resource:
-        updated_properties = deep_update(current_resource, resource_properties)
+        updated_properties = nested_update(current_resource, resource_properties)
         current_resource.clear()
         current_resource.update(updated_properties)
     else:

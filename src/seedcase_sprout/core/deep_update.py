@@ -9,7 +9,7 @@ PropertiesSubclass = TypeVar("PropertiesSubclass", bound=Properties)
 
 
 def _merge_properties(
-    merger: Merger, path: list, old: PropertiesSubclass, updates: PropertiesSubclass
+    merger: Merger, path: list, current: PropertiesSubclass, updates: PropertiesSubclass
 ) -> PropertiesSubclass:
     """Merges two properties objects using the strategy specified in the merger.
 
@@ -18,13 +18,13 @@ def _merge_properties(
     Args:
         merger: The merger calling this function.
         path: The path in the object to the attribute being merged.
-        old: The properties object to update.
+        current: The properties object to update.
         updates: The properties object representing the updates to make.
 
     Returns:
         A new properties object with the updates.
     """
-    return old.from_dict(merger.merge(old.compact_dict, updates.compact_dict))
+    return current.from_dict(merger.merge(current.compact_dict, updates.compact_dict))
 
 
 DEEP_MERGER = Merger(
@@ -43,8 +43,10 @@ DEEP_MERGER = Merger(
 PropertiesOrDict = TypeVar("PropertiesOrDict", Properties, dict[str, Any])
 
 
-def deep_update(old: PropertiesOrDict, updates: PropertiesOrDict) -> PropertiesOrDict:
-    """Updates an object with values from another object.
+def nested_update(
+    current: PropertiesOrDict, updates: PropertiesOrDict
+) -> PropertiesOrDict:
+    """Updates all layers of an object with values from another object.
 
     Works analogously to the `update` method of the dictionary class, but
     can also handle nested structures and properties objects. Nested objects
@@ -53,12 +55,12 @@ def deep_update(old: PropertiesOrDict, updates: PropertiesOrDict) -> PropertiesO
     Returns a new object without modifying the existing object.
 
     Args:
-        old: The existing object to update.
+        current: The existing object to update.
         updates: The object representing the updates to make.
 
     Returns:
         A new object with updated values.
     """
-    if isinstance(old, dict):
-        old = deepcopy(old)
-    return DEEP_MERGER.merge(old, updates)
+    if isinstance(current, dict):
+        current = deepcopy(current)
+    return DEEP_MERGER.merge(current, updates)
