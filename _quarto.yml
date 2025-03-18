@@ -121,7 +121,7 @@ quartodoc:
         - path_package
         - path_properties
         - path_packages
-        - path_resourcef
+        - path_resource
         - path_resource_data
         - path_resource_batch
         - path_resource_batch_files
