@@ -15,7 +15,7 @@ from seedcase_sprout.core.sprout_checks.get_field_error_message import (
 # Column name for column containing the row index
 INDEX_COLUMN = "__row_index__"
 # Column name for column containing the result of the check
-CHECK_COLUMN_NAME = "{column}_correct"
+CHECK_COLUMN_NAME = "__{column}_check_data_types_correct__"
 
 
 def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProperties):
