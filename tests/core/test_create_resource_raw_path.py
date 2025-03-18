@@ -1,6 +1,6 @@
-from seedcase_sprout.core.create_resource_raw_path import create_resource_raw_path
+from seedcase_sprout.core.create_resource_raw_path import create_resource_batch_path
 
 
-def test_outputs_correct_raw_directory_path(tmp_path):
-    """The raw directory path is output correctly."""
-    assert create_resource_raw_path(tmp_path) == tmp_path / "raw"
+def test_outputs_correct_batch_directory_path(tmp_path):
+    """The batch directory path is output correctly."""
+    assert create_resource_batch_path(tmp_path) == tmp_path / "batch"
