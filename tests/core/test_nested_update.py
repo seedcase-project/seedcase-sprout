@@ -1,4 +1,4 @@
-from seedcase_sprout.core.deep_update import nested_update
+from seedcase_sprout.core.nested_update import nested_update
 from seedcase_sprout.core.properties import (
     FieldProperties,
     ResourceProperties,
