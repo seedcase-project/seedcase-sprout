@@ -23,7 +23,7 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
 
     Each value in each data frame column is checked against the data type given in the
     resource properties for the corresponding field. This function expects the column
-    names of the data frame to be correct and assumes that missing values are
+    names of the data frame to be the same as in the `resource_properties` and assumes that missing values are
     represented by null.
 
     Args:
@@ -34,8 +34,8 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
         The data frame, if all data type checks passed.
 
     Raises:
-        ExceptionGroup[ValueError]: One error for each column/field where any values
-            failed the data type check. Each error lists all failed values together
+        ExceptionGroup[ValueError]: One error for each column/field that has any values
+            that failed the data type check. Each error lists all failed values together
             with their row index.
     """
     fields: list[FieldProperties] = get_nested_attr(
