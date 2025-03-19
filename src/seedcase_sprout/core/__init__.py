@@ -13,7 +13,7 @@ from .build_readme_text import build_readme_text
 from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
-from .edit_package_properties import edit_package_properties
+from .edit_package_properties import update_package_properties
 from .example_package_properties import example_package_properties
 
 # TODO: Consider having all these in one module.
@@ -76,7 +76,7 @@ __all__ = [
     "example_package_properties",
     # Packages -----
     "create_package_properties",
-    "edit_package_properties",
+    "update_package_properties",
     "write_package_properties",
     "build_readme_text",
     # "delete_package",

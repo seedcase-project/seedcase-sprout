@@ -1,16 +1,14 @@
 from dataclasses import replace
-from json import JSONDecodeError
 from pathlib import Path
 
 from pytest import mark, raises
 
-from seedcase_sprout.core.edit_package_properties import edit_package_properties
+from seedcase_sprout.core.edit_package_properties import update_package_properties
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.write_json import write_json
 
 full_properties = PackageProperties(
     name="my-package",
@@ -23,10 +21,6 @@ full_properties = PackageProperties(
 )
 
 
-def get_properties_path(tmp_path: Path, package_properties: PackageProperties) -> Path:
-    return write_json(package_properties.compact_dict, tmp_path / "datapackage.json")
-
-
 @mark.parametrize(
     "properties",
     [
@@ -35,14 +29,13 @@ def get_properties_path(tmp_path: Path, package_properties: PackageProperties) -
         full_properties,
     ],
 )
-def test_edits_only_changed_package_properties(tmp_path, properties):
-    """Should only edit package properties and leave unchanged values as is."""
-    properties_path = get_properties_path(tmp_path, full_properties)
+def test_updates_only_changed_package_properties(properties):
+    """Should only update package properties and leave unchanged values as is."""
     expected_properties = PackageProperties.from_dict(
         full_properties.compact_dict | properties.compact_dict
     )
 
-    new_properties = edit_package_properties(properties_path, properties)
+    new_properties = update_package_properties(full_properties, properties)
 
     assert new_properties == expected_properties
 
@@ -54,22 +47,19 @@ def test_edits_only_changed_package_properties(tmp_path, properties):
         PackageProperties(name="my-incomplete-package"),
     ],
 )
-def test_edits_incomplete_package_properties(tmp_path, current_properties):
-    """Should edit properties that are incomplete before being edited."""
-    properties_path = get_properties_path(tmp_path, current_properties)
-
-    new_properties = edit_package_properties(properties_path, full_properties)
+def test_updates_incomplete_package_properties(current_properties):
+    """Should update properties that are incomplete before being updated."""
+    new_properties = update_package_properties(current_properties, full_properties)
 
     assert new_properties == full_properties
 
 
-def test_resources_not_added_from_incoming_properties(tmp_path):
+def test_resources_not_added_from_incoming_properties():
     """When current properties have no resources, these should not be added from
     incoming properties."""
-    properties_path = get_properties_path(tmp_path, full_properties)
     properties = PackageProperties(resources=[ResourceProperties()])
 
-    new_properties = edit_package_properties(properties_path, properties)
+    new_properties = update_package_properties(full_properties, properties)
 
     assert new_properties == full_properties
 
@@ -94,43 +84,19 @@ def test_current_resources_not_modified(tmp_path, properties):
             )
         ],
     )
-    properties_path = get_properties_path(tmp_path, current_properties)
-
-    new_properties = edit_package_properties(properties_path, properties)
+    new_properties = update_package_properties(current_properties, properties)
 
     assert new_properties == current_properties
 
 
-def test_throws_error_if_path_points_to_dir(tmp_path):
-    """Should throw FileNotFoundError if the path points to a folder."""
-    with raises(FileNotFoundError):
-        edit_package_properties(tmp_path, PackageProperties())
-
-
-def test_throws_error_if_path_points_to_nonexistent_file(tmp_path):
-    """Should throw FileNotFoundError if the path points to a nonexistent file."""
-    with raises(FileNotFoundError):
-        edit_package_properties(tmp_path / "datapackage.json", PackageProperties())
-
-
-def test_throws_error_if_properties_file_cannot_be_read(tmp_path):
-    """Should throw JSONDecodeError if the properties file cannot be read as JSON."""
-    file_path = tmp_path / "datapackage.json"
-    file_path.write_text(",,, this is not, JSON")
-
-    with raises(JSONDecodeError):
-        edit_package_properties(file_path, full_properties)
-
-
-def test_throws_error_if_current_properties_have_a_package_error(tmp_path):
+def test_throws_error_if_current_properties_have_a_package_error():
     """Should throw a group of `CheckError`s if the current properties have an error
     among the package properties."""
     current_properties = PackageProperties(name="invalid name with spaces")
-    properties_path = get_properties_path(tmp_path, current_properties)
     properties = PackageProperties(name="my-new-package-name")
 
     with raises(ExceptionGroup) as error_info:
-        edit_package_properties(properties_path, properties)
+        update_package_properties(current_properties, properties)
 
     assert "invalid name with spaces" in error_info.value.message
     errors = error_info.value.exceptions
@@ -139,7 +105,7 @@ def test_throws_error_if_current_properties_have_a_package_error(tmp_path):
     assert errors[0].validator == "pattern"
 
 
-def test_throws_error_if_current_properties_have_a_resource_error(tmp_path):
+def test_throws_error_if_current_properties_have_a_resource_error():
     """Should throw a group of `CheckError`s if the current properties have an error
     among the resource properties."""
     current_properties = replace(
@@ -153,11 +119,10 @@ def test_throws_error_if_current_properties_have_a_resource_error(tmp_path):
             )
         ],
     )
-    properties_path = get_properties_path(tmp_path, current_properties)
     properties = PackageProperties(name="my-new-package-name")
 
     with raises(ExceptionGroup) as error_info:
-        edit_package_properties(properties_path, properties)
+        update_package_properties(current_properties, properties)
 
     assert "my-package" in error_info.value.message
     assert "invalid name with spaces" in error_info.value.message
@@ -167,14 +132,13 @@ def test_throws_error_if_current_properties_have_a_resource_error(tmp_path):
     assert errors[0].validator == "pattern"
 
 
-def test_throws_error_if_incoming_package_properties_are_malformed(tmp_path):
+def test_throws_error_if_incoming_package_properties_are_malformed():
     """Should throw a group of `CheckError`s if the incoming package properties are
     malformed."""
-    properties_path = get_properties_path(tmp_path, full_properties)
     properties = PackageProperties(name="a name with spaces")
 
     with raises(ExceptionGroup) as error_info:
-        edit_package_properties(properties_path, properties)
+        update_package_properties(full_properties, properties)
 
     assert "a name with spaces" in error_info.value.message
     errors = error_info.value.exceptions
@@ -183,15 +147,14 @@ def test_throws_error_if_incoming_package_properties_are_malformed(tmp_path):
     assert errors[0].validator == "pattern"
 
 
-def test_throws_error_if_resulting_properties_are_incomplete(tmp_path):
+def test_throws_error_if_resulting_properties_are_incomplete():
     """Should throw a group of `CheckError`s if the resulting properties have missing
     required fields."""
     current_properties = PackageProperties(name="my-incomplete-package")
-    properties_path = get_properties_path(tmp_path, current_properties)
     properties = PackageProperties(title="My Incomplete Package")
 
     with raises(ExceptionGroup) as error_info:
-        edit_package_properties(properties_path, properties)
+        update_package_properties(current_properties, properties)
 
     message = error_info.value.message
     assert "my-incomplete-package" in message
@@ -201,13 +164,11 @@ def test_throws_error_if_resulting_properties_are_incomplete(tmp_path):
     assert all(error.validator == "required" for error in errors)
 
 
-def test_throws_error_if_both_current_and_incoming_properties_empty(tmp_path):
+def test_throws_error_if_both_current_and_incoming_properties_empty():
     """Should throw a group of `CheckError`s if both current and incoming properties are
     empty."""
-    properties_path = get_properties_path(tmp_path, PackageProperties())
-
     with raises(ExceptionGroup) as error_info:
-        edit_package_properties(properties_path, PackageProperties())
+        update_package_properties(PackageProperties(), PackageProperties())
 
     assert "{}" in error_info.value.message
     errors = error_info.value.exceptions

@@ -1,45 +1,40 @@
 from pathlib import Path
 
-from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
 from seedcase_sprout.core.properties import PackageProperties
-from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_package_properties import (
     check_package_properties,
 )
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
 
 
-def edit_package_properties(
-    path: Path, properties: PackageProperties
+def update_package_properties(
+    current: PackageProperties, updates: PackageProperties
 ) -> PackageProperties:
-    """Edits the properties of an existing package.
+    """Updates the properties of an existing package.
 
-    Use this any time you want to edit the package's properties.  When you need
-    to edit the `datapackage.json` file, use this function to ensure the
-    properties are correctly structured before they're written. It only edits the
+    Use this any time you want to update the package's properties.  When you need
+    to update the `datapackage.json` file, use this function to ensure the
+    properties are correctly structured before they're written. It only updates the
     properties of the package itself, not of the data resources contained within
     the package.
 
-    If the values in `properties` are well-formed, they will overwrite any preexisting
-    values within the original package properties.
+    If the properties in the `updates` argument are correct, they will overwrite any
+    pre-existing properties within the `current` properties.
 
     Args:
-        path: The path to the `datapackage.json` file. Use `path_properties()`
-            to provide the correct path.
-        properties: The new package properties to update from the original. Use
+        current: The current properties found in the `datapackage.json` file. Use
+            `read_properties()` to get the latest properties.
+        updates: The new package properties to update from the original. Use
             `PackageProperties` to provide a correctly structured properties
             dictionary. See `help(PackageProperties)` for details on how to use it.
 
     Returns:
-        The updated package properties as a Python dictionary that mimics the
-            JSON structure. Use `write_package_properties()` to save it back to the
-            `datapackage.json` file.
+        The updated package properties as a `PackageProperties` object. Use
+            `write_package_properties()` to save it back to the `datapackage.json`
+            file.
 
-    Raises:
-        FileNotFound: If the `datapackage.json` file doesn't exist.
-        JSONDecodeError: If the `datapackage.json` file couldn't be read.
-        ExceptionGroup: If there is an error in the current, incoming or resulting
+        ExceptionGroup: If there is an error in the current, incoming, or resulting
             package properties. A group of `CheckError`s, one error for each failed
             check.
 
@@ -63,34 +58,30 @@ def edit_package_properties(
             )
 
             # Edit package properties
-            sp.edit_package_properties(
-                path=temp_path / "1" / "datapackage.json",
-                properties=sp.PackageProperties(
+            sp.update_package_properties(
+                current=sp.read_properties(temp_path / "1" / "datapackage.json"),
+                updates=sp.PackageProperties(
                     title="New Package Title",
                     name="new-package-name",
                     description="New Description",
-                ),
+                )
             )
         ```
     """
-    check_is_file(path)
+    updates.resources = None
+    check_package_properties(updates, ignore=[CheckErrorMatcher(validator="required")])
 
-    properties.resources = None
-    check_package_properties(
-        properties, ignore=[CheckErrorMatcher(validator="required")]
-    )
-
-    current_properties = read_json(path)
     check_properties(
-        current_properties,
+        current,
         ignore=[CheckErrorMatcher(validator="required")],
     )
 
-    current_properties.update(properties.compact_dict)
+    updated = current.compact_dict
+    updated.update(updates.compact_dict)
 
     check_properties(
-        current_properties,
+        updated,
         ignore=[CheckErrorMatcher(validator="required", json_path="resources")],
     )
 
-    return PackageProperties.from_dict(current_properties)
+    return PackageProperties.from_dict(updated)
