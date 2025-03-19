@@ -1,0 +1,61 @@
+---
+title: "Flows"
+toc-depth: 2
+---
+
+::: callout-important
+We created this document mainly as a way to help us as a team all
+understand and agree on what we're making and what needs to be worked
+on. This means that the flows may change quite substantially until we've
+reached a stable full release at `v1.0.0`.
+:::
+
+Based on the [functions](functions.qmd) that list and describe the main
+functions and classes that make up the interface, this document
+describes and shows how all these objects work together and flow into
+one another, but not necessarily the functions exact input and output.
+Those are already described in the [functions](functions.qmd) document.
+
+Each diagram uses specific shapes and lines to represent different
+things:
+
+-   A dotted line between objects/functions means the flow is optional.
+-   A solid line between objects/functions means the flow is required
+    and is the next step.
+-   A cylinder means an object such as a class or file.
+-   A rectangle with rounded corners means an action like a function or
+    method.
+
+::: callout-caution
+For some reason, the diagrams below don't display well on some browsers
+like Firefox. To see them, try using a different browser like Chrome or
+Edge.
+:::
+
+## Save new, added, or modified raw data to batch
+
+A data resource needs data, not just properties. As long as there is the
+resource properties, you can add data to the resource. Whenever data is
+added in anyway to a data resource, it gets first saved in the `batch/`
+folder to keep track of additions or changes. You add the data when:
+
+-   A new data resource is created and raw data is added to it.
+-   Additional raw data is added to an existing data resource.
+-   You need to fix or update or modify existing data in the resource by
+    correcting the data (e.g. fixing a data entry issue).
+
+```{mermaid}
+%%| label: fig-flow-save-raw-data-to-batch
+%%| fig-cap: "Diagram showing the flow of objects and functions to save new, added, or modified raw data to a batch."
+%%| fig-alt: "A flow diagram showing the steps to save new, added, or modified raw data to a batch."
+flowchart
+    raw_data[(Raw data file)]
+    resource_properties[(ResourceProperties)]
+    write_resource_batches("write_resource_batches()")
+    check_data("check_data()")
+
+    raw_data --> write_resource_batches
+    resource_properties --> write_resource_batches
+    raw_data -.-> check_data
+    resource_properties -.-> check_data
+```
