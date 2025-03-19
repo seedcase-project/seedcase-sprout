@@ -99,6 +99,14 @@ flowchart
     function --> out
 ```
 
+### {{< var wip >}} `delete_package(path, confirm)`
+
+Completely delete a specific package and all it's data resources.
+Because this action would be permanent, the `confirm` argument would
+default to `false` so that the user needs to explicitly provide `true`
+to the function argument as confirmation. This is done to prevent
+accidental deletion. Outputs `true` if the deletion was successful.
+
 ## Data resource functions
 
 ### {{< var done >}} `create_resource_dirs(path)`
