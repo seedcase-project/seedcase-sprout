@@ -3,12 +3,12 @@ from pathlib import Path
 
 from pytest import mark, raises
 
-from seedcase_sprout.core.edit_package_properties import update_package_properties
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
+from seedcase_sprout.core.update_package_properties import update_package_properties
 
 full_properties = PackageProperties(
     name="my-package",
