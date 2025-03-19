@@ -1,7 +1,7 @@
 project:
   type: seedcase-theme
   pre-render: rm -rf .storage
-  post-render: rm -rf docs/reference/*.qmd
+  post-render: rm docs/reference/*.qmd
   render:
     - "docs/*"
     - "index.qmd"
@@ -86,7 +86,6 @@ quartodoc:
       desc: "Functions to work with and manage data packages, but not the data resources within them."
       package: "seedcase_sprout.core"
       contents:
-        - create_package_properties
         - edit_package_properties
         - build_readme_text
 
