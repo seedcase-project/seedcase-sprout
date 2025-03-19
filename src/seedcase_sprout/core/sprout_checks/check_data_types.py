@@ -8,8 +8,8 @@ from seedcase_sprout.core.properties import (
 from seedcase_sprout.core.sprout_checks.check_column_data_types import (
     FRICTIONLESS_TO_COLUMN_CHECK,
 )
-from seedcase_sprout.core.sprout_checks.get_field_error_message import (
-    get_field_error_message,
+from seedcase_sprout.core.sprout_checks.field_general_error_messages import (
+    FIELD_GENERAL_ERROR_MESSAGES,
 )
 
 # Column name for column containing the row index
@@ -18,7 +18,7 @@ INDEX_COLUMN = "__row_index__"
 CHECK_COLUMN_NAME = "__{column}_check_data_types_correct__"
 
 
-def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProperties):
+def check_data_types(data: pl.DataFrame, resource_properties: ResourceProperties):
     """Checks that all data items match their data type given in `resource_properties`.
 
     Each value in each data frame column is checked against the data type given in the
@@ -27,7 +27,7 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
     that missing values are represented by null.
 
     Args:
-        data_frame: The data frame to check.
+        data: The data frame to check.
         resource_properties: The resource properties to check against.
 
     Returns:
@@ -43,8 +43,8 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
     )
 
     # Add column with failed values for each field
-    df_checked = data_frame.with_row_index(INDEX_COLUMN).with_columns(
-        check_column(data_frame, field)
+    df_checked = data.with_row_index(INDEX_COLUMN).with_columns(
+        check_column(data, field)
         .pipe(extract_failed_values, field.name)
         .alias(CHECK_COLUMN_NAME.format(column=field.name))
         for field in fields
@@ -67,7 +67,7 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
             errors,
         )
 
-    return data_frame
+    return data
 
 
 def extract_failed_values(check_result: pl.Expr, field_name: str) -> pl.Expr:
@@ -95,14 +95,14 @@ def extract_failed_values(check_result: pl.Expr, field_name: str) -> pl.Expr:
     )
 
 
-def check_column(data_frame: pl.DataFrame, field: FieldProperties) -> pl.Expr:
+def check_column(data: pl.DataFrame, field: FieldProperties) -> pl.Expr:
     """Checks that the values in the given column/field are of the correct type.
 
     This function constructs the appropriate check expression for the field
     based on the field's type.
 
     Args:
-        data_frame: The data frame being operated on.
+        data: The data frame being operated on.
         field: The field to check.
 
     Returns:
@@ -113,10 +113,27 @@ def check_column(data_frame: pl.DataFrame, field: FieldProperties) -> pl.Expr:
     return (
         pl.col(field_name)
         .is_null()
-        .or_(
-            check(data_frame, field_name)
-            if field_type == "datetime"
-            else check(field_name)
-        )
+        .or_(check(data, field_name) if field_type == "datetime" else check(field_name))
         .cast(pl.Boolean)
+    )
+
+
+def get_field_error_message(field: FieldProperties, failed_values: list[str]) -> str:
+    """Returns an error message for the given field.
+
+    The error message includes a general comment about the data type of the field,
+    the name of the field, and a list of failed values in the field's column together
+    with their row indices.
+
+    Args:
+        field: The field to get the error message for.
+        failed_values: The failed values in the field's column.
+
+    Returns:
+        An error message for the field.
+    """
+    return (
+        f"{FIELD_GENERAL_ERROR_MESSAGES.get(field.type, '')} "
+        f"Values in column '{field.name}' at the following row indices "
+        f"could not be parsed as '{field.type}': {', '.join(failed_values)}"
     )
