@@ -23,8 +23,8 @@ def check_data_types(data_frame: pl.DataFrame, resource_properties: ResourceProp
 
     Each value in each data frame column is checked against the data type given in the
     resource properties for the corresponding field. This function expects the column
-    names of the data frame to be the same as in the `resource_properties` and assumes that missing values are
-    represented by null.
+    names of the data frame to be the same as in the `resource_properties` and assumes
+    that missing values are represented by null.
 
     Args:
         data_frame: The data frame to check.
