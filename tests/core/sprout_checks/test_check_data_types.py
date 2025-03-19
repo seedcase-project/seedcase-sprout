@@ -160,4 +160,5 @@ def test_error_raised_when_data_types_do_not_match_properties(data):
         expected_flagged_values = [
             (str(row), str(value)) for row, value in zip(bad_rows, column[:3])
         ]
+        assert f"column '{col_name}'" in error_message
         assert flagged_values == expected_flagged_values

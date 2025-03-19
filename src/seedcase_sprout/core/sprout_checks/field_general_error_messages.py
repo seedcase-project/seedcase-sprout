@@ -1,4 +1,4 @@
-from seedcase_sprout.core.properties import FieldProperties, FieldType
+from seedcase_sprout.core.properties import FieldType
 from seedcase_sprout.core.sprout_checks.check_column_data_types import BOOLEAN_VALUES
 
 DATA_TYPES_URL = "https://sprout.seedcase-project.org/docs/design/interface/data-types#"
@@ -45,24 +45,3 @@ FIELD_GENERAL_ERROR_MESSAGES: dict[FieldType, str] = {
     "array": "The given value doesn't seem to be a correctly formatted JSON array.",
     "geojson": "The given value doesn't seem to be a correctly formatted JSON object.",
 }
-
-
-def get_field_error_message(field: FieldProperties, failed_values: list[str]) -> str:
-    """Returns an error message for the given field.
-
-    The error message includes a general comment about the data type of the field,
-    the name of the field, and a list of failed values in the field's column together
-    with their row indices.
-
-    Args:
-        field: The field to get the error message for.
-        failed_values: The failed values in the field's column.
-
-    Returns:
-        An error message for the field.
-    """
-    return (
-        f"{FIELD_GENERAL_ERROR_MESSAGES.get(field.type, '')} "
-        f"Values in column '{field.name}' at the following row indices "
-        f"could not be parsed as '{field.type}': {', '.join(failed_values)}"
-    )
