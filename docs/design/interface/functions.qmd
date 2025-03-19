@@ -88,13 +88,16 @@ flowchart
 See the help documentation with `help(write_package_properties)` for
 more details.
 
-### {{< var wip >}} `delete_package(path, confirm)`
-
-Completely delete a specific package and all it's data resources.
-Because this action would be permanent, the `confirm` argument would
-default to `false` so that the user needs to explicitly provide `true`
-to the function argument as confirmation. This is done to prevent
-accidental deletion. Outputs `true` if the deletion was successful.
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    in_path[/path/]
+    function("write_package_properties()")
+    out[("Path: ./datapackage.json")]
+    in_properties --> function
+    in_path --> function
+    function --> out
+```
 
 ## Data resource functions
 
