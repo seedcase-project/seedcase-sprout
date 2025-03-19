@@ -8,286 +8,95 @@ first approach).
 
 from pathlib import Path
 
-from seedcase_sprout.core.check_is_dir import check_is_dir
-from seedcase_sprout.core.check_is_file import check_is_file
-from seedcase_sprout.core.check_is_resource_dir import check_is_resource_dir
 
+class path:
+    """Gets the absolute path to a specific file or folder in a data package.
 
-def path_properties(path: Path = Path.cwd()) -> Path:
-    """Gets the absolute path to the specified package's properties file.
+    The functions in this class are used to get the absolute path to a specific file or
+    folder in a data package. They are intended as convenience functions to provide
+    easy and quick access to required files and folders within a data package.
+    These functions have these characteristics in common:
 
-    Args:
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
-
-    Returns:
-        The absolute path to the data package's properties file.
-
-    Examples:
-        ```{python}
-        import os
-        import tempfile
-        from pathlib import Path
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
-            # Create a package structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
-
-            sp.path_properties(path=temp_path)
-        ```
-    """
-    path = path / "datapackage.json"
-    return check_is_file(path)
-
-
-def path_readme(path: Path = Path.cwd) -> Path:
-    """Get the path to the README file for the data package.
+    -   All of these functions output a `Path` object.
+    -   All of these functions have an optional `path` argument that defaults to
+        the current working directory available from the base class.
+    -   If the wrong `resource_id` is given, an error message will include a
+        list of all the actual `resource_id`'s for a specific package.
 
     Args:
         path: Provide a path to the package directory. Defaults to the current working
             directory.
 
     Returns:
-        The absolute path to the data package's README file.
-
-    Examples:
-        ```{python}
-        import os
-        import tempfile
-        from pathlib import Path
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
-
-            # Create a package structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
-
-            sp.path_readme(path=temp_path)
-        ```
-    """
-    path = path / "README.md"
-    return check_is_file(path)
-
-
-def path_resource(resource_id: int, path: Path = Path.cwd()) -> Path:
-    """Gets the absolute path to the specified resource.
-
-    Args:
-        resource_id: The ID of the resource.
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
-
-    Returns:
-        The absolute path to a specific resource in the data package.
+        The absolute path to the data package's file or folder.
 
     Examples:
         ```{python}
         import tempfile
-        from pathlib import Path
-
         import seedcase_sprout.core as sp
 
-        # Create a temporary directory for the example
+        sp.path.properties()
+        sp.path.readme()
+
+        # Create a temporary directory for the example to show
+        # how to use the function with a different path
         with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
-
-            # Create a package and resource structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
-
-            resources_path = Path(temp_path / "resources")
-            resources_path.mkdir()
-            sp.create_resource_structure(path=resources_path)
-
-            # Get the path to the resource
-            sp.path_resource(resource_id=1, path=temp_path)
+            sp.path(temp_path).properties()
+            sp.path(temp_path).readme()
         ```
     """
-    path = path_resources(path=path) / str(resource_id)
-    return check_is_resource_dir(path)
 
+    def __init__(self, path: Path = Path.cwd()) -> Path:
+        """Set the base path."""
+        self.path = path
 
-def path_resource_data(resource_id: int, path: Path = Path.cwd()) -> Path:
-    """Gets the absolute path to a specific resource's data (i.e., Parquet) file.
+    def properties(self) -> Path:
+        """Path to the `datapackage.json` file."""
+        return self.path / "datapackage.json"
 
-    Args:
-        resource_id: ID of the resource.
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
+    def readme(self) -> Path:
+        """Path to the `README.md` file."""
+        return self.path / "README.md"
 
-    Returns:
-        The absolute path the specific resource's data file in a data package.
+    def resources(self) -> Path:
+        """Path to the `resources` folder."""
+        return self.path / "resources"
 
-    Examples:
-        ```{python}
-        import tempfile
-        from pathlib import Path
+    def resource(self, resource_id: str) -> Path:
+        """Gets the absolute path to the specified resource folder.
 
-        import seedcase_sprout.core as sp
+        Args:
+            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
+                the correct resource ID.
+        """
+        return self.path / "resources" / resource_id
 
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
+    def resource_data(self, resource_id: int) -> Path:
+        """Gets the absolute path to the specified resource's data file.
 
-            # Create a package and resource structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
+        Args:
+            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
+                the correct resource ID.
+        """
+        return self.path / "resources" / str(resource_id) / "data.parquet"
 
-            # TODO: Update after writing data to resource
-            # resource_path = Path(temp_path / "resources")
-            # resource_path.mkdir()
-            # sp.create_resource_structure(path=resource_path)
-            # sp.write_resource_data_to_batch(
-            #   package_id=1,
-            #   resource_id=1,
-            #   data="path/to/data.csv")
+    def resource_batch(self, resource_id: int) -> Path:
+        """Gets the absolute path to the specified resource's batch folder.
 
-            # sp.write_resource_parquet(
-            #         batch_files=sp.path_resource_batch_files(
-            #             resource_id=1, path=temp_path
-            #         ),
-            #         path=sp.path_resource_data(resource_id=1, path=temp_path),
-            #     )
+        Args:
+            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
+                the correct resource ID.
+        """
+        return self.path / "resources" / str(resource_id) / "batch"
 
-            # Get the path to the resource data
-            # sp.path_resource_data(resource_id=1, path=temp_path)
-        ```
-    """
-    path = path_resource(resource_id, path=path) / "data.parquet"
-    return check_is_file(path)
+    def resource_batch_files(self, resource_id: int) -> Path:
+        """Gets the absolute path to the specified resource's files in the batch folder.
 
-
-def path_resource_batch(resource_id: int, path: Path = Path.cwd()) -> Path:
-    """Gets the absolute path to a specific resource's batch folder.
-
-    Args:
-        resource_id: The ID of the resource.
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
-
-    Returns:
-        The absolute path to a specific resource's batch folder in a data package.
-
-    Examples:
-        ```{python}
-        import tempfile
-        from pathlib import Path
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
-
-            # Create a package and resource structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
-
-            resources_path = Path(temp_path / "resources")
-            resources_path.mkdir()
-            sp.create_resource_structure(path=resources_path)
-
-            # Get the path to the resource's batch folder
-            sp.path_resource_batch(resource_id=1, path=temp_path)
-        ```
-    """
-    path = path_resource(resource_id, path=path) / "batch"
-    return check_is_dir(path)
-
-
-def path_resource_batch_files(resource_id: int, path: Path = Path.cwd()) -> list[Path]:
-    """Gets the absolute path to the batch files of a specific resource.
-
-    Args:
-        resource_id: The ID of the resource.
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
-
-    Returns:
-        A list of paths to a specific resource's batch files in a data package.
-
-    Examples:
-        ```{python}
-        import tempfile
-        from pathlib import Path
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
-
-            # Create a package and resource structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
-
-            resources_path = Path(temp_path / "resources")
-            resources_path.mkdir()
-            sp.create_resource_structure(path=resources_path)
-            # TODO: Add data/batch files to resource
-            # sp.write_resource_batch_data(
-            #     path=sp.path_resource_batch(resource_id=1, path=temp_dir),
-            #     data="path/to/data.csv")
-
-            # Get the path to the resource's batch files
-            # sp.path_resource_batch_files(resource_id=1, path=temp_dir)
-        ```
-    """
-    return list(path_resource_batch(resource_id, path=path).iterdir())
-
-
-def path_resources(path: Path = Path.cwd()) -> Path:
-    """Gets the absolute path to the resources of a data package.
-
-    Args:
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
-
-    Returns:
-        The absolute path to the resource in a data package.
-
-    Examples:
-        ```{python}
-        import tempfile
-        from pathlib import Path
-
-        import seedcase_sprout.core as sp
-
-        # Create a temporary directory for the example
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir)
-
-            # Create a package structure first
-            sp.create_package_properties(
-                properties=sp.example_package_properties(),
-                path=temp_path
-            )
-
-            Path(temp_path / "resources").mkdir()
-            # Get the path to the resource folders
-            sp.path_resources(path=temp_path)
-        ```
-    """
-    path = path / "resources"
-    return check_is_dir(path)
+        Args:
+            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
+                the correct resource ID.
+        """
+        # TODO: This needs a check if the folder exists?
+        return list(
+            Path(self.path / "resources" / str(resource_id) / "batch").iterdir()
+        )
