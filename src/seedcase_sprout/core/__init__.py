@@ -13,7 +13,6 @@ from .build_readme_text import build_readme_text
 from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
-from .edit_package_properties import update_package_properties
 from .example_package_properties import example_package_properties
 
 # TODO: Consider having all these in one module.
@@ -47,6 +46,7 @@ from .properties import (
 from .sprout_checks.check_package_properties import check_package_properties
 from .sprout_checks.check_properties import check_properties
 from .sprout_checks.check_resource_properties import check_resource_properties
+from .update_package_properties import update_package_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 
