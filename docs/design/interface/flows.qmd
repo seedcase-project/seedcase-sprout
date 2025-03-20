@@ -1,0 +1,69 @@
+---
+title: "Flows"
+toc-depth: 2
+---
+
+::: callout-important
+We created this document mainly as a way to help us as a team all
+understand and agree on what we're making and what needs to be worked
+on. This means that the flows may change quite substantially until we've
+reached a stable full release at `v1.0.0`.
+:::
+
+Based on the [functions](functions.qmd) that list and describe the main
+functions and classes that make up the interface, this document
+describes and shows how all these objects work together and flow into
+one another, but not necessarily the functions exact input and output.
+Those are already described in the [functions](functions.qmd) document.
+
+Each diagram uses specific shapes and lines to represent different
+things:
+
+-   A dotted line between objects/functions means the flow is optional.
+-   A solid line between objects/functions means the flow is required
+    and is the next step.
+-   A cylinder means an object such as a class or file.
+-   A rectangle with rounded corners means an action like a function or
+    method.
+
+::: callout-caution
+For some reason, the diagrams below don't display well on some browsers
+like Firefox. To see them, try using a different browser like Chrome or
+Edge.
+:::
+
+## Create or re-create the resource data
+
+The batch data files are used to keep track of changes to the data
+without deleting the original data, while also keeping the data that
+will be used clean and ready for use. With this flow, the batch data is
+converted into the final resource data. These steps are split up so
+that, if needed or desired, you can make modifications to the data
+before it is written to the final resource data. While
+`write_resource_data()` will call `check_data()` internally, it can also
+be called separately to check the data before writing it to the final
+resource data.
+
+```{mermaid}
+%%| label: fig-flow-create-resource-data
+%%| fig-cap: "Diagram showing the flow of objects and functions to create or re-create the resource data."
+%%| fig-alt: "A flow diagram showing the steps to create or re-create the resource data."
+flowchart
+    path_resource_batch_files("path_resource_batch_files()")
+    read_resource_batches("read_resource_batches()")
+    list_data[("List[DataFrame]")]
+    join_resource_batches("join_resource_batches()")
+    joined_data[(DataFrame)]
+    write_resource_data("write_resource_data()")
+    resource_properties[(ResourceProperties)]
+    check_data("check_data()")
+
+    path_resource_batch_files --> read_resource_batches
+    read_resource_batches --> list_data
+    list_data --> join_resource_batches
+    join_resource_batches --> joined_data
+    joined_data --> write_resource_data
+    resource_properties --> write_resource_data
+    joined_data -.-> check_data
+    resource_properties -.-> check_data
+```
