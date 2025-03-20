@@ -1,0 +1,68 @@
+---
+title: "Flows"
+toc-depth: 2
+---
+
+::: callout-important
+We created this document mainly as a way to help us as a team all
+understand and agree on what we're making and what needs to be worked
+on. This means that the flows may change quite substantially until we've
+reached a stable full release at `v1.0.0`.
+:::
+
+Based on the [functions](functions.qmd) that list and describe the main
+functions and classes that make up the interface, this document
+describes and shows how all these objects work together and flow into
+one another, but not necessarily the functions exact input and output.
+Those are already described in the [functions](functions.qmd) document.
+
+Each diagram uses specific shapes and lines to represent different
+things:
+
+-   A dotted line between objects/functions means the flow is optional.
+-   A solid line between objects/functions means the flow is required
+    and is the next step.
+-   A cylinder means an object such as a class or file.
+-   A rectangle with rounded corners means an action like a function or
+    method.
+
+::: callout-caution
+For some reason, the diagrams below don't display well on some browsers
+like Firefox. To see them, try using a different browser like Chrome or
+Edge.
+:::
+
+## Update resource properties
+
+If you want to make a change to one or more of the properties inside the
+resource properties, this would be the flow you use. While the
+`update_resource_properties()` and `write_resource_properties()`
+functions will internally call `check_resource_properties()`, they can
+also be called separately to check the properties before updating them
+in the `datapackage.json` file.
+
+```{mermaid}
+%%| label: fig-flow-update-resource-properties
+%%| fig-cap: "Diagram showing the flow of objects and functions to update a resource's properties."
+%%| fig-alt: "A flow diagram showing the steps to update resource properties."
+flowchart
+    resource_name[("string<br>(name of resource)")]
+    properties_current[("ResourceProperties<br>(current)")]
+    properties_updates[("ResourceProperties<br>(updates)")]
+    properties_updated[("ResourceProperties<br>(updated)")]
+    path_properties("path_properties()")
+    update_resource_properties("update_resource_properties()")
+    read_resource_properties("read_resource_properties()")
+    write_resource_properties("write_resource_properties()")
+    check_resource_properties("check_resource_properties()")
+
+    path_properties --> read_resource_properties
+    read_resource_properties --> properties_current
+    properties_current --> update_resource_properties
+    properties_updates --> update_resource_properties
+    update_resource_properties --> properties_updated
+    properties_updated --> write_resource_properties
+    path_properties --> write_resource_properties
+    resource_name --> read_resource_properties
+    properties_updated -.-> check_resource_properties
+```
