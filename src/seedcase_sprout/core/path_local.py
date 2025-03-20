@@ -69,9 +69,9 @@ class path:
             resource_id: The ID of the resource. Use `ResourceProperties.name` to get
                 the correct resource ID.
         """
-        return self.path / "resources" / resource_id
+        return self.path / "resources" / str(resource_id)
 
-    def resource_data(self, resource_id: int) -> Path:
+    def resource_data(self, resource_id: str) -> Path:
         """Gets the absolute path to the specified resource's data file.
 
         Args:
@@ -80,7 +80,7 @@ class path:
         """
         return self.path / "resources" / str(resource_id) / "data.parquet"
 
-    def resource_batch(self, resource_id: int) -> Path:
+    def resource_batch(self, resource_id: str) -> Path:
         """Gets the absolute path to the specified resource's batch folder.
 
         Args:
@@ -89,7 +89,7 @@ class path:
         """
         return self.path / "resources" / str(resource_id) / "batch"
 
-    def resource_batch_files(self, resource_id: int) -> Path:
+    def resource_batch_files(self, resource_id: str) -> Path:
         """Gets the absolute path to the specified resource's files in the batch folder.
 
         Args:
