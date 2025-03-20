@@ -13,7 +13,7 @@ reached a stable full release at `v1.0.0`.
 Based on the [functions](functions.qmd) that list and describe the main
 functions and classes that make up the interface, this document
 describes and shows how all these objects work together and flow into
-one another, but not necessarily the functions exact input and output.
+one another, but not necessarily the functions' exact input and output.
 Those are already described in the [functions](functions.qmd) document.
 
 Each diagram uses specific shapes and lines to represent different
