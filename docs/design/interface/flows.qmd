@@ -39,9 +39,9 @@ resource properties, you can add data to the resource. Whenever data is
 added to a data resource, it gets first saved in the `batch/`
 folder to keep track of additions or changes. You add the data when:
 
--   A new data resource is created and raw data is added to it.
--   Additional raw data is added to an existing data resource.
--   You need to fix or update or modify existing data in the resource by
+-   A new data resource is created and data is added to it.
+-   Additional data is added to an existing data resource.
+-   You need to fix, update, or modify existing data in the resource by
     correcting the data (e.g. fixing a data entry issue).
 
 The data must be in a tidy format and must have already been
