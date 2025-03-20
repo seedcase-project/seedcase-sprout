@@ -1,0 +1,57 @@
+---
+title: "Flows"
+toc-depth: 2
+---
+
+::: callout-important
+We created this document mainly as a way to help us as a team all
+understand and agree on what we're making and what needs to be worked
+on. This means that the flows may change quite substantially until we've
+reached a stable full release at `v1.0.0`.
+:::
+
+Based on the [functions](functions.qmd) that list and describe the main
+functions and classes that make up the interface, this document
+describes and shows how all these objects work together and flow into
+one another, but not necessarily the functions exact input and output.
+Those are already described in the [functions](functions.qmd) document.
+
+Each diagram uses specific shapes and lines to represent different
+things:
+
+-   A dotted line between objects/functions means the flow is optional.
+-   A solid line between objects/functions means the flow is required
+    and is the next step.
+-   A cylinder means an object such as a class or file.
+-   A rectangle with rounded corners means an action like a function or
+    method.
+
+::: callout-caution
+For some reason, the diagrams below don't display well on some browsers
+like Firefox. To see them, try using a different browser like Chrome or
+Edge.
+:::
+
+## Create resource properties manually
+
+If the user doesn't have a raw data file yet, but the user knows what
+the properties will be, they can use this workflow to add the resource
+properties manually. The `write_resource_properties()` function will
+internally call `check_resource_properties()`, but it can also be called
+separately to check the properties before writing them to the
+`datapackage.json` file.
+
+```{mermaid}
+%%| label: fig-flow-create-resource-properties
+%%| fig-cap: "Diagram showing the flow of objects and functions to create resource properties manually."
+%%| fig-alt: "A flow diagram showing the steps to create resource properties manually."
+flowchart
+    properties[(ResourceProperties)]
+    path_properties("path_properties()")
+    check_resource_properties("check_resource_properties()")
+    write_resource_properties("write_resource_properties()")
+
+    properties -.-> check_resource_properties
+    properties --> write_resource_properties
+    path_properties --> write_resource_properties
+```
