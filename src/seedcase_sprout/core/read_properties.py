@@ -8,7 +8,7 @@ from seedcase_sprout.core.read_json import read_json
 def read_properties(path: Path) -> PackageProperties:
     """Read in the properties from the `datapackage.json` file.
 
-    Reads the `datapackage.json` file, checks that is correct, and then
+    Reads the `datapackage.json` file, checks that it is correct, and then
     outputs a `PackageProperties` object.
 
     Args:
@@ -37,7 +37,7 @@ def read_properties(path: Path) -> PackageProperties:
                 path=properties_path
             )
 
-            # Edit package properties
+            # Read package properties
             sp.read_properties(properties_path)
         ```
 

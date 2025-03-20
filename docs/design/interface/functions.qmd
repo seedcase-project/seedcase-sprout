@@ -337,7 +337,7 @@ flowchart
     function --> out
 ```
 
-Reads the `datapackage.json` file, checks that is correct, and then
+Reads the `datapackage.json` file, checks that it is correct, and then
 outputs a `PackageProperties` object.
 
 ## Helper functions
