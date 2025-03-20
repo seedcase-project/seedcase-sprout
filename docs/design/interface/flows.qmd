@@ -36,7 +36,7 @@ Edge.
 
 A data resource needs data, not just properties. As long as there is the
 resource properties, you can add data to the resource. Whenever data is
-added in anyway to a data resource, it gets first saved in the `batch/`
+added to a data resource, it gets first saved in the `batch/`
 folder to keep track of additions or changes. You add the data when:
 
 -   A new data resource is created and raw data is added to it.
@@ -44,12 +44,15 @@ folder to keep track of additions or changes. You add the data when:
 -   You need to fix or update or modify existing data in the resource by
     correcting the data (e.g. fixing a data entry issue).
 
+The data must be in a tidy format and must have already been
+loaded in as a Polars DataFrame.
+
 ```{mermaid}
 %%| label: fig-flow-save-raw-data-to-batch
 %%| fig-cap: "Diagram showing the flow of objects and functions to save new, added, or modified raw data to a batch."
 %%| fig-alt: "A flow diagram showing the steps to save new, added, or modified raw data to a batch."
 flowchart
-    raw_data[(Raw data file)]
+    raw_data[("DataFrame<br>(raw data)")]
     resource_properties[(ResourceProperties)]
     write_resource_batches("write_resource_batches()")
     check_data("check_data()")
