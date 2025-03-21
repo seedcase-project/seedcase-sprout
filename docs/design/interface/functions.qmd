@@ -273,41 +273,7 @@ flowchart
 
 ## Path functions
 
--   All of these functions output a path object.
--   All of these functions have an optional `path` argument that defaults to
-    the current working directory.
--   The paths returned by all of these functions are paths that exist,
-    so all include a `check_is_dir()` or `check_is_file()` check.
--   If the wrong `resource_id` is given, an error message will include a
-    list of all the actual `resource_id`s for a specific package.
-
-### {{< var done >}} `path_properties(path)`
-
-See the help documentation with `help(path_properties)` for more
-details.
-
-### {{< var done >}} `path_resources(path)`
-
-See the help documentation with `help(path_resources)` for more details.
-
-### {{< var done >}} `path_resource(resource_id, path)`
-
-See the help documentation with `help(path_resource)` for more details.
-
-### {{< var done >}} `path_resource_batch(resource_id)`
-
-See the help documentation with `help(path_resource_batch)` for more
-details.
-
-### {{< var done >}} `path_resource_batch_files(resource_id, path)`
-
-See the help documentation with `help(path_resource_batch_files)` for more
-details.
-
-### {{< var done >}} `path_resource_data(resource_id, path)`
-
-See the help documentation with `help(path_resource_data)` for more
-details.
+See the help documentation for `help(path)` for more details.
 
 ## Properties dataclasses
 
