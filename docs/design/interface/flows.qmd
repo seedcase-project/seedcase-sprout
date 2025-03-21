@@ -13,7 +13,7 @@ reached a stable full release at `v1.0.0`.
 Based on the [functions](functions.qmd) that list and describe the main
 functions and classes that make up the interface, this document
 describes and shows how all these objects work together and flow into
-one another, but not necessarily the functions exact input and output.
+one another, but not necessarily the functions' exact input and output.
 Those are already described in the [functions](functions.qmd) document.
 
 Each diagram uses specific shapes and lines to represent different
@@ -32,20 +32,71 @@ like Firefox. To see them, try using a different browser like Chrome or
 Edge.
 :::
 
+## Creating a new package
+
+This is the flow for making a new package. The
+`write_package_properties()` will internally call `check_properties()`,
+but it can also be called separately to check the properties before
+writing them to the `datapackage.json` file.
+
+```{mermaid}
+%%| label: fig-flow-new-package
+%%| fig-cap: "Diagram showing the flow of objects and functions to create a new package."
+%%| fig-alt: "A flow diagram showing the steps to making a new package."
+flowchart
+    properties[(PackageProperties)]
+    path_properties("path_properties()")
+    check_properties("check_properties()")
+    write_package_properties("write_package_properties()")
+
+    properties -.-> check_properties
+    properties --> write_package_properties
+    path_properties --> write_package_properties
+```
+
+## Updating properties in an existing package
+
+The flow for updating properties in an existing package. The
+`update_package_properties()` function will internally call
+`check_properties()`, but it can also be called separately to check the
+properties before updating them in the `datapackage.json` file.
+
+```{mermaid}
+%%| label: fig-flow-update-package
+%%| fig-cap: "Diagram showing the flow of objects and functions to update properties in an existing package."
+%%| fig-alt: "A flow diagram showing the steps to updating properties in an existing package."
+flowchart
+    properties_current[("PackageProperties<br>(current)")]
+    properties_updates[("PackageProperties<br>(updates)")]
+    properties_updated[("PackageProperties<br>(updated)")]
+    path_properties("path_properties()")
+    update_package_properties("update_package_properties()")
+    read_package_properties("read_package_properties()")
+    write_package_properties("write_package_properties()")
+
+    path_properties --> read_package_properties
+    read_package_properties --> properties_current
+    properties_current --> update_package_properties
+    properties_updates --> update_package_properties
+    update_package_properties --> properties_updated
+    properties_updated --> write_package_properties
+    path_properties --> write_package_properties
+```
+
 ## Save new, added, or modified raw data to batch
 
 A data resource needs data, not just properties. You can add data to any
-data resource that has resource properties. Whenever data is
-added to a data resource, it gets first saved in the `batch/`
-folder to keep track of additions or changes. You add the data when:
+data resource that has resource properties. Whenever data is added to a
+data resource, it gets first saved in the `batch/` folder to keep track
+of additions or changes. You add the data when:
 
 -   A new data resource is created and data is added to it.
 -   Additional data is added to an existing data resource.
 -   You need to fix, update, or modify existing data in the resource by
     correcting the data (e.g. fixing a data entry issue).
 
-The data must be in a tidy format and must have already been
-loaded in as a Polars DataFrame.
+The data must be in a tidy format and must have already been loaded in
+as a Polars DataFrame.
 
 ```{mermaid}
 %%| label: fig-flow-save-raw-data-to-batch
