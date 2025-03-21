@@ -47,7 +47,7 @@ class path:
     """
 
     def __init__(self, path: Path = Path.cwd()) -> Path:
-        """Set the base path."""
+        """Set the base path of the package."""
         self.path = path
 
     def properties(self) -> Path:
