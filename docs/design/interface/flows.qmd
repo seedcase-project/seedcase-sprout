@@ -97,10 +97,10 @@ fields filled in after using `extract_resource_properties()`. The
 
 ```{mermaid}
 %%| label: fig-flow-extract-resource-properties
-%%| fig-cap: "Diagram showing the flow of objects and functions to extract resource properties from raw data."
-%%| fig-alt: "A flow diagram showing the steps to extract resource properties from raw data."
+%%| fig-cap: "Diagram showing the flow of objects and functions to extract resource properties from data."
+%%| fig-alt: "A flow diagram showing the steps to extract resource properties from data."
 flowchart
-    raw_data[(Raw data file)]
+    data_file[(Data file)]
     properties_extracted[("ResourceProperties<br>(extracted)")]
     properties_updates[("ResourceProperties<br>(additions)")]
     schema_properties_updates[("TableSchemaProperties<br>(additions)")]
@@ -110,7 +110,7 @@ flowchart
     extract_resource_properties("extract_resource_properties()")
     write_resource_properties("write_resource_properties()")
 
-    raw_data --> extract_resource_properties
+    data_file --> extract_resource_properties
     extract_resource_properties --> properties_extracted
     properties_extracted --> update_resource_properties
     schema_properties_updates --> properties_updates
@@ -118,4 +118,35 @@ flowchart
     update_resource_properties --> properties_updated
     properties_updated --> write_resource_properties
     path_properties --> write_resource_properties
+```
+
+## Save new, added, or modified data to batch
+
+A data resource needs data, not just properties. You can add data to any
+data resource that has resource properties. Whenever data is added to a
+data resource, it gets first saved in the `batch/` folder to keep track
+of additions or changes. You add the data when:
+
+-   A new data resource is created and data is added to it.
+-   Additional data is added to an existing data resource.
+-   You need to fix, update, or modify existing data in the resource by
+    correcting the data (e.g. fixing a data entry issue).
+
+The data must be in a tidy format and must have already been loaded in
+as a Polars DataFrame.
+
+```{mermaid}
+%%| label: fig-flow-save-data-to-batch
+%%| fig-cap: "Diagram showing the flow of objects and functions to save new, added, or modified data to a batch."
+%%| fig-alt: "A flow diagram showing the steps to save new, added, or modified data to a batch."
+flowchart
+    data[("DataFrame<br>(original data)")]
+    resource_properties[(ResourceProperties)]
+    write_resource_batch("write_resource_batch()")
+    check_data("check_data()")
+
+    data --> write_resource_batch
+    resource_properties --> write_resource_batch
+    data -.-> check_data
+    resource_properties -.-> check_data
 ```
