@@ -54,11 +54,11 @@ loaded in as a Polars DataFrame.
 flowchart
     raw_data[("DataFrame<br>(raw data)")]
     resource_properties[(ResourceProperties)]
-    write_resource_batches("write_resource_batches()")
+    write_resource_batch("write_resource_batch()")
     check_data("check_data()")
 
-    raw_data --> write_resource_batches
-    resource_properties --> write_resource_batches
+    raw_data --> write_resource_batch
+    resource_properties --> write_resource_batch
     raw_data -.-> check_data
     resource_properties -.-> check_data
 ```
