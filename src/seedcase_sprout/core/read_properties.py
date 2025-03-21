@@ -51,8 +51,8 @@ def read_properties(path: Path) -> PackageProperties:
     """
     check_is_file(path)
     properties = read_json(path)
-    if properties.get("resources"):
-        check_properties(properties)
-    else:
-        check_package_properties(properties)
+    check_properties(
+        properties,
+        ignore=[CheckErrorMatcher(validator="required", json_path=r"resources$")],
+    )
     return PackageProperties.from_dict(properties)
