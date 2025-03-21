@@ -9,11 +9,12 @@
 # from .delete_resource_data import *
 # from .delete_resource_properties import *
 
-from .build_readme_text import build_readme_text
+from .as_readme_text import as_readme_text
 from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .example_package_properties import example_package_properties
+from .extract_resource_properties import extract_resource_properties
 
 # TODO: Consider having all these in one module.
 from .path_global import (
@@ -50,7 +51,6 @@ from .update_package_properties import update_package_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 
-# from .extract_resource_properties import *
 # from .edit_resource_properties import *
 # from .write_resource_data_to_batch import *
 # from .write_resource_parquet import *
@@ -78,12 +78,12 @@ __all__ = [
     "create_package_properties",
     "update_package_properties",
     "write_package_properties",
-    "build_readme_text",
+    "as_readme_text",
     # "delete_package",
     # Resources -----
     "create_resource_structure",
     "create_resource_properties",
-    # "extract_resource_properties",
+    "extract_resource_properties",
     # "edit_resource_properties",
     # "write_resource_data_to_batch",
     # "write_resource_parquet",

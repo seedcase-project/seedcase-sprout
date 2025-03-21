@@ -1,3 +1,21 @@
+## 0.26.5 (2025-03-21)
+
+### Refactor
+
+- :recycle: rename `build_` to `as_readme_text()` (#1172)
+
+## 0.26.4 (2025-03-19)
+
+### Refactor
+
+- :recycle: expose `extract_resource_properties()` (#1152)
+
+## 0.26.3 (2025-03-19)
+
+### Refactor
+
+- :recycle: remove original extension and `.gz` from batch file names (#1147)
+
 ## 0.26.2 (2025-03-18)
 
 ### Refactor

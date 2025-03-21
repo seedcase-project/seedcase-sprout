@@ -58,6 +58,7 @@ website:
             - docs/design/interface/outputs.qmd
             - docs/design/interface/functions.qmd
             - docs/design/interface/inputs.qmd
+            - docs/design/interface/flows.qmd
     - id: guide
       contents:
         - section: "Guide"
@@ -88,13 +89,12 @@ quartodoc:
       contents:
         - create_package_properties
         - update_package_properties
-        - build_readme_text
+        - as_readme_text
 
     - subtitle: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
       package: "seedcase_sprout.core"
       contents:
-        - create_resource_properties
         - create_resource_structure
         - write_resource_properties
 
