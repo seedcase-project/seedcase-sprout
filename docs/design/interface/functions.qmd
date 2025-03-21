@@ -40,7 +40,7 @@ object), built using the `Properties` object, that describes the package
 and resource(s) in the package. This metadata is stored in the
 `datapackage.json` file and follows the Frictionless Data specification.
 
-For `write_*()` functions, they always will overwrite the file and they
+`write_*()` functions will always overwrite the file and they
 will always create the folders to the file if they don't exist.
 
 ::: callout-important
@@ -156,7 +156,7 @@ list of DataFrames.
 ```{mermaid}
 flowchart
     in_path[/path/]
-    function("read_resource_batch_data()")
+    function("read_resource_batches()")
     out[("List[DataFrame]")]
     in_path --> function
     function --> out
