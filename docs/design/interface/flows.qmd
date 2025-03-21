@@ -39,7 +39,7 @@ useful when the raw data is in a format that contains metadata about the
 data, such as a CSV file with a header row that contains the column
 names. The `update_resource_properties()` function will internally call
 `check_resource_properties()`. The `extract_resource_properties()`
-function can not extract all required properties from the raw data, so
+function cannot extract all required properties from the raw data, so
 it must be updated by the user. While `TableSchemaProperties` or
 `ResourceProperties` can be updated, the properties in
 `ResourceProperties` must all be filled in and the
