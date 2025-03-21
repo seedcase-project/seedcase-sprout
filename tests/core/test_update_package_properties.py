@@ -71,7 +71,7 @@ def test_resources_not_added_from_incoming_properties():
         PackageProperties(resources=[ResourceProperties()]),
     ],
 )
-def test_current_resources_not_modified(tmp_path, properties):
+def test_current_resources_not_modified(properties):
     """When current properties have resources, these should not be modified."""
     current_properties = replace(
         full_properties,
