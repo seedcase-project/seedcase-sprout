@@ -47,7 +47,7 @@ class path:
     """
 
     def __init__(self, path: Path = Path.cwd()) -> Path:
-        """Set the base path of the package."""
+        """Set the base path."""
         self.path = path
 
     def properties(self) -> Path:
@@ -59,11 +59,11 @@ class path:
         return self.path / "README.md"
 
     def resources(self) -> Path:
-        """Path to the `resources` folder."""
+        """Path to the `resources/` folder."""
         return self.path / "resources"
 
     def resource(self, resource_id: str) -> Path:
-        """Gets the absolute path to the specified resource folder.
+        """Path to the specified `resources/<id>/` folder.
 
         Args:
             resource_id: The ID of the resource. Use `ResourceProperties.name` to get
@@ -72,7 +72,7 @@ class path:
         return self.path / "resources" / str(resource_id)
 
     def resource_data(self, resource_id: str) -> Path:
-        """Gets the absolute path to the specified resource's data file.
+        """Path to the specific resource's data file.
 
         Args:
             resource_id: The ID of the resource. Use `ResourceProperties.name` to get
@@ -81,7 +81,7 @@ class path:
         return self.path / "resources" / str(resource_id) / "data.parquet"
 
     def resource_batch(self, resource_id: str) -> Path:
-        """Gets the absolute path to the specified resource's batch folder.
+        """Path to the specific resource's `batch/` folder.
 
         Args:
             resource_id: The ID of the resource. Use `ResourceProperties.name` to get
@@ -90,7 +90,7 @@ class path:
         return self.path / "resources" / str(resource_id) / "batch"
 
     def resource_batch_files(self, resource_id: str) -> Path:
-        """Gets the absolute path to the specified resource's files in the batch folder.
+        """Path to all the files in the specific resource's `batch/` folder.
 
         Args:
             resource_id: The ID of the resource. Use `ResourceProperties.name` to get
