@@ -1,5 +1,5 @@
 # ruff: noqa
-def write_resource_batches(
+def write_resource_batch(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> Path:
     """Writes the tidied, original data (as a DataFrame) into the resource's batch data folder.

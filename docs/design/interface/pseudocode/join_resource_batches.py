@@ -4,7 +4,7 @@ def join_resource_batches(
 ) -> DataFrame:
     """Joins all batch resource DataFrames into a single (Polars) DataFrame.
 
-    This function takes the list of DataFrames, merges them together, does a
+    This function takes the list of DataFrames, joins them together, does a
     check to confirm the data are ok after joining against the `resource_properties`,
     and then drops any duplicate observational units.
 
@@ -25,12 +25,12 @@ def join_resource_batches(
         ```
 
     Args:
-        data_list: A list of Polars DataFrames for all the batch files.
+        data_list: A list of Polars DataFrames for all the batch files. Use `read_resource_batches()` get a list of DataFrames that have been checked against the properties individually.
         resource_properties: The `ResourceProperties` object that contains the properties
-            of the resource you want to check the data against.
+            of the resource to check the data against.
 
     Returns:
-        Outputs a single DataFrame object of all the batch data.
+        Outputs a single DataFrame object of all the batch data with duplicate observational units removed.
     """
     check_resource_properties(resource_properties)
 
