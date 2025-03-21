@@ -89,9 +89,9 @@ The flow for extracting resource properties from data. This is useful
 when the data is in a format that contains metadata about the data, such
 as a CSV file with a header row that contains the column names. The
 `extract_resource_properties()` function cannot extract all required
-properties from the data, so it must be updated by the user. So both
+properties from the data, so they must be updated by the user. So both
 `TableSchemaProperties` and `ResourceProperties` will need many of their
-fields filled in to after using `extract_resource_properties()`. The
+fields filled in after using `extract_resource_properties()`. The
 `update_resource_properties()` function will internally call
 `check_resource_properties()`.
 
