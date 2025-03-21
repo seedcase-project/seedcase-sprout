@@ -13,7 +13,7 @@ reached a stable full release at `v1.0.0`.
 Based on the [functions](functions.qmd) that list and describe the main
 functions and classes that make up the interface, this document
 describes and shows how all these objects work together and flow into
-one another, but not necessarily the functions exact input and output.
+one another, but not necessarily the functions' exact input and output.
 Those are already described in the [functions](functions.qmd) document.
 
 Each diagram uses specific shapes and lines to represent different
@@ -31,6 +31,28 @@ For some reason, the diagrams below don't display well on some browsers
 like Firefox. To see them, try using a different browser like Chrome or
 Edge.
 :::
+
+## Creating a new package
+
+This is the flow for making a new package. The
+`write_package_properties()` will internally call `check_properties()`,
+but it can also be called separately to check the properties before
+writing them to the `datapackage.json` file.
+
+```{mermaid}
+%%| label: fig-flow-new-package
+%%| fig-cap: "Diagram showing the flow of objects and functions to create a new package."
+%%| fig-alt: "A flow diagram showing the steps to making a new package."
+flowchart
+    properties[(PackageProperties)]
+    path_properties("path_properties()")
+    check_properties("check_properties()")
+    write_package_properties("write_package_properties()")
+
+    properties -.-> check_properties
+    properties --> write_package_properties
+    path_properties --> write_package_properties
+```
 
 ## Updating properties in an existing package
 
