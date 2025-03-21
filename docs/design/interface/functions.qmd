@@ -46,8 +46,9 @@ while those with a {{< var done >}} icon are implemented.
 :::
 
 ::: callout-caution
-For some reason, the diagrams below don't display well on some browsers like
-Firefox. To see them, try using a different browser like Chrome or Edge.
+For some reason, the diagrams below don't display well on some browsers
+like Firefox. To see them, try using a different browser like Chrome or
+Edge.
 :::
 
 ## Data package functions
@@ -115,8 +116,8 @@ accidental deletion. Outputs `true` if the deletion was successful.
 
 ### {{< var done >}} `create_resource_dirs(path)`
 
-See the help documentation with `help(create_resource_dirs)` for
-more details.
+See the help documentation with `help(create_resource_dirs)` for more
+details.
 
 ```{mermaid}
 flowchart
@@ -177,8 +178,7 @@ flowchart
 
 ### {{< var wip >}} `write_resource_parquet(data, resource_properties)`
 
-See the help documentation with `help(write_parquet)` for more
-details.
+See the help documentation with `help(write_parquet)` for more details.
 
 ```{mermaid}
 flowchart
@@ -195,10 +195,9 @@ flowchart
 
 Edit the properties of a resource in a package. The `properties`
 argument must be a `ResourceProperties` object. Use the
-`path_properties()` function to provide the
-correct path location. Outputs a `ResourceProperties` object; use
-`write_resource_properties()` to save the properties object to the
-`datapackage.json` file.
+`path_properties()` function to provide the correct path location.
+Outputs a `ResourceProperties` object; use `write_resource_properties()`
+to save the properties object to the `datapackage.json` file.
 
 ```{mermaid}
 flowchart
@@ -213,14 +212,15 @@ flowchart
 
 ### {{< var wip >}} `delete_resource_batch_file(path, confirm)`
 
-Use this to delete a batch file in the `batch/` folder of a resource. This
-is useful if the file is no longer needed or if it is incorrect or had
-an issue during the time when a user first added the file to a resource.
-Use `path_resource_batch_files()` to select which file to delete from the
-list of files found. Will only delete one file. The `confirm` argument
-defaults to `false` so that the user needs to explicitly provide `true`
-to the function argument as confirmation. This is done to prevent
-accidental deletion. Outputs `true` if the deletion was successful.
+Use this to delete a batch file in the `batch/` folder of a resource.
+This is useful if the file is no longer needed or if it is incorrect or
+had an issue during the time when a user first added the file to a
+resource. Use `path_resource_batch_files()` to select which file to
+delete from the list of files found. Will only delete one file. The
+`confirm` argument defaults to `false` so that the user needs to
+explicitly provide `true` to the function argument as confirmation. This
+is done to prevent accidental deletion. Outputs `true` if the deletion
+was successful.
 
 ### {{< var wip >}} `delete_resource_data(path, confirm)`
 
@@ -274,8 +274,8 @@ flowchart
 ## Path functions
 
 -   All of these functions output a path object.
--   All of these functions have an optional `path` argument that defaults to
-    the current working directory.
+-   All of these functions have an optional `path` argument that
+    defaults to the current working directory.
 -   The paths returned by all of these functions are paths that exist,
     so all include a `check_is_dir()` or `check_is_file()` check.
 -   If the wrong `resource_id` is given, an error message will include a
@@ -301,8 +301,8 @@ details.
 
 ### {{< var done >}} `path_resource_batch_files(resource_id, path)`
 
-See the help documentation with `help(path_resource_batch_files)` for more
-details.
+See the help documentation with `help(path_resource_batch_files)` for
+more details.
 
 ### {{< var done >}} `path_resource_data(resource_id, path)`
 
@@ -341,31 +341,34 @@ See the help documentation with `help(write_file)` for more details.
 
 ## Observational unit functions
 
-An observational unit is the level of detail on the entity (e.g. human, animal,
-event) that the data was collected on at a given point in time.  An example
-would be: A person in a research study who came to the clinic in May 2024 to
-have their blood collected and to fill out a survey.
+An observational unit is the level of detail on the entity (e.g. human,
+animal, event) that the data was collected on at a given point in time.
+An example would be: A person in a research study who came to the clinic
+in May 2024 to have their blood collected and to fill out a survey.
 
-### {{< var wip >}} `delete_observational_unit(data_list, observational_unit, confirm)`
+### {{< var wip >}} `delete_observational_unit(data_list, observational_unit)`
 
-As per legal and privacy regulations, a person can request that any personally
-identifiable and sensitive data of theirs be deleted in the "right to be
-forgotten" regulation. This function makes this process easier by searching for
-all places where their data is stored in the data and deletes it. We
-can not guarantee that all data is deleted in the history (e.g. backups) or in
-projects that have used the data for research purposes, but the data will no
-longer exist in the current data package and all subsequent uses of it.  This is
-a highly destructive action, be certain everything is correct before running it.
-When `confirm` is false, the function will do a dry-run and show what would be
-deleted.
+As per legal and privacy regulations of multiple countries, a person can
+request that any personally identifiable and sensitive data of theirs be
+deleted in a variation of a ["right to be
+forgotten"](https://en.wikipedia.org/wiki/Right_to_be_forgotten)
+regulation or law. This function makes this process easier by searching
+for all places where their data is stored in the data and deletes it. We
+can not guarantee that all data is deleted in the history (e.g. backups)
+or in projects that have used the data for research purposes, but the
+data will no longer exist in the current data package and all subsequent
+uses of it. This has the potential to be highly destructive, but it
+doesn't yet write back to the files. So be cautious and check that
+everything is correct at this stage before writing back.
 
-The data given must be a list of DataFrames, even if it is only a list of one DataFrame.
-The `observational_unit` is a dictionary that contains the information about the
-observational unit that needs to be deleted. The dictionary must contain one or more
-primary keys that represent the observational unit in the data as well as the value
-to delete. For example:
+The data given must be a list of DataFrames, even if it is only a list
+of one DataFrame. The `observational_unit` is a dictionary that contains
+the information about the observational unit that needs to be deleted.
+The dictionary must contain one or more primary keys that represent the
+observational unit in the data as well as the value to delete. For
+example:
 
-```python
+``` python
 # For one person with the ID "1234", even if there are multiple time-points
 # of data for that person.
 observational_unit = {"person_id": ["1234"]}
@@ -381,21 +384,19 @@ observational_unit = {
 }
 ```
 
-The function will search for all instances of the keys and values in the data and delete them.
+The function will search for all instances of the keys and values in the
+data and delete them.
 
 ```{mermaid}
 flowchart
     in_data[/data_list/]
     in_observational_unit[/observational_unit/]
-    in_confirm[/confirm/]
     function("delete_observational_unit()")
     out[("DataFrame")]
     in_data --> function
-    in_confirm --> function
     in_observational_unit --> function
     function --> out
 ```
-
 
 ## Multi-user environments
 

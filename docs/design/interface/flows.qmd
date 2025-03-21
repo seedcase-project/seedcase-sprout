@@ -53,13 +53,13 @@ flowchart
     list_data_deletions[("List[DataFrame]<br>(deletions)")]
     obs_unit[("dict<br>(observational unit)")]
     delete_observational_unit("delete_observational_unit()")
-    write_resource_batches("write_resource_batches()")
+    write_resource_batch("write_resource_batch()")
 
     path_resource_batch_files --> read_resource_batches
     read_resource_batches --> list_data_current
     list_data_current --> delete_observational_unit
     obs_unit --> delete_observational_unit
     delete_observational_unit --> list_data_deletions
-    list_data_deletions --> write_resource_batches
-    path_resource_batch_files --> write_resource_batches
+    list_data_deletions --> write_resource_batch
+    path_resource_batch_files --> write_resource_batch
 ```
