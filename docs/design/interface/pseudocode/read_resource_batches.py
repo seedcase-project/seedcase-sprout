@@ -39,8 +39,17 @@ def read_resource_batches(
     map(check_is_file, paths)
     check_resource_properties(resource_properties)
 
-    data_list = list(map(pl.read_parquet, paths))
+    data_list = list(map(_read_parquet_batch, paths))
 
     list(map(check_data, data_list, resource_properties))
 
     return data_list
+
+
+def _read_parquet_batch(path: Path) -> DataFrame:
+    """Reads a single batch Parquet file into a Polars DataFrame and adds the timestamp as a column."""
+    data = pl.read_parquet(path)
+    # Take the timestamp from the file name and add it as a column to the data.
+    # Not sure how this will be implemented exactly.
+    data = add_timestamp_as_column(data, path)
+    return data
