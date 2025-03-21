@@ -85,19 +85,19 @@ flowchart
     function --> out
 ```
 
-### {{< var done >}} `update_package_properties(path, properties)`
+### {{< var done >}} `update_package_properties(properties, path)`
 
 See the help documentation with `help(update_package_properties())` for
 more details.
 
 ```{mermaid}
 flowchart
-    in_path[/path/]
     in_properties[/properties/]
+    in_path[/path/]
     function("update_package_properties()")
     out[("PackageProperties")]
-    in_path --> function
     in_properties --> function
+    in_path --> function
     function --> out
 ```
 
@@ -132,47 +132,51 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `write_resource_batches(data_path, resource_properties)`
+### {{< var wip >}} `write_resource_batches(data, resource_properties)`
 
-See the help documentation with `help(write_resource_batches)` for
+See the help documentation with `help(write_resource_batch)` for
 more details.
 
 ```{mermaid}
 flowchart
-    in_data_path[/data_path/]
+    in_data[/data/]
     in_properties[/resource_properties/]
-    function("write_resource_batch_data()")
+    function("write_resource_batch()")
     out[("{path}/{timestamp}-{uuid}.parquet")]
-    in_data_path --> function
+    in_data --> function
     in_properties --> function
     function --> out
 ```
 
-### {{< var wip >}} `read_resource_batches(path)`
+### {{< var wip >}} `read_resource_batches(paths, resource_properties)`
 
-Reads in a set of paths to the batch files of a resource and outputs a
-list of DataFrames.
+See the help documentation with `help(read_resource_batches)` for more
+details.
 
 ```{mermaid}
 flowchart
-    in_path[/path/]
+    in_path[/paths/]
+    in_properties[/resource_properties/]
     function("read_resource_batches()")
     out[("List[DataFrame]")]
     in_path --> function
+    in_properties --> function
     function --> out
 ```
 
-### {{< var wip >}} `join_resource_batches(data_list)`
+### {{< var wip >}} `join_resource_batches(data_list, resource_properties)`
 
-Takes a list of DataFrames and outputs a joined DataFrame. Is
-mostly a wrapper around a join function.
+See the help documentation with `help(join_resource_batches)` for more
+details.
 
 ```{mermaid}
 flowchart
     in_data[/data_list/]
+    in_properties[/resource_properties/]
     function("join_resource_batches()")
     out[("DataFrame")]
     in_data --> function
+    in_properties --> function
     function --> out
 ```
 
