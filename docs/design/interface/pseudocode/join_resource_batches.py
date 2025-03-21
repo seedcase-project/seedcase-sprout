@@ -15,8 +15,9 @@ def join_resource_batches(
     If there are any duplicate observational units in the data, only the most
     recent observational unit will be kept based on the timestamp of the batch
     file. This way, if there are any errors or mistakes in older batch files
-    that have been corrected in later files, the mistake can still be kept, but
-    won't impact the data that will actually be used.
+    that have been corrected in later files, the mistake will be kept in the batch file, but
+    won't be included in the `data.parquet` file.
+    ```
 
     Examples:
 
@@ -31,7 +32,7 @@ def join_resource_batches(
 
     Args:
         data_list: A list of Polars DataFrames for all the batch files. Use
-            `read_resource_batches()` get a list of DataFrames that have been
+            `read_resource_batches()` to get a list of DataFrames that have been
             checked against the properties individually.
         resource_properties: The `ResourceProperties` object that contains the properties
             of the resource to check the data against.
