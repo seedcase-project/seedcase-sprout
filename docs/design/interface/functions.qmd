@@ -339,6 +339,79 @@ Create a prettier, human readable version of a JSON object.
 
 See the help documentation with `help(write_file)` for more details.
 
+## Check functions
+
+All the check functions check the properties given in the
+`datapackage.json` file against the Frictionless Data Package standard.
+Even the checks on the data itself are based on the properties given in
+the `datapackage.json` file. The checks on the properties are mainly
+wrappers around the `check_datapackage` "sub-packakge" (that we will
+eventually split into it's own package).
+
+### {{< var done >}} `check_properties(properties)`
+
+See the help documentation with `help(check_properties)` for more
+details. This checks all the properties, both package and resources.
+
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    function("check_properties()")
+    out[("PackageProperties<br>or Error")]
+    in_properties --> function
+    function --> out
+```
+
+### {{< var done >}} `check_package_properties(properties)`
+
+See the help documentation with `help(check_package_properties)` for
+more details. The *only* checks the package properties.
+
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    function("check_package_properties()")
+    out[("PackageProperties<br>or Error")]
+    in_properties --> function
+    function --> out
+```
+
+### {{< var done >}} `check_resource_properties(resource_properties)`
+
+See the help documentation with `help(check_resource_properties)` for
+more details. The *only* checks the resource properties.
+
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    function("check_resource_properties()")
+    out[("ResourceProperties<br>or Error")]
+    in_properties --> function
+    function --> out
+```
+
+### {{< var wip >}} `check_data(data, resource_properties)`
+
+See the help documentation with `help(check_data)` for more details.
+This function checks the data against the properties in the
+`datapackage.json` file. It includes checks on the data headers against
+the `fields.name` properties, the columns' data types against the
+`fields.type` properties, and the data itself against the constraints
+given in the `fields.constraints` properties (if it exists). See the
+[function flow](flows.qmd) for more details on the internal flow of this
+particular function.
+
+```{mermaid}
+flowchart
+    in_data[/data/]
+    in_properties[/resource_properties/]
+    function("check_data()")
+    out[("DataFrame<br>or Error")]
+    in_data --> function
+    in_properties --> function
+    function --> out
+```
+
 ## Observational unit functions
 
 Observational unit is the level of detail on the entity (e.g. human,
