@@ -1,14 +1,14 @@
 # ruff: noqa
 def check_data(
     data: DataFrame, resource_properties: ResourceProperties
-) -> DataFrame | Error:
+) -> DataFrame:
     """Checks that the DataFrame matches the requirements in the resource properties.
 
     Runs a few checks to compare between the data and the properties on the items:
 
     | Data | Properties |
     |:------|:------------|
-    | Column names | `field.names` |
+    | Column names | `field.name` |
     | Column types | `field.types` |
     | Column values' types | `field.types` |
     | Column values' constraints | `field.constraints` |
@@ -27,7 +27,7 @@ def check_data(
         resource_properties: The specific `ResourceProperties` for the `data`.
 
     Returns:
-        If there are any issues, it gives an Error. Otherwise, will output the `data`.
+        Output the `data` if checks all pass.
 
     Raises:
         ExceptionGroup: A list of messages that highlight where there are differences
