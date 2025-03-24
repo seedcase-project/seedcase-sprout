@@ -46,8 +46,9 @@ while those with a {{< var done >}} icon are implemented.
 :::
 
 ::: callout-caution
-For some reason, the diagrams below don't display well on some browsers like
-Firefox. To see them, try using a different browser like Chrome or Edge.
+For some reason, the diagrams below don't display well on some browsers
+like Firefox. To see them, try using a different browser like Chrome or
+Edge.
 :::
 
 ## Data package functions
@@ -70,8 +71,7 @@ flowchart
 
 ### {{< var done >}} `as_readme_text(properties)`
 
-See the help documentation with `help(as_readme_text)` for more
-details.
+See the help documentation with `help(as_readme_text)` for more details.
 
 ```{mermaid}
 flowchart
@@ -115,8 +115,8 @@ accidental deletion. Outputs `true` if the deletion was successful.
 
 ### {{< var done >}} `create_resource_dirs(path)`
 
-See the help documentation with `help(create_resource_dirs)` for
-more details.
+See the help documentation with `help(create_resource_dirs)` for more
+details.
 
 ```{mermaid}
 flowchart
@@ -177,8 +177,7 @@ flowchart
 
 ### {{< var wip >}} `write_resource_parquet(data, resource_properties)`
 
-See the help documentation with `help(write_parquet)` for more
-details.
+See the help documentation with `help(write_parquet)` for more details.
 
 ```{mermaid}
 flowchart
@@ -195,10 +194,9 @@ flowchart
 
 Edit the properties of a resource in a package. The `properties`
 argument must be a `ResourceProperties` object. Use the
-`path_properties()` function to provide the
-correct path location. Outputs a `ResourceProperties` object; use
-`write_resource_properties()` to save the properties object to the
-`datapackage.json` file.
+`path_properties()` function to provide the correct path location.
+Outputs a `ResourceProperties` object; use `write_resource_properties()`
+to save the properties object to the `datapackage.json` file.
 
 ```{mermaid}
 flowchart
@@ -213,14 +211,15 @@ flowchart
 
 ### {{< var wip >}} `delete_resource_batch_file(path, confirm)`
 
-Use this to delete a batch file in the `batch/` folder of a resource. This
-is useful if the file is no longer needed or if it is incorrect or had
-an issue during the time when a user first added the file to a resource.
-Use `path_resource_batch_files()` to select which file to delete from the
-list of files found. Will only delete one file. The `confirm` argument
-defaults to `false` so that the user needs to explicitly provide `true`
-to the function argument as confirmation. This is done to prevent
-accidental deletion. Outputs `true` if the deletion was successful.
+Use this to delete a batch file in the `batch/` folder of a resource.
+This is useful if the file is no longer needed or if it is incorrect or
+had an issue during the time when a user first added the file to a
+resource. Use `path_resource_batch_files()` to select which file to
+delete from the list of files found. Will only delete one file. The
+`confirm` argument defaults to `false` so that the user needs to
+explicitly provide `true` to the function argument as confirmation. This
+is done to prevent accidental deletion. Outputs `true` if the deletion
+was successful.
 
 ### {{< var wip >}} `delete_resource_data(path, confirm)`
 
@@ -274,8 +273,8 @@ flowchart
 ## Path functions
 
 -   All of these functions output a path object.
--   All of these functions have an optional `path` argument that defaults to
-    the current working directory.
+-   All of these functions have an optional `path` argument that
+    defaults to the current working directory.
 -   The paths returned by all of these functions are paths that exist,
     so all include a `check_is_dir()` or `check_is_file()` check.
 -   If the wrong `resource_id` is given, an error message will include a
@@ -301,8 +300,8 @@ details.
 
 ### {{< var done >}} `path_resource_batch_files(resource_id, path)`
 
-See the help documentation with `help(path_resource_batch_files)` for more
-details.
+See the help documentation with `help(path_resource_batch_files)` for
+more details.
 
 ### {{< var done >}} `path_resource_data(resource_id, path)`
 
