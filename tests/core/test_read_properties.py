@@ -28,8 +28,7 @@ def test_reads_in_as_package_properties(tmp_path):
 
 
 def test_reads_when_resource_not_exists(tmp_path):
-    """Should raise an error if a required field is missing among the package
-    properties."""
+    """Should give an error the resource doesn't exist."""
 
     expected_properties = example_package_properties()
     expected_properties.resources = None
