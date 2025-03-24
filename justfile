@@ -1,22 +1,15 @@
 @_default:
     just --list --unsorted
 
-run-all: install-deps format-python check-python run-tests check-commits build-website
+# Run all build-related recipes in the justfile
+run-all: install-deps format-python check-python test-python check-commits build-website
 
 # Install Python package dependencies
 install-deps:
-  poetry install
+  poetry sync
 
-# Generate SVG images from all PlantUML files
-generate-puml-all:
-  docker run --rm -v $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tsvg "**/*.puml"
-
-# Generate SVG image from specific PlantUML file
-generate-puml name:
-  docker run --rm -v  $(pwd):/puml -w /puml ghcr.io/plantuml/plantuml:latest -tsvg "**/{{name}}.puml"
-
-# Run Python tests
-run-tests:
+# Run the Python tests
+test-python:
   poetry run pytest
 
 # Check Python code with the linter for any errors that need manual attention
@@ -28,11 +21,6 @@ format-python:
   poetry run ruff check --fix .
   poetry run ruff format .
 
-# Reset local Sprout (remove __pycache__ folders, generated build files, etc)
-reset-local:
-  find . -type d -name "__pycache__" -exec rm -rf {} +
-  rm -rf .storage
-
 # Build the documentation website using Quarto
 build-website:
   # To let Quarto know where python is.
@@ -43,7 +31,11 @@ build-website:
 # Run checks on commits with non-main branches
 check-commits:
   #!/bin/zsh
-  if [[ $(git rev-parse --abbrev-ref HEAD) != "main" ]]
+  branch_name=$(git rev-parse --abbrev-ref HEAD)
+  number_of_commits=$(git rev-list --count HEAD ^$branch_name)
+  if [[ ${branch_name} != "main" && ${number_of_commits} -gt 0 ]]
   then
     poetry run cz check --rev-range main..HEAD
+  else
+    echo "Not on main or haven't committed yet."
   fi

@@ -1,46 +1,66 @@
 from pathlib import Path
 
-from seedcase_sprout.core.create_resource_structure import create_resource_structure
+from seedcase_sprout.core import (
+    create_package_properties,
+    create_resource_structure,
+    example_package_properties,
+)
 
 
-def create_test_package_structure(root_path: Path, package_id: int) -> Path:
+def create_test_data_package(tmp_path: Path) -> Path:
     """Creates a package file structure (with empty files) for path function tests.
 
     Args:
-        root_path: Root path to create the package structure.
+        tmp_path: Path to a temporary folder.
+
+    Returns:
+        Path of package.
+    """
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    create_package_properties(properties=example_package_properties(), path=tmp_path)
+
+    (tmp_path / "README.md").touch()
+
+    return tmp_path
+
+
+def create_test_global_data_package(global_path: Path, package_id: int) -> Path:
+    """Creates a package file structure (with empty files) for path function tests.
+
+    Args:
+        global_path: Global path to create the package structure.
         package_id: ID of the package to create.
 
     Returns:
         Path of package.
     """
-    # TODO: Use `create_package_structure()` function here when has been implemented.
-    path_package = root_path / "packages" / str(package_id)
-    path_package.mkdir(parents=True)
+    # TODO: Use `create_package_properties()` function here when has been implemented.
+    path_package = global_path / "packages" / str(package_id)
+    path_package.mkdir(parents=True, exist_ok=True)
     (path_package / "datapackage.json").touch()
-    (path_package / "database.sql").touch()
+    (path_package / "README.md").touch()
 
     return path_package
 
 
 def create_test_resource_structure(
-    path_package: Path, raw_files: str | list[str]
+    path_package: Path, batch_files: str | list[str]
 ) -> list[Path]:
     """Creates a resource file structure (with empty files) for path function tests.
 
     Args:
         path_package: Path to package.
-        resource_id: ID of the resource to create.
-        raw_files: Name(s) of raw file(s).
+        batch_files: Name(s) of batch file(s).
 
     Returns:
-        List with two Paths: one to the resource, one to its raw directory.
+        List with two Paths: one to the resource, one to its batch directory.
     """
     path_resources = path_package / "resources"
     path_resources.mkdir(parents=True, exist_ok=True)
 
     path_list_resource = create_resource_structure(path_resources)
     (path_list_resource[0] / "data.parquet").touch()
-    for raw_file in raw_files:
-        (path_list_resource[1] / raw_file).touch()
+    for batch_file in batch_files:
+        (path_list_resource[1] / batch_file).touch()
 
     return path_list_resource

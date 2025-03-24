@@ -1,14 +1,10 @@
 project:
   type: seedcase-theme
   pre-render: rm -rf .storage
+  post-render: rm -rf docs/reference/*.qmd
   render:
     - "docs/*"
     - "index.qmd"
-
-glossary:
-  path: _extensions/seedcase-project/seedcase-theme/glossary.yml
-  popup: none
-  show: true
 
 website:
   title: "Seedcase Sprout"
@@ -52,17 +48,17 @@ website:
         - section: "Architecture"
           href: docs/design/architecture/index.qmd
           contents:
-            - docs/design/architecture/requirements.qmd
+            - docs/design/architecture/user-personas.qmd
+            - docs/design/architecture/input-data.qmd
             - docs/design/architecture/c4-models.qmd
             - docs/design/architecture/naming.qmd
-            - docs/design/architecture/modular-design.qmd
-            - docs/design/architecture/user-roles.qmd
-        - section: "Implementation"
-          href: docs/design/implementation/index.qmd
+        - section: "Interface"
+          href: docs/design/interface/index.qmd
           contents:
-            - docs/design/implementation/outputs.qmd
-            - docs/design/implementation/core.qmd
-            - docs/design/implementation/app-urls.qmd
+            - docs/design/interface/outputs.qmd
+            - docs/design/interface/functions.qmd
+            - docs/design/interface/inputs.qmd
+            - docs/design/interface/flows.qmd
     - id: guide
       contents:
         - section: "Guide"
@@ -70,6 +66,7 @@ website:
           contents:
             - docs/guide/installation.qmd
             - docs/guide/packages.qmd
+            - docs/guide/checks.qmd
 
 quartodoc:
   sidebar: "docs/reference/_sidebar.yml"
@@ -77,63 +74,74 @@ quartodoc:
   dir: "docs/reference"
   package: "seedcase_sprout"
   parser: google
+  dynamic: true
   renderer:
-    style: markdown
+    style: _renderer.py
     table_style: description-list
+    show_signature_annotations: true
   sections:
     - title: "Core functions"
+      desc: "Core functions that support the creation and management of data packages and data resources."
 
     - subtitle: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
+      package: "seedcase_sprout.core"
       contents:
-        - core.create_package_structure
-        - core.edit_package_properties
+        - create_package_properties
+        - edit_package_properties
+        - as_readme_text
 
     - subtitle: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
+      package: "seedcase_sprout.core"
       contents:
-        - core.write_resource_properties
-        - core.create_resource_properties
-        - core.create_resource_structure
+        - create_resource_structure
+        - write_resource_properties
 
     - subtitle: "Property dataclasses"
       desc: "Dataclasses that support creating correct data package properties."
+      package: "seedcase_sprout.core"
       contents:
-        - core.ConstraintsProperties
-        - core.ContributorProperties
-        - core.FieldProperties
-        - core.LicenseProperties
-        - core.MissingValueProperties
-        - core.PackageProperties
-        - core.ReferenceProperties
-        - core.ResourceProperties
-        - core.SourceProperties
-        - core.TableDialectProperties
-        - core.TableSchemaForeignKeyProperties
-        - core.TableSchemaProperties
+        - ConstraintsProperties
+        - ContributorProperties
+        - FieldProperties
+        - LicenseProperties
+        - MissingValueProperties
+        - PackageProperties
+        - ReferenceProperties
+        - ResourceProperties
+        - SourceProperties
+        - TableSchemaForeignKeyProperties
+        - TableSchemaProperties
 
     - subtitle: "Path functions"
       desc: "Functions to support providing the correct file paths to data package and data resource functions."
+      package: "seedcase_sprout.core"
       contents:
-        - core.path_package
-        - core.path_package_database
-        - core.path_package_properties
-        - core.path_packages
-        - core.path_resource
-        - core.path_resource_data
-        - core.path_resource_raw
-        - core.path_resource_raw_files
-        - core.path_resources
-        - core.path_sprout_root
+        - path_package
+        - path_properties
+        - path_packages
+        - path_resource
+        - path_resource_data
+        - path_resource_batch
+        - path_resource_batch_files
+        - path_resources
+        - path_sprout_global
+
+    - subtitle: "Helper functions"
+      desc: "Functions to support working with data packages and running code within Sprout Core."
+      package: "seedcase_sprout.core"
+      contents:
+        - example_package_properties
+        - write_file
 
 metadata-files:
   - docs/reference/_sidebar.yml
 
-# format:
-#   seedcase-theme-html:
-    # include-before-body:
-      # - "includes/site-counter.html"
-      # - "includes/contribute.html"
+format:
+  seedcase-theme-html:
+    include-before-body:
+      - "docs/site-counter.html"
 
 editor:
   markdown:

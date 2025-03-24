@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "seedcase-sprout"
-version = "0.0.1"
+version = "0.26.6"
 description = "Grow your research data in a structured, modern way that follows best practices."
 authors = [
   "Luke W. Johnston <lwjohnst@gmail.com>",
@@ -20,7 +20,6 @@ readme = "README.md"
 homepage = "https://sprout.seedcase-project.org"
 repository = "https://github.com/seedcase-project/seedcase-sprout"
 license = "MIT"
-packages = [{include = "seedcase_sprout"}]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/seedcase-project/seedcase-sprout/issues"
@@ -28,18 +27,20 @@ packages = [{include = "seedcase_sprout"}]
 [tool.poetry.dependencies]
 python = "^3.12"
 polars = "^1.5.0"
-frictionless = {extras = ["sql"], version = "^5.17.0"}
+frictionless = {extras = ["excel", "json", "parquet"], version = "^5.18.0"}
 requests = "^2.32.3"
 platformdirs = "^4.3.2"
+jsonschema = "^4.23.0"
+dacite = "^1.8.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.2"
 time-machine = "^2.15.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.7.0"
-datamodel-code-generator = {extras = ["http"], version = "^0.26.0"}
-commitizen = "^3.30.0"
+ruff = "^0.9.0"
+datamodel-code-generator = {extras = ["http"], version = "^0.28.2"}
+commitizen = "^4.0.0"
 pre-commit = "^4.0.1"
 
 [tool.poetry.group.docs.dependencies]
@@ -49,3 +50,11 @@ quartodoc = "^0.9.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = [
+  # A short traceback mode to make it easier to view
+  "--tb=short",
+  # Use the `src/` package
+  "--import-mode=importlib",
+]

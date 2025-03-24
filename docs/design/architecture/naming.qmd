@@ -1,5 +1,5 @@
 ---
-title: "Naming scheme"
+title: "Naming"
 ---
 
 This document describes a general naming scheme for Sprout that is
@@ -38,24 +38,25 @@ We may also occasionally use "properties" to refer to the file itself.
 | Object | Description |
 |----------------------------|--------------------------------------------|
 | package(s) | A data package that contains a collection of related data resources and properties. |
-| resource(s) | A single data file within a package, along with its properties and associated *raw* data files. |
-| properties or property | Metadata about a package or resource. |
-| file structure or structure | The file and folder structure of a package. |
+| resource(s) | A single data file within a package, along with its properties and associated batch data files. |
+| properties | Metadata about a package or resource. |
 | path | A file path listing the location of folders or files that Sprout interacts with. |
-| data | The data file within a resource. Within Sprout, this includes the table in the database, the Parquet file, as well as raw files. |
-| identifier | A unique identifier for a package or resource, denoted as `id`. |
+| data | The data file within a resource. Within Sprout, this includes the Parquet data and batch files. |
+| identifier | A unique identifier for a package (*only for server environments*) or resource, denoted as `id`. |
+| changes | The changes made to the data package that will be stored in the version control repository of the data package. |
+| version | The version of the data package, denoted as `version`. |
+| observational unit | The unit of observation, meaning the data associated with a specific entity at a specific time, e.g. a person who had their weight measured on their 30th birthday. |
 
 : General objects used throughout Sprout.
 
 | File or folder | Description |
 |----------------------------|--------------------------------------------|
-| packages | The folder that contains all packages. |
+| dirs | A shortened name for folder or directory. |
+| packages | The folder that contains all packages. *Only for server environments*. |
 | resources | The folder that contains all resource files in a package. |
-| raw | The folder that contains raw data files for a data resource. |
-| raw data file | A compressed raw data file format, such as a `.zip`, `.gzip`, or `.tar.gz` file. |
+| batch | The folder that contains the batch data files for a data resource (timestamped data when first added (or updated) to a resource). |
 | JSON | The main way we save and pass information around on the package's or resource's properties. |
-| Parquet | A columnar, efficient storage file format that we use to save data within a resource. |
-| SQLite | A relational database file format that we use to contain all data resources in a package. |
+| Parquet | A columnar, efficient storage file format that we use to save data within a resource, but as the final resource as well as a batch file when the data was first added or updated to the resource. |
 
 : Specific files and folders used within or output by Sprout.
 
@@ -63,15 +64,13 @@ We may also occasionally use "properties" to refer to the file itself.
 
 | Action | Description |
 |----------------------------|--------------------------------------------|
-| create | Create a new object. |
-| construct | Construct or reconstruct a data file (like the Parquet file). |
-| view | View details about an object. |
-| list | List basic details about many objects. |
-| edit | Edit an object, specifically the properties object. |
-| add | Add another object to an existing object, specifically adding data to a resource. |
+| commit | Saves changes made in a data package to the version control system. |
+| create | Creates a new object or sets up a new object and writes it to the file system. |
+| build | Build means generating or re-generating an object from other objects, e.g. (re-)build the text for the README. |
+| update | Update an object, mainly of the properties or version objects. |
 | write | Write an object to a file. |
-| copy | Copy a file from one location to another. |
-| delete | Permanently delete an object. |
+| read | Reads an object from a file. |
+| delete | Permanently delete a file(s) associated with an object (e.g. delete a whole package or observational unit). |
 | extract | Extract specific information from an object, specifically the properties from a data file. |
 
 : General actions that Sprout can take on objects or files/folders.
