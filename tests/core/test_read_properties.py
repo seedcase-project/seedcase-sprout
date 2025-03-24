@@ -28,7 +28,7 @@ def test_reads_in_as_package_properties(tmp_path):
 
 
 def test_reads_when_resource_not_exists(tmp_path):
-    """Should give an error the resource doesn't exist."""
+    """Should not give an error if there are no resources on the package."""
 
     expected_properties = example_package_properties()
     expected_properties.resources = None
