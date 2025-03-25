@@ -125,7 +125,7 @@ function. In all cases, these functions are mostly customised wrappers
 using a generic `_check_properties()` function, which includes arguments
 to subset which properties to check. The `_check_properties()` function
 itself is also mostly a wrapper around our "sub-package"
-`check_datapackage` (which we intend to split into it's own package
+`check_datapackage` (which we intend to split into its own package
 later).
 
 ```{mermaid}
