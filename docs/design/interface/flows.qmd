@@ -34,7 +34,7 @@ Edge.
 
 ## Update resource properties
 
-If you want to make a change to one or more of the properties inside the
+If you want to make a change to one or more of the fields inside the
 resource properties, this would be the flow you use. While the
 `update_resource_properties()` and `write_resource_properties()`
 functions will internally call `check_resource_properties()`, they can
