@@ -316,7 +316,6 @@ wrapper around standard functions in Python. The `confirm` argument defaults to
 argument as confirmation. This is done to prevent accidental deletion. Outputs
 `true` if the deletion was successful.
 
-
 ## Observational unit functions
 
 Observational unit is the level of detail on the entity (e.g. human,
