@@ -36,7 +36,7 @@ Edge.
 
 The batch data files are used to keep track of changes to the data
 without deleting the original data, while also keeping the data that
-will be used clean and ready for use. With this flow, the batch data is
+will be used clean and ready for analysis. With this flow, the batch data is
 converted into the final resource data. These steps are split up so
 that, if needed or desired, you can make modifications to the data
 before it is written to the final resource data. While
