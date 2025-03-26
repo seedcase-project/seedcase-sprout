@@ -29,8 +29,8 @@ def read_resource_batches(
         paths: A list of paths for all the files in the resource's `batch/` folder.
             Use `path_resource_batch_files()` to help provide the correct paths to the
             batch files.
-        resource_properties: The `ResourceProperties` object that contains the properties
-            of the resource you want to check the data against.
+        resource_properties: The `ResourceProperties` object that contains the
+            properties of the resource you want to check the data against.
 
     Returns:
         Outputs a list of DataFrame objects from all the batch files.
