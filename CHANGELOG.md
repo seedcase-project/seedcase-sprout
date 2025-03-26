@@ -1,3 +1,15 @@
+## 0.26.6 (2025-03-24)
+
+### Refactor
+
+- :recycle: check column data types (#1111)
+
+## 0.26.5 (2025-03-21)
+
+### Refactor
+
+- :recycle: rename `build_` to `as_readme_text()` (#1172)
+
 ## 0.26.4 (2025-03-19)
 
 ### Refactor
