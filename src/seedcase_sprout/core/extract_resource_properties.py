@@ -32,7 +32,6 @@ def extract_resource_properties(data_path: Path) -> ResourceProperties:
     properties = describe(data_path).to_dict()
 
     properties.pop("dialect", None)
-    properties.pop("path", None)
 
     if properties["format"] == "json":
         # Frictionless sets type to "json", but only "table" is accepted by
