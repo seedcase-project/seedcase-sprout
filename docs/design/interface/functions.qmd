@@ -53,15 +53,15 @@ Firefox. To see them, try using a different browser like Chrome or Edge.
 ## Data package functions
 
 
-### {{< var done >}} `build_readme_text(properties)`
+### {{< var done >}} `as_readme_text(properties)`
 
-See the help documentation with `help(build_readme_text)` for more
+See the help documentation with `help(as_readme_text)` for more
 details.
 
 ```{mermaid}
 flowchart
     in_properties[/properties/]
-    function("build_readme_text()")
+    function("as_readme_text()")
     out[("str")]
     in_properties --> function
     function --> out
