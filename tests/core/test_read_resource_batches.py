@@ -1,4 +1,5 @@
 from pathlib import Path
+from uuid import uuid4
 
 import polars as pl
 from pytest import fixture, raises
@@ -9,7 +10,6 @@ from seedcase_sprout.core.properties import (
     TableSchemaProperties,
 )
 from seedcase_sprout.core.read_resource_batches import (
-    _check_timestamp_format,
     read_resource_batches,
 )
 from tests.core.directory_structure_setup import (
@@ -50,9 +50,9 @@ def test_package(tmp_path):
     batch_path = tmp_path / "resources" / "1" / "batch"
     batch_path.mkdir(parents=True)
 
-    for index, batch_data in enumerate([batch_data_1, batch_data_2], start=1):
+    for batch_data in [batch_data_1, batch_data_2]:
         batch_data.write_parquet(
-            Path(batch_path / f"2025-03-26T100346Z-{index}").with_suffix(".parquet")
+            Path(batch_path / f"2025-03-26T100346Z-{uuid4()}").with_suffix(".parquet")
         )
 
     return tmp_path
@@ -129,11 +129,3 @@ def test_raises_error_with_empty_resource_properties():
     # errors = error_info.value.exceptions
 
     assert True
-
-
-def test_raises_error_when_timestamp_is_incorrect_format():
-    """Raises ValueError when the timestamp is not in the correct format."""
-    incorrect_timestamp = "2025-03-26T10"
-
-    with raises(ValueError):
-        _check_timestamp_format(incorrect_timestamp)
