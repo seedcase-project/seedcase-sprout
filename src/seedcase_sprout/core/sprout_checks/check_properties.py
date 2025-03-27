@@ -2,6 +2,7 @@ from seedcase_sprout.core import checks
 from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
 from seedcase_sprout.core.checks.exclude_matching_errors import exclude_matching_errors
 from seedcase_sprout.core.properties import PackageProperties
+from seedcase_sprout.core.sprout_checks.common_types import PackagePropertiesOrDict
 from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
 )
@@ -13,8 +14,8 @@ RESOURCE_FIELD_PATTERN = r"resources\[\d+\]"
 
 
 def check_properties(
-    properties: PackageProperties | dict, ignore: list[CheckErrorMatcher] = []
-) -> PackageProperties | dict:
+    properties: PackagePropertiesOrDict, ignore: list[CheckErrorMatcher] = []
+) -> PackagePropertiesOrDict:
     """Checks that `properties` matches requirements in Sprout.
 
     `properties` is checked against the Data Package standard and the following
