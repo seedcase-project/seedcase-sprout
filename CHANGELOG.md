@@ -1,3 +1,15 @@
+## 0.26.7 (2025-03-27)
+
+### Refactor
+
+- :fire: remove `create_package_properties()` and replace it with `write_*()` (#1153)
+
+## 0.26.6 (2025-03-24)
+
+### Refactor
+
+- :recycle: check column data types (#1111)
+
 ## 0.26.5 (2025-03-21)
 
 ### Refactor
