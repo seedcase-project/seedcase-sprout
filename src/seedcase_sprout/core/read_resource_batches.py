@@ -4,6 +4,7 @@ from pathlib import Path
 import polars as pl
 
 from seedcase_sprout.core.check_is_file import check_is_file
+from seedcase_sprout.core.constants import BATCH_TIMESTAMP_FORMAT
 from seedcase_sprout.core.properties import ResourceProperties
 
 # from seedcase_sprout.core.checks.check_data import check_data
@@ -98,7 +99,7 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
     return data.with_columns(pl.lit(timestamp).alias("_batch_file_timestamp_"))
 
 
-def _check_timestamp_format(timestamp: str, format: str = "%Y-%m-%dT%H%M%SZ") -> str:
+def _check_timestamp_format(timestamp: str) -> str:
     """Check if the timestamp is in the expected format.
 
     The expected format is "%Y-%m-%dT%H%M%SZ", which is the format used by
@@ -115,7 +116,7 @@ def _check_timestamp_format(timestamp: str, format: str = "%Y-%m-%dT%H%M%SZ") ->
         ValueError: If the timestamp doesn't fit the expected format.
     """
     try:
-        datetime.strptime(timestamp, format)
+        datetime.strptime(timestamp, BATCH_TIMESTAMP_FORMAT)
         return timestamp
     except ValueError as error:
         raise ValueError(
