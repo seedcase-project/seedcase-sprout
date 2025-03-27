@@ -21,7 +21,7 @@ def test_reads_in_as_package_properties(tmp_path):
 
     expected_properties = example_package_properties()
     properties_path = tmp_path / "datapackage.json"
-    properties_path = write_package_properties(properties_path, expected_properties)
+    properties_path = write_package_properties(expected_properties, properties_path)
     actual_properties = read_properties(properties_path)
 
     assert expected_properties == actual_properties
@@ -33,7 +33,7 @@ def test_reads_when_resource_not_exists(tmp_path):
     expected_properties = example_package_properties()
     expected_properties.resources = None
     properties_path = tmp_path / "datapackage.json"
-    properties_path = write_package_properties(properties_path, expected_properties)
+    properties_path = write_package_properties(expected_properties, properties_path)
     actual_properties = read_properties(properties_path)
 
     assert expected_properties == actual_properties
