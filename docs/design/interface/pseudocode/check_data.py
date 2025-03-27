@@ -1,7 +1,5 @@
 # ruff: noqa
-def check_data(
-    data: DataFrame, resource_properties: ResourceProperties
-) -> DataFrame:
+def check_data(data: DataFrame, resource_properties: ResourceProperties) -> DataFrame:
     """Checks that the DataFrame matches the requirements in the resource properties.
 
     Runs a few checks to compare between the data and the properties on the items:
@@ -46,19 +44,8 @@ def check_data(
     check_resource_properties(resource_properties)
 
     # TODO: These individual checks have their own pseudocode files.
-    error_messages = _check_column_names(data, resource_properties)
-
-    error_messages += _check_column_types(data, resource_properties)
-
-    # TODO: If there are errors in the types above, this next line won't matter. Maybe have an error output here first?
-    if error_messages:
-        raise ExceptionGroup(error_messages, ...)
-
-    error_messages += _check_column_values_types(data, resource_properties)
-
-    error_messages += _check_column_values_constraints(data, resource_properties)
-
-    if error_messages:
-        raise ExceptionGroup(error_messages, ...)
+    _check_column_names(data, resource_properties)
+    _check_column_types(data, resource_properties)
+    _check_column_values_constraints(data, resource_properties)
 
     return data
