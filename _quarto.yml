@@ -1,7 +1,9 @@
 project:
   type: seedcase-theme
   pre-render: rm -rf .storage
-  post-render: rm docs/reference/*.qmd
+  post-render:
+    # Delete the auto-generated reference files from quartodoc
+    - find docs/reference/ -type f -name "*.qmd" -o -name "*.quarto_ipynb" -delete
   render:
     - "docs/*"
     - "index.qmd"
