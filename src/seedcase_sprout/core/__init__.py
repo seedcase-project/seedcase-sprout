@@ -9,9 +9,7 @@
 # from .delete_resource_data import *
 # from .delete_resource_properties import *
 
-
 from .as_readme_text import as_readme_text
-from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .edit_package_properties import edit_package_properties
