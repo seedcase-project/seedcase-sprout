@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "seedcase-sprout"
-version = "0.26.2"
+version = "0.26.8"
 description = "Grow your research data in a structured, modern way that follows best practices."
 authors = [
   "Luke W. Johnston <lwjohnst@gmail.com>",
@@ -32,8 +32,6 @@ requests = "^2.32.3"
 platformdirs = "^4.3.2"
 jsonschema = "^4.23.0"
 dacite = "^1.8.1"
-xmlschema = "^3.4.3"
-pandera = {extras = ["polars"], version = "^0.22.1"}
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.2"
