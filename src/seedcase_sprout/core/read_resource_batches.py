@@ -45,7 +45,7 @@ def read_resource_batches(
         )
         ```
     """
-    list(map(check_is_file, paths))
+    map(check_is_file, paths)
     check_resource_properties(resource_properties)
 
     data_list = list(map(_read_parquet_batch_file, paths))
@@ -105,7 +105,7 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
         _add_timestamp_as_column(pl.DataFrame(), "2025-03-26T153402Z")
         ```
     """
-    return data.insert_column(0, pl.Series("timestamp", [timestamp] * len(data)))
+    return data.with_columns(pl.lit(timestamp).alias("__timestamp__"))
 
 
 def _check_timestamp_format(timestamp: str, format: str = "%Y-%m-%dT%H%M%SZ") -> str:
