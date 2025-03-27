@@ -100,7 +100,7 @@ fields filled in after using `extract_resource_properties()`. The
 %%| fig-cap: "Diagram showing the flow of objects and functions to extract resource properties from data."
 %%| fig-alt: "A flow diagram showing the steps to extract resource properties from data."
 flowchart
-    data_file[(Data file)]
+    data[("DataFrame<br>(Tidy)")]
     properties_extracted[("ResourceProperties<br>(extracted)")]
     properties_updates[("ResourceProperties<br>(additions)")]
     schema_properties_updates[("TableSchemaProperties<br>(additions)")]
@@ -110,7 +110,7 @@ flowchart
     extract_resource_properties("extract_resource_properties()")
     write_resource_properties("write_resource_properties()")
 
-    data_file --> extract_resource_properties
+    data --> extract_resource_properties
     extract_resource_properties --> properties_extracted
     properties_extracted --> update_resource_properties
     schema_properties_updates --> properties_updates
