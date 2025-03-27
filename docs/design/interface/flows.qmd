@@ -137,16 +137,14 @@ flowchart
     subgraph Internal
         check_column_names("_check_column_names()")
         check_column_types("_check_column_types()")
-        check_column_values_types("_check_column_values_types()")
         check_column_values_constraints("_check_column_values_constraints()")
-        string[("string, with<br>error message")]
+        output[("DataFrame<br>or error")]
     end
 
     data --> check_data
     resource_properties --> check_data
     check_data -.-> Internal
-    check_column_names -.-> string
-    check_column_types -.-> string
-    check_column_values_types -.-> string
-    check_column_values_constraints -.-> string
+    check_column_names -.-> output
+    check_column_types -.-> output
+    check_column_values_constraints -.-> output
 ```
