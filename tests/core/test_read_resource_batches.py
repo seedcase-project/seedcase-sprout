@@ -74,10 +74,13 @@ def test_reads_resource_batches_correctly(resource_paths):
 
     # Then
     assert len(data) == 2
-    assert data[0].shape and data[1].shape == (3, 3)
-    assert timestamp_column[0].name and timestamp_column[1].name == "timestamp"
+    assert data[0].shape == (3, 3) and data[1].shape == (3, 3)
     assert (
-        timestamp_column[0].unique()[0]
+        timestamp_column[0].name == "timestamp"
+        and timestamp_column[1].name == "timestamp"
+    )
+    assert (
+        timestamp_column[0].unique()[0] == "2025-03-26T100346Z"
         and timestamp_column[1].unique()[0] == "2025-03-26T100346Z"
     )
 
