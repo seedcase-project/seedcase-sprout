@@ -95,7 +95,7 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
     Returns:
         Data with added timestamp column.
     """
-    return data.with_columns(pl.lit(timestamp).alias("__timestamp__"))
+    return data.with_columns(pl.lit(timestamp).alias("_batch_file_timestamp_"))
 
 
 def _check_timestamp_format(timestamp: str, format: str = "%Y-%m-%dT%H%M%SZ") -> str:
