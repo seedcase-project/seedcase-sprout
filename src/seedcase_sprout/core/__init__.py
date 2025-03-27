@@ -5,32 +5,33 @@
 # Packages -----
 # from .delete_package import *
 # Resources -----
-# from .delete_resource_raw_file import *
+# from .delete_resource_batch_file import *
 # from .delete_resource_data import *
 # from .delete_resource_properties import *
 
-from .build_readme_text import build_readme_text
+from .as_readme_text import as_readme_text
 from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .edit_package_properties import edit_package_properties
 from .example_package_properties import example_package_properties
+from .extract_resource_properties import extract_resource_properties
 
 # TODO: Consider having all these in one module.
-from .path_package_functions import (
+from .path_global import (
     path_package,
     path_packages,
+    path_sprout_global,
+)
+from .path_local import (
     path_properties,
     path_readme,
-)
-from .path_resource_functions import (
     path_resource,
+    path_resource_batch,
+    path_resource_batch_files,
     path_resource_data,
-    path_resource_raw,
-    path_resource_raw_files,
     path_resources,
 )
-from .path_sprout_global import path_sprout_global
 from .properties import (
     ConstraintsProperties,
     ContributorProperties,
@@ -50,9 +51,8 @@ from .sprout_checks.check_resource_properties import check_resource_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 
-# from .extract_resource_properties import *
 # from .edit_resource_properties import *
-# from .write_resource_data_to_raw import *
+# from .write_resource_data_to_batch import *
 # from .write_resource_parquet import *
 from .write_resource_properties import write_resource_properties
 
@@ -78,17 +78,17 @@ __all__ = [
     "create_package_properties",
     "edit_package_properties",
     "write_package_properties",
-    "build_readme_text",
+    "as_readme_text",
     # "delete_package",
     # Resources -----
     "create_resource_structure",
     "create_resource_properties",
-    # "extract_resource_properties",
+    "extract_resource_properties",
     # "edit_resource_properties",
-    # "write_resource_data_to_raw",
+    # "write_resource_data_to_batch",
     # "write_resource_parquet",
     "write_resource_properties",
-    # "delete_resource_raw_file",
+    # "delete_resource_batch_file",
     # "delete_resource_data",
     # "delete_resource_properties",
     # Path -----
@@ -98,8 +98,8 @@ __all__ = [
     "path_readme",
     "path_resource",
     "path_resource_data",
-    "path_resource_raw",
-    "path_resource_raw_files",
+    "path_resource_batch",
+    "path_resource_batch_files",
     "path_resources",
     "path_sprout_global",
     # Helpers -----

@@ -1,3 +1,51 @@
+## 0.26.6 (2025-03-24)
+
+### Refactor
+
+- :recycle: check column data types (#1111)
+
+## 0.26.5 (2025-03-21)
+
+### Refactor
+
+- :recycle: rename `build_` to `as_readme_text()` (#1172)
+
+## 0.26.4 (2025-03-19)
+
+### Refactor
+
+- :recycle: expose `extract_resource_properties()` (#1152)
+
+## 0.26.3 (2025-03-19)
+
+### Refactor
+
+- :recycle: remove original extension and `.gz` from batch file names (#1147)
+
+## 0.26.2 (2025-03-18)
+
+### Refactor
+
+- 🚚 rename `raw` to `batch` within Python code (#1145)
+
+## 0.26.1 (2025-03-17)
+
+### Refactor
+
+- :recycle: major refactor of path functions to be local-first (#1114)
+
+## 0.26.0 (2025-03-17)
+
+### Feat
+
+- :sparkles: add `check_data_header()` (#1130)
+
+## 0.25.0 (2025-03-17)
+
+### Feat
+
+- :sparkles: add `set_missing_values_to_null()` (#1131)
+
 ## 0.24.0 (2025-03-12)
 
 ### Feat
