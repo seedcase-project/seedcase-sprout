@@ -4,8 +4,10 @@ from pathlib import Path
 import polars as pl
 
 from seedcase_sprout.core.check_is_file import check_is_file
-from seedcase_sprout.core.constants import BATCH_TIMESTAMP_FORMAT
 from seedcase_sprout.core.properties import ResourceProperties
+from seedcase_sprout.core.sprout_checks.check_batch_file_name import (
+    check_batch_file_name,
+)
 
 # from seedcase_sprout.core.checks.check_data import check_data
 from seedcase_sprout.core.sprout_checks.check_resource_properties import (
@@ -70,8 +72,8 @@ def _read_parquet_batch_file(path: Path) -> pl.DataFrame:
         The Parquet file as a DataFrame with a timestamp column added.
     """
     data = pl.read_parquet(path)
+    check_batch_file_name(path)
     timestamp = _extract_timestamp_from_batch_file_path(path)
-    _check_timestamp_format(timestamp)
     data = _add_timestamp_as_column(data, timestamp)
     return data
 
@@ -97,28 +99,3 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
         Data with added timestamp column.
     """
     return data.with_columns(pl.lit(timestamp).alias("_batch_file_timestamp_"))
-
-
-def _check_timestamp_format(timestamp: str) -> str:
-    """Check if the timestamp is in the expected format.
-
-    The expected format is "%Y-%m-%dT%H%M%SZ", which is the format used by
-    `create_batch_file_name()`.
-
-    Args:
-        timestamp: Timestamp string to check.
-        format: Expected format of the timestamp.
-
-    Returns:
-        Timestamp string if in the expected format.
-
-    Raises:
-        ValueError: If the timestamp doesn't fit the expected format.
-    """
-    try:
-        datetime.strptime(timestamp, BATCH_TIMESTAMP_FORMAT)
-        return timestamp
-    except ValueError as error:
-        raise ValueError(
-            f"Timestamp '{timestamp}' is not in the expected format {format}"
-        ) from error
