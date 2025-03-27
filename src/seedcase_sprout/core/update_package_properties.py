@@ -59,8 +59,9 @@ def update_package_properties(
             )
 
             # Edit package properties
+            properties = sp.read_properties(temp_path / "datapackage.json")
             sp.update_package_properties(
-                current_properties=sp.read_properties(temp_path / "1" / "datapackage.json"),
+                current_properties=properties,
                 update_properties=sp.PackageProperties(
                     title="New Package Title",
                     name="new-package-name",

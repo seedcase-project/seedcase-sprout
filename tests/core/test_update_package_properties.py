@@ -22,7 +22,7 @@ test_properties = PackageProperties(
 
 
 @mark.parametrize(
-    "properties",
+    "properties_updates",
     [
         PackageProperties(),
         PackageProperties(name="my-new-package-name"),
@@ -149,7 +149,7 @@ def test_throws_error_if_current_properties_have_a_resource_error():
 def test_throws_error_if_incoming_package_properties_are_malformed():
     """Should throw a group of `CheckError`s if the incoming package properties are
     malformed."""
-    properties_updates = PackageProperties(namfull_propertiese="a name with spaces")
+    properties_updates = PackageProperties(name="a name with spaces")
 
     with raises(ExceptionGroup) as error_info:
         update_package_properties(test_properties, properties_updates)
