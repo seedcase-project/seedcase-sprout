@@ -6,7 +6,7 @@ import polars as pl
 from seedcase_sprout.core.check_is_file import check_is_file
 
 # from seedcase_sprout.core.checks.check_data import check_data
-from seedcase_sprout.core.checks.check_resource_properties import (
+from seedcase_sprout.core.sprout_checks.check_resource_properties import (
     check_resource_properties,
 )
 from seedcase_sprout.core.properties import ResourceProperties
@@ -17,7 +17,7 @@ def read_resource_batches(
 ) -> list[pl.DataFrame]:
     """Reads all the batch resource file(s) into a list of (Polars) DataFrames.
 
-    This function takes the file(s) given by `paths`, reads them in as Polars
+    This function takes the Parquet file(s) given by `paths`, reads them in as Polars
     DataFrames as a list and does some checks on each of the DataFrames in the list
     based on the `resource_properties`. The `resource_properties` object is used
     to check the data and ensure it is correct. While Sprout generally assumes
@@ -46,7 +46,7 @@ def read_resource_batches(
         ```
     """
     list(map(check_is_file, paths))
-    check_resource_properties(resource_properties.compact_dict)
+    check_resource_properties(resource_properties)
 
     data_list = list(map(_read_parquet_batch_file, paths))
 
@@ -63,7 +63,7 @@ def _read_parquet_batch_file(path: Path) -> pl.DataFrame:
     a timestamp column to the DataFrame, extracted from the file name.
 
     Args:
-        path: Path the Parquet batch file.
+        path: Path to the Parquet batch file.
 
     Returns:
         The Parquet file as a DataFrame with a timestamp column added.
