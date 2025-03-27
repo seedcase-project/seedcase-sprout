@@ -10,7 +10,7 @@ from seedcase_sprout.core.properties import (
 )
 from seedcase_sprout.core.update_package_properties import update_package_properties
 
-full_properties = PackageProperties(
+test_properties = PackageProperties(
     name="my-package",
     id="123-abc-123",
     title="My Package",
@@ -26,18 +26,22 @@ full_properties = PackageProperties(
     [
         PackageProperties(),
         PackageProperties(name="my-new-package-name"),
-        full_properties,
+        test_properties,
     ],
 )
-def test_updates_only_change_package_properties(properties):
+def test_updates_only_change_package_properties(properties_updates):
     """Should only update package properties and leave unchanged values as is."""
+    # To make clear it is the current one.
+    current_properties = test_properties
     expected_properties = PackageProperties.from_dict(
-        full_properties.compact_dict | properties.compact_dict
+        current_properties.compact_dict | properties_updates.compact_dict
     )
 
-    updated_properties = update_package_properties(current_properties, new_properties)
+    updated_properties = update_package_properties(
+        current_properties, properties_updates
+    )
 
-    assert new_properties == expected_properties
+    assert updated_properties == expected_properties
 
 
 @mark.parametrize(
@@ -49,32 +53,40 @@ def test_updates_only_change_package_properties(properties):
 )
 def test_updates_incomplete_package_properties(current_properties):
     """Should update properties that were incomplete before they were updated."""
-    new_properties = update_package_properties(current_properties, full_properties)
+    # To make clear what this is.
+    properties_updates = test_properties
+    updated_properties = update_package_properties(
+        current_properties, properties_updates
+    )
 
-    assert new_properties == full_properties
+    assert updated_properties == properties_updates
 
 
 def test_resources_not_added_from_incoming_properties():
     """When current properties have no resources, these should not be added from
     incoming properties."""
-    properties = PackageProperties(resources=[ResourceProperties()])
+    properties_updates = PackageProperties(resources=[ResourceProperties()])
 
-    new_properties = update_package_properties(full_properties, properties)
+    # To make clear what this is.
+    current_properties = test_properties
+    updated_properties = update_package_properties(
+        current_properties, properties_updates
+    )
 
-    assert new_properties == full_properties
+    assert updated_properties == current_properties
 
 
 @mark.parametrize(
-    "properties",
+    "properties_updates",
     [
         PackageProperties(),
         PackageProperties(resources=[ResourceProperties()]),
     ],
 )
-def test_current_resources_not_modified(properties):
+def test_current_resources_not_modified(properties_updates):
     """When current properties have resources, these should not be modified."""
     current_properties = replace(
-        full_properties,
+        test_properties,
         resources=[
             ResourceProperties(
                 name="resource-1",
@@ -84,19 +96,21 @@ def test_current_resources_not_modified(properties):
             )
         ],
     )
-    new_properties = update_package_properties(current_properties, properties)
+    updated_properties = update_package_properties(
+        current_properties, properties_updates
+    )
 
-    assert new_properties == current_properties
+    assert updated_properties == current_properties
 
 
 def test_throws_error_if_current_properties_have_a_package_error():
     """Should throw a group of `CheckError`s if the current properties have an error
     among the package properties."""
     current_properties = PackageProperties(name="invalid name with spaces")
-    properties = PackageProperties(name="my-new-package-name")
+    properties_updates = PackageProperties(name="my-new-package-name")
 
     with raises(ExceptionGroup) as error_info:
-        update_package_properties(current_properties, properties)
+        update_package_properties(current_properties, properties_updates)
 
     assert "invalid name with spaces" in error_info.value.message
     errors = error_info.value.exceptions
@@ -109,7 +123,7 @@ def test_throws_error_if_current_properties_have_a_resource_error():
     """Should throw a group of `CheckError`s if the current properties have an error
     among the resource properties."""
     current_properties = replace(
-        full_properties,
+        test_properties,
         resources=[
             ResourceProperties(
                 name="invalid name with spaces",
@@ -119,10 +133,10 @@ def test_throws_error_if_current_properties_have_a_resource_error():
             )
         ],
     )
-    properties = PackageProperties(name="my-new-package-name")
+    properties_updates = PackageProperties(name="my-new-package-name")
 
     with raises(ExceptionGroup) as error_info:
-        update_package_properties(current_properties, properties)
+        update_package_properties(current_properties, properties_updates)
 
     assert "my-package" in error_info.value.message
     assert "invalid name with spaces" in error_info.value.message
@@ -135,10 +149,10 @@ def test_throws_error_if_current_properties_have_a_resource_error():
 def test_throws_error_if_incoming_package_properties_are_malformed():
     """Should throw a group of `CheckError`s if the incoming package properties are
     malformed."""
-    properties = PackageProperties(name="a name with spaces")
+    properties_updates = PackageProperties(namfull_propertiese="a name with spaces")
 
     with raises(ExceptionGroup) as error_info:
-        update_package_properties(full_properties, properties)
+        update_package_properties(test_properties, properties_updates)
 
     assert "a name with spaces" in error_info.value.message
     errors = error_info.value.exceptions
@@ -151,10 +165,10 @@ def test_throws_error_if_resulting_properties_are_incomplete():
     """Should throw a group of `CheckError`s if the resulting properties have missing
     required fields."""
     current_properties = PackageProperties(name="my-incomplete-package")
-    properties = PackageProperties(title="My Incomplete Package")
+    properties_updates = PackageProperties(title="My Incomplete Package")
 
     with raises(ExceptionGroup) as error_info:
-        update_package_properties(current_properties, properties)
+        update_package_properties(current_properties, properties_updates)
 
     message = error_info.value.message
     assert "my-incomplete-package" in message

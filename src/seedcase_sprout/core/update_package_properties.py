@@ -7,30 +7,32 @@ from seedcase_sprout.core.sprout_checks.check_properties import check_properties
 
 
 def update_package_properties(
-    current: PackageProperties, updates: PackageProperties
+    current_properties: PackageProperties, update_properties: PackageProperties
 ) -> PackageProperties:
     """Updates the properties of an existing package.
 
-    Use this any time you want to update the package's properties.  When you need
-    to update the `datapackage.json` file, use this function to ensure the
-    properties are correctly structured before they're written. It only updates the
-    properties of the package itself, not of the data resources contained within
-    the package.
+    Use this any time you want to update the package's properties.  When you
+    need to update the `datapackage.json` file, use this function to ensure the
+    properties are correctly structured before they're written. It only updates
+    the properties of the package itself, not of the data resources contained
+    within the package.
 
-    If the properties in the `updates` argument are correct (i.e., they pass the properties checks), they will overwrite any
-    pre-existing properties within the `current` properties.
+    If the properties in the `update_properties` argument are correct (i.e.,
+    they pass the properties checks), they will overwrite any pre-existing
+    properties within the `current` properties.
 
     Args:
-        current: The current properties found in the `datapackage.json` file. Use
-            `read_properties()` to get the current properties.
-        updates: The new package properties to update from the original. Use
-            `PackageProperties` to provide a correctly structured properties
+        current_properties: The current properties found in the
+            `datapackage.json` file. Use `read_properties()` to get the current
+            properties.
+        update_properties: The new package properties to update from the current ones.
+            Use `PackageProperties` to provide a correctly structured properties
             dictionary. See `help(PackageProperties)` for details on how to use it.
 
     Returns:
         The updated package properties as a `PackageProperties` object. Use
-            `write_package_properties()` to save it back to the `datapackage.json`
-            file.
+        `write_package_properties()` to save it back to the `datapackage.json`
+        file.
 
     Raises:
         ExceptionGroup: If there is an error in the current, incoming, or resulting
@@ -58,8 +60,8 @@ def update_package_properties(
 
             # Edit package properties
             sp.update_package_properties(
-                current=sp.read_properties(temp_path / "1" / "datapackage.json"),
-                updates=sp.PackageProperties(
+                current_properties=sp.read_properties(temp_path / "1" / "datapackage.json"),
+                update_properties=sp.PackageProperties(
                     title="New Package Title",
                     name="new-package-name",
                     description="New Description",
@@ -67,20 +69,22 @@ def update_package_properties(
             )
         ```
     """
-    updates.resources = None
-    check_package_properties(updates, ignore=[CheckErrorMatcher(validator="required")])
+    update_properties.resources = None
+    check_package_properties(
+        update_properties, ignore=[CheckErrorMatcher(validator="required")]
+    )
 
     check_properties(
-        current,
+        current_properties,
         ignore=[CheckErrorMatcher(validator="required")],
     )
 
-    updated_properties = current.compact_dict
-    updated.update(updates.compact_dict)
+    updated_properties = current_properties.compact_dict
+    updated_properties.update(update_properties.compact_dict)
 
     check_properties(
-        updated,
+        updated_properties,
         ignore=[CheckErrorMatcher(validator="required", json_path="resources")],
     )
 
-    return PackageProperties.from_dict(updated)
+    return PackageProperties.from_dict(updated_properties)
