@@ -70,14 +70,17 @@ def test_reads_resource_batches_correctly(resource_paths):
         paths=resource_paths, resource_properties=resource_properties
     )
     # When
-    timestamp_column = [data[0]["timestamp"], data[1]["timestamp"]]
+    timestamp_column = [
+        data[0]["_batch_file_timestamp_"],
+        data[1]["_batch_file_timestamp_"],
+    ]
 
     # Then
     assert len(data) == 2
     assert data[0].shape == (3, 3) and data[1].shape == (3, 3)
     assert (
-        timestamp_column[0].name == "timestamp"
-        and timestamp_column[1].name == "timestamp"
+        timestamp_column[0].name == "_batch_file_timestamp_"
+        and timestamp_column[1].name == "_batch_file_timestamp_"
     )
     assert (
         timestamp_column[0].unique()[0] == "2025-03-26T100346Z"
