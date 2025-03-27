@@ -67,11 +67,6 @@ def _read_parquet_batch_file(path: Path) -> pl.DataFrame:
 
     Returns:
         The Parquet file as a DataFrame with a timestamp column added.
-
-    Examples:
-        ```{python}
-        _read_parquet_batch_file(Path("resources/1/batch/2025-03-26T153402Z-1.parquet"))
-        ```
     """
     data = pl.read_parquet(path)
     timestamp = _extract_timestamp_from_batch_file_path(path)
@@ -99,11 +94,6 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
 
     Returns:
         Data with added timestamp column.
-
-    Examples:
-        ```{python}
-        _add_timestamp_as_column(pl.DataFrame(), "2025-03-26T153402Z")
-        ```
     """
     return data.with_columns(pl.lit(timestamp).alias("__timestamp__"))
 
@@ -123,11 +113,6 @@ def _check_timestamp_format(timestamp: str, format: str = "%Y-%m-%dT%H%M%SZ") ->
 
     Raises:
         ValueError: If the timestamp doesn't fit the expected format.
-
-    Examples:
-        ```{python}
-        _check_timestamp_format("2025-03-26T153402Z")
-        ```
     """
     try:
         datetime.strptime(timestamp, format)
