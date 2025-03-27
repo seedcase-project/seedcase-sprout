@@ -156,18 +156,20 @@ flowchart
     properties_updated[("ResourceProperties<br>(updated)")]
     path_properties("path_properties()")
     update_resource_properties("update_resource_properties()")
-    read_resource_properties("read_resource_properties()")
+    read_properties("read_properties()")
+    get_resource_properties("get_resource_properties()")
     write_resource_properties("write_resource_properties()")
     check_resource_properties("check_resource_properties()")
 
-    path_properties --> read_resource_properties
-    read_resource_properties --> properties_current
+    path_properties --> read_properties
+    read_properties --> get_resource_properties
+    get_resource_properties --> properties_current
     properties_current --> update_resource_properties
     properties_updates --> update_resource_properties
     update_resource_properties --> properties_updated
     properties_updated --> write_resource_properties
     path_properties --> write_resource_properties
-    resource_name --> read_resource_properties
+    resource_name --> get_resource_properties
     properties_updated -.-> check_resource_properties
 ```
 
