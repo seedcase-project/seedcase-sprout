@@ -82,7 +82,7 @@ flowchart
     function --> out
 ```
 
-### {{< var done >}} `update_package_properties(current, updates)`
+### {{< var done >}} `update_package_properties(current_properties, updated_properties)`
 
 See the help documentation with `help(update_package_properties())` for
 more details.

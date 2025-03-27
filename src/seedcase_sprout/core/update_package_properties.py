@@ -17,12 +17,12 @@ def update_package_properties(
     properties of the package itself, not of the data resources contained within
     the package.
 
-    If the properties in the `updates` argument are correct, they will overwrite any
+    If the properties in the `updates` argument are correct (i.e., they pass the properties checks), they will overwrite any
     pre-existing properties within the `current` properties.
 
     Args:
         current: The current properties found in the `datapackage.json` file. Use
-            `read_properties()` to get the latest properties.
+            `read_properties()` to get the current properties.
         updates: The new package properties to update from the original. Use
             `PackageProperties` to provide a correctly structured properties
             dictionary. See `help(PackageProperties)` for details on how to use it.
@@ -32,6 +32,7 @@ def update_package_properties(
             `write_package_properties()` to save it back to the `datapackage.json`
             file.
 
+    Raises:
         ExceptionGroup: If there is an error in the current, incoming, or resulting
             package properties. A group of `CheckError`s, one error for each failed
             check.
@@ -74,7 +75,7 @@ def update_package_properties(
         ignore=[CheckErrorMatcher(validator="required")],
     )
 
-    updated = current.compact_dict
+    updated_properties = current.compact_dict
     updated.update(updates.compact_dict)
 
     check_properties(

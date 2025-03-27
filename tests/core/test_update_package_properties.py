@@ -29,13 +29,13 @@ full_properties = PackageProperties(
         full_properties,
     ],
 )
-def test_updates_only_changed_package_properties(properties):
+def test_updates_only_change_package_properties(properties):
     """Should only update package properties and leave unchanged values as is."""
     expected_properties = PackageProperties.from_dict(
         full_properties.compact_dict | properties.compact_dict
     )
 
-    new_properties = update_package_properties(full_properties, properties)
+    updated_properties = update_package_properties(current_properties, new_properties)
 
     assert new_properties == expected_properties
 
@@ -48,7 +48,7 @@ def test_updates_only_changed_package_properties(properties):
     ],
 )
 def test_updates_incomplete_package_properties(current_properties):
-    """Should update properties that are incomplete before being updated."""
+    """Should update properties that were incomplete before they were updated."""
     new_properties = update_package_properties(current_properties, full_properties)
 
     assert new_properties == full_properties
