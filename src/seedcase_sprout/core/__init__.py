@@ -10,7 +10,6 @@
 # from .delete_resource_properties import *
 
 from .as_readme_text import as_readme_text
-from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .example_package_properties import example_package_properties
@@ -75,8 +74,8 @@ __all__ = [
     # Example properties -----
     "example_package_properties",
     # Packages -----
-    "create_package_properties",
     "update_package_properties",
+    "edit_package_properties",
     "write_package_properties",
     "as_readme_text",
     # "delete_package",
