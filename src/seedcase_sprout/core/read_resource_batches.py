@@ -1,4 +1,4 @@
-from datetime import datetime
+import re
 from pathlib import Path
 
 import polars as pl
@@ -13,6 +13,7 @@ from seedcase_sprout.core.sprout_checks.check_batch_file_name import (
 from seedcase_sprout.core.sprout_checks.check_resource_properties import (
     check_resource_properties,
 )
+from seedcase_sprout.core.sprout_checks.constants import TIMESTAMP_PATTERN
 
 
 def read_resource_batches(
@@ -85,7 +86,7 @@ def _extract_timestamp_from_batch_file_path(path: Path) -> str:
     specific format, the timestamp can be extracted by taking the first 18 characters of
     the file name.
     """
-    return path.stem[0:18]
+    return re.search(TIMESTAMP_PATTERN, path.stem).group()
 
 
 def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame:
