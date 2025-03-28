@@ -55,7 +55,7 @@ def read_resource_batches(
         )
         ```
     """
-    map(check_is_file, paths)
+    list(map(check_is_file, paths))
     check_resource_properties(resource_properties)
 
     data_list = list(map(_read_parquet_batch_file, paths))
