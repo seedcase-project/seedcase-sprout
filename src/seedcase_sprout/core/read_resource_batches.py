@@ -98,5 +98,16 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
 
     Returns:
         Data with added timestamp column.
+
+    Raises:
+        ValueError: If a column with the name _batch_file_timestamp_ already exists in
+        the data.
     """
+    if "_batch_file_timestamp_" in data.columns:
+        raise ValueError(
+            "The provided resource batch files contains a column named "
+            "'_batch_file_timestamp_'. This column is used internally in Sprout to "
+            "remove duplicate rows across batches. Please rename it in the "
+            "batch files and resource properties to read the resource batches."
+        )
     return data.with_columns(pl.lit(timestamp).alias("_batch_file_timestamp_"))
