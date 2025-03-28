@@ -12,7 +12,7 @@
 from .as_readme_text import as_readme_text
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
-from .example_package_properties import example_package_properties
+from .example_properties import example_package_properties
 from .extract_resource_properties import extract_resource_properties
 
 # TODO: Consider having all these in one module.
