@@ -100,6 +100,31 @@ def test_raises_error_when_file_does_not_exist(resource_paths):
         )
 
 
+def test_raises_error_when_timestamp_column_matches_existing_column(resource_paths):
+    """Raises ValueError when the timestamp column name matches an existing column."""
+    # Given
+    batch_path = resource_paths[0].parent
+
+    for file in batch_path.iterdir():
+        if file.is_file():
+            file.unlink()
+
+    batch_data = pl.DataFrame(
+        {
+            "id": [0, 1, 2],
+            "_batch_file_timestamp_": ["2024-03-26T100346Z"] * 3,
+        }
+    )
+    batch_path = Path(batch_path) / f"2025-03-26T100346Z-{uuid4()}.parquet"
+    batch_data.write_parquet(batch_path)
+
+    # When, Then
+    with raises(ValueError):
+        read_resource_batches(
+            paths=[batch_path], resource_properties=resource_properties
+        )
+
+
 def test_raises_error_when_properties_do_not_match_data(resource_paths):
     """Raises errors from checks when the resource properties don't match the data."""
     # Given
