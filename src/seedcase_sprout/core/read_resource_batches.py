@@ -39,6 +39,12 @@ def read_resource_batches(
     Returns:
         Outputs a list of DataFrame objects from all the batch files.
 
+    Raises:
+        FileNotFoundError: If a file in the list of paths doesn't exist.
+        ValueError: If the batch file name is not in the expected pattern.
+        ValueError: If the timestamp column name matches an existing column in the
+            DataFrame.
+
     Examples:
         ``` python
         import seedcase_sprout.core as sp
