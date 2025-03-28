@@ -1,4 +1,4 @@
-from seedcase_sprout.core.example_properties import (
+from seedcase_sprout.core.examples import (
     example_package_properties,
     example_resource_properties,
 )
