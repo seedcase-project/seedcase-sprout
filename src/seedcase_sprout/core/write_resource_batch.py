@@ -37,7 +37,32 @@ def write_resource_batch(
             ExceptionGroup: A group of `CheckError`s, if data don't align with the resource properties.
 
         Examples:
-            ```{python}
+            ```python
+            # TODO: execute when example_resource_properties() is implemented
+            import tempfile
+            from pathlib import Path
+
+            import polars as pl
+
+            import seedcase_sprout.core as sp
+
+            # Create a temporary directory for the example
+            with tempfile.TemporaryDirectory() as temp_dir:
+                temp_path = Path(temp_dir)
+
+                tidy_data = pl.DataFrame(
+                    {
+                        "id": [0, 1, 2],
+                        "name": ["anne", "belinda", "catherine"],
+                        "value": [1.1, 2.2, 3.3],
+                    }
+                )
+
+                resource_properties = sp.example_resource_properties()
+
+                sp.write_resource_batch(
+                    data=tidy_data, resource_properties=resource_properties
+                )
             ```
     """
     check_resource_properties(resource_properties)
