@@ -259,7 +259,7 @@ folder. You can check the newly added file by using:
 print(sp.path_resource_batch_files(1, path=package_path))
 ```
 
-## Building the Parquet resource data file
+## Building the resource data file
 
 Now that you've stored the data as a batch file, you can build the
 Parquet file that will be used as the data resource. This Parquet file
