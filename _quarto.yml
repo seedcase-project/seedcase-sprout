@@ -1,7 +1,7 @@
 project:
   type: seedcase-theme
   pre-render: rm -rf .storage
-  post-render: rm -rf docs/reference/*.qmd
+  post-render: rm docs/reference/*.qmd
   render:
     - "docs/*"
     - "index.qmd"
@@ -64,9 +64,7 @@ website:
         - section: "Guide"
           href: docs/guide/index.qmd
           contents:
-            - docs/guide/installation.qmd
-            - docs/guide/packages.qmd
-            - docs/guide/checks.qmd
+           - auto: "docs/guide/*.qmd"
 
 quartodoc:
   sidebar: "docs/reference/_sidebar.yml"
@@ -87,8 +85,8 @@ quartodoc:
       desc: "Functions to work with and manage data packages, but not the data resources within them."
       package: "seedcase_sprout.core"
       contents:
-        - create_package_properties
-        - edit_package_properties
+        - write_package_properties
+        - update_package_properties
         - as_readme_text
 
     - subtitle: "Data resource functions"
@@ -113,6 +111,12 @@ quartodoc:
         - SourceProperties
         - TableSchemaForeignKeyProperties
         - TableSchemaProperties
+
+    - subtitle: "Property functions"
+      desc: "Functions used to work with properties."
+      package: "seedcase_sprout.core"
+      contents:
+        - read_properties
 
     - subtitle: "Path functions"
       desc: "Functions to support providing the correct file paths to data package and data resource functions."
