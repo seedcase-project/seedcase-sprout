@@ -1,7 +1,5 @@
 project:
   type: seedcase-theme
-  post-render:
-  post-render: rm docs/reference/*.qmd
   render:
     - "docs/*"
     - "index.qmd"
