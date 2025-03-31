@@ -10,10 +10,8 @@
 # from .delete_resource_properties import *
 
 from .as_readme_text import as_readme_text
-from .create_package_properties import create_package_properties
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
-from .edit_package_properties import edit_package_properties
 from .example_package_properties import example_package_properties
 from .extract_resource_properties import extract_resource_properties
 
@@ -45,9 +43,11 @@ from .properties import (
     TableSchemaForeignKeyProperties,
     TableSchemaProperties,
 )
+from .read_properties import read_properties
 from .sprout_checks.check_package_properties import check_package_properties
 from .sprout_checks.check_properties import check_properties
 from .sprout_checks.check_resource_properties import check_resource_properties
+from .update_package_properties import update_package_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 
@@ -72,10 +72,11 @@ __all__ = [
     "SourceProperties",
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
+    "read_properties",
     # Example properties -----
     "example_package_properties",
     # Packages -----
-    "create_package_properties",
+    "update_package_properties",
     "edit_package_properties",
     "write_package_properties",
     "as_readme_text",
