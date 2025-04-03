@@ -24,11 +24,11 @@ Putting your raw data into a data package makes it easier for yourself
 and others to use later on. The steps you'll take to get your data into
 the structure used by Sprout are:
 
-1.  Create the properties for the resource, using the original raw data
+1.  Create the properties for the resource, using the original data
     as a starting point, and edit as needed.
 2.  Create the folders for the new resource within the package and save
     the resource properties in the `datapackage.json` file.
-3.  Add your data to the data batches of the resource.
+3.  Add your data to the batches of data for the resource.
 4.  Merge the data batches into a new resource data file.
 5.  Re-build the data package's `README.md` file from the updated
     `datapackage.json` file.
@@ -38,7 +38,7 @@ the structure used by Sprout are:
 
 ```{python setup}
 #| include: false
-# This `setup` code chunk creates a package and downloads some raw data.
+# This `setup` code chunk creates a package and downloads some data.
 import seedcase_sprout.core as sp
 from tempfile import mkdtemp
 from pathlib import Path
@@ -72,7 +72,7 @@ starts out in a bit of a "raw" shape that needs some working. This work
 needs to be done before adding the data as a data package, since Sprout
 assumes that the data is already
 [tidy](https://design.seedcase-project.org/data/). For this guide, we
-use a raw (but fake) data file that is already tidy and that looks like:
+use a (fake) data file that is already tidy and that looks like:
 
 ```{python}
 #| echo: false
@@ -120,8 +120,8 @@ resource properties object by extracting as much information as possible
 from the raw data. Afterwards, you can edit these properties as needed.
 
 Now you are ready to use `extract_resource_properties()` to extract the
-resource properties from the raw data. This function tries to infer the
-data types from the raw data, but it might not get it right, so make
+resource properties from the data. This function tries to infer the
+data types from the data, but it might not get it right, so make
 sure to double check the output. It is not possible to infer information
 that is not included in the data, like a description of what the data
 contains or the unit of the data.
@@ -331,8 +331,8 @@ properties object.
 #| eval: false
 # TODO: eval when function implemented
 resource_properties = sp.update_resource_properties(
-    current=resource_properties,
-    updates=sp.ResourceProperties(
+    current_properties=resource_properties,
+    update_properties=sp.ResourceProperties(
         title="Basic characteristics of patients"
     )
 )
