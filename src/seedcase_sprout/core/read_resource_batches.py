@@ -4,6 +4,7 @@ from pathlib import Path
 import polars as pl
 
 from seedcase_sprout.core.check_is_file import check_is_file
+from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.core.properties import ResourceProperties
 from seedcase_sprout.core.sprout_checks.check_batch_file_name import (
     check_batch_file_name,
@@ -106,14 +107,14 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
         Data with added timestamp column.
 
     Raises:
-        ValueError: If a column with the name _batch_file_timestamp_ already exists in
-        the data.
+        ValueError: If a column with the name BATCH_TIMESTAMP_COLUMN_NAME already exists
+        in the data.
     """
-    if "_batch_file_timestamp_" in data.columns:
+    if BATCH_TIMESTAMP_COLUMN_NAME in data.columns:
         raise ValueError(
             "The provided resource batch files contains a column named "
-            "'_batch_file_timestamp_'. This column is used internally in Sprout to "
-            "remove duplicate rows across batches. Please rename it in the "
+            f"'{BATCH_TIMESTAMP_COLUMN_NAME}'. This column is used internally in Sprout"
+            "to remove duplicate rows across batches. Please rename it in the "
             "batch files and resource properties to read the resource batches."
         )
-    return data.with_columns(pl.lit(timestamp).alias("_batch_file_timestamp_"))
+    return data.with_columns(pl.lit(timestamp).alias(BATCH_TIMESTAMP_COLUMN_NAME))

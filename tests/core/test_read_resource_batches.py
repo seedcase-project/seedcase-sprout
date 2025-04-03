@@ -4,6 +4,7 @@ from uuid import uuid4
 import polars as pl
 from pytest import fixture, raises
 
+from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.core.properties import (
     FieldProperties,
     ResourceProperties,
@@ -71,16 +72,16 @@ def test_reads_resource_batches_correctly(resource_paths):
     )
     # When
     timestamp_column = [
-        data[0]["_batch_file_timestamp_"],
-        data[1]["_batch_file_timestamp_"],
+        data[0][BATCH_TIMESTAMP_COLUMN_NAME],
+        data[1][BATCH_TIMESTAMP_COLUMN_NAME],
     ]
 
     # Then
     assert len(data) == 2
     assert data[0].shape == (3, 3) and data[1].shape == (3, 3)
     assert (
-        timestamp_column[0].name == "_batch_file_timestamp_"
-        and timestamp_column[1].name == "_batch_file_timestamp_"
+        timestamp_column[0].name == BATCH_TIMESTAMP_COLUMN_NAME
+        and timestamp_column[1].name == BATCH_TIMESTAMP_COLUMN_NAME
     )
     assert (
         timestamp_column[0].unique()[0] == "2025-03-26T100346Z"
@@ -112,7 +113,7 @@ def test_raises_error_when_timestamp_column_matches_existing_column(resource_pat
     batch_data = pl.DataFrame(
         {
             "id": [0, 1, 2],
-            "_batch_file_timestamp_": ["2024-03-26T100346Z"] * 3,
+            BATCH_TIMESTAMP_COLUMN_NAME: ["2024-03-26T100346Z"] * 3,
         }
     )
     batch_path = Path(batch_path) / f"2025-03-26T100346Z-{uuid4()}.parquet"
