@@ -92,6 +92,7 @@ quartodoc:
       package: "seedcase_sprout.core"
       contents:
         - create_resource_structure
+        - write_resource_batch
         - write_resource_properties
 
     - subtitle: "Property dataclasses"
