@@ -59,13 +59,16 @@ def test_throws_error_if_resource_properties_are_incorrect(
 
 
 def xtest_throws_error_if_data_do_not_match_resource_properties(
-    tmp_path, resource_properties
+    tmp_path, tidy_data, resource_properties
 ):
-    """Throws ExceptionGroup if the data don't match the resource properties."""
+    """Throws ExceptionGroup if data don't match resource properties (extra column)."""
     # Given
     os.chdir(tmp_path)
     (Path("resources") / "1").mkdir(parents=True, exist_ok=True)
 
+    tidy_data.insert_column(2, pl.Series("extra_column", [1, 2, 3]))
+
     # When
+    # TODO: What type of error will `check_data()` raise?
     with raises(ExceptionGroup):
         write_resource_batch(pl.DataFrame(), resource_properties)
