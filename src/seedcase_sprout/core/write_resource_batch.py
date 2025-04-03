@@ -9,7 +9,6 @@ from seedcase_sprout.core.sprout_checks.check_resource_properties import (
 )
 
 
-# ruff: noqa
 def write_resource_batch(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> Path:
