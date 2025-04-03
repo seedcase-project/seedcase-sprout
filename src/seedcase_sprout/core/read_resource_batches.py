@@ -7,7 +7,7 @@ from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.core.properties import ResourceProperties
 from seedcase_sprout.core.sprout_checks.check_batch_file_name import (
-    check_batch_file_name,
+    _check_batch_file_name,
 )
 
 # from seedcase_sprout.core.checks.check_data import check_data
@@ -80,7 +80,7 @@ def _read_parquet_batch_file(path: Path) -> pl.DataFrame:
         The Parquet file as a DataFrame with a timestamp column added.
     """
     data = pl.read_parquet(path)
-    check_batch_file_name(path)
+    _check_batch_file_name(path)
     timestamp = _extract_timestamp_from_batch_file_path(path)
     data = _add_timestamp_as_column(data, timestamp)
     return data

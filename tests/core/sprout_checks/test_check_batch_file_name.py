@@ -4,14 +4,14 @@ from pytest import raises
 
 from seedcase_sprout.core.create_batch_file_name import create_batch_file_name
 from seedcase_sprout.core.sprout_checks.check_batch_file_name import (
-    check_batch_file_name,
+    _check_batch_file_name,
 )
 
 
 def test_file_name_created_by_create_batch_file_name_passes(tmp_path):
     """A batch file name created by `create_batch_file_name` should pass the check."""
     # Given
-    batch_file_name = (Path(tmp_path) / create_batch_file_name()).with_suffix(
+    batch_file_name = (Path(tmp_path) / _create_batch_file_name()).with_suffix(
         ".parquet"
     )
 
@@ -26,4 +26,4 @@ def test_file_name_that_does_not_fit_the_expected_format_fails(tmp_path):
 
     # When, Then
     with raises(ValueError):
-        check_batch_file_name(batch_file_name)
+        _check_batch_file_name(batch_file_name)

@@ -4,7 +4,7 @@ from pathlib import Path
 from seedcase_sprout.core.sprout_checks.constants import BATCH_FILE_NAME_PATTERN
 
 
-def check_batch_file_name(path: Path) -> Path:
+def _check_batch_file_name(path: Path) -> Path:
     """Check that the batch file name is in the expected pattern.
 
     Args:
@@ -23,5 +23,4 @@ def check_batch_file_name(path: Path) -> Path:
             f"Batch file name '{filename}' is not in the expected pattern:"
             f"{BATCH_FILE_NAME_PATTERN}"
         )
-    else:
-        return path
+    return path
