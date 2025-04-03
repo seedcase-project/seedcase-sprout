@@ -12,15 +12,8 @@
 from .as_readme_text import as_readme_text
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
-from .example_package_properties import example_package_properties
+from .examples import example_package_properties, example_resource_properties
 from .extract_resource_properties import extract_resource_properties
-
-# TODO: Consider having all these in one module.
-from .path_global import (
-    path_package,
-    path_packages,
-    path_sprout_global,
-)
 from .path_local import (
     path_properties,
     path_readme,
@@ -75,6 +68,7 @@ __all__ = [
     "read_properties",
     # Example properties -----
     "example_package_properties",
+    "example_resource_properties",
     # Packages -----
     "update_package_properties",
     "edit_package_properties",
@@ -93,8 +87,6 @@ __all__ = [
     # "delete_resource_data",
     # "delete_resource_properties",
     # Path -----
-    "path_package",
-    "path_packages",
     "path_properties",
     "path_readme",
     "path_resource",
@@ -102,7 +94,6 @@ __all__ = [
     "path_resource_batch",
     "path_resource_batch_files",
     "path_resources",
-    "path_sprout_global",
     # Helpers -----
     # "pretty_json",
     "write_file",
