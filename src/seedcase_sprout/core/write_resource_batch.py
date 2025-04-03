@@ -63,7 +63,7 @@ def write_resource_batch(
             sp.write_resource_batch(
                 data=tidy_data, resource_properties=resource_properties
             )
-            ```
+        ```
     """
     check_resource_properties(resource_properties)
     # check_data(data, resource_properties)
