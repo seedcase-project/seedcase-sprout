@@ -221,8 +221,6 @@ Let's check the contents of the `datapackage.json` file to see that the
 resource properties have been added:
 
 ```{python}
-#| eval: false
-# TODO: eval when PR #1156 merged
 pprint(sp.read_properties(sp.path_properties(path=package_path)))
 ```
 
@@ -291,8 +289,6 @@ the text*, but not write it to the file. This allows you to add
 additional information to the README text before writing it to the file.
 
 ```{python}
-#| eval: false
-# TODO: eval when PR #1156 merged
 readme_text = sp.as_readme_text(
     properties=sp.read_properties(sp.path_properties(path=package_path))
 )
@@ -302,8 +298,6 @@ For this guide, you'll only use the default text and not add anything
 else to it. Next you write the text to the `README.md` file by:
 
 ```{python}
-#| eval: false
-# TODO: eval when PR #1156 merged
 sp.write_file(
     string=readme_text,
     path=sp.path_readme(path=package_path)
