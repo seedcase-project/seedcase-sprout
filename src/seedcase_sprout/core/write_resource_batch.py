@@ -66,7 +66,9 @@ def write_resource_batch(
     check_resource_properties(resource_properties)
     # check_data(data, resource_properties)
 
-    # Since `path` is to the `data.parquet` file, take the `parent` to get the `batch` folder
+    # TODO: Use `PackagePath.resource_batch()` when it has been implemented
+    # TODO: Can we assume the cwd is the package path?
+    # Since `path` is to `data.parquet`, take the `parent` to get the `batch` folder
     batch_dir = Path(resource_properties.path).parent / "batch"
 
     # Make sure the batch directory exists
