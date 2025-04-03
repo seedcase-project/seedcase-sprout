@@ -48,6 +48,26 @@ def test_writes_correct_resource_batch_file(tmp_path, tidy_data, resource_proper
     assert_frame_equal(batch_data, tidy_data, check_exact=True)
 
 
+def test_writes_correct_resource_batch_file_with_unordered_columns(
+    tmp_path, tidy_data, resource_properties
+):
+    """Writes batch file correctly even if columns aren't in the order expected by the
+    resource properties."""
+    # Given
+    os.chdir(tmp_path)
+    (Path("resources") / "1").mkdir(parents=True, exist_ok=True)
+
+    tidy_data = tidy_data.select(["name", "id"])
+
+    # When
+    batch_path = write_resource_batch(tidy_data, resource_properties)
+    batch_data = pl.read_parquet(batch_path)
+
+    # Then
+    assert batch_path.exists()
+    assert_frame_equal(batch_data, tidy_data, check_exact=True)
+
+
 def test_throws_error_if_resource_properties_are_incorrect(
     tmp_path, tidy_data, resource_properties
 ):
