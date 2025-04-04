@@ -39,9 +39,8 @@ data in a resource. So you'd first modify the resource properties before
 using this flow. The `update_resource_batches()` function will
 update each batch DataFrame with the new data types or table schema, then
 you can use `write_resource_batches()` to save the updated data back to the
-batch files.
-
-<!-- TODO: I'm not completely clear yet how this flow might work. Does it overwrite existing ones? Or delete? -->
+batch files. The same file name should be used, so it will completely overwrite the
+old batch files.
 
 ```{mermaid}
 %%| label: fig-flow-modify-data-types
