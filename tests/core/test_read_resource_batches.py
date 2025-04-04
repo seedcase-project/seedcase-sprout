@@ -106,10 +106,6 @@ def test_raises_error_when_timestamp_column_matches_existing_column(resource_pat
     # Given
     batch_path = resource_paths[0].parent
 
-    for file in batch_path.iterdir():
-        if file.is_file():
-            file.unlink()
-
     batch_data = pl.DataFrame(
         {
             "id": [0, 1, 2],
