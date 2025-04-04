@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from seedcase_sprout.core.check_datapackage.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.check_datapackage import CheckErrorMatcher
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.properties import ResourceProperties
 from seedcase_sprout.core.read_json import read_json
