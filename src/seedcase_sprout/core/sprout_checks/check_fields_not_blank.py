@@ -1,5 +1,5 @@
-from seedcase_sprout.core.checks.check_error import CheckError
-from seedcase_sprout.core.checks.required_fields import RequiredFieldType
+from seedcase_sprout.core.check_datapackage.check_error import CheckError
+from seedcase_sprout.core.check_datapackage.required_fields import RequiredFieldType
 from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )

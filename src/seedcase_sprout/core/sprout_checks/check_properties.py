@@ -1,6 +1,8 @@
-from seedcase_sprout.core import checks
-from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.checks.exclude_matching_errors import exclude_matching_errors
+from seedcase_sprout.core import check_datapackage
+from seedcase_sprout.core.check_datapackage.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.check_datapackage.exclude_matching_errors import (
+    exclude_matching_errors,
+)
 from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
@@ -43,7 +45,7 @@ def check_properties(
         else properties
     )
 
-    errors = checks.check_properties(properties_dict)
+    errors = check_datapackage.check_properties(properties_dict)
 
     if isinstance(properties_dict, dict):
         errors += get_sprout_package_errors(properties_dict)
