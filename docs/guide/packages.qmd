@@ -135,7 +135,7 @@ print(package_path.glob("**/*"))
 
 Having a *human-readable* version of what is contained in the
 `datapackage.json` file is useful for others who may be working with or
-learning more about your data package. You can use `as_readme_text()` to
+wanting to learn more about your data package. You can use `as_readme_text()` to
 convert the properties information into text that can be added to a
 README file. Let's create a README file with the properties of the data
 package you just created:
