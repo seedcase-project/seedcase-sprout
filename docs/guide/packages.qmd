@@ -25,13 +25,14 @@ functions assume that the working directory is where the
 file (or `.git/` folder) is stored.
 
 With that in mind, let's make a data package! A data package always
-needs a `datapackage.json` file. This file contains a set of [{{< glossary "properties">}}](../glossary.qmd),
-or metadata, about the data package and, eventually, about the data
-resources within it. To set up this `datapackage.json` file, you first
-need a set of properties you want to add to the data package. Then, you
-can use the `create_package_properties()` function that takes the
-properties and the path where you want to store the data package as
-arguments. So first, you need to establish our properties.
+needs a `datapackage.json` file. This file contains a set of
+[{{< glossary "properties">}}](../glossary.qmd), or metadata, about the
+data package and, eventually, about the data resources within it. To set
+up this `datapackage.json` file, you first need a set of properties you
+want to add to the data package. Then, you can use the
+`write_package_properties()` function that takes the properties and the
+path where you want to store the data package as arguments. So first,
+you need to establish our properties.
 
 Sprout has several helper classes, such as `PackageProperties`,
 `LicenseProperties`, and `ContributorProperties`, to make it easier for
@@ -45,10 +46,24 @@ First, import the necessary modules and set up the environment:
 import seedcase_sprout.core as sp
 ```
 
-Then you can create some basic properties:
+There are a few properties that are required for a data package, such as
+`version`, `id`, and `created`. While you could fill these in manually,
+it's much easier to use the `default()` method of the
+`PackageProperties`:
+
+```{python}
+# TODO: This could be improved.
+default_properties = sp.PackageProperties.default().compact_dict
+print(default_properties)
+```
+
+Then you can add some basic properties for your data package:
 
 ```{python}
 properties = sp.PackageProperties(
+    # TODO: This could be improved.
+    # Insert in the default properties.
+    **default_properties,
     name="diabetes-hypertension-study",
     title="Diabetes and Hypertension Study",
     description="Data from the 2021 study on diabetes and hypertension",
@@ -68,6 +83,7 @@ properties = sp.PackageProperties(
         )
     ],
 )
+print(properties)
 ```
 
 Now, time to create your data package with these properties.
@@ -92,21 +108,21 @@ package_path.mkdir(parents=True)
 :::
 
 ```{python}
-sp.create_package_properties(
-    properties = properties,
-    path = package_path
+sp.write_package_properties(
+    properties=properties,
+    path=sp.PackagePath(package_path).properties()
 )
 ```
 
 ::: callout-important
-The `create_package_properties()` function will give an error if the
+The `write_package_properties()` function will give an error if the
 `PackageProperties` object is missing some of its required fields or if
 they are not filled in correctly. In that case, a `datapackage.json`
 file won't be created.
 :::
 
 This creates the initial structure of your new package. The
-`create_package_properties()` function created the `datapackage.json`
+`write_package_properties()` function created the `datapackage.json`
 file in your data package `diabetes-study` folder, which contains the
 properties you added to it. The newly created file would be:
 
@@ -115,26 +131,62 @@ properties you added to it. The newly created file would be:
 print(package_path.glob("**/*"))
 ```
 
-<!-- TODO: Add section on building the README -->
+## Creating a README of the properties
+
+Having a *human-readable* version of what is contained in the
+`datapackage.json` file is useful for others who may be working with or
+wanting to learn more about your data package. You can use `as_readme_text()` to
+convert the properties information into text that can be added to a
+README file. Let's create a README file with the properties of the data
+package you just created:
+
+```{python}
+readme_text = sp.as_readme_text(properties)
+print(readme_text)
+```
+
+It outputs a text string so that, if you want to, you can add other,
+maybe project specific, information before writing to the file. For this
+guide we won't cover how or why to do this.
+
+Then to save it to the file:
+
+```{python}
+sp.write_file(
+    string=readme_text,
+    path=Path(package_path / "README.md")
+)
+```
 
 ## Editing package properties
 
 If you made a mistake and want to update the properties in the current
-`datapackage.json`, you can use the `edit_package_properties()` function
-while using the helper `path_properties()` function to point to the
-`datapackage.json` file. The default behavior of the `path_properties()`
+`datapackage.json`. You likely want to edit the properties in the
+`datapackage.json` file so you first need to read in the properties from
+the file. You can do this with the `read_properties()` function that
+takes the path to the `datapackage.json` file as an argument.
+
+```{python}
+current_properties = sp.read_properties(
+  path=sp.PackagePath(package_path).properties(),
+)
+```
+
+Then you you can use the `update_package_properties()` function
+while using the helper `PackagePath().properties()` function to point to the
+`datapackage.json` file. The default behavior of the `PackagePath().properties()`
 function is to look in the current working directory, but for this
 guide, it is pointing to the temporary folder created from above.
 
 ```{python}
-updated_package_properties = sp.edit_package_properties(
-  path=sp.path_properties(path=package_path),
-  properties=sp.PackageProperties(name="diabetes-study"),
+updated_package_properties = sp.update_package_properties(
+  current_properties=current_properties,
+  update_properties=sp.PackageProperties(name="diabetes-study"),
 )
 ```
 
 ::: callout-important
-The `edit_package_properties()` function will give an error if the
+The `update_package_properties()` function will give an error if the
 required fields are not filled in correctly and so will not create a
 `datapackage.json` file.
 :::
@@ -146,7 +198,7 @@ file, run:
 ```{python}
 sp.write_package_properties(
   properties=updated_package_properties,
-  path=sp.path_properties(path=package_path),
+  path=sp.PackagePath(package_path).properties(),
 )
 ```
 
@@ -157,57 +209,6 @@ fill in for a package.
 
 You now have the basic starting point for adding data resources to your
 data package.
-
-## Creating a data package in a multi-user server environment
-
-If you are making and managing data packages in a multi-user server
-environment that will have or has multiple data packages, there are some
-very small changes you can make to creating and managing packages. Since
-all the functions to create and manage data packages in Sprout take the
-`path` as an argument, they can run in any directory. With that in mind,
-Sprout has a series of helper path functions that can be used to point
-to a "global" Sprout storage location.
-
-The first thing you'll need to decide is where you want to store your
-data packages in this type of environment. By default, Sprout will
-create it in `~/sprout/packages/` on Linux (see
-[Outputs](/docs/design/interface/outputs.qmd) for operating system
-specific locations).
-
-::: callout-note
-You can change the location of the global storage by setting the
-`SPROUT_GLOBAL` environment variable. For instance, maybe you want the
-location to be `~/Desktop/sprout/` or `~/Documents`. For this guide, you
-can try storing your data packages in the current working directory in a
-hidden folder called `.storage/`. It's hidden so it doesn't clutter up
-the directory.
-
-```{python}
-import os
-os.environ["SPROUT_GLOBAL"] = ".storage/"
-```
-:::
-
-Now, you can create a new data package using this global variable, with
-only one change:
-
-```{python}
-# TODO: Update this after fixing the path_package() function
-package_path=sp.path_sprout_global() / "diabetes-study"
-package_path.mkdir(parents=True)
-sp.create_package_properties(
-    properties = properties,
-    path=package_path
-)
-```
-
-After creating the package, you can use functions like `path_package()`
-to point to the correct package or `path_packages()` to list all the
-package in the storage:
-
-```{python}
-print(sp.path_packages())
-```
 
 ```{python}
 #| include: false
