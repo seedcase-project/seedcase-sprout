@@ -10,7 +10,7 @@ def test_package_path_outputs_an_absolute_path(tmp_path):
     assert path.properties().is_absolute()
     assert path.readme().is_absolute()
     assert path.resources().is_absolute()
-    assert path.resource().is_absolute()
-    assert path.resource_data().is_absolute()
-    assert path.resource_batch().is_absolute()
+    assert path.resource("test").is_absolute()
+    assert path.resource_data("test").is_absolute()
+    assert path.resource_batch("test").is_absolute()
     # TODO: Test `resource_batch_files()` after deciding whether to do a check first?

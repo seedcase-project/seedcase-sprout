@@ -40,7 +40,7 @@ class PackagePath:
 
         # Create a temporary directory for the example to show
         # how to use the function with a different path
-        with tempfile.TemporaryDirectory() as temp_dir:
+        with tempfile.TemporaryDirectory() as temp_path:
             sp.PackagePath(temp_path).properties()
             sp.PackagePath(temp_path).readme()
         ```
