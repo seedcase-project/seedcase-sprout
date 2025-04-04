@@ -26,7 +26,7 @@ are the core external-facing functions in Sprout. See the
 different outputs provided by Sprout.
 
 Nearly all functions have a `path` argument. Depending on what the
-function does, the path object will be different. Use the `path_*()`
+function does, the path object will be different. Use the `PackagePath.*()`
 functions to get the correct path object for the specific function. It's
 designed this way to make it more flexible to where individual packages
 and resources are stored and to make it a bit easier to write tests for
@@ -188,7 +188,7 @@ flowchart
 
 Edit the properties of a resource in a package. The `properties`
 argument must be a `ResourceProperties` object. Use the
-`path_properties()` function to provide the
+`PackagePath().properties()` function to provide the
 correct path location. Outputs a `ResourceProperties` object; use
 `write_resource_properties()` to save the properties object to the
 `datapackage.json` file. This function can also be used to delete all of

@@ -9,7 +9,7 @@ first approach).
 from pathlib import Path
 
 
-class path:
+class PackagePath:
     """Gets the absolute path to a specific file or folder in a data package.
 
     The functions in this class are used to get the absolute path to a specific file or
@@ -18,10 +18,10 @@ class path:
     These functions have these characteristics in common:
 
     -   All of these functions output a `Path` object.
-    -   All of these functions have an optional `path` argument that defaults to
+    -   The base class has an optional `path` argument that defaults to
         the current working directory available from the base class.
-    -   If the wrong `resource_id` is given, an error message will include a
-        list of all the actual `resource_id`'s for a specific package.
+    -   If the wrong `resource_name` is given, an error message will include a
+        list of all the actual `resource_name`'s for a specific package.
 
     Args:
         path: Provide a path to the package directory. Defaults to the current working
@@ -35,14 +35,14 @@ class path:
         import tempfile
         import seedcase_sprout.core as sp
 
-        sp.path.properties()
-        sp.path.readme()
+        sp.PackagePath().properties()
+        sp.PackagePath().readme()
 
         # Create a temporary directory for the example to show
         # how to use the function with a different path
         with tempfile.TemporaryDirectory() as temp_dir:
-            sp.path(temp_path).properties()
-            sp.path(temp_path).readme()
+            sp.PackagePath(temp_path).properties()
+            sp.PackagePath(temp_path).readme()
         ```
     """
 
@@ -52,51 +52,51 @@ class path:
 
     def properties(self) -> Path:
         """Path to the `datapackage.json` file."""
-        return self.path / "datapackage.json"
+        return Path(self.path) / "datapackage.json"
 
     def readme(self) -> Path:
         """Path to the `README.md` file."""
-        return self.path / "README.md"
+        return Path(self.path) / "README.md"
 
     def resources(self) -> Path:
         """Path to the `resources/` folder."""
-        return self.path / "resources"
+        return Path(self.path) / "resources"
 
-    def resource(self, resource_id: str) -> Path:
-        """Path to the specified `resources/<id>/` folder.
+    def resource(self, resource_name: str) -> Path:
+        """Path to the specified `resources/<name>/` folder.
 
         Args:
-            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
-                the correct resource ID.
+            resource_name: The name of the resource. Use `ResourceProperties.name` to
+                get the correct resource name.
         """
-        return self.path / "resources" / str(resource_id)
+        return Path(self.path) / "resources" / str(resource_name)
 
-    def resource_data(self, resource_id: str) -> Path:
+    def resource_data(self, resource_name: str) -> Path:
         """Path to the specific resource's data file.
 
         Args:
-            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
-                the correct resource ID.
+            resource_name: The name of the resource. Use `ResourceProperties.name` to
+                get the correct resource name.
         """
-        return self.path / "resources" / str(resource_id) / "data.parquet"
+        return Path(self.path) / "resources" / str(resource_name) / "data.parquet"
 
-    def resource_batch(self, resource_id: str) -> Path:
+    def resource_batch(self, resource_name: str) -> Path:
         """Path to the specific resource's `batch/` folder.
 
         Args:
-            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
-                the correct resource ID.
+            resource_name: The name of the resource. Use `ResourceProperties.name` to
+                get the correct resource name.
         """
-        return self.path / "resources" / str(resource_id) / "batch"
+        return Path(self.path) / "resources" / str(resource_name) / "batch"
 
-    def resource_batch_files(self, resource_id: str) -> Path:
+    def resource_batch_files(self, resource_name: str) -> Path:
         """Path to all the files in the specific resource's `batch/` folder.
 
         Args:
-            resource_id: The ID of the resource. Use `ResourceProperties.name` to get
-                the correct resource ID.
+            resource_name: The name of the resource. Use `ResourceProperties.name` to
+                get the correct resource name.
         """
         # TODO: This needs a check if the folder exists?
         return list(
-            Path(self.path / "resources" / str(resource_id) / "batch").iterdir()
+            Path(Path(self.path) / "resources" / str(resource_name) / "batch").iterdir()
         )
