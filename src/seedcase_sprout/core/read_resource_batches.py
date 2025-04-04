@@ -133,6 +133,8 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
         ValueError: If a column with the name BATCH_TIMESTAMP_COLUMN_NAME already exists
         in the data.
     """
+    # TODO: We could move this to be a check of the resource properties in
+    # `sprout_checks/`
     if BATCH_TIMESTAMP_COLUMN_NAME in data.columns:
         raise ValueError(
             "The provided resource batch files contains a column named "
