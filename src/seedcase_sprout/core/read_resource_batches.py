@@ -1,20 +1,21 @@
 import re
+from datetime import datetime
 from pathlib import Path
 
 import polars as pl
 
 from seedcase_sprout.core.check_is_file import check_is_file
-from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
-from seedcase_sprout.core.properties import ResourceProperties
-from seedcase_sprout.core.sprout_checks.check_batch_file_name import (
-    _check_batch_file_name,
+from seedcase_sprout.core.constants import (
+    BATCH_TIMESTAMP_COLUMN_NAME,
+    BATCH_TIMESTAMP_FORMAT,
+    BATCH_TIMESTAMP_PATTERN,
 )
+from seedcase_sprout.core.properties import ResourceProperties
 
 # from seedcase_sprout.core.checks.check_data import check_data
 from seedcase_sprout.core.sprout_checks.check_resource_properties import (
     check_resource_properties,
 )
-from seedcase_sprout.core.sprout_checks.constants import TIMESTAMP_PATTERN
 
 
 def read_resource_batches(
@@ -80,8 +81,8 @@ def _read_parquet_batch_file(path: Path) -> pl.DataFrame:
         The Parquet file as a DataFrame with a timestamp column added.
     """
     data = pl.read_parquet(path)
-    _check_batch_file_name(path)
     timestamp = _extract_timestamp_from_batch_file_path(path)
+    _check_batch_file_timestamp(timestamp)
     data = _add_timestamp_as_column(data, timestamp)
     return data
 
@@ -89,11 +90,33 @@ def _read_parquet_batch_file(path: Path) -> pl.DataFrame:
 def _extract_timestamp_from_batch_file_path(path: Path) -> str:
     """Extracts the timestamp from the file name.
 
-    Since the batch file name has been created by `create_batch_file_name()`, with a
-    specific format, the timestamp can be extracted by taking the first 18 characters of
-    the file name.
+    Since the batch file name has been created by `create_batch_file_name()`,
+    it should contain a timestamp in the format defined by BATCH_TIMESTAMP_PATTERN.
+
+    If multiple timestamps are found in the file name, the first one is used.
     """
-    return re.search(TIMESTAMP_PATTERN, path.stem).group()
+    timestamp_list = re.findall(BATCH_TIMESTAMP_PATTERN, path.stem)
+
+    if not timestamp_list:
+        raise ValueError(
+            f"Batch file name '{path.stem}' does not contain a timestamp in the "
+            f"expected format '{BATCH_TIMESTAMP_PATTERN}'."
+        )
+
+    return timestamp_list[0]
+
+
+def _check_batch_file_timestamp(timestamp: str) -> str:
+    """Checks the timestamp format and that it is a correct calendar date."""
+    try:
+        datetime.strptime(timestamp, BATCH_TIMESTAMP_FORMAT)
+        return timestamp
+    except ValueError as error:
+        raise ValueError(
+            f"Timestamp '{timestamp}' in the batch file name is not in the "
+            f"expected format '{BATCH_TIMESTAMP_FORMAT}' or not a correct calendar "
+            "date (e.g., 30 February)."
+        ) from error
 
 
 def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame:
