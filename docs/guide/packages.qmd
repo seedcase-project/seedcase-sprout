@@ -146,8 +146,10 @@ print(readme_text)
 ```
 
 It outputs a text string so that, if you want to, you can add other,
-maybe project specific, information before writing to the file. Then to
-save it to the file:
+maybe project specific, information before writing to the file. For this
+guide we won't cover how or why to do this.
+
+Then to save it to the file:
 
 ```{python}
 sp.write_file(
