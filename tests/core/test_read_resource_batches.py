@@ -143,6 +143,24 @@ def test_raises_error_when_file_name_timestamp_does_not_match_pattern(
         )
 
 
+def test_if_multiple_correct_timestamps_in_file_name_use_first_one(resource_paths):
+    """If multiple timestamps are found in the file name, the first one is used."""
+    # Given
+    batch_path = resource_paths[0].parent
+    batch_file_path = (
+        Path(batch_path) / f"2025-03-26T100346Z-1990-03-26T100346Z-{uuid4()}.parquet"
+    )
+    batch_data_1.write_parquet(batch_file_path)
+
+    # When
+    data_list = read_resource_batches(
+        paths=[batch_file_path], resource_properties=resource_properties
+    )
+
+    # Then
+    assert data_list[0][BATCH_TIMESTAMP_COLUMN_NAME][0] == "2025-03-26T100346Z"
+
+
 def test_raises_error_when_properties_do_not_match_data(resource_paths):
     """Raises errors from checks when the resource properties don't match the data."""
     # Given
