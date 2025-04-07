@@ -2,14 +2,13 @@
 title: "Inputs"
 ---
 
-We describe in the architecture [input
-data](/docs/design/architecture/input-data.qmd) generally what domain
-the data comes from and how it may conceptually look like, while in this
-document we describe the inputs into Sprout at a technical level.
+In this
+document we describe the inputs to Sprout at a technical level. For a more general description of what domain we expect data to come from and how it may look like conceptually, see the [input
+data](/docs/design/architecture/input-data.qmd) document.
 
-From the [naming](/docs/design/architecture/naming.qmd) document, the
-objects we incorporate in the interface are primarily: paths,
-properties, and data.
+The
+objects we primarily incorporate in the interface are paths,
+properties, and data, as described in the [naming](/docs/design/architecture/naming.qmd) document.
 
 Paths
 
@@ -20,21 +19,19 @@ Properties
 
 :   These are Python
     [dataclasses](https://docs.python.org/3/library/dataclasses.html)
-    we've created to represent the metadata (properties) of a data
+    we've created to represent the properties (metadata) of a data
     package or resource. They are always prefixed with `*Properties`,
     such as `PackageProperties` and `ResourceProperties`.
 
 Data
 
-:   These data input objects are always a
+:   These data input objects are always
     [Polars](https://decisions.seedcase-project.org/why-polars-for-data-cleaning/)
-    `DataFrame` object. Polars is a fast DataFrame library implemented
-    in Rust and exposed to Python through the `py-polars` library. It is
-    a powerful framework for working with and processing data.
+    `DataFrame` objects.
 
-:   The data objects must also be already
-    [tidy](https://vita.had.co.nz/papers/tidy-data.html) before Sprout
-    can use them. Tidy data is a conceptual framework around how data
+:   Sprout expects the data objects to be in a
+    [tidy](https://vita.had.co.nz/papers/tidy-data.html) format. 
+    Tidy data is a conceptual framework around how data
     should be structured to be optimally usable for analysis. This is
     similar to what is called [third normal
     form](https://en.wikipedia.org/wiki/Third_normal_form) in relational
@@ -48,14 +45,13 @@ Data
     3.  Each cell has a single value that represents both the column and
         row entity.
 
-    This structure makes it easier to process and use the data for later
+    This tidy structure makes it easier to process and use the data for later
     analysis. If it is already in this form, there is less need to
     transform it later.
 
 :   We have set a requirement on using tidy data frames as it simplifies
     the workflow and allows a user to use their own, potentially highly
-    customised, workflows for processing the data that they have
-    already. This also allows for a more flexible and user-friendly
+    customised, workflows for processing their data. This also allows for a more flexible and user-friendly
     interface to Sprout, since we don't need to support or consider all
     the wide variety of formats data can be stored or structured.
     Because data processing and organizing can be so strongly dependent
