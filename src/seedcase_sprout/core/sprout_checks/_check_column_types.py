@@ -41,7 +41,7 @@ def _check_column_types(
         if not check(polars_type):
             errors.append(
                 ValueError(
-                    f"Expected type for column '{column_props.name}' "
+                    f"Expected type of column '{column_props.name}' "
                     f"to be {allowed_types} but found '{polars_type}'."
                 )
             )
