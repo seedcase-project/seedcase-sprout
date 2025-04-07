@@ -161,7 +161,7 @@ def test_if_multiple_correct_timestamps_in_file_name_use_first_one(resource_path
     assert data_list[0][BATCH_TIMESTAMP_COLUMN_NAME][0] == "2025-03-26T100346Z"
 
 
-def test_raises_error_when_properties_do_not_match_data(resource_paths):
+def xtest_raises_error_when_properties_do_not_match_data(resource_paths):
     """Raises errors from checks when the resource properties don't match the data."""
     # Given
     resource_properties.schema.fields[0].name = "not-id"
@@ -175,10 +175,8 @@ def test_raises_error_when_properties_do_not_match_data(resource_paths):
 
     # errors = error_info.value.exceptions
 
-    assert True
 
-
-def test_raises_error_with_empty_resource_properties():
+def xtest_raises_error_with_empty_resource_properties():
     """Raises errors from checks if the resource properties are empty."""
     # When, Then
     # TODO: Uncomment and add asserts when `check_data()` is implemented.
@@ -188,5 +186,3 @@ def test_raises_error_with_empty_resource_properties():
     #     )
 
     # errors = error_info.value.exceptions
-
-    assert True
