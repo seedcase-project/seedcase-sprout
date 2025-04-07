@@ -67,25 +67,20 @@ def resource_paths(test_package):
 def test_reads_resource_batches_correctly(resource_paths):
     """Reads the resource batches correctly with the expected timestamp column."""
     # Given, When
-    data = read_resource_batches(
+    data_list = read_resource_batches(
         paths=resource_paths, resource_properties=resource_properties
     )
-    # When
     timestamp_column = [
-        data[0][BATCH_TIMESTAMP_COLUMN_NAME],
-        data[1][BATCH_TIMESTAMP_COLUMN_NAME],
+        data_list[0][BATCH_TIMESTAMP_COLUMN_NAME],
+        data_list[1][BATCH_TIMESTAMP_COLUMN_NAME],
     ]
 
     # Then
-    assert len(data) == 2
-    assert data[0].shape == (3, 3) and data[1].shape == (3, 3)
-    assert (
-        timestamp_column[0].name == BATCH_TIMESTAMP_COLUMN_NAME
-        and timestamp_column[1].name == BATCH_TIMESTAMP_COLUMN_NAME
-    )
-    assert (
-        timestamp_column[0].unique()[0] == "2025-03-26T100346Z"
-        and timestamp_column[1].unique()[0] == "2025-03-26T100346Z"
+    assert len(data_list) == 2
+    assert all(data.shape == (3, 3) for data in data_list)
+    assert all(len(column.unique()) == 1 for column in timestamp_column)
+    assert all(
+        column.unique()[0] == "2025-03-26T100346Z" for column in timestamp_column
     )
 
 
