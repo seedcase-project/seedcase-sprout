@@ -30,7 +30,7 @@ Data
     `DataFrame` objects.
 
 :   Sprout expects the data objects to be in a
-    [tidy](https://vita.had.co.nz/papers/tidy-data.html) format. 
+    [tidy](https://vita.had.co.nz/papers/tidy-data.html) format.
     Tidy data is a conceptual framework around how data
     should be structured to be optimally usable for analysis. This is
     similar to what is called [third normal
