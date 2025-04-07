@@ -2,7 +2,7 @@ from pathlib import Path
 from uuid import uuid4
 
 import polars as pl
-from pytest import fixture, raises
+from pytest import fixture, mark, raises
 
 from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.core.properties import (
@@ -114,6 +114,32 @@ def test_raises_error_when_timestamp_column_matches_existing_column(resource_pat
     with raises(ValueError):
         read_resource_batches(
             paths=[batch_path], resource_properties=resource_properties
+        )
+
+
+@mark.parametrize(
+    "incorrect_timestamp",
+    [
+        "2025-55-26T100346Z",  # incorrect month
+        "2025-02-30T100346",  # no timezone
+        "2025-03-26T100346",  # incorrect date (30 February)
+        "2025-03-26",  # no time
+        "T100346Z",  # no date
+    ],
+)
+def test_raises_error_when_file_name_timestamp_does_not_match_pattern(
+    resource_paths, incorrect_timestamp
+):
+    """Raises ValueError when the batch file name is not in the expected pattern."""
+    # Given
+    batch_path = resource_paths[0].parent
+    batch_file_path = Path(batch_path) / f"{incorrect_timestamp}-{uuid4()}.parquet"
+    batch_data_1.write_parquet(batch_file_path)
+
+    # When, Then
+    with raises(ValueError):
+        read_resource_batches(
+            paths=[batch_file_path], resource_properties=resource_properties
         )
 
 
