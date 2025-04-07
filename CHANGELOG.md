@@ -1,3 +1,21 @@
+## 0.29.0 (2025-04-07)
+
+### Feat
+
+- :sparkles: add `read_resource_batches()` - without `check_data()` (#1201)
+
+## 0.28.2 (2025-04-07)
+
+### Refactor
+
+- :recycle: clean split of `check_datapackage` sub-package (#1239)
+
+## 0.28.1 (2025-04-04)
+
+### Refactor
+
+- :recycle: convert `path_` functions into class without checks (#1173)
+
 ## 0.28.0 (2025-03-31)
 
 ### Feat
