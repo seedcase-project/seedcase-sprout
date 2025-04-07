@@ -162,7 +162,7 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
     # `sprout_checks/`
     if BATCH_TIMESTAMP_COLUMN_NAME in data.columns:
         raise ValueError(
-            "One or multiple of the the provided resource batch files contain a "
+            "One or multiple of the provided resource batch files contain a "
             f"column named '{BATCH_TIMESTAMP_COLUMN_NAME}'. This column is used "
             "internally in Sprout to remove duplicate rows across batches. Please "
             "rename it in the batch files and resource properties to read the resource "
