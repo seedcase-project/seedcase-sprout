@@ -139,7 +139,7 @@ def _check_batch_file_timestamp(timestamp: str) -> str:
     except ValueError as error:
         raise ValueError(
             f"Timestamp '{timestamp}' in the batch file name is not in the "
-            f"expected format '{BATCH_TIMESTAMP_FORMAT}' or not a correct calendar "
+            f"expected format '{BATCH_TIMESTAMP_FORMAT}' or is not a correct calendar "
             "date (e.g., 30 February)."
         ) from error
 
