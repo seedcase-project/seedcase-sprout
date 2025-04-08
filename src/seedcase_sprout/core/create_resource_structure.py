@@ -44,7 +44,7 @@ def create_resource_structure(path: Path) -> list[Path]:
             # Create a package structure first
             sp.write_package_properties(
                 properties=sp.example_package_properties(),
-                path=Path(temp_path / "datapackage.json")
+                path=sp.PackagePath(temp_path).properties(),
             )
 
             # Create a resource structure

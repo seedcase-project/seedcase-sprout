@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.check_datapackage import CheckErrorMatcher
 from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
 from seedcase_sprout.core.write_json import write_json
@@ -20,7 +20,7 @@ def write_package_properties(properties: PackageProperties, path: Path) -> Path:
         path: The `path` argument is to an existing `datapackage.json` file, to a
             folder that exists but is empty, or to a folder that doesn't exist yet.
             Either way, the `datapackage.json` file will be created or overwritten
-            in the path given. Use `path_properties()` as a helper to get the
+            in the path given. Use `PackagePath().properties()` as a helper to get the
             correct path.
 
     Returns:

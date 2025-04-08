@@ -45,16 +45,16 @@ from pathlib import Path
 from urllib.request import urlretrieve
 
 temp_path = Path(mkdtemp())
-package_path = temp_path / "diabetes-study"
-package_path.mkdir()
+package_path = sp.PackagePath(temp_path / "diabetes-study")
+package_path.root().mkdir()
 
 package_properties = sp.example_package_properties()
 sp.write_package_properties(
     properties=package_properties,
-    path=package_path / "datapackage.json",
+    path=package_path.properties(),
 )
 readme = sp.as_readme_text(package_properties)
-sp.write_file(readme, package_path / "README.md")
+sp.write_file(readme, package_path.readme())
 
 # TODO: Maybe eventually move this over into Sprout as an example dataset, rather than via a URL.
 # Download the example data to a temporary location.
@@ -162,19 +162,18 @@ within the data package and save the resource properties to the
 `datapackage.json` file of the package.
 
 We assume that you've already created a data package (for example, by
-following the [package guide](packages.qmd)) and stored the path to it
-in the `package_path` variable. In this guide `package_path` points to a
-temporary folder:
+following the [package guide](packages.qmd)) and stored the path to it as a `PackagePath` object
+in the `package_path` variable. In this guide, the root folder of the package is a temporary folder:
 
 ```{python}
-print(package_path)
+print(package_path.root())
 ```
 
 Let's take a look at the current files and folders in the data package:
 
 ```{python}
 #| echo: false
-print(list(package_path.glob("**/*")))
+print(list(package_path.root().glob("**/*")))
 ```
 
 This shows that the data package already includes a `datapackage.json`
@@ -185,7 +184,7 @@ directory. To point it to another location, pass it the path to your
 data package folder, like in the example below.
 
 ```{python}
-resource_path, _ = sp.create_resource_structure(path=package_path)
+resource_path, _ = sp.create_resource_structure(path=package_path.root())
 resource_properties = sp.create_resource_properties(
     path=resource_path,
     properties=resource_properties
@@ -195,33 +194,22 @@ resource_properties = sp.create_resource_properties(
 The next step is to write the resource properties to the
 `datapackage.json` file. Before they are added, they will be checked to
 confirm that they are correctly filled in and that no required fields
-are missing. You can use the `path_properties()` helper function to give
+are missing. You can use the `PackagePath().properties()` helper function to give
 you the location of the `datapackage.json` file based on the path to
 your package.
 
 ```{python}
 sp.write_resource_properties(
-    path=sp.path_properties(package_path),
+    path=package_path.properties(),
     resource_properties=resource_properties,
 )
 ```
-
-::: callout-tip
-If you want to see the list of resources available in your data package
-via Python code (rather than looking at it directly in the file system),
-you can list the contents of the resources folder:
-
-```{python}
-# TODO: Make a separate `list_resources()` function for this?
-print(list(sp.path_resources(package_path).iterdir()))
-```
-:::
 
 Let's check the contents of the `datapackage.json` file to see that the
 resource properties have been added:
 
 ```{python}
-pprint(sp.read_properties(sp.path_properties(path=package_path)))
+pprint(sp.read_properties(package_path.properties()))
 ```
 
 ## Storing a backup of the raw data as a batch file
@@ -249,7 +237,7 @@ data as a batch file, which is in the `batch/` folder of the resource's
 folder. You can check the newly added file by using:
 
 ```{python}
-print(sp.path_resource_batch_files(1, path=package_path))
+print(package_path.resource_batch_files(1))
 ```
 
 ## Building the resource data file
@@ -285,7 +273,7 @@ additional information to the README text before writing it to the file.
 
 ```{python}
 readme_text = sp.as_readme_text(
-    properties=sp.read_properties(sp.path_properties(path=package_path))
+    properties=sp.read_properties(package_path.properties())
 )
 ```
 
@@ -295,7 +283,7 @@ else to it. Next you write the text to the `README.md` file by:
 ```{python}
 sp.write_file(
     string=readme_text,
-    path=sp.path_readme(path=package_path)
+    path=package_path.readme()
 )
 ```
 
@@ -333,7 +321,7 @@ Finally, to write your changes back to `datapackage.json`, use the
 
 ```{python}
 sp.write_resource_properties(
-    path=sp.path_properties(path=package_path),
+    path=package_path.properties(),
     resource_properties=resource_properties,
 )
 ```
