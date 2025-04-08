@@ -57,24 +57,32 @@ def _check_column_types(
 
 
 class _PolarsTypeCheck(TypedDict):
+    """Typed dictionary representing a check on a Polars type."""
+
     check: Callable[[pl.DataType], bool]
     allowed_types: str
 
 
-_STRING_TYPE_CHECK: _PolarsTypeCheck = {
-    "check": lambda dtype: dtype == pl.String,
-    "allowed_types": f"'{pl.String}'",
-}
+def _get_check_for_polars_type(expected_dtype: pl.DataType) -> _PolarsTypeCheck:
+    """Creates a very simple type check for a Polars type.
+
+    Args:
+        expected_dtype: The expected Polars data type.
+
+    Returns:
+        A dictionary representing a check on a Polars type.
+    """
+    return {
+        "check": lambda actual_dtype: actual_dtype == expected_dtype,
+        "allowed_types": f"'{expected_dtype}'",
+    }
+
 
 # This mapping gives the allowed Polars types for each Frictionless type
 _FRICTIONLESS_TO_POLARS_TYPE_CHECK: dict[FieldType, _PolarsTypeCheck] = {
     "string": {
         "check": lambda dtype: isinstance(dtype, (pl.String, pl.Categorical, pl.Enum)),
         "allowed_types": f"one of '{pl.String, pl.Categorical, pl.Enum}'",
-    },
-    "boolean": {
-        "check": lambda dtype: dtype == pl.Boolean,
-        "allowed_types": f"'{pl.Boolean}'",
     },
     "integer": {
         "check": lambda dtype: dtype.is_integer(),
@@ -88,32 +96,21 @@ _FRICTIONLESS_TO_POLARS_TYPE_CHECK: dict[FieldType, _PolarsTypeCheck] = {
         "check": lambda dtype: dtype.is_integer(),
         "allowed_types": "an integer type",
     },
-    "datetime": {
-        "check": lambda dtype: dtype == pl.Datetime,
-        "allowed_types": f"'{pl.Datetime}'",
-    },
-    "date": {
-        "check": lambda dtype: dtype == pl.Date,
-        "allowed_types": f"'{pl.Date}'",
-    },
-    "time": {
-        "check": lambda dtype: dtype == pl.Time,
-        "allowed_types": f"'{pl.Time}'",
-    },
-    "yearmonth": {
-        "check": lambda dtype: dtype == pl.Date,
-        "allowed_types": f"'{pl.Date}'",
-    },
     "geopoint": {
         "check": lambda dtype: (
             isinstance(dtype, pl.Array) and dtype.size == 2 and dtype.inner.is_numeric()
         ),
         "allowed_types": "an array of a numeric type with size 2",
     },
-    "duration": _STRING_TYPE_CHECK,
-    "object": _STRING_TYPE_CHECK,
-    "array": _STRING_TYPE_CHECK,
-    "geojson": _STRING_TYPE_CHECK,
+    "datetime": _get_check_for_polars_type(pl.Datetime),
+    "date": _get_check_for_polars_type(pl.Date),
+    "time": _get_check_for_polars_type(pl.Time),
+    "yearmonth": _get_check_for_polars_type(pl.Date),
+    "boolean": _get_check_for_polars_type(pl.Boolean),
+    "duration": _get_check_for_polars_type(pl.String),
+    "object": _get_check_for_polars_type(pl.String),
+    "array": _get_check_for_polars_type(pl.String),
+    "geojson": _get_check_for_polars_type(pl.String),
     "any": {
         "check": lambda _: True,
         "allowed_types": "any type",
