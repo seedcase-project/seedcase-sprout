@@ -9,6 +9,7 @@ def test_package_path_outputs_an_absolute_path(tmp_path):
     # Need to give the `tmp_path` to the class otherwise it uses the working directory
     # of the test script.
     path = PackagePath(tmp_path)
+    assert path.root().is_absolute()
     assert path.properties().is_absolute()
     assert path.readme().is_absolute()
     assert path.resources().is_absolute()
