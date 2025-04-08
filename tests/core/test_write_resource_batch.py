@@ -1,10 +1,12 @@
 import os
+import re
 from pathlib import Path
 
 import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, raises
 
+from seedcase_sprout.core.constants import BATCH_TIMESTAMP_PATTERN
 from seedcase_sprout.core.properties import ResourceProperties
 from seedcase_sprout.core.write_resource_batch import write_resource_batch
 
@@ -42,9 +44,7 @@ def test_writes_correct_resource_batch_file(tmp_path, tidy_data, resource_proper
     # Then
     assert batch_path.exists()
     assert batch_path.parent == Path("resources") / "1" / "batch"
-    # TODO: Does batch_path.name follow the expected format?
-    # using the constants from constants.py (from PR #1201)
-    # assert batch_path.name ==
+    assert len(re.findall(BATCH_TIMESTAMP_PATTERN, batch_path.stem)) == 1
     assert_frame_equal(batch_data, tidy_data, check_exact=True)
 
 
