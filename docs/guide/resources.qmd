@@ -162,8 +162,9 @@ within the data package and save the resource properties to the
 `datapackage.json` file of the package.
 
 We assume that you've already created a data package (for example, by
-following the [package guide](packages.qmd)) and stored the path to it as a `PackagePath` object
-in the `package_path` variable. In this guide, the root folder of the package is a temporary folder:
+following the [package guide](packages.qmd)) and stored the path to it
+as a `PackagePath` object in the `package_path` variable. In this guide,
+the root folder of the package is in a temporary folder:
 
 ```{python}
 print(package_path.path)
@@ -194,9 +195,9 @@ resource_properties = sp.create_resource_properties(
 The next step is to write the resource properties to the
 `datapackage.json` file. Before they are added, they will be checked to
 confirm that they are correctly filled in and that no required fields
-are missing. You can use the `PackagePath().properties()` helper function to give
-you the location of the `datapackage.json` file based on the path to
-your package.
+are missing. You can use the `PackagePath().properties()` helper
+function to give you the location of the `datapackage.json` file based
+on the path to your package.
 
 ```{python}
 sp.write_resource_properties(
@@ -215,7 +216,7 @@ pprint(sp.read_properties(package_path.properties()))
 ## Storing a backup of the raw data as a batch file
 
 ::: callout-note
-See the [flow diagrams](/docs/design/interface/flows.qmd) for a 
+See the [flow diagrams](/docs/design/interface/flows.qmd) for a
 simplified flow of steps involved in adding batch files.
 :::
 
