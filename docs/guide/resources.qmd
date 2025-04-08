@@ -224,7 +224,12 @@ resource properties have been added:
 pprint(sp.read_properties(sp.path_properties(path=package_path)))
 ```
 
-## Storing a backup of the raw data as a ["batch" file](/docs/design/interface/flows.qmd#save-new-added-or-modified-data-to-batch)
+## Storing a backup of the raw data as a batch file
+
+::: callout-note
+See the [flow diagrams](/docs/design/interface/flows.qmd) for a 
+simplified flow of steps involved in adding batch files.
+:::
 
 As shown above, the data is currently stored in the path called
 `raw_data_path`. Time to store this data in the resource's folder by
