@@ -1,7 +1,7 @@
 from pathlib import Path
 
+from seedcase_sprout.core.check_datapackage import CheckErrorMatcher
 from seedcase_sprout.core.check_is_file import check_is_file
-from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
 from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
@@ -14,7 +14,7 @@ def read_properties(path: Path) -> PackageProperties:
     outputs a `PackageProperties` object.
 
     Args:
-        path: The path to the `datapackage.json` file. Use `path_properties()`
+        path: The path to the `datapackage.json` file. Use `PackagePath().properties()`
             to help get the correct path.
 
     Returns:
@@ -32,7 +32,7 @@ def read_properties(path: Path) -> PackageProperties:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
 
-            properties_path = Path(temp_path / "datapackage.json")
+            properties_path = sp.PackagePath(temp_path).properties()
             # Create a package structure first
             sp.write_package_properties(
                 properties=sp.example_package_properties(),

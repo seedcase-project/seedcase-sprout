@@ -32,6 +32,7 @@ like Firefox. To see them, try using a different browser like Chrome or
 Edge.
 :::
 
+
 ## Creating a new package
 
 This is the flow for making a new package. The
@@ -45,7 +46,7 @@ writing them to the `datapackage.json` file.
 %%| fig-alt: "A flow diagram showing the steps to making a new package."
 flowchart
     properties[(PackageProperties)]
-    path_properties("path_properties()")
+    path_properties("PackagePath().properties()")
     check_properties("check_properties()")
     write_package_properties("write_package_properties()")
 
@@ -69,7 +70,7 @@ flowchart
     properties_current[("PackageProperties<br>(current)")]
     properties_updates[("PackageProperties<br>(updates)")]
     properties_updated[("PackageProperties<br>(updated)")]
-    path_properties("path_properties()")
+    path_properties("PackagePath().properties()")
     update_package_properties("update_package_properties()")
     read_package_properties("read_package_properties()")
     write_package_properties("write_package_properties()")
@@ -106,7 +107,7 @@ flowchart
     schema_properties_updates[("TableSchemaProperties<br>(additions)")]
     properties_updated[("ResourceProperties<br>(updated)")]
     update_resource_properties("update_resource_properties()")
-    path_properties("path_properties()")
+    path_properties("PackagePath().properties()")
     extract_resource_properties("extract_resource_properties()")
     write_resource_properties("write_resource_properties()")
 
@@ -136,11 +137,11 @@ to the file.
 %%| fig-alt: "A flow diagram showing the steps to update the README file after changing the package or resource properties."
 flowchart
     properties[(PackageProperties)]
-    path_properties("path_properties()")
+    path_properties("PackagePath().properties()")
     read_package_properties("read_package_properties()")
     as_readme_text("as_readme_text()")
     write_file("write_file()")
-    path_readme("path_readme()")
+    path_readme("PackagePath().readme()")
 
     path_properties --> read_package_properties
     read_package_properties --> properties
@@ -164,7 +165,7 @@ separately to check the properties before writing them to the
 %%| fig-alt: "A flow diagram showing the steps to create resource properties manually."
 flowchart
     properties[(ResourceProperties)]
-    path_properties("path_properties()")
+    path_properties("PackagePath().properties()")
     check_resource_properties("check_resource_properties()")
     write_resource_properties("write_resource_properties()")
 
@@ -191,7 +192,7 @@ flowchart
     properties_current[("ResourceProperties<br>(current)")]
     properties_updates[("ResourceProperties<br>(updates)")]
     properties_updated[("ResourceProperties<br>(updated)")]
-    path_properties("path_properties()")
+    path_properties("PackagePath().properties()")
     update_resource_properties("update_resource_properties()")
     read_properties("read_properties()")
     get_resource_properties("get_resource_properties()")
@@ -208,6 +209,36 @@ flowchart
     path_properties --> write_resource_properties
     resource_name --> get_resource_properties
     properties_updated -.-> check_resource_properties
+```
+
+## Checking the properties of packages or resources
+
+The flow to check the `datapackage.json` file's properties is fairly
+simple. For the `PackageProperties` (that includes or does not include
+resources), you give it to either the `check_properties()` function or
+the `check_package_properties()` function. For the specific resource's
+`ResourceProperties`, you give it to the `check_resource_properties()`
+function. In all cases, these functions are mostly customised wrappers
+using a generic `_check_properties()` function, which includes arguments
+to subset which properties to check. The `_check_properties()` function
+itself is also mostly a wrapper around our "sub-package"
+`check_datapackage` (which we intend to split into its own package
+later).
+
+```{mermaid}
+%%| label: fig-flow-check-properties
+%%| fig-cap: "Diagram showing the flow of objects and functions to check the properties of packages or resources."
+%%| fig-alt: "A flow diagram showing the steps to check the properties of packages or resources."
+flowchart
+    properties[(PackageProperties)]
+    check_properties("check_properties()")
+    check_package_properties("check_package_properties()")
+    resource_properties[(ResourceProperties)]
+    check_resource_properties("check_resource_properties()")
+
+    properties --> check_properties
+    properties --> check_package_properties
+    resource_properties --> check_resource_properties
 ```
 
 ## Save new, added, or modified data to batch
@@ -241,7 +272,7 @@ flowchart
     resource_properties -.-> check_data
 ```
 
-### Check data against the properties
+## Check data against the properties
 
 The data must always match what is described in the properties. This
 means that the data must have the same column names, column types, type
@@ -294,7 +325,7 @@ resource data.
 %%| fig-cap: "Diagram showing the flow of objects and functions to create or re-create the resource data."
 %%| fig-alt: "A flow diagram showing the steps to create or re-create the resource data."
 flowchart
-    path_resource_batch_files("path_resource_batch_files()")
+    path_resource_batch_files("PackagePath().resource_batch_files()")
     read_resource_batches("read_resource_batches()")
     list_data[("List[DataFrame]")]
     join_resource_batches("join_resource_batches()")
@@ -313,32 +344,66 @@ flowchart
     resource_properties -.-> check_data
 ```
 
-### Checking the properties of packages or resources
+## Modifying data types or table schema
 
-The flow to check the `datapackage.json` file's properties is fairly
-simple. For the `PackageProperties` (that includes or does not include
-resources), you give it to either the `check_properties()` function or
-the `check_package_properties()` function. For the specific resource's
-`ResourceProperties`, you give it to the `check_resource_properties()`
-function. In all cases, these functions are mostly customised wrappers
-using a generic `_check_properties()` function, which includes arguments
-to subset which properties to check. The `_check_properties()` function
-itself is also mostly a wrapper around our "sub-package"
-`check_datapackage` (which we intend to split into its own package
-later).
+Sometimes you may need to modify the data types or table schema of the
+data in a resource. So you'd first modify the resource properties before
+using this flow. The `update_resource_batches()` function will
+update each batch DataFrame with the new data types or table schema, then
+you can use `write_resource_batches()` to save the updated data back to the
+batch files. The same file name should be used, so it will completely overwrite the
+old batch files.
 
 ```{mermaid}
-%%| label: fig-flow-check-properties
-%%| fig-cap: "Diagram showing the flow of objects and functions to check the properties of packages or resources."
-%%| fig-alt: "A flow diagram showing the steps to check the properties of packages or resources."
+%%| label: fig-flow-modify-data-types
+%%| fig-cap: "Diagram showing the flow of objects and functions to modify data types or table schema."
+%%| fig-alt: "A flow diagram showing the steps to modify data types or table schema."
 flowchart
-    properties[(PackageProperties)]
-    check_properties("check_properties()")
-    check_package_properties("check_package_properties()")
-    resource_properties[(ResourceProperties)]
-    check_resource_properties("check_resource_properties()")
+    path_resource_batch_files("path_resource_batch_files()")
+    read_resource_batches("read_resource_batches()")
+    properties_updated[("ResourceProperties<br>(updated)")]
+    list_data[("List[DataFrame]")]
+    list_data_updated[("List[DataFrame]<br>(updated)")]
+    update_resource_batches("update_resource_batches()")
+    write_resource_batches("write_resource_batches()")
 
-    properties --> check_properties
-    properties --> check_package_properties
-    resource_properties --> check_resource_properties
+    path_resource_batch_files --> read_resource_batches
+    read_resource_batches --> list_data
+    list_data --> update_resource_batches
+    properties_updated --> update_resource_batches
+    update_resource_batches --> list_data_updated
+    list_data_updated --> write_resource_batches
+    properties_updated --> write_resource_batches
+```
+
+## Deleting an observational unit
+
+If you need to delete an observational unit from the data, you can use
+this flow. The `delete_observational_unit()` function will delete the
+observational unit from the data about output a list of DataFrames with
+the deletions. The `write_resource_batches()` function will save the
+updated data back to the batch files.
+
+<!-- TODO: I don't know how the saving back to the batch files will work yet. -->
+
+```{mermaid}
+%%| label: fig-flow-delete-observational-unit
+%%| fig-cap: "Diagram showing the flow of objects and functions to delete an observational unit."
+%%| fig-alt: "A flow diagram showing the steps to delete an observational unit."
+flowchart
+    path_resource_batch_files("path_resource_batch_files()")
+    read_resource_batches("read_resource_batches()")
+    list_data_current[("List[DataFrame]<br>(original)")]
+    list_data_deletions[("List[DataFrame]<br>(deletions)")]
+    obs_unit[("dict<br>(observational unit)")]
+    delete_observational_unit("delete_observational_unit()")
+    write_resource_batch("write_resource_batch()")
+
+    path_resource_batch_files --> read_resource_batches
+    read_resource_batches --> list_data_current
+    list_data_current --> delete_observational_unit
+    obs_unit --> delete_observational_unit
+    delete_observational_unit --> list_data_deletions
+    list_data_deletions --> write_resource_batch
+    path_resource_batch_files --> write_resource_batch
 ```

@@ -14,15 +14,7 @@ from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .examples import example_package_properties, example_resource_properties
 from .extract_resource_properties import extract_resource_properties
-from .path_local import (
-    path_properties,
-    path_readme,
-    path_resource,
-    path_resource_batch,
-    path_resource_batch_files,
-    path_resource_data,
-    path_resources,
-)
+from .paths import PackagePath
 from .properties import (
     ConstraintsProperties,
     ContributorProperties,
@@ -37,6 +29,7 @@ from .properties import (
     TableSchemaProperties,
 )
 from .read_properties import read_properties
+from .read_resource_batches import read_resource_batches
 from .sprout_checks.check_package_properties import check_package_properties
 from .sprout_checks.check_properties import check_properties
 from .sprout_checks.check_resource_properties import check_resource_properties
@@ -79,6 +72,7 @@ __all__ = [
     "create_resource_structure",
     "create_resource_properties",
     "extract_resource_properties",
+    "read_resource_batches",
     # "edit_resource_properties",
     "write_resource_batch",
     # "write_resource_parquet",
@@ -87,13 +81,7 @@ __all__ = [
     # "delete_resource_data",
     # "delete_resource_properties",
     # Path -----
-    "path_properties",
-    "path_readme",
-    "path_resource",
-    "path_resource_data",
-    "path_resource_batch",
-    "path_resource_batch_files",
-    "path_resources",
+    "PackagePath",
     # Helpers -----
     # "pretty_json",
     "write_file",

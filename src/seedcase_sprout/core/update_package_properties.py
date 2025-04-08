@@ -1,4 +1,4 @@
-from seedcase_sprout.core.checks.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.core.check_datapackage import CheckErrorMatcher
 from seedcase_sprout.core.properties import PackageProperties
 from seedcase_sprout.core.sprout_checks.check_package_properties import (
     check_package_properties,
@@ -51,15 +51,16 @@ def update_package_properties(
         # Create a temporary directory for the example
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
+            properties_path=sp.PackagePath(temp_path).properties()
 
             # Create a package structure first
             sp.write_package_properties(
                 properties=sp.example_package_properties(),
-                path=Path(temp_path / "datapackage.json")
+                path=properties_path
             )
 
             # Edit package properties
-            properties = sp.read_properties(temp_path / "datapackage.json")
+            properties = sp.read_properties(properties_path)
             sp.update_package_properties(
                 current_properties=properties,
                 update_properties=sp.PackageProperties(

@@ -54,8 +54,8 @@ website:
           href: docs/design/interface/index.qmd
           contents:
             - docs/design/interface/outputs.qmd
-            - docs/design/interface/functions.qmd
             - docs/design/interface/inputs.qmd
+            - docs/design/interface/functions.qmd
             - docs/design/interface/flows.qmd
     - id: guide
       contents:
@@ -92,6 +92,7 @@ quartodoc:
       package: "seedcase_sprout.core"
       contents:
         - create_resource_structure
+        - read_resource_batches
         - write_resource_batch
         - write_resource_properties
 
@@ -121,12 +122,7 @@ quartodoc:
       desc: "Functions to support providing the correct file paths to files and folders in a data package for other functions."
       package: "seedcase_sprout.core"
       contents:
-        - path_properties
-        - path_resource
-        - path_resource_data
-        - path_resource_batch
-        - path_resource_batch_files
-        - path_resources
+        - PackagePath
 
     - subtitle: "Helper functions"
       desc: "Functions to support working with data packages and running code within Sprout Core."
