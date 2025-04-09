@@ -103,7 +103,7 @@ def test_current_resources_not_modified(properties_updates):
     assert updated_properties == current_properties
 
 
-def test_error_for_empty_properties(original_properties):
+def test_error_for_empty_properties():
     """If current properties is empty, there should be an error."""
     with raises(ExceptionGroup):
-        update_package_properties(PackageProperties(), original_properties)
+        update_package_properties(PackageProperties(), test_properties)
