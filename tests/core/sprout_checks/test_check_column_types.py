@@ -1,4 +1,7 @@
+import re
+
 import polars as pl
+from polars.testing import assert_frame_equal
 from pytest import mark, raises
 
 from seedcase_sprout.core.examples import (
@@ -8,7 +11,10 @@ from seedcase_sprout.core.examples import (
     example_resource_properties_all_types,
 )
 from seedcase_sprout.core.properties import FieldProperties
-from seedcase_sprout.core.sprout_checks._check_column_types import _check_column_types
+from seedcase_sprout.core.sprout_checks._check_column_types import (
+    _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES,
+    _check_column_types,
+)
 
 
 def test_accepts_correct_column_types():
@@ -48,7 +54,7 @@ def test_accepts_correct_column_types():
         ]
     )
 
-    assert _check_column_types(data, resource_properties) is data
+    assert_frame_equal(_check_column_types(data, resource_properties), data)
 
 
 def test_accepts_columns_in_any_order():
@@ -58,7 +64,7 @@ def test_accepts_columns_in_any_order():
     resource_properties.schema.fields.reverse()
     data = example_data()
 
-    assert _check_column_types(data, resource_properties) is data
+    assert_frame_equal(_check_column_types(data, resource_properties), data)
 
 
 @mark.parametrize(
@@ -93,6 +99,11 @@ def test_rejects_incorrect_column_type(frictionless_type):
 
     errors = error_info.value.exceptions
     assert len(errors) == 1
+    polars_type = re.escape(str(data.schema.dtypes()[0]))
+    allowed_types = _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES[frictionless_type]
+    assert re.search(
+        rf"'my_col'.*{allowed_types}.*found '{polars_type}'", str(errors[0])
+    )
 
 
 def test_rejects_multiple_incorrect_column_types():
@@ -106,6 +117,12 @@ def test_rejects_multiple_incorrect_column_types():
 
     errors = error_info.value.exceptions
     assert len(errors) == data.width
+    for error, field in zip(errors, resource_properties.schema.fields):
+        polars_type = re.escape(str(data.schema[field.name]))
+        allowed_types = _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES[field.type]
+        assert re.search(
+            rf"'{field.name}'.*{allowed_types}.*found '{polars_type}'", str(error)
+        )
 
 
 def test_rejects_geopoint_with_incorrect_size():
