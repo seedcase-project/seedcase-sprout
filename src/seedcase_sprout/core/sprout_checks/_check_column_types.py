@@ -16,8 +16,8 @@ def _check_column_types(
     """Checks that column data types match the data types specified in the properties.
 
     The resource properties specify a Frictionless data type for each column.
-    This function checks if the Polars data type of each column in the data is an
-    allowed realisation of the corresponding Frictionless data type.
+    This function checks if the Polars data type of each column in the data matches
+    the expected Frictionless data type.
 
     Column names are expected to match the names specified in the resource properties.
 
