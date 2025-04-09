@@ -1,9 +1,8 @@
 from dataclasses import replace
 from pathlib import Path
 
-from pytest import fixture, raises
+from pytest import fixture
 
-from seedcase_sprout.core.check_datapackage import CheckError
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
