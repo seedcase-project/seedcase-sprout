@@ -1,7 +1,7 @@
 from dataclasses import replace
 from pathlib import Path
 
-from pytest import mark, raises
+from pytest import mark
 
 from seedcase_sprout.core.properties import (
     LicenseProperties,
