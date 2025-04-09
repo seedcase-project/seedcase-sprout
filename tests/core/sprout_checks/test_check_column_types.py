@@ -95,6 +95,19 @@ def test_rejects_incorrect_column_type(frictionless_type):
     assert len(errors) == 1
 
 
+def test_rejects_multiple_incorrect_column_types():
+    """Should raise an error if multiple column types don't match."""
+    resource_properties = example_resource_properties()
+    data = example_data()
+    data = data.select([pl.lit(None).alias(col) for col in data.columns])
+
+    with raises(ExceptionGroup) as error_info:
+        _check_column_types(data, resource_properties)
+
+    errors = error_info.value.exceptions
+    assert len(errors) == data.width
+
+
 def test_rejects_geopoint_with_incorrect_size():
     """Should raise an error if the size of the array representing a geopoint is not
     correct."""

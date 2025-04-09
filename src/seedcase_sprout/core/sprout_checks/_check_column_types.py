@@ -1,4 +1,4 @@
-from typing import Callable, TypedDict
+from typing import Callable
 
 import polars as pl
 
@@ -35,18 +35,11 @@ def _check_column_types(
         resource_properties, "schema.fields", default=[]
     )
     polars_schema = data.schema
-    errors = []
-    for field in fields:
-        polars_type = polars_schema[field.name]
-        type_check = _FRICTIONLESS_TO_POLARS_TYPE_CHECK[field.type or "any"]
-        check, allowed_types = type_check["check"], type_check["allowed_types"]
-        if not check(polars_type):
-            errors.append(
-                ValueError(
-                    f"Expected type of column '{field.name}' "
-                    f"to be {allowed_types} but found '{polars_type}'."
-                )
-            )
+    errors = [
+        _get_column_type_error(polars_schema[field.name], field)
+        for field in fields
+        if _not_allowed_type(polars_schema[field.name], field)
+    ]
 
     if errors:
         raise ExceptionGroup(
@@ -59,63 +52,75 @@ def _check_column_types(
     return data
 
 
-class _PolarsTypeCheck(TypedDict):
-    """Typed dictionary representing a check on a Polars type."""
-
-    check: Callable[[pl.DataType], bool]
-    allowed_types: str
-
-
-def _get_check_for_polars_type(expected_dtype: pl.DataType) -> _PolarsTypeCheck:
-    """Creates a very simple type check for a Polars type.
+def _not_allowed_type(polars_type: pl.DataType, field: FieldProperties) -> bool:
+    """Returns True if the Polars type does not match the Frictionless type.
 
     Args:
-        expected_dtype: The expected Polars data type.
+        polars_type: The Polars type.
+        field: The field properties.
 
     Returns:
-        A dictionary representing a check on a Polars type.
+        True if the Polars type does not match the Frictionless type, False otherwise.
     """
-    return {
-        "check": lambda actual_dtype: actual_dtype == expected_dtype,
-        "allowed_types": f"'{expected_dtype}'",
-    }
+    is_allowed_type = _FRICTIONLESS_TO_POLARS_TYPE_CHECK[field.type or "any"]
+    return not is_allowed_type(polars_type)
 
 
-# This mapping gives the allowed Polars types for each Frictionless type
-_FRICTIONLESS_TO_POLARS_TYPE_CHECK: dict[FieldType, _PolarsTypeCheck] = {
-    "string": {
-        "check": lambda dtype: isinstance(dtype, (pl.String, pl.Categorical, pl.Enum)),
-        "allowed_types": f"one of '{pl.String, pl.Categorical, pl.Enum}'",
-    },
-    "integer": {
-        "check": lambda dtype: dtype.is_integer(),
-        "allowed_types": "an integer type",
-    },
-    "number": {
-        "check": lambda dtype: dtype.is_float() or dtype.is_decimal(),
-        "allowed_types": "a float or decimal type",
-    },
-    "year": {
-        "check": lambda dtype: dtype.is_integer(),
-        "allowed_types": "an integer type",
-    },
-    "geopoint": {
-        "check": lambda dtype: (
-            isinstance(dtype, pl.Array) and dtype.size == 2 and dtype.inner.is_numeric()
-        ),
-        "allowed_types": "an array of a numeric type with size 2",
-    },
-    "datetime": _get_check_for_polars_type(pl.Datetime),
-    "date": _get_check_for_polars_type(pl.Date),
-    "time": _get_check_for_polars_type(pl.Time),
-    "yearmonth": _get_check_for_polars_type(pl.Date),
-    "boolean": _get_check_for_polars_type(pl.Boolean),
-    "duration": _get_check_for_polars_type(pl.String),
-    "object": _get_check_for_polars_type(pl.String),
-    "array": _get_check_for_polars_type(pl.String),
-    "geojson": _get_check_for_polars_type(pl.String),
-    "any": {
-        "check": lambda _: True,
-        "allowed_types": "any type",
-    },
+def _get_column_type_error(
+    polars_type: pl.DataType, field: FieldProperties
+) -> ValueError:
+    """Creates an error for a column where Polars and Frictionless types don't match.
+
+    Args:
+        polars_type: The Polars type.
+        field: The field properties.
+
+    Returns:
+        A `ValueError`.
+    """
+    allowed_types = _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES[field.type or "any"]
+    return ValueError(
+        f"Expected type of column '{field.name}' "
+        f"to be {allowed_types} but found '{polars_type}'."
+    )
+
+
+# Mapping from Frictionless types to check functions for allowed Polars types
+_FRICTIONLESS_TO_POLARS_TYPE_CHECK: dict[FieldType, Callable[[pl.DataType], bool]] = {
+    "string": lambda dtype: isinstance(dtype, (pl.String, pl.Categorical, pl.Enum)),
+    "integer": lambda dtype: dtype.is_integer(),
+    "number": lambda dtype: dtype.is_float() or dtype.is_decimal(),
+    "year": lambda dtype: dtype.is_integer(),
+    "geopoint": lambda dtype: (
+        isinstance(dtype, pl.Array) and dtype.size == 2 and dtype.inner.is_numeric()
+    ),
+    "datetime": lambda dtype: dtype == pl.Datetime,
+    "date": lambda dtype: dtype == pl.Date,
+    "time": lambda dtype: dtype == pl.Time,
+    "yearmonth": lambda dtype: dtype == pl.Date,
+    "boolean": lambda dtype: dtype == pl.Boolean,
+    "duration": lambda dtype: dtype == pl.String,
+    "object": lambda dtype: dtype == pl.String,
+    "array": lambda dtype: dtype == pl.String,
+    "geojson": lambda dtype: dtype == pl.String,
+    "any": lambda _: True,
+}
+
+# Mapping from Frictionless types to descriptions of allowed Polars types
+_FRICTIONLESS_TO_ALLOWED_POLARS_TYPES: dict[FieldType, str] = {
+    "string": "a string, categorical, or enum type",
+    "integer": "an integer type",
+    "number": "a float or decimal type",
+    "year": "an integer type",
+    "geopoint": "an array of a numeric type with size 2",
+    "datetime": f"'{pl.Datetime}'",
+    "date": f"'{pl.Date}'",
+    "time": f"'{pl.Time}'",
+    "yearmonth": f"'{pl.Date}'",
+    "boolean": f"'{pl.Boolean}'",
+    "duration": f"'{pl.String}'",
+    "object": f"'{pl.String}'",
+    "array": f"'{pl.String}'",
+    "geojson": f"'{pl.String}'",
+    "any": "any type",
 }
