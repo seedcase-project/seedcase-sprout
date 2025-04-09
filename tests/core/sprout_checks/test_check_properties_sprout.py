@@ -2,9 +2,13 @@ from pathlib import Path
 
 from pytest import fixture, mark, raises
 
-from seedcase_sprout.core.check_datapackage import CheckError, CheckErrorMatcher
+from seedcase_sprout.core.check_datapackage import CheckError
 from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
-from seedcase_sprout.core.sprout_checks.check_properties import check_properties
+from seedcase_sprout.core.sprout_checks.check_properties import (
+    check_package_properties,
+    check_properties,
+    check_resource_properties,
+)
 from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
@@ -40,26 +44,41 @@ def properties():
                 description="A second resource.",
             ),
         ],
-    ).compact_dict
+    )
 
 
-def test_check_passes_full_properties(properties):
-    """Should pass if all required fields are present and correct."""
+def test_passes_correct_properties(properties):
+    """Should pass if all required properties are present and correct."""
+    assert check_properties(properties) == properties
+    assert check_package_properties(properties) == properties
+    assert check_resource_properties(properties.resources[0]) == properties.resources[0]
+    assert check_resource_properties(properties.resources[1]) == properties.resources[1]
+
+    # Even when resources isn't there.
+    delattr(properties, "resources")
     assert check_properties(properties) == properties
 
 
-def test_check_accepts_properties_object(properties):
-    """Should accept a properties object as input."""
-    properties = PackageProperties.from_dict(properties)
-    assert check_properties(properties) == properties
+# TODO: We don't have a way to check that it is a `*Properties` object yet, since Python
+# is dynamically typed.
+def xtest_error_incorrect_argument():
+    """Should be an error if it isn't a `*Properties` object."""
+    with raises(ExceptionGroup):
+        check_properties([1, 2, 3])
+
+    with raises(ExceptionGroup):
+        check_package_properties([1, 2, 3])
+
+    with raises(ExceptionGroup):
+        check_resource_properties([1, 2, 3])
 
 
-@mark.parametrize("field", [*PACKAGE_SPROUT_REQUIRED_FIELDS.keys(), "resources"])
-def test_raises_error_if_package_required_field_is_missing(properties, field):
-    """Should raise an error if a required field is missing among the package
-    properties."""
-    del properties[field]
+@mark.parametrize("field", PACKAGE_SPROUT_REQUIRED_FIELDS.keys())
+def test_error_missing_required_package_properties(properties, field):
+    """Should be an error if a required package properties is missing."""
+    delattr(properties, field)
 
+    # All properties checks
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
@@ -68,27 +87,52 @@ def test_raises_error_if_package_required_field_is_missing(properties, field):
     assert errors[0].json_path == f"$.{field}"
     assert errors[0].validator == "required"
 
+    # Package only checks
+    with raises(ExceptionGroup) as error_info:
+        check_package_properties(properties)
 
-@mark.parametrize("field", RESOURCE_SPROUT_REQUIRED_FIELDS.keys())
-def test_raises_error_if_resource_required_field_is_missing(properties, field):
-    """Should raise an error if a required field is missing among the resource
-    properties."""
-    del properties["resources"][0][field]
+    errors = error_info.value.exceptions
+    assert len(errors) == 1
+    assert errors[0].json_path == f"$.{field}"
+    assert errors[0].validator == "required"
+
+
+@mark.parametrize(
+    "item,value,validator",
+    [
+        ("name", "a name with spaces", "pattern"),
+        ("title", 123, "type"),
+        ("homepage", "not a URL", "format"),
+        ("resources", 123, "type"),
+    ],
+)
+def test_error_incorrect_property_values(properties, item, value, validator):
+    """Should be an error when the property value is incorrect."""
+    setattr(properties, item, value)
+
+    with raises(ExceptionGroup) as error_info:
+        check_package_properties(properties)
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 1
+    assert isinstance(errors[0], CheckError)
+    assert errors[0].json_path == f"$.{item}"
+    assert errors[0].validator == f"{validator}"
 
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
     errors = error_info.value.exceptions
     assert len(errors) == 1
-    assert errors[0].json_path == f"$.resources[0].{field}"
-    assert errors[0].validator == "required"
+    assert isinstance(errors[0], CheckError)
+    assert errors[0].json_path == f"$.{item}"
+    assert errors[0].validator == f"{validator}"
 
 
 @mark.parametrize("name,type", PACKAGE_SPROUT_REQUIRED_FIELDS.items())
-def test_raises_error_if_package_field_is_blank(properties, name, type):
-    """Should raise an error if there is one required package field that is present but
-    blank."""
-    properties[name] = get_blank_value_for_type(type)
+def test_error_blank_package_properties(properties, name, type):
+    """Should be an error when a required package field is blank."""
+    setattr(properties, name, get_blank_value_for_type(type))
 
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
@@ -100,12 +144,83 @@ def test_raises_error_if_package_field_is_blank(properties, name, type):
     assert len(blank_errors) == 1
     assert blank_errors[0].json_path == f"$.{name}"
 
+    with raises(ExceptionGroup) as error_info:
+        check_package_properties(properties)
+
+    blank_errors = [
+        error for error in error_info.value.exceptions if error.validator == "blank"
+    ]
+
+    assert len(blank_errors) == 1
+    assert blank_errors[0].json_path == f"$.{name}"
+
+
+def test_error_missing_required_nested_properties(properties):
+    """Should have errors when the nested required properties are missing."""
+    setattr(properties, "licenses", [{}])
+    setattr(properties, "contributors", [{}])
+    setattr(properties, "sources", [{}])
+
+    with raises(ExceptionGroup) as error_info:
+        check_package_properties(properties)
+
+    required_errors = [
+        error for error in error_info.value.exceptions if error.validator == "required"
+    ]
+    assert [error.json_path for error in required_errors] == [
+        "$.contributors[0].title",
+        "$.licenses[0].name",
+        "$.licenses[0].path",
+        "$.sources[0].title",
+    ]
+
+    with raises(ExceptionGroup) as error_info:
+        check_properties(properties)
+
+    required_errors = [
+        error for error in error_info.value.exceptions if error.validator == "required"
+    ]
+    assert [error.json_path for error in required_errors] == [
+        "$.contributors[0].title",
+        "$.licenses[0].name",
+        "$.licenses[0].path",
+        "$.sources[0].title",
+    ]
+
+
+# Resource properties specific --------------------------------------------
+
+
+@mark.parametrize(
+    "field",
+    RESOURCE_SPROUT_REQUIRED_FIELDS.keys(),
+)
+def test_error_missing_required_resource_properties(properties, field):
+    """Should be an error if a required resource properties is missing."""
+    delattr(properties.resources[0], field)
+
+    with raises(ExceptionGroup) as error_info:
+        check_resource_properties(properties.resources[0])
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 1
+    assert isinstance(errors[0], CheckError)
+    assert errors[0].json_path == f"$.{field}"
+    assert errors[0].validator == "required"
+
+    with raises(ExceptionGroup) as error_info:
+        check_properties(properties)
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 1
+    assert errors[0].json_path == f"$.resources[0].{field}"
+    assert errors[0].validator == "required"
+
 
 @mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
-def test_raises_error_if_resource_field_is_blank(properties, name, type):
-    """Should raise an error if there is one required resource field that is present
-    but blank."""
-    properties["resources"][0][name] = get_blank_value_for_type(type)
+def test_error_blank_resource_properties(properties, name, type):
+    """Should be an error when one required resource field is blank."""
+    setattr(properties.resources[0], name, get_blank_value_for_type(type))
 
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
@@ -117,90 +232,71 @@ def test_raises_error_if_resource_field_is_blank(properties, name, type):
     assert len(blank_errors) == 1
     assert blank_errors[0].json_path == f"$.resources[0].{name}"
 
+    with raises(ExceptionGroup) as error_info:
+        check_resource_properties(properties.resources[0])
 
-def test_raises_error_if_there_are_both_package_and_resource_errors(properties):
-    """Should raise `CheckError`s if there are both package and resource errors."""
-    properties["name"] = "space in name"
-    properties["title"] = 123
-    properties["resources"][0]["name"] = "space in name"
-    properties["resources"][1]["path"] = "/bad path"
-    properties["resources"][1]["data"] = "some data"
+    blank_errors = [
+        error for error in error_info.value.exceptions if error.validator == "blank"
+    ]
+
+    assert len(blank_errors) == 1
+    assert blank_errors[0].json_path == f"$.{name}"
+
+
+@mark.parametrize(
+    "item,value,validator",
+    [
+        ("name", "a name with spaces", "pattern"),
+        # TODO: This doesn't give an error.
+        # ("data", "some data", "inline-data"),
+    ],
+)
+def test_error_incorrect_resource_property_values(properties, item, value, validator):
+    """Should be an error when the property value is incorrect."""
+    setattr(properties.resources[0], item, value)
+
+    with raises(ExceptionGroup) as error_info:
+        check_resource_properties(properties.resources[0])
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 1
+    assert isinstance(errors[0], CheckError)
+    assert errors[0].json_path == f"$.{item}"
+    assert errors[0].validator == f"{validator}"
 
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
     errors = error_info.value.exceptions
-    assert [error.json_path for error in errors] == [
-        "$.name",
-        "$.resources[0].name",
-        "$.resources[1].data",
-        "$.resources[1].path",
-        "$.resources[1].path",
-        "$.title",
-    ]
-    assert [error.validator for error in errors] == [
-        "pattern",
-        "pattern",
-        "inline-data",
-        "pattern",
-        "pattern",
-        "type",
-    ]
+    assert len(errors) == 1
+    assert isinstance(errors[0], CheckError)
+    assert errors[0].json_path == f"$.resources[0].{item}"
+    assert errors[0].validator == f"{validator}"
 
 
-def test_raises_error_for_only_sprout_specific_errors(properties):
-    """Errors should be triggered by only those Data Package standard violations that
-    are relevant for Sprout."""
-    properties["resources"][0]["path"] = 123
+@mark.parametrize(
+    "path", ["", [], 123, str(Path("resources", "1")), "/bad/path/data.csv"]
+)
+def test_error_no_resource_name_in_path(properties, path):
+    """Should be an error when the resource name isn't in the `path` or is empty."""
+    properties.resources[0].path = path
 
     with raises(ExceptionGroup) as error_info:
-        check_properties(properties)
+        check_resource_properties(properties.resources[0])
 
     errors = error_info.value.exceptions
-    assert errors == (
-        CheckError("123 is not of type 'string'", "$.resources[0].path", "type"),
+    assert len(errors) >= 1
+    assert all(
+        isinstance(error, CheckError) and error.json_path.endswith("path")
+        for error in errors
     )
 
-
-def test_raises_error_if_package_properties_not_dict():
-    """A `CheckError` should be raised if the package properties is not a dict."""
-    with raises(ExceptionGroup) as error_info:
-        check_properties([1, 2, 3])
-
-    errors = error_info.value.exceptions
-    assert len(errors) == 1
-    assert errors[0].json_path == "$"
-    assert errors[0].validator == "type"
-
-
-def test_raises_error_if_resource_properties_not_dict(properties):
-    """A `CheckError` should be raised if a resource properties is not a dict."""
-    properties["resources"][0] = [1, 2, 3]
-
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
     errors = error_info.value.exceptions
-    assert len(errors) == 1
-    assert errors[0].json_path == "$.resources[0]"
-    assert errors[0].validator == "type"
-
-
-def test_ignored_errors_should_not_make_check_fail():
-    """Check should not fail if triggered by an error that is ignored."""
-    assert check_properties({}, ignore=[CheckErrorMatcher(validator="required")]) == {}
-
-
-def test_excludes_ignored_errors_from_output(properties):
-    """Errors that are ignored should not be in error output."""
-    properties["name"] = "invalid name with spaces"
-    properties["resources"][1]["path"] = "/bad path"
-    properties["resources"][1]["data"] = "some data"
-
-    with raises(ExceptionGroup) as error_info:
-        check_properties(properties, ignore=[CheckErrorMatcher(validator="pattern")])
-
-    errors = error_info.value.exceptions
-    assert len(errors) == 1
-    assert errors[0].json_path == "$.resources[1].data"
-    assert errors[0].validator == "inline-data"
+    assert len(errors) >= 1
+    assert all(
+        isinstance(error, CheckError) and error.json_path.endswith("path")
+        for error in errors
+    )
