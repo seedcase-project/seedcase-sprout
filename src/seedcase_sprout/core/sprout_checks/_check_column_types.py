@@ -31,20 +31,23 @@ def _check_column_types(
     Raises:
         ExceptionGroup: A group of `ValueError`s, one per incorrectly typed column.
     """
-    all_column_props: list[FieldProperties] = get_nested_attr(
+    fields: list[FieldProperties] = get_nested_attr(
         resource_properties, "schema.fields", default=[]
     )
+    polars_schema = data.schema
     errors = []
-    for polars_type, column_props in zip(data.schema.dtypes(), all_column_props):
-        type_check = _FRICTIONLESS_TO_POLARS_TYPE_CHECK[column_props.type or "any"]
+    for field in fields:
+        polars_type = polars_schema[field.name]
+        type_check = _FRICTIONLESS_TO_POLARS_TYPE_CHECK[field.type or "any"]
         check, allowed_types = type_check["check"], type_check["allowed_types"]
         if not check(polars_type):
             errors.append(
                 ValueError(
-                    f"Expected type of column '{column_props.name}' "
+                    f"Expected type of column '{field.name}' "
                     f"to be {allowed_types} but found '{polars_type}'."
                 )
             )
+
     if errors:
         raise ExceptionGroup(
             (

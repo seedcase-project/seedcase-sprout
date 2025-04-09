@@ -2,6 +2,7 @@ import polars as pl
 from pytest import mark, raises
 
 from seedcase_sprout.core.examples import (
+    example_data,
     example_data_all_types,
     example_resource_properties,
     example_resource_properties_all_types,
@@ -46,6 +47,16 @@ def test_accepts_correct_column_types():
             ),
         ]
     )
+
+    assert _check_column_types(data, resource_properties) is data
+
+
+def test_accepts_columns_in_any_order():
+    """Should not raise an error when the data types match but the columns are in a
+    different order."""
+    resource_properties = example_resource_properties()
+    resource_properties.schema.fields.reverse()
+    data = example_data()
 
     assert _check_column_types(data, resource_properties) is data
 
