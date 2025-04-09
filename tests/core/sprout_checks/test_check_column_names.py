@@ -88,10 +88,10 @@ def test_throws_error_when_data_has_extra_and_missing_columns(resource_propertie
     assert bool_field.name not in str(error)
 
 
-def test_throws_error_when_data_has_columns_in_wrong_order(resource_properties):
-    """Should throw an error if the data has columns in the wrong order."""
+def test_no_error_when_data_has_correct_columns_in_different_order(resource_properties):
+    """Should not throw an error if the data has the correct columns in a different
+    order."""
     df = pl.DataFrame({string_field.name: [""], bool_field.name: [True]})
     resource_properties.schema.fields = [bool_field, string_field]
 
-    with raises(ValueError, match="wrong order"):
-        _check_column_names(df, resource_properties)
+    assert _check_column_names(df, resource_properties) is df
