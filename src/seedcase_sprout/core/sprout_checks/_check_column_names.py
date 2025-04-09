@@ -22,16 +22,16 @@ def _check_column_names(
         ValueError: If the column names don't match the names in
             `resource_properties`.
     """
-    names_in_data = data.schema.names()
-    names_in_resource = [
+    columns_in_data = data.schema.names()
+    columns_in_resource = [
         field.name
         for field in get_nested_attr(resource_properties, "schema.fields", default=[])
     ]
     extra_columns_in_data = [
-        name for name in names_in_data if name not in names_in_resource
+        name for name in columns_in_data if name not in columns_in_resource
     ]
     missing_columns_in_data = [
-        name for name in names_in_resource if name not in names_in_data
+        name for name in columns_in_resource if name not in columns_in_data
     ]
 
     if extra_columns_in_data or missing_columns_in_data:
