@@ -43,13 +43,10 @@ from .update_package_properties import update_package_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 
-# from .edit_resource_properties import *
+# from .update_resource_properties import *
 # from .write_resource_data_to_batch import *
 # from .write_resource_parquet import *
 from .write_resource_properties import write_resource_properties
-
-# Helpers -----
-# from .pretty_json import *
 
 __all__ = [
     # Properties -----
@@ -73,7 +70,6 @@ __all__ = [
     "example_resource_properties_all_types",
     # Packages -----
     "update_package_properties",
-    "edit_package_properties",
     "write_package_properties",
     "as_readme_text",
     # "delete_package",
@@ -82,7 +78,7 @@ __all__ = [
     "create_resource_properties",
     "extract_resource_properties",
     "read_resource_batches",
-    # "edit_resource_properties",
+    # "update_resource_properties",
     # "write_resource_data_to_batch",
     # "write_resource_parquet",
     "write_resource_properties",
