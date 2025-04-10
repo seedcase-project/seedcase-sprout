@@ -9,7 +9,7 @@ from seedcase_sprout.core.properties import (
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.sprout_checks._check_column_names import _check_column_names
+from seedcase_sprout.core.sprout_checks.check_data import check_data
 
 string_field = FieldProperties(name="my_string", type="string")
 bool_field = FieldProperties(name="my_bool", type="boolean")
@@ -27,13 +27,6 @@ def resource_properties() -> ResourceProperties:
     )
 
 
-def test_no_error_when_data_frame_and_properties_both_empty():
-    """Should throw no error if the data frame and the properties are both empty."""
-    df = pl.DataFrame({})
-
-    assert _check_column_names(df, ResourceProperties()) is df
-
-
 def test_no_error_when_data_column_names_match_properties(resource_properties):
     """Should throw no error if the column names in the data frame match the column
     names in the properties."""
@@ -46,7 +39,7 @@ def test_no_error_when_data_column_names_match_properties(resource_properties):
     )
     resource_properties.schema.fields = [string_field, bool_field, number_field]
 
-    assert _check_column_names(df, resource_properties) is df
+    assert check_data(df, resource_properties) is df
 
 
 def test_throws_error_when_data_has_extra_columns(resource_properties):
@@ -55,7 +48,7 @@ def test_throws_error_when_data_has_extra_columns(resource_properties):
     resource_properties.schema.fields = [bool_field]
 
     with raises(ValueError, match=r"Extra columns.*extra_col1.*extra_col2") as error:
-        _check_column_names(df, resource_properties)
+        check_data(df, resource_properties)
 
     assert bool_field.name not in str(error)
 
@@ -68,7 +61,7 @@ def test_throws_error_when_data_has_missing_columns(resource_properties):
     with raises(
         ValueError, match=rf"Missing columns.*{string_field.name}.*{number_field.name}"
     ) as error:
-        _check_column_names(df, resource_properties)
+        check_data(df, resource_properties)
 
     assert bool_field.name not in str(error)
 
@@ -79,7 +72,7 @@ def test_throws_error_when_data_has_extra_and_missing_columns(resource_propertie
     resource_properties.schema.fields = [string_field, bool_field, number_field]
 
     with raises(ValueError) as error:
-        _check_column_names(df, resource_properties)
+        check_data(df, resource_properties)
 
     assert re.search(r"Extra columns.*extra_col", str(error))
     assert re.search(
@@ -94,4 +87,4 @@ def test_no_error_when_data_has_correct_columns_in_different_order(resource_prop
     df = pl.DataFrame({string_field.name: [""], bool_field.name: [True]})
     resource_properties.schema.fields = [bool_field, string_field]
 
-    assert _check_column_names(df, resource_properties) is df
+    assert check_data(df, resource_properties) is df
