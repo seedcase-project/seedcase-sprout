@@ -13,8 +13,8 @@ from seedcase_sprout.core.examples import (
 from seedcase_sprout.core.properties import FieldProperties
 from seedcase_sprout.core.sprout_checks._check_column_types import (
     _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES,
-    _check_column_types,
 )
+from seedcase_sprout.core.sprout_checks.check_data import check_data
 
 
 def test_accepts_correct_column_types():
@@ -54,7 +54,7 @@ def test_accepts_correct_column_types():
         ]
     )
 
-    assert_frame_equal(_check_column_types(data, resource_properties), data)
+    assert_frame_equal(check_data(data, resource_properties), data)
 
 
 def test_accepts_columns_in_any_order():
@@ -64,7 +64,7 @@ def test_accepts_columns_in_any_order():
     resource_properties.schema.fields.reverse()
     data = example_data()
 
-    assert_frame_equal(_check_column_types(data, resource_properties), data)
+    assert_frame_equal(check_data(data, resource_properties), data)
 
 
 @mark.parametrize(
@@ -95,7 +95,7 @@ def test_rejects_incorrect_column_type(frictionless_type):
     ]
 
     with raises(ExceptionGroup) as error_info:
-        _check_column_types(data, resource_properties)
+        check_data(data, resource_properties)
 
     errors = error_info.value.exceptions
     assert len(errors) == 1
@@ -113,7 +113,7 @@ def test_rejects_multiple_incorrect_column_types():
     data = data.select([pl.lit(None).alias(col) for col in data.columns])
 
     with raises(ExceptionGroup) as error_info:
-        _check_column_types(data, resource_properties)
+        check_data(data, resource_properties)
 
     errors = error_info.value.exceptions
     assert len(errors) == data.width
@@ -137,7 +137,7 @@ def test_rejects_geopoint_with_incorrect_size():
     ]
 
     with raises(ExceptionGroup) as error_info:
-        _check_column_types(data, resource_properties)
+        check_data(data, resource_properties)
 
     errors = error_info.value.exceptions
     assert len(errors) == 1
@@ -155,7 +155,7 @@ def test_rejects_geopoint_with_incorrect_inner_type():
     ]
 
     with raises(ExceptionGroup) as error_info:
-        _check_column_types(data, resource_properties)
+        check_data(data, resource_properties)
 
     errors = error_info.value.exceptions
     assert len(errors) == 1
