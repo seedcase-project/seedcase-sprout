@@ -36,6 +36,7 @@ from .properties import (
 )
 from .read_properties import read_properties
 from .read_resource_batches import read_resource_batches
+from .sprout_checks.check_data import check_data
 from .sprout_checks.check_properties import (
     check_package_properties,
     check_properties,
@@ -100,4 +101,5 @@ __all__ = [
     "check_package_properties",
     "check_properties",
     "check_resource_properties",
+    "check_data",
 ]
