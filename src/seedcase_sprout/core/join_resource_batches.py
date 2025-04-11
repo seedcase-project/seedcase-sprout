@@ -2,7 +2,7 @@ import polars as pl
 
 from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.core.properties import ResourceProperties
-from seedcase_sprout.core.sprout_checks.check_resource_properties import (
+from seedcase_sprout.core.sprout_checks.check_properties import (
     check_resource_properties,
 )
 
