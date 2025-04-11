@@ -51,7 +51,7 @@ def _format_column_name_error_message(
         "Column names in the data do not match column names in the resource properties:"
     )
     if extra_columns_in_data:
-        message += f"\n- Extra columns: {extra_columns_in_data}"
+        message += f"\n- Unexpected column(s) in data: {extra_columns_in_data}"
     if missing_columns_in_data:
-        message += f"\n- Missing columns: {missing_columns_in_data}"
+        message += f"\n- Missing column(s) in data: {missing_columns_in_data}"
     return message

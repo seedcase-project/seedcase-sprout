@@ -92,7 +92,7 @@ def test_throws_error_when_data_has_extra_columns(resource_properties):
     df = pl.DataFrame({"extra_col1": [""], bool_field.name: [True], "extra_col2": [""]})
     resource_properties.schema.fields = [bool_field]
 
-    with raises(ValueError, match=r"Extra columns.*extra_col1.*extra_col2") as error:
+    with raises(ValueError, match=r"Unexpected.*extra_col1.*extra_col2") as error:
         check_data(df, resource_properties)
 
     assert bool_field.name not in str(error)
@@ -104,7 +104,7 @@ def test_throws_error_when_data_has_missing_columns(resource_properties):
     resource_properties.schema.fields = [string_field, bool_field, number_field]
 
     with raises(
-        ValueError, match=rf"Missing columns.*{string_field.name}.*{number_field.name}"
+        ValueError, match=rf"Missing.*{string_field.name}.*{number_field.name}"
     ) as error:
         check_data(df, resource_properties)
 
@@ -119,10 +119,8 @@ def test_throws_error_when_data_has_extra_and_missing_columns(resource_propertie
     with raises(ValueError) as error:
         check_data(df, resource_properties)
 
-    assert re.search(r"Extra columns.*extra_col", str(error))
-    assert re.search(
-        rf"Missing columns.*{string_field.name}.*{number_field.name}", str(error)
-    )
+    assert re.search(r"Unexpected.*extra_col", str(error))
+    assert re.search(rf"Missing.*{string_field.name}.*{number_field.name}", str(error))
     assert bool_field.name not in str(error)
 
 
