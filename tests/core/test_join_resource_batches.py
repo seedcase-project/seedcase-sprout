@@ -208,3 +208,17 @@ def test_throws_error_with_non_matching_column_names(data_list, resource_propert
         )
 
 
+def test_single_dataframe_in_data_list(data_list, resource_properties):
+    """Test that a single DataFrame is returned as is (except row order)."""
+    # Given
+    data_list = [data_list[0]]
+
+    # When
+    joined_batches = join_resource_batches(
+        data_list=data_list,
+        resource_properties=resource_properties,
+    )
+
+    # Then
+    expected_joined_batches = data_list[0].drop(BATCH_TIMESTAMP_COLUMN_NAME)
+    assert_frame_equal(joined_batches, expected_joined_batches, check_row_order=False)
