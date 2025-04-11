@@ -59,18 +59,31 @@ def test_passes_correct_properties(properties):
     assert check_properties(properties) == properties
 
 
-# TODO: We don't have a way to check that it is a `*Properties` object yet, since Python
-# is dynamically typed.
-def xtest_error_incorrect_argument():
+def test_error_incorrect_argument():
     """Should be an error if it isn't a `*Properties` object."""
-    with raises(ExceptionGroup):
+    with raises(TypeError):
+        check_properties(ResourceProperties())
+
+    with raises(TypeError):
+        check_resource_properties(PackageProperties())
+
+    with raises(TypeError):
+        check_properties("")
+
+    with raises(TypeError):
         check_properties([1, 2, 3])
 
-    with raises(ExceptionGroup):
+    with raises(TypeError):
         check_package_properties([1, 2, 3])
 
-    with raises(ExceptionGroup):
+    with raises(TypeError):
+        check_package_properties("")
+
+    with raises(TypeError):
         check_resource_properties([1, 2, 3])
+
+    with raises(TypeError):
+        check_resource_properties("")
 
 
 @mark.parametrize("field", PACKAGE_SPROUT_REQUIRED_FIELDS.keys())

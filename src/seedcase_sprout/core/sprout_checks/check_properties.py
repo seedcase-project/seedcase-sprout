@@ -29,6 +29,7 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
     Raises:
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
+    _check_is_package_properties_type(properties)
     return _generic_check_properties(
         properties,
         ignore=[
@@ -66,6 +67,7 @@ def check_properties(properties: PackageProperties) -> PackageProperties:
     Raises:
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
+    _check_is_package_properties_type(properties)
     if not properties.resources:
         check_package_properties(properties)
     else:
@@ -95,6 +97,7 @@ def check_resource_properties(properties: ResourceProperties) -> ResourcePropert
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
     package_field_pattern = r"\$\.\w+$"
+    _check_is_resource_properties_type(properties)
     try:
         _generic_check_properties(
             PackageProperties(resources=[properties]),
@@ -165,3 +168,19 @@ def _generic_check_properties(
         )
 
     return properties
+
+
+def _check_is_package_properties_type(properties):
+    if not isinstance(properties, PackageProperties):
+        raise TypeError(
+            f"Expected properties to be a PackageProperties object,"
+            f"but the object is {type(properties)}"
+        )
+
+
+def _check_is_resource_properties_type(properties):
+    if not isinstance(properties, ResourceProperties):
+        raise TypeError(
+            f"Expected properties to be a ResourceProperties object,"
+            f"but the object is {type(properties)}"
+        )
