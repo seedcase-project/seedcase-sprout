@@ -260,8 +260,6 @@ def test_error_blank_resource_properties(properties, name, type):
     "item,value,validator",
     [
         ("name", "a name with spaces", "pattern"),
-        # TODO: This doesn't give an error.
-        # ("data", "some data", "inline-data"),
     ],
 )
 def test_error_incorrect_resource_property_values(properties, item, value, validator):
