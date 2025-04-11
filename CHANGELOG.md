@@ -1,3 +1,27 @@
+## 0.32.2 (2025-04-11)
+
+### Refactor
+
+- :recycle: simplify imports and `__init__.py` file (#1257)
+
+## 0.32.1 (2025-04-11)
+
+### Refactor
+
+- :recycle: match `check_properties()` with design (#1255)
+
+## 0.32.0 (2025-04-11)
+
+### Feat
+
+- :sparkles: check column names in `check_data()` (#1247)
+
+## 0.31.0 (2025-04-11)
+
+### Feat
+
+- :sparkles: `check_data()` with column type checks (#1246)
+
 ## 0.30.0 (2025-04-09)
 
 ### Feat
