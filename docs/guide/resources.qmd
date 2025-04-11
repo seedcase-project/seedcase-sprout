@@ -20,9 +20,9 @@ that you have a record of the steps taken to clean and transform the
 data.
 :::
 
-Putting your data into a data package makes it easier for yourself
-and others to use later on. The steps you'll take to get your data into
-the structure used by Sprout are:
+Putting your data into a data package makes it easier for yourself and
+others to use later on. The steps you'll take to get your data into the
+structure used by Sprout are:
 
 1.  Create the properties for the resource, using the original data as a
     starting point, and edit as needed.
@@ -111,7 +111,8 @@ you can create a resource properties object manually using
 you, for example, have many columns in your data. To make this process
 easier, `extract_resource_properties()` allows you to create an initial
 resource properties object by extracting as much information as possible
-from the Polars DataFrame with your data. Afterwards, you can edit these properties as needed.
+from the Polars DataFrame with your data. Afterwards, you can edit these
+properties as needed.
 
 Now you are ready to use `extract_resource_properties()` to extract the
 resource properties from the data. This function tries to infer the data
@@ -225,8 +226,9 @@ See the [flow diagrams](/docs/design/interface/flows.qmd) for a
 simplified flow of steps involved in adding batch files.
 :::
 
-As shown above, the data is currently stored loaded as a Polars DataFrame called `data`. Now, it's time to store this data in the resource's folder by
-using:
+As shown above, the data is currently stored loaded as a Polars
+DataFrame called `data`. Now, it's time to store this data in the
+resource's folder by using:
 
 ```{python}
 #| eval: false
