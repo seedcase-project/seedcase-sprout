@@ -43,7 +43,7 @@ def resource_properties() -> ResourceProperties:
 def test_batches_are_joined_correctly(data_list, resource_properties):
     """Test that the batches are joined correctly."""
     # Given
-    resource_properties.schema.primary_key = ["id"]
+    resource_properties.schema.primary_key = "id"
 
     # When
     joined_batches = join_resource_batches(

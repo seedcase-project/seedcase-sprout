@@ -13,7 +13,7 @@ def join_resource_batches(
     """Joins all batch resource DataFrames into a single (Polars) DataFrame.
 
     This function takes a list of DataFrames, joins them together and drops any
-    duplicate observational units based on the primary key from resource_properties.
+    duplicate observational units based on the primary key from `resource_properties`.
     Then, it confirms that the data are correct against the `resource_properties` after
     the join.
 
@@ -26,7 +26,6 @@ def join_resource_batches(
     if there are any errors or mistakes in older batch files that have been corrected in
     later files, the mistake will be kept in the batch file, but won't be included in
     the `data.parquet` file.
-    ```
 
     Args:
         data_list: A list of Polars DataFrames for all the batch files. Use
@@ -44,6 +43,7 @@ def join_resource_batches(
         import polars as pl
 
         import seedcase_sprout.core as sp
+        # TODO: Remove this once read_properties/examples is done
         from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 
         data_list = [
