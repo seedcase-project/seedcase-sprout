@@ -11,8 +11,7 @@ from seedcase_sprout.core.constants import (
     BATCH_TIMESTAMP_PATTERN,
 )
 from seedcase_sprout.core.properties import ResourceProperties
-
-# from seedcase_sprout.core.checks.check_data import check_data
+from seedcase_sprout.core.sprout_checks.check_data import check_data
 from seedcase_sprout.core.sprout_checks.check_properties import (
     check_resource_properties,
 )
@@ -87,8 +86,7 @@ def read_resource_batches(
 
     data_list = list(map(_read_parquet_batch_file, paths))
 
-    # TODO: Uncomment and test when `check_data` is implemented
-    # list(map(check_data, data_list, resource_properties))
+    list(map(lambda data: check_data(data, resource_properties), data_list))
 
     return data_list
 
