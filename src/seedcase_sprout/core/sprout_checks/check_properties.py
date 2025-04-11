@@ -35,7 +35,7 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
         ignore=[
             # Ignore checks on specific resources within the resource field.
             cdp.CheckErrorMatcher(json_path=_RESOURCE_FIELD_PATTERN),
-            # Ignore checks on the resource field itself.
+            # Ignore missing resources.
             cdp.CheckErrorMatcher(json_path=r"resources$", validator="required"),
         ],
     )
