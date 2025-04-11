@@ -38,6 +38,13 @@ def join_resource_batches(
         Outputs a single DataFrame object of all the batch data with duplicate
             observational units removed.
 
+    Raises:
+        polars.exceptions.ShapeError: Raised when dataframes in data_list have different
+            shapes, such as mismatched column names or numbers.
+
+        polars.exceptions.SchemaError: Raised when dataframes in data_list have
+            different schemas, e.g., their column data types don't match.
+
     Examples:
         ```{python}
         import polars as pl
