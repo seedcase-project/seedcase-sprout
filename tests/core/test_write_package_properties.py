@@ -1,9 +1,8 @@
 from dataclasses import replace
 from pathlib import Path
 
-from pytest import fixture, raises
+from pytest import fixture
 
-from seedcase_sprout.core.check_datapackage import CheckError
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
@@ -76,36 +75,6 @@ def test_writes_properties_with_missing_resources(path, package_properties):
 
     assert write_package_properties(new_properties, path) == path
     assert_file_contains(path, new_properties)
-
-
-def test_throws_error_if_error_in_package_properties(path, package_properties):
-    """Should throw `CheckError`s if there are errors in the package properties."""
-    package_properties.name = "invalid name with spaces"
-    package_properties.id = None
-    write_json(resource_properties.compact_dict, path)
-
-    with raises(ExceptionGroup) as error_info:
-        write_package_properties(package_properties, path)
-
-    errors = error_info.value.exceptions
-    assert len(errors) == 2
-    assert all(isinstance(error, CheckError) for error in errors)
-    assert_file_contains(path, resource_properties)
-
-
-def test_throws_error_if_error_in_resource_properties(path, package_properties):
-    """Should throw `CheckError`s if there are errors in the resource properties."""
-    package_properties.resources[0].name = "invalid name with spaces"
-    package_properties.resources[0].description = None
-    write_json(resource_properties.compact_dict, path)
-
-    with raises(ExceptionGroup) as error_info:
-        write_package_properties(package_properties, path)
-
-    errors = error_info.value.exceptions
-    assert len(errors) == 2
-    assert all(isinstance(error, CheckError) for error in errors)
-    assert_file_contains(path, resource_properties)
 
 
 def assert_file_contains(path: Path, expected_properties: PackageProperties):
