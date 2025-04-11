@@ -1,6 +1,6 @@
 import polars as pl
 from polars.testing import assert_frame_equal
-from pytest import fixture
+from pytest import fixture, raises
 
 from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.core.examples import example_resource_properties
@@ -134,3 +134,77 @@ def test_batches_joined_correctly_when_primary_key_is_multiple_fields(
     )
 
     assert_frame_equal(joined_batches, expected_joined_batches, check_row_order=False)
+
+
+def test_throws_error_with_data_of_different_shapes(data_list, resource_properties):
+    """Test that an error is raised when the data have different shapes."""
+    # Given, when
+    data_list.append(
+        pl.DataFrame(
+            {
+                "id": [2],
+                "name": ["bertha"],
+                # value column is missing
+                BATCH_TIMESTAMP_COLUMN_NAME: ["2024-03-26T100000Z"],
+            }
+        )
+    )
+
+    # Then
+    with raises(pl.exceptions.ShapeError):
+        join_resource_batches(
+            data_list=data_list,
+            resource_properties=resource_properties,
+        )
+
+
+def test_throws_error_with_non_matching_data_types(data_list, resource_properties):
+    """Test that an error is raised when the data types don't match."""
+    # Given, when
+    data_list.append(
+        pl.DataFrame(
+            {
+                "id": [2],
+                "name": ["bertha"],
+                "value": [1.1],
+                BATCH_TIMESTAMP_COLUMN_NAME: ["2024-03-26T100000Z"],
+            },
+            schema={
+                "id": pl.Int64,
+                "name": pl.String,
+                "value": pl.Object,  # different type than the other dataframes
+                BATCH_TIMESTAMP_COLUMN_NAME: pl.String,
+            },
+        ),
+    )
+
+    # Then
+    with raises(pl.exceptions.SchemaError):
+        join_resource_batches(
+            data_list=data_list,
+            resource_properties=resource_properties,
+        )
+
+
+def test_throws_error_with_non_matching_column_names(data_list, resource_properties):
+    """Test that an error is raised when the column names don't match."""
+    # Given, when
+    data_list.append(
+        pl.DataFrame(
+            {
+                "id": [2],
+                "unexpected_column_name": ["bertha"],
+                "value": [1.1],
+                BATCH_TIMESTAMP_COLUMN_NAME: ["2024-03-26T100000Z"],
+            },
+        )
+    )
+
+    # Then
+    with raises(pl.exceptions.ShapeError):
+        join_resource_batches(
+            data_list=data_list,
+            resource_properties=resource_properties,
+        )
+
+
