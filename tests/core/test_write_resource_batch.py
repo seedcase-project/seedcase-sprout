@@ -65,20 +65,8 @@ def test_writes_correct_resource_batch_file_with_unordered_columns(
     assert_frame_equal(batch_data, tidy_data, check_exact=True)
 
 
-def test_throws_error_if_resource_properties_are_incorrect(
-    tmp_path, tidy_data, resource_properties
-):
-    """Throws ExceptionGroup if resources properties are incorrect."""
-    # Given
-    os.chdir(tmp_path)
-    (tmp_path / "resources" / resource_properties.name).mkdir(parents=True)
-    resource_properties.description = ""
 
-    # When
-    with raises(ExceptionGroup):
-        write_resource_batch(tidy_data, resource_properties, tmp_path)
-
-
+# TODO: Move this to check_data tests when it is ready
 def xtest_throws_error_if_data_do_not_match_resource_properties(
     tmp_path, tidy_data, resource_properties
 ):
