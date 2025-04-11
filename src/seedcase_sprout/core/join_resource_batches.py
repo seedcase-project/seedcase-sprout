@@ -77,7 +77,7 @@ def join_resource_batches(
     check_resource_properties(resource_properties)
 
     data = pl.concat(data_list)
-    primary_key = _get_primary_key(resource_properties)
+    primary_key = resource_properties.schema.primary_key
     data = _drop_duplicate_obs_units(data, primary_key)
 
     # check_data(data, resource_properties)
@@ -85,34 +85,11 @@ def join_resource_batches(
     return data
 
 
-def _get_primary_key(
-    resource_properties: ResourceProperties,
-) -> list[str] | str | None:
-    """Get the primary key from the resource properties.
-
-    Args:
-        resource_properties: The resource properties object.
-
-    Returns:
-        The primary key of the resource.
-    """
-    return resource_properties.schema.primary_key
-
-
 def _drop_duplicate_obs_units(
     data: pl.DataFrame, primary_key: list[str] | str | None
 ) -> pl.DataFrame:
     """Drop duplicates based on the primary key and keep the latest one."""
-    data = _sort_by_timestamp(data)
-    data = _drop_timestamp_column(data)
+    data = data.sort(BATCH_TIMESTAMP_COLUMN_NAME)
+    data = data.drop(BATCH_TIMESTAMP_COLUMN_NAME)
+
     return data.unique(subset=primary_key, keep="last")
-
-
-def _sort_by_timestamp(data: pl.DataFrame) -> pl.DataFrame:
-    """Sort the data by timestamp."""
-    return data.sort(BATCH_TIMESTAMP_COLUMN_NAME)
-
-
-def _drop_timestamp_column(data: pl.DataFrame) -> pl.DataFrame:
-    """Drop the timestamp column from the data."""
-    return data.drop(BATCH_TIMESTAMP_COLUMN_NAME)
