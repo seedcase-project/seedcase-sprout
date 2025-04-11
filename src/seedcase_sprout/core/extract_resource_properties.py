@@ -12,21 +12,21 @@ from seedcase_sprout.core.properties import (
 
 
 def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
-    """Extracts resource properties from a batch data file.
+    """Extracts resource properties from Polars DataFrame.
 
-    This function takes a Polars DataFrame and extracts properties from it into a
-    `ResourceProperties` object.
-
-    Note that some types may be simplified during the conversion. For example, a
-    year might be extracted as an integer instead of using Frictionless's year type.
-    Review and adjust the output as needed.
+    The data types are extracted from the DataFrame's schema and mapped from Polars to
+    Frictionless data types. For the best results, ensure the DataFrame's schema is as
+    expected. Since there are differences between Polars and Frictionless data types,
+    the mapping may not always be perfect, and some data types might be extracted
+    in a simplified way. For example, a year column might be extracted as an integer
+    instead of Frictionless's `year` type. Review and adjust the extracted properties
+    as needed.
 
     Args:
         data: A Polars DataFrame containing the data to extract properties from.
 
     Returns:
-        A `ResourceProperties` object. Use `write_resource_properties()`
-            to save the object to the `datapackage.json` file.
+        A `ResourceProperties` object.
 
     Raises:
         ValueError: If the data is empty
