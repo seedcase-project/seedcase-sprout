@@ -3,7 +3,7 @@ from pathlib import Path
 
 import polars as pl
 from polars.testing import assert_frame_equal
-from pytest import fixture, raises, mark
+from pytest import fixture, mark, raises
 
 from seedcase_sprout.core.examples import (
     example_data,
@@ -16,10 +16,10 @@ from seedcase_sprout.core.properties import (
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.sprout_checks.check_data import check_data
 from seedcase_sprout.core.sprout_checks._check_column_types import (
     _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES,
 )
+from seedcase_sprout.core.sprout_checks.check_data import check_data
 
 string_field = FieldProperties(name="my_string", type="string")
 bool_field = FieldProperties(name="my_bool", type="boolean")
@@ -37,73 +37,9 @@ def resource_properties() -> ResourceProperties:
     )
 
 
-def test_no_error_when_data_column_names_match_properties(resource_properties):
-    """Should throw no error if the column names in the data frame match the column
-    names in the properties."""
-    df = pl.DataFrame(
-        {
-            string_field.name: ["abc", "def"],
-            bool_field.name: [True, False],
-            number_field.name: [23, 45],
-        }
-    )
-    resource_properties.schema.fields = [string_field, bool_field, number_field]
-
-    assert check_data(df, resource_properties) is df
-
-
-def test_throws_error_when_data_has_extra_columns(resource_properties):
-    """Should throw an error if the data has extra columns."""
-    df = pl.DataFrame({"extra_col1": [""], bool_field.name: [True], "extra_col2": [""]})
-    resource_properties.schema.fields = [bool_field]
-
-    with raises(ValueError, match=r"Extra columns.*extra_col1.*extra_col2") as error:
-        check_data(df, resource_properties)
-
-    assert bool_field.name not in str(error)
-
-
-def test_throws_error_when_data_has_missing_columns(resource_properties):
-    """Should throw an error if the data has missing columns."""
-    df = pl.DataFrame({bool_field.name: [True]})
-    resource_properties.schema.fields = [string_field, bool_field, number_field]
-
-    with raises(
-        ValueError, match=rf"Missing columns.*{string_field.name}.*{number_field.name}"
-    ) as error:
-        check_data(df, resource_properties)
-
-    assert bool_field.name not in str(error)
-
-
-def test_throws_error_when_data_has_extra_and_missing_columns(resource_properties):
-    """Should throw an error if the data has extra columns and missing columns."""
-    df = pl.DataFrame({"extra_col": [""], bool_field.name: [True]})
-    resource_properties.schema.fields = [string_field, bool_field, number_field]
-
-    with raises(ValueError) as error:
-        check_data(df, resource_properties)
-
-    assert re.search(r"Extra columns.*extra_col", str(error))
-    assert re.search(
-        rf"Missing columns.*{string_field.name}.*{number_field.name}", str(error)
-    )
-    assert bool_field.name not in str(error)
-
-
-def test_no_error_when_data_has_correct_columns_in_different_order(resource_properties):
-    """Should not throw an error if the data has the correct columns in a different
-    order."""
-    df = pl.DataFrame({string_field.name: [""], bool_field.name: [True]})
-    resource_properties.schema.fields = [bool_field, string_field]
-
-    assert check_data(df, resource_properties) is df
-
-
-
-def test_accepts_correct_column_types():
-    """Should not raise an error when the Polars data type of a column matches the
-    Frictionless data type given in the resource properties."""
+def test_accepts_correct_columns():
+    """Should not raise an error when columns in the data match columns in the
+    resource properties."""
     resource_properties = example_resource_properties_all_types()
     resource_properties.schema.fields += [
         FieldProperties(name="my_categorical", type="string"),
@@ -149,6 +85,45 @@ def test_accepts_columns_in_any_order():
     data = example_data()
 
     assert_frame_equal(check_data(data, resource_properties), data)
+
+
+def test_throws_error_when_data_has_extra_columns(resource_properties):
+    """Should throw an error if the data has extra columns."""
+    df = pl.DataFrame({"extra_col1": [""], bool_field.name: [True], "extra_col2": [""]})
+    resource_properties.schema.fields = [bool_field]
+
+    with raises(ValueError, match=r"Extra columns.*extra_col1.*extra_col2") as error:
+        check_data(df, resource_properties)
+
+    assert bool_field.name not in str(error)
+
+
+def test_throws_error_when_data_has_missing_columns(resource_properties):
+    """Should throw an error if the data has missing columns."""
+    df = pl.DataFrame({bool_field.name: [True]})
+    resource_properties.schema.fields = [string_field, bool_field, number_field]
+
+    with raises(
+        ValueError, match=rf"Missing columns.*{string_field.name}.*{number_field.name}"
+    ) as error:
+        check_data(df, resource_properties)
+
+    assert bool_field.name not in str(error)
+
+
+def test_throws_error_when_data_has_extra_and_missing_columns(resource_properties):
+    """Should throw an error if the data has extra columns and missing columns."""
+    df = pl.DataFrame({"extra_col": [""], bool_field.name: [True]})
+    resource_properties.schema.fields = [string_field, bool_field, number_field]
+
+    with raises(ValueError) as error:
+        check_data(df, resource_properties)
+
+    assert re.search(r"Extra columns.*extra_col", str(error))
+    assert re.search(
+        rf"Missing columns.*{string_field.name}.*{number_field.name}", str(error)
+    )
+    assert bool_field.name not in str(error)
 
 
 @mark.parametrize(
