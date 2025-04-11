@@ -128,7 +128,7 @@ resource_properties = sp.extract_resource_properties(
 print(resource_properties)
 ```
 
-<!-- TODO: pprint doesn't work well with nested objects like resource_properties above. 
+<!-- TODO: pprint doesn't work well with nested objects like resource_properties above.
 So, for now, we'll use print here. but, we should find an alternative.
  -->
 
@@ -215,7 +215,7 @@ resource properties have been added:
 print(sp.read_properties(package_path.properties()))
 ```
 
-<!-- TODO: pprint doesn't work well with nested objects like resource_properties above. 
+<!-- TODO: pprint doesn't work well with nested objects like resource_properties above.
 So, for now, we'll use print here. but, we should find an alternative.
  -->
 
