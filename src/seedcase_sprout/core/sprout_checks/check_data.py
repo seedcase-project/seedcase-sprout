@@ -44,9 +44,9 @@ def check_data(
 
     Examples:
         ```{python}
-        import seedcase_sprout as sp
+        import seedcase_sprout.core as sp
 
-        check_data(
+        sp.check_data(
             data=sp.example_data(),
             resource_properties=sp.example_resource_properties()
         )
