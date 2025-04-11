@@ -80,6 +80,7 @@ def join_resource_batches(
     primary_key = resource_properties.schema.primary_key
     data = _drop_duplicate_obs_units(data, primary_key)
 
+    # TODO: Uncomment once `check_data` has been implemented
     # check_data(data, resource_properties)
 
     return data
