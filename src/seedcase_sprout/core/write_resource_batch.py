@@ -7,6 +7,7 @@ from seedcase_sprout.core.create_batch_file_name import create_batch_file_name
 # from seedcase_sprout.core.checks.check_data import check_data
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import ResourceProperties
+from seedcase_sprout.core.sprout_checks.check_data import check_data
 from seedcase_sprout.core.sprout_checks.check_properties import (
     check_resource_properties,
 )
@@ -73,8 +74,7 @@ def write_resource_batch(
         ```
     """
     check_resource_properties(resource_properties)
-    # TODO: Uncomment once `check_data` has been implemented`
-    # check_data(data, resource_properties)
+    check_data(data, resource_properties)
 
     batch_path = PackagePath(package_path).resource_batch(resource_properties.name)
     batch_path.mkdir(exist_ok=True)
