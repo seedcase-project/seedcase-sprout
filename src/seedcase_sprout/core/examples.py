@@ -240,11 +240,9 @@ class ExamplePackage(AbstractContextManager):
 
         with sp.ExamplePackage() as package_path:
             properties = sp.read_properties(package_path.properties())
-            ...
 
         with sp.ExamplePackage(with_resources=False) as package_path:
             properties = sp.read_properties(package_path.properties())
-            ...
         ```
     """
 
