@@ -1,6 +1,8 @@
 import tempfile
 from pathlib import Path
 
+from pytest import raises
+
 from seedcase_sprout.core.example_package import ExamplePackage
 from seedcase_sprout.core.read_properties import read_properties
 from seedcase_sprout.core.sprout_checks.check_properties import check_properties
@@ -50,6 +52,16 @@ def test_changes_cwd_to_package_root_in_package_context():
     original_cwd = Path.cwd()
     with ExamplePackage() as package_path:
         assert Path.cwd() == package_path.path
+
+    assert Path.cwd() == original_cwd
+
+
+def test_restores_cwd_when_error_raised_in_context():
+    """The original cwd should be restored after exiting the context, even if an error
+    was raised inside the context."""
+    original_cwd = Path.cwd()
+    with ExamplePackage(), raises(ValueError):
+        raise ValueError("An error!")
 
     assert Path.cwd() == original_cwd
 
