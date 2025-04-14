@@ -12,8 +12,8 @@
 from .as_readme_text import as_readme_text
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
-from .example_package import ExamplePackage
 from .examples import (
+    ExamplePackage,
     example_data,
     example_data_all_types,
     example_package_properties,
