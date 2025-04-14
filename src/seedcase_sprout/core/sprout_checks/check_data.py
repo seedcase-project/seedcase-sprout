@@ -39,8 +39,9 @@ def check_data(
         Output the `data` if checks all pass.
 
     Raises:
-        ExceptionGroup: A list of messages that highlight where there are differences
-            between the data and the properties.
+        ExceptionGroup[CheckError]: If the resource properties are incorrect.
+        ValueError: If column names in the data are incorrect.
+        ExceptionGroup[ValueError]: If data types in the data are incorrect.
 
     Examples:
         ```{python}
