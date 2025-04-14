@@ -133,3 +133,46 @@ def test_throws_error_if_properties_file_cannot_be_read(
 
     with raises(JSONDecodeError):
         write_resource_properties(file_path, resource_properties_1)
+
+
+def test_throws_error_if_resource_properties_have_missing_required_fields(
+    package_properties_path,
+):
+    """Should throw `CheckError`s if the resource properties have missing required
+    fields."""
+    with raises(ExceptionGroup) as error_info:
+        write_resource_properties(package_properties_path, ResourceProperties())
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 4
+    assert all(error.validator == "required" for error in errors)
+
+
+def test_throws_error_if_data_path_malformed_on_new_resource(
+    package_properties_path, resource_properties_1
+):
+    """Should throw a `CheckError` if the data path of the new resource is malformed."""
+    resource_properties_1.path = str(Path("no", "id"))
+
+    with raises(ExceptionGroup) as error_info:
+        write_resource_properties(package_properties_path, resource_properties_1)
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 1
+    assert errors[0].validator == "pattern"
+    assert errors[0].json_path == "$.path"
+
+
+def test_throws_error_if_package_properties_have_missing_required_fields(
+    tmp_path, resource_properties_1
+):
+    """Should throw `CheckError`s if the package properties have missing required
+    fields."""
+    path = write_json({}, tmp_path / "datapackage.json")
+
+    with raises(ExceptionGroup) as error_info:
+        write_resource_properties(path, resource_properties_1)
+
+    errors = error_info.value.exceptions
+    assert len(errors) == 7
+    assert all(error.validator == "required" for error in errors)

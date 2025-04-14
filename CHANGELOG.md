@@ -1,3 +1,51 @@
+## 0.36.0 (2025-04-14)
+
+### Feat
+
+- :sparkles: `write_resource_batch()` (#1213)
+
+## 0.35.0 (2025-04-14)
+
+### Feat
+
+- :sparkles: get cwd at call time in `PackagePath` (#1266)
+
+## 0.34.0 (2025-04-14)
+
+### Feat
+
+- ✨ `join_resource_batches()` (#1252)
+
+## 0.33.0 (2025-04-14)
+
+### Feat
+
+- :sparkles: use `check_data()` in `read_resource_batches()` (#1263)
+
+## 0.32.2 (2025-04-11)
+
+### Refactor
+
+- :recycle: simplify imports and `__init__.py` file (#1257)
+
+## 0.32.1 (2025-04-11)
+
+### Refactor
+
+- :recycle: match `check_properties()` with design (#1255)
+
+## 0.32.0 (2025-04-11)
+
+### Feat
+
+- :sparkles: check column names in `check_data()` (#1247)
+
+## 0.31.0 (2025-04-11)
+
+### Feat
+
+- :sparkles: `check_data()` with column type checks (#1246)
+
 ## 0.30.0 (2025-04-09)
 
 ### Feat

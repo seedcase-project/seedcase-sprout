@@ -20,6 +20,7 @@ from .examples import (
     example_resource_properties_all_types,
 )
 from .extract_resource_properties import extract_resource_properties
+from .join_resource_batches import join_resource_batches
 from .paths import PackagePath
 from .properties import (
     ConstraintsProperties,
@@ -36,20 +37,21 @@ from .properties import (
 )
 from .read_properties import read_properties
 from .read_resource_batches import read_resource_batches
-from .sprout_checks.check_package_properties import check_package_properties
-from .sprout_checks.check_properties import check_properties
-from .sprout_checks.check_resource_properties import check_resource_properties
+from .sprout_checks.check_data import check_data
+from .sprout_checks.check_properties import (
+    check_package_properties,
+    check_properties,
+    check_resource_properties,
+)
 from .update_package_properties import update_package_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
+from .write_resource_batch import write_resource_batch
 
-# from .edit_resource_properties import *
+# from .update_resource_properties import *
 # from .write_resource_data_to_batch import *
 # from .write_resource_parquet import *
 from .write_resource_properties import write_resource_properties
-
-# Helpers -----
-# from .pretty_json import *
 
 __all__ = [
     # Properties -----
@@ -73,7 +75,6 @@ __all__ = [
     "example_resource_properties_all_types",
     # Packages -----
     "update_package_properties",
-    "edit_package_properties",
     "write_package_properties",
     "as_readme_text",
     # "delete_package",
@@ -81,8 +82,10 @@ __all__ = [
     "create_resource_structure",
     "create_resource_properties",
     "extract_resource_properties",
+    "join_resource_batches",
     "read_resource_batches",
-    # "edit_resource_properties",
+    "write_resource_batch",
+    # "update_resource_properties",
     # "write_resource_data_to_batch",
     # "write_resource_parquet",
     "write_resource_properties",
@@ -98,4 +101,5 @@ __all__ = [
     "check_package_properties",
     "check_properties",
     "check_resource_properties",
+    "check_data",
 ]

@@ -90,7 +90,8 @@ def example_resource_properties() -> ResourceProperties:
                     description="Value of the record.",
                     type="number",
                 ),
-            ]
+            ],
+            primary_key=["id"],
         ),
     )
 
@@ -153,7 +154,7 @@ def example_resource_properties_all_types() -> ResourceProperties:
                 FieldProperties(name="my_none", type=None),
                 FieldProperties(name="my_duration", type="duration"),
                 FieldProperties(name="my_geojson", type="geojson"),
-            ]
+            ],
         ),
     )
 
@@ -214,8 +215,8 @@ def example_data_all_types() -> pl.DataFrame:
                 '{"outer": "value", "inner": {"prop1": 123, "prop2": true}}',
             ],
             "my_string": ["some text", "æøåäöü£$%^&*()\\''", "μῆνιν ἄειδε θεὰ"],
-            "my_any": pl.Series([{"prop": "value"}] * 3, dtype=pl.Object),
-            "my_none": pl.Series([{"prop": "value"}] * 3, dtype=pl.Object),
+            "my_any": pl.Series([[1]] * 3, dtype=pl.List),
+            "my_none": pl.Series([[1]] * 3, dtype=pl.List),
             "my_duration": ["P1Y2M3DT10H30M45.343S", "P1Y2M3DT10H30M45", "P33Y6M4D"],
             "my_geojson": ["{}"] * 3,
         }
