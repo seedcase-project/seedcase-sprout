@@ -66,13 +66,7 @@ def read_resource_batches(
             # TODO: Use `write_resource_batch()` to create the batch file
             # Create a temporary batch file
             batch_file_path = resource_batch_dir / "2025-03-26T100346Z-12345678.parquet"
-            data = pl.DataFrame(
-                {
-                    "id": [1, 2, 3],
-                    "name": ["anne", "belinda", "charlotte"],
-                    "value": [10, 20, 30],
-                }
-            )
+            data = sp.example_data()
             data.write_parquet(batch_file_path)
 
             sp.read_resource_batches(
