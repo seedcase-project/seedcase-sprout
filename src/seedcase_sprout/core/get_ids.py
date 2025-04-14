@@ -1,6 +1,8 @@
 import re
 from pathlib import Path
 
+import seedcase_sprout.core.fp as fp
+
 
 def get_ids(path: Path) -> list[int]:
     """Gets the ids of existing resources or packages in a directory.
@@ -14,7 +16,7 @@ def get_ids(path: Path) -> list[int]:
     """
     # Keep only directories
     dirs = list(path.glob("*/"))
-    ids = list(map(get_number_from_dir, dirs))
+    ids = fp._map(dirs, get_number_from_dir)
     # Drop any empty items
     ids = sorted(filter(None, ids))
 
