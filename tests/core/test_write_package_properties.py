@@ -4,12 +4,12 @@ from pathlib import Path
 from pytest import fixture, raises
 
 from seedcase_sprout.core.check_datapackage import CheckError
+from seedcase_sprout.core.internals import _read_json
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.write_json import write_json
 from seedcase_sprout.core.write_package_properties import write_package_properties
 
@@ -94,5 +94,5 @@ def test_throws_error_if_error_in_package_properties(path, package_properties):
 
 
 def assert_file_contains(path: Path, expected_properties: PackageProperties):
-    new_properties = read_json(path)
+    new_properties = _read_json(path)
     assert new_properties == expected_properties.compact_dict
