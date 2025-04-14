@@ -3,8 +3,8 @@ from pathlib import Path
 
 from pytest import mark, raises
 
+from seedcase_sprout.core.internals import _write_json
 from seedcase_sprout.core.read_json import read_json
-from seedcase_sprout.core.write_json import write_json
 
 
 @mark.parametrize(
@@ -22,7 +22,7 @@ from seedcase_sprout.core.write_json import write_json
 def test_reads_valid_file(tmp_path, expected):
     """Should load the contents of a deserialisable JSON file into an object."""
     tmp_path = tmp_path / "test.json"
-    write_json(expected, tmp_path)
+    _write_json(expected, tmp_path)
 
     assert read_json(tmp_path) == expected
 

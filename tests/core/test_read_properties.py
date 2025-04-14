@@ -9,11 +9,11 @@ from seedcase_sprout.core import (
     read_properties,
     write_package_properties,
 )
+from seedcase_sprout.core.internals import _write_json
 from seedcase_sprout.core.sprout_checks.required_fields import (
     PACKAGE_SPROUT_REQUIRED_FIELDS,
     RESOURCE_SPROUT_REQUIRED_FIELDS,
 )
-from seedcase_sprout.core.write_json import write_json
 
 
 def test_reads_in_as_package_properties(tmp_path):
@@ -66,7 +66,7 @@ def test_raises_error_if_file_is_missing_required_field(field, tmp_path):
     properties = example_package_properties()
     package_path = tmp_path / "datapackage.json"
     delattr(properties, field)
-    write_json(properties.compact_dict, package_path)
+    _write_json(properties.compact_dict, package_path)
 
     with raises(ExceptionGroup) as error_info:
         read_properties(package_path)
@@ -97,7 +97,7 @@ def test_raises_error_if_file_is_missing_required_resource_fields(field, tmp_pat
     ]
     package_path = tmp_path / "datapackage.json"
     delattr(properties.resources[0], field)
-    write_json(properties.compact_dict, package_path)
+    _write_json(properties.compact_dict, package_path)
 
     with raises(ExceptionGroup) as error_info:
         read_properties(package_path)
