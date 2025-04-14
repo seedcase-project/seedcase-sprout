@@ -49,7 +49,6 @@ from .write_resource_batch import write_resource_batch
 
 # from .update_resource_properties import *
 # from .write_resource_data_to_batch import *
-
 # from .write_resource_parquet import *
 from .write_resource_properties import write_resource_properties
 
