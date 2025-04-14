@@ -16,10 +16,10 @@ from seedcase_sprout.core.properties import (
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.sprout_checks._check_column_types import (
+from seedcase_sprout.core.sprout_checks.check_data import (
     _FRICTIONLESS_TO_ALLOWED_POLARS_TYPES,
+    check_data,
 )
-from seedcase_sprout.core.sprout_checks.check_data import check_data
 from tests.core.assert_raises_errors import (
     assert_raises_check_errors,
     assert_raises_errors,
