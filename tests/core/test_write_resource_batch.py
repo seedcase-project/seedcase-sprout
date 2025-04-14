@@ -1,3 +1,4 @@
+import os
 import re
 
 import polars as pl
@@ -46,8 +47,20 @@ def test_writes_correct_resource_batch_file_with_unordered_columns(tmp_path):
     assert_frame_equal(batch_data, data, check_exact=True)
 
 
-# Add when `check_data` has been fully implemented
-def xtest_throws_error_if_data_do_not_match_example_resource_properties(tmp_path):
+def test_throws_error_if_data_do_not_match_example_resource_properties(tmp_path):
     """Throws ExceptionGroup if data don't match resource properties."""
-    with raises(ExceptionGroup):
+    with raises(ValueError):
         write_resource_batch(pl.DataFrame(), example_resource_properties(), tmp_path)
+
+
+def test_throws_error_if_data_do_not_match_resource_properties(tmp_path):
+    """Throws ExceptionGroup if data don't match resource properties (extra column)."""
+    # Given
+    os.chdir(tmp_path)
+    (tmp_path / "resources" / example_resource_properties().name).mkdir(parents=True)
+
+    data = example_data().insert_column(2, pl.Series("extra_column", [1, 2, 3]))
+
+    # When
+    with raises(ValueError):
+        write_resource_batch(data, example_resource_properties(), tmp_path)
