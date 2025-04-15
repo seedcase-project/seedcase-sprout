@@ -1,11 +1,9 @@
 import polars as pl
-from pytest import mark, raises
+from pytest import raises
 
 from seedcase_sprout.core.examples import (
-    example_data,
-    example_data_all_types,
-    example_resource_properties,
-    example_resource_properties_all_types,
+    example_data_all_polars_types,
+    example_resource_properties_all_polars_types,
 )
 from seedcase_sprout.core.extract_resource_properties import (
     extract_resource_properties,
@@ -35,36 +33,15 @@ def _keep_extractable_properties(
     )
 
 
-expected_resource_properties_all_types = _keep_extractable_properties(
-    example_resource_properties_all_types()
-)
-# Adjustments based on what Polars detects in the data's schema
-for index, field in enumerate(expected_resource_properties_all_types.schema.fields):
-    if field.name == "my_year":
-        field.type = "integer"
-    elif field.name == "my_yearmonth":
-        field.type = "date"
-    elif field.name == "my_geopoint":
-        field.type = "array"
-    elif field.name in ["my_duration", "my_object", "my_array", "my_geojson"]:
-        field.type = "string"
-
-
-@mark.parametrize(
-    "data, expected_resource_properties",
-    [
-        (example_data(), _keep_extractable_properties(example_resource_properties())),
-        (
-            example_data_all_types(),
-            expected_resource_properties_all_types,
-        ),
-    ],
-)
-def test_properties_are_extracted_correctly(data, expected_resource_properties):
+def test_properties_are_extracted_correctly():
     """Test that the resource properties are extracted correctly from the data."""
-    extracted_resource_properties = extract_resource_properties(data)
+    extracted_resource_properties = extract_resource_properties(
+        example_data_all_polars_types()
+    )
 
-    assert extracted_resource_properties == expected_resource_properties
+    assert extracted_resource_properties == _keep_extractable_properties(
+        example_resource_properties_all_polars_types()
+    )
 
 
 def test_throw_error_with_empty_data():
