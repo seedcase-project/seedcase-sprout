@@ -1,5 +1,10 @@
 from typing import Any, TypeVar
 
+from seedcase_sprout.core.examples import (
+    example_resource_properties,
+)
+from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
+
 T = TypeVar("T")
 
 
@@ -37,10 +42,6 @@ def get_nested_attr(
         ```
     """
     attributes = attributes.split(".")
-    if any(not attribute.isidentifier() for attribute in attributes):
-        raise ValueError(
-            "`attributes` should contain valid identifiers separated by `.`."
-        )
 
     try:
         for attribute in attributes:
@@ -49,3 +50,39 @@ def get_nested_attr(
         return default
 
     return default if base_object is None else base_object
+
+
+_get_nested_property = get_nested_attr
+
+
+def _get_package_property(properties: PackageProperties, field: str) -> Any | None:
+    return getattr(properties, field)
+
+
+def _get_resource_property(properties: ResourceProperties, field: str) -> Any | None:
+    return getattr(properties, field)
+
+
+from itertools import repeat
+
+
+def _get_resource_field_names(properties: ResourceProperties) -> list[str] | None:
+    properties = _get_resource_fields(properties)
+    return list(map(getattr, properties, repeat("name")))
+
+
+def _get_resource_fields(
+    properties: ResourceProperties,
+) -> list[Any | None]:
+    return _get_nested_property(properties, "schema.fields")
+
+
+print(_get_resource_field_names(example_resource_properties()))
+
+# fields: list[FieldProperties] = get_nested_attr(
+#     resource_properties, "schema.fields", default=[]
+# )
+
+# schema_missing_values = get_nested_attr(
+#     resource_properties, "schema.missing_values", default=[""]
+# )
