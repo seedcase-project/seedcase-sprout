@@ -4,17 +4,17 @@ from pathlib import Path
 
 import polars as pl
 
-from seedcase_sprout.core.check_is_file import check_is_file
+from seedcase_sprout.core.check_data import check_data
+from seedcase_sprout.core.check_properties import (
+    check_resource_properties,
+)
 from seedcase_sprout.core.constants import (
     BATCH_TIMESTAMP_COLUMN_NAME,
     BATCH_TIMESTAMP_FORMAT,
     BATCH_TIMESTAMP_PATTERN,
 )
+from seedcase_sprout.core.internals import _check_is_file, _map, _map2
 from seedcase_sprout.core.properties import ResourceProperties
-from seedcase_sprout.core.sprout_checks.check_data import check_data
-from seedcase_sprout.core.sprout_checks.check_properties import (
-    check_resource_properties,
-)
 
 
 def read_resource_batches(
@@ -81,9 +81,9 @@ def read_resource_batches(
             )
         ```
     """
-    list(map(check_is_file, paths))
+    _map(paths, _check_is_file)
     check_resource_properties(resource_properties)
-    return [_read_parquet_batch_file(path, resource_properties) for path in paths]
+    return _map2(paths, [resource_properties], _read_parquet_batch_file)
 
 
 def _read_parquet_batch_file(

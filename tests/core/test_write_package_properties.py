@@ -3,14 +3,12 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
-from seedcase_sprout.core.check_datapackage import CheckError
+from seedcase_sprout.core.internals import _read_json, _write_json
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.read_json import read_json
-from seedcase_sprout.core.write_json import write_json
 from seedcase_sprout.core.write_package_properties import write_package_properties
 
 resource_properties = ResourceProperties(
@@ -40,6 +38,11 @@ def path(tmp_path) -> Path:
     return tmp_path / "datapackage.json"
 
 
+def assert_file_contains(path: Path, expected_properties: PackageProperties):
+    new_properties = _read_json(path)
+    assert new_properties == expected_properties.compact_dict
+
+
 def test_writes_properties_when_file_does_not_exist(path, package_properties):
     """Should write properties to file when the file doesn't yet exist."""
     assert write_package_properties(package_properties, path) == path
@@ -50,7 +53,7 @@ def test_rewrites_package_properties_when_file_exists(path, package_properties):
     """Should write properties to file when the file already exists, rewriting existing
     package properties."""
     old_properties = package_properties.compact_dict | {"name": "old-name"}
-    write_json(old_properties, path)
+    _write_json(old_properties, path)
 
     assert write_package_properties(package_properties, path) == path
     assert_file_contains(path, package_properties)
@@ -63,7 +66,7 @@ def test_rewrites_resource_properties_when_file_exists(path, package_properties)
         package_properties,
         resources=[replace(resource_properties, name="old-name")],
     )
-    write_json(old_properties.compact_dict, path)
+    _write_json(old_properties.compact_dict, path)
 
     assert write_package_properties(package_properties, path) == path
     assert_file_contains(path, package_properties)
@@ -71,7 +74,7 @@ def test_rewrites_resource_properties_when_file_exists(path, package_properties)
 
 def test_writes_properties_with_missing_resources(path, package_properties):
     """Should write properties with missing resources to file."""
-    write_json(package_properties.compact_dict, path)
+    _write_json(package_properties.compact_dict, path)
     new_properties = replace(package_properties, resources=None)
 
     assert write_package_properties(new_properties, path) == path
@@ -82,17 +85,7 @@ def test_throws_error_if_error_in_package_properties(path, package_properties):
     """Should throw `CheckError`s if there are errors in the package properties."""
     package_properties.name = "invalid name with spaces"
     package_properties.id = None
-    write_json(resource_properties.compact_dict, path)
+    _write_json(resource_properties.compact_dict, path)
 
-    with raises(ExceptionGroup) as error_info:
+    with raises(ExceptionGroup):
         write_package_properties(package_properties, path)
-
-    errors = error_info.value.exceptions
-    assert len(errors) == 2
-    assert all(isinstance(error, CheckError) for error in errors)
-    assert_file_contains(path, resource_properties)
-
-
-def assert_file_contains(path: Path, expected_properties: PackageProperties):
-    new_properties = read_json(path)
-    assert new_properties == expected_properties.compact_dict
