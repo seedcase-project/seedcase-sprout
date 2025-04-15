@@ -1,5 +1,7 @@
 """Mimicking the functional programming tools from R and the R package purrr."""
 
+from typing import Callable
+
 
 def _map(x: list, fn: Callable) -> list:
     """Use a function on each item in a list.
