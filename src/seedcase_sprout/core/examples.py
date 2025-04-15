@@ -393,4 +393,3 @@ class ExamplePackage(AbstractContextManager):
         """Restore the original working directory and clean up the temporary package."""
         os.chdir(self.calling_dir)
         self.temp_dir.cleanup()
-
