@@ -48,19 +48,18 @@ POLARS_TO_FRICTIONLESS: dict[pl.DataType, FieldType] = {
     # Temporal
     pl.Date: "date",
     pl.Datetime: "datetime",
-    pl.Duration: "duration",
+    pl.Duration: "string",
     pl.Time: "time",
     # Nested
     pl.Array: "array",
-    pl.List: "any",
-    pl.Field: "object",
-    pl.Struct: "object",
+    pl.List: "list",
+    pl.Struct: "object",  # pl.Field is not here since it can't exist outside a Struct
     # String
     **{type: "string" for type in [pl.String, pl.Categorical, pl.Enum, pl.Utf8]},
     # Other
-    pl.Binary: "binary",
+    pl.Binary: "string",  # TODO: add format="binary" to this field type?
     pl.Boolean: "boolean",
-    pl.Null: None,
+    pl.Null: "any",
     pl.Object: "object",
     pl.Unknown: "any",
 }
