@@ -40,6 +40,9 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
         )
         ```
     """
+    if data.is_empty():
+        raise ValueError("Data is empty. Cannot extract resource properties.")
+
     resource_properties = ResourceProperties()
     resource_properties.type = "table"
     resource_properties.schema = TableSchemaProperties(fields_match="equal")
@@ -60,7 +63,5 @@ def _extract_field_properties(data: pl.DataFrame):
         FieldProperties(name=key, type=POLARS_TO_FRICTIONLESS[value.base_type()])
         for key, value in data.schema.items()
     ]
-    if field_properties == []:
-        raise ValueError("Failed to extract field properties from the provided data.")
 
     return field_properties
