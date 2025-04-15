@@ -94,7 +94,7 @@ class PackagePath:
         return self.resource(resource_name) / "batch"
 
     def resource_batch_files(self, resource_name: str) -> list[Path]:
-        """Path to all the files in the specific resource's `batch/` folder.
+        """Paths to all the files in the specific resource's `batch/` folder.
 
         Args:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
