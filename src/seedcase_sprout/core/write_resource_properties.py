@@ -1,13 +1,13 @@
 from pathlib import Path
 
 from seedcase_sprout.core.check_is_file import check_is_file
-from seedcase_sprout.core.nested_update import nested_update
-from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
-from seedcase_sprout.core.read_json import read_json
-from seedcase_sprout.core.sprout_checks.check_properties import (
+from seedcase_sprout.core.check_properties import (
     check_package_properties,
     check_resource_properties,
 )
+from seedcase_sprout.core.nested_update import nested_update
+from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
+from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.write_json import write_json
 
 

@@ -1,7 +1,7 @@
 from pathlib import Path
 
+from seedcase_sprout.core.check_properties import check_properties
 from seedcase_sprout.core.properties import PackageProperties
-from seedcase_sprout.core.sprout_checks.check_properties import check_properties
 from seedcase_sprout.core.write_json import write_json
 
 
