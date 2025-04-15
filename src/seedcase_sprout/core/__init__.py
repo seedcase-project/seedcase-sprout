@@ -10,9 +10,11 @@
 # from .delete_resource_properties import *
 
 from .as_readme_text import as_readme_text
+from .check_data import check_data
 from .create_resource_properties import create_resource_properties
 from .create_resource_structure import create_resource_structure
 from .examples import (
+    ExamplePackage,
     example_data,
     example_data_all_types,
     example_package_properties,
@@ -37,7 +39,6 @@ from .properties import (
 )
 from .read_properties import read_properties
 from .read_resource_batches import read_resource_batches
-from .sprout_checks.check_data import check_data
 from .sprout_checks.check_properties import (
     check_package_properties,
     check_properties,
@@ -73,6 +74,7 @@ __all__ = [
     "example_data",
     "example_data_all_types",
     "example_resource_properties_all_types",
+    "ExamplePackage",
     # Packages -----
     "update_package_properties",
     "write_package_properties",
