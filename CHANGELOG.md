@@ -1,3 +1,21 @@
+## 0.36.0 (2025-04-14)
+
+### Feat
+
+- :sparkles: `write_resource_batch()` (#1213)
+
+## 0.35.0 (2025-04-14)
+
+### Feat
+
+- :sparkles: get cwd at call time in `PackagePath` (#1266)
+
+## 0.34.0 (2025-04-14)
+
+### Feat
+
+- ✨ `join_resource_batches()` (#1252)
+
 ## 0.33.0 (2025-04-14)
 
 ### Feat
