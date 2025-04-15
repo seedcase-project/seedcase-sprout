@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-import seedcase_sprout.core.internals as _map
+from seedcase_sprout.core.internals import _map
 
 
 def get_ids(path: Path) -> list[int]:

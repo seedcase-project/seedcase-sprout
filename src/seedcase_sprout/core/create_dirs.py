@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import seedcase_sprout.core.internals as _map
+from seedcase_sprout.core.internals import _map
 
 
 def create_dir(path: Path) -> Path:
