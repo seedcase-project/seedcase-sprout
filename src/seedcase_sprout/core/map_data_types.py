@@ -26,8 +26,8 @@ FRICTIONLESS_TO_POLARS: dict[FieldType, pl.DataType] = {
 # Mapping from Polars data types to Frictionless data types
 # Polars data types from https://docs.pola.rs/api/python/stable/reference/datatypes.html
 # Note that this mapping does not cover all Frictionless data types, but is a simplified
-# version for extracting field properties from pl.DataFrames.
-# Missing Frictionless data types are: `year`, `yearmonth`, and `geojson`.
+# version for extracting field properties from `pl.DataFrame`s.
+# Missing Frictionless data types are: `year`, `yearmonth`, `geopoint, and `geojson`.
 POLARS_TO_FRICTIONLESS: dict[pl.DataType, FieldType] = {
     # Numeric
     **{type: "number" for type in [pl.Decimal, pl.Float32, pl.Float64]},
