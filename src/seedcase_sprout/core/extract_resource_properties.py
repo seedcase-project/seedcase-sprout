@@ -35,14 +35,14 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
         ```{python}
         import seedcase_sprout.core as sp
 
-        extract_resource_properties(
+        sp.extract_resource_properties(
             data=sp.example_data(),
         )
         ```
     """
     resource_properties = ResourceProperties()
     resource_properties.type = "table"
-    resource_properties.schema = TableSchemaProperties()
+    resource_properties.schema = TableSchemaProperties(fields_match="equal")
     resource_properties.schema.fields = _extract_field_properties(data)
 
     cdp.check_resource_properties(

@@ -28,7 +28,7 @@ FRICTIONLESS_TO_POLARS: dict[FieldType, pl.DataType] = {
 # Note that this mapping does not cover all Frictionless data types, but is a simplified
 # version for extracting field properties from pl.DataFrames.
 # Missing Frictionless data types are: `year`, `yearmonth`, and `geojson`.
-POLARS_TO_FRICTIONLESS = {
+POLARS_TO_FRICTIONLESS: dict[pl.DataType, FieldType] = {
     # Numeric
     **{type: "number" for type in [pl.Decimal, pl.Float32, pl.Float64]},
     **{

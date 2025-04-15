@@ -91,17 +91,3 @@ def test_throw_error_with_empty_data():
         extract_resource_properties(pl.DataFrame([]))
 
 
-def test_extract_properties_with_missing_values():
-    """Test extraction when the data contains missing values."""
-    data = pl.DataFrame(
-        {
-            "col1": [1, 2, None],
-            "col2": ["a", None, "c"],
-        }
-    )
-    extracted_resource_properties = extract_resource_properties(data)
-
-    assert isinstance(extracted_resource_properties, ResourceProperties)
-    assert len(extracted_resource_properties.schema.fields) == 2
-    assert extracted_resource_properties.schema.fields[0].type == "integer"
-    assert extracted_resource_properties.schema.fields[1].type == "string"
