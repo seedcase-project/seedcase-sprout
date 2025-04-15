@@ -6,6 +6,7 @@ from pytest import raises
 from seedcase_sprout.core.check_data import check_data
 from seedcase_sprout.core.check_properties import (
     check_package_properties,
+    check_properties,
     check_resource_properties,
 )
 from seedcase_sprout.core.examples import (
