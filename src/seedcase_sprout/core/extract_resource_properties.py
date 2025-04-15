@@ -63,5 +63,5 @@ def _extract_field_properties(data: pl.DataFrame):
         FieldProperties(name=key, type=POLARS_TO_FRICTIONLESS[value.base_type()])
         for key, value in data.schema.items()
     ]
-
+    # TODO: add format="binary" to Binary field type?
     return field_properties

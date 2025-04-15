@@ -57,7 +57,7 @@ POLARS_TO_FRICTIONLESS: dict[pl.DataType, FieldType] = {
     # String
     **{type: "string" for type in [pl.String, pl.Categorical, pl.Enum, pl.Utf8]},
     # Other
-    pl.Binary: "string",  # TODO: add format="binary" to this field type?
+    pl.Binary: "string",
     pl.Boolean: "boolean",
     pl.Null: "any",
     pl.Object: "object",
