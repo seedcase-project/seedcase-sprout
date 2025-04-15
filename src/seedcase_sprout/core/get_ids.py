@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-import seedcase_sprout.core.fp as fp
+import seedcase_sprout.core.internals as _map
 
 
 def get_ids(path: Path) -> list[int]:
@@ -16,7 +16,7 @@ def get_ids(path: Path) -> list[int]:
     """
     # Keep only directories
     dirs = list(path.glob("*/"))
-    ids = fp._map(dirs, get_number_from_dir)
+    ids = _map(dirs, get_number_from_dir)
     # Drop any empty items
     ids = sorted(filter(None, ids))
 

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import polars as pl
 
-import seedcase_sprout.core.fp as fp
+import seedcase_sprout.core.internals as _map
 from seedcase_sprout.core.check_is_file import check_is_file
 from seedcase_sprout.core.constants import (
     BATCH_TIMESTAMP_COLUMN_NAME,
@@ -82,7 +82,7 @@ def read_resource_batches(
             )
         ```
     """
-    fp._map(paths, check_is_file)
+    _map(paths, check_is_file)
     check_resource_properties(resource_properties)
     return [_read_parquet_batch_file(path, resource_properties) for path in paths]
 

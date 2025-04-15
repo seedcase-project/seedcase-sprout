@@ -21,10 +21,10 @@ def _map(x: list, fn: callable) -> list:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core.fp as fp
+        from seedcase_sprout.core.internals import _map
         def square(x):
             return x * x
-        fp._map([1, 2, 3], square)
+        _map([1, 2, 3], square)
         ```
     """
     return list(map(fn, x))
