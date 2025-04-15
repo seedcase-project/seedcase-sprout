@@ -119,7 +119,7 @@ def example_data() -> pl.DataFrame:
 
 
 def example_resource_properties_all_types() -> ResourceProperties:
-    """Generate an example resource properties object with all data types.
+    """Generate an example resource properties object with all Frictionless data types.
 
     Returns:
         Outputs a correctly formatted example `ResourceProperties` object.
