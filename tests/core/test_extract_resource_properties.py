@@ -89,5 +89,3 @@ def test_throw_error_with_empty_data():
     """Test that an error is thrown when the data is empty."""
     with raises(ValueError):
         extract_resource_properties(pl.DataFrame([]))
-
-
