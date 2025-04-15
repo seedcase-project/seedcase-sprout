@@ -1,10 +1,8 @@
 from pathlib import Path
 
-from seedcase_sprout.core.check_is_file import check_is_file
-from seedcase_sprout.core.internals import _write_json
+from seedcase_sprout.core.internals import _check_is_file, _read_json, _write_json
 from seedcase_sprout.core.nested_update import nested_update
 from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
-from seedcase_sprout.core.read_json import read_json
 from seedcase_sprout.core.sprout_checks.check_properties import (
     check_package_properties,
     check_resource_properties,
@@ -77,10 +75,10 @@ def write_resource_properties(
         # )
         ```
     """
-    check_is_file(path)
+    _check_is_file(path)
     check_resource_properties(resource_properties)
 
-    package_properties = read_json(path)
+    package_properties = _read_json(path)
     check_package_properties(PackageProperties().from_dict(package_properties))
 
     resource_properties = resource_properties.compact_dict
