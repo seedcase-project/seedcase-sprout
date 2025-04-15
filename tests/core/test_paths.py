@@ -26,6 +26,6 @@ def test_path_defaults_to_cwd_at_call_time(tmp_path):
     try:
         os.chdir(tmp_path)
         package_path = PackagePath()
-        assert package_path.path == tmp_path
+        assert package_path.root() == tmp_path
     finally:
         os.chdir(original_cwd)
