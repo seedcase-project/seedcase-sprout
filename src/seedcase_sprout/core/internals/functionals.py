@@ -1,7 +1,7 @@
 """Mimicking the functional programming tools from R and the R package purrr."""
 
 
-def _map(x: list, fn: callable) -> list:
+def _map(x: list, fn: Callable) -> list:
     """Use a function on each item in a list.
 
     This is a simpler, more user-friendly version of the built-in `map()`
