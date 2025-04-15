@@ -3,7 +3,7 @@
 from itertools import repeat
 
 
-def _map2(x: list, y: list, fn: callable) -> list:
+def _map2(x: list, y: list, fn: Callable) -> list:
     """Use a function on each item in two lists, placed on the first two arguments.
 
     This function is similar to the `map2()` function from the R package purrr.
