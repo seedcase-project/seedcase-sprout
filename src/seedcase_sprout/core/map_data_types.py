@@ -83,7 +83,7 @@ def _polars_to_frictionless(dtype: pl.DataType) -> FieldType:
     """Map a Polars type to the corresponding Frictionless type.
 
     Frictionless types are matched against the Polars type in the order set out in
-    `_FRICTIONLESS_TO_POLARS_TYPE_CHECK`. The first successful match is returned.
+    `_FRICTIONLESS_TO_POLARS`. The first successful match is returned.
 
     Args:
         dtype: The Polars type.
