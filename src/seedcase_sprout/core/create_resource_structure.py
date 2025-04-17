@@ -6,9 +6,10 @@ from seedcase_sprout.core.create_next_id import create_next_id
 from seedcase_sprout.core.create_resource_batch_path import create_resource_batch_path
 from seedcase_sprout.core.get_ids import get_ids
 from seedcase_sprout.core.internals import _check_is_dir
+from seedcase_sprout.core.paths import PackagePath
 
 
-def create_resource_structure(path: Path) -> list[Path]:
+def create_resource_structure(path: Path | None = None) -> list[Path]:
     """Creates the directory structure of a new resource.
 
     This is the first function to use to set up the structure for a data
@@ -19,7 +20,7 @@ def create_resource_structure(path: Path) -> list[Path]:
     `resources/<id>/batch/` path. The output is a list of these two path objects.
 
     Args:
-       path: Path to the package folder.
+       path: Path to the package folder. Defaults to the current working directory.
 
     Returns:
        A list of the two created directories:
@@ -51,8 +52,9 @@ def create_resource_structure(path: Path) -> list[Path]:
             sp.create_resource_structure(path=temp_path)
         ```
     """
-    _check_is_dir(path)
-    path_resources = path / "resources"
+    package_path = PackagePath(path)
+    _check_is_dir(package_path.root())
+    path_resources = package_path.resources()
     path_resources.mkdir(exist_ok=True)
 
     existing_ids = get_ids(path_resources)
