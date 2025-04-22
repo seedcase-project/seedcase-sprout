@@ -1,3 +1,15 @@
+## 0.40.0 (2025-04-16)
+
+### Feat
+
+- :sparkles: only return `.parquet` files in the batch folder (#1283)
+
+## 0.39.0 (2025-04-16)
+
+### Feat
+
+- :sparkles: finish up `PackagePath` and `resource_batch_files()` (#1282)
+
 ## 0.38.3 (2025-04-15)
 
 ### Refactor
