@@ -63,11 +63,3 @@ dev = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.pytest.ini_options]
-addopts = [
-  # A short traceback mode to make it easier to view
-  "--tb=short",
-  # Use the `src/` package
-  "--import-mode=importlib",
-]
