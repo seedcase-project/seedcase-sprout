@@ -7,7 +7,7 @@
 ## Grow structured and scalable data
 
 [![Build package](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml)
-[![Build website of documentation](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml)
+[![Build documentation](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/seedcase-project/seedcase-sprout/main.svg)](https://results.pre-commit.ci/latest/github/seedcase-project/seedcase-sprout/main)
 [![code coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/coverage.svg?raw=true)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/index.html)
 
