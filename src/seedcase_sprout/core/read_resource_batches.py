@@ -83,11 +83,9 @@ def read_resource_batches(
         ```
     """
     check_resource_properties(resource_properties)
-    paths = (
-        PackagePath().resource_batch_files(resource_properties.name)
-        if paths is None
-        else paths
-    )
+    if paths is None:
+        paths = PackagePath().resource_batch_files(resource_properties.name)
+
     _map(paths, _check_is_file)
     return _map2(paths, [resource_properties], _read_parquet_batch_file)
 
