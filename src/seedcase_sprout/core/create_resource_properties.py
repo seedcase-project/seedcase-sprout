@@ -26,8 +26,7 @@ def create_resource_properties(
             See the `ResourceProperties` help documentation for details
             on what can or needs to be filled in.
         path: The path to the resource `id` folder; use `PackagePath().resource()`
-            to provide the correct path or use the output of
-            `create_resource_structure()`.
+            to provide the correct path.
 
     Returns:
         The properties object, verified and updated.
