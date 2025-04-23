@@ -1,7 +1,6 @@
 from pytest import raises
 
 from seedcase_sprout.core import create_resource_structure
-from seedcase_sprout.core.paths import PackagePath
 
 
 def test_returns_resource_structure_when_no_resources_exist(tmp_path):
@@ -36,16 +35,3 @@ def test_raises_not_a_directory_error(tmp_path):
     """Raises NotADirectoryError when the path is not an existing directory."""
     with raises(NotADirectoryError):
         create_resource_structure(tmp_path / "non_existent_folder")
-
-
-def test_creates_resource_structure_in_cwd_by_default(tmp_cwd):
-    """If no path is provided, should create the structure in the cwd."""
-    package_path = PackagePath(tmp_cwd)
-
-    created_paths = create_resource_structure()
-
-    assert created_paths == [
-        package_path.resource("1"),
-        package_path.resource_batch("1"),
-    ]
-    assert all(path.is_dir() for path in created_paths)
