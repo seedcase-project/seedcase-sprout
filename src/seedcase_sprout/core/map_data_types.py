@@ -72,7 +72,6 @@ def _polars_and_datapackage_types_match(
 
     Returns:
         Whether the given types match.
-
     """
     return (datapackage_type or "any") in _get_allowed_datapackage_types(polars_type)
 
