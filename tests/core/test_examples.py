@@ -57,10 +57,7 @@ def test_creates_package_with_resources():
         properties = read_properties(package_path.properties())
         assert check_properties(properties)
         # Test resources
-        assert package_path.resources().is_dir()
-        assert len(list(package_path.resources().iterdir())) == 1
         assert properties.resources and len(properties.resources) == 1
-        assert package_path.resource(properties.resources[0].name).is_dir()
 
 
 def test_creates_package_without_resources():

@@ -77,7 +77,7 @@ def write_resource_batch(
     check_data(data, resource_properties)
 
     batch_path = PackagePath(package_path).resource_batch(resource_properties.name)
-    batch_path.mkdir(exist_ok=True)
+    batch_path.mkdir(exist_ok=True, parents=True)
     # TODO: Move out some of this into the create_batch_file_name during refactoring
     batch_file_path = batch_path / Path(create_batch_file_name()).with_suffix(
         ".parquet"

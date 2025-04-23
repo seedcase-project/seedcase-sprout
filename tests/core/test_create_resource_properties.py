@@ -38,14 +38,6 @@ def test_creates_properties_with_required_fields_present(
     )
 
 
-def test_rejects_path_if_not_directory(tmp_path, resource_properties):
-    """Given a path that is not a directory, should raise `NotADirectoryError`."""
-    resource_path = tmp_path / "nonexistent"
-
-    with raises(NotADirectoryError):
-        create_resource_properties(resource_path, resource_properties)
-
-
 def test_rejects_properties_if_incorrect_path_generated(tmp_path, resource_properties):
     """Should raise a `CheckError` if the `path` was not generated correctly."""
     with raises(ExceptionGroup) as error_info:

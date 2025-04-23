@@ -17,7 +17,6 @@ from .check_properties import (
     check_resource_properties,
 )
 from .create_resource_properties import create_resource_properties
-from .create_resource_structure import create_resource_structure
 from .examples import (
     ExamplePackage,
     example_data,
@@ -81,7 +80,6 @@ __all__ = [
     "as_readme_text",
     # "delete_package",
     # Resources -----
-    "create_resource_structure",
     "create_resource_properties",
     "extract_resource_properties",
     "join_resource_batches",
