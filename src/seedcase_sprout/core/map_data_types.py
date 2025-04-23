@@ -1,101 +1,114 @@
-from collections import OrderedDict
-from typing import Callable
-
 import polars as pl
 
 from seedcase_sprout.core.properties import FieldType
 
 """
-Mapping between Frictionless types and Polars types.
+Mapping between Polars types and Data Package types.
 
-Each Frictionless type maps to a function that checks if a given Polars type is an
-allowed representation of that Frictionless type. There are often multiple allowed
-Polars types for a single Frictionless type.
-
-To allow reverse lookups, i.e. mapping a Polars type to a single Frictionless type,
-entries are listed in order of precedence. The Polars type should be compared against
-Frictionless types in the order they are listed. The first entry with a passing check
-should determine the Frictionless type. Use `polars_to_frictionless()` to do the reverse
-lookup.
+Each Polars type can be described by any of the specified Data Package types.
+When extracting Data Package types from a data frame, each Polars type is mapped to
+the first Data Package type in the corresponding entry. 
 """
-_FRICTIONLESS_TO_POLARS: OrderedDict[FieldType, Callable[[pl.DataType], bool]] = (
-    OrderedDict(
-        {
-            # Primary types: reverse lookup always gives back Frictionless type
-            "number": lambda dtype: dtype.is_float() or dtype.is_decimal(),
-            "integer": lambda dtype: (
-                dtype.is_integer() or isinstance(dtype, pl.Duration)
-            ),
-            "string": lambda dtype: isinstance(
-                dtype, (pl.String, pl.Categorical, pl.Enum, pl.Binary)
-            ),
-            "date": lambda dtype: isinstance(dtype, pl.Date),
-            "datetime": lambda dtype: isinstance(dtype, pl.Datetime),
-            "time": lambda dtype: dtype == pl.Time,  # Polars stores Time as a class
-            "boolean": lambda dtype: isinstance(dtype, pl.Boolean),
-            # Secondary types: reverse lookup gives back Frictionless type only if
-            # primary type doesn't take precedence
-            "array": lambda dtype: isinstance(dtype, (pl.String, pl.Array, pl.List)),
-            "object": lambda dtype: isinstance(
-                dtype, (pl.String, pl.Struct, pl.Object)
-            ),
-            # Tertiary types: reverse lookup never gives back Frictionless type
-            "geopoint": lambda dtype: (
-                isinstance(dtype, pl.Array)
-                and dtype.size == 2
-                and dtype.inner.is_numeric()
-            ),
-            "geojson": lambda dtype: isinstance(
-                dtype, (pl.String, pl.Struct, pl.Object)
-            ),
-            "year": lambda dtype: dtype.is_integer(),
-            "yearmonth": lambda dtype: isinstance(dtype, pl.Date),
-            "duration": lambda dtype: isinstance(dtype, pl.String),
-            # Fallback type
-            "any": lambda _: True,
-        }
-    )
-)
-
-# Mapping from Frictionless types to descriptions of allowed Polars types
-_FRICTIONLESS_TO_POLARS_DESCRIPTION: dict[FieldType, str] = {
-    "number": "a float or decimal type",
-    "integer": f"an integer type or '{pl.Duration}'",
-    "string": (
-        f"one of '{pl.String}', '{pl.Categorical}', '{pl.Enum}', or '{pl.Binary}'"
-    ),
-    "date": f"'{pl.Date}'",
-    "datetime": f"'{pl.Datetime}'",
-    "time": f"'{pl.Time}'",
-    "boolean": f"'{pl.Boolean}'",
-    "array": f"one of '{pl.String}', '{pl.Array}', or '{pl.List}'",
-    "object": f"one of '{pl.String}', '{pl.Struct}', or '{pl.Object}'",
-    "geopoint": "an array of a numeric type with size 2",
-    "geojson": f"one of '{pl.String}', '{pl.Struct}', or '{pl.Object}'",
-    "year": "an integer type",
-    "yearmonth": f"'{pl.Date}'",
-    "duration": f"'{pl.String}'",
-    "any": "any type",
+_POLARS_TO_DATAPACKAGE: dict[type[pl.DataType], list[FieldType]] = {
+    pl.Int8: ["integer", "year", "any"],
+    pl.Int16: ["integer", "year", "any"],
+    pl.Int32: ["integer", "year", "any"],
+    pl.Int64: ["integer", "year", "any"],
+    pl.Int128: ["integer", "year", "any"],
+    pl.UInt8: ["integer", "year", "any"],
+    pl.UInt16: ["integer", "year", "any"],
+    pl.UInt32: ["integer", "year", "any"],
+    pl.UInt64: ["integer", "year", "any"],
+    pl.Float32: ["number", "any"],
+    pl.Float64: ["number", "any"],
+    pl.Decimal: ["number", "any"],
+    pl.Boolean: ["boolean", "any"],
+    pl.String: ["string", "array", "object", "geojson", "duration", "any"],
+    pl.Binary: ["string", "any"],
+    pl.Categorical: ["string", "any"],
+    pl.Enum: ["string", "any"],
+    pl.Date: ["date", "yearmonth", "any"],
+    pl.Datetime: ["datetime", "any"],
+    pl.Time: ["time", "any"],
+    pl.Duration: ["integer", "any"],
+    pl.Array: ["array", "any"],
+    pl.List: ["array", "any"],
+    pl.Struct: ["object", "geojson", "any"],
+    pl.Object: ["object", "geojson", "any"],
+    pl.Unknown: ["any"],
+    pl.Null: ["any"],
 }
 
 
-def _polars_to_frictionless(dtype: pl.DataType) -> FieldType:
-    """Map a Polars type to the corresponding Frictionless type.
-
-    Frictionless types are matched against the Polars type in the order set out in
-    `_FRICTIONLESS_TO_POLARS`. The first successful match is returned.
+def _get_allowed_datapackage_types(polars_type: pl.DataType) -> list[FieldType]:
+    """Return the Data Package types that can describe the given Polars type.
 
     Args:
-        dtype: The Polars type.
+        polars_type: The Polars type to get the Data Package types for.
 
     Returns:
-        The corresponding Frictionless type.
+        The allowed Data Package types.
     """
-    return next(
-        (
-            frictionless_type
-            for frictionless_type, is_type in _FRICTIONLESS_TO_POLARS.items()
-            if is_type(dtype)
-        ),
-        "any",
-    )
+    allowed_types = _POLARS_TO_DATAPACKAGE.get(polars_type.base_type(), ["any"])
+
+    if (
+        isinstance(polars_type, pl.Array)
+        and polars_type.size == 2
+        and polars_type.inner.is_numeric()
+    ):
+        return allowed_types + ["geopoint"]
+
+    return allowed_types
+
+
+def _polars_and_datapackage_types_match(
+    polars_type: pl.DataType, datapackage_type: FieldType | None
+) -> bool:
+    """Decide if the given Polars and Data Package types match.
+
+    Args:
+        polars_type: The Polars type to check.
+        datapackage_type: The Data Package type to check.
+
+    Returns:
+        Whether the given types match.
+
+    """
+    return (datapackage_type or "any") in _get_allowed_datapackage_types(polars_type)
+
+
+def _get_allowed_polars_types(
+    datapackage_type: FieldType | None,
+) -> list[type[pl.DataType]]:
+    """Return the Polars types that can represent the given Data Package type.
+
+    Args:
+        datapackage_type: The Data Package type.
+
+    Returns:
+        The allowed Polars types.
+    """
+    datapackage_type = datapackage_type or "any"
+    if datapackage_type == "geopoint":
+        # Strictly speaking, this should be an Array of a numeric type with size 2, but
+        # it wouldn't be practical to list all combinations here. This information is
+        # added directly to the error message instead.
+        return [pl.Array]
+
+    return [
+        polars_type
+        for polars_type, datapackage_types in _POLARS_TO_DATAPACKAGE.items()
+        if datapackage_type in datapackage_types
+    ]
+
+
+def _polars_to_frictionless(polars_type: pl.DataType) -> FieldType:
+    """Return the Data Package type that is the best match for the given Polars type.
+
+    Args:
+        polars_type: The Polars type to match.
+
+    Returns:
+        The best-match Data Package type.
+    """
+    return _get_allowed_datapackage_types(polars_type)[0]

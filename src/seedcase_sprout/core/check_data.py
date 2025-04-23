@@ -4,9 +4,10 @@ from seedcase_sprout.core.check_properties import (
     check_resource_properties,
 )
 from seedcase_sprout.core.get_nested_attr import get_nested_attr
+from seedcase_sprout.core.internals.functionals import _map
 from seedcase_sprout.core.map_data_types import (
-    _FRICTIONLESS_TO_POLARS,
-    _FRICTIONLESS_TO_POLARS_DESCRIPTION,
+    _get_allowed_polars_types,
+    _polars_and_datapackage_types_match,
 )
 from seedcase_sprout.core.properties import (
     FieldProperties,
@@ -148,7 +149,9 @@ def _check_column_types(
     errors = [
         _get_column_type_error(polars_schema[field.name], field)
         for field in fields
-        if _not_allowed_type(polars_schema[field.name], field)
+        if not _polars_and_datapackage_types_match(
+            polars_schema[field.name], field.type
+        )
     ]
 
     if errors:
@@ -160,20 +163,6 @@ def _check_column_types(
             errors,
         )
     return data
-
-
-def _not_allowed_type(polars_type: pl.DataType, field: FieldProperties) -> bool:
-    """Returns True if the Polars type does not match the Frictionless type.
-
-    Args:
-        polars_type: The Polars type.
-        field: The field properties.
-
-    Returns:
-        True if the Polars type does not match the Frictionless type, False otherwise.
-    """
-    is_allowed_type = _FRICTIONLESS_TO_POLARS[field.type or "any"]
-    return not is_allowed_type(polars_type)
 
 
 def _get_column_type_error(
@@ -188,8 +177,17 @@ def _get_column_type_error(
     Returns:
         A `ValueError`.
     """
-    allowed_types = _FRICTIONLESS_TO_POLARS_DESCRIPTION[field.type or "any"]
+    allowed_types = _map(_get_allowed_polars_types(field.type), str)
+    allowed_types = (
+        allowed_types[0]
+        if len(allowed_types) == 1
+        else f"one of {', '.join(allowed_types)}"
+    )
+
+    if field.type == "geopoint":
+        allowed_types = "an Array of a numeric type with size 2"
+
     return ValueError(
         f"Expected type of column '{field.name}' "
-        f"to be {allowed_types} but found '{polars_type}'."
+        f"to be {allowed_types} but found {polars_type}."
     )

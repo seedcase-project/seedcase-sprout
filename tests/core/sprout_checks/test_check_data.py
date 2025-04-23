@@ -10,7 +10,7 @@ from seedcase_sprout.core.examples import (
     example_data,
     example_resource_properties,
 )
-from seedcase_sprout.core.map_data_types import _FRICTIONLESS_TO_POLARS_DESCRIPTION
+from seedcase_sprout.core.map_data_types import _get_allowed_polars_types
 from seedcase_sprout.core.properties import (
     FieldProperties,
     ResourceProperties,
@@ -153,10 +153,8 @@ def test_rejects_incorrect_column_type(frictionless_type, resource_properties):
     errors = error_info.value.exceptions
     assert len(errors) == 1
     polars_type = re.escape(str(data.schema.dtypes()[0]))
-    allowed_types = _FRICTIONLESS_TO_POLARS_DESCRIPTION[frictionless_type]
-    assert re.search(
-        rf"'my_col'.*{allowed_types}.*found '{polars_type}'", str(errors[0])
-    )
+    allowed_types = _get_allowed_polars_types(frictionless_type)
+    assert re.search(rf"'my_col'.*{allowed_types}.*found {polars_type}", str(errors[0]))
 
 
 def test_rejects_multiple_incorrect_column_types():
@@ -172,9 +170,9 @@ def test_rejects_multiple_incorrect_column_types():
     assert len(errors) == data.width
     for error, field in zip(errors, resource_properties.schema.fields):
         polars_type = re.escape(str(data.schema[field.name]))
-        allowed_types = _FRICTIONLESS_TO_POLARS_DESCRIPTION[field.type]
+        allowed_types = _get_allowed_polars_types(field.type)
         assert re.search(
-            rf"'{field.name}'.*{allowed_types}.*found '{polars_type}'", str(error)
+            rf"'{field.name}'.*{allowed_types}.*found {polars_type}", str(error)
         )
 
 
