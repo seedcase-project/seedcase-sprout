@@ -7,7 +7,7 @@ Mapping between Polars types and Data Package types.
 
 Each Polars type can be described by any of the specified Data Package types.
 When extracting Data Package types from a data frame, each Polars type is mapped to
-the first Data Package type in the corresponding entry. 
+the first Data Package type in the corresponding entry.
 """
 _POLARS_TO_DATAPACKAGE: dict[type[pl.DataType], list[FieldType]] = {
     pl.Int8: ["integer", "year", "any"],
