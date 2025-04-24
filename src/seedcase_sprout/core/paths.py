@@ -49,7 +49,6 @@ class PackagePath:
     def __init__(self, path: Path | None = None) -> Path:
         """Set the base path."""
         self.path = path or Path.cwd()
-        self.path = Path(self.path)
 
     def root(self) -> Path:
         """Path to the root folder of the package."""
