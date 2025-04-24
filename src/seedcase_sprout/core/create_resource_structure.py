@@ -32,10 +32,23 @@ def create_resource_structure(path: Path) -> list[Path]:
 
     Examples:
         ```{python}
+        import tempfile
+        from pathlib import Path
+
         import seedcase_sprout.core as sp
 
-        with sp.ExamplePackage(with_resources=False):
-            sp.create_resource_structure()
+        # Create a temporary directory for the example
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+
+            # Create a package structure first
+            sp.write_package_properties(
+                properties=sp.example_package_properties(),
+                path=sp.PackagePath(temp_path).properties(),
+            )
+
+            # Create a resource structure
+            sp.create_resource_structure(path=temp_path)
         ```
     """
     _check_is_dir(path)
