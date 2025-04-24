@@ -94,6 +94,7 @@ def _get_allowed_polars_types(
         # added directly to the error message instead.
         return [pl.Array]
 
+    # TODO: Revise once `_map_keep()` has been implemented
     return [
         polars_type
         for polars_type, datapackage_types in _POLARS_TO_DATAPACKAGE.items()
