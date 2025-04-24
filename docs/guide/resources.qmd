@@ -319,8 +319,8 @@ Finally, to write your changes back to `datapackage.json`, use the
 
 ```{python}
 sp.write_resource_properties(
-    path=package_path.properties(),
     resource_properties=resource_properties,
+    path=package_path.properties(),
 )
 ```
 

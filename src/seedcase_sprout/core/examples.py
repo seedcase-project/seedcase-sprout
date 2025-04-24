@@ -8,8 +8,7 @@ import polars as pl
 
 from seedcase_sprout.core.as_readme_text import as_readme_text
 from seedcase_sprout.core.create_resource_properties import create_resource_properties
-from seedcase_sprout.core.get_iso_timestamp import get_iso_timestamp
-from seedcase_sprout.core.map_data_types import FRICTIONLESS_TO_POLARS
+from seedcase_sprout.core.internals import _get_iso_timestamp
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import (
     ContributorProperties,
@@ -38,7 +37,7 @@ def example_package_properties() -> PackageProperties:
     properties = PackageProperties(
         name="example-package",
         version="0.1.0",
-        created=get_iso_timestamp(),
+        created=_get_iso_timestamp(),
         id=str(uuid4()),
         title="Example fake data package",
         description="Data from a fake data package on something.",
@@ -210,7 +209,7 @@ def example_data_all_types() -> pl.DataFrame:
                 ["15:00:59", "00:00:00.3", "12:00:00.345345"]
             ).str.to_time(),
             "my_geopoint": pl.Series([[-90, -180], [5, 45], [5.9999, 45.0000]]).cast(
-                FRICTIONLESS_TO_POLARS["geopoint"]
+                pl.Array(pl.Float64, 2)
             ),
             "my_array": [
                 "[]",

@@ -1,3 +1,21 @@
+## 0.41.2 (2025-04-24)
+
+### Refactor
+
+- :recycle: moved functions into internals/location of use (#1298)
+
+## 0.41.1 (2025-04-24)
+
+### Refactor
+
+- :recycle: make master Frictionless - Polars type map (#1284)
+
+## 0.41.0 (2025-04-23)
+
+### Feat
+
+- :sparkles: add default path for path functions (#1285)
+
 ## 0.40.1 (2025-04-22)
 
 ### Fix

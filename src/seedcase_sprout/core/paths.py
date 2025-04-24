@@ -23,26 +23,26 @@ class PackagePath:
     -   If the wrong `resource_name` is given, an error message will include a
         list of all the actual `resource_name`'s for a specific package.
 
+    Outputs a `PackagePath` object representing the structure of a data package.
+
     Args:
         path: Provide a path to the package directory. Defaults to the current working
             directory.
 
-    Returns:
-        A `PackagePath` object representing the structure of a data package.
-
     Examples:
         ```{python}
-        import tempfile
+        from pathlib import Path
+
         import seedcase_sprout.core as sp
 
+        # With default path
         sp.PackagePath().properties()
         sp.PackagePath().readme()
 
-        # Create a temporary directory for the example to show
-        # how to use the function with a different path
-        with tempfile.TemporaryDirectory() as temp_path:
-            sp.PackagePath(temp_path).properties()
-            sp.PackagePath(temp_path).readme()
+        # With custom path
+        my_path = Path("my/path")
+        sp.PackagePath(my_path).properties()
+        sp.PackagePath(my_path).readme()
         ```
     """
 
