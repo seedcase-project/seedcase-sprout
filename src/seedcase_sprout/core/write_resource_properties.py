@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from seedcase_sprout.core.check_properties import (
-    check_package_properties,
+    check_properties,
     check_resource_properties,
 )
 from seedcase_sprout.core.internals import _check_is_file, _read_json, _write_json
@@ -57,7 +57,7 @@ def write_resource_properties(
     check_resource_properties(resource_properties)
 
     package_properties = _read_json(path)
-    check_package_properties(PackageProperties().from_dict(package_properties))
+    check_properties(PackageProperties().from_dict(package_properties))
 
     resource_properties = resource_properties.compact_dict
     current_resource = next(

@@ -3,7 +3,10 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
-from seedcase_sprout.core.examples import example_package_properties
+from seedcase_sprout.core.examples import (
+    ExamplePackage,
+    example_package_properties,
+)
 from seedcase_sprout.core.internals import _read_json, _write_json
 from seedcase_sprout.core.internals._create_relative_resource_data_path import (
     _create_relative_resource_data_path,
@@ -16,6 +19,7 @@ from seedcase_sprout.core.properties import (
 )
 from seedcase_sprout.core.write_package_properties import write_package_properties
 from seedcase_sprout.core.write_resource_properties import write_resource_properties
+from tests.core.assert_raises_errors import assert_raises_check_errors
 
 
 @fixture
@@ -131,12 +135,28 @@ def test_error_if_properties_file_cannot_be_read(tmp_path, resource_properties_1
         write_resource_properties(resource_properties_1, file_path)
 
 
-def test_error_if_resource_properties_have_missing_required_fields(
+def test_error_if_input_resource_properties_are_incorrect(
     package_properties_path,
 ):
-    """Should have an error if there are missing required resource properties."""
-    with raises(ExceptionGroup):
-        write_resource_properties(ResourceProperties(), package_properties_path)
+    """Should raise an error if the input resource properties are incorrect."""
+    assert_raises_check_errors(
+        lambda: write_resource_properties(ResourceProperties(), package_properties_path)
+    )
+
+
+def test_error_if_existing_resource_properties_are_incorrect(
+    resource_properties_1, resource_properties_2
+):
+    """Should raise an error if the existing resource properties are incorrect."""
+    delattr(resource_properties_1, "name")
+    package_properties = example_package_properties()
+    package_properties.resources = [resource_properties_1]
+    with ExamplePackage() as package_path:
+        _write_json(package_properties.compact_dict, package_path.properties())
+
+        assert_raises_check_errors(
+            lambda: write_resource_properties(resource_properties_2)
+        )
 
 
 def test_error_if_package_properties_have_missing_required_fields(
