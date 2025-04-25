@@ -60,8 +60,14 @@ def write_resource_properties(
     check_package_properties(PackageProperties().from_dict(package_properties))
 
     resource_properties = resource_properties.compact_dict
-    resource_id = get_resource_id_from_properties(resource_properties)
-    current_resource = get_resource_properties(package_properties, resource_id)
+    current_resource = next(
+        (
+            resource
+            for resource in package_properties.get("resources", [])
+            if resource["name"] == resource_properties["name"]
+        ),
+        None,
+    )
     if current_resource:
         updated_properties = nested_update(current_resource, resource_properties)
         current_resource.clear()
@@ -71,30 +77,3 @@ def write_resource_properties(
         package_properties["resources"] = resources + [resource_properties]
 
     return _write_json(package_properties, path)
-
-
-def get_resource_properties(package_properties: dict, resource_id: int) -> dict | None:
-    """Finds the resource properties with the given ID within the given package.
-
-    Args:
-        package_properties: The package properties with the resources to look through.
-        resource_id: The ID of the resource to find.
-
-    Returns:
-        The resource with the specified ID, if found. Otherwise returns `None`.
-    """
-    for resource in package_properties.get("resources", []):
-        if get_resource_id_from_properties(resource) == resource_id:
-            return resource
-
-
-def get_resource_id_from_properties(resource_properties: dict) -> int:
-    """Returns the resource ID of the specified resource properties.
-
-    Args:
-        resource_properties: The resource properties object.
-
-    Returns:
-        The ID of the resource.
-    """
-    return int(Path(resource_properties["path"]).parts[1])

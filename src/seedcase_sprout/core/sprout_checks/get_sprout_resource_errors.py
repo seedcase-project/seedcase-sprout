@@ -5,10 +5,10 @@ from seedcase_sprout.core.sprout_checks.check_fields_not_blank import (
 from seedcase_sprout.core.sprout_checks.check_fields_present import (
     check_fields_present,
 )
-from seedcase_sprout.core.sprout_checks.check_id_in_resource_path import (
-    check_id_in_resource_path,
-)
 from seedcase_sprout.core.sprout_checks.check_no_inline_data import check_no_inline_data
+from seedcase_sprout.core.sprout_checks.check_resource_path_format import (
+    check_resource_path_format,
+)
 from seedcase_sprout.core.sprout_checks.check_resource_path_string import (
     check_resource_path_string,
 )
@@ -30,7 +30,7 @@ def get_sprout_resource_errors(
         A list of errors. An empty list if no errors were found.
     """
     errors = check_resource_path_string(properties, index)
-    errors += check_id_in_resource_path(properties, index)
+    errors += check_resource_path_format(properties, index)
     errors += check_no_inline_data(properties, index)
     errors += check_fields_not_blank(properties, RESOURCE_SPROUT_REQUIRED_FIELDS, index)
     errors += check_fields_present(properties, RESOURCE_SPROUT_REQUIRED_FIELDS, index)

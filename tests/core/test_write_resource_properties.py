@@ -3,11 +3,11 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
-from seedcase_sprout.core.create_relative_resource_data_path import (
-    create_relative_resource_data_path,
-)
 from seedcase_sprout.core.examples import example_package_properties
 from seedcase_sprout.core.internals import _read_json, _write_json
+from seedcase_sprout.core.internals._create_relative_resource_data_path import (
+    _create_relative_resource_data_path,
+)
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import (
     LicenseProperties,
@@ -18,15 +18,11 @@ from seedcase_sprout.core.write_package_properties import write_package_properti
 from seedcase_sprout.core.write_resource_properties import write_resource_properties
 
 
-def create_data_path(resource_id: int) -> str:
-    return str(create_relative_resource_data_path(Path("resources", str(resource_id))))
-
-
 @fixture
 def resource_properties_1() -> ResourceProperties:
     return ResourceProperties(
         name="resource-1",
-        path=create_data_path(1),
+        path=_create_relative_resource_data_path("resource-1"),
         title="My First Resource",
         description="This is my first resource.",
     )
@@ -36,7 +32,7 @@ def resource_properties_1() -> ResourceProperties:
 def resource_properties_2() -> ResourceProperties:
     return ResourceProperties(
         name="resource-2",
-        path=create_data_path(2),
+        path=_create_relative_resource_data_path("resource-2"),
         title="My Second Resource",
         description="This is my second resource.",
     )
@@ -70,7 +66,7 @@ def test_updates_existing_resource_in_package(
     # given
     new_resource_properties = ResourceProperties(
         name="resource-1",
-        path=create_data_path(1),
+        path=_create_relative_resource_data_path("resource-1"),
         title="My New Title",
         description="This is my updated resource.",
     )
@@ -95,7 +91,7 @@ def test_adds_new_resource_to_package(
     # given
     resource_properties_3 = ResourceProperties(
         name="resource-3",
-        path=create_data_path(3),
+        path=_create_relative_resource_data_path("resource-3"),
         title="My Third Resource",
         description="This is my third resource.",
     )
