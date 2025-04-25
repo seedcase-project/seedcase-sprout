@@ -16,7 +16,7 @@ def write_resource_properties(
     """Writes the specified resource properties to the `datapackage.json` file.
 
     This functions verifies `resource_properties`, and if a
-    resource with that ID is already present on the package, the properties of that
+    resource with that name is already present on the package, the properties of that
     resource are updated. The values in `resource_properties` overwrite
     preexisting values. Otherwise, `resource_properties` is added as a new resource.
 

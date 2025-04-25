@@ -61,8 +61,8 @@ def package_properties_path(
 def test_updates_existing_resource_in_package(
     package_properties_path, resource_properties_2
 ):
-    """Given a package with a resource having the same ID, should update the properties
-    of this resource."""
+    """Given a package with a matching resource, should update the properties of
+    this resource."""
     # given
     new_resource_properties = ResourceProperties(
         name="resource-1",
@@ -86,7 +86,7 @@ def test_updates_existing_resource_in_package(
 def test_adds_new_resource_to_package(
     package_properties_path, resource_properties_1, resource_properties_2
 ):
-    """Given a package without a resource with a matching ID, should add a new set of
+    """Given a package without a matching resource, should add a new set of
     resource properties."""
     # given
     resource_properties_3 = ResourceProperties(

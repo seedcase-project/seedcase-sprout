@@ -79,8 +79,8 @@ def test_error_found_if_required_fields_are_missing(properties, name, index):
 
 @mark.parametrize("path", ["", [], str(Path("resources", "1"))])
 def test_error_found_if_data_path_is_incorrect_(properties, path):
-    """Should find at least one error if `path` contains no resource ID, is not a
-    string, or is otherwise malformed."""
+    """Should find at least one error if `path` is not a string or has the wrong
+    format."""
     properties["path"] = path
 
     errors = get_sprout_resource_errors(properties)
