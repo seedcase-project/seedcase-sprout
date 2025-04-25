@@ -6,7 +6,6 @@ from seedcase_sprout.core.check_properties import (
 from seedcase_sprout.core.create_relative_resource_data_path import (
     create_relative_resource_data_path,
 )
-from seedcase_sprout.core.internals import _check_is_dir
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import ResourceProperties
 
@@ -54,7 +53,6 @@ def create_resource_properties(
             )
 
             # TODO: Update after converting to "local-first"
-            # sp.create_resource_structure(path=temp_path / "1" / "resources")
             # Create resource properties
             # sp.create_resource_properties(
             #     properties=sp.ResourceProperties(
@@ -68,6 +66,5 @@ def create_resource_properties(
         ```
     """
     path = path or PackagePath().resource(properties.name)
-    _check_is_dir(path)
     properties.path = str(create_relative_resource_data_path(path))
     return check_resource_properties(properties)

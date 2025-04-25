@@ -8,7 +8,6 @@ import polars as pl
 
 from seedcase_sprout.core.as_readme_text import as_readme_text
 from seedcase_sprout.core.create_resource_properties import create_resource_properties
-from seedcase_sprout.core.create_resource_structure import create_resource_structure
 from seedcase_sprout.core.internals import _get_iso_timestamp
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import (
@@ -276,7 +275,7 @@ class ExamplePackage(AbstractContextManager):
             # Create resource folders
             # TODO: update after resource creation is refactored
             package_path.resources().mkdir(exist_ok=True)
-            resource_path, _ = create_resource_structure(path=package_path.path)
+            resource_path = package_path.resource(resource_properties.name)
             resource_properties = create_resource_properties(
                 path=resource_path, properties=resource_properties
             )
