@@ -272,7 +272,9 @@ class ExamplePackage(AbstractContextManager):
             package_properties.resources = [resource_properties]
 
             # Create resource folders
-            package_path.resources().mkdir(exist_ok=True)
+            package_path.resource(resource_properties.name).mkdir(
+                exist_ok=True, parents=True
+            )
 
         # Save properties
         write_package_properties(
