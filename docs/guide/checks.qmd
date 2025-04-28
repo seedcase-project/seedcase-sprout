@@ -146,7 +146,6 @@ An error will be raised for each problem:
 #| error: true
 resource_properties = sp.ResourceProperties(
     name="Woolly Dormice (2015, Toros Dağları)",
-    path="resources/1/data.parquet",
 )
 sp.check_resource_properties(resource_properties)
 ```

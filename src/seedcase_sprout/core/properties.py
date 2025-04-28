@@ -526,7 +526,6 @@ class ResourceProperties(Properties):
         """
         return cls(
             name="",
-            path="",
             type="table",
             title="",
             description="",

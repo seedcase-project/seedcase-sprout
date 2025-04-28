@@ -120,7 +120,6 @@ def test_creates_package_properties_with_correct_defaults(mock_uuid):
             ResourceProperties(
                 name="resource-name",
                 licenses=[LicenseProperties(name="MIT")],
-                path=str(Path("resources", "resource-name", "data.parquet")),
             ),
         ),
         (

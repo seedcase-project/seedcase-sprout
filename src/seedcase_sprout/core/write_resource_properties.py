@@ -47,7 +47,6 @@ def write_resource_properties(
                     name="new-resource-name",
                     title="New resource name",
                     description="This is a new resource",
-                    path="resources/2/data.parquet",
                 )
             )
         ```

@@ -75,7 +75,6 @@ def example_resource_properties() -> ResourceProperties:
         name="example-resource",
         title="Example fake data resource",
         description="Data from a fake resource on something.",
-        path="resources/1/data.parquet",
         schema=TableSchemaProperties(
             fields=[
                 FieldProperties(
@@ -139,7 +138,6 @@ def example_resource_properties_all_types() -> ResourceProperties:
     return ResourceProperties(
         name="data",
         title="data",
-        path=str(Path("resources", "1", "data.parquet")),
         description="My data...",
         schema=TableSchemaProperties(
             fields=[

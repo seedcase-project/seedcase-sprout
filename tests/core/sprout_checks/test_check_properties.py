@@ -8,9 +8,6 @@ from seedcase_sprout.core.check_properties import (
     check_properties,
     check_resource_properties,
 )
-from seedcase_sprout.core.internals._create_relative_resource_data_path import (
-    _create_relative_resource_data_path,
-)
 from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
 from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
@@ -36,13 +33,11 @@ def properties():
         resources=[
             ResourceProperties(
                 name="resource-1",
-                path=_create_relative_resource_data_path("resource-1"),
                 title="Resource 1",
                 description="A resource.",
             ),
             ResourceProperties(
                 name="resource-2",
-                path=_create_relative_resource_data_path("resource-2"),
                 title="Resource 2",
                 description="A second resource.",
             ),

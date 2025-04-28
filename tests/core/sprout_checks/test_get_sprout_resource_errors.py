@@ -21,7 +21,6 @@ from seedcase_sprout.core.sprout_checks.required_fields import (
 def properties():
     return ResourceProperties(
         name="resource-1",
-        path=str(Path("resources", "1", "data.parquet")),
         title="Resource 1",
         description="A resource.",
     ).compact_dict
@@ -29,9 +28,7 @@ def properties():
 
 @fixture
 def properties_partial():
-    return ResourceProperties(
-        path=str(Path("resources", "1", "data.parquet")),
-    ).compact_dict
+    return ResourceProperties().compact_dict
 
 
 def test_passes_full_resource_properties(properties):
