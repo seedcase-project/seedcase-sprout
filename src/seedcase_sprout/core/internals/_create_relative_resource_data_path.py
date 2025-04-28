@@ -1,9 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-from seedcase_sprout.core.internals._is_resource_name_incorrect import (
-    _is_resource_name_incorrect,
-)
+import seedcase_sprout.core.check_datapackage as cdp
 
 
 def _create_relative_resource_data_path(resource_name: Any) -> str | None:
@@ -19,7 +17,7 @@ def _create_relative_resource_data_path(resource_name: Any) -> str | None:
             E.g., "resources/test-resource/data.parquet"
     """
     return (
-        None
-        if _is_resource_name_incorrect(resource_name)
-        else str(Path("resources", resource_name, "data.parquet"))
+        str(Path("resources", resource_name, "data.parquet"))
+        if cdp.is_resource_name_correct(resource_name)
+        else None
     )

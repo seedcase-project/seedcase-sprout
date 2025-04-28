@@ -12,6 +12,7 @@ from .constants import (
     RequiredFieldType,
 )
 from .exclude_matching_errors import exclude_matching_errors
+from .is_resource_name_correct import is_resource_name_correct
 
 __all__ = [
     "CheckError",
@@ -24,4 +25,5 @@ __all__ = [
     "RESOURCE_REQUIRED_FIELDS",
     "RequiredFieldType",
     "exclude_matching_errors",
+    "is_resource_name_correct",
 ]

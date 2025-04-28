@@ -1,9 +1,7 @@
+import seedcase_sprout.core.check_datapackage as cdp
 from seedcase_sprout.core.check_datapackage import CheckError
 from seedcase_sprout.core.internals._create_relative_resource_data_path import (
     _create_relative_resource_data_path,
-)
-from seedcase_sprout.core.internals._is_resource_name_incorrect import (
-    _is_resource_name_incorrect,
 )
 from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
@@ -32,7 +30,7 @@ def check_resource_path_format(
 
     if (
         # Do not check path if name is incorrect
-        _is_resource_name_incorrect(name)
+        not cdp.is_resource_name_correct(name)
         # Do not flag type and required errors twice
         or not isinstance(path, str)
         # Do not flag blank errors twice
