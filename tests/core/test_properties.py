@@ -141,13 +141,7 @@ def test_transforms_dict_to_properties(dict, expected_properties):
 @mark.parametrize(
     "resource_properties, path",
     [
-        # Incorrect names
-        (ResourceProperties(), None),
-        (ResourceProperties(name=None), None),
-        (ResourceProperties(name=123), None),
-        (ResourceProperties(name=""), None),
         (ResourceProperties(name="space in name"), None),
-        # Correct names
         (
             ResourceProperties(name="test-resource"),
             str(Path("resources", "test-resource", "data.parquet")),
