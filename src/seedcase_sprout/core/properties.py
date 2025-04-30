@@ -478,8 +478,8 @@ class PackageProperties(Properties):
     ) -> Self:
         """Creates a `PackageProperties` dataclass with default values.
 
-        Default values can be overridden and unset values can be set using
-        keyword arguments.
+        Default values (`id`, `version`, and `created`) can be overridden and unset
+        values can be set using keyword arguments.
 
         Args:
             name (str | None): A simple name or identifier to be used for this package.
