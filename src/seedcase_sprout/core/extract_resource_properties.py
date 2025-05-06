@@ -15,11 +15,11 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
     """Extracts resource properties from Polars DataFrame.
 
     The data types are extracted from the DataFrame's schema and mapped from Polars to
-    Frictionless data types. For the best results, ensure the DataFrame's schema is as
-    expected. Since there are differences between Polars and Frictionless data types,
+    Data Package data types. For the best results, ensure the DataFrame's schema is as
+    expected. Since there are differences between Polars and Data Package data types,
     the mapping may not always be perfect, and some data types might be extracted
     in a simplified way. For example, a year column might be extracted as an integer
-    instead of Frictionless's `year` type. Review and adjust the extracted properties
+    instead of Data Package's `year` type. Review and adjust the extracted properties
     as needed.
 
     Args:
