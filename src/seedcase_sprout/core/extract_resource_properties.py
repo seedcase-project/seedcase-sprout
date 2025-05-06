@@ -1,6 +1,5 @@
 import polars as pl
 
-import seedcase_sprout.core.check_datapackage as cdp
 from seedcase_sprout.core.map_data_types import (
     POLARS_TO_FRICTIONLESS,
 )
@@ -47,10 +46,6 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
     resource_properties.type = "table"
     resource_properties.schema = TableSchemaProperties(fields_match="equal")
     resource_properties.schema.fields = _extract_field_properties(data)
-
-    cdp.check_resource_properties(
-        resource_properties,
-    )
 
     return resource_properties
 
