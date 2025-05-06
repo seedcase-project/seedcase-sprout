@@ -2,15 +2,19 @@
     just --list --unsorted
 
 # Run all build-related recipes in the justfile
-run-all: install-deps format-python check-python test-python check-commits build-website
+run-all: install-deps format-python check-python test-python check-security check-spelling check-commits build-website
 
 # Install Python package dependencies
 install-deps:
-  uv sync
+  uv sync --all-extras --dev
 
 # Run the Python tests
 test-python:
   uv run pytest
+  # Make the badge from the coverage report
+  uv run genbadge coverage \
+    -i coverage.xml \
+    -o htmlcov/coverage.svg
 
 # Check Python code with the linter for any errors that need manual attention
 check-python:
@@ -42,3 +46,11 @@ check-commits:
   else
     echo "Can't either be on ${branch_name} or have more than ${number_of_commits}."
   fi
+
+# Run basic security checks on the package
+check-security:
+  uv run bandit -r src/
+
+# Check for spelling errors in files
+check-spelling:
+  uv run typos

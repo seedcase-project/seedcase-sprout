@@ -4,6 +4,7 @@ from pathlib import Path
 from pytest import fixture, raises
 
 from seedcase_sprout.core.internals import _read_json, _write_json
+from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import (
     LicenseProperties,
     PackageProperties,
@@ -81,6 +82,17 @@ def test_writes_properties_with_missing_resources(path, package_properties):
     assert_file_contains(path, new_properties)
 
 
+def test_writes_properties_using_utf8(path, package_properties):
+    """Should write properties to file using UTF-8."""
+    package_properties.description = (
+        "Håkan Ørsted's favourite letters: æ ø å Æ Ø Å é μῆνιν ἄειδε θεὰ"
+    )
+
+    write_package_properties(package_properties, path)
+
+    assert package_properties.description in path.read_bytes().decode("utf-8")
+
+
 def test_throws_error_if_error_in_package_properties(path, package_properties):
     """Should throw `CheckError`s if there are errors in the package properties."""
     package_properties.name = "invalid name with spaces"
@@ -89,3 +101,11 @@ def test_throws_error_if_error_in_package_properties(path, package_properties):
 
     with raises(ExceptionGroup):
         write_package_properties(package_properties, path)
+
+
+def test_writes_properties_to_cwd_if_no_path_provided(tmp_cwd, package_properties):
+    """If no path is provided, should use datapackage.json in the cwd."""
+    assert (
+        write_package_properties(package_properties)
+        == PackagePath(tmp_cwd).properties()
+    )

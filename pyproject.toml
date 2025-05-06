@@ -1,6 +1,6 @@
 [project]
 name = "seedcase-sprout"
-version = "0.38.3"
+version = "0.42.3"
 description = "Grow your research data in a structured, modern way that follows best practices."
 authors = [
   {name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
@@ -37,7 +37,6 @@ dependencies = [
     "deepmerge>=2.0",
     "jsonschema>=4.23.0",
     "polars>=1.26.0",
-    "requests>=2.32.3",
 ]
 
 [project.urls]
@@ -48,25 +47,21 @@ issues = "https://github.com/seedcase-project/seedcase-sprout/issues"
 
 [dependency-groups]
 dev = [
+    "bandit>=1.8.3",
     "commitizen>=4.5.0",
     "datamodel-code-generator>=0.28.5",
+    "genbadge>=1.1.2",
     "jupyter>=1.1.1",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
     "pyyaml>=6.0.2",
     "quartodoc>=0.9.1",
     "ruff>=0.11.4",
     "time-machine>=2.16.0",
+    "typos>=1.31.1",
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.pytest.ini_options]
-addopts = [
-  # A short traceback mode to make it easier to view
-  "--tb=short",
-  # Use the `src/` package
-  "--import-mode=importlib",
-]

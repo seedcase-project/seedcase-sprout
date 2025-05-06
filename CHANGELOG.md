@@ -1,3 +1,63 @@
+## 0.42.3 (2025-05-01)
+
+### Refactor
+
+- :recycle: have a default method only for `PackageProperties` (#1304)
+
+## 0.42.2 (2025-04-30)
+
+### Fix
+
+- :bug: do not escape non-ASCII characters when writing JSON (#1305)
+
+## 0.42.1 (2025-04-25)
+
+### Refactor
+
+- :recycle: use `ExamplePackage` in examples (#1301)
+
+## 0.42.0 (2025-04-25)
+
+### Feat
+
+- :sparkles: `write_resource_data()` (#1302)
+
+## 0.41.2 (2025-04-24)
+
+### Refactor
+
+- :recycle: moved functions into internals/location of use (#1298)
+
+## 0.41.1 (2025-04-24)
+
+### Refactor
+
+- :recycle: make master Frictionless - Polars type map (#1284)
+
+## 0.41.0 (2025-04-23)
+
+### Feat
+
+- :sparkles: add default path for path functions (#1285)
+
+## 0.40.1 (2025-04-22)
+
+### Fix
+
+- :lock: fixed bandit flagged issues, moved dataclass gen into `tools/` (#1292)
+
+## 0.40.0 (2025-04-16)
+
+### Feat
+
+- :sparkles: only return `.parquet` files in the batch folder (#1283)
+
+## 0.39.0 (2025-04-16)
+
+### Feat
+
+- :sparkles: finish up `PackagePath` and `resource_batch_files()` (#1282)
+
 ## 0.38.3 (2025-04-15)
 
 ### Refactor

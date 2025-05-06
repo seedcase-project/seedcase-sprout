@@ -6,7 +6,11 @@
 
 ## Grow structured and scalable data
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
+[![Build package](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml)
+[![Build documentation](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/seedcase-project/seedcase-sprout/main.svg)](https://results.pre-commit.ci/latest/github/seedcase-project/seedcase-sprout/main)
+[![code coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/coverage.svg?raw=true)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/index.html)
 
 Sprout is a component of the Seedcase framework that aims to take data
 created or collected for research studies and "grow" it in a structured

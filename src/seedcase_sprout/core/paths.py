@@ -23,26 +23,26 @@ class PackagePath:
     -   If the wrong `resource_name` is given, an error message will include a
         list of all the actual `resource_name`'s for a specific package.
 
+    Outputs a `PackagePath` object representing the structure of a data package.
+
     Args:
         path: Provide a path to the package directory. Defaults to the current working
             directory.
 
-    Returns:
-        The absolute path to the data package's file or folder.
-
     Examples:
         ```{python}
-        import tempfile
+        from pathlib import Path
+
         import seedcase_sprout.core as sp
 
+        # With default path
         sp.PackagePath().properties()
         sp.PackagePath().readme()
 
-        # Create a temporary directory for the example to show
-        # how to use the function with a different path
-        with tempfile.TemporaryDirectory() as temp_path:
-            sp.PackagePath(temp_path).properties()
-            sp.PackagePath(temp_path).readme()
+        # With custom path
+        my_path = Path("my/path")
+        sp.PackagePath(my_path).properties()
+        sp.PackagePath(my_path).readme()
         ```
     """
 
@@ -56,15 +56,15 @@ class PackagePath:
 
     def properties(self) -> Path:
         """Path to the `datapackage.json` file."""
-        return Path(self.path) / "datapackage.json"
+        return self.root() / "datapackage.json"
 
     def readme(self) -> Path:
         """Path to the `README.md` file."""
-        return Path(self.path) / "README.md"
+        return self.root() / "README.md"
 
     def resources(self) -> Path:
         """Path to the `resources/` folder."""
-        return Path(self.path) / "resources"
+        return self.root() / "resources"
 
     def resource(self, resource_name: str) -> Path:
         """Path to the specified `resources/<name>/` folder.
@@ -73,7 +73,7 @@ class PackagePath:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
                 get the correct resource name.
         """
-        return Path(self.path) / "resources" / str(resource_name)
+        return self.resources() / str(resource_name)
 
     def resource_data(self, resource_name: str) -> Path:
         """Path to the specific resource's data file.
@@ -82,7 +82,7 @@ class PackagePath:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
                 get the correct resource name.
         """
-        return Path(self.path) / "resources" / str(resource_name) / "data.parquet"
+        return self.resource(resource_name) / "data.parquet"
 
     def resource_batch(self, resource_name: str) -> Path:
         """Path to the specific resource's `batch/` folder.
@@ -91,16 +91,13 @@ class PackagePath:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
                 get the correct resource name.
         """
-        return Path(self.path) / "resources" / str(resource_name) / "batch"
+        return self.resource(resource_name) / "batch"
 
-    def resource_batch_files(self, resource_name: str) -> Path:
-        """Path to all the files in the specific resource's `batch/` folder.
+    def resource_batch_files(self, resource_name: str) -> list[Path]:
+        """Paths to all the files in the specific resource's `batch/` folder.
 
         Args:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
                 get the correct resource name.
         """
-        # TODO: This needs a check if the folder exists?
-        return list(
-            Path(Path(self.path) / "resources" / str(resource_name) / "batch").iterdir()
-        )
+        return list(self.resource_batch(resource_name).glob("*.parquet"))
