@@ -1,7 +1,8 @@
 import polars as pl
 
+from seedcase_sprout.core.internals.functionals import _map, _map2
 from seedcase_sprout.core.map_data_types import (
-    POLARS_TO_FRICTIONLESS,
+    _polars_to_frictionless,
 )
 from seedcase_sprout.core.properties import (
     FieldProperties,
@@ -52,11 +53,16 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
 
 def _extract_field_properties(data: pl.DataFrame):
     """Extract field properties from a Polars DataFrame."""
-    # Simplify by extracting the field type from the Polars base type
-    # (so e.g., Datetime(time_unit='us', time_zone='UTC') becomes Datetime)
-    field_properties = [
-        FieldProperties(name=key, type=POLARS_TO_FRICTIONLESS[value.base_type()])
-        for key, value in data.schema.items()
-    ]
     # TODO: add format="binary" to Binary field type?
+    field_names = data.columns
+    field_types = _map(data.dtypes, _polars_to_frictionless)
+
+    field_properties = _map2(
+        field_names,
+        field_types,
+        lambda field_name, field_type: FieldProperties(
+            name=field_name, type=field_type
+        ),
+    )
+
     return field_properties
