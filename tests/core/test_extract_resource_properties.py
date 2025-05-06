@@ -35,13 +35,15 @@ def _keep_extractable_properties(
 
 def test_properties_are_extracted_correctly():
     """Test that the resource properties are extracted correctly from the data."""
+    # Given, when
     extracted_resource_properties = extract_resource_properties(
         example_data_all_polars_types()
     )
-
-    assert extracted_resource_properties == _keep_extractable_properties(
+    expected_resource_properties = _keep_extractable_properties(
         example_resource_properties_all_polars_types()
     )
+    # Then
+    assert extracted_resource_properties == expected_resource_properties
 
 
 def test_throw_error_with_empty_data():
