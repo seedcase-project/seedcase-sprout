@@ -2,6 +2,9 @@
 title: "Naming"
 ---
 
+::: {#naming}
+:::
+
 This document describes a general naming scheme for Sprout that is
 guided by our [style guide](https://design.seedcase-project.org/style/)
 as well as by the [Frictionless

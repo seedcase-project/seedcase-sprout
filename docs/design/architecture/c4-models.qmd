@@ -20,7 +20,7 @@ for more information.
 
 The Context diagram shows the users and any external systems that
 interact with Sprout. This includes the user roles described in the
-[User Personas](user-personas.qmd) page.
+[User Personas](user-personas.qmd#user-types) page.
 
 ::: callout-caution
 For some reason, these diagrams don't display well on some browsers like

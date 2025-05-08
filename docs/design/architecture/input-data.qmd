@@ -2,6 +2,9 @@
 title: "Input data"
 ---
 
+::: {#input-data}
+:::
+
 The types of data we expect or anticipate to be input into Sprout are
 described in this section. We design Sprout with these types of data and
 formats in mind.

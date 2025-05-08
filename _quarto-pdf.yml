@@ -1,6 +1,9 @@
 project:
   type: book
 
+filters:
+  - filters/pdf-internal-link.lua
+
 format:
   pdf:
     documentclass: scrbook
