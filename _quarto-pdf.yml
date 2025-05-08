@@ -1,0 +1,48 @@
+project:
+  type: book
+
+format:
+  pdf:
+    documentclass: scrbook
+    papersize: a4
+    geometry:
+      - top=3cm
+      - bottom=3cm
+    
+    number-sections: true
+    number-depth: 2
+    toc: true
+    toc-depth: 2
+    colorlinks: true 
+
+    shortcodes: 
+      - _extensions/seedcase-project/seedcase-theme/_extensions/quarto-ext/fontawesome/fontawesome.lua
+
+book:
+  output-file: seedcase-sprout
+  title: "Seedcase Sprout Documentation"
+  author: "Seedcase Project"
+  chapters:
+    - index.qmd
+    - part: "Guide"
+      chapters:
+        # - docs/guide/index.qmd
+        - docs/guide/installation.qmd
+        - docs/guide/packages.qmd
+        - docs/guide/resources.qmd
+        - docs/guide/checks.qmd
+    - part: "Design - Architecture"
+      chapters:
+        - docs/design/architecture/index.qmd
+        - docs/design/architecture/c4-models.qmd
+        - docs/design/architecture/input-data.qmd
+        - docs/design/architecture/naming.qmd
+        - docs/design/architecture/user-personas.qmd
+    - part: "Design - Interface"
+      chapters:
+        - docs/design/interface/index.qmd
+        - docs/design/interface/flows.qmd
+        - docs/design/interface/functions.qmd
+        - docs/design/interface/inputs.qmd
+        - docs/design/interface/outputs.qmd
+
