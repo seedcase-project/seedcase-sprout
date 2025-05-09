@@ -1,3 +1,9 @@
+## 0.43.1 (2025-05-09)
+
+### Fix
+
+- :alembic: remove "feature" text
+
 ## 0.43.0 (2025-05-09)
 
 ### Feat
