@@ -6,7 +6,29 @@ on:
       - main
 
 jobs:
-  update-version:
-    uses: seedcase-project/.github/.github/workflows/reusable-update-python-project-version.yml@main
-    secrets:
-      update-version-gh-token: ${{ secrets.UPDATE_VERSION_TOKEN }}
+  update-version-and-changelog:
+    if: "!startsWith(github.event.head_commit.message, 'build(version): ')"
+    runs-on: ubuntu-latest
+    name: "Update project's version and changelog"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Only need the last commit from the repo.
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push version and tag
+        run: |
+          npm version ${{ github.event.inputs.version }}
+          git push
+
+      - id: cz
+        name: Update version and changelog
+        uses: commitizen-tools/commitizen-action@0.24.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          changelog: true
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
