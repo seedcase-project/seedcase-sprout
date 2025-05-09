@@ -17,6 +17,12 @@ jobs:
           # Only need the last commit from the repo.
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Push version and tag
         run: |
           npm version ${{ github.event.inputs.version }}
