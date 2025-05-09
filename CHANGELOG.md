@@ -1,3 +1,9 @@
+## 0.43.0 (2025-05-09)
+
+### Feat
+
+- :sparkles: add "New feature" text to `README`
+
 ## 0.42.3 (2025-05-01)
 
 ### Refactor
