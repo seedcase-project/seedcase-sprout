@@ -29,5 +29,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           changelog: true
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
