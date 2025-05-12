@@ -7,6 +7,9 @@ filters:
 format:
   pdf:
     documentclass: scrbook
+    classoption: 
+      - openany
+    # keep-tex: true
     papersize: a4
     geometry:
       - top=3cm
@@ -23,25 +26,25 @@ format:
 
 book:
   output-file: seedcase-sprout
-  title: "Seedcase Sprout Documentation"
+  title: Seedcase Sprout Documentation
   author: "Seedcase Project"
   chapters:
     - index.qmd
-    - part: "Guide"
+    - part: Guide
       chapters:
         # - docs/guide/index.qmd
         - docs/guide/installation.qmd
         - docs/guide/packages.qmd
         - docs/guide/resources.qmd
         - docs/guide/checks.qmd
-    - part: "Design - Architecture"
+    - part: "Design: Architecture"
       chapters:
         - docs/design/architecture/index.qmd
         - docs/design/architecture/c4-models.qmd
         - docs/design/architecture/input-data.qmd
         - docs/design/architecture/naming.qmd
         - docs/design/architecture/user-personas.qmd
-    - part: "Design - Interface"
+    - part: "Design: Interface"
       chapters:
         - docs/design/interface/index.qmd
         - docs/design/interface/flows.qmd
