@@ -22,10 +22,12 @@ format:
       - openany
 
     include-in-header: 
-      # Wrap text in code blocks
       text: |
+        % Wrap text in code blocks
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        % Keep code blocks where they appear in the text
+        \AtBeginDocument{\floatplacement{codelisting}{H}}
    
     papersize: a4
     geometry:
