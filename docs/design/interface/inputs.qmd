@@ -2,9 +2,6 @@
 title: "Inputs"
 ---
 
-::: {#inputs}
-:::
-
 In this document we describe the inputs to Sprout at a technical level.
 For a more general description of what domain we expect data to come
 from and how it may look like conceptually, see the [input

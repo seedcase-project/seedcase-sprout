@@ -3,9 +3,6 @@ title: "Installing Sprout"
 order: 0
 ---
 
-::: {#installation}
-:::
-
 We designed Sprout to be installed for use either on your own computer
 (locally) or on a server (remote). This guide will walk you through
 installing Sprout. Regardless of how you install Sprout, you will need
