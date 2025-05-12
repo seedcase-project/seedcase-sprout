@@ -4,17 +4,34 @@ project:
 filters:
   - filters/pdf-internal-link.lua
 
+include-before-body:
+  # Wrap text in code output
+  text: |
+    \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+      showspaces = false,
+      showtabs = false,
+      breaksymbolleft={},
+      breaklines
+    }
+
 format:
   pdf:
     documentclass: scrbook
     classoption: 
+      # Chapters can start on any page (no blank pages)
       - openany
-    # keep-tex: true
+
+    include-in-header: 
+      # Wrap text in code blocks
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+   
     papersize: a4
     geometry:
       - top=3cm
       - bottom=3cm
-    
+
     number-sections: true
     number-depth: 2
     toc: true
