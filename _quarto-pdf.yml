@@ -46,7 +46,7 @@ format:
 book:
   output-file: seedcase-sprout
   title: Seedcase Sprout Documentation
-  author: "Seedcase Project"
+  author: Seedcase Project
   chapters:
     - index.qmd
     - part: Guide
