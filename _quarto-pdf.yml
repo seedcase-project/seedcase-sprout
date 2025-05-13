@@ -17,18 +17,18 @@ include-before-body:
 format:
   pdf:
     documentclass: scrbook
-    classoption: 
+    classoption:
       # Chapters can start on any page (no blank pages)
       - openany
 
-    include-in-header: 
+    include-in-header:
       text: |
         % Wrap text in code blocks
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
         % Keep code blocks where they appear in the text
         \AtBeginDocument{\floatplacement{codelisting}{H}}
-   
+
     papersize: a4
     geometry:
       - top=3cm
@@ -38,9 +38,9 @@ format:
     number-depth: 2
     toc: true
     toc-depth: 2
-    colorlinks: true 
+    colorlinks: true
 
-    shortcodes: 
+    shortcodes:
       - _extensions/seedcase-project/seedcase-theme/_extensions/quarto-ext/fontawesome/fontawesome.lua
 
 book:
@@ -70,4 +70,3 @@ book:
         - docs/design/interface/functions.qmd
         - docs/design/interface/inputs.qmd
         - docs/design/interface/outputs.qmd
-
