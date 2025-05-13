@@ -2,13 +2,11 @@ import os
 import tempfile
 from contextlib import AbstractContextManager
 from pathlib import Path
-from uuid import uuid4
 
 import polars as pl
 
 from seedcase_sprout.core.as_readme_text import as_readme_text
 from seedcase_sprout.core.create_resource_properties import create_resource_properties
-from seedcase_sprout.core.internals import _get_iso_timestamp
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import (
     ContributorProperties,
@@ -34,11 +32,8 @@ def example_package_properties() -> PackageProperties:
         sp.example_package_properties()
         ```
     """
-    properties = PackageProperties(
+    properties = PackageProperties.from_default(
         name="example-package",
-        version="0.1.0",
-        created=_get_iso_timestamp(),
-        id=str(uuid4()),
         title="Example fake data package",
         description="Data from a fake data package on something.",
         contributors=[
@@ -279,6 +274,7 @@ class ExamplePackage(AbstractContextManager):
             resource_properties = create_resource_properties(
                 path=resource_path, properties=resource_properties
             )
+            # TODO: delete after data path is refactored to use name
             resource_properties.name = resource_path.stem
 
         # Save properties

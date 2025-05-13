@@ -1,3 +1,27 @@
+## 0.42.3 (2025-05-01)
+
+### Refactor
+
+- :recycle: have a default method only for `PackageProperties` (#1304)
+
+## 0.42.2 (2025-04-30)
+
+### Fix
+
+- :bug: do not escape non-ASCII characters when writing JSON (#1305)
+
+## 0.42.1 (2025-04-25)
+
+### Refactor
+
+- :recycle: use `ExamplePackage` in examples (#1301)
+
+## 0.42.0 (2025-04-25)
+
+### Feat
+
+- :sparkles: `write_resource_data()` (#1302)
+
 ## 0.41.2 (2025-04-24)
 
 ### Refactor

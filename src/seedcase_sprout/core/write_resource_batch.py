@@ -47,7 +47,7 @@ def write_resource_batch(
         ```{python}
         import seedcase_sprout.core as sp
 
-        with sp.ExamplePackage() as package_path:
+        with sp.ExamplePackage():
             resource_properties = sp.read_properties().resources[0]
             sp.write_resource_batch(
                 data=sp.example_data(),
