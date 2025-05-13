@@ -43,19 +43,18 @@ def test_example_data_matches_resource_properties_all_types():
 
 
 def test_creates_package_with_resources():
-    """Should create: package folder, datapackage.json, README, resources folder,
-    folder for one resource."""
+    """Should create: package folder, datapackage.json, README."""
     with ExamplePackage() as package_path:
         # Test root folder
         assert package_path.path.is_dir()
-        assert len(list(package_path.path.iterdir())) == 3
+        assert len(list(package_path.path.iterdir())) == 2
         # Test README
         assert package_path.readme().is_file()
         assert package_path.readme().read_text()
         # Test datapackage.json
         assert package_path.properties().is_file()
         properties = read_properties(package_path.properties())
-        assert check_properties(properties)
+        assert check_resource_properties(properties.resources)
         # Test resources
         assert properties.resources and len(properties.resources) == 1
 
