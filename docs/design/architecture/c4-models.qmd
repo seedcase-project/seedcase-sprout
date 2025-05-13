@@ -57,6 +57,7 @@ shows the technology choices for each container.
 
 ```{mermaid}
 %%| label: fig-c4-container
+%%| fig-width: 6.3
 %%| fig-cap: "C4 Container diagram showing larger functional parts of Sprout and their connections."
 flowchart TB
     user(["User<br>[person]"])
