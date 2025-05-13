@@ -1,5 +1,4 @@
 import seedcase_sprout.core.check_datapackage as cdp
-from seedcase_sprout.core.check_datapackage import CheckError
 from seedcase_sprout.core.internals._create_relative_resource_data_path import (
     _create_relative_resource_data_path,
 )
@@ -43,7 +42,7 @@ def get_sprout_resource_errors(
 
 def _check_resource_path_format(
     properties: dict, index: int | None = None
-) -> list[CheckError]:
+) -> list[cdp.CheckError]:
     """Checks if the data path in the resource properties has the correct format.
 
     As the path is constructed from the resource name, its format can only be checked
@@ -73,7 +72,7 @@ def _check_resource_path_format(
         return []
 
     return [
-        CheckError(
+        cdp.CheckError(
             message=f"Expected the path to be '{expected_path}' but found '{path}'.",
             json_path=get_json_path_to_resource_field("path", index),
             validator="pattern",
