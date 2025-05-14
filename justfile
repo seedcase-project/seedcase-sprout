@@ -59,8 +59,8 @@ check-spelling:
 check-unused:
   # exit code=0: No unused code was found
   # exit code=3: Unused code was found
-  # Three confidence values: 
+  # Three confidence values:
   # - 100 %: function/method/class argument, unreachable code
-  # - 90 %: import 
+  # - 90 %: import
   # - 60 %: attribute, class, function, method, property, variable
   vulture src/ tests/
