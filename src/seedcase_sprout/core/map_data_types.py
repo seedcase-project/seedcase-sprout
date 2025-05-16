@@ -102,7 +102,7 @@ def _get_allowed_polars_types(
     ]
 
 
-def _polars_to_frictionless(polars_type: pl.DataType) -> FieldType:
+def _polars_to_datapackage(polars_type: pl.DataType) -> FieldType:
     """Return the Data Package type that is the best match for the given Polars type.
 
     Args:
