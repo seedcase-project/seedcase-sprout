@@ -15,6 +15,9 @@ from seedcase_sprout.core.sprout_checks.check_resource_path_string import (
 from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
+from seedcase_sprout.core.sprout_checks.is_resource_name_correct import (
+    _is_resource_name_correct,
+)
 from seedcase_sprout.core.sprout_checks.required_fields import (
     RESOURCE_SPROUT_REQUIRED_FIELDS,
 )
@@ -62,7 +65,7 @@ def _check_resource_path_format(
 
     if (
         # Do not check path if name is incorrect
-        not cdp.is_resource_name_correct(name)
+        not _is_resource_name_correct(name)
         # Do not flag type and required errors twice
         or not isinstance(path, str)
         # Do not flag blank errors twice

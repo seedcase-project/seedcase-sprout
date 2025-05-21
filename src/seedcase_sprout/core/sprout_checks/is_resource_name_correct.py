@@ -4,7 +4,7 @@ from typing import Any
 from seedcase_sprout.core.check_datapackage.constants import NAME_PATTERN
 
 
-def is_resource_name_correct(resource_name: Any) -> bool:
+def _is_resource_name_correct(resource_name: Any) -> bool:
     """Checks if the given resource name is correct.
 
     Args:

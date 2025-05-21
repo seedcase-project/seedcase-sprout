@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-import seedcase_sprout.core.check_datapackage as cdp
+import seedcase_sprout.core.sprout_checks.is_resource_name_correct as _is_resource_name_correct
 
 
 def _create_relative_resource_data_path(resource_name: Any) -> str | None:
@@ -18,6 +18,6 @@ def _create_relative_resource_data_path(resource_name: Any) -> str | None:
     """
     return (
         str(Path("resources", resource_name, "data.parquet"))
-        if cdp.is_resource_name_correct(resource_name)
+        if _is_resource_name_correct(resource_name)
         else None
     )
