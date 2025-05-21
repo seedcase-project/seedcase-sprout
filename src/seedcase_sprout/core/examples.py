@@ -259,7 +259,7 @@ def example_resource_properties_all_polars_types() -> ResourceProperties:
                 FieldProperties(name="my_time", type="time"),
                 FieldProperties(name="my_array", type="array"),
                 # We can't map to DataPackage `list` bc it's missing in the TableSchema
-                # profile we use generate the datapackage schema we check properties
+                # profile we use to generate the datapackage schema that we check properties
                 # against. We've made an issue about this in the DataPackage repo.
                 FieldProperties(name="my_list", type="array"),
                 FieldProperties(name="my_struct", type="object"),
