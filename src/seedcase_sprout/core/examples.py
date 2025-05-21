@@ -6,8 +6,6 @@ from pathlib import Path
 import polars as pl
 
 from seedcase_sprout.core.as_readme_text import as_readme_text
-from seedcase_sprout.core.create_resource_properties import create_resource_properties
-from seedcase_sprout.core.create_resource_structure import create_resource_structure
 from seedcase_sprout.core.paths import PackagePath
 from seedcase_sprout.core.properties import (
     ContributorProperties,
@@ -72,7 +70,6 @@ def example_resource_properties() -> ResourceProperties:
         name="example-resource",
         title="Example fake data resource",
         description="Data from a fake resource on something.",
-        path="resources/1/data.parquet",
         schema=TableSchemaProperties(
             fields=[
                 FieldProperties(
@@ -136,7 +133,6 @@ def example_resource_properties_all_types() -> ResourceProperties:
     return ResourceProperties(
         name="data",
         title="data",
-        path=str(Path("resources", "1", "data.parquet")),
         description="My data...",
         schema=TableSchemaProperties(
             fields=[
@@ -333,18 +329,27 @@ class ExamplePackage(AbstractContextManager):
         with sp.ExamplePackage() as package_path:
             properties = sp.read_properties(package_path.properties())
 
-        with sp.ExamplePackage(with_resources=False) as package_path:
-            properties = sp.read_properties(package_path.properties())
+        with sp.ExamplePackage(with_resources=False):
+            properties = sp.read_properties()
+
+        with sp.ExamplePackage(package_name="my-package"):
+            properties = sp.read_properties()
         ```
     """
 
-    def __init__(self, with_resources: bool = True):
+    def __init__(
+        self,
+        package_name: str = example_package_properties().name,
+        with_resources: bool = True,
+    ):
         """Initialise the `ExamplePackage` context manager.
 
         Args:
+            package_name: The name of the package and its root folder.
             with_resources: Whether resources should be added when creating the package.
                 Defaults to True.
         """
+        self.package_name = package_name
         self.with_resources = with_resources
         self.calling_dir = Path.cwd()
         self.temp_dir = tempfile.TemporaryDirectory()
@@ -355,10 +360,13 @@ class ExamplePackage(AbstractContextManager):
         Returns:
             A `PackagePath` object pointing to the root of the temporary package.
         """
-        package_path = PackagePath(Path(self.temp_dir.name))
+        package_dir = Path(self.temp_dir.name) / self.package_name
+        package_dir.mkdir(exist_ok=True)
+        package_path = PackagePath(package_dir)
 
         # Create package properties
         package_properties = example_package_properties()
+        package_properties.name = self.package_name
 
         # Create resource properties
         if self.with_resources:
@@ -366,14 +374,9 @@ class ExamplePackage(AbstractContextManager):
             package_properties.resources = [resource_properties]
 
             # Create resource folders
-            # TODO: update after resource creation is refactored
-            package_path.resources().mkdir(exist_ok=True)
-            resource_path, _ = create_resource_structure(path=package_path.path)
-            resource_properties = create_resource_properties(
-                path=resource_path, properties=resource_properties
+            package_path.resource(resource_properties.name).mkdir(
+                exist_ok=True, parents=True
             )
-            # TODO: delete after data path is refactored to use name
-            resource_properties.name = resource_path.stem
 
         # Save properties
         write_package_properties(
@@ -383,7 +386,7 @@ class ExamplePackage(AbstractContextManager):
         # Write README
         write_file(as_readme_text(package_properties), package_path.readme())
 
-        os.chdir(package_path.path)
+        os.chdir(package_path.root())
 
         return package_path
 
