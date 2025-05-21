@@ -149,6 +149,7 @@ Time to fill in the missing fields of the resource properties:
 # TODO: Need to consider/design how editing can be done in an easier, user-friendly way.
 # TODO: Add more detail when we know what can and can't be extracted.
 resource_properties.name = "patient-data"
+resource_properties.path = "resources/patient-data/data.parquet"
 resource_properties.title = "Patient Data"
 resource_properties.description = "This data resource contains data about..."
 ```
