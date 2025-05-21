@@ -26,11 +26,6 @@ def properties():
     ).compact_dict
 
 
-@fixture
-def properties_partial():
-    return ResourceProperties().compact_dict
-
-
 def test_passes_full_resource_properties(properties):
     """Should pass with a full set of resource properties."""
     assert get_sprout_resource_errors(properties) == []

@@ -1,7 +1,9 @@
 from pathlib import Path
 from typing import Any
 
-import seedcase_sprout.core.sprout_checks.is_resource_name_correct as _is_resource_name_correct
+from seedcase_sprout.core.sprout_checks.is_resource_name_correct import (
+    _is_resource_name_correct,
+)
 
 
 def _create_relative_resource_data_path(resource_name: Any) -> str | None:
