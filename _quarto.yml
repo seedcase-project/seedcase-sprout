@@ -3,6 +3,8 @@ project:
   render:
     - "docs/*"
     - "index.qmd"
+  post-render:
+    - find resources/patient-data/batch/ -iname "*.parquet" -delete
 
 website:
   title: "Seedcase Sprout"

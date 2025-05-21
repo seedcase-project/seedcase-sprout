@@ -233,6 +233,8 @@ As shown above, the data is currently stored loaded as a Polars
 DataFrame called `data`. Now, it's time to store this data in the
 resource's folder by using:
 
+<!-- TODO: Convert to save to temp location -->
+
 ```{python}
 sp.write_resource_batch(
     data=original_data,
