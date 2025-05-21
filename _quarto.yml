@@ -91,6 +91,7 @@ quartodoc:
       desc: "Functions to work with and manage data resources found within a data package."
       package: "seedcase_sprout.core"
       contents:
+        - extract_resource_properties
         - join_resource_batches
         - read_resource_batches
         - write_resource_batch

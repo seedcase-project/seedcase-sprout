@@ -2,7 +2,7 @@
     just --list --unsorted
 
 # Run all build-related recipes in the justfile
-run-all: install-deps format-python check-python test-python check-security check-spelling check-commits build-website
+run-all: install-deps format-python check-python check-unused test-python check-security check-spelling check-commits build-website
 
 # Install Python package dependencies
 install-deps:
@@ -54,3 +54,24 @@ check-security:
 # Check for spelling errors in files
 check-spelling:
   uv run typos
+
+# Build the documentation as PDF using Quarto
+build-pdf:
+  # To let Quarto know where python is.
+  export QUARTO_PYTHON=.venv/bin/python3
+  uv run quarto install tinytex
+  # For generating images from Mermaid diagrams
+  uv run quarto install chromium
+  uv run quarto render --profile pdf --to pdf
+  find docs -name "mermaid-figure-*.png" -delete
+
+# Check for unused code in the package and its tests
+check-unused:
+  # exit code=0: No unused code was found
+  # exit code=3: Unused code was found
+  # Three confidence values:
+  # - 100 %: function/method/class argument, unreachable code
+  # - 90 %: import
+  # - 60 %: attribute, class, function, method, property, variable
+  # There are some things should be ignored though, with the allowlist.
+  uv run vulture src/ tests/ **/vulture-allowlist.py

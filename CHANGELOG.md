@@ -1,3 +1,27 @@
+## 0.43.1 (2025-05-21)
+
+### Refactor
+
+- :recycle: update `extract_resource_properties()` to take `pl.DataFrame` (#1264)
+
+## 0.43.0 (2025-05-21)
+
+### Feat
+
+- :sparkles: add custom package name to `ExamplePackage` (#1309)
+
+## 0.42.5 (2025-05-19)
+
+### Fix
+
+- :bug: raise a more informative error when the data list is empty (#1308)
+
+## 0.42.4 (2025-05-13)
+
+### Fix
+
+- :bug: resolve temp paths so tests pass on MacOS as well (#1322)
+
 ## 0.42.3 (2025-05-01)
 
 ### Refactor
