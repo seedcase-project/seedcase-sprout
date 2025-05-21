@@ -60,7 +60,7 @@ def _extract_field_properties(data: pl.DataFrame):
     field_properties = _map2(
         field_names,
         field_types,
-        FieldProperties
+        lambda name, type: FieldProperties(name=name, type=type),
     )
 
     return field_properties
