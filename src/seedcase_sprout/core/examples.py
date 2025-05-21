@@ -231,9 +231,9 @@ def example_resource_properties_all_polars_types() -> ResourceProperties:
         ```
     """
     return ResourceProperties(
-        name="data",
+        name="example-resource",
         title="data",
-        path=str(Path("resources", "1", "data.parquet")),
+        path=str(Path("resources", "example-resource", "data.parquet")),
         description="My data...",
         schema=TableSchemaProperties(
             fields=[
