@@ -83,7 +83,6 @@ quartodoc:
 
     - subtitle: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
-      package: "seedcase_sprout"
       contents:
         - write_package_properties
         - update_package_properties
@@ -91,7 +90,6 @@ quartodoc:
 
     - subtitle: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
-      package: "seedcase_sprout"
       contents:
         - extract_resource_properties
         - join_resource_batches
@@ -102,7 +100,6 @@ quartodoc:
 
     - subtitle: "Property dataclasses"
       desc: "Dataclasses that support creating correct data package properties."
-      package: "seedcase_sprout"
       contents:
         - ConstraintsProperties
         - ContributorProperties
@@ -118,19 +115,16 @@ quartodoc:
 
     - subtitle: "Property functions"
       desc: "Functions used to work with properties."
-      package: "seedcase_sprout"
       contents:
         - read_properties
 
     - subtitle: "Path functions"
       desc: "Functions to support providing the correct file paths to files and folders in a data package for other functions."
-      package: "seedcase_sprout"
       contents:
         - PackagePath
 
     - subtitle: "Helper functions"
       desc: "Functions to support working with data packages and running code within Seedcase Sprout."
-      package: "seedcase_sprout"
       contents:
         - example_package_properties
         - example_resource_properties
