@@ -4,18 +4,18 @@ import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, mark, raises
 
-from seedcase_sprout.core.check_data import check_data
-from seedcase_sprout.core.examples import (
+from seedcase_sprout.check_data import check_data
+from seedcase_sprout.examples import (
     example_data,
     example_resource_properties,
 )
-from seedcase_sprout.core.map_data_types import _get_allowed_polars_types
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.map_data_types import _get_allowed_polars_types
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,
 )
-from tests.core.assert_raises_errors import (
+from tests.assert_raises_errors import (
     assert_raises_check_errors,
     assert_raises_errors,
 )

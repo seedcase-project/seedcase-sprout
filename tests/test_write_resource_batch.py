@@ -5,13 +5,13 @@ import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import raises
 
-from seedcase_sprout.core.constants import BATCH_TIMESTAMP_PATTERN
-from seedcase_sprout.core.examples import (
+from seedcase_sprout.constants import BATCH_TIMESTAMP_PATTERN
+from seedcase_sprout.examples import (
     example_data,
     example_resource_properties,
 )
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.write_resource_batch import write_resource_batch
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.write_resource_batch import write_resource_batch
 
 
 def test_writes_correct_resource_batch_file(tmp_path):

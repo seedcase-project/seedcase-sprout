@@ -1,4 +1,4 @@
-from seedcase_sprout.core.check_datapackage.constants import (
+from seedcase_sprout.check_datapackage.constants import (
     NAME_PATTERN,
     PACKAGE_RECOMMENDED_FIELDS,
     SEMVER_PATTERN,

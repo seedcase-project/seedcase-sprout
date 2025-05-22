@@ -3,14 +3,14 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
-from seedcase_sprout.core.internals import _read_json, _write_json
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.internals import _read_json, _write_json
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.write_package_properties import write_package_properties
+from seedcase_sprout.write_package_properties import write_package_properties
 
 resource_properties = ResourceProperties(
     name="resource-1",

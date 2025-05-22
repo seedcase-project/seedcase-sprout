@@ -1,12 +1,12 @@
 from pytest import fixture, mark
 
-from seedcase_sprout.core.sprout_checks.check_required_package_properties_not_blank import (  # noqa: E501
+from seedcase_sprout.sprout_checks.check_required_package_properties_not_blank import (  # noqa: E501
     check_required_package_properties_not_blank,
 )
-from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
+from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
-from seedcase_sprout.core.sprout_checks.required_fields import (
+from seedcase_sprout.sprout_checks.required_fields import (
     PACKAGE_SPROUT_REQUIRED_FIELDS,
 )
 

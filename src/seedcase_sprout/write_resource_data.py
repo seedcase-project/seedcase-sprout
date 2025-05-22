@@ -2,9 +2,9 @@ from pathlib import Path
 
 import polars as pl
 
-from seedcase_sprout.core.check_data import check_data
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import ResourceProperties
+from seedcase_sprout.check_data import check_data
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import ResourceProperties
 
 
 def write_resource_data(
@@ -36,7 +36,7 @@ def write_resource_data(
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         with sp.ExamplePackage():
             resource_properties = sp.example_resource_properties()

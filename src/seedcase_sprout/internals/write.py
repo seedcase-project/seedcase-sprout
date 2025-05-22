@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from seedcase_sprout.core.write_file import write_file
+from seedcase_sprout.write_file import write_file
 
 
 def _write_json(json_object: list | dict, path: Path) -> Path:

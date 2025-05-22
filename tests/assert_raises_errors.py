@@ -2,7 +2,7 @@ from typing import Callable
 
 from pytest import raises
 
-from seedcase_sprout.core.check_datapackage.check_error import CheckError
+from seedcase_sprout.check_datapackage.check_error import CheckError
 
 
 def assert_raises_errors(

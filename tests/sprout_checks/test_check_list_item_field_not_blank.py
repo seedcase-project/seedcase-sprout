@@ -1,10 +1,10 @@
 from pytest import mark
 
-from seedcase_sprout.core.check_datapackage import RequiredFieldType
-from seedcase_sprout.core.sprout_checks.check_list_item_field_not_blank import (
+from seedcase_sprout.check_datapackage import RequiredFieldType
+from seedcase_sprout.sprout_checks.check_list_item_field_not_blank import (
     check_list_item_field_not_blank,
 )
-from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
+from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
 

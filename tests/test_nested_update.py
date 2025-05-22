@@ -1,5 +1,5 @@
-from seedcase_sprout.core.nested_update import nested_update
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.nested_update import nested_update
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,

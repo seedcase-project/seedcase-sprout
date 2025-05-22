@@ -1,12 +1,12 @@
 from importlib.resources import files
 from pathlib import Path
 
-from seedcase_sprout.core.check_datapackage.required_fields import RequiredFieldType
+from seedcase_sprout.check_datapackage.required_fields import RequiredFieldType
 
 COMPLEX_VALIDATORS = {"allOf", "anyOf", "oneOf"}
 
 DATA_PACKAGE_SCHEMA_PATH: Path = files(
-    "seedcase_sprout.core.check_datapackage.schemas"
+    "seedcase_sprout.check_datapackage.schemas"
 ).joinpath("data-package-schema.json")
 
 NAME_PATTERN = r"^[a-z0-9._-]+$"

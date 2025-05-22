@@ -4,19 +4,19 @@ from uuid import uuid4
 import polars as pl
 from pytest import fixture, mark, raises
 
-from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.constants import BATCH_TIMESTAMP_COLUMN_NAME
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.read_resource_batches import (
+from seedcase_sprout.read_resource_batches import (
     read_resource_batches,
 )
-from tests.core.assert_raises_errors import (
+from tests.assert_raises_errors import (
     assert_raises_check_errors,
 )
-from tests.core.directory_structure_setup import (
+from tests.directory_structure_setup import (
     create_test_data_package,
 )
 

@@ -1,11 +1,11 @@
-from seedcase_sprout.core.check_datapackage import CheckError
-from seedcase_sprout.core.sprout_checks.check_fields_not_blank import (
+from seedcase_sprout.check_datapackage import CheckError
+from seedcase_sprout.sprout_checks.check_fields_not_blank import (
     check_fields_not_blank,
 )
-from seedcase_sprout.core.sprout_checks.check_list_item_field_not_blank import (
+from seedcase_sprout.sprout_checks.check_list_item_field_not_blank import (
     check_list_item_field_not_blank,
 )
-from seedcase_sprout.core.sprout_checks.required_fields import (
+from seedcase_sprout.sprout_checks.required_fields import (
     PACKAGE_SPROUT_REQUIRED_FIELDS,
 )
 

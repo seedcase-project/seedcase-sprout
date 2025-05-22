@@ -1,6 +1,6 @@
-from seedcase_sprout.core.check_datapackage.check_error import CheckError
-from seedcase_sprout.core.check_datapackage.check_error_matcher import CheckErrorMatcher
-from seedcase_sprout.core.check_datapackage.exclude_matching_errors import (
+from seedcase_sprout.check_datapackage.check_error import CheckError
+from seedcase_sprout.check_datapackage.check_error_matcher import CheckErrorMatcher
+from seedcase_sprout.check_datapackage.exclude_matching_errors import (
     exclude_matching_errors,
 )
 

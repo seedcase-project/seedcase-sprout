@@ -2,10 +2,10 @@ import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, raises
 
-from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
-from seedcase_sprout.core.examples import example_resource_properties
-from seedcase_sprout.core.join_resource_batches import join_resource_batches
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.constants import BATCH_TIMESTAMP_COLUMN_NAME
+from seedcase_sprout.examples import example_resource_properties
+from seedcase_sprout.join_resource_batches import join_resource_batches
+from seedcase_sprout.properties import (
     ResourceProperties,
 )
 

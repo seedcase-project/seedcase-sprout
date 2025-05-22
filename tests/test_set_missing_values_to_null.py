@@ -2,12 +2,12 @@ import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, mark
 
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.set_missing_values_to_null import set_missing_values_to_null
+from seedcase_sprout.set_missing_values_to_null import set_missing_values_to_null
 
 missing_values = ["None", "NA", "*", "some text", ""]
 

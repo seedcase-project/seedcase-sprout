@@ -33,7 +33,7 @@ class PackagePath:
         ```{python}
         from pathlib import Path
 
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         # With default path
         sp.PackagePath().properties()

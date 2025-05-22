@@ -5,9 +5,9 @@ from pathlib import Path
 
 import polars as pl
 
-from seedcase_sprout.core.as_readme_text import as_readme_text
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.as_readme_text import as_readme_text
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import (
     ContributorProperties,
     FieldProperties,
     LicenseProperties,
@@ -15,8 +15,8 @@ from seedcase_sprout.core.properties import (
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.core.write_file import write_file
-from seedcase_sprout.core.write_package_properties import write_package_properties
+from seedcase_sprout.write_file import write_file
+from seedcase_sprout.write_package_properties import write_package_properties
 
 
 def example_package_properties() -> PackageProperties:
@@ -27,7 +27,7 @@ def example_package_properties() -> PackageProperties:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         sp.example_package_properties()
         ```
     """
@@ -62,7 +62,7 @@ def example_resource_properties() -> ResourceProperties:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         sp.example_resource_properties()
         ```
     """
@@ -105,7 +105,7 @@ def example_data() -> pl.DataFrame:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         sp.example_data()
         ```
     """
@@ -126,7 +126,7 @@ def example_resource_properties_all_types() -> ResourceProperties:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         sp.example_resource_properties_all_types()
         ```
     """
@@ -167,7 +167,7 @@ def example_data_all_types() -> pl.DataFrame:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         sp.example_data_all_types()
         ```
     """
@@ -281,7 +281,7 @@ def example_data_all_polars_types() -> pl.DataFrame:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         sp.example_data_all_polars_types()
         ```
     """
@@ -326,7 +326,7 @@ class ExamplePackage(AbstractContextManager):
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         with sp.ExamplePackage() as package_path:
             properties = sp.read_properties(package_path.properties())
 

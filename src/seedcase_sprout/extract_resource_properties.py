@@ -1,10 +1,10 @@
 import polars as pl
 
-from seedcase_sprout.core.internals.functionals import _map, _map2
-from seedcase_sprout.core.map_data_types import (
+from seedcase_sprout.internals.functionals import _map, _map2
+from seedcase_sprout.map_data_types import (
     _polars_to_datapackage,
 )
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,
@@ -33,7 +33,7 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         sp.extract_resource_properties(
             data=sp.example_data(),

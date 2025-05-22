@@ -1,11 +1,11 @@
 import polars as pl
 
-from seedcase_sprout.core.check_data import check_data
-from seedcase_sprout.core.check_properties import (
+from seedcase_sprout.check_data import check_data
+from seedcase_sprout.check_properties import (
     check_resource_properties,
 )
-from seedcase_sprout.core.constants import BATCH_TIMESTAMP_COLUMN_NAME
-from seedcase_sprout.core.properties import ResourceProperties
+from seedcase_sprout.constants import BATCH_TIMESTAMP_COLUMN_NAME
+from seedcase_sprout.properties import ResourceProperties
 
 
 def join_resource_batches(
@@ -49,7 +49,7 @@ def join_resource_batches(
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         with sp.ExamplePackage():
             resource_properties = sp.example_resource_properties()

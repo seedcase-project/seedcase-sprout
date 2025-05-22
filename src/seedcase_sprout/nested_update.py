@@ -3,7 +3,7 @@ from typing import Any, TypeVar
 
 from deepmerge import Merger
 
-from seedcase_sprout.core.properties import Properties
+from seedcase_sprout.properties import Properties
 
 PropertiesSubclass = TypeVar("PropertiesSubclass", bound=Properties)
 

@@ -1,15 +1,15 @@
 import polars as pl
 
-from seedcase_sprout.core.check_properties import (
+from seedcase_sprout.check_properties import (
     check_resource_properties,
 )
-from seedcase_sprout.core.get_nested_attr import get_nested_attr
-from seedcase_sprout.core.internals.functionals import _map
-from seedcase_sprout.core.map_data_types import (
+from seedcase_sprout.get_nested_attr import get_nested_attr
+from seedcase_sprout.internals.functionals import _map
+from seedcase_sprout.map_data_types import (
     _get_allowed_polars_types,
     _polars_and_datapackage_types_match,
 )
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
 )
@@ -52,7 +52,7 @@ def check_data(
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         sp.check_data(
             data=sp.example_data(),

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-from seedcase_sprout.core.sprout_checks.is_resource_name_correct import (
+from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
 )
 

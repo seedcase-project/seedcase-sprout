@@ -1,7 +1,7 @@
-from seedcase_sprout.core.check_properties import (
+from seedcase_sprout.check_properties import (
     check_properties,
 )
-from seedcase_sprout.core.properties import PackageProperties
+from seedcase_sprout.properties import PackageProperties
 
 
 def update_package_properties(
@@ -39,7 +39,7 @@ def update_package_properties(
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         sp.update_package_properties(
             current_properties=sp.example_package_properties(),

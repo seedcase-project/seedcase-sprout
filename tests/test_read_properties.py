@@ -3,13 +3,13 @@ from pathlib import Path
 
 from pytest import raises
 
-from seedcase_sprout.core import (
+from seedcase_sprout import (
     example_package_properties,
     read_properties,
     write_package_properties,
 )
-from seedcase_sprout.core.internals import _write_json
-from seedcase_sprout.core.paths import PackagePath
+from seedcase_sprout.internals import _write_json
+from seedcase_sprout.paths import PackagePath
 
 
 def test_reads_in_as_package_properties(tmp_path):

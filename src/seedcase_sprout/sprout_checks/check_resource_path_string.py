@@ -1,5 +1,5 @@
-from seedcase_sprout.core.check_datapackage import CheckError
-from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
+from seedcase_sprout.check_datapackage import CheckError
+from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
 

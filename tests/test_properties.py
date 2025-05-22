@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 import time_machine
 from pytest import mark
 
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.properties import (
     ConstraintsProperties,
     ContributorProperties,
     FieldProperties,
@@ -88,7 +88,7 @@ def test_compact_dict_removes_none_values_in_nested_objects():
     }
 
 
-@patch("seedcase_sprout.core.properties.uuid4", return_value=UUID(int=1))
+@patch("seedcase_sprout.properties.uuid4", return_value=UUID(int=1))
 @time_machine.travel(datetime(2024, 5, 14, 5, 0, 1, tzinfo=ZoneInfo("UTC")), tick=False)
 def test_creates_package_properties_with_correct_defaults(mock_uuid):
     """`from_default` should create `PackageProperties` with correct defaults for id,

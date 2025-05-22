@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from seedcase_sprout.core import (
+from seedcase_sprout import (
     example_package_properties,
     write_package_properties,
 )

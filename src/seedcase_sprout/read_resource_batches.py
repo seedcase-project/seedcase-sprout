@@ -4,18 +4,18 @@ from pathlib import Path
 
 import polars as pl
 
-from seedcase_sprout.core.check_data import check_data
-from seedcase_sprout.core.check_properties import (
+from seedcase_sprout.check_data import check_data
+from seedcase_sprout.check_properties import (
     check_resource_properties,
 )
-from seedcase_sprout.core.constants import (
+from seedcase_sprout.constants import (
     BATCH_TIMESTAMP_COLUMN_NAME,
     BATCH_TIMESTAMP_FORMAT,
     BATCH_TIMESTAMP_PATTERN,
 )
-from seedcase_sprout.core.internals import _check_is_file, _map, _map2
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import ResourceProperties
+from seedcase_sprout.internals import _check_is_file, _map, _map2
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import ResourceProperties
 
 
 def read_resource_batches(
@@ -49,7 +49,7 @@ def read_resource_batches(
 
     Examples:
         ``` {python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         with sp.ExamplePackage():
             resource_properties = sp.example_resource_properties()

@@ -1,16 +1,16 @@
 import polars as pl
 from polars.testing import assert_frame_equal
 
-from seedcase_sprout.core.examples import (
+from seedcase_sprout.examples import (
     ExamplePackage,
     example_data,
     example_data_all_types,
     example_resource_properties,
     example_resource_properties_all_types,
 )
-from seedcase_sprout.core.read_properties import read_properties
-from seedcase_sprout.core.write_resource_data import write_resource_data
-from tests.core.assert_raises_errors import (
+from seedcase_sprout.read_properties import read_properties
+from seedcase_sprout.write_resource_data import write_resource_data
+from tests.assert_raises_errors import (
     assert_raises_check_errors,
     assert_raises_errors,
 )

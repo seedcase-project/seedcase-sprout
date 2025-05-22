@@ -3,20 +3,20 @@ from pathlib import Path
 
 from pytest import fixture, raises
 
-from seedcase_sprout.core.examples import (
+from seedcase_sprout.examples import (
     ExamplePackage,
     example_package_properties,
 )
-from seedcase_sprout.core.internals import _read_json, _write_json
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.internals import _read_json, _write_json
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.write_package_properties import write_package_properties
-from seedcase_sprout.core.write_resource_properties import write_resource_properties
-from tests.core.assert_raises_errors import assert_raises_check_errors
+from seedcase_sprout.write_package_properties import write_package_properties
+from seedcase_sprout.write_resource_properties import write_resource_properties
+from tests.assert_raises_errors import assert_raises_check_errors
 
 
 @fixture

@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from seedcase_sprout.core.check_properties import check_properties
-from seedcase_sprout.core.internals import _check_is_file, _read_json
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import PackageProperties
+from seedcase_sprout.check_properties import check_properties
+from seedcase_sprout.internals import _check_is_file, _read_json
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import PackageProperties
 
 
 def read_properties(path: Path | None = None) -> PackageProperties:
@@ -23,7 +23,7 @@ def read_properties(path: Path | None = None) -> PackageProperties:
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
 
         with sp.ExamplePackage():
             sp.read_properties()

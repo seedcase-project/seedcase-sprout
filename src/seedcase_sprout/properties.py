@@ -15,8 +15,8 @@ from uuid import uuid4
 
 from dacite import from_dict
 
-from seedcase_sprout.core.internals import _get_iso_timestamp
-from seedcase_sprout.core.internals._create_relative_resource_data_path import (
+from seedcase_sprout.internals import _get_iso_timestamp
+from seedcase_sprout.internals._create_relative_resource_data_path import (
     _create_relative_resource_data_path,
 )
 
@@ -80,7 +80,7 @@ class ContributorProperties(Properties):
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         print(sp.ContributorProperties())
         print(sp.ContributorProperties(title="Amir Smith"))
         ```
@@ -111,7 +111,7 @@ class LicenseProperties(Properties):
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         print(sp.LicenseProperties())
         ```
     """
@@ -323,7 +323,7 @@ class TableSchemaProperties(Properties):
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         print(sp.TableSchemaProperties(primary_key="id"))
         ```
     """
@@ -374,7 +374,7 @@ class ResourceProperties(Properties):
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         print(sp.ResourceProperties())
         print(sp.ResourceProperties(name="blood-samples", title="Blood samples"))
         ```
@@ -432,7 +432,7 @@ class PackageProperties(Properties):
 
     Examples:
         ```{python}
-        import seedcase_sprout.core as sp
+        import seedcase_sprout as sp
         print(sp.PackageProperties())
         print(sp.PackageProperties(name="diabetes-cohort", title="Diabetes Cohort"))
         print(sp.PackageProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
@@ -517,7 +517,7 @@ class PackageProperties(Properties):
 
         Examples:
             ```{python}
-            import seedcase_sprout.core as sp
+            import seedcase_sprout as sp
 
             sp.PackageProperties.from_default(name="my-package", title="My Package...")
             ```

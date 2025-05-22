@@ -1,4 +1,4 @@
-from seedcase_sprout.core import (
+from seedcase_sprout import (
     ContributorProperties,
     LicenseProperties,
     PackageProperties,

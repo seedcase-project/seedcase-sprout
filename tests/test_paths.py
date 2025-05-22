@@ -1,4 +1,4 @@
-from seedcase_sprout.core import PackagePath
+from seedcase_sprout import PackagePath
 
 
 def test_package_path_outputs_an_absolute_path(tmp_path):

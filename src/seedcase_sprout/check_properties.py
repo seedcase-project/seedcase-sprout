@@ -1,9 +1,9 @@
-import seedcase_sprout.core.check_datapackage as cdp
-from seedcase_sprout.core.properties import PackageProperties, ResourceProperties
-from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
+import seedcase_sprout.check_datapackage as cdp
+from seedcase_sprout.properties import PackageProperties, ResourceProperties
+from seedcase_sprout.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
 )
-from seedcase_sprout.core.sprout_checks.get_sprout_resource_errors import (
+from seedcase_sprout.sprout_checks.get_sprout_resource_errors import (
     get_sprout_resource_errors,
 )
 

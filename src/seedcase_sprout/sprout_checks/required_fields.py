@@ -1,4 +1,4 @@
-import seedcase_sprout.core.check_datapackage as cdp
+import seedcase_sprout.check_datapackage as cdp
 
 # Sprout-specific required fields and their types
 

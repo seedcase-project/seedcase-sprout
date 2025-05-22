@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from seedcase_sprout.core.check_properties import check_properties
-from seedcase_sprout.core.internals import _write_json
-from seedcase_sprout.core.paths import PackagePath
-from seedcase_sprout.core.properties import PackageProperties
+from seedcase_sprout.check_properties import check_properties
+from seedcase_sprout.internals import _write_json
+from seedcase_sprout.paths import PackagePath
+from seedcase_sprout.properties import PackageProperties
 
 
 def write_package_properties(

@@ -1,6 +1,6 @@
 import polars as pl
 
-from seedcase_sprout.core.properties import FieldType
+from seedcase_sprout.properties import FieldType
 
 """
 Mapping between Polars types and Data Package types.

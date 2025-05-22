@@ -1,11 +1,11 @@
 from pytest import fixture, raises
 
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.core.update_package_properties import update_package_properties
+from seedcase_sprout.update_package_properties import update_package_properties
 
 
 @fixture

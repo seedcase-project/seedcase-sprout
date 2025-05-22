@@ -1,10 +1,10 @@
 from pytest import mark
 
-from seedcase_sprout.core.check_datapackage import RequiredFieldType
-from seedcase_sprout.core.sprout_checks.check_fields_not_blank import (
+from seedcase_sprout.check_datapackage import RequiredFieldType
+from seedcase_sprout.sprout_checks.check_fields_not_blank import (
     check_fields_not_blank,
 )
-from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
+from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
 

@@ -1,7 +1,7 @@
 from pytest import mark
 
-from seedcase_sprout.core.sprout_checks.check_no_inline_data import check_no_inline_data
-from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
+from seedcase_sprout.sprout_checks.check_no_inline_data import check_no_inline_data
+from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
 

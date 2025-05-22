@@ -1,7 +1,7 @@
 import re
 from typing import Any
 
-from seedcase_sprout.core.check_datapackage.constants import NAME_PATTERN
+from seedcase_sprout.check_datapackage.constants import NAME_PATTERN
 
 
 def _is_resource_name_correct(resource_name: Any) -> bool:

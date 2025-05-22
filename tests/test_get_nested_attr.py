@@ -1,6 +1,6 @@
 from pytest import mark, raises
 
-from seedcase_sprout.core.get_nested_attr import get_nested_attr
+from seedcase_sprout.get_nested_attr import get_nested_attr
 
 
 class D:

@@ -1,13 +1,13 @@
 from pytest import fixture, mark
 
-from seedcase_sprout.core.properties import PackageProperties
-from seedcase_sprout.core.sprout_checks.get_blank_value_for_type import (
+from seedcase_sprout.properties import PackageProperties
+from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
-from seedcase_sprout.core.sprout_checks.get_sprout_package_errors import (
+from seedcase_sprout.sprout_checks.get_sprout_package_errors import (
     get_sprout_package_errors,
 )
-from seedcase_sprout.core.sprout_checks.required_fields import (
+from seedcase_sprout.sprout_checks.required_fields import (
     PACKAGE_SPROUT_REQUIRED_FIELDS,
 )
 

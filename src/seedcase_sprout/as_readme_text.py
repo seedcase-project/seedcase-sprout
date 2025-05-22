@@ -4,12 +4,12 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
 )
 
-TEMPLATES_PATH: Path = files("seedcase_sprout.core").joinpath("templates")
+TEMPLATES_PATH: Path = files("seedcase_sprout").joinpath("templates")
 
 
 def as_readme_text(properties: PackageProperties) -> str:

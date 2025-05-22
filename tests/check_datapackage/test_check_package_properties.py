@@ -1,6 +1,6 @@
 from pytest import mark
 
-from seedcase_sprout.core.check_datapackage.check_package_properties import (
+from seedcase_sprout.check_datapackage.check_package_properties import (
     check_package_properties,
 )
 

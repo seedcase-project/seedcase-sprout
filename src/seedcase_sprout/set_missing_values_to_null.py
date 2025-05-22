@@ -1,7 +1,7 @@
 import polars as pl
 
-from seedcase_sprout.core.get_nested_attr import get_nested_attr
-from seedcase_sprout.core.properties import (
+from seedcase_sprout.get_nested_attr import get_nested_attr
+from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
 )

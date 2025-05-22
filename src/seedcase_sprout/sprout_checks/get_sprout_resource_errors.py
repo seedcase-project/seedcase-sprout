@@ -1,24 +1,24 @@
-import seedcase_sprout.core.check_datapackage as cdp
-from seedcase_sprout.core.internals._create_relative_resource_data_path import (
+import seedcase_sprout.check_datapackage as cdp
+from seedcase_sprout.internals._create_relative_resource_data_path import (
     _create_relative_resource_data_path,
 )
-from seedcase_sprout.core.sprout_checks.check_fields_not_blank import (
+from seedcase_sprout.sprout_checks.check_fields_not_blank import (
     check_fields_not_blank,
 )
-from seedcase_sprout.core.sprout_checks.check_fields_present import (
+from seedcase_sprout.sprout_checks.check_fields_present import (
     check_fields_present,
 )
-from seedcase_sprout.core.sprout_checks.check_no_inline_data import check_no_inline_data
-from seedcase_sprout.core.sprout_checks.check_resource_path_string import (
+from seedcase_sprout.sprout_checks.check_no_inline_data import check_no_inline_data
+from seedcase_sprout.sprout_checks.check_resource_path_string import (
     check_resource_path_string,
 )
-from seedcase_sprout.core.sprout_checks.get_json_path_to_resource_field import (
+from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
 )
-from seedcase_sprout.core.sprout_checks.is_resource_name_correct import (
+from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
 )
-from seedcase_sprout.core.sprout_checks.required_fields import (
+from seedcase_sprout.sprout_checks.required_fields import (
     RESOURCE_SPROUT_REQUIRED_FIELDS,
 )
 
