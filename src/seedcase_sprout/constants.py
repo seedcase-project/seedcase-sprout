@@ -1,4 +1,4 @@
-"""Constants in the sprout.core module."""
+"""Constants in the seedcase_sprout module."""
 
 """The format of the timestamp used in batch file names."""
 BATCH_TIMESTAMP_FORMAT = "%Y-%m-%dT%H%M%SZ"

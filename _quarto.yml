@@ -78,8 +78,8 @@ quartodoc:
     table_style: description-list
     show_signature_annotations: true
   sections:
-    - title: "Core functions"
-      desc: "Core functions that support the creation and management of data packages and data resources."
+    - title: "Seedcase Sprout"
+      desc: "Functions and classes that support the creation and management of data packages and data resources."
 
     - subtitle: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
@@ -129,7 +129,7 @@ quartodoc:
         - PackagePath
 
     - subtitle: "Helper functions"
-      desc: "Functions to support working with data packages and running code within Sprout Core."
+      desc: "Functions to support working with data packages and running code within Seedcase Sprout."
       package: "seedcase_sprout"
       contents:
         - example_package_properties

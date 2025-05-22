@@ -1,6 +1,6 @@
-"""Core, external-facing functions of Sprout."""
+"""External-facing functions of Seedcase Sprout."""
 # This exposes only the functions we want exposed when
-# the package is imported via `from sprout.core import *`.
+# the package is imported via `from seedcase_sprout import *`.
 
 # Packages -----
 # from .delete_package import *
