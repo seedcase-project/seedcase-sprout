@@ -170,7 +170,7 @@ Now that you have the properties for the resource, you can create the
 properties for the resource within your existing data package. A data
 package can contain multiple resources, so their `name` property
 must be unique. This `name` property is what will be used later
-to create the folder structure. for that resource.
+to create the folder structure for that resource.
 
 We assume that you've already created a data package (for example, by
 following the [package guide](packages.qmd#creating-a-data-package)) and
