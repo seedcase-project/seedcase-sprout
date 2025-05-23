@@ -1,5 +1,5 @@
 import seedcase_sprout.check_datapackage as cdp
-from seedcase_sprout.internals._create_relative_resource_data_path import (
+from seedcase_sprout.internals import (
     _create_relative_resource_data_path,
 )
 from seedcase_sprout.sprout_checks.check_fields_not_blank import (
