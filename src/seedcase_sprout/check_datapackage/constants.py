@@ -1,7 +1,7 @@
 from importlib.resources import files
 from pathlib import Path
 
-from seedcase_sprout.check_datapackage.required_fields import RequiredFieldType
+from seedcase_sprout.check_datapackage.internals import RequiredFieldType
 
 COMPLEX_VALIDATORS = {"allOf", "anyOf", "oneOf"}
 
