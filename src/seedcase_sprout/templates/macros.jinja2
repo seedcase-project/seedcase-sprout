@@ -1,0 +1,47 @@
+{# Renders a required field #}
+{% macro required(name, value, default='""') -%}
+{% if value is not defined or value is none -%}
+  {{ name }}={{ default }},
+{%- else -%}
+  {{ name }}={{ value | quote_str }},
+{%- endif -%}
+{%- endmacro %}
+
+{# Renders an optional field #}
+{% macro optional(name, value, default='""') -%}
+{% if value is not defined or value is none -%}
+  # {{ name }}={{ default }},
+{%- else -%}
+  {{ name }}={{ value | quote_str }},
+{%- endif -%}
+{%- endmacro %}
+
+{# Renders a required list field #}
+{% macro required_list(name, items) -%}
+{%- set items = items if items else [{}] -%}
+{{ name }}=[
+    {%- for item in items -%}
+    {{ caller(item) }}
+    {%- endfor -%}
+],
+{%- endmacro %}
+
+{# Renders an optional list field #}
+{% macro optional_list(name, items) -%}
+{%- if not items %}
+  {%- set items = [{}] -%}
+  # {{ name }}=[
+  {%- for item in items -%}
+    {{ caller(item)
+        | replace("    )", "#     )")
+        | replace("    sp", "#     sp") }}
+  {%- endfor -%}
+  # ],
+{%- else -%}
+  {{ name }}=[
+  {%- for item in items -%}
+    {{ caller(item) }}
+  {%- endfor -%}
+  ],
+{%- endif %}
+{%- endmacro %}
