@@ -4,6 +4,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 from seedcase_sprout.constants import TEMPLATES_PATH
+from seedcase_sprout.internals.functionals import _map
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import PackageProperties
 from seedcase_sprout.read_properties import read_properties
@@ -33,6 +34,7 @@ def sync_package_properties_template(path: Path | None = None):
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=False)
     env.filters["quote_str"] = lambda value: json.dumps(value, ensure_ascii=False)
+    env.filters["comment"] = _comment
 
     template = env.get_template("package-properties.jinja2")
     text = template.render(properties=package_properties)
@@ -40,3 +42,25 @@ def sync_package_properties_template(path: Path | None = None):
     template_path = package_path.package_properties_template()
     template_path.parent.mkdir(exist_ok=True)
     write_file(text, template_path)
+
+
+def _comment(text: str) -> str:
+    """Comments out each line in a block of text."""
+
+    def _comment_line(line: str) -> str:
+        content = line.lstrip()
+        # Don't change empty lines
+        if content == "":
+            return line
+
+        # Indentation to keep after `#`: one indent smaller than original
+        keep_spaces = line[4 : -len(content)]
+
+        # Uncomment any commented lines
+        if content.startswith("# "):
+            content = content[2:]
+
+        # Place one indent before `#`
+        return f"    #{keep_spaces}{content}"
+
+    return "\n".join(_map(text.splitlines(), _comment_line))

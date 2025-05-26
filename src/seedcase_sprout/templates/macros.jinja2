@@ -32,9 +32,7 @@
   {%- set items = [{}] -%}
   # {{ name }}=[
   {%- for item in items -%}
-    {{ caller(item)
-        | replace("    )", "#     )")
-        | replace("    sp", "#     sp") }}
+    {{ caller(item) | comment }}
   {%- endfor -%}
   # ],
 {%- else -%}
