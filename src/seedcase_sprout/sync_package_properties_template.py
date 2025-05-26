@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from seedcase_sprout.constants import TEMPLATES_PATH
 from seedcase_sprout.internals.functionals import _map
@@ -32,11 +32,14 @@ def sync_package_properties_template(path: Path | None = None):
         else PackageProperties.from_default()
     )
 
-    env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=False)
+    env = Environment(
+        loader=FileSystemLoader(TEMPLATES_PATH),
+        autoescape=select_autoescape(disabled_extensions=("py.jinja2")),
+    )
     env.filters["quote_str"] = lambda value: json.dumps(value, ensure_ascii=False)
     env.filters["comment"] = _comment
 
-    template = env.get_template("package-properties.jinja2")
+    template = env.get_template("package-properties.py.jinja2")
     text = template.render(properties=package_properties)
 
     template_path = package_path.package_properties_template()
