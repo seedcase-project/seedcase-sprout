@@ -7,7 +7,7 @@ from seedcase_sprout.properties import PackageProperties
 from seedcase_sprout.read_properties import read_properties
 
 
-def write_package_properties_from_template(
+def use_package_properties_template(
     properties: PackageProperties, path: Path | None = None
 ) -> Path:
     """Write package-level properties to the `datapackage.json` file.
