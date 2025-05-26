@@ -1,6 +1,8 @@
+import os
 import runpy
 from dataclasses import replace
 from datetime import datetime
+from pathlib import Path
 from unittest.mock import patch
 from uuid import UUID
 from zoneinfo import ZoneInfo
@@ -35,7 +37,7 @@ def test_creates_empty_template_when_no_datapackage_json(mock_uuid, tmp_cwd):
 
     # Executing the template should fail the checks
     assert_raises_check_errors(
-        lambda: runpy.run_path(package_path.package_properties_template())
+        lambda: runpy_from_script_folder(package_path.package_properties_template())
     )
 
 
@@ -66,7 +68,7 @@ def test_creates_populated_template_when_datapackage_json():
         assert 'roles=["creator"]' in template
 
         # Executing the template should write the same values back to datapackage.json
-        runpy.run_path(template_path)
+        runpy_from_script_folder(template_path)
         assert read_properties() == properties
 
 
@@ -85,7 +87,7 @@ def test_running_modified_template_updates_datapackage_json():
         )
         template_path.write_text(template)
 
-        runpy.run_path(template_path)
+        runpy_from_script_folder(template_path)
 
         assert read_properties() == expected_properties
 
@@ -103,7 +105,7 @@ def test_cannot_set_resources_using_package_properties_template(tmp_cwd):
     template_path.write_text(template)
 
     with raises(ValueError, match="resources"):
-        runpy.run_path(template_path)
+        runpy_from_script_folder(template_path)
 
 
 def test_cannot_sync_to_incorrect_datapackage_json(tmp_cwd):
@@ -119,3 +121,13 @@ def test_works_with_custom_path(tmp_path):
     """Should work with a custom path."""
     sync_package_properties_template(tmp_path)
     assert PackagePath(tmp_path).package_properties_template().exists()
+
+
+def runpy_from_script_folder(script_path: Path):
+    """Runs a Python script with the script's folder as the cwd."""
+    original = os.getcwd()
+    os.chdir(script_path.parent)
+    try:
+        runpy.run_path(script_path)
+    finally:
+        os.chdir(original)

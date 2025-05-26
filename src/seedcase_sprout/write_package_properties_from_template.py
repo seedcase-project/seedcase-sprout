@@ -35,7 +35,7 @@ def write_package_properties_from_template(
             "The `resources` field must not be set. Use the resource template to define"
             "resource properties."
         )
-    path = path or PackagePath().properties()
+    path = path or PackagePath(Path.cwd().parent).properties()
     check_properties(properties)
 
     if path.exists():
