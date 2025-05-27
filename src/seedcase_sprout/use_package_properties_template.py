@@ -33,7 +33,7 @@ def use_package_properties_template(
     if properties.resources is not None:
         raise ValueError(
             "The `resources` field must not be set. Use the resource template to define"
-            "resource properties."
+            " resource properties."
         )
     check_properties(properties)
 
