@@ -41,6 +41,7 @@ def sync_package_properties_template(path: Path | None = None) -> Path:
     )
     env.filters["quote_str"] = lambda value: json.dumps(value, ensure_ascii=False)
     env.filters["comment"] = _comment
+    env.filters["strip_n"] = lambda text: text.lstrip("\n").rstrip("    ")
 
     template = env.get_template("package-properties.py.jinja2")
     text = template.render(properties=package_properties)

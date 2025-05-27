@@ -20,10 +20,9 @@
 {% macro required_list(name, items) -%}
 {%- set items = items if items else [{}] -%}
 {{ name }}=[
-    {%- for item in items -%}
-    {{ caller(item) }}
-    {%- endfor -%}
-],
+{% for item in items -%}
+    {{ caller(item) | strip_n }}
+    {%- endfor %}    ],
 {%- endmacro %}
 
 {# Renders an optional list field #}
@@ -37,9 +36,8 @@
   # ],
 {%- else -%}
   {{ name }}=[
-  {%- for item in items -%}
-    {{ caller(item) }}
-  {%- endfor -%}
-  ],
+{% for item in items -%}
+    {{ caller(item) | strip_n }}
+    {%- endfor %}    ],
 {%- endif %}
 {%- endmacro %}
