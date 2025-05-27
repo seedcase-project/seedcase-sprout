@@ -184,6 +184,22 @@ flowchart
     function --> out
 ```
 
+### {{< var wip >}} `read_resource_data(properties, resource_name)`
+
+See the help documentation with `help(read_resource_data)` for more
+details.
+
+```{mermaid}
+flowchart
+    in_properties[/properties/]
+    in_name[/resource_name/]
+    function("read_resource_data()")
+    out[("DataFrame")]
+    in_properties --> function
+    in_name --> function
+    function --> out
+```
+
 ### {{< var wip >}} `update_resource_properties(current, updates)`
 
 Edit the properties of a resource in a package. The `properties`
