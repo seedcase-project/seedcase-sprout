@@ -11,11 +11,14 @@ from seedcase_sprout.read_properties import read_properties
 from seedcase_sprout.write_file import write_file
 
 
-def sync_package_properties_template(path: Path | None = None):
+def sync_package_properties_template(path: Path | None = None) -> Path:
     """Syncs the package properties template with the package properties.
 
     Args:
         path: The path to the package folder. Defaults to the current working directory.
+
+    Returns:
+        The path to the template file.
 
     Examples:
         ```{python}
@@ -44,7 +47,7 @@ def sync_package_properties_template(path: Path | None = None):
 
     template_path = package_path.package_properties_template()
     template_path.parent.mkdir(exist_ok=True)
-    write_file(text, template_path)
+    return write_file(text, template_path)
 
 
 def _comment(text: str) -> str:

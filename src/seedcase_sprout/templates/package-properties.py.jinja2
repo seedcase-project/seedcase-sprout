@@ -1,4 +1,6 @@
 {% from "macros.jinja2" import required, optional, optional_list, required_list -%}
+from pathlib import Path
+
 import seedcase_sprout as sp
 
 package_properties = sp.PackageProperties.from_default(
@@ -48,4 +50,4 @@ package_properties = sp.PackageProperties.from_default(
     {{ optional("created", properties.created) }}
 )
 
-sp.use_package_properties_template(package_properties)
+sp.use_package_properties_template(package_properties, Path(__file__))

@@ -14,3 +14,5 @@ BATCH_TIMESTAMP_PATTERN = r"\d{4}-\d{2}-\d{2}T\d{6}Z"
 BATCH_TIMESTAMP_COLUMN_NAME = "_batch_file_timestamp_"
 
 TEMPLATES_PATH: Path = files("seedcase_sprout").joinpath("templates")
+
+SCRIPTS_FOLDER: str = "scripts"

@@ -8,6 +8,8 @@ first approach).
 
 from pathlib import Path
 
+from seedcase_sprout.constants import SCRIPTS_FOLDER
+
 
 class PackagePath:
     """Gets the absolute path to a specific file or folder in a data package.
@@ -104,4 +106,4 @@ class PackagePath:
 
     def package_properties_template(self) -> Path:
         """Path to the package properties template."""
-        return self.root() / "scripts" / "package-properties.py"
+        return self.root() / SCRIPTS_FOLDER / "package-properties.py"
