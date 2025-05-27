@@ -16,7 +16,7 @@ from uuid import uuid4
 from dacite import from_dict
 
 from seedcase_sprout.internals import (
-    _create_relative_resource_data_path,
+    _create_resource_data_path,
     _get_iso_timestamp,
 )
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
@@ -399,8 +399,11 @@ class ResourceProperties(Properties):
 
     def __post_init__(self):
         """Generates the path from the resource name after object creation."""
-        if _is_resource_name_correct(self.name):
-            self.path = _create_relative_resource_data_path(self.name)
+        self.path = (
+            _create_resource_data_path(self.name)
+            if _is_resource_name_correct(self.name)
+            else None
+        )
 
 
 @dataclass
