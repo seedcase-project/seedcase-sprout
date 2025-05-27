@@ -5,41 +5,49 @@ order: 0
 
 {{< include _preamble.qmd >}}
 
-Before installing Sprout, you need to have [Python](https://www.python.org/downloads/) and [pipx](https://pipx.pypa.io/latest/installation/) installed.
+Before installing Sprout, you need to have
+[Python](https://www.python.org/downloads/) and
+[pipx](https://pipx.pypa.io/latest/installation/) installed.
 
-To check that these programs are installed, run the following commands in your
-Terminal:
+To check that these programs are installed, run the following commands
+in your Terminal:
 
 ``` {.bash filename="Terminal"}
 python3 --version
 pipx --version
 ```
 
-If Python and pipx are installed, these commands will show you the versions installed on your system. If you get an error, you need to install them before continuing.
+If Python and pipx are installed, these commands will show you the
+versions installed on your system. If you get an error, you need to
+install them before continuing.
 
 ## Install Sprout in a virtual environment (recommended)
 
 It's generally recommended to install Python packages in a virtual
-environment to keep a project's dependencies separate from the system-wide Python setup and avoid conflicts. There are several tools to
+environment to keep a project's dependencies separate from the
+system-wide Python setup and avoid conflicts. There are several tools to
 manage package dependencies and create virtual environments, such as
 venv, virtualenv, and uv. For this guide, we will use
 [uv](https://docs.astral.sh/uv/).
 
-If you don't have uv installed, you can install it in your Terminal with pipx:
+If you don't have uv installed, you can install it in your Terminal with
+pipx:
 
 ``` {.bash filename="Terminal"}
 pipx install uv
 ```
 
-To check that uv is installed, run this
-command:
+To check that uv is installed, run this command:
 
 ``` {.bash filename="Terminal"}
 uv
 ```
 
 To create a Python project using uv, follow the instructions on
-[uv's](https://docs.astral.sh/uv/guides/projects/) website. After creating the project, make sure your Terminal's working directory is in the project folder. You can determinate this by running the `pwd` command.
+[uv's](https://docs.astral.sh/uv/guides/projects/) website. After
+creating the project, make sure your Terminal's working directory is in
+the project folder. You can determinate this by running the `pwd`
+command.
 
 You can now install Sprout directly from the [GitHub
 repository](https://github.com/seedcase-project/seedcase-sprout):
@@ -48,31 +56,32 @@ repository](https://github.com/seedcase-project/seedcase-sprout):
 uv add git+https://github.com/seedcase-project/seedcase-sprout.git
 ```
 
-Check that Sprout has been installed correctly by running this
-command:
+Check that Sprout has been installed correctly by running this command:
 
 ``` {.bash filename="Terminal"}
 uv pip show seedcase_sprout
 ```
 
-If Sprout has been installed successfully, the output will show details about Sprout.
+If Sprout has been installed successfully, the output will show details
+about Sprout.
 
 Get started with your first data package by following the guide on
 [Creating and managing data packages](/docs/guide/packages.qmd).
 
 ## Install Sprout in system-wide
 
-We strongly recommend using Sprout in a virtual environment, but you can also install it system-wide. The easiest way to do that is to use pipx:
+We strongly recommend using Sprout in a virtual environment, but you can
+also install it system-wide. The easiest way to do that is to use pipx:
 
 ``` {.bash filename="Terminal"}
 pipx install git+https://github.com/seedcase-project/seedcase-sprout.git
 ```
 
-To check that Sprout has been installed correctly, run the following and make sure `seedcase_sprout` is listed:
+To check that Sprout has been installed correctly, run the following and
+make sure `seedcase_sprout` is listed:
 
 ``` {.bash filename="Terminal"}
 pipx list
 ```
 
-Now you can use Sprout in any Python script throughout your
-computer.
+Now you can use Sprout in any Python script throughout your computer.
