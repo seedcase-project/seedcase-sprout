@@ -1,8 +1,7 @@
 from pathlib import Path
-from typing import Any
 
 
-def _create_resource_data_path(resource_name: Any) -> str:
+def _create_resource_data_path(resource_name: str) -> str:
     """Creates a stringified relative path to the resource data file based on the name.
 
     Args:
