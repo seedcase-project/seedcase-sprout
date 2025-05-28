@@ -13,7 +13,7 @@ show you how to create and manage data packages using Sprout.
 
 ## Creating a data package
 
-Sprout is designed to work in the root of your Python project--—where
+Sprout is designed to work in the root of your Python project---where
 your `.git/` folder and/or `pyproject.toml` file is located (see the
 [installation guide](installation.qmd#installation) for how to install
 Sprout in a virtual environment). By default, Sprout's helper functions
