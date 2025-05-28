@@ -15,6 +15,7 @@ show you how to create and manage data packages using Sprout.
 
 Sprout is designed to work in the root of your Python project--—where your `.git/` folder and/or `pyproject.toml` file is located (see the [installation guide](installation.qmd#installation) for how to install Sprout in a virtual environment). By default, Sprout's helper functions expect the working directory to be the root of your project. Throughout this guide we will refer to the root folder of the Python project as the root folder of the data package.
 
+<!-- TODO: Update the section below after the properties templates have been implemented -->
 
 With that in mind, let's make a data package! A data package always
 needs a `datapackage.json` file. This file will be located at the root of your data package and contains a set of
