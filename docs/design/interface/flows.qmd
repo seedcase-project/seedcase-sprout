@@ -71,9 +71,9 @@ properties from the data, so they must be updated by the user. So both
 `TableSchemaProperties` and `ResourceProperties` will need many of their
 fields filled in after using `extract_resource_properties()`. The output
 of the function `extract_resource_properties()` can be used to generate
-a Python script from a template, to give you a starting point for
+a Python script from a template to give you a starting point for
 writing the resource properties. Afterwards, if you want to update
-the resource properties, you would manually edit the Python script
+the resource properties, you'll edit the Python script
 with the properties and then re-run your build process to generate
 the `datapackage.json` file with the updated properties.
 
