@@ -26,7 +26,7 @@ def create_properties_template(path: Path | None = None) -> Path:
     """
     package_path = PackagePath(path)
 
-    env = Environment(loader=FileSystemLoader(TEMPLATES_PATH))
+    env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     template = env.get_template("properties.py.jinja2")
     text = template.render(
         properties=PackageProperties.from_default(name=package_path.root().name)
