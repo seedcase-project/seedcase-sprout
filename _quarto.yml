@@ -96,7 +96,7 @@ quartodoc:
         - write_resource_properties
 
     - title: "Package property dataclasses"
-      desc: "Dataclasses to help create properties, at the package level."
+      desc: "Dataclasses to help create properties at the package level."
       contents:
         - PackageProperties
         - ContributorProperties
@@ -104,7 +104,7 @@ quartodoc:
         - SourceProperties
 
     - title: "Resource property dataclasses"
-      desc: "Dataclasses to help create properties, at the resource level."
+      desc: "Dataclasses to help create properties at the resource level."
       contents:
         - ResourceProperties
         - TableSchemaProperties
