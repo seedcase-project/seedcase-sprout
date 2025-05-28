@@ -43,11 +43,7 @@ from .properties import (
 )
 from .read_properties import read_properties
 from .read_resource_batches import read_resource_batches
-from .sync_package_properties_template import sync_package_properties_template
 from .update_package_properties import update_package_properties
-from .use_package_properties_template import (
-    use_package_properties_template,
-)
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 from .write_resource_batch import write_resource_batch
@@ -81,8 +77,6 @@ __all__ = [
     # Packages -----
     "update_package_properties",
     "write_package_properties",
-    "use_package_properties_template",
-    "sync_package_properties_template",
     "as_readme_text",
     # "delete_package",
     # Resources -----
