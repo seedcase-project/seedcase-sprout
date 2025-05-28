@@ -107,3 +107,7 @@ class PackagePath:
     def package_properties_template(self) -> Path:
         """Path to the package properties template."""
         return self.root() / SCRIPTS_FOLDER / "package-properties.py"
+
+    def properties_template(self) -> Path:
+        """Path to the properties template."""
+        return self.root() / "main.py"
