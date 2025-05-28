@@ -33,6 +33,8 @@ you to make properties with the correct fields filled in. See the guide
 on [properties](/docs/guide/properties.qmd#properties) for more
 information about these data classes.
 
+<!-- TODO: Add properties guide referenced above -->
+
 First, import the necessary modules and set up the environment:
 
 ```{python}
