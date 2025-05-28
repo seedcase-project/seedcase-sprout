@@ -1,6 +1,6 @@
 import seedcase_sprout as sp
 
-# from scripts.resource_properties import resource_properties_1
+# from .resource_properties_1 import resource_properties_1
 
 properties = sp.PackageProperties(
     ## Required:
@@ -51,5 +51,3 @@ properties = sp.PackageProperties(
     version="{{ properties.version }}",
     created="{{ properties.created }}",
 )
-
-sp.write_package_properties(properties)

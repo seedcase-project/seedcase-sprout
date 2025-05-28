@@ -24,10 +24,14 @@ def create_properties_template(path: Path | None = None) -> Path:
         sp.create_properties_template()
         ```
     """
+    package_path = PackagePath(path)
+
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH))
     template = env.get_template("properties.py.jinja2")
-    package_path = PackagePath(path)
     text = template.render(
         properties=PackageProperties.from_default(name=package_path.root().name)
     )
-    return write_file(text, package_path.properties_template())
+
+    template_path = package_path.properties_template()
+    template_path.parent.mkdir(exist_ok=True)
+    return write_file(text, template_path)
