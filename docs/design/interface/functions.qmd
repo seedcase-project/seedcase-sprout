@@ -70,22 +70,6 @@ flowchart
     function --> out
 ```
 
-### {{< var done >}} `update_package_properties(current_properties, update_properties)`
-
-See the help documentation with `help(update_package_properties())` for
-more details.
-
-```{mermaid}
-flowchart
-    in_current[/current_properties/]
-    in_updates[/update_properties/]
-    function("update_package_properties()")
-    out[("PackageProperties")]
-    in_current --> function
-    in_updates --> function
-    function --> out
-```
-
 ### {{< var done >}} `write_package_properties(properties, path)`
 
 See the help documentation with `help(write_package_properties)` for
@@ -120,7 +104,7 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `write_resource_batch(data, resource_properties)`
+### {{< var done >}} `write_resource_batch(data, resource_properties)`
 
 See the help documentation with `help(write_resource_batch)` for
 more details.
@@ -136,7 +120,7 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `read_resource_batches(resource_properties, paths)`
+### {{< var done >}} `read_resource_batches(resource_properties, paths)`
 
 See the help documentation with `help(read_resource_batches)` for more
 details.
@@ -152,7 +136,7 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `join_resource_batches(data_list, resource_properties)`
+### {{< var done >}} `join_resource_batches(data_list, resource_properties)`
 
 See the help documentation with `help(join_resource_batches)` for more
 details.
@@ -168,7 +152,7 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `write_resource_data(data, resource_properties)`
+### {{< var done >}} `write_resource_data(data, resource_properties)`
 
 See the help documentation with `help(write_resource_data)` for more
 details.
@@ -321,7 +305,7 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `check_data(data, resource_properties)`
+### {{< var done >}} `check_data(data, resource_properties)`
 
 See the help documentation with `help(check_data)` for more details.
 This function checks the data against the properties in the
@@ -407,19 +391,3 @@ flowchart
 ### {{< var done >}} `write_file(text, path)`
 
 See the help documentation with `help(write_file)` for more details.
-
-### {{< var wip >}} `delete_file(path, confirm)`
-
-Given a path, delete that file. This is mostly a wrapper around standard
-functions in Python. The `confirm` argument defaults to `false` so that
-the user needs to explicitly provide `true` to the function argument as
-confirmation. This is done to prevent accidental deletion. Outputs `true`
-if the deletion was successful.
-
-### {{< var wip >}} `delete_dir(path, confirm)`
-
-Given a path, delete that directory and everything inside. This is mostly a
-wrapper around standard functions in Python. The `confirm` argument defaults to
-`false` so that the user needs to explicitly provide `true` to the function
-argument as confirmation. This is done to prevent accidental deletion. Outputs
-`true` if the deletion was successful.
