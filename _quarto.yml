@@ -98,21 +98,21 @@ quartodoc:
     - title: "Package property dataclasses"
       desc: "Dataclasses to help create properties at the package level."
       contents:
-        - PackageProperties
         - ContributorProperties
         - LicenseProperties
+        - PackageProperties
         - SourceProperties
 
     - title: "Resource property dataclasses"
       desc: "Dataclasses to help create properties at the resource level."
       contents:
-        - ResourceProperties
-        - TableSchemaProperties
-        - FieldProperties
         - ConstraintsProperties
+        - FieldProperties
         - MissingValueProperties
-        - TableSchemaForeignKeyProperties
         - ReferenceProperties
+        - ResourceProperties
+        - TableSchemaForeignKeyProperties
+        - TableSchemaProperties
 
     - title: "Property functions"
       desc: "Functions used to work with properties."
