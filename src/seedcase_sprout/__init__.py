@@ -16,6 +16,7 @@ from .check_properties import (
     check_properties,
     check_resource_properties,
 )
+from .create_properties_template import create_properties_template
 from .examples import (
     ExamplePackage,
     example_data,
@@ -42,7 +43,6 @@ from .properties import (
 )
 from .read_properties import read_properties
 from .read_resource_batches import read_resource_batches
-from .update_package_properties import update_package_properties
 from .write_file import write_file
 from .write_package_properties import write_package_properties
 from .write_resource_batch import write_resource_batch
@@ -65,6 +65,7 @@ __all__ = [
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
     "read_properties",
+    "create_properties_template",
     # Example properties -----
     "example_package_properties",
     "example_resource_properties",
@@ -73,7 +74,6 @@ __all__ = [
     "example_resource_properties_all_types",
     "ExamplePackage",
     # Packages -----
-    "update_package_properties",
     "write_package_properties",
     "as_readme_text",
     # "delete_package",
