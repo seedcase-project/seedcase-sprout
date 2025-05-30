@@ -44,7 +44,7 @@ from .properties import (
 from .read_properties import read_properties
 from .read_resource_batches import read_resource_batches
 from .write_file import write_file
-from .write_package_properties import write_properties
+from .write_properties import write_properties
 from .write_resource_batch import write_resource_batch
 
 # from .update_resource_properties import *

@@ -11,7 +11,7 @@ from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     PackageProperties,
 )
-from seedcase_sprout.write_package_properties import write_properties
+from seedcase_sprout.write_properties import write_properties
 
 
 @fixture

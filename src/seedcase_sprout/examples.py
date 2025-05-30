@@ -16,7 +16,7 @@ from seedcase_sprout.properties import (
     TableSchemaProperties,
 )
 from seedcase_sprout.write_file import write_file
-from seedcase_sprout.write_package_properties import write_properties
+from seedcase_sprout.write_properties import write_properties
 
 
 def example_package_properties() -> PackageProperties:
