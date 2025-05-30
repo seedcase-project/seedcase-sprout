@@ -116,6 +116,7 @@ quartodoc:
     - title: "Property functions"
       desc: "Functions used to work with properties."
       contents:
+        - create_properties_template
         - read_properties
 
     - title: "Path functions"
