@@ -51,7 +51,7 @@ package_path = sp.PackagePath(temp_path / "diabetes-study")
 package_path.root().mkdir()
 
 package_properties = sp.example_package_properties()
-sp.write_package_properties(
+sp.write_properties(
     properties=package_properties,
     path=package_path.properties(),
 )
