@@ -10,7 +10,7 @@ from seedcase_sprout.properties import (
     PackageProperties,
     ResourceProperties,
 )
-from seedcase_sprout.write_package_properties import write_package_properties
+from seedcase_sprout.write_package_properties import write_properties
 
 resource_properties = ResourceProperties(
     name="resource-1",

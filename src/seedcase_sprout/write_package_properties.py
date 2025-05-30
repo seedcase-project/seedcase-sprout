@@ -6,9 +6,7 @@ from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import PackageProperties
 
 
-def write_package_properties(
-    properties: PackageProperties, path: Path | None = None
-) -> Path:
+def write_properties(properties: PackageProperties, path: Path | None = None) -> Path:
     """Writes the specified package properties to the `datapackage.json` file.
 
     Writes a set of package properties (with or without resource properties) back to the
