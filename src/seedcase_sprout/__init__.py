@@ -49,7 +49,6 @@ from .write_resource_batch import write_resource_batch
 
 # from .update_resource_properties import *
 from .write_resource_data import write_resource_data
-from .write_resource_properties import write_resource_properties
 
 __all__ = [
     # Properties -----
@@ -84,7 +83,6 @@ __all__ = [
     "write_resource_batch",
     # "update_resource_properties",
     "write_resource_data",
-    "write_resource_properties",
     # "delete_resource_batch_file",
     # "delete_resource_data",
     # "delete_resource_properties",
