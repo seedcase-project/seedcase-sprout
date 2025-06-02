@@ -1,8 +1,5 @@
 import polars as pl
 
-from seedcase_sprout.create_resource_properties_template import (
-    create_resource_properties_template,
-)
 from seedcase_sprout.internals.functionals import _map, _map2
 from seedcase_sprout.map_data_types import (
     _polars_to_datapackage,
@@ -14,9 +11,7 @@ from seedcase_sprout.properties import (
 )
 
 
-def extract_resource_properties(
-    data: pl.DataFrame, resource_name: str = ""
-) -> ResourceProperties:
+def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
     """Extracts resource properties from Polars DataFrame.
 
     The data types are extracted from the DataFrame's schema and mapped from Polars to
@@ -29,7 +24,6 @@ def extract_resource_properties(
 
     Args:
         data: A Polars DataFrame containing the data to extract properties from.
-        resource_name: The name of the new resource. Defaults to "".
 
     Returns:
         A `ResourceProperties` object.
@@ -43,20 +37,16 @@ def extract_resource_properties(
 
         sp.extract_resource_properties(
             data=sp.example_data(),
-            resource_name="my-resource",
         )
         ```
     """
     if data.is_empty():
         raise ValueError("Data is empty. Cannot extract resource properties.")
 
-    resource_properties = ResourceProperties(name=resource_name, type="table")
+    resource_properties = ResourceProperties()
+    resource_properties.type = "table"
     resource_properties.schema = TableSchemaProperties(fields_match="equal")
     resource_properties.schema.fields = _extract_field_properties(data)
-
-    create_resource_properties_template(
-        resource_name=resource_name, fields=resource_properties.schema.fields
-    )
 
     return resource_properties
 
