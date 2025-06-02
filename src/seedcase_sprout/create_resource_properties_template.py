@@ -13,7 +13,7 @@ from seedcase_sprout.write_file import write_file
 
 
 def create_resource_properties_template(
-    resource_name: str = "",
+    resource_name: str | None = None,
     fields: list[FieldProperties] | None = None,
     path: Path | None = None,
 ) -> Path:
@@ -22,7 +22,7 @@ def create_resource_properties_template(
     The resource name and the fields' name and type information can be included.
 
     Args:
-        resource_name: The name of the new resource. Defaults to "".
+        resource_name: The name of the new resource. Defaults to None.
         fields: The fields (columns) of the new resource. Defaults to None.
         path: The path to the package folder. Defaults to the current working directory.
 
@@ -44,6 +44,7 @@ def create_resource_properties_template(
             f"The resource name '{resource_name}' is not correct. Resource names"
             " should only include alphanumeric characters and `.-_`."
         )
+    resource_name = resource_name or ""
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     env.filters["_in_snake_case"] = _in_snake_case
