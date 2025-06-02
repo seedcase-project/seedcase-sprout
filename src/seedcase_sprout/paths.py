@@ -8,6 +8,8 @@ first approach).
 
 from pathlib import Path
 
+from seedcase_sprout.internals.create import _in_snake_case
+
 
 class PackagePath:
     """Gets the absolute path to a specific file or folder in a data package.
@@ -105,3 +107,15 @@ class PackagePath:
     def properties_template(self) -> Path:
         """Path to the properties template."""
         return self.root() / "scripts" / "properties.py"
+
+    def resource_properties_template(self, resource_name: str = "") -> Path:
+        """Path to a specific resource's template.
+
+        Args:
+            resource_name: The name of the resource.
+        """
+        return (
+            self.root()
+            / "scripts"
+            / f"resource_properties_{_in_snake_case(resource_name)}.py"
+        )

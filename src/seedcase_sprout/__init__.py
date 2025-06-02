@@ -17,6 +17,7 @@ from .check_properties import (
     check_resource_properties,
 )
 from .create_properties_template import create_properties_template
+from .create_resource_properties_template import create_resource_properties_template
 from .examples import (
     ExamplePackage,
     example_data,
@@ -82,6 +83,7 @@ __all__ = [
     "join_resource_batches",
     "read_resource_batches",
     "write_resource_batch",
+    "create_resource_properties_template",
     # "update_resource_properties",
     "write_resource_data",
     "write_resource_properties",
