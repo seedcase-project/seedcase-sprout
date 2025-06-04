@@ -1,17 +1,18 @@
 """Internal functions for the package."""
 
 from .check import _check_is_dir, _check_is_file
-from .create import _create_resource_data_path, _in_snake_case
+from .create import _create_resource_data_path
 from .functionals import _map, _map2
 from .get import _get_iso_timestamp
 from .read import _read_json
+from .to import _to_snake_case
 from .write import _write_json
 
 __all__ = [
     "_check_is_file",
     "_check_is_dir",
     "_create_resource_data_path",
-    "_in_snake_case",
+    "_to_snake_case",
     "_get_iso_timestamp",
     "_map",
     "_map2",

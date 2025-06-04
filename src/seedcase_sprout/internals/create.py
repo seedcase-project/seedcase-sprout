@@ -12,16 +12,3 @@ def _create_resource_data_path(resource_name: str) -> str:
             E.g., "resources/test-resource/data.parquet"
     """
     return str(Path("resources", resource_name, "data.parquet"))
-
-
-def _in_snake_case(name: str) -> str:
-    """Creates a snake-case version of a package or resource name.
-
-    Args:
-        name: The package or resource name.
-
-    Returns:
-        The package or resource name in snake case.
-
-    """
-    return name.replace(".", "_").replace("-", "_")

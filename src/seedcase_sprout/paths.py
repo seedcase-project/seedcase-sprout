@@ -8,7 +8,7 @@ first approach).
 
 from pathlib import Path
 
-from seedcase_sprout.internals import _in_snake_case
+from seedcase_sprout.internals import _to_snake_case
 
 
 class PackagePath:
@@ -117,5 +117,5 @@ class PackagePath:
         return (
             self.root()
             / "scripts"
-            / f"resource_properties_{_in_snake_case(resource_name)}.py"
+            / f"resource_properties_{_to_snake_case(resource_name)}.py"
         )
