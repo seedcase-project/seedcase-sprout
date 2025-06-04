@@ -2,7 +2,7 @@
 {% from "field_properties.jinja2" import field_properties -%}
 import seedcase_sprout as sp
 
-resource_properties_{{ resource_name | _to_snake_case }} = sp.ResourceProperties(
+{{ resource_name | to_variable_name }} = sp.ResourceProperties(
     ## Required:
     name="{{ resource_name }}",
     title="",

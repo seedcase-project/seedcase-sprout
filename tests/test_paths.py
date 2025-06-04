@@ -85,5 +85,5 @@ def test_resource_properties_script_returns_correct_path_without_resource_name(
     package_path = PackagePath(tmp_path)
     assert (
         package_path.resource_properties_script()
-        == tmp_path / "scripts" / "resource_properties_.py"
+        == tmp_path / "scripts" / "resource_properties.py"
     )

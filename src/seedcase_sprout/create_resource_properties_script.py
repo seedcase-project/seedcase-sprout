@@ -3,7 +3,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 from seedcase_sprout.constants import TEMPLATES_PATH
-from seedcase_sprout.internals import _to_snake_case
+from seedcase_sprout.internals import _create_resource_properties_script_filename
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import FieldProperties
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
@@ -47,7 +47,7 @@ def create_resource_properties_script(
     resource_name = resource_name or ""
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
-    env.filters["_to_snake_case"] = _to_snake_case
+    env.filters["to_variable_name"] = _create_resource_properties_script_filename
     template = env.get_template("resource_properties.py.jinja2")
     text = template.render(resource_name=resource_name, fields=fields)
 

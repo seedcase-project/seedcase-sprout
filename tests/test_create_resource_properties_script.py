@@ -18,7 +18,7 @@ def test_creates_empty_script(tmp_cwd, args):
     script_path = create_resource_properties_script(*args)
 
     assert script_path == PackagePath().resource_properties_script()
-    properties = load_properties(script_path, "resource_properties_")
+    properties = load_properties(script_path, "resource_properties")
     assert properties == ResourceProperties(
         name="",
         title="",
