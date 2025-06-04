@@ -1,7 +1,7 @@
 from pytest import mark, raises
 
-from seedcase_sprout.create_resource_properties_template import (
-    create_resource_properties_template,
+from seedcase_sprout.create_resource_properties_script import (
+    create_resource_properties_script,
 )
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
@@ -13,12 +13,12 @@ from tests.load_properties import load_properties
 
 
 @mark.parametrize("args", [[], [None] * 3])
-def test_creates_empty_template(tmp_cwd, args):
-    """Should create an empty template."""
-    template_path = create_resource_properties_template(*args)
+def test_creates_empty_script(tmp_cwd, args):
+    """Should create an empty script."""
+    script_path = create_resource_properties_script(*args)
 
-    assert template_path == PackagePath().resource_properties_template()
-    properties = load_properties(template_path, "resource_properties_")
+    assert script_path == PackagePath().resource_properties_script()
+    properties = load_properties(script_path, "resource_properties_")
     assert properties == ResourceProperties(
         name="",
         title="",
@@ -31,19 +31,19 @@ def test_creates_empty_template(tmp_cwd, args):
 
 
 @mark.parametrize("resource_name", ["my_resource", "my.resource", "my-resource"])
-def test_creates_template_with_name_and_fields(tmp_cwd, resource_name):
-    """Should create a template with resource name and fields."""
+def test_creates_script_with_name_and_fields(tmp_cwd, resource_name):
+    """Should create a script with resource name and fields."""
     fields = [
         FieldProperties(name="field1", type="string"),
         FieldProperties(name="field2", type="datetime"),
     ]
 
-    template_path = create_resource_properties_template(
+    script_path = create_resource_properties_script(
         resource_name=resource_name,
         fields=fields,
     )
 
-    properties = load_properties(template_path, "resource_properties_my_resource")
+    properties = load_properties(script_path, "resource_properties_my_resource")
     assert properties == ResourceProperties(
         name=resource_name,
         title="",
@@ -57,12 +57,12 @@ def test_creates_template_with_name_and_fields(tmp_cwd, resource_name):
 
 def test_works_with_custom_path(tmp_path):
     """Should work with a custom path."""
-    template_path = create_resource_properties_template(path=tmp_path)
+    script_path = create_resource_properties_script(path=tmp_path)
 
-    assert template_path == PackagePath(tmp_path).resource_properties_template()
+    assert script_path == PackagePath(tmp_path).resource_properties_script()
 
 
 def test_incorrect_resource_name_raises_error(tmp_cwd):
     """Should raise a error if an incorrect resource name is provided."""
     with raises(ValueError, match="resource name"):
-        create_resource_properties_template(resource_name="spaces in name")
+        create_resource_properties_script(resource_name="spaces in name")

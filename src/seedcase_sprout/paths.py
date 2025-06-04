@@ -108,8 +108,8 @@ class PackagePath:
         """Path to the properties template."""
         return self.root() / "scripts" / "properties.py"
 
-    def resource_properties_template(self, resource_name: str = "") -> Path:
-        """Path to a specific resource's template.
+    def resource_properties_script(self, resource_name: str = "") -> Path:
+        """Path to a specific resource's resource properties script.
 
         Args:
             resource_name: The name of the resource.

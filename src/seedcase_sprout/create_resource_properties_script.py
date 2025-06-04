@@ -12,7 +12,7 @@ from seedcase_sprout.sprout_checks.is_resource_name_correct import (
 from seedcase_sprout.write_file import write_file
 
 
-def create_resource_properties_template(
+def create_resource_properties_script(
     resource_name: str | None = None,
     fields: list[FieldProperties] | None = None,
     path: Path | None = None,
@@ -36,7 +36,7 @@ def create_resource_properties_template(
         ```{python}
         import seedcase_sprout as sp
 
-        sp.create_resource_properties_template("my-resource")
+        sp.create_resource_properties_script("my-resource")
         ```
     """
     if resource_name and not _is_resource_name_correct(resource_name):
@@ -51,6 +51,6 @@ def create_resource_properties_template(
     template = env.get_template("resource_properties.py.jinja2")
     text = template.render(resource_name=resource_name, fields=fields)
 
-    template_path = PackagePath(path).resource_properties_template(resource_name)
-    template_path.parent.mkdir(exist_ok=True)
-    return write_file(text, template_path)
+    script_path = PackagePath(path).resource_properties_script(resource_name)
+    script_path.parent.mkdir(exist_ok=True)
+    return write_file(text, script_path)

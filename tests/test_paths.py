@@ -65,25 +65,25 @@ def test_path_defaults_to_cwd_at_call_time(tmp_cwd):
 
 
 @mark.parametrize("resource_name", ["my_resource", "my.resource", "my-resource"])
-def test_resource_properties_template_returns_correct_path_with_resource_name(
+def test_resource_properties_script_returns_correct_path_with_resource_name(
     tmp_path, resource_name
 ):
-    """Should return the path to the resource properties template with the resource
+    """Should return the path to the resource properties script with the resource
     name in snake case."""
     package_path = PackagePath(tmp_path)
     assert (
-        package_path.resource_properties_template(resource_name)
+        package_path.resource_properties_script(resource_name)
         == tmp_path / "scripts" / "resource_properties_my_resource.py"
     )
 
 
-def test_resource_properties_template_returns_correct_path_without_resource_name(
+def test_resource_properties_script_returns_correct_path_without_resource_name(
     tmp_path,
 ):
-    """Should return the path to the resource properties template without a
+    """Should return the path to the resource properties script without a
     resource name."""
     package_path = PackagePath(tmp_path)
     assert (
-        package_path.resource_properties_template()
+        package_path.resource_properties_script()
         == tmp_path / "scripts" / "resource_properties_.py"
     )
