@@ -17,7 +17,7 @@ def create_resource_properties_template(
     fields: list[FieldProperties] | None = None,
     path: Path | None = None,
 ) -> Path:
-    """Creates the resource properties template.
+    """Create a script using the resource properties template.
 
     The resource name and the fields' name and type information can be included.
 
@@ -27,7 +27,7 @@ def create_resource_properties_template(
         path: The path to the package folder. Defaults to the current working directory.
 
     Returns:
-        The path to the template file.
+        The path to the newly created script file.
 
     Raises:
         ValueError: If the resource name is not correct.

@@ -8,7 +8,7 @@ first approach).
 
 from pathlib import Path
 
-from seedcase_sprout.internals.create import _in_snake_case
+from seedcase_sprout.internals import _in_snake_case
 
 
 class PackagePath:
