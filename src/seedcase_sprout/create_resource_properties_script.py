@@ -42,7 +42,7 @@ def create_resource_properties_script(
     if resource_name and not _is_resource_name_correct(resource_name):
         raise ValueError(
             f"The resource name '{resource_name}' is not correct. Resource names"
-            " should only include alphanumeric characters and `.-_`."
+            " should only include lowercase alphanumeric characters and `.-_`."
         )
     resource_name = resource_name or ""
 
