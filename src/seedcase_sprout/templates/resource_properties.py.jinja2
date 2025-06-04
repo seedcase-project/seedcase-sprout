@@ -1,5 +1,5 @@
 
-{% from "field_properties.jinja2" import field_properties -%}
+{%- from "field_properties.jinja2" import field_properties -%}
 import seedcase_sprout as sp
 
 {{ resource_name | to_variable_name }} = sp.ResourceProperties(
