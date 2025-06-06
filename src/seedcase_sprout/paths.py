@@ -104,8 +104,8 @@ class PackagePath:
         """
         return list(self.resource_batch(resource_name).glob("*.parquet"))
 
-    def properties_template(self) -> Path:
-        """Path to the properties template."""
+    def properties_script(self) -> Path:
+        """Path to the properties script."""
         return self.root() / "scripts" / "properties.py"
 
     def resource_properties_script(self, resource_name: str = "") -> Path:

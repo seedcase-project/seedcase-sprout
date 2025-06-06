@@ -16,7 +16,7 @@ from .check_properties import (
     check_properties,
     check_resource_properties,
 )
-from .create_properties_template import create_properties_template
+from .create_properties_script import create_properties_script
 from .create_resource_properties_script import create_resource_properties_script
 from .examples import (
     ExamplePackage,
@@ -34,7 +34,6 @@ from .properties import (
     ContributorProperties,
     FieldProperties,
     LicenseProperties,
-    MissingValueProperties,
     PackageProperties,
     ReferenceProperties,
     ResourceProperties,
@@ -57,7 +56,6 @@ __all__ = [
     "ContributorProperties",
     "FieldProperties",
     "LicenseProperties",
-    "MissingValueProperties",
     "PackageProperties",
     "ReferenceProperties",
     "ResourceProperties",
@@ -65,7 +63,7 @@ __all__ = [
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
     "read_properties",
-    "create_properties_template",
+    "create_properties_script",
     # Example properties -----
     "example_package_properties",
     "example_resource_properties",
