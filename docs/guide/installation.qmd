@@ -43,11 +43,50 @@ To check that uv is installed, run this command:
 uv
 ```
 
-To create a Python project using uv, follow the instructions on
-[uv's](https://docs.astral.sh/uv/guides/projects/) website. After
-creating the project, make sure your Terminal's working directory is in
-the project folder. You can determinate this by running the `pwd`
-command.
+You can create a Python project using uv, which has a
+[guide](https://docs.astral.sh/uv/guides/projects/) on creating one.
+Briefly, you can create a new project using uv by running the following
+command in your Terminal (assuming we make a new data package called `diabetes-study`):
+
+``` {.bash filename="Terminal"}
+uv init diabetes-study
+```
+
+Which will create a new directory called `diabetes-study` with the
+basic structure of a Python project. It should look like:
+
+<!-- TODO: Auto-create this some how? -->
+
+```
+diabetes-study/
+├── .git/
+├── .gitignore
+├── .python-version
+├── README.md
+├── main.py
+└── pyproject.toml
+```
+
+uv also creates the folder as a Git repository. Of the files created,
+the most important ones for Sprout are the `pyproject.toml` and
+`main.py` files. The `pyproject.toml` file is used to manage the
+dependencies of the project, while the `main.py` file is where you will
+write much of the Sprout code, or at least use it to coordinate the
+other Python scripts in your project.
+
+<!-- TODO: eventually flip callout content this so the template is recommended and not uv -->
+
+::: callout-tip
+You can generate the basic structure of a template data package by using
+our Seedcase Project
+[`template-data-package`](https://github.com/seedcase-project/template-data-package).
+There are instructions there on how to use it to make the initial
+structure of a data package.
+:::
+
+After creating the project, open your Terminal into this newly created
+project so that the working directory is the project folder. Run the
+`pwd` command to confirm.
 
 You can now install Sprout directly from the [GitHub
 repository](https://github.com/seedcase-project/seedcase-sprout):
