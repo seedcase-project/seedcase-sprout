@@ -1,3 +1,15 @@
+## 0.44.5 (2025-06-10)
+
+### Refactor
+
+- :recycle: re-export pprint and textwrap (#1385)
+
+## 0.44.4 (2025-06-10)
+
+### Fix
+
+- :bug: forgot to quote the function in `__all__.py` (#1380)
+
 ## 0.44.3 (2025-06-06)
 
 ### Refactor
