@@ -30,7 +30,7 @@ class Properties(ABC):
 
     @property
     def compact_dict(self) -> dict:
-        """Converts the dataclass `*Properties` object to a camel-case dictionary.
+        """Converts the dataclass `*Properties` object to a `camelCase` dictionary.
 
         Applies recursively to nested `*Properties` objects. Also removes any keys with
         None values.
