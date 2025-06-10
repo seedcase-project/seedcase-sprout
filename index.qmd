@@ -49,7 +49,7 @@ those whose task is to build up and organise data for a project or
 research study, as well as for those who want more control over
 individual steps in the data processing and management workflow.
 
-We build this package mainly for computationally technical personnel,
+We designed this package mainly for computationally technical personnel,
 such as data engineers or software developers. It's designed to be
 easily extended and customized to fit your needs, within a framework
 that ensures your data is ultimately structured, organized, and usable.
