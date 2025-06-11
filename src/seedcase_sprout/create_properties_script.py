@@ -27,16 +27,15 @@ def create_properties_script(path: Path | None = None) -> Path:
         ```
     """
     package_path = PackagePath(path)
+    script_path = package_path.properties_script()
+    script_path.parent.mkdir(exist_ok=True)
+    # We don't want to overwrite an existing script.
+    if script_path.exists():
+        return script_path
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     template = env.get_template("properties.py.jinja2")
     text = template.render(
         properties=PackageProperties.from_default(name=package_path.root().name)
     )
-
-    script_path = package_path.properties_script()
-    script_path.parent.mkdir(exist_ok=True)
-    # We don't want to overwrite an existing script.
-    if script_path.exists():
-        return script_path
     return write_file(text, script_path)
