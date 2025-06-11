@@ -62,7 +62,7 @@ __all__ = [
     "example_resource_properties_all_types",
     "ExamplePackage",
     # Packages -----
-    write_properties,
+    "write_properties",
     "as_readme_text",
     # Resources -----
     "extract_resource_properties",
@@ -75,6 +75,8 @@ __all__ = [
     # Helpers -----
     # "pretty_json",
     "write_file",
+    "pprint",
+    "dedent",
     # Checks -----
     "check_package_properties",
     "check_properties",
