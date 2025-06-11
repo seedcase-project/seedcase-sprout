@@ -44,7 +44,7 @@ Now, time to make a data package! A data package always needs a
 `datapackage.json` file in the root of the project. It contains a set of
 [{{< glossary "properties">}}](../glossary.qmd), or metadata about the
 data package and the data resources within it. Right now, you don't have
-a `datapackage.json` file yet. Before you can create one though, you
+a `datapackage.json` file yet. Before you can create one, you
 need to write out the properties for the data package.
 
 While you could manually create a `datapackage.json` file and then add
@@ -63,7 +63,7 @@ everything in it and copy and paste the below code into it.
 import seedcase_sprout as sp
 
 def main():
-    # Create the properties script in default location.
+    # Create the properties script in the default location.
     sp.create_properties_script()
 
 if __name__ == "__main__":
@@ -86,7 +86,7 @@ This will then create the `properties.py` file in the newly created
 
 ::: callout-caution
 Because of the way Python scripts and importing works, you should also
-create a `__init__.py` file in the `scripts/` folder. In your Terminal,
+create an `__init__.py` file in the `scripts/` folder. In your Terminal,
 run the following command to create an empty `__init__.py` file:
 
 ``` {.bash filename="Terminal"}
@@ -120,7 +120,7 @@ print((sp.PackagePath(package_path).properties_script()).read_text())
 You can now start filling in that script by using the comments included,
 such as making sure to fill in the required fields, as well as using the
 help documentation for the `PackageProperties` to know what to write.
-The core of a data package is its properties. Without which, your data
+The core of a data package is its properties. Without these, your data
 are simply a collection of files without any context or meaning. The
 metadata (properties) are **crucially important** for understanding and
 actually using the data in your data package!
@@ -132,8 +132,8 @@ with the correct fields filled in. See the
 [`PackageProperties`](/docs/reference/PackageProperties.qmd)
 documentation for more details about these data classes.
 
-For now, let's write some basic properties for you data package. Below
-is an example of what a filled required properties are (including the
+For now, let's write some basic properties for your data package. Below
+is an example of a set of properties with required fields filled in (including the
 optional but highly recommended `contributors` field).
 
 ```{python}
@@ -209,7 +209,7 @@ properties = sp.PackageProperties.from_default(
 )
 ```
 
-Now, that you've filled in some of the package properties, it's time to
+Now that you've filled in some of the package properties, it's time to
 create your data package with these properties. You can use the
 `write_properties()` function for this. But in order to use it
 effectively, it's best included within the `main.py` script within the
@@ -255,7 +255,7 @@ file won't be created. So you will have to return to the
 :::
 
 The `write_properties()` function created the `datapackage.json` file in
-your data package `diabetes-study` folder, which contains the properties
+your data package's `diabetes-study` folder, which contains the properties
 you added to it. Now, you will see the added `datapackage.json` file in
 your data package folder.
 
