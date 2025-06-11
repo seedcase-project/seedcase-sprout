@@ -2,6 +2,9 @@
 # This exposes only the functions we want exposed when
 # the package is imported via `from seedcase_sprout import *`.
 
+from pprint import pprint
+from textwrap import dedent
+
 from .as_readme_text import as_readme_text
 from .check_data import check_data
 from .check_properties import (
