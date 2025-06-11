@@ -9,6 +9,9 @@
 # from .delete_resource_data import *
 # from .delete_resource_properties import *
 
+from pprint import pprint
+from textwrap import dedent
+
 from .as_readme_text import as_readme_text
 from .check_data import check_data
 from .check_properties import (
@@ -72,7 +75,7 @@ __all__ = [
     "example_resource_properties_all_types",
     "ExamplePackage",
     # Packages -----
-    write_properties,
+    "write_properties",
     "as_readme_text",
     # "delete_package",
     # Resources -----
@@ -91,6 +94,8 @@ __all__ = [
     # Helpers -----
     # "pretty_json",
     "write_file",
+    "pprint",
+    "dedent",
     # Checks -----
     "check_package_properties",
     "check_properties",
