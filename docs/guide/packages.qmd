@@ -65,8 +65,6 @@ import seedcase_sprout as sp
 def main():
     # Create the properties script in default location.
     sp.create_properties_script()
-    # Simply to have something to return.
-    return "Done!"
 
 if __name__ == "__main__":
     main()
@@ -228,8 +226,6 @@ def main():
     # Create the properties script in default location.
     sp.create_properties_script()
     sp.write_properties(properties=properties)
-    # Simply to have something to return.
-    return "Done!"
 
 if __name__ == "__main__":
     main()
@@ -282,8 +278,6 @@ def main():
     sp.write_properties(properties=properties)
     readme_text = sp.as_readme_text(properties)
     sp.write_file(readme_text)
-    # Simply to have something to return.
-    return "Done!"
 
 if __name__ == "__main__":
     main()
