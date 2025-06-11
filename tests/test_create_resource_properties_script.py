@@ -66,3 +66,14 @@ def test_incorrect_resource_name_raises_error(tmp_cwd):
     """Should raise a error if an incorrect resource name is provided."""
     with raises(ValueError, match="resource name"):
         create_resource_properties_script(resource_name="spaces in name")
+
+
+@mark.parametrize("args", [[], ["my-resource"]])
+def test_existing_script_not_overwritten(tmp_cwd, args):
+    """If a script already exists for a resource, it should not be overwritten."""
+    script_path = create_resource_properties_script(*args)
+    script_path.write_text("test")
+
+    create_resource_properties_script(*args)
+
+    assert script_path.read_text() == "test"

@@ -20,6 +20,7 @@ def create_resource_properties_script(
     """Create a script using the resource properties template.
 
     The resource name and the fields' name and type information can be included.
+    If the script already exists, it will not be overwritten.
 
     Args:
         resource_name: The name of the new resource. Defaults to None.
@@ -45,12 +46,14 @@ def create_resource_properties_script(
             " should only include lowercase alphanumeric characters and `.-_`."
         )
     resource_name = resource_name or ""
+    script_path = PackagePath(path).resource_properties_script(resource_name)
+    script_path.parent.mkdir(exist_ok=True)
+    if script_path.exists():
+        return script_path
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     env.filters["to_variable_name"] = _create_resource_properties_script_filename
     template = env.get_template("resource_properties.py.jinja2")
     text = template.render(resource_name=resource_name, fields=fields)
 
-    script_path = PackagePath(path).resource_properties_script(resource_name)
-    script_path.parent.mkdir(exist_ok=True)
     return write_file(text, script_path)
