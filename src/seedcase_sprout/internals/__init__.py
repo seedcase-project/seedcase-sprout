@@ -6,6 +6,7 @@ from .functionals import _map, _map2
 from .get import _get_iso_timestamp
 from .list import _list_rel_files
 from .read import _read_json
+from .to import _to_camel_case
 from .write import _write_json
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
     "_read_json",
     "_write_json",
     "_list_rel_files",
+    "_to_camel_case",
 ]
