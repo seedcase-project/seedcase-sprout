@@ -218,7 +218,7 @@ effectively, it's best included within the `main.py` script within the
 `main()` function, so that it can be run as part of your build pipeline.
 So in your `main.py`, include this code:
 
-<!-- TODO: How to auto-run this? -->
+<!-- TODO: How to auto-run the code below? -->
 
 ``` python
 import seedcase_sprout as sp
