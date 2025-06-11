@@ -277,7 +277,7 @@ def main():
     sp.create_properties_script()
     sp.write_properties(properties=properties)
     readme_text = sp.as_readme_text(properties)
-    sp.write_file(readme_text)
+    sp.write_file(readme_text, sp.PackagePath().readme())
 
 if __name__ == "__main__":
     main()
