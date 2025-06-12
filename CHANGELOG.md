@@ -1,3 +1,33 @@
+## 0.44.8 (2025-06-12)
+
+### Refactor
+
+- :recycle: don't overwrite the `properties.py` script (#1383)
+
+## 0.44.7 (2025-06-11)
+
+### Refactor
+
+- :recycle: import from `internals` only, not sub-modules of it (#1382)
+
+## 0.44.6 (2025-06-11)
+
+### Fix
+
+- :bug: use camel case in JSON dict (#1389)
+
+## 0.44.5 (2025-06-10)
+
+### Refactor
+
+- :recycle: re-export pprint and textwrap (#1385)
+
+## 0.44.4 (2025-06-10)
+
+### Fix
+
+- :bug: forgot to quote the function in `__all__.py` (#1380)
+
 ## 0.44.3 (2025-06-06)
 
 ### Refactor
