@@ -36,3 +36,18 @@ def test_works_with_custom_path(tmp_path):
 
     assert script_path == PackagePath(tmp_path).properties_script()
     assert load_properties(script_path, "properties").name == tmp_path.name
+
+
+def test_does_not_overwrite_existing_script(tmp_path):
+    """Should not overwrite an existing script."""
+    script_path = create_properties_script(tmp_path)
+
+    # Create a file at the script path>
+    script_path.write_text("This is a test file.")
+
+    # Call the function again.
+    new_script_path = create_properties_script(tmp_path)
+
+    # The path should be the same, and the content should not change.
+    assert new_script_path == script_path
+    assert script_path.read_text() == "This is a test file."
