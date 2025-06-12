@@ -13,8 +13,8 @@ from tests.load_properties import load_properties
 
 
 @mark.parametrize("args", [[], [None] * 3])
-def test_creates_empty_script(tmp_cwd, args):
-    """Should create an empty script."""
+def test_creates_script_with_empty_resource_properties(tmp_cwd, args):
+    """Should create a script with an empty `ResourceProperties` object."""
     script_path = create_resource_properties_script(*args)
 
     assert script_path == PackagePath().resource_properties_script()
