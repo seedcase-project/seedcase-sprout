@@ -31,7 +31,7 @@ def create_resource_properties_script(
         The path to the newly created script file.
 
     Raises:
-        ValueError: If the resource name is not correct (e.g., contains spaces). 
+        ValueError: If the resource name is not correct (e.g., contains spaces).
 
     Examples:
         ```{python}
