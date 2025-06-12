@@ -46,13 +46,13 @@ to structure and manage your data.
 
 Sprout is a **Python package** with a flexible interface directed at
 those whose task is to build up and organise data for a project or
-research study, as well as for those who want more control over
+research study, as well as those who want more control over
 individual steps in the data processing and management workflow.
 
 We designed this package mainly for computationally technical personnel,
 such as data engineers or software developers. It's designed to be
 easily extended and customized to fit your needs, within a framework
-that ensures your data is ultimately structured, organized, and usable.
+that ensures your data is structured, organized, and usable.
 :::
 ::::
 :::::
