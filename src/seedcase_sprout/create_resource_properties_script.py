@@ -37,7 +37,8 @@ def create_resource_properties_script(
         ```{python}
         import seedcase_sprout as sp
 
-        sp.create_resource_properties_script("my-resource")
+        with sp.ExamplePackage():
+            sp.create_resource_properties_script("my-resource")
         ```
     """
     if resource_name and not _is_resource_name_correct(resource_name):
