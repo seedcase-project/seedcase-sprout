@@ -53,6 +53,7 @@ dev = [
     "datamodel-code-generator>=0.28.5",
     "genbadge>=1.1.2",
     "jupyter>=1.1.1",
+    "mypy>=1.16.1",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
