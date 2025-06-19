@@ -2,7 +2,7 @@
     just --list --unsorted
 
 # Run all build-related recipes in the justfile
-run-all: install-deps format-python check-python type-check-python check-unused test-python check-security check-spelling check-commits build-website
+run-all: install-deps format-python check-python check-unused test-python check-security check-spelling check-commits build-website
 
 # Install the pre-commit hooks
 install-precommit:
@@ -25,12 +25,11 @@ test-python:
     -i coverage.xml \
     -o htmlcov/coverage.svg
 
-# Check Python code with the linter for any errors that need manual attention
+# Check Python code for any errors that need manual attention
 check-python:
+  # Check formatting
   uv run ruff check .
-
-# Check Python types
-type-check-python:
+  # Check types
   uv run mypy .
 
 # Reformat Python code to match coding style and general structure
