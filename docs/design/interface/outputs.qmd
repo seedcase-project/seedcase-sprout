@@ -103,7 +103,7 @@ Sprout creates and uses these files:
 
 `./README.md`
 
-:   The `README.md` file is an auto-generated, more human readable
+:   The `README.md` file is a generated, more human readable
     summary of the information in the `datapackage.json` file. This file
     is used to a) adhere to interoperable principles and b) serve as the
     basis for displaying human-readable information about the data
