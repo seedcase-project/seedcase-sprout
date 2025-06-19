@@ -18,7 +18,7 @@ Data Package](https://datapackage.org/) terminology, we simplify "data
 package" to "package" and "data resource" to "resource". We use the
 words "property" or "properties" to describe package and resource
 metadata contained in the `datapackage.json` file that follows the
-Frictionless Data specification.
+Frictionless Data Package specification.
 
 ::: callout-important
 While we use the term "properties" to mean anything related to the
@@ -37,8 +37,8 @@ refer to the file itself.
 
 | Object             | Description                                                                                                                                                         |
 |----------------------------|--------------------------------------------|
-| package(s)         | A data package that contains a collection of related data resources and properties.                                                                                 |
-| resource(s)        | A single data file within a package, along with its properties and associated batch data files.                                                                     |
+| package         | A data package that contains a collection of related data resources and properties.                                                                                 |
+| resource        | A single data file within a package, along with its properties and associated batch data files.                                                                     |
 | properties         | Metadata about a package or resource.                                                                                                                               |
 | path               | A file path listing the location of folders or files that Sprout interacts with.                                                                                    |
 | data               | The data file(s) within a resource. Within Sprout, this consists of the Parquet data and batch files.                                                               |
