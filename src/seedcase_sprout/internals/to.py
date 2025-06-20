@@ -8,7 +8,7 @@ def _to_snake_case(name: str) -> str:
         The package or resource name in snake case.
 
     """
-    return name.replace(".", "_").replace("-", "_")
+    return name.replace(".", "_").replace("-", "_").lower()
 
 
 def _to_camel_case(text: str) -> str:
