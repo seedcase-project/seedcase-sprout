@@ -76,7 +76,7 @@ Python scripts in your project.
 <!-- TODO: eventually flip callout content so the template is recommended and not uv -->
 
 ::: callout-tip
-You can generate the basic structure of a template data package by using
+You can generate the basic structure of a data package by using
 the Seedcase Project
 [`template-data-package`](https://github.com/seedcase-project/template-data-package).
 There are instructions there on how to use it to make the initial
