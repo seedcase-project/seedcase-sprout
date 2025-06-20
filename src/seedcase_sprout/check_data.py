@@ -70,7 +70,7 @@ def check_data(
 
 def _check_column_names(
     data: pl.DataFrame, resource_properties: ResourceProperties
-) -> str:
+) -> pl.DataFrame:
     """Checks that column names in `data` match those in `resource_properties`.
 
     Columns may appear in any order.
