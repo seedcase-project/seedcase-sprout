@@ -21,6 +21,7 @@ keywords:
   - "data infrastructure"
   - "data package"
   - "framework"
+  - "frictionless data"
   - "parquet"
 license: MIT
 message: "If you use this software, please cite it using these metadata."
