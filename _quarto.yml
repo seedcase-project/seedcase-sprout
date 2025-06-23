@@ -1,5 +1,7 @@
 project:
   type: seedcase-theme
+  pre-render:
+    - quarto render README.qmd --to gfm
   render:
     - "docs/*"
     - "index.qmd"

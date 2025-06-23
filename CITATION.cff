@@ -1,5 +1,5 @@
-title: "seedcase-sprout"
-abstract: "Grow your research data into a structured, modern data package."
+title: "Seedcase Sprout"
+abstract: "Grow your research data into a structured, modern data package. This package provides a framework for building and managing well-described and organised data."
 authors:
   - family-names: Johnston
     given-names: Luke William
