@@ -11,9 +11,9 @@ reached a stable full release at `v1.0.0`.
 :::
 
 Based on the [functions](functions.qmd#functions) page that lists and
-describes the main functions and classes that make up the interface in detail including their input and output,
-this document describes and shows how all these objects work together
-and flow into one another.
+describes the main functions and classes that make up the interface in
+detail including their input and output, this document describes and
+shows how all these objects work together and flow into one another.
 
 Each diagram uses specific shapes and lines to represent different
 things:
@@ -31,7 +31,7 @@ like Firefox. To see them, try using a different browser like Chrome or
 Edge.
 :::
 
-## Create or update a package
+## Creating or updating a package
 
 This is the flow for making a new package. The `write_properties()`
 function will internally call `check_properties()`, but this can also be
@@ -39,8 +39,8 @@ called separately to check the properties before writing them to the
 `datapackage.json` file. The `PackageProperties` input is imported from
 a Python script in the `scripts/` folder of the data package. To update
 the properties in the `datapackage.json` file, you would edit the Python
-script with the properties directly and then rerun your main script to overwrite the
-`datapackage.json` file with the new properties.
+script with the properties directly and then rerun your main script to
+overwrite the `datapackage.json` file with the new properties.
 
 ```{mermaid}
 %%| label: fig-flow-new-package
@@ -57,7 +57,7 @@ flowchart
     path_properties --> write_properties
 ```
 
-## Extract resource properties from data
+## Extracting resource properties from data
 
 The flow for extracting resource properties from data. This is useful
 when the data is in a format that contains metadata about the data, such
@@ -87,7 +87,7 @@ flowchart
     properties_extracted --> python_script
 ```
 
-## Update README after changing package or resource properties
+## Updating README after changing package or resource properties
 
 The flow for updating the README file after changing the package or
 resource properties. Since the README template text is generated from
@@ -116,7 +116,7 @@ flowchart
     path_readme --> write_file
 ```
 
-## Check the properties of packages or resources
+## Checking the properties of packages or resources
 
 The flow to check the `datapackage.json` file's properties is fairly
 simple. You check `PackageProperties` (with or without resources) using
@@ -145,7 +145,7 @@ flowchart
     resource_properties --> check_resource_properties
 ```
 
-## Save new or modified data to batch
+## Saving new or modified data to batch
 
 A data resource needs data, not just properties. You can add data to any
 data resource that has resource properties. Whenever data is added to a
@@ -176,7 +176,7 @@ flowchart
     resource_properties -.-> check_data
 ```
 
-## Check data against the properties
+## Checking data against the properties
 
 The data must always match what is described in the properties. This
 means that the data must have the same column names, column types, and
@@ -209,7 +209,7 @@ flowchart
     style Internal fill:#ffffff
 ```
 
-## Create or re-create the resource data
+## Creating or re-creating the resource data
 
 The batch data files are used to keep track of changes to the data. The
 data that will be used is kept clean and ready for analysis, while
@@ -244,7 +244,7 @@ flowchart
     resource_properties -.-> check_data
 ```
 
-## Modify data types or table schema
+## Modifying data types or table schema
 
 Sometimes you may need to modify the data types or table schema of the
 data in a resource. Before using this flow, you first need to modify the
@@ -276,7 +276,7 @@ flowchart
     properties_updated --> write_resource_batch
 ```
 
-## Delete an observational unit
+## Deleting an observational unit
 
 If you need to delete an observational unit from the data, you can use
 this flow. The `delete_observational_unit()` function will delete the
