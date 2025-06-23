@@ -39,7 +39,7 @@ In particular, because Sprout is a Python package, you can use Python as
 you normally would to help build up your data. You don't need to
 learn another tool nor use a new interface. It's just code.
 
-There are few tools available that we've found that do what Sprout does.
+We've found few tools that do what Sprout does.
 But there are a few similar tools available, though with quite different
 purposes and use-cases, such as:
 
@@ -53,9 +53,6 @@ purposes and use-cases, such as:
 This website contains documentation on Sprout's design, how to use it,
 and details about the interface.
 
--   [Design](/docs/design/index.qmd): The design section describes the
-    architecture and interface of Sprout, the requirements, use-cases,
-    user personas, and the [C4 model](https://c4model.com/).
 -   [How-to guide](/docs/guide/index.qmd): The guide section provides a
     step-by-step introduction to using Sprout, including installation,
     setup, and creating and managing data packages.
@@ -63,3 +60,6 @@ and details about the interface.
     contains detailed information about the Sprout Python Package API,
     specifically the documentation of individual classes, methods, and
     functions.
+-   [Design](/docs/design/index.qmd): The design section describes the
+    architecture and interface of Sprout, the requirements, use-cases,
+    user personas, and the [C4 model](https://c4model.com/).
