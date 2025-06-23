@@ -24,7 +24,7 @@ information, such as an
 [overview](https://sprout.seedcase-project.org/docs/overview/), how to
 use it [guide](https://sprout.seedcase-project.org/docs/guide/), or
 to read about the
-[design](https://sprout.seedcase-project.org/docs/design/). For 
+[design](https://sprout.seedcase-project.org/docs/design/). For
 a list of changes, see our
 [changelog](https://sprout.seedcase-project.org/docs/releases/) page.
 
