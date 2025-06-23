@@ -89,4 +89,3 @@ Or as a BibTeX entry:
 ```{python}
 !uvx --quiet cffconvert --format bibtex
 ```
-
