@@ -13,6 +13,7 @@ from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import ResourceProperties
 
 
+# TODO: Add exception for data check when implemented.
 def write_resource_batch(
     data: pl.DataFrame,
     resource_properties: ResourceProperties,
@@ -41,7 +42,6 @@ def write_resource_batch(
 
     Raises:
         ExceptionGroup: A group of `CheckError`s, if resource properties are incorrect.
-        # TODO: Add exception for data check when implemented.
 
     Examples:
         ```{python}
