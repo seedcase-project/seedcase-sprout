@@ -12,11 +12,11 @@ from seedcase_sprout.internals import _create_resource_properties_script_filenam
 
 
 class PackagePath:
-    """Gets the absolute path to a specific file or folder in a data package.
+    """Get the absolute path to a specific file or folder in a data package.
 
-    The functions in this class are used to get the absolute path to a specific file or
+    Use the functions in this class to get the absolute path to a specific file or
     folder in a data package. They are intended as convenience functions to provide
-    easy and quick access to required files and folders within a data package.
+    you with easy and quick access to required files and folders within a data package.
     These functions have these characteristics in common:
 
     -   All of these functions output a `Path` object.

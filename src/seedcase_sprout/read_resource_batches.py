@@ -21,11 +21,11 @@ from seedcase_sprout.properties import ResourceProperties
 def read_resource_batches(
     resource_properties: ResourceProperties, paths: list[Path] | None = None
 ) -> list[pl.DataFrame]:
-    """Reads all the batch resource file(s) into a list of (Polars) DataFrames.
+    """Read all the batch resource file(s) into a list of (Polars) DataFrames.
 
-    This function takes the Parquet file(s) given by `paths`, reads them in as Polars
-    DataFrames as a list and does some checks on each of the DataFrames in the list
-    based on the `resource_properties`. The `resource_properties` object is used
+    You use this function to take the Parquet file(s) given by `paths`, read them in as
+    a list of Polars DataFrames, and does some checks on each of the DataFrames
+    against the `resource_properties`. The `resource_properties` object is used
     to check the data and ensure it is correct. While Sprout generally assumes
     that the files stored in the `resources/<id>/batch/` folder are already
     correctly structured and tidy, this function still runs checks to ensure the
@@ -39,7 +39,7 @@ def read_resource_batches(
             batch files. Defaults to the batch files of the given resource.
 
     Returns:
-        Outputs a list of DataFrame objects from all the batch files.
+        A list of DataFrame objects from all the batch files.
 
     Raises:
         FileNotFoundError: If a file in the list of paths doesn't exist.

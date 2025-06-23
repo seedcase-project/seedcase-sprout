@@ -12,7 +12,7 @@ from seedcase_sprout.properties import ResourceProperties
 def join_resource_batches(
     data_list: list[pl.DataFrame], resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Joins all batch resource DataFrames into a single (Polars) DataFrame.
+    """Join all the batch resource DataFrames into a single (Polars) DataFrame.
 
     This function takes a list of DataFrames, joins them together and drops any
     duplicate observational units based on the primary key from `resource_properties`.
@@ -37,15 +37,14 @@ def join_resource_batches(
             properties of the resource to check the data against.
 
     Returns:
-        Outputs a single DataFrame object of all the batch data with duplicate
+        A single DataFrame object of all the batch data with duplicate
             observational units removed.
 
     Raises:
         ValueError: If an empty `data_list` is provided.
-        polars.exceptions.ShapeError: Raised when dataframes in data_list have different
+        polars.exceptions.ShapeError: If the dataframes in data_list have different
             shapes, such as mismatched column names or numbers.
-
-        polars.exceptions.SchemaError: Raised when dataframes in data_list have
+        polars.exceptions.SchemaError: If the dataframes in data_list have
             different schemas, e.g., their column data types don't match.
 
     Examples:

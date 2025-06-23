@@ -17,9 +17,9 @@ def create_resource_properties_script(
     fields: list[FieldProperties] | None = None,
     path: Path | None = None,
 ) -> Path:
-    """Creates a script using the resource properties template.
+    """Create a script using the resource properties template.
 
-    The resource name and the fields' name and type information can be included.
+    You can include the resource name and the fields' name and type information.
     If the script already exists, it will not be overwritten.
 
     Args:

@@ -18,7 +18,7 @@ def read_properties(path: Path | None = None) -> PackageProperties:
             for the `datapackage.json` file in the current working directory.
 
     Returns:
-        Outputs a `PackageProperties` object with the properties from the
+        A `PackageProperties` object with the properties from the
             `datapackage.json` file.
 
     Examples:

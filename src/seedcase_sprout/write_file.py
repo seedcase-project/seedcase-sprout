@@ -2,9 +2,9 @@ from pathlib import Path
 
 
 def write_file(string: str, path: Path) -> Path:
-    """Writes a file to the given path with the given content.
+    """Write the `string` to a file from `path`.
 
-    The parent folder of the file given in path must exist.
+    The parent folder of the file in `path` must exist.
     If the file already exists, it will be overwritten.
 
     Args:

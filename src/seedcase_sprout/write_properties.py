@@ -7,7 +7,7 @@ from seedcase_sprout.properties import PackageProperties
 
 
 def write_properties(properties: PackageProperties, path: Path | None = None) -> Path:
-    """Writes the specified properties to the `datapackage.json` file.
+    """Write the `properties` to the `datapackage.json` file.
 
     If the `datapackage.json` file already exists, it will be overwritten. If not,
     a new file will be created.
