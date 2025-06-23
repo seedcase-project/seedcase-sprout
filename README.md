@@ -15,15 +15,16 @@
 Sprout is one component of the [Seedcase
 Project](https://seedcase-project.org) framework that aims to take data
 created or collected for research studies and "grow" it in a structured
-way using modern data engineering best practices. Sprout takes data to
-organise, describe, and store it for effective discovery, management,
+way using modern data engineering best practices. Sprout is designed to
+organise, describe, and store data for effective discovery, management,
 and analysis.
 
 Check out our [website](https://sprout.seedcase-project.org/) for more
 information, such as an
-[overview](https://sprout.seedcase-project.org/docs/overview/), on the
-[design](https://sprout.seedcase-project.org/docs/design/), or how to
-use it [guide](https://sprout.seedcase-project.org/docs/guide/). For
+[overview](https://sprout.seedcase-project.org/docs/overview/), how to
+use it [guide](https://sprout.seedcase-project.org/docs/guide/), or
+to read about the
+[design](https://sprout.seedcase-project.org/docs/design/). For 
 a list of changes, see our
 [changelog](https://sprout.seedcase-project.org/docs/releases/) page.
 
@@ -32,12 +33,12 @@ a list of changes, see our
 Seedcase Sprout can be installed in two ways. The first is to install it
 as a user, and the second is to install it as a contributor.
 
-To install it as a user, see our [Installation
+To install Sprout for general use, see our [Installation
 Guide](https://sprout.seedcase-project.org/docs/guide/installation).
 
 ### Installing as a contributor
 
-We use [uv](https://docs.astral.sh/uv/) to manage our project, including
+To install Sprout for development or contribution, you first need to install [uv](https://docs.astral.sh/uv/). We use uv to manage our project, including
 dependencies. Their website has a more detailed guide on using uv, but
 below are some simple instructions to get you started.
 
