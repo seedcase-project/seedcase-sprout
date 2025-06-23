@@ -11,15 +11,36 @@ show you how to create and manage data packages using Sprout.
 
 ```{python setup}
 #| include: false
-import seedcase_sprout.internals as internals
 import seedcase_sprout as sp
 import subprocess
+import seedir as sd
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 temp_path = TemporaryDirectory()
 package_path = Path(temp_path.name) / "diabetes-study"
 subprocess.run(["uv", "init", str(package_path)])
+
+def file_tree(package_path: Path) -> list[Path]:
+    """Show the file tree for the data package, excluding `.git` files.
+
+    Args:
+        package_path: The path to the package directory.
+
+    Returns:
+        A string representation of the file tree.
+    """
+    # Check if the path is a directory and exists
+    if not package_path.is_dir():
+        raise ValueError(f"{package_path} is not a directory.")
+
+    return sd.seedir(
+        package_path,
+        style="emoji",
+        exclude_folders=[".git"],
+        first="folders",
+        printout=False
+    )
 ```
 
 {{< include _preamble.qmd >}}
@@ -32,11 +53,9 @@ are located.
 
 Right now, your file structure should look a bit like:
 
-<!-- TODO: Convert the pprint to file trees when listing paths -->
-
 ```{python}
 #| echo: false
-sp.pprint(internals._list_rel_files(package_path))
+print(file_tree(package_path))
 ```
 
 Now, time to make a data package! A data package always needs a
@@ -105,7 +124,7 @@ The file structure should now look like:
 ```{python}
 #| echo: false
 # List all files in directory
-sp.pprint(internals._list_rel_files(package_path))
+print(file_tree(package_path))
 ```
 
 Inside the `scripts/properties.py` file, you will find a template for
@@ -259,6 +278,11 @@ your data package's `diabetes-study` folder, which contains the properties
 you added to it. Now, you will see the added `datapackage.json` file in
 your data package folder.
 
+```{python}
+#| echo: false
+print(file_tree(package_path))
+```
+
 ## Creating a README of the properties
 
 Having a *human-readable* version of what is contained in the
@@ -275,8 +299,11 @@ from scripts.properties import properties
 def main():
     # Create the properties script in default location.
     sp.create_properties_script()
+    # Save the properties to `datapackage.json`.
     sp.write_properties(properties=properties)
+    # Create text for a README of the data package.
     readme_text = sp.as_readme_text(properties)
+    # Write the README text to a `README.md` file.
     sp.write_file(readme_text, sp.PackagePath().readme())
 
 if __name__ == "__main__":
@@ -311,7 +338,7 @@ Now you can see that the `README.md` file has been created in your data package:
 
 ```{python}
 #| echo: false
-sp.pprint(internals._list_rel_files(package_path))
+print(file_tree(package_path))
 ```
 
 ## Editing package properties
