@@ -1,3 +1,39 @@
+## 0.45.0 (2025-06-23)
+
+### Feat
+
+- :sparkles: add resource properties template (#1369)
+
+## 0.44.12 (2025-06-23)
+
+### Refactor
+
+- :wrench: set up mypy and fix issues from it (#1403)
+
+## 0.44.11 (2025-06-23)
+
+### Refactor
+
+- :recycle: change `fields_match` type to list (#1410)
+
+## 0.44.10 (2025-06-20)
+
+### Fix
+
+- :bug: change `fields_match` to be an array in `extract_resource_properties()` (#1392)
+
+## 0.44.9 (2025-06-19)
+
+### Fix
+
+- :adhesive_bandage: use a temp folder in example code (#1396)
+
+## 0.44.8 (2025-06-12)
+
+### Refactor
+
+- :recycle: don't overwrite the `properties.py` script (#1383)
+
 ## 0.44.7 (2025-06-11)
 
 ### Refactor

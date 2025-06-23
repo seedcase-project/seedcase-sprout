@@ -1,6 +1,4 @@
 from datetime import datetime
-from importlib.util import module_from_spec, spec_from_file_location
-from pathlib import Path
 from unittest.mock import patch
 from uuid import UUID
 from zoneinfo import ZoneInfo
@@ -10,6 +8,7 @@ import time_machine
 from seedcase_sprout.create_properties_script import create_properties_script
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import LicenseProperties, PackageProperties
+from tests.load_properties import load_properties
 
 
 @patch("seedcase_sprout.properties.uuid4", return_value=UUID(int=1))
@@ -19,7 +18,7 @@ def test_creates_script_with_default_values(mock_uuid, tmp_cwd):
     script_path = create_properties_script()
 
     assert script_path == PackagePath().properties_script()
-    properties = load_properties(script_path)
+    properties = load_properties(script_path, "properties")
     assert properties == PackageProperties(
         name=tmp_cwd.name,
         title="",
@@ -36,12 +35,19 @@ def test_works_with_custom_path(tmp_path):
     script_path = create_properties_script(tmp_path)
 
     assert script_path == PackagePath(tmp_path).properties_script()
-    assert load_properties(script_path).name == tmp_path.name
+    assert load_properties(script_path, "properties").name == tmp_path.name
 
 
-def load_properties(path: Path) -> PackageProperties:
-    """Loads `properties` object from file."""
-    spec = spec_from_file_location("test_module", path)
-    module = module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module.properties
+def test_does_not_overwrite_existing_script(tmp_path):
+    """Should not overwrite an existing script."""
+    script_path = create_properties_script(tmp_path)
+
+    # Create a file at the script path>
+    script_path.write_text("This is a test file.")
+
+    # Call the function again.
+    new_script_path = create_properties_script(tmp_path)
+
+    # The path should be the same, and the content should not change.
+    assert new_script_path == script_path
+    assert script_path.read_text() == "This is a test file."
