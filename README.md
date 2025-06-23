@@ -54,7 +54,7 @@ If you would like to contribute, please check out our
 details on how we work and develop. It is a regularly evolving document,
 so is at various states of completion.
 
-To install Sprout to contributing, you first need to install
+To install Sprout to contribute, you first need to install
 [uv](https://docs.astral.sh/uv/) and
 [justfile](https://just.systems/man/en/packages.html). We use uv and
 justfile to manage our project, such as to install development
