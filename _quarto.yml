@@ -23,6 +23,8 @@ website:
     logo: "_extensions/seedcase-project/seedcase-theme/logos/navbar-logo-seedcase-sprout.svg"
     logo-alt: "Seedcase Sprout logo: Main page"
     left:
+      - text: "Overview"
+        href: docs/index.qmd
       - text: "Guide"
         href: docs/guide/index.qmd
       - text: "Design"
@@ -39,9 +41,12 @@ website:
         href: https://seedcase-project.org
         aria-label: "House icon: Seedcase Project home page"
   sidebar:
-    - id: design
+    - id: overview
       pinned: true
       style: "floating"
+      contents:
+        - docs/releases.qmd
+    - id: design
       contents:
         - text: "Design"
           href: docs/design/index.qmd
