@@ -1,5 +1,6 @@
 ---
 title: "Overview"
+jupyter: python3
 ---
 
 ## What is Sprout?
@@ -63,3 +64,14 @@ and details about the interface.
 -   [Design](/docs/design/index.qmd): The design section describes the
     architecture and interface of Sprout, the requirements, use-cases,
     user personas, and the [C4 model](https://c4model.com/).
+
+## Contributors
+
+These are the people who have contributed to Sprout by submitting
+changes through pull requests :tada:
+
+```{python}
+#| echo: false
+#| output: asis
+!cat contributors.txt.tmp
+```
