@@ -11,11 +11,9 @@ reached a stable full release at `v1.0.0`.
 :::
 
 Based on the [functions](functions.qmd#functions) page that lists and
-describes the main functions and classes that make up the interface,
+describes the main functions and classes that make up the interface in detail including their input and output,
 this document describes and shows how all these objects work together
-and flow into one another, but not necessarily the functions' exact
-input and output. Those are already described in the
-[functions](functions.qmd#functions) document.
+and flow into one another.
 
 Each diagram uses specific shapes and lines to represent different
 things:
@@ -41,7 +39,7 @@ called separately to check the properties before writing them to the
 `datapackage.json` file. The `PackageProperties` input is imported from
 a Python script in the `scripts/` folder of the data package. To update
 the properties in the `datapackage.json` file, you would edit the Python
-script directly and then run your main script again to overwrite the
+script with the properties directly and then rerun your main script to overwrite the
 `datapackage.json` file with the new properties.
 
 ```{mermaid}
