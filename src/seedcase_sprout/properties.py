@@ -303,7 +303,7 @@ class TableSchemaProperties(Properties):
     Attributes:
         fields (list[FieldProperties] | None): Specifies the fields in this table
             schema.
-        fields_match (FieldsMatchType | None): Specifies how fields in the table
+        fields_match (list[FieldsMatchType] | None): Specifies how fields in the table
             schema match the fields in the data source.
         primary_key (list[str] | str | None): A primary key is a field name or an array
             of field names, whose values must uniquely identify each row in the table.
@@ -322,7 +322,7 @@ class TableSchemaProperties(Properties):
     """
 
     fields: list[FieldProperties] | None = None
-    fields_match: FieldsMatchType | None = None
+    fields_match: list[FieldsMatchType] | None = None
     primary_key: list[str] | str | None = None
     unique_keys: list[list[str]] | None = None
     foreign_keys: list[TableSchemaForeignKeyProperties] | None = None
