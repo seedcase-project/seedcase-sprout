@@ -39,7 +39,7 @@ read about the
 of changes, see our
 [changelog](https://sprout.seedcase-project.org/docs/releases/) page.
 
-## Install
+## Installing
 
 Seedcase Sprout can be installed in two ways. The first is to install it
 as a user, and the second is to install it as a contributor.
