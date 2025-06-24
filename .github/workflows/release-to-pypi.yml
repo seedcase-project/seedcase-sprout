@@ -1,0 +1,13 @@
+name: Release to PyPI
+
+on:
+  push:
+    branches:
+      - main
+
+# Limit token permissions for security
+permissions: read-all
+
+jobs:
+  build:
+    uses: seedcase-project/.github/.github/workflows/reusable-release-to-pypi.yml@main
