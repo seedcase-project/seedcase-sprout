@@ -13,7 +13,6 @@ from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import ResourceProperties
 
 
-# TODO: Add exception for data check when implemented.
 def write_resource_batch(
     data: pl.DataFrame,
     resource_properties: ResourceProperties,
@@ -41,7 +40,9 @@ def write_resource_batch(
         The path to the written Parquet resource file.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, if resource properties are incorrect.
+        ExceptionGroup[CheckError]: If the resource properties are incorrect.
+        ValueError: If column names in the data are incorrect.
+        ExceptionGroup[ValueError]: If data types in the data are incorrect.
 
     Examples:
         ```{python}
