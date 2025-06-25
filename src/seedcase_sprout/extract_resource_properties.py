@@ -12,15 +12,16 @@ from seedcase_sprout.properties import (
 
 
 def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
-    """Extracts resource properties from Polars DataFrame.
+    """Extract resource properties from a Polars DataFrame.
 
-    The data types are extracted from the DataFrame's schema and mapped from Polars to
-    Data Package data types. For the best results, ensure the DataFrame's schema is as
-    expected. Since there are differences between Polars and Data Package data types,
-    the mapping may not always be perfect, and some data types might be extracted
-    in a simplified way. For example, a year column might be extracted as an integer
-    instead of Data Package's `year` type. Review and adjust the extracted properties
-    as needed.
+    Data types are extracted from the DataFrame's schema and mapped from Polars to
+    Data Package data types. For the best results, ensure that the DataFrame's schema is
+    correct---this may require some manually fixing. Since there are differences
+    between Polars and Data Package data types, the mapping may not always be
+    perfect, and some data types may be extracted to simpler types. For
+    example, a year column may be extracted as an integer instead of Data
+    Package's `year` type. Be sure to review and modify the extracted
+    properties to suit your needs.
 
     Args:
         data: A Polars DataFrame containing the data to extract properties from.
