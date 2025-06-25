@@ -40,8 +40,9 @@ def write_resource_batch(
         The path to the written Parquet resource file.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, if resource properties are incorrect.
-        # TODO: Add exception for data check when implemented.
+        ExceptionGroup[CheckError]: If the resource properties are incorrect.
+        ValueError: If column names in the data are incorrect.
+        ExceptionGroup[ValueError]: If data types in the data are incorrect.
 
     Examples:
         ```{python}

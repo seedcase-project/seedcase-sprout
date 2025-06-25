@@ -27,7 +27,7 @@ def read_resource_batches(
     DataFrames as a list and does some checks on each of the DataFrames in the list
     based on the `resource_properties`. The `resource_properties` object is used
     to check the data and ensure it is correct. While Sprout generally assumes
-    that the files stored in the `resources/<id>/batch/` folder are already
+    that the files stored in the `resources/<name>/batch/` folder are already
     correctly structured and tidy, this function still runs checks to ensure the
     data are correct by comparing to the properties.
 

@@ -89,7 +89,7 @@ quartodoc:
       desc: "Functions to work with and manage data packages, but not the data resources within them."
       contents:
         - as_readme_text
-        - write_properties
+        - write_file
 
     - title: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
@@ -121,8 +121,14 @@ quartodoc:
     - title: "Property functions"
       desc: "Functions used to work with properties."
       contents:
+        - check_data
+        - check_properties
+        - check_package_properties
+        - check_resource_properties
         - create_properties_script
+        - create_resource_properties_script
         - read_properties
+        - write_properties
 
     - title: "Path functions"
       desc: "Functions to support providing the correct file paths to files and folders in a data package for other functions."
@@ -138,7 +144,6 @@ quartodoc:
         - example_data
         - example_data_all_types
         - ExamplePackage
-        - write_file
 
 metadata-files:
   - docs/reference/_sidebar.yml
