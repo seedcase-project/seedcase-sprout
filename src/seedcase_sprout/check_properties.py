@@ -1,3 +1,5 @@
+from typing import Any
+
 import seedcase_sprout.check_datapackage as cdp
 from seedcase_sprout.properties import PackageProperties, ResourceProperties
 from seedcase_sprout.sprout_checks.get_sprout_package_errors import (
@@ -173,7 +175,7 @@ def _generic_check_properties(
     return properties
 
 
-def _check_is_package_properties_type(properties):
+def _check_is_package_properties_type(properties: Any) -> None:
     if not isinstance(properties, PackageProperties):
         raise TypeError(
             f"Expected properties to be a PackageProperties object,"
@@ -181,7 +183,7 @@ def _check_is_package_properties_type(properties):
         )
 
 
-def _check_is_resource_properties_type(properties):
+def _check_is_resource_properties_type(properties: Any) -> None:
     if not isinstance(properties, ResourceProperties):
         raise TypeError(
             f"Expected properties to be a ResourceProperties object,"

@@ -98,7 +98,7 @@ def _extract_timestamp_from_batch_file_path(path: Path) -> str:
 
     If multiple timestamps are found in the file name, the first one is used.
     """
-    timestamp_list = re.findall(BATCH_TIMESTAMP_PATTERN, path.stem)
+    timestamp_list: list[str] = re.findall(BATCH_TIMESTAMP_PATTERN, path.stem)
 
     if not timestamp_list:
         raise ValueError(

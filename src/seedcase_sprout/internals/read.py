@@ -1,8 +1,9 @@
 from json import loads
 from pathlib import Path
+from typing import Any
 
 
-def _read_json(path: Path) -> dict:
+def _read_json(path: Path) -> Any:
     """Reads the contents of a JSON file into an object.
 
     Args:

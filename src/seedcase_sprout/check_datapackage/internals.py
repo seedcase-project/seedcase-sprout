@@ -1,7 +1,7 @@
 import re
 from json import loads
 from pathlib import Path
-from typing import Iterator
+from typing import Any, Iterator
 
 from jsonschema import Draft7Validator, FormatChecker, ValidationError
 
@@ -14,12 +14,12 @@ from seedcase_sprout.check_datapackage.constants import (
 )
 
 
-def _read_json(path: Path) -> dict:
+def _read_json(path: Path) -> Any:
     """Reads the contents of a JSON file into an object."""
     return loads(path.read_text())
 
 
-def _add_package_recommendations(schema: dict) -> dict:
+def _add_package_recommendations(schema: dict[str, Any]) -> dict[str, Any]:
     """Add recommendations from the Data Package standard to the schema.
 
     Modifies the schema in place.
@@ -38,7 +38,7 @@ def _add_package_recommendations(schema: dict) -> dict:
     return schema
 
 
-def _add_resource_recommendations(schema: dict) -> dict:
+def _add_resource_recommendations(schema: dict[str, Any]) -> dict[str, Any]:
     """Add recommendations from the Data Resource standard to the schema.
 
     Modifies the schema in place.
@@ -56,7 +56,7 @@ def _add_resource_recommendations(schema: dict) -> dict:
 
 
 def _check_object_against_json_schema(
-    json_object: dict, schema: dict
+    json_object: dict[str, Any], schema: dict[str, Any]
 ) -> list[CheckError]:
     """Checks that `json_object` matches the given JSON schema.
 
@@ -103,7 +103,7 @@ def _validation_errors_to_check_errors(
             validator=str(error.validator),
         )
         for error in _unwrap_errors(list(validation_errors))
-        if error.validator not in COMPLEX_VALIDATORS
+        if str(error.validator) not in COMPLEX_VALIDATORS
     ]
     return sorted(set(check_errors))
 
@@ -136,7 +136,7 @@ def _get_full_json_path_from_error(error: ValidationError) -> str:
     Returns:
         The full `json_path` of the error.
     """
-    if error.validator == "required":
+    if str(error.validator) == "required":
         match = re.search("'(.*)' is a required property", error.message)
         if match:
             return f"{error.json_path}.{match.group(1)}"

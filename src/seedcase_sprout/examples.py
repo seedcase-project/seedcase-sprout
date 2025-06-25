@@ -321,7 +321,7 @@ def example_data_all_polars_types() -> pl.DataFrame:
     )
 
 
-class ExamplePackage(AbstractContextManager):
+class ExamplePackage(AbstractContextManager[PackagePath]):
     """Create a temporary data package with optional resources for demoing or testing.
 
     Examples:
@@ -389,7 +389,7 @@ class ExamplePackage(AbstractContextManager):
 
         return package_path
 
-    def __exit__(self, *_) -> None:
+    def __exit__(self, *_) -> None:  # type: ignore[no-untyped-def]
         """Restore the original working directory and clean up the temporary package."""
         os.chdir(self.calling_dir)
         self.temp_dir.cleanup()

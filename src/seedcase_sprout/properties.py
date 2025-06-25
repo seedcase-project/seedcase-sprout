@@ -30,7 +30,7 @@ class Properties(ABC):
     """An abstract base class for all `*Properties` classes holding common logic."""
 
     @property
-    def compact_dict(self) -> dict:
+    def compact_dict(self) -> dict[str, Any]:
         """Converts the dataclass `*Properties` object to a `camelCase` dictionary.
 
         Applies recursively to nested `*Properties` objects. Also removes any keys with
@@ -48,7 +48,7 @@ class Properties(ABC):
         )
 
     @classmethod
-    def from_dict(cls: type[Self], data: dict) -> Self:
+    def from_dict(cls: type[Self], data: dict[str, Any]) -> Self:
         """Creates a dataclass `*Properties` object filled with data from a dictionary.
 
         Args:
@@ -221,7 +221,7 @@ class ConstraintsProperties(Properties):
         pattern (str | None): A regular expression pattern to test each
             value of the property against, where a truthy response indicates
             validity.
-        enum (list | None): The value of the field must exactly match one of
+        enum (list[Any] | None): The value of the field must exactly match one of
             the values in the `enum` array.
         min_length (int | None): An integer that specifies the minimum
             length of a value.
@@ -241,7 +241,7 @@ class ConstraintsProperties(Properties):
     required: bool | None = None
     unique: bool | None = None
     pattern: str | None = None
-    enum: list | None = None
+    enum: list[Any] | None = None
     min_length: int | None = None
     max_length: int | None = None
     minimum: str | float | int | None = None
@@ -386,10 +386,10 @@ class ResourceProperties(Properties):
     hash: str | None = None
     schema: TableSchemaProperties | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Generates the path from the resource name after object creation."""
         self.path = (
-            _create_resource_data_path(self.name)
+            _create_resource_data_path(str(self.name))
             if _is_resource_name_correct(self.name)
             else None
         )
