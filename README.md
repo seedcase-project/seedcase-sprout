@@ -83,6 +83,10 @@ project (`seedcase-sprout/`) and run:
 just install-deps
 ```
 
+Please note that this project is released with a [Contributor Code of
+Conduct](https://github.com/seedcase-project/seedcase-sprout/blob/main/CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
 ## Licensing
 
 This project is licensed under the [MIT
