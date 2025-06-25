@@ -23,15 +23,15 @@ def as_readme_text(properties: PackageProperties) -> str:
         A string with the README text based on the properties.
     """
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
-    env.filters["join_names"] = join_names
-    env.filters["format_date"] = format_date
-    env.filters["inline_code"] = inline_code
-    env.filters["format_link"] = format_link
+    env.filters["join_names"] = _join_names
+    env.filters["format_date"] = _format_date
+    env.filters["inline_code"] = _inline_code
+    env.filters["format_link"] = _format_link
     template = env.get_template("README.jinja2")
     return template.render(properties=properties)
 
 
-def join_names(licenses: list[LicenseProperties] | None) -> str:
+def _join_names(licenses: list[LicenseProperties] | None) -> str:
     """Joins license names into a comma-separated list.
 
     Args:
@@ -43,7 +43,7 @@ def join_names(licenses: list[LicenseProperties] | None) -> str:
     return ", ".join(str(license.name) for license in licenses) if licenses else "N/A"
 
 
-def format_date(created: str | None) -> str:
+def _format_date(created: str | None) -> str:
     """Transforms ISO date stamp to human-readable format.
 
     Args:
@@ -59,7 +59,7 @@ def format_date(created: str | None) -> str:
     )
 
 
-def inline_code(value: str | None) -> str:
+def _inline_code(value: str | None) -> str:
     """Adds inline code formatting to the input.
 
     Args:
@@ -71,7 +71,7 @@ def inline_code(value: str | None) -> str:
     return f"`{value}`" if value else "N/A"
 
 
-def format_link(url: str | None, title: str = "See more") -> str:
+def _format_link(url: str | None, title: str = "See more") -> str:
     """Formats a URL as a markdown link.
 
     Args:

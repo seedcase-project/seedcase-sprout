@@ -2,6 +2,7 @@ project:
   type: seedcase-theme
   pre-render:
     - quarto render README.qmd --to gfm
+    - sh ./tools/get-contributors.sh
   render:
     - "docs/*"
     - "index.qmd"

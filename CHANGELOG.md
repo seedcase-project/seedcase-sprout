@@ -1,3 +1,9 @@
+## 0.45.1 (2025-06-24)
+
+### Refactor
+
+- :recycle: convert to internal functions with `_` prefix (#1423)
+
 ## 0.45.0 (2025-06-23)
 
 ### Feat
