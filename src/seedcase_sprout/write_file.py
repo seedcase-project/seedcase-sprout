@@ -8,11 +8,12 @@ def write_file(string: str, path: Path) -> Path:
     If the file already exists, it will be overwritten.
 
     Args:
-        string: The content to be written to the file.
-        path: A path of the file to be created, including the file name and extension.
+        string: The content you want written to the file.
+        path: The full path to the file you want to create, including the file name and
+            extension.
 
     Returns:
-        A path to the file that was created.
+        The path to the file that was created.
 
     Raises:
         FileNotFoundError: If the parent folder of the file doesn't exist.
