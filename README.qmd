@@ -1,0 +1,91 @@
+---
+format: gfm
+execute:
+  echo: false
+jupyter: python3
+---
+
+```{=html}
+<p align="center">
+    <a href="https://sprout.seedcase-project.org/">
+        <img src="https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/main/_extensions/seedcase-project/seedcase-theme/logos/navbar-logo-seedcase-sprout.svg" alt="Link to Sprout website" height="150"/>
+    </a>
+</p>
+```
+
+## seedcase-sprout: Grow structured, organised, and usable data
+
+{{< include /docs/includes/_badges.qmd >}}
+
+Sprout is one component of the [Seedcase
+Project](https://seedcase-project.org) framework that aims to take data
+created or collected for research studies and "grow" it in a structured
+way using modern data engineering best practices. Sprout is designed to
+organise, describe, and store data for effective discovery, management,
+and analysis.
+
+Check out our [website](https://sprout.seedcase-project.org/) for more
+information, such as an
+[overview](https://sprout.seedcase-project.org/docs/overview/), how to
+use it [guide](https://sprout.seedcase-project.org/docs/guide/), or to
+read about the
+[design](https://sprout.seedcase-project.org/docs/design/). For a list
+of changes, see our
+[changelog](https://sprout.seedcase-project.org/docs/releases/) page.
+
+## Installing
+
+Seedcase Sprout can be installed in two ways. The first is to install it
+as a user, and the second is to install it as a contributor.
+
+To install Sprout for general use, see our [Installation
+Guide](https://sprout.seedcase-project.org/docs/guide/installation).
+
+## Contributing
+
+If you would like to contribute, please check out our
+[guidebook](https://guidebook.seedcase-project.org/) for more specific
+details on how we work and develop. It is a regularly evolving document,
+so is at various states of completion.
+
+To install Sprout to contribute, you first need to install
+[uv](https://docs.astral.sh/uv/) and
+[justfile](https://just.systems/man/en/packages.html). We use uv and
+justfile to manage our project, such as to install development
+dependencies. Both uv and justfile website have a more detailed guide on
+using uv, but below are some simple instructions to get you started.
+
+To install uv, run:
+
+``` bash
+pipx install uv
+```
+
+Then, open a terminal so that the working directory is the root of this
+project (`seedcase-sprout/`) and run:
+
+``` bash
+just install-deps
+```
+
+## Licensing
+
+This project is licensed under the [MIT
+License](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md).
+
+## Citing
+
+This project is part of the Seedcase Project, which is a collaborative
+effort to create a framework for data management and analysis in
+research. If you use this project in your work, please cite it as follows:
+
+```{python}
+#| output: asis
+!uvx --quiet cffconvert --format apalike
+```
+
+Or as a BibTeX entry:
+
+```{python}
+!uvx --quiet cffconvert --format bibtex
+```

@@ -18,21 +18,20 @@ def write_resource_batch(
     resource_properties: ResourceProperties,
     package_path: Path | None = None,
 ) -> Path:
-    """Writes the tidied, original data into the resource's batch data folder.
+    """Write the tidied data into the resource's batch data folder.
 
-    Writes the original data that is in a Tidy format and read as a pl.DataFrame
-    into the resource location available from the `path` property of the
-    `resource_properties`. This will save a timestamped, unique file
-    name to store it as a backup. See the
+    Use this function to write the original data that is in a tidy Polars
+    DataFrame to the resource folder provided by the `path` property in the
+    `resource_properties`. The function saves the DataFrame as file with a
+    timestamped, unique name, as a backup. See the
     [design](https://sprout.seedcase-project.org/docs/design/) docs for an
-    explanation of this batch file. Data is always checked against the properties
-    before writing it to the batch folder.
+    explanation of this batch file. Data is always checked against the
+    `resource_properties` before it is written to the batch folder.
 
     Args:
         data: A Polars DataFrame object with the data to write to the batch folder.
         resource_properties: The properties object for the specific resource.
-            Use `read_properties()` to read the properties for the resource
-            and `get_resource_properties()` to get the correct resource properties.
+            Use `read_properties()` to read the properties for the resource.
         package_path: The path to the data package root folder (where `datapackage.json`
             is located). Defaults to the current working directory.
 
@@ -40,8 +39,9 @@ def write_resource_batch(
         The path to the written Parquet resource file.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, if resource properties are incorrect.
-        # TODO: Add exception for data check when implemented.
+        ExceptionGroup[CheckError]: If the resource properties are incorrect.
+        ValueError: If column names in the data are incorrect.
+        ExceptionGroup[ValueError]: If data types in the data are incorrect.
 
     Examples:
         ```{python}

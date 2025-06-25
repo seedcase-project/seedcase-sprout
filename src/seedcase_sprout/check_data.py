@@ -20,9 +20,9 @@ from seedcase_sprout.properties import (
 def check_data(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Checks that the DataFrame matches the requirements in the resource properties.
+    """Check that the DataFrame matches the requirements in the resource properties.
 
-    Runs a few checks to compare between the data and the properties on the items:
+    Run a few checks to compare between the data and the properties on the items:
 
     | Data | Properties |
     |:------|:------------|
@@ -31,21 +31,23 @@ def check_data(
     | Column values' types | `field.types` |
     | Column values' constraints | `field.constraints` |
 
-    Error messages output generally in the format of:
+    The error messages are generally in the format of:
 
-    > # {data item}:
-    >
-    > There is a mismatch found:
-    >
-    > - In the properties: {mismatch}
-    > - In the data: {mismatch}
+    ```
+    # {data item}:
+
+    There is a mismatch found:
+
+    - In the properties: {mismatch}
+    - In the data: {mismatch}
+    ```
 
     Args:
         data: A Polars DataFrame.
         resource_properties: The specific `ResourceProperties` for the `data`.
 
     Returns:
-        Output the `data` if checks all pass.
+        The `data` if checks all pass.
 
     Raises:
         ExceptionGroup[CheckError]: If the resource properties are incorrect.

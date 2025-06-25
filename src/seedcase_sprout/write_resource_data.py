@@ -22,7 +22,6 @@ def write_resource_data(
     `resource_properties` to ensure that the data is correctly structured and
     tidy.
 
-
     Args:
         data: A DataFrame object with the resources data from the files in its
             `batch/` folder.
@@ -32,7 +31,7 @@ def write_resource_data(
             is located). Defaults to the current working directory.
 
     Returns:
-        Outputs the path of the created Parquet file.
+        The path of the created Parquet file.
 
     Examples:
         ```{python}
