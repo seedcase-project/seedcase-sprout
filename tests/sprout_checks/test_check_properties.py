@@ -1,6 +1,7 @@
 from pathlib import Path
+from typing import cast
 
-from pytest import fixture, mark, raises
+from pytest import ExceptionInfo, fixture, mark, raises
 
 from seedcase_sprout.check_datapackage import CheckError
 from seedcase_sprout.check_properties import (
@@ -9,7 +10,13 @@ from seedcase_sprout.check_properties import (
     check_resource_properties,
 )
 from seedcase_sprout.examples import example_resource_properties
-from seedcase_sprout.properties import PackageProperties, ResourceProperties
+from seedcase_sprout.properties import (
+    ContributorProperties,
+    LicenseProperties,
+    PackageProperties,
+    ResourceProperties,
+    SourceProperties,
+)
 from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
@@ -28,9 +35,9 @@ def properties():
         description="A package.",
         version="1.0.0",
         created="2024-05-14T05:00:01+00:00",
-        licenses=[{"name": "a-license"}],
-        contributors=[{"title": "a contributor"}],
-        sources=[{"title": "a source"}],
+        licenses=[LicenseProperties(name="a-license")],
+        contributors=[ContributorProperties(title="a contributor")],
+        sources=[SourceProperties(title="a source")],
         resources=[
             ResourceProperties(
                 name="resource-1",
@@ -94,7 +101,7 @@ def test_error_missing_required_package_properties(properties, field):
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert errors[0].json_path == f"$.{field}"
     assert errors[0].validator == "required"
@@ -103,7 +110,7 @@ def test_error_missing_required_package_properties(properties, field):
     with raises(ExceptionGroup) as error_info:
         check_package_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert errors[0].json_path == f"$.{field}"
     assert errors[0].validator == "required"
@@ -125,7 +132,7 @@ def test_error_incorrect_property_values(properties, item, value, validator):
     with raises(ExceptionGroup) as error_info:
         check_package_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == f"$.{item}"
@@ -134,7 +141,7 @@ def test_error_incorrect_property_values(properties, item, value, validator):
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == f"$.{item}"
@@ -150,7 +157,7 @@ def test_error_blank_package_properties(properties, name, type):
         check_properties(properties)
 
     blank_errors = [
-        error for error in error_info.value.exceptions if error.validator == "blank"
+        error for error in _as_check_errors(error_info) if error.validator == "blank"
     ]
 
     assert len(blank_errors) == 1
@@ -160,7 +167,7 @@ def test_error_blank_package_properties(properties, name, type):
         check_package_properties(properties)
 
     blank_errors = [
-        error for error in error_info.value.exceptions if error.validator == "blank"
+        error for error in _as_check_errors(error_info) if error.validator == "blank"
     ]
 
     assert len(blank_errors) == 1
@@ -177,7 +184,7 @@ def test_error_missing_required_nested_properties(properties):
         check_package_properties(properties)
 
     required_errors = [
-        error for error in error_info.value.exceptions if error.validator == "required"
+        error for error in _as_check_errors(error_info) if error.validator == "required"
     ]
     assert [error.json_path for error in required_errors] == [
         "$.contributors[0].title",
@@ -190,7 +197,7 @@ def test_error_missing_required_nested_properties(properties):
         check_properties(properties)
 
     required_errors = [
-        error for error in error_info.value.exceptions if error.validator == "required"
+        error for error in _as_check_errors(error_info) if error.validator == "required"
     ]
     assert [error.json_path for error in required_errors] == [
         "$.contributors[0].title",
@@ -214,7 +221,7 @@ def test_error_missing_required_resource_properties(properties, field):
     with raises(ExceptionGroup) as error_info:
         check_resource_properties(properties.resources[0])
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == f"$.{field}"
@@ -223,7 +230,7 @@ def test_error_missing_required_resource_properties(properties, field):
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert errors[0].json_path == f"$.resources[0].{field}"
     assert errors[0].validator == "required"
@@ -238,7 +245,7 @@ def test_error_blank_resource_properties(properties, name, type):
         check_properties(properties)
 
     blank_errors = [
-        error for error in error_info.value.exceptions if error.validator == "blank"
+        error for error in _as_check_errors(error_info) if error.validator == "blank"
     ]
 
     assert len(blank_errors) == 1
@@ -248,7 +255,7 @@ def test_error_blank_resource_properties(properties, name, type):
         check_resource_properties(properties.resources[0])
 
     blank_errors = [
-        error for error in error_info.value.exceptions if error.validator == "blank"
+        error for error in _as_check_errors(error_info) if error.validator == "blank"
     ]
 
     assert len(blank_errors) == 1
@@ -258,6 +265,7 @@ def test_error_blank_resource_properties(properties, name, type):
 def test_errors_flagged_for_fields_with_multipart_name():
     """Errors should be flagged when the name of the field has more than one word."""
     properties = example_resource_properties()
+    assert properties.schema
     properties.schema.primary_key = []
 
     with raises(ExceptionGroup) as error_info:
@@ -265,7 +273,7 @@ def test_errors_flagged_for_fields_with_multipart_name():
 
     assert all(
         error.json_path == "$.schema.primaryKey"
-        for error in error_info.value.exceptions
+        for error in _as_check_errors(error_info)
     )
 
 
@@ -276,7 +284,7 @@ def test_error_incorrect_resource_property_values(properties):
     with raises(ExceptionGroup) as error_info:
         check_resource_properties(properties.resources[0])
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == "$.title"
@@ -285,7 +293,7 @@ def test_error_incorrect_resource_property_values(properties):
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) == 1
     assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == "$.resources[0].title"
@@ -302,7 +310,7 @@ def test_error_no_resource_name_in_path(properties, path):
     with raises(ExceptionGroup) as error_info:
         check_resource_properties(properties.resources[0])
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) >= 1
     assert all(
         isinstance(error, CheckError) and error.json_path.endswith("path")
@@ -312,9 +320,17 @@ def test_error_no_resource_name_in_path(properties, path):
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
-    errors = error_info.value.exceptions
+    errors = _as_check_errors(error_info)
     assert len(errors) >= 1
     assert all(
         isinstance(error, CheckError) and error.json_path.endswith("path")
         for error in errors
     )
+
+
+def _as_check_errors(
+    error_info: ExceptionInfo[ExceptionGroup[Exception]],
+) -> list[CheckError]:
+    errors = error_info.value.exceptions
+    assert all(isinstance(error, CheckError) for error in errors)
+    return cast(list[CheckError], errors)

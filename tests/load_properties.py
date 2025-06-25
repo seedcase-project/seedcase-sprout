@@ -11,4 +11,5 @@ def load_properties(path: Path, object_name: str) -> Properties:
     assert spec.loader
     module = module_from_spec(spec)
     spec.loader.exec_module(module)
-    return getattr(module, object_name)
+    properties: Properties = getattr(module, object_name)
+    return properties

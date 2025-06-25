@@ -72,6 +72,7 @@ def test_uses_cwd_if_no_path_provided(tmp_cwd):
     # Given
     package_path = PackagePath(tmp_cwd)
     resource_properties = example_resource_properties()
+    assert resource_properties.name
     package_path.resource(resource_properties.name).mkdir(parents=True)
 
     # When
