@@ -12,7 +12,7 @@ _RESOURCE_FIELD_PATTERN = r"resources\[\d+\]"
 
 
 def check_package_properties(properties: PackageProperties) -> PackageProperties:
-    """Check that the `PackageProperties`, excluding `ResourceProperties`, match Sprout's requirements.
+    """Check `PackageProperties` (not `ResourceProperties`) against the requirements.
 
     Package `properties` are checked against the Data Package standard and the following
     Sprout-specific requirements:
@@ -44,9 +44,9 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
 def check_properties(properties: PackageProperties) -> PackageProperties:
     """Check that all `properties` match Sprout's requirements.
 
-    If the resources property hasn't been filled in yet, this will only check the package
-    properties. The `properties` are checked against the Data Package standard and the
-    following Sprout-specific requirements:
+    If the resources property hasn't been filled in yet, this will only check
+    the package properties. The `properties` are checked against the Data
+    Package standard and the following Sprout-specific requirements:
 
     - Sprout-specific required fields are present
     - Required fields are not blank
