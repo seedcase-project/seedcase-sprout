@@ -33,12 +33,14 @@ def check_data(
 
     The error messages are generally in the format of:
 
-    > # {data item}:
-    >
-    > There is a mismatch found:
-    >
-    > - In the properties: {mismatch}
-    > - In the data: {mismatch}
+    ```
+    # {data item}:
+
+    There is a mismatch found:
+
+    - In the properties: {mismatch}
+    - In the data: {mismatch}
+    ```
 
     Args:
         data: A Polars DataFrame.

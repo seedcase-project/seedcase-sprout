@@ -155,9 +155,9 @@ class ReferenceProperties(Properties):
     """The destination part of a foreign key.
 
     Attributes:
-        resource: (str | None): The name of the resource within the current data
+        resource (str | None): The name of the resource within the current data
             package where the `fields` are located.
-        fields: (list[str] | None): An array of strings of the same length as
+        fields (list[str] | None): An array of strings of the same length as
             `TableSchemaForeignKeyProperties.fields`, specifying the field (or fields)
             that form the destination part of the foreign key.
     """
