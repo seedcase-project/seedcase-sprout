@@ -18,7 +18,7 @@ def write_resource_batch(
     resource_properties: ResourceProperties,
     package_path: Path | None = None,
 ) -> Path:
-    """Write the tidied, original data into the resource's batch data folder.
+    """Write the tidied data into the resource's batch data folder.
 
     Use this function to write the original data that is in a tidy Polars
     DataFrame to the resource folder provided by the `path` property in the
@@ -26,7 +26,7 @@ def write_resource_batch(
     timestamped, unique name, as a backup. See the
     [design](https://sprout.seedcase-project.org/docs/design/) docs for an
     explanation of this batch file. Data is always checked against the
-    properties before writing it to the batch folder.
+    `resource_properties` before it is written to the batch folder.
 
     Args:
         data: A Polars DataFrame object with the data to write to the batch folder.

@@ -17,7 +17,7 @@ def as_readme_text(properties: PackageProperties) -> str:
     `write_file()`.
 
     Args:
-        properties: An `PackageProperties` object containing the package and resource
+        properties: A `PackageProperties` object containing the package and resource
             properties.
 
     Returns:

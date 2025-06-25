@@ -23,8 +23,8 @@ def read_resource_batches(
 ) -> list[pl.DataFrame]:
     """Read all the batch resource file(s) into a list of (Polars) DataFrames.
 
-    You use this function to take the Parquet file(s) given by `paths`, read them in as
-    a list of Polars DataFrames, and does some checks on each of the DataFrames
+    Use this function to read the Parquet file(s) specified in `paths` into
+    a list of Polars DataFrames, and perform checks on each of the DataFrames
     against the `resource_properties`. The `resource_properties` object is used
     to check the data and ensure it is correct. While Sprout generally assumes
     that the files stored in the `resources/<id>/batch/` folder are already
