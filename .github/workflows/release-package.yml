@@ -1,4 +1,4 @@
-name: Update version
+name: Release package
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     # Only give permissions for this job.
     permissions:
       contents: write
-    uses: seedcase-project/.github/.github/workflows/reusable-update-python-project-version.yml@main
+    uses: seedcase-project/.github/.github/workflows/reusable-release-package.yml@main
     with:
       app-id: ${{ vars.UPDATE_VERSION_APP_ID }}
     secrets:
