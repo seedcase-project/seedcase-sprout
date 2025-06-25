@@ -43,6 +43,7 @@ def read_resource_batches(
 
     Raises:
         FileNotFoundError: If a file in the list of paths doesn't exist.
+        ValueError: If the file is not a Parquet file.
         ValueError: If the batch file name is not in the expected pattern.
         ValueError: If the timestamp column name matches an existing column in the
             DataFrame.
@@ -80,7 +81,15 @@ def _read_parquet_batch_file(
 
     Returns:
         The Parquet file as a DataFrame with a timestamp column added.
+
+    Raises:
+        ValueError: If the file is not a Parquet file.
     """
+    if path.suffix != ".parquet":
+        raise ValueError(
+            "Failed to read batch file. Expected a file with a "
+            f"`.parquet` extension but found {path}."
+        )
     data = pl.read_parquet(path)
     check_data(data, resource_properties)
 
