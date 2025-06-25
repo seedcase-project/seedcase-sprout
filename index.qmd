@@ -41,7 +41,7 @@ div.quarto-about-jolla {
 ::::: hero-banner
 :::: landing-page-block
 ::: hero-text
-## Standardise your data and simplify managing it
+## Standardise your data and streamline its management
 
 Sprout is a **Python package**, and the backbone of the [**Seedcase
 Project**](https://seedcase-project.org), with a flexible interface
