@@ -43,30 +43,9 @@ Guide](https://sprout.seedcase-project.org/docs/guide/installation).
 
 ## Contributing
 
-If you would like to contribute, please check out our
-[guidebook](https://guidebook.seedcase-project.org/) for more specific
-details on how we work and develop. It is a regularly evolving document,
-so is at various states of completion.
-
-To install Sprout to contribute, you first need to install
-[uv](https://docs.astral.sh/uv/) and
-[justfile](https://just.systems/man/en/packages.html). We use uv and
-justfile to manage our project, such as to install development
-dependencies. Both uv and justfile website have a more detailed guide on
-using uv, but below are some simple instructions to get you started.
-
-To install uv, run:
-
-``` bash
-pipx install uv
-```
-
-Then, open a terminal so that the working directory is the root of this
-project (`seedcase-sprout/`) and run:
-
-``` bash
-just install-deps
-```
+Check out our [contributing page](https://sprout.seedcase-project.org/CONTRIBUTING/)
+for information on how to contribute to the project, including how to
+set up your development environment.
 
 ## Licensing
 
