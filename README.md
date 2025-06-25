@@ -8,10 +8,14 @@
 
 ## seedcase-sprout: Grow structured, organised, and usable data
 
+[![GitHub
+License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
 [![PyPI
 Version](https://img.shields.io/pypi/v/seedcase-sprout.png)](https://pypi.org/project/seedcase-sprout/)
 [![GitHub
 Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
+[![Supported Python Version from PEP 621
+TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fseedcase-project%2Fseedcase-sprout%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
 [![OpenSSF
 Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge?raw=true.png)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
 [![Build
@@ -24,6 +28,9 @@ status](https://results.pre-commit.ci/badge/github/seedcase-project/seedcase-spr
 [![code
 coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/coverage.svg?raw=true)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/index.html)
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 Sprout is one component of the [Seedcase
 Project](https://seedcase-project.org) framework that aims to take data
