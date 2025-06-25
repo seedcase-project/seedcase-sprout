@@ -10,17 +10,18 @@ from seedcase_sprout.properties import (
 
 
 def as_readme_text(properties: PackageProperties) -> str:
-    """Creates a string containing the README text based on the properties.
+    """Create a human-readable version of the properties as a README string.
 
-    Using a template, this will build a README file with the contents of the
-    properties object in a human-readable format. Use `write_file()` to save
-    the text to the `README.md` file.
+    Convert the properties object into human-readable version as Markdown-formatted
+    text. Use this to generate the text for a `README.md` file and save it using
+    `write_file()`.
 
     Args:
-        properties: An object containing the package and resource properties.
+        properties: A `PackageProperties` object containing the package and resource
+            properties.
 
     Returns:
-        A string with the README text based on the properties.
+        A Markdown-styled string to eventually save as a `README.md` file.
     """
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     env.filters["join_names"] = _join_names

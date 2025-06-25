@@ -9,7 +9,7 @@ from seedcase_sprout.write_file import write_file
 
 
 def create_properties_script(path: Path | None = None) -> Path:
-    """Creates the properties script with default values.
+    """Create a properties script with default values.
 
     If the script already exists, it will not be overwritten.
 

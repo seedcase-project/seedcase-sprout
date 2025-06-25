@@ -12,7 +12,7 @@ _RESOURCE_FIELD_PATTERN = r"resources\[\d+\]"
 
 
 def check_package_properties(properties: PackageProperties) -> PackageProperties:
-    """Checks that the package, not resource, `properties` match Sprout's requirements.
+    """Check `PackageProperties` (not `ResourceProperties`) against the requirements.
 
     Package `properties` are checked against the Data Package standard and the following
     Sprout-specific requirements:
@@ -24,7 +24,7 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
         properties: The package properties to check.
 
     Returns:
-        Outputs the `properties` if all checks pass.
+        The `properties` if all checks pass.
 
     Raises:
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
@@ -42,17 +42,17 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
 
 
 def check_properties(properties: PackageProperties) -> PackageProperties:
-    """Checks that all `properties` match Sprout's requirements.
+    """Check that all `properties` match Sprout's requirements.
 
-    If the resources property hasn't been filled in yet, only package properties will
-    be checked. The `properties` are checked against the Data Package standard and the
-    following Sprout-specific requirements:
+    If the resources property hasn't been filled in yet, this will only check
+    the package properties. The `properties` are checked against the Data
+    Package standard and the following Sprout-specific requirements:
 
     - Sprout-specific required fields are present
     - Required fields are not blank
 
-    If the resources property has been filled in, the resource properties will also
-    have these checks:
+    If the resources property *has* been filled in, these resource properties will also
+    be checked:
 
     - `path` is of type string.
     - `path` includes resource name.
@@ -62,7 +62,7 @@ def check_properties(properties: PackageProperties) -> PackageProperties:
         properties: The properties to check.
 
     Returns:
-        Outputs the `properties` if all checks pass.
+        The `properties` if all checks pass.
 
     Raises:
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
