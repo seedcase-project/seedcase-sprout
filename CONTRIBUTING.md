@@ -18,7 +18,7 @@ To install Sprout to contribute, you first need to install
 [uv](https://docs.astral.sh/uv/) and
 [justfile](https://just.systems/man/en/packages.html). We use uv and
 justfile to manage our project, such as to install development
-dependencies. Both uv and justfile website have a more detailed guide on
+dependencies. Both the uv and justfile websites have a more detailed guide on
 using uv, but below are some simple instructions to get you started.
 
 To install uv, run:
