@@ -1,4 +1,3 @@
-import polars as pl
 from pytest import raises
 
 from seedcase_sprout import ExamplePackage, example_data, read_resource_data
