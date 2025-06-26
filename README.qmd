@@ -47,6 +47,10 @@ Check out our [contributing page](https://sprout.seedcase-project.org/CONTRIBUTI
 for information on how to contribute to the project, including how to
 set up your development environment.
 
+Please note that this project is released with a [Contributor Code of
+Conduct](https://github.com/seedcase-project/.github/blob/main/CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
 ## Licensing
 
 This project is licensed under the [MIT
@@ -56,7 +60,8 @@ License](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.m
 
 This project is part of the Seedcase Project, which is a collaborative
 effort to create a framework for data management and analysis in
-research. If you use this project in your work, please cite it as follows:
+research. If you use this project in your work, please cite it as
+follows:
 
 ```{python}
 #| output: asis

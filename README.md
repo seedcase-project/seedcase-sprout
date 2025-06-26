@@ -63,6 +63,10 @@ page](https://sprout.seedcase-project.org/CONTRIBUTING/) for information
 on how to contribute to the project, including how to set up your
 development environment.
 
+Please note that this project is released with a [Contributor Code of
+Conduct](https://github.com/seedcase-project/.github/blob/main/CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
 ## Licensing
 
 This project is licensed under the [MIT
