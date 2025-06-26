@@ -1,3 +1,9 @@
+## 0.46.0 (2025-06-26)
+
+### Feat
+
+- :sparkles: add `read_resource_data()` (#1433)
+
 ## 0.45.2 (2025-06-26)
 
 ### Refactor
