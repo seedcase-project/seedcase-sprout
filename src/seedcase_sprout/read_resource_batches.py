@@ -34,16 +34,14 @@ def read_resource_batches(
     Args:
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to check the data against.
-        paths: A list of paths for all the files in the resource's `batch/` folder.
-            Use `path_resource_batch_files()` to help provide the correct paths to the
-            batch files. Defaults to the batch files of the given resource.
+        paths: A list of paths for all the Parquet files in the resource's `batch/`
+            folder. Use `path_resource_batch_files()` to help provide the correct paths
+            to the batch files. Defaults to the batch files of the given resource.
 
     Returns:
         A list of DataFrame objects from all the batch files.
 
     Raises:
-        FileNotFoundError: If a file in the list of paths doesn't exist.
-        ValueError: If the file is not a Parquet file.
         ValueError: If the batch file name is not in the expected pattern.
         ValueError: If the timestamp column name matches an existing column in the
             DataFrame.
@@ -81,9 +79,6 @@ def _read_parquet_batch_file(
 
     Returns:
         The Parquet file as a DataFrame with a timestamp column added.
-
-    Raises:
-        ValueError: If the file is not a Parquet file.
     """
     if path.suffix != ".parquet":
         raise ValueError(
