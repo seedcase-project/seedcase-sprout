@@ -9,15 +9,15 @@ def read_resource_data(
     resource_name: str,
     path: Path | None = None,
 ) -> pl.DataFrame:
-    """Read the resource's Parquet data.
+    """Read the resource's `data.parquet` file.
 
     Use this function to read in the data file for a specific resource in a data
     package as a Polars DataFrame.
 
     Args:
         resource_name: The name of the resource. This should match the name
-            found in the `datapackage.json` file under the `resources.name`
-            key.
+            found in the `datapackage.json` file under the `resource.name`
+            key for the resource.
         path: The path to the data package folder, where the `datapackage.json`
             file is located. If not provided, it defaults to the current
             working directory. Use `PackagePath().properties()` to help get the
