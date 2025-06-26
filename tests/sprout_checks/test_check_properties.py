@@ -134,7 +134,6 @@ def test_error_incorrect_property_values(properties, item, value, validator):
 
     errors = _as_check_errors(error_info)
     assert len(errors) == 1
-    assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == f"$.{item}"
     assert errors[0].validator == f"{validator}"
 
@@ -143,7 +142,6 @@ def test_error_incorrect_property_values(properties, item, value, validator):
 
     errors = _as_check_errors(error_info)
     assert len(errors) == 1
-    assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == f"$.{item}"
     assert errors[0].validator == f"{validator}"
 
@@ -223,7 +221,6 @@ def test_error_missing_required_resource_properties(properties, field):
 
     errors = _as_check_errors(error_info)
     assert len(errors) == 1
-    assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == f"$.{field}"
     assert errors[0].validator == "required"
 
@@ -286,7 +283,6 @@ def test_error_incorrect_resource_property_values(properties):
 
     errors = _as_check_errors(error_info)
     assert len(errors) == 1
-    assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == "$.title"
     assert errors[0].validator == "type"
 
@@ -295,7 +291,6 @@ def test_error_incorrect_resource_property_values(properties):
 
     errors = _as_check_errors(error_info)
     assert len(errors) == 1
-    assert isinstance(errors[0], CheckError)
     assert errors[0].json_path == "$.resources[0].title"
     assert errors[0].validator == "type"
 
@@ -312,20 +307,14 @@ def test_error_no_resource_name_in_path(properties, path):
 
     errors = _as_check_errors(error_info)
     assert len(errors) >= 1
-    assert all(
-        isinstance(error, CheckError) and error.json_path.endswith("path")
-        for error in errors
-    )
+    assert all(error.json_path.endswith("path") for error in errors)
 
     with raises(ExceptionGroup) as error_info:
         check_properties(properties)
 
     errors = _as_check_errors(error_info)
     assert len(errors) >= 1
-    assert all(
-        isinstance(error, CheckError) and error.json_path.endswith("path")
-        for error in errors
-    )
+    assert all(error.json_path.endswith("path") for error in errors)
 
 
 def _as_check_errors(
