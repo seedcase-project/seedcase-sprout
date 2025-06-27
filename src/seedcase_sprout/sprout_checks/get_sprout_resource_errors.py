@@ -1,3 +1,5 @@
+from typing import Any
+
 import seedcase_sprout.check_datapackage as cdp
 from seedcase_sprout.internals import (
     _create_resource_data_path,
@@ -24,7 +26,7 @@ from seedcase_sprout.sprout_checks.required_fields import (
 
 
 def get_sprout_resource_errors(
-    properties: dict, index: int | None = None
+    properties: dict[str, Any], index: int | None = None
 ) -> list[cdp.CheckError]:
     """Checks the resource `properties` against Sprout-specific requirements only.
 
@@ -44,7 +46,7 @@ def get_sprout_resource_errors(
 
 
 def _check_resource_path_format(
-    properties: dict, index: int | None = None
+    properties: dict[str, Any], index: int | None = None
 ) -> list[cdp.CheckError]:
     """Checks if the data path in the resource properties has the correct format.
 

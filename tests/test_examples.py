@@ -54,6 +54,7 @@ def test_creates_package_with_resources():
         # Test datapackage.json
         assert package_path.properties().is_file()
         properties = read_properties(package_path.properties())
+        assert properties.resources
         assert check_resource_properties(properties.resources[0])
         # Test resources
         assert properties.resources and len(properties.resources) == 1

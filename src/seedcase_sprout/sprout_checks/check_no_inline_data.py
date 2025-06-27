@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import CheckError
 from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
@@ -5,7 +7,7 @@ from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
 
 
 def check_no_inline_data(
-    properties: dict, index: int | None = None
+    properties: dict[str, Any], index: int | None = None
 ) -> list[CheckError]:
     """Checks that the `data` field of a set of resource properties is not set.
 

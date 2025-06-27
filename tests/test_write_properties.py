@@ -22,11 +22,11 @@ def properties() -> PackageProperties:
 
 
 @fixture
-def path(tmp_path) -> Path:
+def path(tmp_path: Path) -> Path:
     return tmp_path / "datapackage.json"
 
 
-def assert_file_contains(path: Path, expected_properties: PackageProperties):
+def assert_file_contains(path: Path, expected_properties: PackageProperties) -> None:
     new_properties = _read_json(path)
     assert new_properties == expected_properties.compact_dict
 

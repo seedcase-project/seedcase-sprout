@@ -26,7 +26,7 @@ def test_creates_script_with_empty_resource_properties(tmp_cwd, args):
         type="table",
         format="parquet",
         mediatype="application/parquet",
-        schema=TableSchemaProperties(fields=[FieldProperties(name="", type="")]),
+        schema=TableSchemaProperties(fields=[FieldProperties(name="", type="")]),  # type: ignore[arg-type]
     )
 
 

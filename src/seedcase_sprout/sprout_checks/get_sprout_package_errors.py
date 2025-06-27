@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import CheckError
 from seedcase_sprout.sprout_checks.check_fields_present import (
     check_fields_present,
@@ -10,7 +12,7 @@ from seedcase_sprout.sprout_checks.required_fields import (
 )
 
 
-def get_sprout_package_errors(properties: dict) -> list[CheckError]:
+def get_sprout_package_errors(properties: dict[str, Any]) -> list[CheckError]:
     """Checks the package `properties` against Sprout-specific requirements only.
 
     Args:

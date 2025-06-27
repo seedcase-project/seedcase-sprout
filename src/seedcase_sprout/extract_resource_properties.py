@@ -54,7 +54,7 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
     return resource_properties
 
 
-def _extract_field_properties(data: pl.DataFrame):
+def _extract_field_properties(data: pl.DataFrame) -> list[FieldProperties]:
     """Extract field properties from a Polars DataFrame."""
     # TODO: add format="binary" to Binary field type?
     field_names = data.columns

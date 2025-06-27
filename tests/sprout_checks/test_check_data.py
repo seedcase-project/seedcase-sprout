@@ -62,6 +62,7 @@ def test_accepts_correct_columns(fr_type, pl_types):
     """Should not raise an error when columns in the data match columns in the
     resource properties."""
     resource_properties = example_resource_properties()
+    assert resource_properties.schema
     resource_properties.schema.fields = [
         FieldProperties(name=str(pl_type), type=fr_type) for pl_type in pl_types
     ]
@@ -76,6 +77,7 @@ def test_accepts_columns_in_any_order():
     """Should not raise an error when the data types match but the columns are in a
     different order."""
     resource_properties = example_resource_properties()
+    assert resource_properties.schema and resource_properties.schema.fields
     resource_properties.schema.fields.reverse()
     data = example_data()
 
@@ -90,7 +92,7 @@ def test_throws_error_when_data_has_extra_columns(resource_properties):
     with raises(ValueError, match=r"Unexpected.*extra_col1.*extra_col2") as error:
         check_data(df, resource_properties)
 
-    assert bool_field.name not in str(error)
+    assert bool_field.name and bool_field.name not in str(error)
 
 
 def test_throws_error_when_data_has_missing_columns(resource_properties):
@@ -103,7 +105,7 @@ def test_throws_error_when_data_has_missing_columns(resource_properties):
     ) as error:
         check_data(df, resource_properties)
 
-    assert bool_field.name not in str(error)
+    assert bool_field.name and bool_field.name not in str(error)
 
 
 def test_throws_error_when_data_has_extra_and_missing_columns(resource_properties):
@@ -116,7 +118,7 @@ def test_throws_error_when_data_has_extra_and_missing_columns(resource_propertie
 
     assert re.search(r"Unexpected.*extra_col", str(error))
     assert re.search(rf"Missing.*{string_field.name}.*{number_field.name}", str(error))
-    assert bool_field.name not in str(error)
+    assert bool_field.name and bool_field.name not in str(error)
 
 
 @mark.parametrize(
@@ -166,8 +168,9 @@ def test_rejects_multiple_incorrect_column_types():
 
     errors = error_info.value.exceptions
     assert len(errors) == data.width
+    assert resource_properties.schema and resource_properties.schema.fields
     for error, field in zip(errors, resource_properties.schema.fields):
-        polars_type = re.escape(str(data.schema[field.name]))
+        polars_type = re.escape(str(data.schema[str(field.name)]))
         allowed_types = _get_allowed_polars_types(field.type)
         assert re.search(
             rf"'{field.name}'.*{allowed_types}.*found {polars_type}", str(error)
@@ -181,6 +184,7 @@ def test_rejects_geopoint_with_incorrect_size():
         {"my_geopoint": pl.Series([[1, 1, 1]] * 3, dtype=pl.Array(pl.Int8, 3))}
     )
     resource_properties = example_resource_properties()
+    assert resource_properties.schema
     resource_properties.schema.fields = [
         FieldProperties(name="my_geopoint", type="geopoint")
     ]
@@ -195,6 +199,7 @@ def test_rejects_geopoint_with_incorrect_inner_type():
         {"my_geopoint": pl.Series([["a", "b"]] * 3, dtype=pl.Array(pl.String, 2))}
     )
     resource_properties = example_resource_properties()
+    assert resource_properties.schema
     resource_properties.schema.fields = [
         FieldProperties(name="my_geopoint", type="geopoint")
     ]

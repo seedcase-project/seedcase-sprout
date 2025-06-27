@@ -92,9 +92,10 @@ def _check_column_names(
     """
     columns_in_data = data.schema.names()
     columns_in_resource = [
-        field.name
+        str(field.name)
         for field in cast(
-            list, get_nested_attr(resource_properties, "schema.fields", default=[])
+            list[FieldProperties],
+            get_nested_attr(resource_properties, "schema.fields", default=[]),
         )
     ]
     extra_columns_in_data = [

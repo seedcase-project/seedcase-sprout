@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage.check_error import CheckError
 from seedcase_sprout.check_datapackage.constants import DATA_PACKAGE_SCHEMA_PATH
 from seedcase_sprout.check_datapackage.internals import (
@@ -9,7 +11,7 @@ from seedcase_sprout.check_datapackage.internals import (
 
 
 def check_properties(
-    properties: dict, check_recommendations: bool = True
+    properties: dict[str, Any], check_recommendations: bool = True
 ) -> list[CheckError]:
     """Checks that `properties` matches the Data Package standard (v2.0).
 

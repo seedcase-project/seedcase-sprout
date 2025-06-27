@@ -8,10 +8,11 @@ from plum import dispatch
 from quartodoc import MdRenderer, layout
 from quartodoc._griffe_compat import docstrings as ds
 from quartodoc.pandoc.blocks import DefinitionList
+from quartodoc.renderers.md_renderer import ParamRow
 from tabulate import tabulate
 
 
-class Renderer(MdRenderer):
+class Renderer(MdRenderer):  # type: ignore[misc]
     style = "seedcase"
 
     @dispatch
@@ -30,7 +31,9 @@ class Renderer(MdRenderer):
     # returns ----
 
     @dispatch
-    def render(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
+    def render(
+        self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]
+    ) -> str:
         rows = list(map(self.render, el.value))
         header = [
             "Type",
@@ -40,10 +43,10 @@ class Renderer(MdRenderer):
 
     def _render_table(
         self,
-        rows,
-        headers,
+        rows: list[ParamRow],
+        headers: list[str],
         style: Literal["parameters", "attributes", "returns"],
-    ):
+    ) -> str:
         if self.table_style == "description-list":
             str_rows = str(DefinitionList([row.to_definition_list() for row in rows]))
             # remove empty fields and their separators
@@ -62,7 +65,7 @@ class Renderer(MdRenderer):
     # Summarize ===============================================================
 
     @dispatch
-    def summarize(self, el: layout.Section):
+    def summarize(self, el: layout.Section) -> str:
         desc = f"\n\n{el.desc}" if el.desc is not None else ""
         if el.title is not None:
             header = f"## {el.title}{desc}"

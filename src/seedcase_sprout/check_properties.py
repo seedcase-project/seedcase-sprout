@@ -1,3 +1,5 @@
+from typing import Any
+
 import seedcase_sprout.check_datapackage as cdp
 from seedcase_sprout.properties import PackageProperties, ResourceProperties
 from seedcase_sprout.sprout_checks.get_sprout_package_errors import (
@@ -11,7 +13,7 @@ from seedcase_sprout.sprout_checks.get_sprout_resource_errors import (
 _RESOURCE_FIELD_PATTERN = r"resources\[\d+\]"
 
 
-def check_package_properties(properties: PackageProperties) -> PackageProperties:
+def check_package_properties(properties: Any) -> PackageProperties:
     """Check `PackageProperties` (not `ResourceProperties`) against the requirements.
 
     Package `properties` are checked against the Data Package standard and the following
@@ -29,9 +31,9 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
     Raises:
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
-    _check_is_package_properties_type(properties)
+    package_properties = _check_is_package_properties_type(properties)
     return _generic_check_properties(
-        properties,
+        package_properties,
         ignore=[
             # Ignore checks on specific resources within the resource field.
             cdp.CheckErrorMatcher(json_path=_RESOURCE_FIELD_PATTERN),
@@ -41,7 +43,7 @@ def check_package_properties(properties: PackageProperties) -> PackageProperties
     )
 
 
-def check_properties(properties: PackageProperties) -> PackageProperties:
+def check_properties(properties: Any) -> PackageProperties:
     """Check that all `properties` match Sprout's requirements.
 
     If the resources property hasn't been filled in yet, this will only check
@@ -67,15 +69,15 @@ def check_properties(properties: PackageProperties) -> PackageProperties:
     Raises:
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
-    _check_is_package_properties_type(properties)
-    if not properties.resources:
-        check_package_properties(properties)
+    package_properties = _check_is_package_properties_type(properties)
+    if not package_properties.resources:
+        check_package_properties(package_properties)
     else:
-        _generic_check_properties(properties)
-    return properties
+        _generic_check_properties(package_properties)
+    return package_properties
 
 
-def check_resource_properties(properties: ResourceProperties) -> ResourceProperties:
+def check_resource_properties(properties: Any) -> ResourceProperties:
     """Checks that only the resource `properties` match Sprout's requirements.
 
     All resource `properties` are checked against the Data Package standard and
@@ -97,10 +99,10 @@ def check_resource_properties(properties: ResourceProperties) -> ResourcePropert
         ExceptionGroup: A group of `CheckError`s, one error per failed check.
     """
     package_field_pattern = r"\$\.\w+$"
-    _check_is_resource_properties_type(properties)
+    resource_properties = _check_is_resource_properties_type(properties)
     try:
         _generic_check_properties(
-            PackageProperties(resources=[properties]),
+            PackageProperties(resources=[resource_properties]),
             ignore=[cdp.CheckErrorMatcher(json_path=package_field_pattern)],
         )
     # TODO: This probably is better placed in the `check-datapackage` package.
@@ -110,7 +112,7 @@ def check_resource_properties(properties: ResourceProperties) -> ResourcePropert
                 error.json_path = error.json_path.replace(".resources[0]", "")
         raise error_info
 
-    return properties
+    return resource_properties
 
 
 def _generic_check_properties(
@@ -173,17 +175,19 @@ def _generic_check_properties(
     return properties
 
 
-def _check_is_package_properties_type(properties):
+def _check_is_package_properties_type(properties: Any) -> PackageProperties:
     if not isinstance(properties, PackageProperties):
         raise TypeError(
             f"Expected properties to be a PackageProperties object,"
             f"but the object is {type(properties)}"
         )
+    return properties
 
 
-def _check_is_resource_properties_type(properties):
+def _check_is_resource_properties_type(properties: Any) -> ResourceProperties:
     if not isinstance(properties, ResourceProperties):
         raise TypeError(
             f"Expected properties to be a ResourceProperties object,"
             f"but the object is {type(properties)}"
         )
+    return properties

@@ -8,6 +8,7 @@
     "GitHub.vscode-pull-request-github",
     "ms-python.python",
     "ms-python.vscode-pylance",
+    "ms-python.mypy-type-checker",
     "njpwerner.autodocstring",
     "quarto.quarto",
     "ms-toolsai.jupyter",

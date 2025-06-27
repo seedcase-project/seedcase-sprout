@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import CheckError
 from seedcase_sprout.sprout_checks.check_fields_not_blank import (
     check_fields_not_blank,
@@ -11,7 +13,7 @@ from seedcase_sprout.sprout_checks.required_fields import (
 
 
 def check_required_package_properties_not_blank(
-    properties: dict,
+    properties: dict[str, Any],
 ) -> list[CheckError]:
     """Checks that required package properties fields are not blank.
 

@@ -1,10 +1,14 @@
 """Mimicking the functional programming tools from R and the R package purrr."""
 
 from itertools import repeat
-from typing import Callable
+from typing import Callable, TypeVar
+
+T = TypeVar("T")
+U = TypeVar("U")
+V = TypeVar("V")
 
 
-def _map(x: list, fn: Callable) -> list:
+def _map(x: list[T], fn: Callable[[T], U]) -> list[U]:
     """Use a function on each item in a list.
 
     This is a simpler, more user-friendly version of the built-in `map()`
@@ -33,7 +37,7 @@ def _map(x: list, fn: Callable) -> list:
     return list(map(fn, x))
 
 
-def _map2(x: list, y: list, fn: Callable) -> list:
+def _map2(x: list[T], y: list[U], fn: Callable[[T, U], V]) -> list[V]:
     """Use a function on each item in two lists, placed on the first two arguments.
 
     This function is similar to the `map2()` function from the R package purrr.

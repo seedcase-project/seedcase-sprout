@@ -34,4 +34,5 @@
   "files.insertFinalNewline": true,
   "python.testing.pytestEnabled": true,
   "python.testing.pytestPath": "${workspaceFolder}/.venv/bin/pytest",
+  "mypy.runUsingActiveInterpreter": true,
 }
