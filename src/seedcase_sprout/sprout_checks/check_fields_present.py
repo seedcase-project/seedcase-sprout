@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import CheckError, RequiredFieldType
 from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
@@ -7,7 +9,7 @@ CHECKS_REQUIRED_ERROR_MESSAGE = "'{field_name}' is a required property"
 
 
 def check_fields_present(
-    properties: dict,
+    properties: dict[str, Any],
     required_fields: dict[str, RequiredFieldType],
     index: int | None = None,
 ) -> list[CheckError]:

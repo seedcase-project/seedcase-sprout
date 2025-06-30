@@ -2,6 +2,7 @@ import os
 import tempfile
 from contextlib import AbstractContextManager
 from pathlib import Path
+from types import TracebackType
 
 import polars as pl
 
@@ -321,7 +322,7 @@ def example_data_all_polars_types() -> pl.DataFrame:
     )
 
 
-class ExamplePackage(AbstractContextManager):
+class ExamplePackage(AbstractContextManager[PackagePath]):
     """Create a temporary data package with optional resources for demoing or testing.
 
     Examples:
@@ -394,7 +395,12 @@ class ExamplePackage(AbstractContextManager):
 
         return package_path
 
-    def __exit__(self, *_) -> None:
+    def __exit__(
+        self,
+        error_type: type[BaseException] | None,
+        error: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
         """Restore the original working directory and clean up the temporary package."""
         os.chdir(self.calling_dir)
         self.temp_dir.cleanup()

@@ -1,6 +1,8 @@
+from typing import Any
+
 from pytest import fixture, mark
 
-from seedcase_sprout.properties import PackageProperties
+from seedcase_sprout.examples import example_package_properties
 from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
     get_blank_value_for_type,
 )
@@ -13,18 +15,8 @@ from seedcase_sprout.sprout_checks.required_fields import (
 
 
 @fixture
-def properties():
-    return PackageProperties(
-        name="package-1",
-        id="abc1",
-        title="Package 1",
-        description="A package.",
-        version="1.0.0",
-        created="2024-05-14T05:00:01+00:00",
-        licenses=[{"name": "a-license"}],
-        contributors=[{"title": "a contributor"}],
-        sources=[{"title": "a source"}],
-    ).compact_dict
+def properties() -> dict[str, Any]:
+    return example_package_properties().compact_dict
 
 
 def test_passes_full_package_properties(properties):

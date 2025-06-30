@@ -40,6 +40,7 @@ def extract_field_properties(data: pl.DataFrame) -> list[FieldProperties]:
     """
     if data.is_empty():
         raise ValueError("Data is empty. Cannot extract field properties.")
+
     # TODO: add format="binary" to Binary field type?
     field_names = data.columns
     field_types = _map(data.dtypes, _polars_to_datapackage)

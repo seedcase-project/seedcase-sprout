@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import CheckError
 from seedcase_sprout.sprout_checks.get_json_path_to_resource_field import (
     get_json_path_to_resource_field,
@@ -7,7 +9,7 @@ CHECKS_TYPE_ERROR_MESSAGE = "{field_value} is not of type '{field_type}'"
 
 
 def check_resource_path_string(
-    properties: dict, index: int | None = None
+    properties: dict[str, Any], index: int | None = None
 ) -> list[CheckError]:
     """Checks that the `path` field of a set of resource properties is of type string.
 

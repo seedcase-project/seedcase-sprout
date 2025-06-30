@@ -1,3 +1,5 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import CheckError, RequiredFieldType
 from seedcase_sprout.sprout_checks.check_fields_not_blank import (
     SPROUT_BLANK_ERROR_MESSAGE,
@@ -8,7 +10,10 @@ from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
 
 
 def check_list_item_field_not_blank(
-    properties: dict, list_name: str, field_name: str, field_type=RequiredFieldType.str
+    properties: dict[str, Any],
+    list_name: str,
+    field_name: str,
+    field_type: RequiredFieldType = RequiredFieldType.str,
 ) -> list[CheckError]:
     """Checks that the specified field of items in a list is not blank.
 
