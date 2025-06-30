@@ -118,12 +118,12 @@ correct, as all data in the resource must match the properties. While
 you can create a resource properties object manually using
 `ResourceProperties`, it can be quite intensive and time-consuming if
 you, for example, have many columns in your data. To make this process
-easier, `extract_resource_properties()` allows you to create an initial
+easier, `extract_field_properties()` allows you to create an initial
 resource properties object by extracting as much information as possible
 from the Polars DataFrame with your data. Afterwards, you can edit these
 properties as needed.
 
-Now you are ready to use `extract_resource_properties()` to extract the
+Now you are ready to use `extract_field_properties()` to extract the
 resource properties from the data. This function tries to infer the data
 types from the data, but it might not get it right, so make sure to
 double check the output. It is not possible to infer information that is
@@ -131,8 +131,17 @@ not included in the data, like a description of what the data contains
 or the unit of the data.
 
 ```{python}
-resource_properties = sp.extract_resource_properties(
+field_properties = sp.extract_field_properties(
     data=data
+)
+resource_properties = sp.ResourceProperties(
+    name = "patients",
+    path = "resources/patients/data.parquet",
+    title = "Patients Data",
+    description = "This data resource contains data about patients in a diabetes study.",
+    schema=sp.TableSchemaProperties(
+        fields=field_properties
+    )
 )
 print(resource_properties)
 ```
@@ -140,6 +149,7 @@ print(resource_properties)
 <!-- TODO: pprint doesn't work well with nested objects like resource_properties above.
 So, for now, we'll use print here. but, we should find an alternative.
  -->
+<!-- TODO: The last required field `Path` is still missing at this point -->
 
 You may be able to see that some things are missing, for instance, the
 individual columns (called `fields`) don't have any descriptions. You
@@ -150,19 +160,6 @@ properties to confirm what is missing:
 #| error: true
 print(sp.check_resource_properties(resource_properties))
 ```
-
-Time to fill in the missing fields of the resource properties:
-
-```{python}
-# TODO: Need to consider/design how editing can be done in an easier, user-friendly way.
-# TODO: Add more detail when we know what can and can't be extracted.
-resource_properties.name = "patient-data"
-resource_properties.path = "resources/patient-data/data.parquet"
-resource_properties.title = "Patient Data"
-resource_properties.description = "This data resource contains data about..."
-```
-
-<!-- TODO: The last required field `Path` is still missing at this point -->
 
 ## Creating a data resource
 
