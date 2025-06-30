@@ -51,7 +51,8 @@ def test_resource_batch_files_returns_file_paths_when_batches(tmp_path):
         batch_folder = package_path.resource_batch(resource)
         batch_folder.mkdir(parents=True)
         (batch_folder / "sub-folder").mkdir()
-        [(batch_folder / file).touch() for file in ["file", "file.txt", "file.parquet"]]
+        for file in ["file", "file.txt", "file.parquet"]:
+            (batch_folder / file).touch()
 
     # Only the batch file for the given resource should be returned
     assert package_path.resource_batch_files("test2") == [batch_folder / "file.parquet"]

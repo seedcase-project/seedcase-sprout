@@ -1,7 +1,9 @@
+from typing import Any
+
 from seedcase_sprout.check_datapackage import RequiredFieldType
 
 
-def get_blank_value_for_type(type: RequiredFieldType) -> str | list | None:
+def get_blank_value_for_type(type: RequiredFieldType) -> str | list[Any] | None:
     """Returns the blank value for each type of (required) field.
 
     Args:

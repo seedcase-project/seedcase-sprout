@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import cast
 from unittest.mock import patch
 from uuid import UUID
 from zoneinfo import ZoneInfo
@@ -35,7 +36,8 @@ def test_works_with_custom_path(tmp_path):
     script_path = create_properties_script(tmp_path)
 
     assert script_path == PackagePath(tmp_path).properties_script()
-    assert load_properties(script_path, "properties").name == tmp_path.name
+    properties = cast(PackageProperties, load_properties(script_path, "properties"))
+    assert properties.name == tmp_path.name
 
 
 def test_does_not_overwrite_existing_script(tmp_path):
