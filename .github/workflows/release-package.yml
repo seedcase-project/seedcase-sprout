@@ -9,16 +9,34 @@ on:
 permissions: read-all
 
 jobs:
-  update-version:
+  release-package:
     # Only give permissions for this job.
     permissions:
       contents: write
-      # IMPORTANT: mandatory for trusted publishing.
-      id-token: write
     uses: seedcase-project/.github/.github/workflows/reusable-release-package.yml@main
     with:
       app-id: ${{ vars.UPDATE_VERSION_APP_ID }}
-      # Publish the package to PyPI.
-      publish: true
     secrets:
       update-version-gh-token: ${{ secrets.UPDATE_VERSION_TOKEN }}
+
+  pypi-publish:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    # Only give permissions for this job.
+    permissions:
+      # IMPORTANT: mandatory for trusted publishing.
+      id-token: write
+    environment:
+      name: pypi
+    needs:
+      - release-package
+    steps:
+      - name: Download built distributions
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: release-dists
+          path: dist/
+
+      - name: Publish 📦 to PyPI
+        # Only publish if the option is explicitly set in the calling workflow.
+        run: uv publish --trusted-publishing always
