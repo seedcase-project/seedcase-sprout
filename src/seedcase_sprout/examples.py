@@ -2,6 +2,7 @@ import os
 import tempfile
 from contextlib import AbstractContextManager
 from pathlib import Path
+from types import TracebackType
 
 import polars as pl
 
@@ -389,7 +390,12 @@ class ExamplePackage(AbstractContextManager[PackagePath]):
 
         return package_path
 
-    def __exit__(self, *_) -> None:  # type: ignore[no-untyped-def]
+    def __exit__(
+        self,
+        error_type: type[BaseException] | None,
+        error: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
         """Restore the original working directory and clean up the temporary package."""
         os.chdir(self.calling_dir)
         self.temp_dir.cleanup()
