@@ -22,7 +22,7 @@ from .examples import (
     example_resource_properties,
     example_resource_properties_all_types,
 )
-from .extract_resource_properties import extract_resource_properties
+from .extract_field_properties import extract_field_properties
 from .join_resource_batches import join_resource_batches
 from .paths import PackagePath
 from .properties import (
@@ -59,10 +59,12 @@ __all__ = [
     "TableSchemaProperties",
     "read_properties",
     "create_properties_script",
-    # Example properties -----
+    # Example data and properties -----
     "example_package_properties",
+    "example_package_properties_diabetes_study",
     "example_resource_properties",
     "example_data",
+    "example_data_patients",
     "example_data_all_types",
     "example_resource_properties_all_types",
     "ExamplePackage",
@@ -70,7 +72,7 @@ __all__ = [
     "write_properties",
     "as_readme_text",
     # Resources -----
-    "extract_resource_properties",
+    "extract_field_properties",
     "join_resource_batches",
     "read_resource_batches",
     "read_resource_data",

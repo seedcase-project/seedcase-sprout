@@ -4,15 +4,11 @@ from seedcase_sprout.internals import _map, _map2
 from seedcase_sprout.map_data_types import (
     _polars_to_datapackage,
 )
-from seedcase_sprout.properties import (
-    FieldProperties,
-    ResourceProperties,
-    TableSchemaProperties,
-)
+from seedcase_sprout.properties import FieldProperties
 
 
-def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
-    """Extract resource properties from a Polars DataFrame.
+def extract_field_properties(data: pl.DataFrame) -> list[FieldProperties]:
+    """Extract field properties from a Polars DataFrame.
 
     Data types are extracted from the DataFrame's schema and mapped from Polars to
     Data Package data types. For the best results, ensure that the DataFrame's schema is
@@ -27,35 +23,24 @@ def extract_resource_properties(data: pl.DataFrame) -> ResourceProperties:
         data: A Polars DataFrame containing the data to extract properties from.
 
     Returns:
-        A `ResourceProperties` object.
+        A list of `FieldProperties` objects, each representing a field/column in the
+        DataFrame.
 
     Raises:
-        ValueError: If the data is empty
+        ValueError: If the data is empty.
 
     Examples:
         ```{python}
         import seedcase_sprout as sp
 
-        sp.extract_resource_properties(
+        sp.extract_field_properties(
             data=sp.example_data(),
         )
         ```
     """
     if data.is_empty():
-        raise ValueError("Data is empty. Cannot extract resource properties.")
+        raise ValueError("Data is empty. Cannot extract field properties.")
 
-    resource_properties = ResourceProperties()
-    resource_properties.type = "table"
-    # The fields_match property is supposed to be a string, but there's an error in the
-    # JSON schema. This should be fixed in datapackage V2.1.
-    resource_properties.schema = TableSchemaProperties(fields_match=["equal"])
-    resource_properties.schema.fields = _extract_field_properties(data)
-
-    return resource_properties
-
-
-def _extract_field_properties(data: pl.DataFrame) -> list[FieldProperties]:
-    """Extract field properties from a Polars DataFrame."""
     # TODO: add format="binary" to Binary field type?
     field_names = data.columns
     field_types = _map(data.dtypes, _polars_to_datapackage)
