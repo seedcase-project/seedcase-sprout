@@ -1,3 +1,9 @@
+## 0.46.2 (2025-06-30)
+
+### Refactor
+
+- ♻️ simplify extraction to field properties only (#1443)
+
 ## 0.46.1 (2025-06-30)
 
 ### Fix
