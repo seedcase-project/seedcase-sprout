@@ -1,3 +1,9 @@
+## 0.46.1 (2025-06-30)
+
+### Fix
+
+- :adhesive_bandage: fix `mypy` errors in strict mode (#1437)
+
 ## 0.46.0 (2025-06-26)
 
 ### Feat
