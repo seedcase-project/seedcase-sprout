@@ -380,6 +380,11 @@ class ExamplePackage(AbstractContextManager[PackagePath]):
                 exist_ok=True, parents=True
             )
 
+            # Include some data in the resource
+            example_data().write_parquet(
+                package_path.resource_data(str(resource_properties.name)),
+            )
+
         # Save properties
         write_properties(properties=package_properties, path=package_path.properties())
 

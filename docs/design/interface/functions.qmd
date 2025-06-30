@@ -152,13 +152,10 @@ flowchart
     function --> out
 ```
 
-### {{< var wip >}} `read_resource_data(resource_name, path)`
+### {{< var done >}} `read_resource_data(resource_name, path)`
 
-This function takes the name of the resource you want to read and
-optionally the path to the `datapackage.json` file and will read in the
-data resource (as a Parquet file) into a Polars DataFrame. If the `path`
-is not given, it will look for the `datapackage.json` file in the
-current working directory.
+See the help documentation with `help(read_resource_data)` for more
+details.
 
 ```{mermaid}
 flowchart

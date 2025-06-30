@@ -6,6 +6,7 @@ project:
   render:
     - "docs/*"
     - "index.qmd"
+    - "CONTRIBUTING.md"
   post-render:
     - find resources/patient-data/batch/ -iname "*.parquet" -delete
 
@@ -48,7 +49,9 @@ website:
       pinned: true
       style: "floating"
       contents:
+        - docs/index.qmd
         - docs/releases.qmd
+        - CONTRIBUTING.md
     - id: design
       contents:
         - text: "Design"

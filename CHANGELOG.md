@@ -1,3 +1,15 @@
+## 0.46.0 (2025-06-26)
+
+### Feat
+
+- :sparkles: add `read_resource_data()` (#1433)
+
+## 0.45.2 (2025-06-26)
+
+### Refactor
+
+- :recycle: raise error for non-Parquet batch files (#1428)
+
 ## 0.45.1 (2025-06-24)
 
 ### Refactor

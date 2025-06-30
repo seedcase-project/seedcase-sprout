@@ -5,6 +5,7 @@ import polars as pl
 from pytest import fixture, mark, raises
 
 from seedcase_sprout.constants import BATCH_TIMESTAMP_COLUMN_NAME
+from seedcase_sprout.examples import example_resource_properties
 from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
@@ -99,6 +100,17 @@ def test_raises_error_when_file_does_not_exist(resource_paths, resource_properti
     with raises(FileNotFoundError):
         read_resource_batches(
             resource_properties=resource_properties, paths=resource_paths
+        )
+
+
+def test_raises_error_when_file_not_parquet(tmp_path):
+    """Raises a ValueError when the function is called with a non-Parquet file."""
+    csv_file = tmp_path / "non-parquet-file.csv"
+    csv_file.touch()
+
+    with raises(ValueError):
+        read_resource_batches(
+            paths=[csv_file], resource_properties=example_resource_properties()
         )
 
 
