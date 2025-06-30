@@ -22,7 +22,7 @@ from .examples import (
     example_resource_properties,
     example_resource_properties_all_types,
 )
-from .extract_resource_properties import extract_field_properties
+from .extract_field_properties import extract_field_properties
 from .join_resource_batches import join_resource_batches
 from .paths import PackagePath
 from .properties import (

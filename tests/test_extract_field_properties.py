@@ -5,7 +5,7 @@ from seedcase_sprout.examples import (
     example_data_all_polars_types,
     example_resource_properties_all_polars_types,
 )
-from seedcase_sprout.extract_resource_properties import (
+from seedcase_sprout.extract_field_properties import (
     extract_field_properties,
 )
 from seedcase_sprout.properties import FieldProperties, ResourceProperties
