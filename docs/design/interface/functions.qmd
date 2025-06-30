@@ -168,16 +168,16 @@ flowchart
     function --> out
 ```
 
-### {{< var done >}} `extract_resource_properties(data)`
+### {{< var done >}} `extract_field_properties(data)`
 
-See the help documentation with `help(extract_resource_properties)` for
+See the help documentation with `help(extract_field_properties)` for
 more details.
 
 ```{mermaid}
 flowchart
     in_data_path[/data/]
-    function("extract_resource_properties()")
-    out[("ResourceProperties")]
+    function("extract_field_properties()")
+    out[("list[FieldProperties]")]
     in_data_path --> function
     function --> out
 ```

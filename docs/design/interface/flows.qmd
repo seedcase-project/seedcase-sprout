@@ -62,10 +62,10 @@ flowchart
 The flow for extracting resource properties from data. This is useful
 when the data is in a format that contains metadata about the data, such
 as a CSV file with a header row that contains the column names. The
-`extract_resource_properties()` function cannot extract all required
+`extract_field_properties()` function cannot extract all required
 properties from the data, so both `TableSchemaProperties` and
 `ResourceProperties` will need many of their fields filled in after
-extraction. The output of the `extract_resource_properties()` function
+extraction. The output of the `extract_field_properties()` function
 can be used to generate a Python script to give you a starting point for
 writing the resource properties. Afterwards, if you want to update the
 resource properties, you'll edit this Python script and then re-run your
@@ -79,11 +79,11 @@ properties.
 flowchart
     data[("DataFrame<br>(Tidy)")]
     properties_extracted[("ResourceProperties<br>(extracted)")]
-    extract_resource_properties("extract_resource_properties()")
+    extract_field_properties("extract_field_properties()")
     python_script("Python script<br>(generated with<br>extracted properties)")
 
-    data --> extract_resource_properties
-    extract_resource_properties --> properties_extracted
+    data --> extract_field_properties
+    extract_field_properties --> properties_extracted
     properties_extracted --> python_script
 ```
 
