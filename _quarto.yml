@@ -98,7 +98,7 @@ quartodoc:
     - title: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
       contents:
-        - extract_resource_properties
+        - extract_field_properties
         - join_resource_batches
         - read_resource_batches
         - write_resource_batch
