@@ -5,8 +5,7 @@ import polars as pl
 from seedcase_sprout.check_properties import (
     check_resource_properties,
 )
-from seedcase_sprout.get_nested_attr import get_nested_attr
-from seedcase_sprout.internals import _map
+from seedcase_sprout.internals import _get_nested_attr, _map
 from seedcase_sprout.map_data_types import (
     _get_allowed_polars_types,
     _polars_and_datapackage_types_match,
@@ -95,7 +94,7 @@ def _check_column_names(
         str(field.name)
         for field in cast(
             list[FieldProperties],
-            get_nested_attr(resource_properties, "schema.fields", default=[]),
+            _get_nested_attr(resource_properties, "schema.fields", default=[]),
         )
     ]
     extra_columns_in_data = [
@@ -151,7 +150,7 @@ def _check_column_types(
     """
     fields = cast(
         list[FieldProperties],
-        get_nested_attr(resource_properties, "schema.fields", default=[]),
+        _get_nested_attr(resource_properties, "schema.fields", default=[]),
     )
     polars_schema = data.schema
     errors = [
