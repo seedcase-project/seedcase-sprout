@@ -37,6 +37,8 @@ structure used by Sprout are:
     `update_resource_properties()` and then write the result to the
     `datapackage.json` file.
 
+{{< include _python-minimal-package-setup.qmd >}}
+
 ```{python setup}
 #| include: false
 # This `setup` code chunk creates a package and downloads some data.
