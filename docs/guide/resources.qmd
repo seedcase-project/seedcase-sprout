@@ -4,29 +4,29 @@ order: 2
 jupyter: python3
 ---
 
-In each [data package](/docs/glossary.qmd) are
-[data resources](/docs/glossary.qmd), which
-contain conceptually standalone sets of data. This page shows you how to
-create and manage data resources inside a data package using Sprout. You
-will need to have already [created a data
-package](packages.qmd#creating-a-data-package).
+In each [data package](/docs/glossary.qmd) are [data
+resources](/docs/glossary.qmd), which contain conceptually standalone
+sets of data. This page shows you how to create and manage data
+resources inside a data package using Sprout. You will need to have
+already [created a data package](packages.qmd#creating-a-data-package).
 
 {{< include _preamble.qmd >}}
 
 ::: callout-important
 Data resources can only be created from [tidy
-data](https://design.seedcase-project.org/data/). Before you can store
-it, you need to process it into a tidy format, ideally using Python so
-that you have a record of the steps taken to clean and transform the
-data.
+data](https://design.seedcase-project.org/data/) in [Polars
+DataFrames]((https://pola.rs/)). Before you can store it, you need to
+process it into a tidy format, ideally using Python so that you have a
+record of the steps taken to clean and transform the data.
 :::
 
-Putting your data into a data package makes it easier for yourself and
-others to use later on. The steps you'll take to get your data into the
-structure used by Sprout are:
+The steps you'll take to get your data into the structure used by Sprout
+are:
+
+<!-- TODO: update when finished with updating the rest of the guide -->
 
 1.  Create the properties for the resource, using the original data as a
-    starting point, and edit as needed.
+    starting point, and edit the resource properties script as needed.
 2.  Create the folders for the new resource within the package and save
     the resource properties in the `datapackage.json` file.
 3.  Add your data to the batches of data for the resource.
@@ -41,18 +41,16 @@ structure used by Sprout are:
 
 ```{python setup}
 #| include: false
-# This `setup` code chunk creates a package and downloads some data.
+# This `setup` code chunk sets up the package from the packages guide and downloads some data.
 import polars as pl
-import seedcase_sprout as sp
-from tempfile import mkdtemp
-from pathlib import Path
+from tempfile import TemporaryDirectory, mkdtemp
 from urllib.request import urlretrieve
 
-temp_path = Path(mkdtemp())
-package_path = sp.PackagePath(temp_path / "diabetes-study")
-package_path.root().mkdir()
+package_path = sp.PackagePath(package_path)
 
 package_properties = sp.example_package_properties()
+sp.create_properties_script(package_path.root())
+
 sp.write_properties(
     properties=package_properties,
     path=package_path.properties(),
@@ -63,104 +61,452 @@ sp.write_file(readme, package_path.readme())
 # TODO: Maybe eventually move this over into Sprout as an example dataset, rather than via a URL.
 # Download the example data to a temporary location.
 url = "https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv"
-raw_data_path = temp_path / "patients.csv"
+raw_data_path = package_path.root() / "rawdata" / "patients.csv"
+raw_data_path.parent.mkdir(exist_ok=True)
 urlretrieve(
     url,
     raw_data_path
 )
 
-data = pl.read_csv(raw_data_path)
+raw_data_patients = pl.read_csv(raw_data_path)
 ```
 
 Making a data resource requires that you have data that can be made into
 a resource in the first place. Usually, generated or collected data
 starts out in a bit of a "raw" shape that needs some working. This work
-needs to be done before adding the data as a data package, since Sprout
+needs to be done before adding the data to a data package, since Sprout
 assumes that the data is already
-[tidy](https://design.seedcase-project.org/data/). For this guide, we
-use (fake) data that is already tidy and loaded into a Polars DataFrame:
+[tidy](https://design.seedcase-project.org/data/).
 
-```{python}
-data.head(5)
-```
-
-If you want to follow this guide with the same data, you can find it
+For this guide, you will use (fake) data that is already tidy. You can
+find the data
 [here](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv).
+We've placed this data in a `rawdata/` folder in the data package and
+called it `patients.csv`, so that we can keep the original data separate
+from the processed data.
 
-Before we start, you need to import Sprout as well as other helper
-packages:
-
-```{python}
-import seedcase_sprout as sp
-
-# For pretty printing of output
-from pprint import pprint
-```
-
-Since Sprout only works with [Polars DataFrames](https://pola.rs/), we
-will need to load in the data using Polars:
+`patients.csv` includes data about patients with diabetes, and it looks
+like this:
 
 ```{python}
-import polars as pl
-
-original_data = pl.read_csv(raw_data_path)
-print(original_data)
+#| echo: false
+raw_data_patients.head(5)
 ```
 
-Then we can continue with the next steps.
+At this point, your data package `diabetes-study` has the following
+structure:
+
+```{python}
+#| echo: false
+print(file_tree(package_path.root()))
+```
 
 ## Extracting resource properties from the data
 
-You'll start by creating the resource's properties. Before you can store
-data in your data package, you need to describe it using properties
-(i.e., metadata). The resource's properties are what allow other people
-to understand what your data is about and to use it more easily. These
-properties also define what it means for data in the resource to be
-correct, as all data in the resource must match the properties. While
-you can create a resource properties object manually using
-`ResourceProperties`, it can be quite intensive and time-consuming if
-you, for example, have many columns in your data. To make this process
-easier, `extract_field_properties()` allows you to create an initial
-resource properties object by extracting as much information as possible
-from the Polars DataFrame with your data. Afterwards, you can edit these
-properties as needed.
+Before you can store resource data in your data package, you need to
+describe its [properties](/docs/glossary.qmd). The resource's properties
+are what allow other people to understand what your data is about and to
+use it more easily.
 
-Now you are ready to use `extract_field_properties()` to extract the
-resource properties from the data. This function tries to infer the data
-types from the data, but it might not get it right, so make sure to
-double check the output. It is not possible to infer information that is
-not included in the data, like a description of what the data contains
-or the unit of the data.
+The resource's properties also define what it means for data in the
+resource to be correct, as all data in the resource must match the
+properties. Sprout checks that the properties are correctly filled in
+and that no required properties fields are missing. It also checks that
+the data matches the properties, so that you can be sure that data
+actually contains what you expect it to contain.
 
-```{python}
-field_properties = sp.extract_field_properties(
-    data=data
-)
-resource_properties = sp.ResourceProperties(
-    name = "patients",
-    path = "resources/patients/data.parquet",
-    title = "Patients Data",
-    description = "This data resource contains data about patients in a diabetes study.",
-    schema=sp.TableSchemaProperties(
-        fields=field_properties
+Like with the package properties, you will create a properties script
+for the resource that allows you to easily edit the properties later on.
+You can do this by using the `create_properties_script()` function. This
+function needs the `resource_name` and optionally the `fields` (i.e.,
+columns or variables) that you want to include in the resource.
+
+The `resource_name` is the name of the resource, which is used to
+identify the resource in the data package. It is required and *should
+not* be changed, since it's used in the file name of the resource
+properties script. Since a data package can contain multiple resources,
+the resource `name` must also be unique.
+
+To ease the process of adding `fields` to your resource properties,
+Sprout provides a function called `extract_field_properties()` which
+allows you to extract information from the Polars DataFrame with your
+data to have some initial properties. Use these extracted properties as
+a starting point and edit as needed.
+
+::: callout-warning
+`extract_field_properties()` extracts the field properties from the
+Polars DataFrame's \[schema\] and maps the Polars data type to a [Data
+Package field
+type](https://datapackage.org/standard/table-schema/#field-types).
+
+The mapping is not perfect, so you may need to edit the extracted
+properties to ensure that they are as you want them to be.
+:::
+
+Let's add these steps to our `main.py` file: First, we need to load the
+original data from the `rawdata/` folder into a Polars DataFrame, then
+we can extract the field properties from it, and use these properties in
+the creation of our resource properties script:
+
+```python
+import polars as pl
+
+def main():
+    # Your existing code here...
+
+    # Load the "patients" raw data from the CSV file.
+    raw_data_patients = pl.read_csv(package_path.root() / "rawdata" / "patients.csv")
+    # Extract field properties.
+    field_properties = sp.extract_field_properties(
+        data=raw_data_patients,
     )
-)
-print(resource_properties)
+    # Create the resource properties script.
+    sp.create_resource_properties_script(
+        resource_name="patients",
+        fields=field_properties,
+    )
+
+if __name__ == "__main__":
+    main()
 ```
 
-<!-- TODO: pprint doesn't work well with nested objects like resource_properties above.
-So, for now, we'll use print here. but, we should find an alternative.
- -->
-<!-- TODO: The last required field `Path` is still missing at this point -->
+Then run the `main.py` file in your Terminal to create the resource
+properties script:
 
-You may be able to see that some things are missing, for instance, the
-individual columns (called `fields`) don't have any descriptions. You
-will have to manually add this yourself. You can run a check on the
-properties to confirm what is missing:
+``` {.bash filename="Terminal"}
+uv run main.py
+```
+
+```{python}
+#| include: false
+raw_data_patients = pl.read_csv(package_path.root() / "rawdata" / "patients.csv")
+field_properties = sp.extract_field_properties(data=raw_data_patients)
+sp.create_resource_properties_script(
+        resource_name="patients",
+        fields=field_properties,
+        path=package_path.root()
+    )
+```
+
+
+To see the contents of the newly created resource properties script,
+open the `scripts/resource_properties_patients.py` file on your
+computer. It should look like this:
+
+::: {.callout collapse="true"}
+## Full content of the `resource_properties_patients.py` file
+
+```{python}
+
+import seedcase_sprout as sp
+
+resource_properties_patients = sp.ResourceProperties(
+    ## Required:
+    name="patients",
+    title="",
+    description="",
+    ## Optional:
+    type="table",
+    format="parquet",
+    mediatype="application/parquet",
+    schema=sp.TableSchemaProperties(
+        ## Required
+        fields=[
+            sp.FieldProperties(
+                ## Required
+                name="id",
+                type="integer",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="age",
+                type="integer",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="sex",
+                type="string",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="height",
+                type="number",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="weight",
+                type="number",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="diabetes_type",
+                type="string",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+        ],
+        ## Optional
+        # fields_match=["equal"],
+        # primary_key=[""],
+        # unique_keys=[[""]],
+        # foreign_keys=[
+        #     sp.TableSchemaForeignKeyProperties(
+        #         ## Required
+        #         fields=[""],
+        #         reference=sp.ReferenceProperties(
+        #             ## Required
+        #             resource="",
+        #             fields=[""],
+        #         ),
+        #     ),
+        # ],
+    ),
+    # sources=[
+    #     sp.SourceProperties(
+    #         ## Required:
+    #         title="",
+    #         ## Optional:
+    #         path="",
+    #         email="",
+    #         version="",
+    #     ),
+    # ],
+)
+```
+:::
+
+In the resource properties script, the `name` property is set to
+`patients`. However, the two other required properties, `title` and
+`description`, are empty. You will need to fill these in yourself in the
+script, like so:
+
+```{python}
+#| eval: false
+resource_properties_patients = sp.ResourceProperties(
+    ## Required:
+    name="patients",
+    title="Patients Data",
+    description="This data resource contains data about patients in a diabetes study.",
+    ## Optional:
+    # Rest of the properties...
+)
+```
+
+::: callout-warning
+## `CheckError` when properties are not filled in
+
+If the `title` and `description` properties are not filled in, Sprout
+will raise a `CheckError` when try to include the resource's properties
+in the `datapackage.json` file.
+
+Below you can see how `CheckErrors` look like when you try to check the
+resource properties without filling in the required fields.
+
+The used function `check_resource_properties()` checks that the
+properties are correctly filled in and that no required fields are
+missing. It's used internally in Sprout to ensure that the properties
+are correct before writing them to the `datapackage.json` file.
 
 ```{python}
 #| error: true
-print(sp.check_resource_properties(resource_properties))
+#| eval: false
+print(sp.check_resource_properties(resource_properties_patients))
+```
+
+```
+  +-+---------------- 1 ----------------
+    | seedcase_sprout.check_datapackage.check_error.CheckError: Error at `$.description` caused by `blank`: The 'description' field is blank, please fill it in.
+    +---------------- 2 ----------------
+    | seedcase_sprout.check_datapackage.check_error.CheckError: Error at `$.title` caused by `blank`: The 'title' field is blank, please fill it in.
+    +------------------------------------
+```
+:::
+
+Now, the resource properties for patients include the following
+information (printed as a dictionary representation that omits empty
+fields):
+
+```{python}
+#| echo: false
+resource_properties_patients = sp.ResourceProperties(
+    ## Required:
+    name="patients",
+    title="Patients Data",
+    description="This data resource contains data about the patients included in the diabetes study.",
+    ## Optional:
+    type="table",
+    format="parquet",
+    mediatype="application/parquet",
+    schema=sp.TableSchemaProperties(
+        ## Required
+        fields=[
+            sp.FieldProperties(
+                ## Required
+                name="id",
+                type="integer",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="age",
+                type="integer",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="sex",
+                type="string",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="height",
+                type="number",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="weight",
+                type="number",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="diabetes_type",
+                type="string",
+                ## Optional
+                # title="",
+                # format="",
+                # description="",
+                # example="",
+                # categories=[],
+                # categories_ordered=False,
+            ),
+        ],
+        ## Optional
+        # fields_match=["equal"],
+        # primary_key=[""],
+        # unique_keys=[[""]],
+        # foreign_keys=[
+        #     sp.TableSchemaForeignKeyProperties(
+        #         ## Required
+        #         fields=[""],
+        #         reference=sp.ReferenceProperties(
+        #             ## Required
+        #             resource="",
+        #             fields=[""],
+        #         ),
+        #     ),
+        # ],
+    ),
+    # sources=[
+    #     sp.SourceProperties(
+    #         ## Required:
+    #         title="",
+    #         ## Optional:
+    #         path="",
+    #         email="",
+    #         version="",
+    #     ),
+    # ],
+)
+```
+
+```{python}
+sp.pprint(resource_properties_patients.compact_dict)
+```
+
+<!-- TODO: pprint doesn't work well with nested objects like resource_properties above.
+So, for now, we'll use a compact dict representation  here. but, we should find an alternative.
+ -->
+
+To include these properties in your data package, you need to include
+the resource properties in the `properties.py` file of your data
+package. You can do this by adding the following lines to the
+`properties.py` file:
+
+```{python}
+#| eval: false
+# Below the existing imports, add:
+from .resource_properties_patients import resource_properties_patients
+
+properties = sp.PackageProperties(
+    # Your existing properties here...
+    # Uncomment the resource properties line below and add `resource_properties_patients`:
+    resources=[
+        resource_properties_patients,
+    ],
+)
 ```
 
 ## Creating a data resource
@@ -185,7 +531,7 @@ Let's take a look at the current files and folders in the data package:
 
 ```{python}
 #| echo: false
-print(list(package_path.root().glob("**/*")))
+print(file_tree(package_path.root()))
 ```
 
 This shows that the data package already includes a `datapackage.json`
@@ -227,8 +573,9 @@ simplified flow of steps involved in adding batch files.
 
 Batch files are used to store data in a data package each time you add
 data to a resource. These batch files will be used to create the data
-file that is actually used as the resource at the path `resource/<name>/data.parquet`.
-The first time a batch file is saved, it will create the folders necessary for the resource.
+file that is actually used as the resource at the path
+`resource/<name>/data.parquet`. The first time a batch file is saved, it
+will create the folders necessary for the resource.
 
 As shown above, the data is currently stored loaded as a Polars
 DataFrame called `data`. Now, it's time to store this data in the
@@ -238,8 +585,8 @@ resource's folder by using:
 
 ```{python}
 sp.write_resource_batch(
-    data=original_data,
-    resource_properties=resource_properties
+    data=raw_data_patients,
+    resource_properties=resource_properties_patients,
 )
 ```
 
@@ -344,6 +691,6 @@ sp.write_properties(
 #| include: false
 import shutil
 
-if temp_path.exists():
-    shutil.rmtree(temp_path)
+if Path(temp_path.name).exists():
+    shutil.rmtree(Path(temp_path.name))
 ```
