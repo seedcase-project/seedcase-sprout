@@ -22,7 +22,7 @@ Right now, your file structure should look a bit like:
 
 ```{python}
 #| echo: false
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 Now, time to make a data package! A data package always needs a
@@ -66,7 +66,7 @@ uv run main.py
 
 ```{python}
 #| include: false
-sp.create_properties_script(package_path)
+sp.create_properties_script(package_path.root())
 ```
 
 This will create a `properties.py` file in the newly created `scripts/`
@@ -85,7 +85,7 @@ touch scripts/__init__.py
 #| include: false
 import subprocess
 # Touch file in scripts/ folder in the package_path
-subprocess.run(["touch", str(package_path / "scripts/__init__.py")])
+subprocess.run(["touch", str(package_path.root() / "scripts/__init__.py")])
 ```
 :::
 
@@ -94,7 +94,7 @@ The file structure should now look like:
 ```{python}
 #| echo: false
 # List all files in directory
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 Inside the `scripts/properties.py` file, you will find a template for
@@ -102,7 +102,7 @@ creating the properties of your data package. It looks like:
 
 ```{python}
 #| echo: false
-print((sp.PackagePath(package_path).properties_script()).read_text())
+print(package_path.properties_script().read_text())
 ```
 
 You can now start filling in that script by using the comments included,
@@ -192,7 +192,7 @@ if __name__ == "__main__":
 # Only to check that it runs.
 sp.write_properties(
     properties=properties,
-    path=sp.PackagePath(package_path).properties()
+    path=package_path.properties()
 )
 ```
 
@@ -217,7 +217,7 @@ properties you added to it. Now, you will see the added
 
 ```{python}
 #| echo: false
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 ## Creating a README of the properties
@@ -269,7 +269,7 @@ uv run main.py
 readme_text = sp.as_readme_text(properties)
 sp.write_file(
     string=readme_text,
-    path=sp.PackagePath(package_path).readme()
+    path=package_path.readme()
 )
 ```
 
@@ -278,7 +278,7 @@ package:
 
 ```{python}
 #| echo: false
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 ## Editing package properties
