@@ -45,7 +45,9 @@ beginning to end of creating your data package. Open the `main.py` file
 in your Python project, delete everything in it and copy and paste the
 below code into it.
 
-``` python
+```{python}
+#| eval: false
+#| filename: "main.py"
 import seedcase_sprout as sp
 
 def main():
@@ -169,7 +171,9 @@ So in your `main.py`, include this code:
 
 <!-- TODO: How to auto-run the code below? -->
 
-``` python
+```{python}
+#| eval: false
+#| filename: "main.py"
 import seedcase_sprout as sp
 from scripts.properties import properties
 
@@ -225,7 +229,9 @@ wanting to learn more about your data package. You can use
 to a README file. Let's create a README file with the properties of the
 data package you just created by writing it in the `main.py` file.
 
-``` python
+```{python}
+#| eval: false
+#| filename: "main.py"
 import seedcase_sprout as sp
 from scripts.properties import properties
 
