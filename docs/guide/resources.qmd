@@ -39,8 +39,9 @@ are:
 6.  Merge the data batches into a new resource data file.
 7.  Re-build the data package's `README.md` file from the updated
     `datapackage.json` file.
-8.  If you need to update the properties at a later point, you can use
-    `update_resource_properties()` and then write the result to the
+8.  If you need to update the properties at a later point, you would
+    edit the resource properties script, run the `main.py` file to
+    re-create the properties, and then write the properties to the
     `datapackage.json` file.
 
 Many of these steps are taken care of by functions in Sprout, but some
@@ -231,124 +232,6 @@ below.
 ```{python}
 #| echo: false
 print(package_path.resource_properties_script("patients").read_text())
-```
-
-```{python}
-#| filename: "scripts/resource_properties_patients.py"
-import seedcase_sprout as sp
-
-resource_properties_patients = sp.ResourceProperties(
-    ## Required:
-    name="patients",
-    title="",
-    description="",
-    ## Optional:
-    type="table",
-    format="parquet",
-    mediatype="application/parquet",
-    schema=sp.TableSchemaProperties(
-        ## Required
-        fields=[
-            sp.FieldProperties(
-                ## Required
-                name="id",
-                type="integer",
-                ## Optional
-                # title="",
-                # format="",
-                # description="",
-                # example="",
-                # categories=[],
-                # categories_ordered=False,
-            ),
-            sp.FieldProperties(
-                ## Required
-                name="age",
-                type="integer",
-                ## Optional
-                # title="",
-                # format="",
-                # description="",
-                # example="",
-                # categories=[],
-                # categories_ordered=False,
-            ),
-            sp.FieldProperties(
-                ## Required
-                name="sex",
-                type="string",
-                ## Optional
-                # title="",
-                # format="",
-                # description="",
-                # example="",
-                # categories=[],
-                # categories_ordered=False,
-            ),
-            sp.FieldProperties(
-                ## Required
-                name="height",
-                type="number",
-                ## Optional
-                # title="",
-                # format="",
-                # description="",
-                # example="",
-                # categories=[],
-                # categories_ordered=False,
-            ),
-            sp.FieldProperties(
-                ## Required
-                name="weight",
-                type="number",
-                ## Optional
-                # title="",
-                # format="",
-                # description="",
-                # example="",
-                # categories=[],
-                # categories_ordered=False,
-            ),
-            sp.FieldProperties(
-                ## Required
-                name="diabetes_type",
-                type="string",
-                ## Optional
-                # title="",
-                # format="",
-                # description="",
-                # example="",
-                # categories=[],
-                # categories_ordered=False,
-            ),
-        ],
-        ## Optional
-        # fields_match=["equal"],
-        # primary_key=[""],
-        # unique_keys=[[""]],
-        # foreign_keys=[
-        #     sp.TableSchemaForeignKeyProperties(
-        #         ## Required
-        #         fields=[""],
-        #         reference=sp.ReferenceProperties(
-        #             ## Required
-        #             resource="",
-        #             fields=[""],
-        #         ),
-        #     ),
-        # ],
-    ),
-    # sources=[
-    #     sp.SourceProperties(
-    #         ## Required:
-    #         title="",
-    #         ## Optional:
-    #         path="",
-    #         email="",
-    #         version="",
-    #     ),
-    # ],
-)
 ```
 :::
 
