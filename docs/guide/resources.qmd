@@ -32,9 +32,9 @@ are:
 2.  Create the folders for the new resource within the package and save
     the resource properties in the `datapackage.json` file.
 3.  Optionally store the raw data in a `raw/` folder in the package, so
-    that you can keep the original data separate from the tided data.
-4.  Tidy the data as needed and converting into a Polars DataFrame (if
-    it isn't already) before adding it to the resource.
+    that you can keep the original data separate from the tidied data.
+4.  Tidy the data as needed and convert it into a Polars DataFrame (if
+    you haven't already) before adding it to the resource.
 5.  Add your tidy data as a batch of data to the resource.
 6.  Merge the data batches into a new resource data file.
 7.  Re-build the data package's `README.md` file from the updated
@@ -101,7 +101,7 @@ structure:
 print(file_tree(package_path.root()))
 ```
 
-And the `raw/patients.csv` includes data about patients with diabetes,
+And the `raw/patients.csv` file includes data about patients with diabetes,
 and it looks like this:
 
 ```{python}
@@ -136,9 +136,9 @@ properties script. Since a data package can contain multiple resources,
 the resource's `name` must also be unique.
 
 To ease the process of adding `fields` to your resource properties,
-Sprout provides a function called `extract_field_properties()` which
+Sprout provides a function called `extract_field_properties()`, which
 allows you to extract information from the Polars DataFrame with your
-data to have some initial properties. Use these extracted properties as
+data. Use these extracted properties as
 a starting point and edit as needed.
 
 ::: callout-warning
@@ -371,8 +371,8 @@ resource_properties_patients = sp.ResourceProperties(
 
 ::: callout-warning
 If the `title` and `description` properties are not filled in, you'll
-get a `CheckError` when you try to use `write_properties()` so that the
-resource's properties get included into the `datapackage.json` file.
+get a `CheckError` when you try to use `write_properties()` to save
+the resource's properties to the `datapackage.json` file.
 
 Below you can see how `CheckErrors` look like when you try to check the
 resource properties without filling in the required fields. When you use
@@ -385,7 +385,7 @@ the properties are always correct before writing them to the
 ```{python}
 #| error: true
 #| eval: false
-print(sp.check_resource_properties(resource_properties_patients))
+sp.check_resource_properties(resource_properties_patients)
 ```
 
 ```
@@ -437,8 +437,7 @@ properties = sp.PackageProperties(
 )
 ```
 
-Now that you have the properties for the resource, you can add it to
-your existing data package. A data package can contain multiple
+A data package can contain multiple
 resources, so their `name` property must be unique. This `name` property
 is what will be used later to create the folder structure for that
 resource.
@@ -505,8 +504,8 @@ simplified flow of steps involved in adding batch files. Also see the
 these batch files in the resource's folder.
 :::
 
-Batch files are used to store data in a data package each time you add
-new or modified data to a resource. These batch files will be used to
+Each time you add new or modified data to a resource, this data is
+stored in a batch file. These batch files will be used to
 create the final data file that is actually used as the resource at the
 path `resource/<name>/data.parquet`. The first time a batch file is
 saved, it will create the folders necessary for the resource.
@@ -525,7 +524,7 @@ from scripts.resource_properties_patients import resource_properties_patients
 
 def main():
     # Previous code is excluded to keep it short.
-    # New code inserted to the bottom -----
+    # New code inserted at the bottom -----
     # Save the batch data.
     sp.write_resource_batch(
         data=raw_data_patients,
@@ -559,10 +558,10 @@ Now that you've stored the data as a batch file, you can build the
 resource. This Parquet file is built from all the data in the `batch/`
 folder. Since there is only one batch data file stored in the resource's
 folder, only this one will be used to build the data resource's Parquet
-file. Before you can create this main Parquet file, you need to read in
+file. To create this main Parquet file, you need to read in
 all the batch files, join them together, and, optionally, do any
 additional processing on the data before writing it to the file. The
-functions are `read_resource_batches()`, `join_resource_batches()`, and
+functions to use are `read_resource_batches()`, `join_resource_batches()`, and
 `write_resource_data()`. Several of these functions will internally run
 checks via `check_data()`.
 
@@ -575,7 +574,7 @@ Let's add these functions to the `main.py` file to make the
 # This code is shortened to only show what was changed.
 def main():
     # Previous code is excluded to keep it short.
-    # New code inserted to the bottom -----
+    # New code inserted at the bottom -----
     # Read in all the batch data files for the resource as a list.
     batch_data = sp.read_resource_batches(
         resource_properties=resource_properties_patients
