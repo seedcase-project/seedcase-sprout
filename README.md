@@ -8,6 +8,7 @@
 
 ## seedcase-sprout: Grow structured, organised, and usable data
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800478.svg)](https://doi.org/10.5281/zenodo.15800478)
 [![GitHub
 License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
 [![PyPI
