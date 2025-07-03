@@ -10,10 +10,10 @@ on. This means that the flows may change quite substantially until we've
 reached a stable full release at `v1.0.0`.
 :::
 
-Based on the [functions](functions.qmd#functions) page that lists and
-describes the main functions and classes that make up the interface in
-detail including their input and output, this document describes and
-shows how all these objects work together and flow into one another.
+Based on the [functions](functions.qmd) page that lists and describes
+the main functions and classes that make up the interface in detail
+including their input and output, this document describes and shows how
+all these objects work together and flow into one another.
 
 Each diagram uses specific shapes and lines to represent different
 things:
@@ -30,6 +30,15 @@ For some reason, the diagrams below don't display well on some browsers
 like Firefox. To see them, try using a different browser like Chrome or
 Edge.
 :::
+
+## Creating scripts from templates
+
+There are two functions you can use to help with creating much of the
+"boilerplate" code that implements some of the flows below. They are
+`create_properties_script()` and `create_resource_properties_script()`,
+and they are used to create Python scripts that contain the
+`PackageProperties` or `ResourceProperties` for a data package or
+resource, respectively.
 
 ## Creating or updating a package
 
@@ -57,34 +66,36 @@ flowchart
     path_properties --> write_properties
 ```
 
-## Extracting resource properties from data
+## Extracting properties from data
 
-The flow for extracting resource properties from data. This is useful
-when the data is in a format that contains metadata about the data, such
-as a CSV file with a header row that contains the column names. The
-`extract_field_properties()` function cannot extract all required
-properties from the data, so both `TableSchemaProperties` and
-`ResourceProperties` will need many of their fields filled in after
-extraction. The output of the `extract_field_properties()` function
-can be used to generate a Python script to give you a starting point for
-writing the resource properties. Afterwards, if you want to update the
-resource properties, you'll edit this Python script and then re-run your
-build process to generate the `datapackage.json` file with the updated
+The flow for extracting a resource's field properties from data. This is
+useful when the data is in a format that contains metadata about the
+data, such as a CSV file with a header row that contains the column
+names. While the `extract_field_properties()` function extracts all
+*required* `FieldProperties` from the data, there are many optional
+properties that are still very useful and should be filled in manually.
+The output of the `extract_field_properties()` function can be used to
+generate a Python script to give you a starting point for writing the
+resource properties. Afterwards, if you want to update the resource
+properties, you'll edit this Python script and then re-run your build
+process to generate the `datapackage.json` file with the updated
 properties.
 
 ```{mermaid}
-%%| label: fig-flow-extract-resource-properties
-%%| fig-cap: "Diagram showing the flow of objects and functions to extract resource properties from data."
-%%| fig-alt: "A flow diagram showing the steps to extract resource properties from data."
+%%| label: fig-flow-extract-field-properties
+%%| fig-cap: "Diagram showing the flow of objects and functions to extract a resource's field properties from data."
+%%| fig-alt: "A flow diagram showing the steps to extract field properties from data."
 flowchart
     data[("DataFrame<br>(Tidy)")]
-    properties_extracted[("ResourceProperties<br>(extracted)")]
+    properties_extracted[("FieldProperties<br>(extracted)")]
     extract_field_properties("extract_field_properties()")
     python_script("Python script<br>(generated with<br>extracted properties)")
+    create_script("create_resource_properties_script()")
 
     data --> extract_field_properties
     extract_field_properties --> properties_extracted
-    properties_extracted --> python_script
+    properties_extracted --> create_script
+    create_script --> python_script
 ```
 
 ## Updating README after changing package or resource properties
@@ -244,6 +255,9 @@ flowchart
     resource_properties -.-> check_data
 ```
 
+::: content-hidden
+<!-- TODO: Need to reconsider this flow. Or see it in action first. -->
+
 ## Modifying data types or table schema
 
 Sometimes you may need to modify the data types or table schema of the
@@ -275,6 +289,7 @@ flowchart
     list_data_updated --> write_resource_batch
     properties_updated --> write_resource_batch
 ```
+:::
 
 ## Deleting an observational unit
 

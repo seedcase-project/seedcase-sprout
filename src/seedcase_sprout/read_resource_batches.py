@@ -35,8 +35,9 @@ def read_resource_batches(
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to check the data against.
         paths: A list of paths for all the Parquet files in the resource's `batch/`
-            folder. Use `path_resource_batch_files()` to help provide the correct paths
-            to the batch files. Defaults to the batch files of the given resource.
+            folder. Use `PackagePath().resource_batch_files()` to help provide the
+            correct paths to the batch files. Defaults to the batch files of the given
+            resource.
 
     Returns:
         A list of DataFrame objects from all the batch files.

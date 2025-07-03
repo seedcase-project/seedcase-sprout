@@ -8,41 +8,9 @@ At the core of Sprout is the ["data package"](/docs/glossary.qmd), which
 is a standardized way of structuring and documenting data. This guide
 will show you how to create and manage data packages using Sprout.
 
-```{python setup}
-#| include: false
-import seedcase_sprout as sp
-import subprocess
-import seedir as sd
-from pathlib import Path
-from tempfile import TemporaryDirectory
-
-temp_path = TemporaryDirectory()
-package_path = Path(temp_path.name) / "diabetes-study"
-subprocess.run(["uv", "init", str(package_path)])
-
-def file_tree(package_path: Path) -> list[Path]:
-    """Show the file tree for the data package, excluding `.git` files.
-
-    Args:
-        package_path: The path to the package directory.
-
-    Returns:
-        A string representation of the file tree.
-    """
-    # Check if the path is a directory and exists
-    if not package_path.is_dir():
-        raise ValueError(f"{package_path} is not a directory.")
-
-    return sd.seedir(
-        package_path,
-        style="emoji",
-        exclude_folders=[".git"],
-        first="folders",
-        printout=False
-    )
-```
-
 {{< include _preamble.qmd >}}
+
+{{< include _python-minimal-package-setup.qmd >}}
 
 ## Creating a data package
 
@@ -54,7 +22,7 @@ Right now, your file structure should look a bit like:
 
 ```{python}
 #| echo: false
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 Now, time to make a data package! A data package always needs a
@@ -77,7 +45,9 @@ beginning to end of creating your data package. Open the `main.py` file
 in your Python project, delete everything in it and copy and paste the
 below code into it.
 
-``` python
+```{python}
+#| eval: false
+#| filename: "main.py"
 import seedcase_sprout as sp
 
 def main():
@@ -96,7 +66,7 @@ uv run main.py
 
 ```{python}
 #| include: false
-sp.create_properties_script(package_path)
+sp.create_properties_script(package_path.root())
 ```
 
 This will create a `properties.py` file in the newly created `scripts/`
@@ -115,7 +85,7 @@ touch scripts/__init__.py
 #| include: false
 import subprocess
 # Touch file in scripts/ folder in the package_path
-subprocess.run(["touch", str(package_path / "scripts/__init__.py")])
+subprocess.run(["touch", str(package_path.root() / "scripts/__init__.py")])
 ```
 :::
 
@@ -124,7 +94,7 @@ The file structure should now look like:
 ```{python}
 #| echo: false
 # List all files in directory
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 Inside the `scripts/properties.py` file, you will find a template for
@@ -132,7 +102,7 @@ creating the properties of your data package. It looks like:
 
 ```{python}
 #| echo: false
-print((sp.PackagePath(package_path).properties_script()).read_text())
+print(package_path.properties_script().read_text())
 ```
 
 You can now start filling in that script by using the comments included,
@@ -190,42 +160,7 @@ properties = sp.PackageProperties(
 )
 ```
 
-```{python}
-#| include: false
-# This is only to check that it runs.
-properties = sp.PackageProperties.from_default(
-    name="diabetes-study",
-    title="A Study on Diabetes",
-    # You can write Markdown below, with the helper `sp.dedent()`.
-    description=sp.dedent("""
-        # Data from a 2021 study on diabetes prevalence
-
-        This data package contains data from a study conducted in 2021 on the
-        *prevalence* of diabetes in various populations. The data includes:
-
-        - demographic information
-        - health metrics
-        - survey responses about lifestyle
-        """),
-    contributors=[
-        sp.ContributorProperties(
-            title="Jamie Jones",
-            email="jamie_jones@example.com",
-            path="example.com/jamie_jones",
-            roles=["creator"],
-        )
-    ],
-    licenses=[
-        sp.LicenseProperties(
-            name="ODC-BY-1.0",
-            path="https://opendatacommons.org/licenses/by",
-            title="Open Data Commons Attribution License 1.0",
-        )
-    ],
-    # We don't include the rest in this guide, the above is only to
-    # show what it might look like writing properties.
-)
-```
+{{< include _python-package-properties.qmd >}}
 
 Now that you've filled in some of the package properties, it's time to
 create your `datapackage.json` file with these properties. You can use
@@ -236,7 +171,9 @@ So in your `main.py`, include this code:
 
 <!-- TODO: How to auto-run the code below? -->
 
-``` python
+```{python}
+#| eval: false
+#| filename: "main.py"
 import seedcase_sprout as sp
 from scripts.properties import properties
 
@@ -255,7 +192,7 @@ if __name__ == "__main__":
 # Only to check that it runs.
 sp.write_properties(
     properties=properties,
-    path=sp.PackagePath(package_path).properties()
+    path=package_path.properties()
 )
 ```
 
@@ -280,7 +217,7 @@ properties you added to it. Now, you will see the added
 
 ```{python}
 #| echo: false
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 ## Creating a README of the properties
@@ -292,7 +229,9 @@ wanting to learn more about your data package. You can use
 to a README file. Let's create a README file with the properties of the
 data package you just created by writing it in the `main.py` file.
 
-``` python
+```{python}
+#| eval: false
+#| filename: "main.py"
 import seedcase_sprout as sp
 from scripts.properties import properties
 
@@ -330,7 +269,7 @@ uv run main.py
 readme_text = sp.as_readme_text(properties)
 sp.write_file(
     string=readme_text,
-    path=sp.PackagePath(package_path).readme()
+    path=package_path.readme()
 )
 ```
 
@@ -339,7 +278,7 @@ package:
 
 ```{python}
 #| echo: false
-print(file_tree(package_path))
+print(file_tree(package_path.root()))
 ```
 
 ## Editing package properties
