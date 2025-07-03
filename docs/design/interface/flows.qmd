@@ -33,13 +33,12 @@ Edge.
 
 ## Creating scripts from templates
 
-There are two functions you can use to help with creating many of the
-"boilerplate" code that implement some of the flows below. They are
+There are two functions you can use to help with creating much of the
+"boilerplate" code that implements some of the flows below. They are
 `create_properties_script()` and `create_resource_properties_script()`,
-and they are used to create a Python script that contains the
-`PackageProperties` or `ResourceProperties` for a data package or a
-resource, respectively. Many of the below flows are used inside these
-scripts and integrated together.
+and they are used to create Python scripts that contain the
+`PackageProperties` or `ResourceProperties` for a data package or
+resource, respectively.
 
 ## Creating or updating a package
 
