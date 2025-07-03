@@ -1,3 +1,9 @@
+## 0.46.3 (2025-07-03)
+
+### Refactor
+
+- :recycle: move `_get_nested_attr()` into internals (#1455)
+
 ## 0.46.2 (2025-06-30)
 
 ### Refactor
