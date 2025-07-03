@@ -40,8 +40,8 @@ are:
 7.  Re-build the data package's `README.md` file from the updated
     `datapackage.json` file.
 8.  If you need to update the properties at a later point, you would
-    edit the resource properties script, run the `main.py` file to
-    re-create the properties, and then write the properties to the
+    edit the resource properties script and run the `main.py` file to
+    re-create the properties and write them to the
     `datapackage.json` file.
 
 Many of these steps are taken care of by functions in Sprout, but some
