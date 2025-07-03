@@ -241,6 +241,57 @@ In the resource properties script, the `name` property is set to
 script, like so:
 
 ```{python}
+#| echo: false
+# This is to create the `resource_properties_patients` object to use later
+# in this guide.
+resource_properties_patients = sp.ResourceProperties(
+    ## Required:
+    name="patients",
+    title="Patients Data",
+    description="This data resource contains data about patients in a diabetes study.",
+    ## Optional:
+    type="table",
+    format="parquet",
+    mediatype="application/parquet",
+    schema=sp.TableSchemaProperties(
+        ## Required
+        fields=[
+            sp.FieldProperties(
+                ## Required
+                name="id",
+                type="integer",
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="age",
+                type="integer",
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="sex",
+                type="string",
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="height",
+                type="number",
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="weight",
+                type="number",
+            ),
+            sp.FieldProperties(
+                ## Required
+                name="diabetes_type",
+                type="string",
+            ),
+        ],
+    ),
+)
+```
+
+```{python}
 #| eval: false
 resource_properties_patients = sp.ResourceProperties(
     ## Required:
@@ -283,12 +334,6 @@ sp.check_resource_properties(resource_properties_patients)
 Now, the resource properties for patients include the following
 information (printed as a dictionary representation that omits empty
 fields):
-
-```{python}
-#| echo: false
-resource_properties_patients.title = "Patients Data"
-resource_properties_patients.description = "This data resource contains data about the patients included in the diabetes study."
-```
 
 ```{python}
 sp.pprint(resource_properties_patients.compact_dict)
