@@ -1,6 +1,6 @@
 from pytest import mark, raises
 
-from seedcase_sprout.get_nested_attr import get_nested_attr
+from seedcase_sprout.internals import _get_nested_attr
 
 
 class D:
@@ -51,22 +51,22 @@ a = A()
 )
 def test_gets_nested_attribute(nested_object, attributes, expected):
     """Should resolve an attribute chain and return the correct value."""
-    assert get_nested_attr(nested_object, attributes) == expected
+    assert _get_nested_attr(nested_object, attributes) == expected
 
 
 def test_returns_default_if_attribute_not_found():
     """Should return the default value when the attribute chain cannot be resolved."""
-    assert get_nested_attr(a, "e", default="default") == "default"
+    assert _get_nested_attr(a, "e", default="default") == "default"
 
 
 def test_returns_default_if_attribute_is_none():
     """Should return the default value when the attribute exists and is None."""
-    assert get_nested_attr(d, "none", default="default") == "default"
+    assert _get_nested_attr(d, "none", default="default") == "default"
 
 
 def test_ignores_default_if_attribute_found():
     """Should ignore the default value when the attribute chain can be resolved."""
-    assert get_nested_attr(d, "Number_1", default=456) == 123
+    assert _get_nested_attr(d, "Number_1", default=456) == 123
 
 
 @mark.parametrize(
@@ -91,4 +91,4 @@ def test_ignores_default_if_attribute_found():
 def test_throws_error_if_attribute_not_identifier(attributes):
     """Should throw `ValueError` if the input doesn't contain valid identifiers."""
     with raises(ValueError):
-        get_nested_attr(a, attributes)
+        _get_nested_attr(a, attributes)
