@@ -7,8 +7,6 @@ project:
     - "docs/*"
     - "index.qmd"
     - "CONTRIBUTING.md"
-  post-render:
-    - find resources/patients/batch/ -iname "*.parquet" -delete
 
 website:
   title: "Seedcase Sprout"
