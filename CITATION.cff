@@ -15,7 +15,7 @@ authors:
     given-names: Marton
     affiliation: "Steno Diabetes Center Aarhus"
 cff-version: 1.2.0
-# doi:
+doi: "10.5281/zenodo.15800478"
 keywords:
   - "data engineering"
   - "data infrastructure"

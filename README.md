@@ -8,6 +8,7 @@
 
 ## seedcase-sprout: Grow structured, organised, and usable data
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800478.svg)](https://doi.org/10.5281/zenodo.15800478)
 [![GitHub
 License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
 [![PyPI
@@ -79,13 +80,14 @@ effort to create a framework for data management and analysis in
 research. If you use this project in your work, please cite it as
 follows:
 
-Johnston L.W., Brødbæk S.K., Beicher K., Vago M. Seedcase Sprout URL:
-https://sprout.seedcase-project.org
+Johnston L.W., Brødbæk S.K., Beicher K., Vago M. Seedcase Sprout DOI:
+10.5281/zenodo.15800478 URL: https://sprout.seedcase-project.org
 
 Or as a BibTeX entry:
 
     @misc{YourReferenceHere,
     author = {Johnston, Luke William and Brødbæk, Signe Kirk and Beicher, Kristiane and Vago, Marton},
+    doi = {10.5281/zenodo.15800478},
     title = {Seedcase Sprout},
     url = {https://sprout.seedcase-project.org}
     }
