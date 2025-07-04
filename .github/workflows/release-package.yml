@@ -9,12 +9,12 @@ on:
 permissions: read-all
 
 jobs:
-  release-package:
+  release:
     # This job outputs env variables `previous_version` and `current_version`.
     # Only give permissions for this job.
     permissions:
       contents: write
-    uses: seedcase-project/.github/.github/workflows/reusable-release-package.yml@main
+    uses: seedcase-project/.github/.github/workflows/reusable-release-project.yml@main
     with:
       app-id: ${{ vars.UPDATE_VERSION_APP_ID }}
     secrets:
@@ -30,17 +30,19 @@ jobs:
     environment:
       name: pypi
     needs:
-      - release-package
-    if: ${{ needs.release-package.outputs.previous_version != needs.release-package.outputs.current_version }}
+      - release
+    if: ${{ needs.release.outputs.previous_version != needs.release.outputs.current_version }}
     steps:
-      - name: Download built distributions
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
-        with:
-          name: release-dists
-          path: dist/
-
+      # This workflow and the publish workflows are based on:
+      # - https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
+      # - https://www.andrlik.org/dispatches/til-use-uv-for-build-and-publish-github-actions/
+      # - https://github.com/astral-sh/trusted-publishing-examples
       - name: Set up uv
         uses: astral-sh/setup-uv@bd01e18f51369d5a26f1651c3cb451d3417e3bba # v6.3.1
+
+      - name: Build distributions
+        # Builds dists from source and stores them in the dist/ directory.
+        run: uv build
 
       - name: Publish 📦 to PyPI
         # Only publish if the option is explicitly set in the calling workflow.
