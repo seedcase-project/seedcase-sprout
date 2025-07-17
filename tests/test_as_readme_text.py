@@ -59,17 +59,17 @@ def test_creates_readme_with_empty_values():
 @mark.parametrize(
     "description, expected",
     [
-        # Empty or whitespace-only
+        # Empty or whitespace-only.
         ("", ""),
         ("    ", ""),
-        # Single line text
+        # Single line text.
         ("Non-indented one-line text.", "Non-indented one-line text."),
         ("    Indented one-line text.", "Indented one-line text."),
         (
             "    Indented one-line text with trailing whitespace.   ",
             "Indented one-line text with trailing whitespace.",
         ),
-        # Multiline text
+        # Multiline text.
         ("Non-indented\nmultiline\ntext.", "Non-indented\nmultiline\ntext."),
         ("    Indented\n    multiline text.", "Indented\nmultiline text."),
         (
@@ -84,7 +84,7 @@ def test_creates_readme_with_empty_values():
             """,
             "Indented multiline\ntext",
         ),
-        # Mixed indentation
+        # Mixed indentation.
         (
             "\tIndented with tab\n    Indented with spaces\n\t  Mixed indented line",
             "Indented with tab\nIndented with spaces\nMixed indented line",
