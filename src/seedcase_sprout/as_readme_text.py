@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader
@@ -29,7 +30,28 @@ def as_readme_text(properties: PackageProperties) -> str:
     env.filters["inline_code"] = _inline_code
     env.filters["format_link"] = _format_link
     template = env.get_template("README.jinja2")
+
+    # Dedent description text.
+    if properties.description:
+        properties.description = _dedent_text(properties.description)
+
     return template.render(properties=properties)
+
+
+def _dedent_text(text: str) -> str:
+    """Dedent text.
+
+    If text is not indented, it will be returned as is. If it is indented, the leading
+    whitespace or tab will be removed from each line.
+
+    Args:
+        text: The text string to dedent.
+
+    Returns:
+        The string dedented.
+    """
+    # Remove leading whitespace or tab from each line.
+    return re.sub(r"^[ \t]+", "", text, flags=re.MULTILINE)
 
 
 def _join_names(licenses: list[LicenseProperties] | None) -> str:
