@@ -25,6 +25,7 @@ def write_properties(properties: PackageProperties, path: Path | None = None) ->
             `CheckError`s, one error for each failed check.
     """
     path = path or PackagePath().properties()
-    properties.description = _to_dedented_text(properties.description or "")
+    if properties.description:
+        properties.description = _to_dedented_text(properties.description)
     check_properties(properties)
     return _write_json(properties.compact_dict, path)
