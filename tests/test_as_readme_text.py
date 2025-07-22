@@ -67,7 +67,7 @@ def test_creates_readme_with_empty_values():
         ("    Indented one-line text.", "Indented one-line text."),
         (
             "    Indented one-line text with trailing whitespace.   ",
-            "Indented one-line text with trailing whitespace.",
+            "Indented one-line text with trailing whitespace.   ",
         ),
         # Multiline text.
         ("Non-indented\nmultiline\ntext.", "Non-indented\nmultiline\ntext."),

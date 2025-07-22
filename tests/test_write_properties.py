@@ -94,5 +94,5 @@ def test_writes_properties_with_dedented_description(path, properties):
     assert (
         # json.dumps() adds the extra `\` to escape the `\n` in the string.
         "Indented description with leading spaces.\\nMultiline text with tab and space."
-        in path.read_bytes().decode("utf-8")
+        in path.read_text()
     )
