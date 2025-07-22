@@ -8,7 +8,7 @@ from .create import (
 from .functionals import _map, _map2
 from .get import _get_iso_timestamp, _get_nested_attr
 from .read import _read_json
-from .to import _to_camel_case, _to_snake_case
+from .to import _to_camel_case, _to_dedented_text, _to_snake_case
 from .write import _write_json
 
 __all__ = [
@@ -24,4 +24,5 @@ __all__ = [
     "_read_json",
     "_write_json",
     "_to_camel_case",
+    "_to_dedented_text",
 ]

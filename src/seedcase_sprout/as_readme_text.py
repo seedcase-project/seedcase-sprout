@@ -1,9 +1,9 @@
-import re
 from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader
 
 from seedcase_sprout.constants import TEMPLATES_PATH
+from seedcase_sprout.internals import _to_dedented_text
 from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
@@ -33,25 +33,9 @@ def as_readme_text(properties: PackageProperties) -> str:
 
     # Dedent description text.
     if properties.description:
-        properties.description = _dedent_text(properties.description)
+        properties.description = _to_dedented_text(properties.description)
 
     return template.render(properties=properties)
-
-
-def _dedent_text(text: str) -> str:
-    """Dedent text.
-
-    If text is not indented, it will be returned as is. If it is indented, the leading
-    whitespace or tab will be removed from each line.
-
-    Args:
-        text: The text string to dedent.
-
-    Returns:
-        The string dedented.
-    """
-    # Remove leading whitespace or tab from each line.
-    return re.sub(r"^[ \t]+", "", text, flags=re.MULTILINE)
 
 
 def _join_names(licenses: list[LicenseProperties] | None) -> str:
