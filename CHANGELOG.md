@@ -1,3 +1,9 @@
+## 0.46.4 (2025-07-23)
+
+### Fix
+
+- :bug: dedent `description` in `as_readme_text()` and `write_properties()` (#1476)
+
 ## 0.46.3 (2025-07-03)
 
 ### Refactor
