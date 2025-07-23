@@ -73,9 +73,9 @@ def test_creates_readme_with_empty_values():
         ("Non-indented\nmultiline\ntext.", "Non-indented\nmultiline\ntext."),
         ("    Indented\n    multiline text.", "Indented\nmultiline text."),
         (
-            """Indented multiline
-        text.""",
-            "Indented multiline\ntext.",
+            """Non-indented first line,
+            indented second line.""",
+            "Non-indented first line,\nindented second line.",
         ),
         (
             """
