@@ -3,6 +3,7 @@ from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 
 from seedcase_sprout.constants import TEMPLATES_PATH
+from seedcase_sprout.internals import _to_dedented
 from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
@@ -29,6 +30,11 @@ def as_readme_text(properties: PackageProperties) -> str:
     env.filters["inline_code"] = _inline_code
     env.filters["format_link"] = _format_link
     template = env.get_template("README.jinja2")
+
+    # Dedent description text.
+    if properties.description:
+        properties.description = _to_dedented(properties.description)
+
     return template.render(properties=properties)
 
 

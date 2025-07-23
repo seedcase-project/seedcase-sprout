@@ -79,3 +79,20 @@ def test_throws_error_if_error_in_resource_properties(path, properties):
 def test_writes_properties_to_cwd_if_no_path_provided(tmp_cwd, properties):
     """If no path is provided, should use datapackage.json in the cwd."""
     assert write_properties(properties) == PackagePath(tmp_cwd).properties()
+
+
+def test_writes_properties_with_dedented_description(path, properties):
+    """Should write properties to file with dedented description."""
+    # Simple test here bc it's tested thoroughly in the `as_readme_text` tests.
+    properties.description = """
+        Indented description with leading spaces.
+        \t Multiline text with tab and space.
+        """
+
+    write_properties(properties, path)
+
+    assert (
+        # json.dumps() adds the extra `\` to escape the `\n` in the string.
+        "Indented description with leading spaces.\\nMultiline text with tab and space."
+        in path.read_text()
+    )
