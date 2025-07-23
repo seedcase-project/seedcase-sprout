@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800478.svg)](https://doi.org/10.5281/zenodo.15800478)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800477.svg)](https://doi.org/10.5281/zenodo.15800477)
 [![GitHub License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
 [![PyPI Version](https://img.shields.io/pypi/v/seedcase-sprout)](https://pypi.org/project/seedcase-sprout/)
 [![GitHub Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
