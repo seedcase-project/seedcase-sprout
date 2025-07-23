@@ -27,7 +27,7 @@ def _to_camel_case(text: str) -> str:
     return first_part + "".join(part.title() for part in remaining_parts)
 
 
-def _to_dedented_text(text: str) -> str:
+def _to_dedented(text: str) -> str:
     """Dedents text by removing leading whitespace and tabs from each line.
 
     If it is not indented, it will be returned as is.

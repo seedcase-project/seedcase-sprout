@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from seedcase_sprout.check_properties import check_properties
-from seedcase_sprout.internals import _to_dedented_text, _write_json
+from seedcase_sprout.internals import _to_dedented, _write_json
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import PackageProperties
 
@@ -26,6 +26,6 @@ def write_properties(properties: PackageProperties, path: Path | None = None) ->
     """
     path = path or PackagePath().properties()
     if properties.description:
-        properties.description = _to_dedented_text(properties.description)
+        properties.description = _to_dedented(properties.description)
     check_properties(properties)
     return _write_json(properties.compact_dict, path)

@@ -3,7 +3,7 @@ from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 
 from seedcase_sprout.constants import TEMPLATES_PATH
-from seedcase_sprout.internals import _to_dedented_text
+from seedcase_sprout.internals import _to_dedented
 from seedcase_sprout.properties import (
     LicenseProperties,
     PackageProperties,
@@ -33,7 +33,7 @@ def as_readme_text(properties: PackageProperties) -> str:
 
     # Dedent description text.
     if properties.description:
-        properties.description = _to_dedented_text(properties.description)
+        properties.description = _to_dedented(properties.description)
 
     return template.render(properties=properties)
 
