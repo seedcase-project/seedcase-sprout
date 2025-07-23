@@ -8,7 +8,7 @@
 
 ## seedcase-sprout: Grow structured, organised, and usable data
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800478.svg)](https://doi.org/10.5281/zenodo.15800478)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800477.svg)](https://doi.org/10.5281/zenodo.15800477)
 [![GitHub
 License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
 [![PyPI
@@ -89,7 +89,7 @@ Or as a BibTeX entry:
 
     @misc{YourReferenceHere,
     author = {Johnston, Luke William and Brødbæk, Signe Kirk and Beicher, Kristiane and Vago, Marton},
-    doi = {10.5281/zenodo.15800478},
+    doi = {10.5281/zenodo.15800477},
     title = {Seedcase Sprout},
     url = {https://sprout.seedcase-project.org}
     }
