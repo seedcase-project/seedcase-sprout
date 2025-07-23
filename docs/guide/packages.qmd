@@ -69,7 +69,7 @@ uv run main.py
 sp.create_properties_script(package_path.root())
 ```
 
-This will create a `properties.py` file in the newly created `scripts/`
+This will create a `package_properties.py` file in the newly created `scripts/`
 folder of your data package.
 
 ::: callout-caution
@@ -97,7 +97,7 @@ The file structure should now look like:
 print(file_tree(package_path.root()))
 ```
 
-Inside the `scripts/properties.py` file, you will find a template for
+Inside the `scripts/package_properties.py` file, you will find a template for
 creating the properties of your data package. It looks like:
 
 ```{python}
@@ -126,7 +126,7 @@ is an example of a set of properties with required fields filled in
 
 ```{python}
 #| eval: false
-properties = sp.PackageProperties(
+package_properties = sp.PackageProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
     # You can write Markdown below, with the helper `sp.dedent()`.
@@ -175,13 +175,13 @@ So in your `main.py`, include this code:
 #| eval: false
 #| filename: "main.py"
 import seedcase_sprout as sp
-from scripts.properties import properties
+from scripts.package_properties import package_properties
 
 def main():
     # Create the properties script in default location.
     sp.create_properties_script()
     # Write properties from properties script to `datapackage.json`.
-    sp.write_properties(properties=properties)
+    sp.write_properties(properties=package_properties)
 
 if __name__ == "__main__":
     main()
@@ -207,7 +207,7 @@ The `write_properties()` function will give an error if the
 `PackageProperties` object is missing some of its required fields or if
 they are not filled in correctly. In that case, a `datapackage.json`
 file won't be created. So you will have to return to the
-`scripts/properties.py` file and fill in the correct properties.
+`scripts/package_properties.py` file and fill in the correct properties.
 :::
 
 The `write_properties()` function created the `datapackage.json` file in
@@ -233,15 +233,15 @@ data package you just created by writing it in the `main.py` file.
 #| eval: false
 #| filename: "main.py"
 import seedcase_sprout as sp
-from scripts.properties import properties
+from scripts.package_properties import package_properties
 
 def main():
     # Create the properties script in default location.
     sp.create_properties_script()
     # Save the properties to `datapackage.json`.
-    sp.write_properties(properties=properties)
+    sp.write_properties(properties=package_properties)
     # Create text for a README of the data package.
-    readme_text = sp.as_readme_text(properties)
+    readme_text = sp.as_readme_text(package_properties)
     # Write the README text to a `README.md` file.
     sp.write_file(readme_text, sp.PackagePath().readme())
 

@@ -161,7 +161,7 @@ the creation of our resource properties script:
 #| filename: "main.py"
 #| eval: false
 import seedcase_sprout as sp
-from scripts.properties import properties
+from scripts.package_properties import package_properties
 import polars as pl
 
 def main():
@@ -184,9 +184,9 @@ def main():
     # New code ends here -----
 
     # Save the properties to `datapackage.json`.
-    sp.write_properties(properties=properties)
+    sp.write_properties(properties=package_properties)
     # Create text for a README of the data package.
-    readme_text = sp.as_readme_text(properties)
+    readme_text = sp.as_readme_text(package_properties)
     # Write the README text to a `README.md` file.
     sp.write_file(readme_text, sp.PackagePath().readme())
 
@@ -353,11 +353,11 @@ package. You can do this by adding the following lines to the
 
 ```{python}
 #| eval: false
-#| filename: "properties.py"
+#| filename: "package_properties.py"
 # Import the resource properties object.
 from .resource_properties_patients import resource_properties_patients
 
-properties = sp.PackageProperties(
+package_properties = sp.PackageProperties(
     # Your existing properties here...
     resources=[
         resource_properties_patients,
@@ -372,8 +372,8 @@ resource.
 
 The next step is to write the resource properties to the
 `datapackage.json` file. Since we included the `resource_properties`
-object directly into the `scripts/properties.py` file, and since the
-`scripts/properties.py` file is imported already in `main.py`, we can
+object directly into the `scripts/package_properties.py` file, and since the
+`scripts/package_properties.py` file is imported already in `main.py`, we can
 simply re-run the `main.py` file and it will update both the
 `datapackage.json` file and the `README.md` file.
 
