@@ -33,6 +33,14 @@ jobs:
       - release
     if: ${{ needs.release.outputs.previous_version != needs.release.outputs.current_version }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
       # This workflow and the publish workflows are based on:
       # - https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
       # - https://www.andrlik.org/dispatches/til-use-uv-for-build-and-publish-github-actions/
