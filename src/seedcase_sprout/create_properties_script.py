@@ -35,7 +35,7 @@ def create_properties_script(path: Path | None = None) -> Path:
         return script_path
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
-    template = env.get_template("properties.py.jinja2")
+    template = env.get_template("package_properties.py.jinja2")
     text = template.render(
         properties=PackageProperties.from_default(name=package_path.root().name)
     )
