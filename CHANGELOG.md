@@ -1,3 +1,9 @@
+## 0.46.6 (2025-07-23)
+
+### Refactor
+
+- 🚚 rename obj in package properties script to `package_properties` (#1484)
+
 ## 0.46.5 (2025-07-23)
 
 ### Refactor
