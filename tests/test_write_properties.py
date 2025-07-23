@@ -81,18 +81,22 @@ def test_writes_properties_to_cwd_if_no_path_provided(tmp_cwd, properties):
     assert write_properties(properties) == PackagePath(tmp_cwd).properties()
 
 
-def test_writes_properties_with_dedented_description(path, properties):
+def test_writes_properties_with_dedented_descriptions(path, properties):
     """Should write properties to file with dedented description."""
     # Simple test here bc it's tested thoroughly in the `as_readme_text` tests.
-    properties.description = """
+    indented_text = """
         Indented description with leading spaces.
         \t Multiline text with tab and space.
         """
 
+    properties.description = indented_text
+    properties.resources[0].description = indented_text
+    properties.resources[0].schema.fields[0].description = indented_text
+
     write_properties(properties, path)
 
-    assert (
-        # json.dumps() adds the extra `\` to escape the `\n` in the string.
+    dedented_text = (
         "Indented description with leading spaces.\\nMultiline text with tab and space."
-        in path.read_text()
     )
+    file_text = path.read_text()
+    assert file_text.count(dedented_text) == 3
