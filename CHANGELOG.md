@@ -1,3 +1,9 @@
+## 0.46.5 (2025-07-23)
+
+### Refactor
+
+- :recycle: rename properties script to `package_properties.py` (#1482)
+
 ## 0.46.4 (2025-07-23)
 
 ### Fix
