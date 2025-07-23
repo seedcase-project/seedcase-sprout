@@ -84,6 +84,11 @@ def test_creates_readme_with_empty_values():
             """,
             "Indented multiline\ntext",
         ),
+        # Tab indentation.
+        (
+            "\tIndented with tab\n\tAlso indented with tab",
+            "Indented with tab\nAlso indented with tab",
+        ),
         # Mixed indentation.
         (
             "\tIndented with tab\n    Indented with spaces\n\t  Mixed indented line",
@@ -92,6 +97,14 @@ def test_creates_readme_with_empty_values():
         (
             "  Indented with 2 spaces\n    Indented with 4 spaces\n  Back to 2 spaces",
             "Indented with 2 spaces\nIndented with 4 spaces\nBack to 2 spaces",
+        ),
+        # Multi-level list (relative indentation removed, not ideal).
+        (
+            """
+            Description with multilevel list:
+            - Item 1
+                - Item 2""",
+            "Description with multilevel list:\n- Item 1\n- Item 2",
         ),
     ],
 )
