@@ -19,7 +19,7 @@ def test_creates_script_with_default_values(mock_uuid, tmp_cwd):
     script_path = create_properties_script()
 
     assert script_path == PackagePath().properties_script()
-    properties = load_properties(script_path, "properties")
+    properties = load_properties(script_path, "package_properties")
     assert properties == PackageProperties(
         name=tmp_cwd.name,
         title="",
@@ -36,7 +36,9 @@ def test_works_with_custom_path(tmp_path):
     script_path = create_properties_script(tmp_path)
 
     assert script_path == PackagePath(tmp_path).properties_script()
-    properties = cast(PackageProperties, load_properties(script_path, "properties"))
+    properties = cast(
+        PackageProperties, load_properties(script_path, "package_properties")
+    )
     assert properties.name == tmp_path.name
 
 
