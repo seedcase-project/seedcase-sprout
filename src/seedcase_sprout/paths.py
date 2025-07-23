@@ -107,7 +107,7 @@ class PackagePath:
 
     def properties_script(self) -> Path:
         """Path to the properties script."""
-        return self.root() / "scripts" / "properties.py"
+        return self.root() / "scripts" / "package_properties.py"
 
     def resource_properties_script(self, resource_name: str = "") -> Path:
         """Path to a specific resource's resource properties script.
