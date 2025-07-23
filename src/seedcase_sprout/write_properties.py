@@ -3,7 +3,11 @@ from pathlib import Path
 from seedcase_sprout.check_properties import check_properties
 from seedcase_sprout.internals import _to_dedented, _write_json
 from seedcase_sprout.paths import PackagePath
-from seedcase_sprout.properties import PackageProperties
+from seedcase_sprout.properties import (
+    FieldProperties,
+    PackageProperties,
+    ResourceProperties,
+)
 
 
 def write_properties(properties: PackageProperties, path: Path | None = None) -> Path:
@@ -27,5 +31,24 @@ def write_properties(properties: PackageProperties, path: Path | None = None) ->
     path = path or PackagePath().properties()
     if properties.description:
         properties.description = _to_dedented(properties.description)
+
+    resources = getattr(properties, "resources", None)
+    if resources:
+        for resource in resources:
+            _dedent_if_present(resource, "description")
+
+            schema = getattr(resource, "schema", None)
+            if schema and schema.fields:
+                for field in schema.fields:
+                    _dedent_if_present(field, "description")
+
     check_properties(properties)
     return _write_json(properties.compact_dict, path)
+
+
+def _dedent_if_present(
+    properties: ResourceProperties | FieldProperties, field: str
+) -> None:
+    val = getattr(properties, field, None)
+    if val:
+        setattr(properties, field, _to_dedented(val))
