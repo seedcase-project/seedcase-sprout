@@ -1,12 +1,13 @@
 from pathlib import Path
+from typing import cast
 
 from seedcase_sprout.check_properties import check_properties
 from seedcase_sprout.internals import _to_dedented, _write_json
+from seedcase_sprout.internals.get import _get_nested_attr
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     FieldProperties,
     PackageProperties,
-    ResourceProperties,
 )
 
 
@@ -29,26 +30,20 @@ def write_properties(properties: PackageProperties, path: Path | None = None) ->
             `CheckError`s, one error for each failed check.
     """
     path = path or PackagePath().properties()
+
+    # Dedent descriptions
     if properties.description:
         properties.description = _to_dedented(properties.description)
 
-    resources = getattr(properties, "resources", None)
-    if resources:
-        for resource in resources:
-            _dedent_if_present(resource, "description")
+    for resource in properties.resources or []:
+        resource.description = _to_dedented(resource.description)
 
-            schema = getattr(resource, "schema", None)
-            if schema and schema.fields:
-                for field in schema.fields:
-                    _dedent_if_present(field, "description")
+        for field in cast(
+            list[FieldProperties],
+            _get_nested_attr(resource, "schema.fields", default=[]),
+        ):
+            field.description = _to_dedented(field.description)
 
     check_properties(properties)
+
     return _write_json(properties.compact_dict, path)
-
-
-def _dedent_if_present(
-    properties: ResourceProperties | FieldProperties, field: str
-) -> None:
-    val = getattr(properties, field, None)
-    if val:
-        setattr(properties, field, _to_dedented(val))
