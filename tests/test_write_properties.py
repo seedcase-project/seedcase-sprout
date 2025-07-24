@@ -100,3 +100,20 @@ def test_writes_properties_with_dedented_descriptions(path, properties):
     )
     file_text = path.read_text()
     assert file_text.count(dedented_text) == 3
+
+
+def test_throws_error_if_resource_description_is_none(path, properties):
+    """Should throw an error if the required resource description is None, i.e.,
+    dedentation works and the subsequent check fails."""
+    properties.resources[0].description = None
+
+    with raises(ExceptionGroup):
+        write_properties(properties, path)
+
+
+def test_writes_properties_when_field_description_is_none(path, properties):
+    """Should write properties to file without optional field description."""
+    properties.resources[0].schema.fields[0].description = None
+    write_properties(properties, path)
+
+    assert_file_contains(path, properties)
