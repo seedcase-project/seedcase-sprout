@@ -35,6 +35,7 @@ def write_properties(properties: PackageProperties, path: Path | None = None) ->
     if properties.description:
         properties.description = _to_dedented(properties.description)
 
+    # TODO: Code to find all description fields and dedent to avoid nested for-loops?
     for resource in properties.resources or []:
         resource.description = _to_dedented(resource.description)
 
