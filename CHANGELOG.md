@@ -1,3 +1,9 @@
+## 0.47.1 (2025-07-25)
+
+### Fix
+
+- :bug: do not create duplicate batch files (#1493)
+
 ## 0.47.0 (2025-07-25)
 
 ### Feat
