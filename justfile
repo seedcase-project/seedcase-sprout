@@ -2,7 +2,7 @@
     just --list --unsorted
 
 # Run all build-related recipes in the justfile
-run-all: install-deps format-python check-python check-unused test-python check-security check-spelling check-commits build-website
+run-all: install-deps format-python check-python check-unused test-python check-security check-spelling check-commits build-website build-readme
 
 # Install the pre-commit hooks
 install-precommit:
@@ -15,7 +15,7 @@ install-precommit:
 
 # Install Python package dependencies
 install-deps:
-  uv sync --all-extras --dev
+  uv sync --all-extras --dev --upgrade
 
 # Run the Python tests
 test-python:
@@ -88,3 +88,7 @@ check-unused:
   # There are some things should be ignored though, with the allowlist.
   # Create an allowlist with `vulture --make-allowlist`
   uv run vulture src/ tests/ **/vulture-allowlist.py
+
+# Re-build the README from the Quarto file
+build-readme:
+  uvx --from quarto quarto render README.qmd --to gfm
