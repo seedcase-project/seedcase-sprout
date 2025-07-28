@@ -6,7 +6,7 @@
     </a>
 </p>
 
-## seedcase-sprout: Grow structured, organised, and usable data
+## seedcase-sprout: Grow structured, organised, and FAIR data
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800477.svg)](https://doi.org/10.5281/zenodo.15800477)
 [![GitHub
@@ -82,14 +82,15 @@ effort to create a framework for data management and analysis in
 research. If you use this project in your work, please cite it as
 follows:
 
-Johnston L.W., Brødbæk S.K., Beicher K., Vago M. Seedcase Sprout DOI:
-10.5281/zenodo.15800478 URL: https://sprout.seedcase-project.org
+Johnston L.W., Brødbæk S.K., Beicher K., Vago M. Seedcase Sprout: Grow
+structured, organised, and FAIR data. DOI: 10.5281/zenodo.15800477 URL:
+https://sprout.seedcase-project.org
 
 Or as a BibTeX entry:
 
     @misc{YourReferenceHere,
     author = {Johnston, Luke William and Brødbæk, Signe Kirk and Beicher, Kristiane and Vago, Marton},
     doi = {10.5281/zenodo.15800477},
-    title = {Seedcase Sprout},
+    title = {Seedcase Sprout: Grow structured, organised, and FAIR data.},
     url = {https://sprout.seedcase-project.org}
     }

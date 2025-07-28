@@ -1,5 +1,5 @@
 ---
-title: Grow structured, organised, and *usable* data
+title: Grow structured, organised, and *FAIR* data
 format:
   seedcase-theme-html:
     toc: false
@@ -46,9 +46,10 @@ div.quarto-about-jolla {
 Sprout is a **Python package**, and the backbone of the [**Seedcase
 Project**](https://seedcase-project.org), with a flexible interface
 designed and built for people whose task is to build up, structure,
-describe, and organise data for research projects. It is made to offer
-flexibility and control over the individual steps in a data processing
-and management workflow.
+describe, and organise data for research projects that follows
+[FAIR](https://www.go-fair.org/fair-principles/) principles. It is made
+to offer flexibility and control over the individual steps in a data
+processing and management workflow.
 
 We built this package mainly for digitally-technical personnel, such as
 data engineers or software developers. It's designed to be easily

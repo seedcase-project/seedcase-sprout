@@ -13,7 +13,7 @@ jupyter: python3
 </p>
 ```
 
-## seedcase-sprout: Grow structured, organised, and usable data
+## seedcase-sprout: Grow structured, organised, and FAIR data
 
 {{< include /docs/includes/_badges.qmd >}}
 
