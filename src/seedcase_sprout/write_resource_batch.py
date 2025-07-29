@@ -23,7 +23,8 @@ def write_resource_batch(
     Use this function to write the original data that is in a tidy Polars
     DataFrame to the resource folder provided by the `path` property in the
     `resource_properties`. The function saves the DataFrame as file with a
-    timestamped, unique name, as a backup. See the
+    timestamped, unique name, as a backup. If the data is exactly the same as
+    the data in one of the existing batch files, it won't be duplicated. See the
     [design](https://sprout.seedcase-project.org/docs/design/) docs for an
     explanation of this batch file. Data is always checked against the
     `resource_properties` before it is written to the batch folder.
@@ -58,7 +59,15 @@ def write_resource_batch(
     check_resource_properties(resource_properties)
     check_data(data, resource_properties)
 
-    batch_path = PackagePath(package_path).resource_batch(str(resource_properties.name))
+    package = PackagePath(package_path)
+    resource_name = str(resource_properties.name)
+
+    for batch_path in package.resource_batch_files(resource_name):
+        batch = pl.read_parquet(batch_path)
+        if data.equals(batch):
+            return batch_path
+
+    batch_path = package.resource_batch(resource_name)
     batch_path.mkdir(exist_ok=True, parents=True)
     # TODO: Move out some of this into the create_batch_file_name during refactoring
     batch_file_path = batch_path / _create_batch_file_name()
