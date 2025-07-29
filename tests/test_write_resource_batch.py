@@ -32,6 +32,41 @@ def test_writes_correct_resource_batch_file(tmp_path):
     assert_frame_equal(batch_data, example_data(), check_exact=True)
 
 
+def test_does_not_duplicate_batch_file(tmp_cwd):
+    """Should not create a new batch file when the data has already been saved in an
+    existing batch file."""
+    # Given
+    data = example_data()
+    resource_properties = example_resource_properties()
+    existing_batch_path = write_resource_batch(data, resource_properties)
+
+    # When
+    new_batch_path = write_resource_batch(data, resource_properties)
+
+    # Then
+    assert new_batch_path == existing_batch_path
+    assert len(PackagePath().resource_batch_files(str(resource_properties.name))) == 1
+    assert_frame_equal(pl.read_parquet(new_batch_path), data)
+
+
+def test_creates_new_batch_file_when_data_not_duplicate(tmp_cwd):
+    """Should create a new batch file when the data is different from data in
+    existing batch files."""
+    # Given
+    existing_data = example_data()
+    new_data = example_data()
+    new_data[2, "name"] = "Bob"
+    resource_properties = example_resource_properties()
+    existing_batch_path = write_resource_batch(existing_data, resource_properties)
+
+    # When
+    new_batch_path = write_resource_batch(new_data, resource_properties)
+
+    # Then
+    assert_frame_equal(pl.read_parquet(existing_batch_path), existing_data)
+    assert_frame_equal(pl.read_parquet(new_batch_path), new_data)
+
+
 def test_writes_correct_resource_batch_file_with_unordered_columns(tmp_path):
     """Writes batch file correctly even if columns aren't in the order expected by the
     resource properties."""
