@@ -1,3 +1,15 @@
+## 0.47.1 (2025-07-25)
+
+### Fix
+
+- :bug: do not create duplicate batch files (#1493)
+
+## 0.47.0 (2025-07-25)
+
+### Feat
+
+- :sparkles: dedent resource and field descriptions in `write_properties()` (#1488)
+
 ## 0.46.6 (2025-07-23)
 
 ### Refactor
