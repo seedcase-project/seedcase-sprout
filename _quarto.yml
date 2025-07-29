@@ -5,6 +5,7 @@ project:
   render:
     - "docs/*"
     - "index.qmd"
+    - "404.qmd"
     - "CONTRIBUTING.md"
 
 website:
