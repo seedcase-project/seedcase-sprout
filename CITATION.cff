@@ -5,7 +5,8 @@ abstract: |
   and organise data for research projects that follows FAIR
   (findable, accessible, interoperable, reusable) principles. It is
   made to offer flexibility and control over the individual steps in a
-  data processing and management workflow.
+  data processing and management workflow. It integrates with the
+  Data Package standard.
 authors:
   - family-names: Johnston
     given-names: Luke William
