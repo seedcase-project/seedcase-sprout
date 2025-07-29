@@ -1,5 +1,12 @@
-title: "Seedcase Sprout"
-abstract: "Grow structured, organised, and usable data. This package provides a framework for building and managing well-described and organised FAIR data."
+title: "Seedcase Sprout: Grow structured, organised, and FAIR data."
+abstract: |
+  Sprout is a Python package with a flexible interface designed and
+  built for people whose task is to build up, structure, describe,
+  and organise data for research projects that follows FAIR
+  (findable, accessible, interoperable, reusable) principles. It is
+  made to offer flexibility and control over the individual steps in a
+  data processing and management workflow. It integrates with the
+  Data Package standard.
 authors:
   - family-names: Johnston
     given-names: Luke William
