@@ -26,13 +26,13 @@
   "[quarto][qmd]": {
     "editor.formatOnSave": false
   },
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  },
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
   "python.languageServer": "Pylance",
   "files.insertFinalNewline": true,
-  "python.testing.pytestEnabled": true,
-  "python.testing.pytestPath": "${workspaceFolder}/.venv/bin/pytest",
-  "mypy.runUsingActiveInterpreter": true,
+  "files.associations": {
+    "*.yml.jinja": "jinja-yaml",
+    "*.cff.jinja": "jinja-yaml",
+    "*.toml.jinja": "jinja-toml",
+    "*.qmd.jinja": "jinja-md"
+  },
 }
