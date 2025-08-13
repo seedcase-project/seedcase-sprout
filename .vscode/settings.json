@@ -12,27 +12,29 @@
   "editor.tabCompletion": "on",
   "editor.snippetSuggestions": "inline",
   "conventional-branch.type": [
-    "build", // Changes that affect the build system or external dependencies
-    "ci", // Changes to our CI configuration files and scripts
-    "docs", // Documentation only changes
-    "feat", // A new feature
-    "fix", // A bug fix
-    "refactor", // A code change that neither fixes a bug nor adds a feature
-    "style", // Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-    "test", // Adding missing tests or correcting existing tests
-    "chore", // Misc things, like renaming or deleting files
+    "build",
+    "ci",
+    "docs",
+    "feat",
+    "fix",
+    "refactor",
+    "style",
+    "test",
+    "chore",
+    "perf",
+    "revert"
   ],
   "conventional-branch.format": "{Type}/{Branch}",
   "[quarto][qmd]": {
     "editor.formatOnSave": false
   },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
   "python.languageServer": "Pylance",
   "files.insertFinalNewline": true,
-  "files.associations": {
-    "*.yml.jinja": "jinja-yaml",
-    "*.cff.jinja": "jinja-yaml",
-    "*.toml.jinja": "jinja-toml",
-    "*.qmd.jinja": "jinja-md"
-  },
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestPath": "${workspaceFolder}/.venv/bin/pytest",
+  "mypy.runUsingActiveInterpreter": true,
 }

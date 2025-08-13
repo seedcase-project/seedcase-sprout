@@ -1,5 +1,5 @@
 # ruff: noqa
-# type: ignore
+# mypy: ignore-errors
 email  # unused variable (src/seedcase_sprout/properties.py:91)
 given_name  # unused variable (src/seedcase_sprout/properties.py:92)
 family_name  # unused variable (src/seedcase_sprout/properties.py:93)
