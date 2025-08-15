@@ -112,7 +112,8 @@ build-contributors:
 
 # Check for and apply updates from the template
 update-from-template:
-  uvx copier update --trust --defaults
+  # Do not update existing source files
+  uvx copier update --trust --defaults $(find src/seedcase_sprout -type f -printf "--exclude %p ")
 
 # Reset repo changes to match the template
 reset-from-template:
