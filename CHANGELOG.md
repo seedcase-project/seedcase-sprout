@@ -1,3 +1,9 @@
+## 0.47.2 (2025-08-18)
+
+### Fix
+
+- :bug: revert syncing with `template-python-package` (#1508)
+
 ## 0.47.1 (2025-07-25)
 
 ### Fix
