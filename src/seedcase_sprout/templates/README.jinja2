@@ -14,8 +14,17 @@
 {% if properties.resources -%}
 ## Data Resources
 {% for resource in properties.resources %}
-  {{ loop.index }}. **{{ resource.title }}**: {{ resource.description }}
+{{ loop.index }}.  **{{ resource.title }}**: {{ resource.description }}
+{% if resource.schema.fields %}
+    ### Resource Fields
+
+    | Name | Title | Type | Description |
+    |------|-------|------|-------------|
+{%- for field in resource.schema.fields %}
+    | {{ field.name | inline_code }} | {{ field.title }} | {{ field.type | inline_code }} | {{ field.description }} |
 {%- endfor %}
+{% endif %}
+{%- endfor -%}
 {% else -%}
 No resources available.
 {% endif %}
