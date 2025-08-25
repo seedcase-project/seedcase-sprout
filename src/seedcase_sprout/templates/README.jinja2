@@ -22,9 +22,9 @@
 |------|-------|------|-------------|
 {%- for field in resource.schema.fields %}
 | {{ field.name | inline_code }} | {{ field.title }} | {{ field.type | inline_code }} | {{ field.description }} |
+{%- endfor %}
 
 : Resource fields in {{ resource.title }} and some details about them.
-{%- endfor %}
 {% endif %}
 {%- endfor -%}
 {% else -%}
