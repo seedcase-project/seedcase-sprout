@@ -17,7 +17,7 @@ Version](https://img.shields.io/pypi/v/seedcase-sprout.svg)](https://pypi.org/pr
 [![GitHub
 Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout.svg)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
 [![Supported Python Version from PEP 621
-TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/refs/heads/main/pyproject.toml.svg)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
+TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/refs/heads/main/pyproject.toml)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
 [![OpenSSF
 Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge?raw=true.svg)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
 [![Build

@@ -59,7 +59,7 @@ build-website:
   uv run quartodoc build
   uv run quarto render --execute
 
-# Run checks on commits with non-main branches
+# Check the commit messages on the current branch that are not on the main branch
 check-commits:
   #!/usr/bin/env bash
   branch_name=$(git rev-parse --abbrev-ref HEAD)
