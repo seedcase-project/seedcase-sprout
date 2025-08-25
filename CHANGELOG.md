@@ -1,3 +1,9 @@
+## 0.48.0 (2025-08-25)
+
+### Feat
+
+- :sparkles: add field information to README (#1510)
+
 ## 0.47.3 (2025-08-19)
 
 ### Fix
