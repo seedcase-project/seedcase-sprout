@@ -1,3 +1,9 @@
+## 0.47.3 (2025-08-19)
+
+### Fix
+
+- :lipstick: improve badge quality by setting them as SVGs (#1507)
+
 ## 0.47.2 (2025-08-18)
 
 ### Fix

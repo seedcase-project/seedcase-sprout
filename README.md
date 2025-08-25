@@ -34,7 +34,7 @@ coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/cov
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![OpenSSF Best
-Practices](https://www.bestpractices.dev/projects/10459/badge?raw=true.png)](https://www.bestpractices.dev/projects/10459)
+Practices](https://www.bestpractices.dev/projects/10459/badge?raw=true.svg)](https://www.bestpractices.dev/projects/10459)
 
 Sprout is one component of the [Seedcase
 Project](https://seedcase-project.org) framework that aims to take data
