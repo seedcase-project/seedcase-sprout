@@ -8,18 +8,18 @@
 
 ## seedcase-sprout: Grow structured, organised, and FAIR data
 
-[![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-teal.json?raw=true)](https://github.com/copier-org/copier)
+[![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-teal.json?raw=true.svg)](https://github.com/copier-org/copier)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800477.svg)](https://doi.org/10.5281/zenodo.15800477)
 [![GitHub
-License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
+License](https://img.shields.io/github/license/seedcase-project/seedcase-sprout.svg)](https://github.com/seedcase-project/seedcase-sprout/blob/main/LICENSE.md)
 [![PyPI
-Version](https://img.shields.io/pypi/v/seedcase-sprout.png)](https://pypi.org/project/seedcase-sprout/)
+Version](https://img.shields.io/pypi/v/seedcase-sprout.svg)](https://pypi.org/project/seedcase-sprout/)
 [![GitHub
-Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout.png)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
+Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout.svg)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
 [![Supported Python Version from PEP 621
-TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fseedcase-project%2Fseedcase-sprout%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
+TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/refs/heads/main/pyproject.toml.svg)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
 [![OpenSSF
-Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge?raw=true.png)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
+Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge?raw=true.svg)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
 [![Build
 package](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml)
 [![Build
