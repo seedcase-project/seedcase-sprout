@@ -1,8 +1,16 @@
 @_default:
     just --list --unsorted
 
+@_checks: check-python check-unused check-security check-spelling check-commits
+@_tests: test-python
+@_builds: build-contributors build-website build-readme
+
 # Run all build-related recipes in the justfile
-run-all: install-deps format-python check-python check-unused test-python check-security check-spelling check-commits build-website build-readme
+run-all: install-deps update-quarto-theme format-python _checks _tests _builds
+
+# List all TODO items in the repository
+list-todos:
+  grep -R -n --exclude="*.code-snippets" "TODO" *
 
 # Install the pre-commit hooks
 install-precommit:
@@ -13,9 +21,13 @@ install-precommit:
   # Update versions of pre-commit hooks
   uvx pre-commit autoupdate
 
+# Update the Quarto seedcase-theme extension
+update-quarto-theme:
+  quarto add seedcase-project/seedcase-theme --no-prompt
+
 # Install Python package dependencies
 install-deps:
-  uv sync --all-extras --dev --upgrade
+  uv sync --all-extras --dev
 
 # Run the Python tests
 test-python:
@@ -47,16 +59,17 @@ build-website:
   uv run quartodoc build
   uv run quarto render --execute
 
-# Run checks on commits with non-main branches
+# Check the commit messages on the current branch that are not on the main branch
 check-commits:
-  #!/bin/zsh
+  #!/usr/bin/env bash
   branch_name=$(git rev-parse --abbrev-ref HEAD)
   number_of_commits=$(git rev-list --count HEAD ^main)
   if [[ ${branch_name} != "main" && ${number_of_commits} -gt 0 ]]
   then
-    uv run cz check --rev-range main..HEAD
+    # If issue happens, try `uv tool update-shell`
+    uvx --from commitizen cz check --rev-range main..HEAD
   else
-    echo "Can't either be on ${branch_name} or have more than ${number_of_commits}."
+    echo "On 'main' or current branch doesn't have any commits."
   fi
 
 # Run basic security checks on the package
@@ -89,6 +102,19 @@ check-unused:
   # Create an allowlist with `vulture --make-allowlist`
   uv run vulture src/ tests/ **/vulture-allowlist.py
 
-# Re-build the README from the Quarto file
+# Re-build the README file from the Quarto version
 build-readme:
   uvx --from quarto quarto render README.qmd --to gfm
+
+# Generate a Quarto include file with the contributors
+build-contributors:
+  sh ./tools/get-contributors.sh seedcase-project/seedcase-sprout
+
+# Check for and apply updates from the template
+update-from-template:
+  # Do not update existing source files
+  uvx copier update --trust --defaults $(find src/seedcase_sprout -type f -printf "--exclude %p ")
+
+# Reset repo changes to match the template
+reset-from-template:
+  uvx copier recopy --trust --defaults
