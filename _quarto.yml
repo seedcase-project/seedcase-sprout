@@ -1,7 +1,7 @@
 project:
   type: seedcase-theme
-  pre-render:
-    - sh ./tools/get-contributors.sh
+  # Delete auto-generated files from `quartodoc`
+  post-render: rm -f docs/reference/*.qmd
   render:
     - "docs/*"
     - "index.qmd"

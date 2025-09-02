@@ -1,3 +1,9 @@
+## 0.48.1 (2025-09-01)
+
+### Refactor
+
+- :recycle: apply changes from copier template
+
 ## 0.48.0 (2025-08-25)
 
 ### Feat
