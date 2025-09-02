@@ -6,7 +6,7 @@ abstract: |
   (findable, accessible, interoperable, reusable) principles. It is
   made to offer flexibility and control over the individual steps in a
   data processing and management workflow. It integrates with the
-  Data Package standard.
+  Data Package standard. See https://sprout.seedcase-project.org
 authors:
   - family-names: Johnston
     given-names: Luke William
@@ -19,10 +19,13 @@ authors:
   - family-names: Beicher
     given-names: Kristiane
     affiliation: "Steno Diabetes Center Aarhus"
+    orcid: "https://orcid.org/0000-0001-7556-9566"
   - family-names: Vago
     given-names: Marton
     affiliation: "Steno Diabetes Center Aarhus"
+    orcid: "https://orcid.org/0009-0007-4628-655X"
 cff-version: 1.2.0
+date-released: "2025-07-03"
 doi: "10.5281/zenodo.15800477"
 keywords:
   - "data engineering"
