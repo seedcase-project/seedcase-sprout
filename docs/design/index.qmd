@@ -53,9 +53,9 @@ focused and narrow scope as well as being extensible or customizable,
 Overall, Sprout must:
 
 -   Be able to handle a variety of data file sizes: While the size of
-    research data usually does not compare to that found in industry, it
-    can still become large enough that it requires special care and
-    handling.
+    research data usually does not compare to that found in industry,
+    Sprout must be able to handle data that is large enough to requires
+    special care and handling.
 -   Store data in a format that is open source, integrates with many
     tools, and is storage efficient: Sprout is first and foremost a data
     engineering tool for research data storage and distribution (or at
