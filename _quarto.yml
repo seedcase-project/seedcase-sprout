@@ -1,7 +1,5 @@
 project:
   type: seedcase-theme
-  # Delete auto-generated files from `quartodoc`
-  post-render: rm -f docs/reference/*.qmd
   render:
     - "docs/*"
     - "index.qmd"
@@ -42,7 +40,7 @@ website:
       style: "floating"
       contents:
         - docs/index.qmd
-        - docs/releases.qmd
+        - CHANGELOG.qmd
         - CONTRIBUTING.md
     - id: design
       contents:
@@ -146,8 +144,10 @@ metadata-files:
 
 format:
   seedcase-theme-html:
+    theme:
+      - brand
     include-before-body:
-      - "docs/site-counter.html"
+      - "docs/includes/site-counter.html"
 
 editor:
   markdown:
