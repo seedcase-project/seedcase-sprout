@@ -70,6 +70,17 @@ Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
 to abide by its terms.
 
+### Contributors
+
+The following people have contributed to this project by submitting pull
+requests :tada:
+
+[@lwjohnst86](https://github.com/lwjohnst86),
+[@signekb](https://github.com/signekb),
+[@martonvago](https://github.com/martonvago),
+[@K-Beicher](https://github.com/K-Beicher),
+[@philter87](https://github.com/philter87)
+
 ## Licensing
 
 This project is licensed under the [MIT License](LICENSE.md).

@@ -6,11 +6,11 @@ jupyter: python3
 ## What is Sprout?
 
 Sprout is a Python package that is designed to help create and manage a
-standardised and organised structure for storing and describing research data.
-Using modern data
-engineering and management practices, Sprout helps to ensure and enforce that
-research data are well-designed, discoverable, well-documented, and
-ultimately more (re)usable for later analyses.
+standardised and organised structure for storing and describing research
+data. Using modern data engineering and management practices,
+Sprout helps to ensure and enforce that research data are well-designed,
+discoverable, well-documented, and ultimately more (re)usable for later
+analyses.
 
 Specifically, Sprout does this by integrating everything around the
 [Frictionless Data
@@ -23,9 +23,9 @@ resources"](/docs/glossary.qmd).
 
 ## Why use it?
 
-There are many tools for processing, cleaning, and transforming data, and
-for storing them in databases on servers and building data warehouses.
-However, few tools are specifically designed to create
+There are many tools for processing, cleaning, and transforming data,
+and for storing them in databases on servers and building data
+warehouses. However, few tools are specifically designed to create
 structured and organised data that is directly linked to its
 metadata---and even fewer assist in creating and structuring that
 metadata. Without metadata, data is nearly unusable.
@@ -37,12 +37,12 @@ right data needed for the analysis, and for better understanding of what
 is actually in the data.
 
 In particular, because Sprout is a Python package, you can use Python as
-you normally would to help build up your data. You don't need to
-learn another tool nor use a new interface. It's just code.
+you normally would to help build up your data. You don't need to learn
+another tool nor use a new interface. It's just code.
 
-We've found few tools that do what Sprout does.
-But there are a few similar tools available, though with quite different
-purposes and use-cases, such as:
+We've found few tools that do what Sprout does. But there are a few
+similar tools available, though with quite different purposes and
+use-cases, such as:
 
 -   [Open Data Editor](https://opendataeditor.okfn.org/): Is a web- and
     click-based tool for creating and editing data packages.
@@ -67,11 +67,4 @@ and details about the interface.
 
 ## Contributors
 
-These are the people who have contributed to Sprout by submitting
-changes through pull requests :tada:
-
-```{python}
-#| echo: false
-#| output: asis
-!cat contributors.txt.tmp
-```
+{{< include /docs/includes/_contributors.qmd >}}
