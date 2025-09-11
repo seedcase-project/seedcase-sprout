@@ -147,7 +147,7 @@ metadata-files:
 format:
   seedcase-theme-html:
     include-before-body:
-      - "docs/site-counter.html"
+      - "docs/includes/site-counter.html"
 
 editor:
   markdown:
