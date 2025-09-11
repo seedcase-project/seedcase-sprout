@@ -3,6 +3,8 @@ format: gfm
 execute:
   echo: false
 jupyter: python3
+metadata-files:
+  - _metadata.yml
 ---
 
 ```{=html}
@@ -13,7 +15,7 @@ jupyter: python3
 </p>
 ```
 
-## seedcase-sprout: Grow structured, organised, and FAIR data
+## {{< meta gh.repo >}}: Grow structured, organised, and FAIR data
 
 {{< include /docs/includes/_badges.qmd >}}
 
