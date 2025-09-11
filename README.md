@@ -18,17 +18,17 @@ Version](https://img.shields.io/pypi/v/seedcase-sprout.svg)](https://pypi.org/pr
 Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout.svg)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
 [![Supported Python Version from PEP 621
 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/refs/heads/main/pyproject.toml)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
-[![OpenSSF
-Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge?raw=true.svg)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
-[![Build
-package](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-package.yml)
 [![Build
 documentation](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml)
+[![Check
+package](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/check-package.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/check-package.yml)
+[![code
+coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/coverage.svg?raw=true)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/index.html)
+[![OpenSSF
+Scorecard](https://api.scorecard.dev/projects/github.com/seedcase-project/seedcase-sprout/badge?raw=true.svg)](https://scorecard.dev/viewer/?uri=github.com/seedcase-project/seedcase-sprout)
 [![CodeQL](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/github-code-scanning/codeql)
 [![pre-commit.ci
 status](https://results.pre-commit.ci/badge/github/seedcase-project/seedcase-sprout/main.svg)](https://results.pre-commit.ci/latest/github/seedcase-project/seedcase-sprout/main)
-[![code
-coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/coverage.svg?raw=true)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/index.html)
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
