@@ -42,7 +42,7 @@ website:
       style: "floating"
       contents:
         - docs/index.qmd
-        - docs/releases.qmd
+        - CHANGELOG.md
         - CONTRIBUTING.md
     - id: design
       contents:
