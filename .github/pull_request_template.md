@@ -1,13 +1,12 @@
 # Description
 
-This PR DESCRIBE CHANGES.
+EXPLANATION
 
 Closes #
 
-This PR needs a quick/an in-depth review.
+Needs a quick/an in-depth review.
 
 ## Checklist
 
-- [ ] Added or updated tests
-- [ ] Updated documentation
+- [ ] Formatted Markdown
 - [ ] Ran `just run-all`
