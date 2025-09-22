@@ -1,10 +1,5 @@
 project:
   type: seedcase-theme
-  render:
-    - "docs/*"
-    - "index.qmd"
-    - "404.qmd"
-    - "CONTRIBUTING.md"
 
 website:
   title: "Seedcase Sprout"
