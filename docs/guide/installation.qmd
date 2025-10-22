@@ -89,7 +89,7 @@ After creating the project, open the project folder (in this case
 `diabetes-study`) in your Terminal. Run the `pwd` command to confirm
 that your working directory is the project folder.
 
-You can now install Sprout running this command:
+You can now install Sprout with this command:
 
 ``` {.bash filename="Terminal"}
 uv add seedcase-sprout
