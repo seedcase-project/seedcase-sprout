@@ -12,14 +12,20 @@ Sprout helps to ensure and enforce that research data are well-designed,
 discoverable, well-documented, and ultimately more (re)usable for later
 analyses.
 
-Specifically, Sprout does this by integrating everything around the
-[Frictionless Data
-Package](https://decisions.seedcase-project.org/why-frictionless-data/)
-standard, storing the data in the [Apache
-Parquet](https://decisions.seedcase-project.org/why-parquet/) format,
-and using a specific directory structure to organise the data into a
-["data package"](/docs/glossary.qmd) with one or more ["data
-resources"](/docs/glossary.qmd).
+Specifically, Sprout assists in the creation of a ["data
+package"](/docs/glossary.qmd) which enforces best practices for both the
+**data** and **metadata** in a project:
+
+- **Metadata** must follow the [Frictionless Data
+  Package](https://decisions.seedcase-project.org/why-frictionless-data/)
+  specification. It is created, managed, and verified programmatically
+  to avoid mistakes from manual edits and to guarantee conformation to
+  the specification.
+- **Data** must follow the [tidy specification for tabular
+  data](https://sprout.seedcase-project.org/docs/design/interface/inputs),
+  be stored in [Apache
+  Parquet](https://decisions.seedcase-project.org/why-parquet/) format,
+  and be found in a standardized location in the project.
 
 ## Why use it?
 
