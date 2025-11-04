@@ -19,7 +19,7 @@ package"](/docs/glossary.qmd) which enforces best practices for both the
 - **Metadata** must follow the [Frictionless Data
   Package](https://decisions.seedcase-project.org/why-frictionless-data/)
   specification. It is created, managed, and verified programmatically
-  to avoid mistakes from manual edits and to guarantee conformation to
+  to avoid mistakes from manual edits and to guarantee that it conforms to
   the specification.
 - **Data** must follow the [tidy specification for tabular
   data](https://sprout.seedcase-project.org/docs/design/interface/inputs),
