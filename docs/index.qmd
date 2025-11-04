@@ -42,18 +42,9 @@ data will be more easily usable for later analysis, for finding the
 right data needed for the analysis, and for better understanding of what
 is actually in the data.
 
-In particular, because Sprout is a Python package, you can use Python as
-you normally would to help build up your data. You don't need to learn
-another tool nor use a new interface. It's just code.
-
-We've found few tools that do what Sprout does. But there are a few
-similar tools available, though with quite different purposes and
-use-cases, such as:
-
--   [Open Data Editor](https://opendataeditor.okfn.org/): Is a web- and
-    click-based tool for creating and editing data packages.
--   [gen3](https://gen3.org/): Is a web-based platform for building data
-    commons.
+Since Sprout is a Python package, you can use Python as
+you normally would to help build up your data and metadata. You don't
+need to learn another tool nor use a new interface. It's just code.
 
 ## Learning more
 
@@ -70,6 +61,15 @@ and details about the interface.
 -   [Design](/docs/design/index.qmd): The design section describes the
     architecture and interface of Sprout, the requirements, use-cases,
     user personas, and the [C4 model](https://c4model.com/).
+
+If you are interested in learning more about similar tools, we have only
+found a few that are related though with quite different purposes and
+use-cases, such as:
+
+-   [Open Data Editor](https://opendataeditor.okfn.org/): Is a web- and
+    click-based tool for creating and editing data packages.
+-   [gen3](https://gen3.org/): Is a web-based platform for building data
+    commons.
 
 ## Contributors
 
