@@ -3,19 +3,19 @@ title: "Installing Sprout"
 order: 0
 ---
 
-Before installing Sprout, you need to have
-[Python](https://www.python.org/downloads/) and
-[pipx](https://pipx.pypa.io/latest/installation/) installed.
+{{< include _preamble.qmd >}}
+
+Before installing Sprout, you need to have [Python](https://www.python.org/downloads/) and a Python package manager installed. For the latter, we recommend using uv which can be [installed via a shell script](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer) or [via pipx](https://docs.astral.sh/uv/getting-started/installation/#pypi).
 
 To check that these programs are installed, run the following commands
 in your Terminal:
 
 ``` {.bash filename="Terminal"}
 python3 --version
-pipx --version
+uv --version
 ```
 
-If Python and pipx are installed, these commands will show you the
+If Python and uv are installed, these commands will show you the
 versions installed on your system. If you get an error, you need to
 install them before continuing.
 
@@ -27,19 +27,6 @@ system-wide Python setup and avoid conflicts. There are several tools to
 manage package dependencies and create virtual environments, such as
 venv, virtualenv, and uv. For this guide, we will use
 [uv](https://docs.astral.sh/uv/).
-
-If you don't have uv installed, you can install it in your Terminal with
-pipx:
-
-``` {.bash filename="Terminal"}
-pipx install uv
-```
-
-To check that uv is installed, run this command:
-
-``` {.bash filename="Terminal"}
-uv
-```
 
 You can create a Python project using [uv](https://docs.astral.sh/uv/).
 In short, you can create a new project using uv by running the following
