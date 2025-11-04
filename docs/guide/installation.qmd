@@ -21,12 +21,14 @@ install them before continuing.
 
 ## Install Sprout in a virtual environment (recommended)
 
-It's generally recommended to install Python packages in a virtual
-environment to keep a project's dependencies separate from the
-system-wide Python setup and avoid conflicts. There are several tools to
-manage package dependencies and create virtual environments, such as
-venv, virtualenv, and uv. For this guide, we will use
-[uv](https://docs.astral.sh/uv/).
+While you could install sprout globally (via pip, pipx, etc), we recommend
+installing it (and any other python packages you use) locally in a separate
+virtual environment for each project you are working on. This makes it easier
+to keep track of which package versions you are using for a specific project
+which increases reproducibility.
+
+To create a virtual environment for your project, you can use uv to
+initialize a "Python project". uv This will add the required files to keep track of your virtual environment and also add files
 
 You can create a Python project using [uv](https://docs.astral.sh/uv/).
 In short, you can create a new project using uv by running the following
@@ -91,21 +93,3 @@ about Sprout.
 
 Get started with your first data package by following the guide on
 [Creating and managing data packages](/docs/guide/packages.qmd).
-
-## Install Sprout in system-wide
-
-We strongly recommend using Sprout in a virtual environment, but you can
-also install it system-wide. The easiest way to do that is to use pipx:
-
-``` {.bash filename="Terminal"}
-pipx install seedcase-sprout
-```
-
-To check that Sprout has been installed correctly, run the following and
-make sure `seedcase_sprout` is listed:
-
-``` {.bash filename="Terminal"}
-pipx list
-```
-
-Now you can use Sprout in any Python script throughout your computer.
