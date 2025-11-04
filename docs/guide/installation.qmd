@@ -5,6 +5,8 @@ order: 0
 
 {{< include _preamble.qmd >}}
 
+## Preparing to install Sprout
+
 Before installing Sprout, you need to have [Python](https://www.python.org/downloads/) and a Python package manager installed. For the latter, we recommend using uv which can be [installed via a shell script](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer) or [via pipx](https://docs.astral.sh/uv/getting-started/installation/#pypi).
 
 To check that these programs are installed, run the following commands
@@ -19,20 +21,17 @@ If Python and uv are installed, these commands will show you the
 versions installed on your system. If you get an error, you need to
 install them before continuing.
 
-## Install Sprout in a virtual environment (recommended)
+### Setting up a Python project
 
 While you could install sprout globally (via pip, pipx, etc), we recommend
 installing it (and any other python packages you use) locally in a separate
 virtual environment for each project you are working on. This makes it easier
 to keep track of which package versions you are using for a specific project
-which increases reproducibility.
+which in turn increases reproducibility.
 
-To create a virtual environment for your project, you can use uv to
-initialize a "Python project". uv This will add the required files to keep track of your virtual environment and also add files
-
-You can create a Python project using [uv](https://docs.astral.sh/uv/).
-In short, you can create a new project using uv by running the following
-command in your Terminal (assuming we make a new data package called
+The first step in creating a virtual environment for your project, is to use uv
+to initialize a [Python project](https://docs.astral.sh/uv/guides/projects/#creating-a-new-project). You can create a new project by running the
+following command in your Terminal (assuming we want to call our project
 `diabetes-study`):
 
 ``` {.bash filename="Terminal"}
@@ -40,7 +39,7 @@ uv init diabetes-study
 ```
 
 This will create a new directory called `diabetes-study` with the basic
-structure of a Python project. It should look like:
+structure of a Python project:
 
 <!-- TODO: Auto-create this some how? -->
 
@@ -52,44 +51,40 @@ diabetes-study/
 ├── README.md
 ├── main.py
 └── pyproject.toml
-```
+``
 
-uv also creates the folder as a Git repository. For more information on
-working on projects with uv, see their
-[guide](https://docs.astral.sh/uv/guides/projects/). Of the files
-created, the most important ones for your data package are the
-`pyproject.toml` and `main.py` files. The `pyproject.toml` file is used
-to manage the dependencies of the project, while the `main.py` file is
-where you will coordinate the Python scripts in your project.
+Of the files created, the most important ones for your data package are the
+`pyproject.toml` and `main.py` files. The `pyproject.toml` file is used to
+manage the dependencies of the project, while the `main.py` file is where you
+will coordinate the Python scripts in your project. As you can see, uv also
+created the folder as a Git repository, so that you can keep the changes you make under version control.
 
 <!-- TODO: eventually flip callout content so the template is recommended and not uv -->
 
-::: callout-tip
-You can generate the basic structure of a data package by using the
-Seedcase Project
-[`template-data-package`](https://github.com/seedcase-project/template-data-package).
-There are instructions there on how to use it to make the initial
-structure of a data package.
-:::
+### Adding useful files via a project template
+
+In addition to project structure created by `uv init`, there are other
+configuration files that could help you work in a reproducible and effective
+manner with your data, e.g. by setting up code formatting and adding license
+information. We have created a project template that allows you to easily copy
+these files into your newly created Python project without having to create
+them all from scratch.
+
+We recommend that you use this template by [following the project template documentation](https://template-data-package.seedcase-project.org/docs/guide) under the headings "Installing" and "Creating a new data package".
+
+## Installing Sprout in the project's virtual environment
 
 After creating the project, open the project folder (in this case
-`diabetes-study`) in your Terminal. Run the `pwd` command to confirm
-that your working directory is the project folder.
-
-You can now install Sprout with this command:
+`diabetes-study`) in your Terminal. You can now install Sprout locally in the
+project's virtual environment with the following command:
 
 ``` {.bash filename="Terminal"}
 uv add seedcase-sprout
 ```
 
-Check that Sprout has been installed correctly by running this command:
+If the command runs successfully, the output should include a line saying
+something like "Installed 13 packages in 10ms", followed by a list of the
+installed packages which includes seedcase-sprout and all its required
+dependencies.
 
-``` {.bash filename="Terminal"}
-uv pip show seedcase_sprout
-```
-
-If Sprout has been installed successfully, the output will show details
-about Sprout.
-
-Get started with your first data package by following the guide on
-[Creating and managing data packages](/docs/guide/packages.qmd).
+Now that you have installed Sprout, the next step is to use it to create and manage your data and metadata as a "data package". This is what you will learn about in the next section of this guide.
