@@ -49,7 +49,11 @@ def resource_properties() -> ResourceProperties:
         ("object", [pl.String, pl.Struct, pl.Object]),
         (
             "geopoint",
-            [pl.Array(pl.Int128, 2), pl.Array(pl.Float32, 2), pl.Array(pl.Decimal, 2)],
+            [
+                pl.Array(pl.Int128, 2),
+                pl.Array(pl.Float32, 2),
+                pl.Array(pl.Decimal(2, 2), 2),
+            ],
         ),
         ("geojson", [pl.String, pl.Struct, pl.Object]),
         ("year", [pl.Int32, pl.UInt8, pl.Int64]),
