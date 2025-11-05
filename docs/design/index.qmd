@@ -54,7 +54,7 @@ Overall, Sprout must:
 
 -   Be able to handle a variety of data file sizes: While the size of
     research data usually does not compare to that found in industry,
-    Sprout must be able to handle data that is large enough to requires
+    Sprout must be able to handle data that is large enough to require
     special care and handling.
 -   Store data in a format that is open source, integrates with many
     tools, and is storage efficient: Sprout is first and foremost a data
