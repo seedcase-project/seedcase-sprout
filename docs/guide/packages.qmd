@@ -57,6 +57,9 @@ creating your data package and that allows you to easily recreate it if needed.
 Open the `main.py` file in your Python project, delete the placeholder code
 that uv created in it and paste the below code into it instead.
 
+::: callout-note
+If you copied our data package template, this section will already exist and you can simply uncomment it to get started.
+:::
 
 ```{python}
 #| eval: false
@@ -85,10 +88,11 @@ sp.create_properties_script(package_path.root())
 This will create a `package_properties.py` file in the newly created `scripts/`
 folder of your data package.
 
-::: callout-caution
-Because of the way Python scripts and importing works, you should also
-create an `__init__.py` file in the `scripts/` folder. You can do this
-by running the following command in your Terminal:
+::: callout-important
+Because of the way Python scripts and importing works, there should also exist
+an `__init__.py` file in the `scripts/` folder. If you copied our data package
+template, this file has already been created for you, otherwise you can create
+this file by running the following command in your Terminal:
 
 ``` {.bash filename="Terminal"}
 touch scripts/__init__.py
