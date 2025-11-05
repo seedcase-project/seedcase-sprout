@@ -4,9 +4,37 @@ order: 1
 jupyter: python3
 ---
 
-At the core of Sprout is the ["data package"](/docs/glossary.qmd), which
-is a standardized way of structuring and documenting data. This guide
-will show you how to create and manage data packages using Sprout.
+## What a data package is
+
+At the core of Sprout is the [Data Package](/docs/glossary.qmd), which is
+a standardized way of structuring and documenting data. Technically, a data
+package is any folder that includes a file called `datapackage.json` containing
+metadata following the [Frictionless Data Package
+specification](https://datapackage.org/standard/data-package/#introduction).
+
+The metadata in `datapackage.json` describes both the project (e.g. its title,
+creation data, and contributors) and any data included in the project (e.g. the
+name, data type, and description of each column/variable in the data). This
+metadata is stored in JSON format with a standardized naming convention, e.g.
+the title of the project should be stored as `"title": "your project title"`.
+In this guide, we will refer to each piece of metadata stored in the JSON file
+as a [*metadata property* (or just a *property* for
+short)](/docs/glossary.qmd). You can [view an example of a complete
+`datapackage.json` file in our example
+repository](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
+
+## Creating a data package with Sprout
+
+A standardized naming scheme has many advantages in terms of reproducibility,
+but it also makes it difficult to manually create the `datapackage.json` file
+since it is difficult to remember all the naming conventions for the different
+metadata properties in the JSON file. Manually editing this file is also
+ill-advised since it would make you susceptible to introducing errors via typos
+and misunderstandings of the specification. To make this process more
+convenient and robust, Sprout provides a way to create and edit the metadata in
+`datapackage.json` programmatically via Python scripts.
+
+Let's start by taking a look at what your project's file structure looks like at this point:
 
 {{< include _python-minimal-package-setup.qmd >}}
 
