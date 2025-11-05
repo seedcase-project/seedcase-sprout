@@ -8,3 +8,5 @@ listing:
     fields:
         - title
 ---
+
+{{< include _preamble.qmd >}}
