@@ -1,5 +1,5 @@
 ---
-title: "Creating and managing properties in a data package"
+title: "Creating a data package"
 order: 1
 jupyter: python3
 ---
@@ -24,6 +24,8 @@ short)](/docs/glossary.qmd). You can [view an example of a complete
 repository](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
 
 ## Creating a data package with Sprout
+
+### Creating a script to help manage metadata
 
 A standardized naming scheme has many advantages in terms of reproducibility,
 but it also makes it difficult to manually create the `datapackage.json` file
@@ -114,6 +116,8 @@ The file structure should now look like:
 print(file_tree(package_path.root()))
 ```
 
+### Managing metadata programmatically
+
 Inside the `scripts/package_properties.py` file, you will find a template for
 creating the properties of your data package:
 
@@ -185,6 +189,8 @@ package_properties = sp.PackageProperties(
 ```
 
 {{< include _python-package-properties.qmd >}}
+
+### Creating `datapackage.json`
 
 Now that you've filled in some of the package properties, it's time to
 create your `datapackage.json` file with these properties. You can use
