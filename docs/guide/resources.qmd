@@ -10,8 +10,6 @@ of data. This page shows you how to use Sprout to create and manage data
 resources inside a data package. You will need to have [created a data
 package](packages.qmd#creating-a-data-package) already.
 
-{{< include _preamble.qmd >}}
-
 ::: callout-important
 Data resources can only be created from [tidy
 data](https://design.seedcase-project.org/data/) in [Polars
