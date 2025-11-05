@@ -74,7 +74,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Then, run this command in the Terminal:
+Then, use uv to run the script from the Terminal:
 
 ``` {.bash filename="Terminal"}
 uv run main.py
@@ -220,7 +220,7 @@ sp.write_properties(
 )
 ```
 
-Then, run this command in the Terminal:
+Then, use uv to run the script from the Terminal:
 
 ``` {.bash filename="Terminal"}
 uv run main.py
