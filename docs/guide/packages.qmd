@@ -115,11 +115,18 @@ print(file_tree(package_path.root()))
 ```
 
 Inside the `scripts/package_properties.py` file, you will find a template for
-creating the properties of your data package. It looks like:
+creating the properties of your data package:
 
 ```{python}
 #| echo: false
-print(package_path.properties_script().read_text())
+#| output: asis
+#| filename: "scripts/package_properties.py"
+print(
+    '```python',
+    package_path.properties_script().read_text(),
+    '```',
+    sep='\n'
+)
 ```
 
 You can now start filling in that script by using the comments included,
