@@ -49,18 +49,14 @@ Python project---where your `.git/` folder and/or `pyproject.toml` file
 are located. If you copied our data package template, you will see additional config files to the ones listed above.
 :::
 
-While you could manually create a `datapackage.json` file and then add
-the properties manually to it yourself, this would require that you know
-the exact fields and values to fill in. To ease this process, Sprout
-provides a way to create the properties using Python scripts. So let's
-create this script first, by adding it as a step in the `main.py` file!
+Since there is no `datapackage.json` file in our root folder, our project does
+not yet qualify to be called a data package, so let's create one! The `main.py`
+file is where you will write the code to create and manage your data package.
+You can think of it as a pipeline that takes you from beginning to end of
+creating your data package and that allows you to easily recreate it if needed.
+Open the `main.py` file in your Python project, delete the placeholder code
+that uv created in it and paste the below code into it instead.
 
-The `main.py` file is where you will write the code to create and manage
-your data package, so that you can easily recreate your data package and
-its resources. You can think of it as a pipeline that takes you from
-beginning to end of creating your data package. Open the `main.py` file
-in your Python project, delete everything in it and copy and paste the
-below code into it.
 
 ```{python}
 #| eval: false
