@@ -38,25 +38,16 @@ Let's start by taking a look at what your project's file structure looks like at
 
 {{< include _python-minimal-package-setup.qmd >}}
 
-## Creating a data package
-
-Sprout is designed assuming the working directory is the root of your
-Python project---where your `.git/` folder and/or `pyproject.toml` file
-are located.
-
-Right now, your file structure should look a bit like:
-
 ```{python}
 #| echo: false
 print(file_tree(package_path.root()))
 ```
 
-Now, time to make a data package! A data package always needs a
-`datapackage.json` file in the root of the project. It contains a set of
-[properties](/docs/glossary.qmd), or metadata about the data package and
-the data resources within it. Right now, you don't have a
-`datapackage.json` file yet. Before you can create one, you need to
-write out the properties for the data package.
+::: callout-important
+Sprout is designed assuming the working directory is the root of your
+Python project---where your `.git/` folder and/or `pyproject.toml` file
+are located. If you copied our data package template, you will see additional config files to the ones listed above.
+:::
 
 While you could manually create a `datapackage.json` file and then add
 the properties manually to it yourself, this would require that you know
