@@ -123,7 +123,25 @@ print(file_tree(package_path.root()))
 ### Managing metadata programmatically
 
 Inside the `scripts/package_properties.py` file, you will find a template for
-creating the properties of your data package:
+creating the metadata properties of your Data Package programmatically. We will
+walk through the full template in more detail in the next section of the guide.
+Here, we will first start with a simplified `package_properties.py` script to
+easier understand how to manage metadata via this script.
+
+As you can see in the code snippet below, Sprout uses Python classes to
+facilitate the entry of metadata. For example, the `PackageProperties` class
+allows you to use tab completion to view the names of all existing metadata
+properties instead of trying to memorize them or looking them up in the
+documentation each time. The docstring of each class has additional information
+of how the metadata should be entered; it is available both in your IDE and
+online, e.g. for [`PackageProperties`](/docs/reference/PackageProperties.qmd).
+
+<!--TODO Why isn't the class used to checks the types directly? Because it
+involves a reimplementation of the schema? -->
+
+In the example below, we have filled out all the required metadata properties
+on the package level with sample values. You can go ahead and copy this over
+to your `package_properties.py` replacing any existing code there.
 
 ```{python}
 #| echo: false
