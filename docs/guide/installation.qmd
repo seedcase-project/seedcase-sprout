@@ -7,7 +7,12 @@ order: 0
 
 ## Preparing to install Sprout
 
-Before installing Sprout, you need to have [Python](https://www.python.org/downloads/) and a Python package manager installed. For the latter, we recommend using uv which can be [installed via a shell script](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer) or [via pipx](https://docs.astral.sh/uv/getting-started/installation/#pypi).
+Before installing Sprout, you need to have
+[Python](https://www.python.org/downloads/) and a Python package manager
+installed. For the latter, we recommend using uv which can be [installed via
+a shell
+script](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
+or [via pipx](https://docs.astral.sh/uv/getting-started/installation/#pypi).
 
 To check that these programs are installed, run the following commands
 in your Terminal:
@@ -30,9 +35,10 @@ to keep track of which package versions you are using for a specific project
 which in turn increases reproducibility.
 
 The first step in creating a virtual environment for your project, is to use uv
-to initialize a [Python project](https://docs.astral.sh/uv/guides/projects/#creating-a-new-project). You can create a new project by running the
-following command in your Terminal (assuming we want to call our project
-`diabetes-study`):
+to initialize a [Python
+project](https://docs.astral.sh/uv/guides/projects/#creating-a-new-project).
+You can create a new project by running the following command in your Terminal
+(assuming we want to call our project `diabetes-study`):
 
 ``` {.bash filename="Terminal"}
 uv init diabetes-study
@@ -70,7 +76,9 @@ information. We have created a project template that allows you to easily copy
 these files into your newly created Python project without having to create
 them all from scratch.
 
-We recommend that you use this template by [following the project template documentation](https://template-data-package.seedcase-project.org/docs/guide) under the headings "Installing" and "Creating a new data package".
+We recommend that you use this template by [following the project template
+documentation](https://template-data-package.seedcase-project.org/docs/guide)
+under the headings "Installing" and "Creating a new data package".
 
 ## Installing Sprout in the project's virtual environment
 
@@ -87,4 +95,6 @@ something like "Installed 13 packages in 10ms", followed by a list of the
 installed packages which includes seedcase-sprout and all its required
 dependencies.
 
-Now that you have installed Sprout, the next step is to use it to create and manage your data and metadata as a "data package". This is what you will learn about in the next section of this guide.
+Now that you have installed Sprout, the next step is to use it to create and
+manage your data and metadata as a "data package". This is what you will learn
+about in the next section of this guide.
