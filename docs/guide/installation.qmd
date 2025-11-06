@@ -3,8 +3,6 @@ title: "Installing Sprout"
 order: 0
 ---
 
-{{< include _preamble.qmd >}}
-
 ## Preparing to install Sprout
 
 Before installing Sprout, you need to have
