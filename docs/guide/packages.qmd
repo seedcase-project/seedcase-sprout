@@ -1,10 +1,10 @@
 ---
-title: "Creating a data package"
+title: "Creating a Data Package"
 order: 1
 jupyter: python3
 ---
 
-## What a data package is
+## What is a Data Package
 
 At the core of Sprout is the [Data Package](/docs/glossary.qmd), which is
 a standardized way of structuring and documenting data. Technically, a data
@@ -23,7 +23,7 @@ short)](/docs/glossary.qmd). You can [view an example of a complete
 `datapackage.json` file in our example
 repository](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
 
-## Creating a data package with Sprout
+## Creating a Data Package with Sprout
 
 ### Creating a script to help manage metadata
 
@@ -46,21 +46,23 @@ print(file_tree(package_path.root()))
 ```
 
 ::: callout-important
-Sprout is designed assuming the working directory is the root of your
-Python project---where your `.git/` folder and/or `pyproject.toml` file
-are located. If you copied our data package template, you will see additional config files to the ones listed above.
+Sprout is designed assuming the working directory is the root of your Python
+project---where your `.git/` folder and/or `pyproject.toml` file are located.
+If you copied our Data Package template, you will see additional config files
+to the ones listed above.
 :::
 
 Since there is no `datapackage.json` file in our root folder, our project does
-not yet qualify to be called a data package, so let's create one! The `main.py`
-file is where you will write the code to create and manage your data package.
+not yet qualify to be called a Data Package, so let's create one! The `main.py`
+file is where you will write the code to create and manage your Data Package.
 You can think of it as a pipeline that takes you from beginning to end of
-creating your data package and that allows you to easily recreate it if needed.
+creating your Data Package and that allows you to easily recreate it if needed.
 Open the `main.py` file in your Python project, delete the placeholder code
 that uv created in it and paste the below code into it instead.
 
 ::: callout-note
-If you copied our data package template, this section will already exist and you can simply uncomment it to get started.
+If you copied our Data Package template, this section will already exist and
+you can simply uncomment it to get started.
 :::
 
 ```{python}
@@ -88,11 +90,13 @@ sp.create_properties_script(package_path.root())
 ```
 
 This will create a `package_properties.py` file in the newly created `scripts/`
-folder of your data package.
+folder of your Data Package.
 
+<!--TODO could this callout come later? -->
+<!--TODO If the __init__ file is required in all cases, why is its creation no automated? -->
 ::: callout-important
 Because of the way Python scripts and importing works, there should also exist
-an `__init__.py` file in the `scripts/` folder. If you copied our data package
+an `__init__.py` file in the `scripts/` folder. If you copied our Data Package
 template, this file has already been created for you, otherwise you can create
 this file by running the following command in your Terminal:
 
