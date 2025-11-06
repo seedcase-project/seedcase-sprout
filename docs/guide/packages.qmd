@@ -221,3 +221,25 @@ properties you added to it. Now, you will see the added
 print(file_tree(package_path.root()))
 ```
 
+The content of this file should look like this:
+
+```{.json filename="datapackage.json"}
+{
+  "name": "diabetes-study",
+  "id": "c0f9b217-589b-4ee4-a917-3c4f21e3be8d",
+  "title": "A Study on Diabetes",
+  "description": "Data from a 2021 study on diabetes prevalence",
+  "version": "0.1.0",
+  "created": "2025-11-05T16:16:20+01:00",
+  "licenses": [
+    {
+      "name": "ODC-BY-1.0"
+    }
+  ]
+}
+```
+
+Congratulations, you have created your first Data Package! Remember that you
+will never need to edit the `datapackage.json` file manually. Instead, you will
+edit `scripts/package_properties.py` and run `main.py` to update
+`datapackage.json`.
