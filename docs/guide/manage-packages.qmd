@@ -124,12 +124,83 @@ the helper function `dedent()` and that we used the `ContributorPoperties`
 class twice as we set the `contributors` parameter to a list of two
 contributors who co-created this fictional project.
 
-If you made a mistake and want to update the properties in the current
-`datapackage.json`, you can edit the Python script directly where you
-previously made the properties. Since everything is written in Python
-scripts, updating those scripts and re-running your build pipeline
-(`main.py`) will then update everything.
+Now you can edit your `main.py` file to again include the `write_properties()` function:
 
+```{python}
+#| eval: false
+#| filename: "main.py"
+import seedcase_sprout as sp
+from scripts.package_properties import package_properties
+
+def main():
+    # Create the metadata properties script in default location.
+    sp.create_properties_script()
+    # Write metadata properties from properties script to `datapackage.json`.
+    sp.write_properties(properties=package_properties)
+
+if __name__ == "__main__":
+    main()
+```
+
+```{python}
+#| include: false
+# Only to check that it runs.
+sp.write_properties(
+    properties=package_properties,
+    path=package_path.properties()
+)
+```
+
+Then, use uv to run the script from the Terminal.
+
+``` {.bash filename="Terminal"}
+uv run main.py
+```
+
+When you inspect the created `datapackage.json` file,
+you will see that it contains all the metadata specified in `scripts/package_properties.py`:
+
+
+```{.json filename="datapackage.json"}
+{
+  "name": "diabetes-study",
+  "id": "8f301286-2327-45bf-bbc8-09696d059499",
+  "title": "A Study on Diabetes",
+  "description": "# Data from a 2021 study on diabetes prevalence\n\nThis data package contains data from a study conducted in 2021 on the\n*prevalence* of diabetes in various populations. The data includes:\n\n- demographic information\n- health metrics\n- survey responses about lifestyle\n",
+  "version": "0.1.0",
+  "created": "2025-11-07T11:12:56+01:00",
+  "contributors": [
+    {
+      "title": "Jamie Jones",
+      "path": "example.com/jamie_jones",
+      "email": "jamie_jones@example.com",
+      "roles": [
+        "creator"
+      ]
+    },
+    {
+      "title": "Zdena Ziri",
+      "path": "example.com/zdena_ziri",
+      "email": "zdena_ziri@example.com",
+      "roles": [
+        "creator"
+      ]
+    }
+  ],
+  "licenses": [
+    {
+      "name": "ODC-BY-1.0",
+      "path": "https://opendatacommons.org/licenses/by",
+      "title": "Open Data Commons Attribution License 1.0"
+    }
+  ]
+}
+```
+
+If you made a mistake and want to update the properties in the current
+`datapackage.json`, remember that you never need to edit the JSON file
+directly. Instead, you edit the `scripts/package_properties.py` and then run
+the `main.py` script to regenerate `datapackage.json`.
 
 ## Creating a README of the properties
 
