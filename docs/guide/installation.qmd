@@ -55,7 +55,7 @@ diabetes-study/
 ├── README.md
 ├── main.py
 └── pyproject.toml
-``
+```
 
 Of the files created, the most important ones for your Data Package are the
 `pyproject.toml` and `main.py` files. The `pyproject.toml` file is used to
