@@ -28,3 +28,27 @@ Now run the script from terminal:
 ``` {.bash filename="Terminal"}
 uv run main.py
 ```
+
+If you now view the created `package_properties.py` script, you will see that
+it lists many of the most commonly used metadata names together with comments
+indicating which are required and which are optional:
+
+<!-- Create the script where quarto can find it for building the docs -->
+{{< include _python-minimal-package-setup.qmd >}}
+```{python}
+#| include: false
+sp.create_properties_script(package_path.root())
+```
+
+
+```{python}
+#| echo: false
+#| output: asis
+#| filename: "scripts/package_properties.py"
+print(
+    '```python',
+    package_path.properties_script().read_text(),
+    '```',
+    sep='\n'
+)
+```
