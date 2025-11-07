@@ -123,7 +123,7 @@ package_properties = sp.PackageProperties(
 ```
 
 You can see that we included a more involved description of the package using
-the helper function `dedent()` and that we used the `ContributorPoperties`
+the helper function `dedent()` and that we used the `ContributorProperties`
 class twice as we set the `contributors` parameter to a list of two
 contributors who co-created this fictional project.
 
