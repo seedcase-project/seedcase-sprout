@@ -11,7 +11,6 @@ delete file `scripts/package_properties.py` and change your `main.py` back to
 look like this:
 
 ```{python}
-#| eval: true
 #| filename: "main.py"
 import seedcase_sprout as sp
 
@@ -74,7 +73,10 @@ In the example above, you can see a couple of additional classes
 Let`s create a slightly more complex example involving one of these new classes:
 
 ```{python}
-#| eval: false
+#| filename: "scripts/package_properties.py"
+
+import seedcase_sprout as sp
+
 package_properties = sp.PackageProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
