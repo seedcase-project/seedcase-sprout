@@ -1,7 +1,30 @@
 ---
-title: "Managing Data Package metadata"
+title: "Managing project-level metadata"
 order: 2
 jupyter: python3
 ---
 
-{{< include _python-minimal-package-setup.qmd >}}
+In the last section, we saw how to write a minimal set of metadata properties
+to `datapackage.json`. Here, we will take a closer look at the full
+`package_properties.py` that is created by `create_properties_script()`. First,
+delete file `scripts/package_properties.py` and change your `main.py` back to
+look like this:
+
+```{python}
+#| eval: true
+#| filename: "main.py"
+import seedcase_sprout as sp
+
+def main():
+    # Create the properties script in the default location.
+    sp.create_properties_script()
+
+if __name__ == "__main__":
+    main()
+```
+
+Now run the script from terminal:
+
+``` {.bash filename="Terminal"}
+uv run main.py
+```
