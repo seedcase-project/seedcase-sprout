@@ -251,7 +251,6 @@ uv run main.py
 ```{python}
 #| include: false
 # Only to check that it runs.
-from scripts.package_properties import package_properties
 readme_text = sp.as_readme_text(package_properties)
 sp.write_file(
     string=readme_text,
