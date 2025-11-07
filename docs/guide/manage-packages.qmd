@@ -65,12 +65,11 @@ them, your data are simply a collection of files without any context or
 meaning. The metadata (properties) are **crucially important** for
 understanding and actually using the data in your data package!
 
-Since metadata is so important,
-Sprout encourages users to enter it by facilitating its management
-via the use of Python classes as we saw in the previous section.
-In the example above, you can see a couple of additional classes
-`ContributorProperties` and `SourceProperties`.
-Let`s create a slightly more complex example involving one of these new classes:
+Since metadata is so important, Sprout encourages users to enter it by
+facilitating its management via the use of Python classes as we saw in the
+previous section. In the example above, you can see a couple of additional
+classes `ContributorProperties` and `SourceProperties`. Let`s create a slightly
+more complex example involving one of these new classes:
 
 ```{python}
 #| filename: "scripts/package_properties.py"
@@ -124,7 +123,8 @@ the helper function `dedent()` and that we used the `ContributorPoperties`
 class twice as we set the `contributors` parameter to a list of two
 contributors who co-created this fictional project.
 
-Now you can edit your `main.py` file to again include the `write_properties()` function:
+Now you can edit your `main.py` file to again include the `write_properties()`
+function:
 
 ```{python}
 #| eval: false
@@ -157,8 +157,8 @@ Then, use uv to run the script from the Terminal.
 uv run main.py
 ```
 
-When you inspect the created `datapackage.json` file,
-you will see that it contains all the metadata specified in `scripts/package_properties.py`:
+When you inspect the created `datapackage.json` file, you will see that it
+contains all the metadata specified in `scripts/package_properties.py`:
 
 
 ```{.json filename="datapackage.json"}
@@ -205,11 +205,11 @@ the `main.py` script to regenerate `datapackage.json`.
 ## Creating a README of the properties
 
 Having a *human-readable* version of what is contained in the
-`datapackage.json` file is useful for others who may be working with or
-wanting to learn more about your data package. You can use
-`as_readme_text()` to convert the properties into text that can be added
-to a README file. Let's create a README file with the properties of the
-data package you just created by writing it in the `main.py` file.
+`datapackage.json` file is useful for others who may be working with or wanting
+to learn more about your data package. You can use `as_readme_text()` to
+convert the properties into text that can be added to a README file. Let's
+create a README file with the properties of the data package you just created
+by writing it in the `main.py` file.
 
 ```{python}
 #| eval: false
@@ -231,12 +231,11 @@ if __name__ == "__main__":
     main()
 ```
 
-Sprout splits the README creation functionality into two steps: One to
-make the text and one to write to the file. That way, if you want to add
-or manipulate the text, you can do so before writing it to the file.
-This is useful if you want to add information to the README that you
-don't want included in the `datapackage.json` file. For this guide we
-won't cover how or why to do this.
+Sprout splits the README creation functionality into two steps: One to make the
+text and one to write to the file. That way, if you want to add or manipulate
+the text, you can do so before writing it to the file. This is useful if you
+want to add information to the README that you don't want included in the
+`datapackage.json` file. For this guide we won't cover how or why to do this.
 
 Next, run this command in the Terminal to make the README file. The
 `write_file()` will always overwrite the existing README file.
@@ -264,9 +263,8 @@ package:
 print(file_tree(package_path.root()))
 ```
 
-Now that you know how to create and manage metadata at the project-level,
-it is time to learn how to add data to the project
-and manage its metadata.
+Now that you know how to create and manage metadata at the project-level, it is
+time to learn how to add data to the project and manage its metadata.
 
 ```{python}
 #| include: false

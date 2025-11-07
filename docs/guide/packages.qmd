@@ -36,7 +36,8 @@ and misunderstandings of the specification. To make this process more
 convenient and robust, Sprout provides a way to create and edit the metadata in
 `datapackage.json` programmatically via Python scripts.
 
-Let's start by taking a look at what your project's file structure looks like at this point:
+Let's start by taking a look at what your project's file structure looks like
+at this point:
 
 {{< include _python-minimal-package-setup.qmd >}}
 
@@ -84,6 +85,7 @@ Then, use uv to run the script from the Terminal:
 uv run main.py
 ```
 
+<!-- Create the script where quarto can find it for building the docs -->
 ```{python}
 #| include: false
 sp.create_properties_script(package_path.root())
