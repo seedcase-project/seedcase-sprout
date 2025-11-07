@@ -4,6 +4,8 @@ order: 2
 jupyter: python3
 ---
 
+## Understanding the template for `package_properties.py`
+
 In the last section, we saw how to write a minimal set of metadata properties
 to `datapackage.json`. Here, we will take a closer look at the full
 `package_properties.py` that is created by `create_properties_script()`. First,
@@ -65,7 +67,9 @@ them, your data are simply a collection of files without any context or
 meaning. The metadata (properties) are **crucially important** for
 understanding and actually using the data in your data package!
 
-Since metadata is so important, Sprout encourages users to enter it by
+## Creating a more complex `datapackage.json` file
+
+Since metadata is so important, Sprout encourages users to include it by
 facilitating its management via the use of Python classes as we saw in the
 previous section. In the example above, you can see a couple of additional
 classes `ContributorProperties` and `SourceProperties`. Let`s create a slightly
@@ -202,7 +206,7 @@ If you made a mistake and want to update the properties in the current
 directly. Instead, you edit the `scripts/package_properties.py` and then run
 the `main.py` script to regenerate `datapackage.json`.
 
-## Creating a README of the properties
+## Creating a README of the metadata properties
 
 Having a *human-readable* version of what is contained in the
 `datapackage.json` file is useful for others who may be working with or wanting
