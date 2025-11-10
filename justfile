@@ -55,14 +55,19 @@ format-python:
   uv run ruff format .
 
 # Build the documentation website using Quarto
-build-website:
+prepare-website-env:
   # To let Quarto know where python is.
   export QUARTO_PYTHON=.venv/bin/python3
   # Delete any previously built files from quartodoc.
   # -f is to not give an error if the files don't exist yet.
   rm -rf docs/reference
   uv run quartodoc build
+
+build-website:  prepare-website-env
   uv run quarto render --execute
+
+preview-website: prepare-website-env
+  uv run quarto preview --execute
 
 # Check the commit messages on the current branch that are not on the main branch
 check-commits:
