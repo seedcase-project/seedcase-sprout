@@ -15,37 +15,22 @@ of data.
 
 Creating a data resource requires that your data is in the correct format.
 Usually, generated or collected data starts out in a "raw" shape that needs to
-be cleaned and organized into [tidy
-data](https://design.seedcase-project.org/data/) before it can become a data
-resource. Ideally you would use a Python package such as
+be cleaned and organized into so called "tidy data" before it can become a data
+resource. How to tidy data will differ from dataset to dataset and is outside
+the scope of Sprout, so we will not cover the procedure in detail here. Ideally
+you would use a Python package such as
 [Polars](https://decisions.seedcase-project.org/why-polars-for-data-cleaning/).
 to tidy your data, so that you have a record of the steps taken to clean and
-transform the data.
+transform the data. After cleaning, your [data should follow the specification
+outlined in our
+documentation](https://sprout.seedcase-project.org/docs/design/interface/inputs)
 
-The steps you'll take to get your data into the structure used by Sprout
-are:
-
-<!-- TODO: update when finished with updating the rest of the guide -->
-
-1.  Create the properties for the resource, using the original data as a
-    starting point, and then edit the resource properties as needed.
-2.  Create the folders for the new resource within the package and save
-    the resource properties in the `datapackage.json` file.
-3.  Optionally store the raw data in a `raw/` folder in the package, so
-    that you can keep the original data separate from the tidied data.
-4.  Tidy the data as needed and convert it into a Polars DataFrame (if
-    you haven't already) before adding it to the resource.
-5.  Add your tidy data as a batch of data to the resource.
-6.  Merge the data batches into a new resource data file.
-7.  Re-build the data package's `README.md` file from the updated
-    `datapackage.json` file.
-8.  If you need to update the properties at a later point, you would
-    edit the resource properties script and run the `main.py` file to
-    re-create the properties and write them to the
-    `datapackage.json` file.
-
-Many of these steps are taken care of by functions in Sprout, but some
-require writing your own code.
+For this guide, you will use (fake) data that is already tidy. You can
+[find the data
+here](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv).
+We've placed this data in a `raw/` folder in the data package and called
+it `patients.csv`, so that we can keep the original "raw" data separate from
+the processed data.
 
 {{< include _python-minimal-package-setup.qmd >}}
 
@@ -79,13 +64,6 @@ urlretrieve(
 
 raw_data_patients = pl.read_csv(raw_data_path)
 ```
-
-For this guide, you will use (fake) data that is already tidy. You can
-[find the data
-here](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv).
-We've placed this data in a `raw/` folder in the data package and called
-it `patients.csv`, so that we can keep the original "raw" data separate from
-the processed data.
 
 At this point, your data package `diabetes-study` has the following
 structure:
