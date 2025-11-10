@@ -4,6 +4,8 @@ order: 2
 jupyter: python3
 ---
 
+## What is a data resource
+
 So far, we have seen how to create and manage project-level metadata for our
 data package. In this section, we will learn about how we can add data files
 and how we can create and manage its metadata (e.g. documenting the type of
@@ -11,7 +13,9 @@ data in each column). In a Data Package, data files are referred to as [data
 resources](/docs/glossary.qmd), each which contains a conceptually distinct set
 of data.
 
-## Creating a data resource
+## Creating a data resource with Sprout
+
+### Converting data to the correct format
 
 Creating a data resource requires that your data is in the correct format.
 Usually, generated or collected data starts out in a "raw" shape that needs to
@@ -78,34 +82,49 @@ and it looks like this:
 
 ```{python}
 #| echo: false
-raw_data_patients.head(5)
+raw_data_patients
 ```
 
-## Extracting properties from the data
 
-Before you can store resource data in your data package, you need to
+### Defining metadata properties for the data resource
+
+Before you can store a data file as a resource in your data package, you need to
 describe its [metadata properties](/docs/glossary.qmd). The resource's metadata
 are what allow other people to understand what your data is about and to
 use it more easily.
 
 The resource's metadata also define what it means for data in the resource to
-be correct, as all data in the resource must match the metadata Sprout checks
-that the metadata properties are correctly filled in and that no required
-metadata fields are missing. It also checks that the data in the data resources
-matches the properties, so that you can be sure that data actually contains
-what you expect it to contain.
+be correctly entered, as all data in the resource must match the metadata
+properties. Sprout checks that the metadata properties are correctly filled in
+and that no required metadata fields are missing. It also checks that the data
+in the data resources matches the metadata properties, so that you can be sure
+that data actually contains what you expect it to contain. These checks can
+protect you from human errors introduced when adding new data or editing an
+existing data resource.
 
-Like with the project-level metadata, you will create a script
-for the data resource that allows you to easily edit the metadata properties later on.
-You can do this by using the `create_properties_script()` function. This
-function needs the `resource_name` and optionally the `fields` (i.e.,
-columns or variables) that you want to include in the resource.
+### Creating a script to help manage data-level metadata
 
-The `resource_name` is the name of the resource, which is used to
-identify the resource in the data package. It is required and *should
-not* be changed, since it's used in the file name of the data resource's
-properties script. Since a data package can contain multiple resources,
-the resource's `name` must also be unique.
+Like with the project-level metadata, you will create a script for the data
+resource that allows you to easily edit the metadata properties later on. You
+can do this by using the `create_resource_properties_script()` function. This
+function needs the `resource_name` parameter to specify the name of the
+resource, which is used to identify the resource in the data package. It is
+required and *should not* be changed, since it's used in the file name of the
+data resource's properties script. Since a data package can contain multiple
+resources, the resource's `name` must also be unique.
+
+Building upon the `main.py` file we created in the previous section,
+we will go ahead and add the `create_resource_properties_script()` step to the pipeline:
+
+
+
+
+
+
+## Extracting metadata from the data
+
+and optionally the `fields` (i.e., columns
+or variables) that you want to include in the resource.
 
 To ease the process of adding `fields` to your resource metadata,
 Sprout provides a function called `extract_field_properties()`, which
