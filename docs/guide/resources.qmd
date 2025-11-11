@@ -164,9 +164,9 @@ to the package-level metadata script, but with different names for the metadata
 properties. Since the file content is somewhat lengthy, it's hidden by default
 on this page and you can click the banner below to show it.
 
-::: {.callout-note collapse=true}
+::: {.callout-tip icon=false collapse=true}
 
-## `scripts/resource_properties_patients.py` content
+## `scripts/resource_properties_patients.py`
 ```{python}
 #| echo: false
 #| output: asis
@@ -275,8 +275,8 @@ print(file_tree(package_path.root()))
 
 If you now open `scripts/resource_properties_patients.py`, you will see that field properties are added for all the columns in the data. The fields that could be automatically extracted also have their metadata filled our already, in this case the `name` and `type`:
 
-::: {.callout-note collapse=true}
-## `scripts/resource_properties_patients.py` content
+::: {.callout-tip icon=false collapse=true}
+## `scripts/resource_properties_patients.py`
 
 ```{python}
 #| echo: false
