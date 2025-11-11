@@ -241,6 +241,12 @@ if __name__ == "__main__":
 3. The extracted field properties are passed to the function that creates the
    properties script so that they can be included in the created file.
 
+Before running the script, we need to manually delete
+`scripts/resource_properties_patients.py` since the function
+`create_resource_properties_script` will never overwrite an existing file (this
+is a precaution in case you have made manual edits to the file and accidentally
+trigger the function). Then run the `main.py` file in your Terminal, which will
+re-create the resource properties script:
 
 ``` {.bash filename="Terminal"}
 uv run main.py
@@ -248,14 +254,16 @@ uv run main.py
 
 ```{python}
 #| include: false
-# Run to confirm the code works.
+# Run to confirm that the sample code works
 raw_data_patients = pl.read_csv(package_path.root() / "raw" / "patients.csv")
 field_properties = sp.extract_field_properties(data=raw_data_patients)
+# We need to first delete the old resource script before recreating it
+package_path.resource_properties_script('patients').unlink(),
 sp.create_resource_properties_script(
-        resource_name="patients",
-        fields=field_properties,
-        path=package_path.root()
-    )
+    resource_name="patients",
+    fields=field_properties,
+    path=package_path.root()
+)
 ```
 
 Your folders and files should now look like:
@@ -265,18 +273,20 @@ Your folders and files should now look like:
 print(file_tree(package_path.root()))
 ```
 
-## Writing the resource properties
+If you now open `scripts/resource_properties_patients.py`, you will see that field properties are added for all the columns in the data. The fields that could be automatically extracted also have their metadata filled our already, in this case the `name` and `type`:
 
-Open the newly created `scripts/resource_properties_patients.py` file in
-order to make edits to it. See the full contents in the callout block
-below.
-
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse=true}
 ## `scripts/resource_properties_patients.py` content
 
 ```{python}
 #| echo: false
-print(package_path.resource_properties_script("patients").read_text())
+#| output: asis
+print(
+    '```python',
+    package_path.resource_properties_script('patients').read_text(),
+    '```',
+    sep='\n'
+)
 ```
 :::
 
