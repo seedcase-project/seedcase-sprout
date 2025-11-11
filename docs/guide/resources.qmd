@@ -161,8 +161,12 @@ As you can see, the filename has been suffixed with your chosen
 `resource_name`, i.e. "patients". If you view the content of
 `scripts/resource_properties_patients.py`, you will see that it looks similar
 to the package-level metadata script, but with different names for the metadata
-properties:
+properties. Since the file content is somewhat lengthy, it's hidden by default
+on this page and you can click the banner below to show it.
 
+::: {.callout-note collapse=true}
+
+## `scripts/resource_properties_patients.py` content
 ```{python}
 #| echo: false
 #| output: asis
@@ -173,6 +177,8 @@ print(
     sep='\n'
 )
 ```
+
+:::
 
 As with the template for the package-level metadata, the comments in this file
 indicates which properties are required and which are optional. You can see
