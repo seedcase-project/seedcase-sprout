@@ -218,37 +218,29 @@ from scripts.package_properties import package_properties
 import polars as pl
 
 def main():
-    # Create the properties script in default location.
     sp.create_properties_script()
 
-    # New code here -----
-    # Load the "patients" raw, but tidy, data from the CSV file.
-    raw_data_patients = pl.read_csv(package_path.root() / "raw" / "patients.csv")
-    # Extract field properties from the raw, but tidy, data.
-    field_properties = sp.extract_field_properties(
-        data=raw_data_patients,
-    )
-    # Create the resource properties script. This is only created once, it will
-    # not be overwritten if it already exists.
+    raw_data_patients = pl.read_csv(package_path.root() / "raw" / "patients.csv")   # <1>
+    field_properties = sp.extract_field_properties(data=raw_data_patients)          # <2>
     sp.create_resource_properties_script(
         resource_name="patients",
-        fields=field_properties,
+        fields=field_properties,                                                    # <3>
     )
-    # New code ends here -----
 
-    # Save the properties to `datapackage.json`.
     sp.write_properties(properties=package_properties)
-    # Create text for a README of the data package.
-    readme_text = sp.as_readme_text(package_properties)
-    # Write the README text to a `README.md` file.
-    sp.write_file(readme_text, sp.PackagePath().readme())
 
 if __name__ == "__main__":
     main()
 ```
 
-Then run the `main.py` file in your Terminal, which will create the
-resource properties script:
+1. Load in the cleaned data. In our example, this is the same as the raw data
+   in the CSV file, but in for an actual project, there is often several
+   cleaning steps to take in order to get the raw data organized.
+2. Extract field properties from the cleaned data, such as the column name and
+   its data type.
+3. The extracted field properties are passed to the function that creates the
+   properties script so that they can be included in the created file.
+
 
 ``` {.bash filename="Terminal"}
 uv run main.py
