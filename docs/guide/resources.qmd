@@ -78,7 +78,7 @@ print(file_tree(package_path.root()))
 ```
 
 And the `raw/patients.csv` file includes data about patients with diabetes,
-and it looks like this:
+which look like this:
 
 ```{python}
 #| echo: false
@@ -156,24 +156,44 @@ sp.create_resource_properties_script(
 print(file_tree(package_path.root()))
 ```
 
+As you can see, the filename has been suffixed with your chosen
+`resource_name`, i.e. "patients". If you view the content of
+`scripts/resource_properties_patients.py`, you will see that it looks similar
+to the package-level metadata script, but with different names for the metadata
+properties:
 
-## Extracting metadata from the data
+```{python}
+#| echo: false
+#| output: asis
+print(
+    '```python',
+    package_path.resource_properties_script('patients').read_text(),
+    '```',
+    sep='\n'
+)
+```
 
-and optionally the `fields` (i.e., columns
-or variables) that you want to include in the resource.
+As with the template for the package-level metadata, the comments in this file
+indicates which properties are required and which are optional. You can see
+that you would need to fill out a `title` and a `description` just as we did
+previously for the package-level metadata. However, you also need to fill out
+the `name` and the `type` inside `FieldProperties` (a "field" is the same as a
+"column" or "variable" in your dataset). Doing this manually can be tedious for
+datasets with many columns, so sprout provides a way to extract this metadata
+directly from the data file.
 
-To ease the process of adding `fields` to your resource metadata,
-Sprout provides a function called `extract_field_properties()`, which
-allows you to extract information from the Polars DataFrame with your
-data. Use these extracted properties as
-a starting point and edit as needed.
+## Extracting column metadata from data
+
+To ease the process of adding `fields` to your resource metadata, Sprout
+provides a function called `extract_field_properties()`, which allows you to
+extract information from the Polars DataFrame with your data. You can these
+extracted properties as a starting point and edit as needed.
 
 ::: callout-warning
 `extract_field_properties()` extracts the field properties from the
 Polars DataFrame's schema and maps the Polars data type to a Data
 Package [field
 type](https://datapackage.org/standard/table-schema/#field-types).
-
 The mapping is not perfect, so you may need to edit the extracted
 properties to ensure that they are as you want them to be.
 :::
