@@ -189,7 +189,7 @@ the `name` and the `type` inside `FieldProperties` (a "field" is the same as a
 datasets with many columns, so sprout provides a way to extract this metadata
 directly from the data file.
 
-## Extracting column metadata from data
+### Extracting column metadata directly from the data
 
 To ease the process of adding `fields` to your resource metadata, Sprout
 provides a function called `extract_field_properties()`, which allows you to
