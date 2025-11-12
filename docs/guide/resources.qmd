@@ -137,7 +137,7 @@ if __name__ == "__main__":
    overwritten if it already exists.
 3. We have removed the writing of `datapackage.json` and the creation of the
    readme to make it easier to see what is new. You will learn how to write the
-   data metadata later in this guide.
+   data-level metadata and the readme later in this guide.
 
 Now go ahead and run the script like previously:
 
