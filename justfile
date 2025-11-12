@@ -63,9 +63,11 @@ build-quartodoc:
   rm -rf docs/reference
   uv run quartodoc build
 
+# Build the documentation website using Quarto
 build-website:  build-quartodoc
   uv run quarto render --execute
 
+# Preview the documentation website with automatic reload on changes
 preview-website: build-quartodoc
   uv run quarto preview --execute
 
