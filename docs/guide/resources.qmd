@@ -359,31 +359,13 @@ resource_properties_patients = sp.ResourceProperties(
 ```
 
 ::: callout-warning
-If the `title` and `description` properties are not filled in, you'll
-get a `CheckError` when you try to use `write_properties()` to save
-the resource's properties to the `datapackage.json` file.
 
-Below you can see how `CheckErrors` look like when you try to check the
-resource properties without filling in the required fields. When you use
-`check_resource_properties()` on the `ResourceProperties` object, it
-checks if everything is correctly filled in and that no required fields
-are missing. It's used internally in `write_properties()` to ensure that
-the properties are always correct before writing them to the
-`datapackage.json` file.
+If the `title` and `description` properties are not filled in, you'll get a
+`CheckError` when you try to use `write_properties()` to save the resource's
+properties to the `datapackage.json` file. You will understand these errors
+more deeply after reading the next section in the guide; for now focus on
+making sure that the three required fields above are all filled out.
 
-```{python}
-#| error: true
-#| eval: false
-sp.check_resource_properties(resource_properties_patients)
-```
-
-```
-  +-+---------------- 1 ----------------
-    | seedcase_sprout.check_datapackage.check_error.CheckError: Error at `$.description` caused by `blank`: The 'description' field is blank, please fill it in.
-    +---------------- 2 ----------------
-    | seedcase_sprout.check_datapackage.check_error.CheckError: Error at `$.title` caused by `blank`: The 'title' field is blank, please fill it in.
-    +------------------------------------
-```
 :::
 
 Now, the resource properties for patients include the following
