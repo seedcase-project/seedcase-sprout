@@ -452,11 +452,6 @@ package_properties = sp.PackageProperties(
 
 :::
 
-A data package can contain multiple
-resources, so their `name` property must be unique. This `name` property
-is what will be used later to create the folder structure for that
-resource.
-
 The next step is to write the resource properties to the
 `datapackage.json` file. Since we included the `resource_properties`
 object directly into the `scripts/package_properties.py` file, and since the
