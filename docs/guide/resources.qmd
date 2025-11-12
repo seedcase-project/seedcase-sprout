@@ -169,6 +169,7 @@ on this page and you can click the banner below to show it.
 ```{python}
 #| echo: false
 #| output: asis
+#| filename: "scripts/resource_properties_patients.py"
 print(
     '```python',
     package_path.resource_properties_script('patients').read_text(),
@@ -278,6 +279,7 @@ If you now open `scripts/resource_properties_patients.py`, you will see that fie
 ```{python}
 #| echo: false
 #| output: asis
+#| filename: "scripts/resource_properties_patients.py"
 print(
     '```python',
     package_path.resource_properties_script('patients').read_text(),
