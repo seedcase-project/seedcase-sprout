@@ -54,8 +54,8 @@ format-python:
   uv run ruff check --fix .
   uv run ruff format .
 
-# Build the documentation website using Quarto
-prepare-website-env:
+# Build the Python docstrings as a section in the website using quartodoc
+build-quartodoc:
   # To let Quarto know where python is.
   export QUARTO_PYTHON=.venv/bin/python3
   # Delete any previously built files from quartodoc.
@@ -63,10 +63,10 @@ prepare-website-env:
   rm -rf docs/reference
   uv run quartodoc build
 
-build-website:  prepare-website-env
+build-website:  build-quartodoc
   uv run quarto render --execute
 
-preview-website: prepare-website-env
+preview-website: build-quartodoc
   uv run quarto preview --execute
 
 # Check the commit messages on the current branch that are not on the main branch
