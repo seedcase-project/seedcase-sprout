@@ -287,10 +287,25 @@ print(
 ```
 :::
 
-In the resource properties script, the `name` property is set to
-`patients`. However, the two other required properties, `title` and
-`description`, are empty. You will need to fill these in yourself in the
-script, like so:
+## Writing the data-level metadata to `datapackage.json`
+
+Before writing the metadata to file, we need to make sure that all the required
+properties are filled out. In the resource properties script, the `name`
+property is already set to `patients`. However, the two other required properties,
+`title` and `description`, are empty. You will need to fill these in yourself
+in the script, like so:
+
+```{python}
+#| filename: scripts/resource_properties_patients.py
+#| eval: false
+resource_properties_patients = sp.ResourceProperties(
+    ## Required:
+    name="patients",
+    title="Patients Data",
+    description="This data resource contains data about patients in a diabetes study.",
+    ...  # Additional metadata are omitted here to save space
+)
+```
 
 ```{python}
 #| echo: false
@@ -340,18 +355,6 @@ resource_properties_patients = sp.ResourceProperties(
             ),
         ],
     ),
-)
-```
-
-```{python}
-#| eval: false
-resource_properties_patients = sp.ResourceProperties(
-    ## Required:
-    name="patients",
-    title="Patients Data",
-    description="This data resource contains data about patients in a diabetes study.",
-    ## Optional:
-    # Rest of the properties that we don't show here, but that is above ...
 )
 ```
 
