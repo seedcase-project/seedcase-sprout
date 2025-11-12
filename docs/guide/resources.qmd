@@ -396,6 +396,7 @@ You can click the banner below to view the full file at this point:
 
 ```{python}
 #| filename: "scripts/package_properties.py"
+#| eval: false
 
 import seedcase_sprout as sp
 from scripts.resource_properties_patients import resource_properties_patients   # <1>
