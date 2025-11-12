@@ -125,20 +125,19 @@ from scripts.package_properties import package_properties
 def main():
     sp.create_properties_script()                                    # <1>
     sp.create_resource_properties_script(resource_name="patients")   # <2>
-    sp.write_properties(properties=package_properties)               # <3>
-
-    ...                                                              # <4>
+    ...                                                              # <3>
 if __name__ == "__main__":
     main()
 ```
 
-1. We already had this line in our script from the previous section of the guide.
-2. This is the only new line of code. It creates the resource properties script.
-   Note that the script is only created once, it will not be overwritten if it
-   already exists.
-3. We already had this line in our script from the previous section of the guide.
-4. Here, we temporarily removed the creation of the README file to make it easier to
-   see what is new.
+1. We already had this line in our script from the previous section of the
+   guide.
+2. This is the only new line of code. It creates the resource properties
+   script. Note that the script is only created once, it will not be
+   overwritten if it already exists.
+3. We have removed the writing of `datapackage.json` and the creation of the
+   readme to make it easier to see what is new. You will learn how to write the
+   data metadata later in this guide.
 
 Now go ahead and run the script like previously:
 
@@ -226,8 +225,6 @@ def main():
         resource_name="patients",
         fields=field_properties,                                                    # <3>
     )
-
-    sp.write_properties(properties=package_properties)
 
 if __name__ == "__main__":
     main()
