@@ -164,41 +164,16 @@ uv run main.py
 When you inspect the created `datapackage.json` file, you will see that it
 contains all the metadata specified in `scripts/package_properties.py`:
 
-
-```{.json filename="datapackage.json"}
-{
-  "name": "diabetes-study",
-  "id": "8f301286-2327-45bf-bbc8-09696d059499",
-  "title": "A Study on Diabetes",
-  "description": "# Data from a 2021 study on diabetes prevalence\n\nThis data package contains data from a study conducted in 2021 on the\n*prevalence* of diabetes in various populations. The data includes:\n\n- demographic information\n- health metrics\n- survey responses about lifestyle\n",
-  "version": "0.1.0",
-  "created": "2025-11-07T11:12:56+01:00",
-  "contributors": [
-    {
-      "title": "Jamie Jones",
-      "path": "example.com/jamie_jones",
-      "email": "jamie_jones@example.com",
-      "roles": [
-        "creator"
-      ]
-    },
-    {
-      "title": "Zdena Ziri",
-      "path": "example.com/zdena_ziri",
-      "email": "zdena_ziri@example.com",
-      "roles": [
-        "creator"
-      ]
-    }
-  ],
-  "licenses": [
-    {
-      "name": "ODC-BY-1.0",
-      "path": "https://opendatacommons.org/licenses/by",
-      "title": "Open Data Commons Attribution License 1.0"
-    }
-  ]
-}
+```{python}
+#| echo: false
+#| output: asis
+#| filename: datapackage.json
+print(
+    '```json',
+    (package_path.path / 'datapackage.json').read_text(),
+    '```',
+    sep='\n'
+)
 ```
 
 If you made a mistake and want to update the properties in the current
