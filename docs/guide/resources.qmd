@@ -530,12 +530,10 @@ print(
 
 ```
 
-::: callout-note
 If you need to update the resource properties later on, you can simply
 edit the `scripts/resource_properties_patients.py` file and then re-run
 the `main.py` file to update the `datapackage.json` file and the
 `README.md` file.
-:::
 
 ## Storing a backup of the data as a batch file
 
