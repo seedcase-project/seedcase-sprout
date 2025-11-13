@@ -4,11 +4,10 @@ order: 2
 jupyter: python3
 ---
 
-## Understanding the template for `package_properties.py`
 
 In the last section, we saw how to write a minimal set of metadata properties
-to `datapackage.json`. Here, we will take a closer look at the full
-`package_properties.py` that is created by `create_properties_script()`. First,
+to `datapackage.json`. Here, we'll take a closer look at the full
+`package_properties.py` that's created by `create_properties_script()`. First,
 delete file `scripts/package_properties.py` and change your `main.py` back to
 look like this:
 
@@ -54,9 +53,9 @@ print(
 )
 ```
 
-As you can see, there are quite a lot of metadata properties available for use.
+As you can see, there are a lot of available metadata properties.
 However, as we saw in the previous section and as you can see from the comments
-in this template script, the *required* metadata are not as many, so it is easy
+in this template script, there aren't that many *required* metadata, so it is easy
 to get started creating a Data Package and then add more metadata later as it
 becomes available.
 
@@ -70,10 +69,10 @@ understanding and actually using the data in your data package!
 ## Creating a more complex `datapackage.json` file
 
 Since metadata is so important, Sprout encourages users to include it by
-facilitating its management via the use of Python classes as we saw in the
+making it easier to manage it through the use of Python classes, as we saw in the
 previous section. In the example above, you can see a couple of additional
-classes `ContributorProperties` and `SourceProperties`. Let`s create a slightly
-more complex example involving one of these new classes:
+classes `ContributorProperties` and `SourceProperties`. Let's create a slightly
+more complex example using one of these other classes:
 
 ```{python}
 #| filename: "scripts/package_properties.py"
@@ -125,7 +124,7 @@ package_properties = sp.PackageProperties(
 You can see that we included a more involved description of the package using
 the helper function `dedent()` and that we used the `ContributorProperties`
 class twice as we set the `contributors` parameter to a list of two
-contributors who co-created this fictional project.
+contributors who co-created this example Data Package.
 
 Now you can edit your `main.py` file to again include the `write_properties()`
 function:
@@ -161,8 +160,8 @@ Then, use uv to run the script from the Terminal.
 uv run main.py
 ```
 
-When you inspect the created `datapackage.json` file, you will see that it
-contains all the metadata specified in `scripts/package_properties.py`:
+When you inspect the created `datapackage.json` file, you'll see that it
+contains all the metadata from the `scripts/package_properties.py`:
 
 ```{python}
 #| echo: false
