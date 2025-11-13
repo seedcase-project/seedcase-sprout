@@ -1,6 +1,6 @@
 ---
 title: "Creating and managing the properties and data for data resources"
-order: 2
+order: 3
 jupyter: python3
 ---
 
