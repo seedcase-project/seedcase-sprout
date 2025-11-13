@@ -193,22 +193,8 @@ directly from the data file.
 
 To ease the process of adding `fields` to your resource metadata, Sprout
 provides a function called `extract_field_properties()`, which allows you to
-extract information from the Polars DataFrame with your data. You can these
-extracted properties as a starting point and edit as needed.
-
-::: callout-warning
-`extract_field_properties()` extracts the field properties from the
-Polars DataFrame's schema and maps the Polars data type to a Data
-Package [field
-type](https://datapackage.org/standard/table-schema/#field-types).
-The mapping is not perfect, so you may need to edit the extracted
-properties to ensure that they are as you want them to be.
-:::
-
-Let's add these steps to our `main.py` file: First, we need to load the
-original data from the `raw/` folder into a Polars DataFrame, then we
-can extract the field properties from it, and use these properties in
-the creation of our resource properties script:
+extract metadata from each column in your dataset. To use this function, we need to read in our data as a Polars DataFrame and clean it until we are happy with the name and data type for each column.
+In the code snippet below, we have added all the required steps to our `main.py` file.
 
 ```{python}
 #| filename: "main.py"
@@ -221,23 +207,35 @@ def main():
     sp.create_properties_script()
 
     raw_data_patients = pl.read_csv(package_path.root() / "raw" / "patients.csv")   # <1>
-    field_properties = sp.extract_field_properties(data=raw_data_patients)          # <2>
+    ... # Data cleaning                                                             # <2>
+    field_properties = sp.extract_field_properties(data=raw_data_patients)          # <3>
     sp.create_resource_properties_script(
         resource_name="patients",
-        fields=field_properties,                                                    # <3>
+        fields=field_properties,                                                    # <4>
     )
 
 if __name__ == "__main__":
     main()
 ```
 
-1. Load in the cleaned data. In our example, this is the same as the raw data
-   in the CSV file, but in for an actual project, there is often several
-   cleaning steps to take in order to get the raw data organized.
-2. Extract field properties from the cleaned data, such as the column name and
+1. Read the original data from the `raw/` folder into a Polars DataFrame.
+2. Clean the data until the name and data type of each column is satisfactory.
+   In our example, the raw data is already cleaned and in tidy format, but in
+   an actual project, you would likely have a separate cleaning script and call
+   some of its functions here.
+3. Extract field properties from the cleaned data, such as the column name and
    its data type.
-3. The extracted field properties are passed to the function that creates the
-   properties script so that they can be included in the created file.
+4. Pass the extracted field properties to the function that saves the
+   properties script, so that they are included in the created file.
+
+::: callout-warning
+`extract_field_properties()` extracts the field properties from the
+Polars DataFrame's schema and maps the Polars data type to a Data
+Package [field
+type](https://datapackage.org/standard/table-schema/#field-types).
+The mapping is not perfect, so you may need to edit the extracted
+properties to ensure that they are as you want them to be.
+:::
 
 Before running the script, we need to manually delete
 `scripts/resource_properties_patients.py` since the function
