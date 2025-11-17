@@ -23,7 +23,7 @@ short). You can view an example of a complete
 `datapackage.json` file in one of our [example
 repositories](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
 
-## Creating a Data Package with Sprout
+## Using Sprout to create a Data Package
 
 ### Creating the package properties script to manage your metadata
 
