@@ -54,8 +54,9 @@ If you used our Data Package [template](https://template-data-package.seedcase-p
 to the ones listed above.
 :::
 
-Since there is no `datapackage.json` file in our root folder, we can't yet
-call it a Data Package. So let's create the file! The `main.py`
+Since there is no `datapackage.json` file in our root folder, we can't yet call
+it a Data Package. So let's embark on the journey of creating this file,
+starting with understanding the content of `main.py`. The `main.py`
 file is where you will write the code to create and manage your Data Package.
 You can think of it as a pipeline that takes you from beginning to end of
 creating your Data Package and that allows you to easily recreate it if needed.
