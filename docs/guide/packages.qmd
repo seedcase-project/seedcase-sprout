@@ -36,8 +36,9 @@ convenient and robust, Sprout provides a way to create and edit the metadata in
 
 ### Creating the package properties script to manage your metadata
 
-Let's start by taking a look at what your project's file structure looks like
-at this point:
+Let's start by taking a look at what your project's file structure should look
+like after following [the installation section of this
+guide](https://sprout.seedcase-project.org/docs/guide/installation):
 
 {{< include _python-minimal-package-setup.qmd >}}
 
