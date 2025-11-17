@@ -4,7 +4,7 @@ order: 3
 jupyter: python3
 ---
 
-## What is a data resource
+## What is a data resource?
 
 So far, we have seen how to create and manage package metadata for our
 data package. In this section, we will learn about how we can add data files
@@ -25,14 +25,15 @@ the scope of Sprout, so we will not cover the procedure in detail here. Ideally
 you would use a Python package such as
 [Polars](https://decisions.seedcase-project.org/why-polars-for-data-cleaning/).
 to tidy your data, so that you have a record of the steps taken to clean and
-transform the data. After cleaning, your [data should follow the specification
+transform the data. After cleaning, your data should follow the specification
 outlined in our
-documentation](https://sprout.seedcase-project.org/docs/design/interface/inputs)
+[documentation](https://sprout.seedcase-project.org/docs/design/interface/inputs),
+specifically that it needs to be a Polars DataFrame.
 
 For this guide, you will use (fake) data that is already tidy. You can
 [find the data
 here](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv).
-We've placed this data in a `raw/` folder in the data package and called
+We've placed this data in a `raw/` folder in the Data Package and called
 it `patients.csv`, so that we can keep the original "raw" data separate from
 the processed data.
 
@@ -136,7 +137,7 @@ if __name__ == "__main__":
    script. Note that the script is only created once, it will not be
    overwritten if it already exists.
 3. We have removed the writing of `datapackage.json` and the creation of the
-   readme to make it easier to see what is new. You will learn how to write the
+   README to make it easier to see what is new. You will learn how to write the
    resource metadata and the readme later in this guide.
 
 Now go ahead and run the script like previously:
@@ -165,7 +166,7 @@ on this page and you can click the banner below to show it.
 
 ::: {.callout-tip icon=false collapse=true}
 
-## `scripts/resource_properties_patients.py`
+## Inside the `resource/properties_patients.py` script
 ```{python}
 #| echo: false
 #| output: asis
@@ -181,12 +182,12 @@ print(
 :::
 
 As with the template for the package metadata, the comments in this file
-indicates which properties are required and which are optional. You can see
+indicate which properties are required and which are optional. You can see
 that you would need to fill out a `title` and a `description` just as we did
 previously for the package metadata. However, you also need to fill out
 the `name` and the `type` inside `FieldProperties` (a "field" is the same as a
 "column" or "variable" in your dataset). Doing this manually can be tedious for
-datasets with many columns, so sprout provides a way to extract this metadata
+datasets with many columns, so Sprout provides a way to extract this metadata
 directly from the data file.
 
 ### Extracting column metadata directly from the data
@@ -194,7 +195,7 @@ directly from the data file.
 To ease the process of adding `fields` to your resource metadata, Sprout
 provides a function called `extract_field_properties()`, which allows you to
 extract metadata from each column in your dataset. To use this function, we need to read in our data as a Polars DataFrame and clean it until we are happy with the name and data type for each column.
-In the code snippet below, we have added all the required steps to our `main.py` file.
+In the code chunk below, we've added all the required steps to our `main.py` file.
 
 ```{python}
 #| filename: "main.py"
@@ -219,7 +220,7 @@ if __name__ == "__main__":
 ```
 
 1. Read the original data from the `raw/` folder into a Polars DataFrame.
-2. Clean the data until the name and data type of each column is satisfactory.
+2. Clean the data until you have the name and data type of each column to what you want or need them to be.
    In our example, the raw data is already cleaned and in tidy format, but in
    an actual project, you would likely have a separate cleaning script and call
    some of its functions here.
@@ -254,7 +255,7 @@ uv run main.py
 raw_data_patients = pl.read_csv(package_path.root() / "raw" / "patients.csv")
 field_properties = sp.extract_field_properties(data=raw_data_patients)
 # We need to first delete the old resource script before recreating it
-package_path.resource_properties_script('patients').unlink(),
+package_path.resource_properties_script('patients').unlink()
 sp.create_resource_properties_script(
     resource_name="patients",
     fields=field_properties,
@@ -269,10 +270,10 @@ Your folders and files should now look like:
 print(file_tree(package_path.root()))
 ```
 
-If you now open `scripts/resource_properties_patients.py`, you will see that field properties are added for all the columns in the data. The fields that could be automatically extracted also have their metadata filled our already, in this case the `name` and `type`:
+If you now open `scripts/resource_properties_patients.py`, you will see that field properties are added for all the columns in the data. The fields that could be automatically extracted also have their metadata filled in already, in this case the `name` and `type`:
 
 ::: {.callout-tip icon=false collapse=true}
-## `scripts/resource_properties_patients.py`
+## Inside the `resource_properties_patients.py` script
 
 ```{python}
 #| echo: false
@@ -377,7 +378,7 @@ file:
 
 ```{python}
 #| eval: false
-#| filename: "package_properties.py"
+#| filename: "scripts/package_properties.py"
 # Import the resource properties object.
 from scripts.resource_properties_patients import resource_properties_patients
 
@@ -392,7 +393,7 @@ package_properties = sp.PackageProperties(
 You can click the banner below to view the full file at this point:
 
 ::: {.callout-tip icon=false collapse=true}
-## `scripts/package_properties.py`
+## Inside the `package_properties.py` script
 
 ```{python}
 #| filename: "scripts/package_properties.py"
@@ -486,8 +487,8 @@ if __name__ == "__main__":
 ```
 
 1. Write `datapackage.json` (including both the package metadata and the resource metadata).
-2. Create the readme text.
-3. Write the readme file.
+2. Create the README text.
+3. Write the README file.
 
 Now run the `main.py` file form the terminal:
 
