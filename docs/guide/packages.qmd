@@ -26,8 +26,6 @@ repositories](https://github.com/seedcase-project/example-seed-beetle/blob/main/
 
 ## Using Sprout to create a Data Package
 
-### Creating the package properties script to manage your metadata
-
 The Data Package standard provides a standardised structure and naming scheme in `datapackage.json`.
 This has many advantages in terms of reproducibility,
 but it also makes it difficult to manually create the `datapackage.json` file
@@ -35,6 +33,8 @@ and remember all the names for each of the different properties. Manually editin
 ill-advised since you are more likely to accidentally make typos or accidentally not follow the schema provided by the specification. To make this process more
 convenient and robust, Sprout provides a way to create and edit the metadata in
 `datapackage.json` programmatically via Python scripts.
+
+### Creating the package properties script to manage your metadata
 
 Let's start by taking a look at what your project's file structure looks like
 at this point:
