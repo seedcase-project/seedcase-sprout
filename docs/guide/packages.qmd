@@ -17,10 +17,11 @@ creation data, and contributors) and any data included in the Data Package (e.g.
 name, data type, and description of each column/variable in the data). This
 metadata is stored in JSON format with a standardized naming convention, e.g.
 the title of the project should be stored as `"title": "your project title"`.
+
 In this guide, we will refer to each piece of metadata stored in the JSON file
 as a [*metadata property*](/docs/glossary.qmd) (or just a *property* for
 short). You can view an example of a complete
-`datapackage.json` file in one of our [example
+`datapackage.json` file in this [example
 repositories](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
 
 ## Using Sprout to create a Data Package
