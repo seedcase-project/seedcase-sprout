@@ -139,7 +139,7 @@ if __name__ == "__main__":
     will not be overwritten if it already exists.
 3.  We have removed the writing of `datapackage.json` and the creation
     of the README to make it easier to see what is new. You will learn
-    how to write the resource metadata and the readme later in this
+    how to write the resource metadata and the README later in this
     guide.
 
 Now go ahead and run the script like previously:
