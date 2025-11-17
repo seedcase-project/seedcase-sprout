@@ -1,11 +1,11 @@
 ---
-title: "Managing project-level metadata"
+title: "Managing package-level metadata"
 order: 2
 jupyter: python3
 ---
 
 
-In the last section, we saw how to write a minimal set of metadata properties
+In the [previous guide](/docs/guide/packages.qmd), we created a Data Package and we saw how to write a minimal set of metadata properties
 to `datapackage.json`. Here, we'll take a closer look at the full
 `package_properties.py` that's created by `create_properties_script()`. First,
 delete file `scripts/package_properties.py` and change your `main.py` back to
