@@ -7,7 +7,7 @@ jupyter: python3
 ## What is a Data Package?
 
 At the core of Sprout is the [Data Package](/docs/glossary.qmd), which is
-a standardized way of structuring and documenting data. Technically, a data
+a standardized way of documenting data via structured metadata. Technically, a data
 Package is any folder that has a file called `datapackage.json` in it that contains
 metadata following the [Frictionless Data Package
 specification](https://datapackage.org/standard/data-package/#introduction).
