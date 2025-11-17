@@ -1,17 +1,17 @@
 ---
-title: "Managing data-level metadata"
+title: "Resource metadata"
 order: 3
 jupyter: python3
 ---
 
 ## What is a data resource
 
-So far, we have seen how to create and manage project-level metadata for our
+So far, we have seen how to create and manage package metadata for our
 data package. In this section, we will learn about how we can add data files
 and how we can create and manage its metadata (e.g. documenting the type of
 data in each column). In a Data Package, data files are referred to as [data
 resources](/docs/glossary.qmd), each which contains a conceptually distinct set
-of data.
+of data. We refer to the metadata for a data resource as "resource metadata".
 
 ## Creating a data resource with Sprout
 
@@ -101,16 +101,16 @@ that data actually contains what you expect it to contain. These checks can
 protect you from human errors introduced when adding new data or editing an
 existing data resource.
 
-### Creating a script to help manage data-level metadata
+### Creating a script to help manage resource metadata
 
-Like with the project-level metadata, you will create a script for the data
-resource that allows you to easily edit the metadata properties later on. You
-can do this by using the `create_resource_properties_script()` function. This
-function needs the `resource_name` parameter to specify the name of the
-resource, which is used to identify the resource in the data package. It is
-required and *should not* be changed, since it's used in the file name of the
-data resource's properties script. Since a data package can contain multiple
-resources, the resource's `name` must also be unique.
+As we did for the package metadata, you will create a script to manage the
+resource medata. You can do this by using the
+`create_resource_properties_script()` function. This function needs the
+`resource_name` parameter to specify the name of the resource, which is used to
+identify the resource in the data package. It is required and *should not* be
+changed, since it's used in the file name of the data resource's properties
+script. Since a data package can contain multiple resources, the resource's
+`name` must also be unique.
 
 Building upon the `main.py` file we created in the previous section, we will go
 ahead and add the `create_resource_properties_script()` step to the pipeline:
@@ -137,7 +137,7 @@ if __name__ == "__main__":
    overwritten if it already exists.
 3. We have removed the writing of `datapackage.json` and the creation of the
    readme to make it easier to see what is new. You will learn how to write the
-   data-level metadata and the readme later in this guide.
+   resource metadata and the readme later in this guide.
 
 Now go ahead and run the script like previously:
 
@@ -159,7 +159,7 @@ print(file_tree(package_path.root()))
 As you can see, the filename has been suffixed with your chosen
 `resource_name`, i.e. "patients". If you view the content of
 `scripts/resource_properties_patients.py`, you will see that it looks similar
-to the package-level metadata script, but with different names for the metadata
+to the package metadata script, but with different names for the metadata
 properties. Since the file content is somewhat lengthy, it's hidden by default
 on this page and you can click the banner below to show it.
 
@@ -180,10 +180,10 @@ print(
 
 :::
 
-As with the template for the package-level metadata, the comments in this file
+As with the template for the package metadata, the comments in this file
 indicates which properties are required and which are optional. You can see
 that you would need to fill out a `title` and a `description` just as we did
-previously for the package-level metadata. However, you also need to fill out
+previously for the package metadata. However, you also need to fill out
 the `name` and the `type` inside `FieldProperties` (a "field" is the same as a
 "column" or "variable" in your dataset). Doing this manually can be tedious for
 datasets with many columns, so sprout provides a way to extract this metadata
@@ -287,7 +287,7 @@ print(
 ```
 :::
 
-## Writing the data-level metadata to `datapackage.json`
+## Writing the resource metadata to `datapackage.json`
 
 Before writing the metadata to file, we need to make sure that all the required
 properties are filled out. In the resource properties script, the `name`
@@ -370,7 +370,7 @@ making sure that the three required fields above are all filled out.
 
 Our resource properties file include the `name`, `title`, and `description` of
 that data resource together with the `name` and `type` of each field in the
-data resource. To write these data-level metadata to `datapackage.json`, you need to
+data resource. To write these resource metadata to `datapackage.json`, you need to
 include the resource properties in the `package_properties.py` file of your data
 package. You can do this by adding the following lines to the `properties.py`
 file:
@@ -446,8 +446,8 @@ package_properties = sp.PackageProperties(
 )
 ```
 
-1. Import the data-level metadata from the resource properties script.
-2. Set the `resources` parameter of the project-level metadata to hold
+1. Import the resource metadata from the resource properties script.
+2. Set the `resources` parameter of the package metadata to hold
    information about all the data resources. There would be one item in the
    list per data resource.
 
@@ -485,7 +485,7 @@ if __name__ == "__main__":
     main()
 ```
 
-1. Write `datapackage.json` (including both the project-level and data-level metadata).
+1. Write `datapackage.json` (including both the package metadata and the resource metadata).
 2. Create the readme text.
 3. Write the readme file.
 
@@ -529,7 +529,7 @@ print(
 )
 ```
 
-All the data-level metadata is now also saved in this file! If you need to
+All the resource metadata is now also saved in this file! If you need to
 update the resource properties later on, you can simply edit the
 `scripts/resource_properties_patients.py` file and then re-run the `main.py`
 file to update the `datapackage.json` file and the `README.md` file.
