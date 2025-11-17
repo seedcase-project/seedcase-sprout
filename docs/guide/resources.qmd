@@ -14,9 +14,7 @@ data files are referred to as [data resources](/docs/glossary.qmd), each
 which contains a conceptually distinct set of data. We refer to the
 metadata for a data resource as "resource metadata".
 
-## Creating a data resource with Sprout
-
-### Converting data to the correct format
+## Creating a data resource
 
 Creating a data resource requires that your data is in the correct
 format. Usually, generated or collected data starts out in a "raw" shape
@@ -87,7 +85,7 @@ diabetes, which look like this:
 raw_data_patients
 ```
 
-### Defining metadata properties for the data resource
+## Managing resource metadata with Sprout
 
 Before you can store a data file as a resource in your data package, you
 need to describe its [metadata properties](/docs/glossary.qmd). The
