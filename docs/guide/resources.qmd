@@ -6,7 +6,7 @@ jupyter: python3
 
 ## What is a data resource?
 
-So far, we have seen how to create and manage package metadata for our
+In the previous sections, we have seen how to create and manage package metadata for our
 data package. In this section, we will learn about how we can add data files
 and how we can create and manage its metadata (e.g. documenting the type of
 data in each column). In a Data Package, data files are referred to as [data
