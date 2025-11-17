@@ -5,11 +5,20 @@ jupyter: python3
 ---
 
 
-In the [previous guide](/docs/guide/packages.qmd), we created a Data Package and we saw how to write a minimal set of metadata properties
-to `datapackage.json`. Here, we'll take a closer look at the full
-`package_properties.py` that's created by `create_properties_script()`. First,
-delete file `scripts/package_properties.py` and change your `main.py` back to
-look like this:
+In the [previous guide](/docs/guide/packages.qmd), we created a Data Package
+and we saw how to write a minimal set of metadata properties to
+`datapackage.json`. Here, we'll take a closer look at the full
+`package_properties.py` that's created by `create_properties_script()`.
+
+::: callout-important
+
+Before we get started with this section, it's necessary to delete any
+previously created `scripts/package_properties.py` since
+`create_properties_script()` does not overwrite this file if it already exists.
+
+:::
+
+First, change your `main.py` to look like this:
 
 ```{python}
 #| filename: "main.py"
@@ -30,8 +39,8 @@ uv run main.py
 ```
 
 If you now view the created `package_properties.py` script, you will see that
-it lists many of the most commonly used metadata names together with comments
-indicating which are required and which are optional:
+it includes a template containing many of the most commonly used metadata names
+together with comments indicating which are required and which are optional:
 
 <!-- Create the script where quarto can find it for building the docs -->
 {{< include _python-minimal-package-setup.qmd >}}
