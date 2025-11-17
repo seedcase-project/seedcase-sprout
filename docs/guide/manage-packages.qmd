@@ -1,5 +1,5 @@
 ---
-title: "Managing package-level metadata"
+title: "Package metadata"
 order: 2
 jupyter: python3
 ---

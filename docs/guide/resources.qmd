@@ -1,5 +1,5 @@
 ---
-title: "Creating and managing the properties and data for data resources"
+title: "Resource metadata"
 order: 3
 jupyter: python3
 ---
