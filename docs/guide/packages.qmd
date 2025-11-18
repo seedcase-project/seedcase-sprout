@@ -22,7 +22,7 @@ In this guide, we will refer to each piece of metadata stored in the JSON file
 as a [*metadata property*](/docs/glossary.qmd) (or just a *property* for
 short). You can view an example of a complete
 `datapackage.json` file in this [example
-repositories](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
+repository](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
 
 ## Using Sprout to create a Data Package
 
@@ -50,13 +50,13 @@ print(file_tree(package_path.root()))
 ::: callout-important
 Sprout assumes the working directory is the root of your Python
 project---where your `.git/` folder and/or `pyproject.toml` file are located.
-If you used our Data Package [template](https://template-data-package.seedcase-project.org), you will see additional config files
+If you used our Data Package [template](https://template-data-package.seedcase-project.org) as we recommend in the [installation guide](https://sprout.seedcase-project.org/docs/guide/installation#adding-useful-files-via-a-project-template), you will see additional config files
 to the ones listed above.
 :::
 
 Since there is no `datapackage.json` file in our root folder, we can't yet call
-it a Data Package. So let's embark on the journey of creating this file,
-starting with understanding the content of `main.py`. The `main.py`
+it a Data Package. Before we create this file, let's take a look at 
+`main.py` from where we'll create the `datapackage.json`. The `main.py`
 file is where you will write the code to create and manage your Data Package.
 You can think of it as a pipeline that takes you from beginning to end of
 creating your Data Package and that allows you to easily recreate it if needed.
