@@ -7,12 +7,11 @@ jupyter: python3
 ## What is a data resource?
 
 In the previous sections, we have seen how to create and manage package
-metadata for our data package. In this section, we will learn about how
-we can add data files and how we can create and manage its metadata
-(e.g. documenting the type of data in each column). In a Data Package,
-data files are referred to as [data resources](/docs/glossary.qmd), each
-which contains a conceptually distinct set of data. We refer to the
-metadata for a data resource as "resource metadata".
+metadata for our data package. In this section, we will explore how we can add
+data files and manage its metadata (e.g. documenting the type of data in each
+column). In a Data Package, data files are referred to as [data
+resources](/docs/glossary.qmd), each containing a conceptually distinct set
+of data. We refer to the metadata for a data resource as "resource metadata".
 
 ## Creating a data resource
 
@@ -103,13 +102,13 @@ introduced when adding new data or editing an existing data resource.
 
 ### Creating a script to help manage resource metadata
 
-As we did for the package metadata, you will create a script to manage
-the resource medata. You can do this by using the
+As you did for the package metadata, you will create a script to manage the
+resource medata. You can do this by using the
 `create_resource_properties_script()` function. This function needs the
-`resource_name` parameter to specify the name of the resource, which is
-used to identify the resource in the data package. It is required and
+`resource_name` parameter to specify the name of the resource, which is used to
+identify the resource in the data package. It is a required property and
 *should not* be changed, since it's used in the file name of the data
-resource's properties script. Since a data package can contain multiple
+resource's properties script. Because a data package can contain multiple
 resources, the resource's `name` must also be unique.
 
 Building upon the `main.py` file we created in the previous section, we
