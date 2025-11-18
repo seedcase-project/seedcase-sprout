@@ -55,7 +55,7 @@ to the ones listed above.
 :::
 
 Since there is no `datapackage.json` file in our root folder, we can't yet call
-it a Data Package. Before we create this file, let's take a look at 
+it a Data Package. Before we create this file, let's take a look at
 `main.py` from where we'll create the `datapackage.json`. The `main.py`
 file is where you will write the code to create and manage your Data Package.
 You can think of it as a pipeline that takes you from beginning to end of
