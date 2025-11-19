@@ -29,9 +29,9 @@ specification outlined in our
 [documentation](https://sprout.seedcase-project.org/docs/design/interface/inputs),
 specifically that it needs to be a Polars DataFrame.
 
-For this guide, you will use (fake) data that is already tidy. You can
-[find the data
-here](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv).
+For this guide, you will use the [(fake) data on 
+patients](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv)
+that is already tidy.
 We've placed this data in a `raw/` folder in the Data Package and called
 it `patients.csv`, so that we can keep the original "raw" data separate
 from the processed data.
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 2.  This is the only new line of code. It creates the resource
     properties script. Note that the script is only created once, it
     will not be overwritten if it already exists.
-3.  We have removed the writing of `datapackage.json` and the creation
+3.  We have removed saving the properties into `datapackage.json` by deleting `write_properties()` and the creation
     of the README to make it easier to see what is new. You will learn
     how to write the resource metadata and the README later in this
     guide.
@@ -162,7 +162,7 @@ As you can see, the filename has been suffixed with your chosen
 `scripts/resource_properties_patients.py`, you will see that it looks
 similar to the package metadata script, but with different names for the
 metadata properties. Since the file content is somewhat lengthy, it's
-hidden by default on this page and you can click the banner below to
+hidden by default on this page. You can click the banner below to
 show it.
 
 ::: {.callout-tip icon="false" collapse="true"}
@@ -226,7 +226,7 @@ if __name__ == "__main__":
     DataFrame.
 2.  Clean the data until you have the name and data type of each column
     to what you want or need them to be. In our example, the raw data is
-    already cleaned and in tidy format, but in an actual project, you
+    already cleaned and in a tidy format, but in an actual project, you
     would likely have a separate cleaning script and call some of its
     functions here.
 3.  Extract field properties from the cleaned data, such as the column
