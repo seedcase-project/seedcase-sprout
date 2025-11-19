@@ -9,7 +9,7 @@ jupyter: python3
 At the core of Sprout is the [Data Package](/docs/glossary.qmd), which is
 a standardized way of documenting data via structured metadata. Technically, a data
 Package is any folder that has a file called `datapackage.json` in it that contains
-metadata following the [Frictionless Data Package
+metadata following the formal [Data Package
 specification](https://datapackage.org/standard/data-package/#introduction).
 
 The metadata in `datapackage.json` can describe both the Data Package (e.g. its title,
@@ -27,7 +27,7 @@ repository](https://github.com/seedcase-project/example-seed-beetle/blob/main/da
 ## Using Sprout to create a Data Package
 
 The Data Package standard provides a standardised structure and naming scheme in `datapackage.json`.
-This has many advantages in terms of reproducibility,
+This has many advantages in terms of reproducibility and machine-readability,
 but it also makes it difficult to manually create the `datapackage.json` file
 and remember all the names for each of the different properties. Manually editing this file is also
 ill-advised since you are more likely to accidentally make typos or accidentally not follow the schema provided by the specification. To make this process more
@@ -61,7 +61,7 @@ file is where you will write the code to create and manage your Data Package.
 You can think of it as a pipeline that takes you from beginning to end of
 creating your Data Package and that allows you to easily recreate it if needed.
 Open the `main.py` file in your Python project, delete the placeholder code
-that uv created in it and paste the below code into it instead.
+that uv created in it, and paste the below code into it instead.
 
 ::: callout-note
 If you copied our Data Package template, this section will already exist and
@@ -127,7 +127,7 @@ print(file_tree(package_path.root()))
 
 Inside the `scripts/package_properties.py` file, you will find a template for
 creating the metadata properties of your Data Package programmatically. We will
-walk through the full template in more detail in the [next section](./docs/guide/manage-packages.qmd) of the guide.
+walk through the full template in more detail in the [next section](/docs/guide/manage-packages.qmd) of the guide.
 Here, we will first start with a simplified `package_properties.py` script to
 more easily understand how to manage metadata via this script.
 

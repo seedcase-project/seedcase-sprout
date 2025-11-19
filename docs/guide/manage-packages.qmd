@@ -1,12 +1,12 @@
 ---
-title: "Package metadata"
+title: "Adding to the package metadata"
 order: 2
 jupyter: python3
 ---
 
 
 In the [previous guide](/docs/guide/packages.qmd), we created a Data Package
-and we saw how to write a minimal set of metadata properties to
+and saw how to write a minimal set of metadata properties to
 `datapackage.json`. Here, we'll take a closer look at the full
 `package_properties.py` that's created by `create_properties_script()`.
 
@@ -38,7 +38,7 @@ Now run the script from terminal:
 uv run main.py
 ```
 
-If you now view the created `package_properties.py` script, you will see that
+If you now view the created `package_properties.py` script, you'll see that
 it includes a template containing many of the most commonly used metadata names
 together with comments indicating which are required and which are optional:
 
@@ -64,13 +64,13 @@ print(
 
 As you can see, there are a lot of available metadata properties.
 However, as we saw in the previous section and as you can see from the comments
-in this template script, there aren't that many *required* metadata, so it is easy
-to get started creating a Data Package and then add more metadata later as it
-becomes available.
+in this template script, there aren't that many *required* metadata. So you can quickly
+get started creating a Data Package and add more metadata later as
+needed.
 
 Sometimes it might feel tedious to fill out metadata properties at all and you
-might be tempted to skip creating a Data Package for your data. Then it is
-important to remember just how important these metadata actually are. Without
+might be tempted to skip creating a Data Package for your data. But it's
+important to remember just how vital these metadata actually are. Without
 them, your data are simply a collection of files without any context or
 meaning. The metadata (properties) are **crucially important** for
 understanding and actually using the data in your data package!
@@ -78,7 +78,7 @@ understanding and actually using the data in your data package!
 ## Creating a more complex `datapackage.json` file
 
 Since metadata is so important, Sprout encourages users to include it by
-making it easier to manage it through the use of Python classes, as we saw in the
+making it easier to manage it through the use of Python classes as we saw in the
 previous section. In the example above, you can see a couple of additional
 classes `ContributorProperties` and `SourceProperties`. Let's create a slightly
 more complex example using one of these other classes:
