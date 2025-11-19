@@ -29,7 +29,7 @@ specification outlined in our
 [documentation](https://sprout.seedcase-project.org/docs/design/interface/inputs),
 specifically that it needs to be a Polars DataFrame.
 
-For this guide, you will use the [(fake) data on 
+For this guide, you will use the [(fake) data on
 patients](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv)
 that is already tidy.
 We've placed this data in a `raw/` folder in the Data Package and called
