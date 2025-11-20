@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import check_datapackage as cdp
 from pytest import fixture, raises
 
 from seedcase_sprout.examples import (
@@ -64,7 +65,7 @@ def test_throws_error_if_error_in_package_properties(path, properties):
     """Should throw `CheckError`s if there are errors in the package properties."""
     properties.id = None
 
-    with raises(ExceptionGroup):
+    with raises(cdp.DataPackageError):
         write_properties(properties, path)
 
 
@@ -72,7 +73,7 @@ def test_throws_error_if_error_in_resource_properties(path, properties):
     """Should throw `CheckError`s if there are errors in the resource properties."""
     properties.resources[0].name = "invalid name with spaces"
 
-    with raises(ExceptionGroup):
+    with raises(cdp.DataPackageError):
         write_properties(properties, path)
 
 
@@ -107,7 +108,7 @@ def test_throws_error_if_resource_description_is_none(path, properties):
     dedentation works and the subsequent check fails."""
     properties.resources[0].description = None
 
-    with raises(ExceptionGroup):
+    with raises(cdp.DataPackageError):
         write_properties(properties, path)
 
 
