@@ -1,20 +1,20 @@
 from typing import Any
 
-import seedcase_sprout.check_datapackage as cdp
-from seedcase_sprout.properties import PackageProperties, ResourceProperties
-from seedcase_sprout.sprout_checks.get_sprout_package_errors import (
-    get_sprout_package_errors,
-)
-from seedcase_sprout.sprout_checks.get_sprout_resource_errors import (
-    get_sprout_resource_errors,
-)
+import check_datapackage as cdp
 
-# Script only constant
-_RESOURCE_FIELD_PATTERN = r"resources\[\d+\]"
+from seedcase_sprout.internals.create import _create_resource_data_path
+from seedcase_sprout.properties import PackageProperties, ResourceProperties
+from seedcase_sprout.sprout_checks.is_resource_name_correct import (
+    _is_resource_name_correct,
+)
+from seedcase_sprout.sprout_checks.required_fields import (
+    PACKAGE_SPROUT_REQUIRED_FIELDS,
+    RESOURCE_SPROUT_REQUIRED_FIELDS,
+)
 
 
 def check_package_properties(properties: Any) -> PackageProperties:
-    """Check `PackageProperties` (not `ResourceProperties`) against the requirements.
+    r"""Check `PackageProperties` (not `ResourceProperties`) against the requirements.
 
     Package `properties` are checked against the Data Package standard and the following
     Sprout-specific requirements:
@@ -29,22 +29,22 @@ def check_package_properties(properties: Any) -> PackageProperties:
         The `properties` if all checks pass.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, one error per failed check.
+        DataPackageError: an error flagging issues in the package properties.
     """
     package_properties = _check_is_package_properties_type(properties)
     return _generic_check_properties(
         package_properties,
-        ignore=[
+        exclusions=[
             # Ignore checks on specific resources within the resource field.
-            cdp.CheckErrorMatcher(json_path=_RESOURCE_FIELD_PATTERN),
+            cdp.Exclusion(jsonpath="$.resources[*]"),
             # Ignore missing resources.
-            cdp.CheckErrorMatcher(json_path=r"resources$", validator="required"),
+            cdp.Exclusion(jsonpath="$.resources", type="required"),
         ],
     )
 
 
 def check_properties(properties: Any) -> PackageProperties:
-    """Check that all `properties` match Sprout's requirements.
+    r"""Check that all `properties` match Sprout's requirements.
 
     If the resources property hasn't been filled in yet, this will only check
     the package properties. The `properties` are checked against the Data
@@ -67,7 +67,7 @@ def check_properties(properties: Any) -> PackageProperties:
         The `properties` if all checks pass.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, one error per failed check.
+        DataPackageError: an error flagging issues in the properties.
     """
     package_properties = _check_is_package_properties_type(properties)
     if not package_properties.resources:
@@ -77,8 +77,21 @@ def check_properties(properties: Any) -> PackageProperties:
     return package_properties
 
 
+class DataResourceError(Exception):
+    """Error listing issues in a data resource."""
+
+    def __init__(
+        self,
+        data_package_error: cdp.DataPackageError,
+    ) -> None:
+        r"""Create a `DataResourceError` from a `cdp.DataPackageError`."""
+        # TODO: update when explain() implemented
+        message = str(data_package_error).replace(".resources[0]", "")
+        super().__init__(message)
+
+
 def check_resource_properties(properties: Any) -> ResourceProperties:
-    """Checks that only the resource `properties` match Sprout's requirements.
+    r"""Checks that only the resource `properties` match Sprout's requirements.
 
     All resource `properties` are checked against the Data Package standard and
     the following Sprout-specific requirements:
@@ -96,31 +109,26 @@ def check_resource_properties(properties: Any) -> ResourceProperties:
         Outputs the `properties` if all checks pass.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, one error per failed check.
+        DataResourceError: an error flagging issues in the resource properties.
     """
-    package_field_pattern = r"\$\.\w+$"
     resource_properties = _check_is_resource_properties_type(properties)
     try:
         _generic_check_properties(
             PackageProperties(resources=[resource_properties]),
-            ignore=[cdp.CheckErrorMatcher(json_path=package_field_pattern)],
+            exclusions=[cdp.Exclusion(jsonpath="$.*")],
         )
-    # TODO: This probably is better placed in the `check-datapackage` package.
-    except ExceptionGroup as error_info:
-        for error in error_info.exceptions:
-            if isinstance(error, cdp.CheckError):
-                error.json_path = error.json_path.replace(".resources[0]", "")
-        raise error_info
+    except cdp.DataPackageError as error:
+        raise DataResourceError(error)
 
     return resource_properties
 
 
 def _generic_check_properties(
-    properties: PackageProperties, ignore: list[cdp.CheckErrorMatcher] = []
+    properties: PackageProperties, exclusions: list[cdp.Exclusion] = []
 ) -> PackageProperties:
     """A generic check for Sprout-specific requirements on the Frictionless standard.
 
-    All `properties`, excluding those in `ignore`, are checked against the Data
+    All `properties`, excluding those in `exclusions`, are checked against the Data
     Package standard as well as the following Sprout-specific requirements:
 
     - Sprout-specific required fields are present
@@ -131,48 +139,127 @@ def _generic_check_properties(
 
     Args:
         properties: The full package properties to check, including resource properties.
-        ignore: A list of matchers for any `CheckErrors` to ignore.
+        exclusions: A list of exclusions for any checks to ignore.
 
     Returns:
         Outputs the `properties` object if all checks pass.
 
     Raises:
-        ExceptionGroup: A group of `CheckError`s, one error per failed check.
+        DataPackageError: an error flagging issues in the properties.
     """
-    properties_dict = properties.compact_dict
-
-    errors = cdp.check_properties(properties_dict)
-
-    errors += get_sprout_package_errors(properties_dict)
-
-    resources = properties_dict.get("resources")
-    if isinstance(resources, list):
-        for index, resource in enumerate(resources):
-            if isinstance(resource, dict):
-                errors += get_sprout_resource_errors(resource, index)
-
-    errors = cdp.exclude_matching_errors(
-        errors,
-        [
-            *ignore,
-            cdp.CheckErrorMatcher(
-                validator="required", json_path=rf"{_RESOURCE_FIELD_PATTERN}\.data$"
-            ),
-            cdp.CheckErrorMatcher(
-                validator="type",
-                json_path=rf"{_RESOURCE_FIELD_PATTERN}\.path$",
-                message="not of type 'array'",
-            ),
-        ],
-    )
-    errors = sorted(set(errors))
-
-    if errors:
-        raise ExceptionGroup(
-            f"The following checks failed on the properties:\n{properties}", errors
+    package_required_checks = [
+        cdp.RequiredCheck(
+            jsonpath=f"$.{field}",
+            message=f"The `{field}` package property must be present.",
         )
+        for field in PACKAGE_SPROUT_REQUIRED_FIELDS
+    ]
+    resource_required_checks = [
+        cdp.RequiredCheck(
+            jsonpath=f"$.resources[*].{field}",
+            message=f"The `{field}` resource property must be present.",
+        )
+        for field in RESOURCE_SPROUT_REQUIRED_FIELDS
+    ]
+
+    not_blank = cdp.CustomCheck(
+        jsonpath=(
+            "$.name | id | licenses | title | description | version | created "
+            "| $.contributors[*].title"
+            "| $.sources[*].title"
+            "| $.licenses[*].name"
+            "| $.licenses[*].path"
+            "| $.resources[*].name"
+            "| $.resources[*].path"
+            "| $.resources[*].title"
+            "| $.resources[*].description"
+        ),
+        message="This property must not be empty.",
+        check=lambda value: bool(value),
+        type="not-blank",
+    )
+    resource_path_string = cdp.CustomCheck(
+        jsonpath="$.resources[*].path",
+        message="Resource path must be of type string.",
+        check=lambda value: isinstance(value, str),
+        type="resource-path-string",
+    )
+    resource_path_format = cdp.CustomCheck(
+        jsonpath="$.resources[*]",
+        message=(
+            "Resource path must have the format "
+            "`resources/<resource-name>/data.parquet`."
+        ),
+        check=lambda value: _check_resource_path_format(value),
+        type="resource-path-format",
+    )
+    no_resource_data = cdp.CustomCheck(
+        jsonpath="$.resources[*].data",
+        message=(
+            "Sprout doesn't use the `data` field, instead it expects data "
+            "in separate files that are given in the `path` field."
+        ),
+        check=lambda value: value is None,
+        type="no-inline-data",
+    )
+    exclude_resource_data = cdp.Exclusion(jsonpath="$.resources[*].data")
+    exclude_resource_path_or_data_required = cdp.Exclusion(
+        jsonpath="$.resources[*]", type="required"
+    )
+    exclude_resource_path_type = cdp.Exclusion(
+        jsonpath="$.resources[*].path", type="type"
+    )
+
+    cdp.check(
+        properties.compact_dict,
+        config=cdp.Config(
+            strict=True,
+            exclusions=[
+                exclude_resource_data,
+                exclude_resource_path_or_data_required,
+                exclude_resource_path_type,
+            ]
+            + exclusions,
+            extensions=cdp.Extensions(
+                required_checks=package_required_checks + resource_required_checks,
+                custom_checks=[
+                    not_blank,
+                    resource_path_string,
+                    resource_path_format,
+                    no_resource_data,
+                ],
+            ),
+        ),
+        error=True,
+    )
 
     return properties
+
+
+def _check_resource_path_format(resource_properties: Any) -> bool:
+    """Checks if the data path in the resource properties has the correct format.
+
+    As the path is constructed from the resource name, its format can only be checked
+    if the resource name is correct.
+    """
+    if not isinstance(resource_properties, dict):
+        return True
+
+    name = resource_properties.get("name")
+    path = resource_properties.get("path")
+
+    if (
+        # Do not check path if name is incorrect
+        not _is_resource_name_correct(name)
+        # Do not check path if not string
+        or not isinstance(path, str)
+        # Do not check path if blank
+        or path == ""
+    ):
+        return True
+
+    expected_path = _create_resource_data_path(str(name))
+    return path == expected_path
 
 
 def _check_is_package_properties_type(properties: Any) -> PackageProperties:

@@ -1,7 +1,7 @@
 import re
 from typing import Any
 
-from seedcase_sprout.check_datapackage.constants import NAME_PATTERN
+NAME_PATTERN = r"^[a-z0-9._-]+$"
 
 
 def _is_resource_name_correct(resource_name: Any) -> bool:

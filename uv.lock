@@ -351,6 +351,17 @@ wheels = [
 ]
 
 [[package]]
+name = "check-datapackage"
+version = "0.18.0"
+source = { git = "https://github.com/seedcase-project/check-datapackage#8098f488019b13e849c07403e4f20cde43d34514" }
+dependencies = [
+    { name = "jsonschema" },
+    { name = "pydantic" },
+    { name = "python-jsonpath" },
+    { name = "types-jsonschema" },
+]
+
+[[package]]
 name = "click"
 version = "8.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1809,6 +1820,15 @@ wheels = [
 ]
 
 [[package]]
+name = "python-jsonpath"
+version = "2.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f3/db/f1f19205b0df6eb0195de154dc6c967448802dfb573487fa8a4206a243cd/python_jsonpath-2.0.1.tar.gz", hash = "sha256:32a84ebb2dc0ec1b42a6e165b0f9174aef8310bad29154ad9aee31ac37cca18f", size = 49659, upload-time = "2025-09-13T08:01:47.82Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/d4/64d7cdc01269f5fed45e6a69f5395c30451958c299ca5cbc1442a4f3f9b9/python_jsonpath-2.0.1-py3-none-any.whl", hash = "sha256:ebd518b7c883acc5b976518d76b6c96288405edec7d9ef838641869c1e1a5eb7", size = 64060, upload-time = "2025-09-13T08:01:46.184Z" },
+]
+
+[[package]]
 name = "pytokens"
 version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2142,6 +2162,7 @@ name = "seedcase-sprout"
 version = "0.48.1"
 source = { editable = "." }
 dependencies = [
+    { name = "check-datapackage" },
     { name = "dacite" },
     { name = "deepmerge" },
     { name = "jinja2" },
@@ -2175,6 +2196,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "check-datapackage", git = "https://github.com/seedcase-project/check-datapackage" },
     { name = "dacite", specifier = ">=1.9.2" },
     { name = "deepmerge", specifier = ">=2.0" },
     { name = "jinja2", specifier = ">=3.1.6" },
