@@ -4,18 +4,16 @@ order: 2
 jupyter: python3
 ---
 
-
-In the [previous guide](/docs/guide/packages.qmd), we created a Data Package
-and saw how to write a minimal set of metadata properties to
+In the [previous guide](/docs/guide/packages.qmd), we created a Data
+Package and saw how to write a minimal set of metadata properties to
 `datapackage.json`. Here, we'll take a closer look at the full
 `package_properties.py` that's created by `create_properties_script()`.
 
 ::: callout-important
-
 Before we get started with this section, it's necessary to delete any
 previously created `scripts/package_properties.py` since
-`create_properties_script()` does not overwrite this file if it already exists.
-
+`create_properties_script()` does not overwrite this file if it already
+exists.
 :::
 
 First, change your `main.py` to look like this:
@@ -38,17 +36,19 @@ Now run the script from terminal:
 uv run main.py
 ```
 
-If you now view the created `package_properties.py` script, you'll see that
-it includes a template containing many of the most commonly used metadata names
-together with comments indicating which are required and which are optional:
+If you now view the created `package_properties.py` script, you'll see
+that it includes a template containing many of the most commonly used
+metadata names together with comments indicating which are required and
+which are optional:
 
 <!-- Create the script where quarto can find it for building the docs -->
+
 {{< include _python-minimal-package-setup.qmd >}}
+
 ```{python}
 #| include: false
 sp.create_properties_script(package_path.root())
 ```
-
 
 ```{python}
 #| echo: false
@@ -63,25 +63,27 @@ print(
 ```
 
 As you can see, there are a lot of available metadata properties.
-However, as we saw in the previous section and as you can see from the comments
-in this template script, there aren't that many *required* metadata. So you can quickly
-get started creating a Data Package and add more metadata later as
-needed.
+However, as we saw in the previous section and as you can see from the
+comments in this template script, there aren't that many *required*
+metadata. So you can quickly get started creating a Data Package and add
+more metadata later as needed.
 
-Sometimes it might feel tedious to fill out metadata properties at all and you
-might be tempted to skip creating a Data Package for your data. But it's
-important to remember just how vital these metadata actually are. Without
-them, your data are simply a collection of files without any context or
-meaning. The metadata (properties) are **crucially important** for
-understanding and actually using the data in your data package!
+Sometimes it might feel tedious to fill out metadata properties at all
+and you might be tempted to skip creating a Data Package for your data.
+But it's important to remember just how vital these metadata actually
+are. Without them, your data are simply a collection of files without
+any context or meaning. The metadata (properties) are **crucially
+important** for understanding and actually using the data in your data
+package!
 
 ## Creating a more complex `datapackage.json` file
 
 Since metadata is so important, Sprout encourages users to include it by
-making it easier to manage it through the use of Python classes as we saw in the
-previous section. In the example above, you can see a couple of additional
-classes `ContributorProperties` and `SourceProperties`. Let's create a slightly
-more complex example using one of these other classes:
+making it easier to manage it through the use of Python classes as we
+saw in the previous section. In the example above, you can see a couple
+of additional classes `ContributorProperties` and `SourceProperties`.
+Let's create a slightly more complex example using one of these other
+classes:
 
 ```{python}
 #| filename: "scripts/package_properties.py"
@@ -130,13 +132,14 @@ package_properties = sp.PackageProperties(
 )
 ```
 
-You can see that we included a more involved description of the package using
-the helper function `dedent()` and that we used the `ContributorProperties`
-class twice as we set the `contributors` parameter to a list of two
-contributors who co-created this example Data Package.
+You can see that we included a more involved description of the package
+using the helper function `dedent()` and that we used the
+`ContributorProperties` class twice as we set the `contributors`
+parameter to a list of two contributors who co-created this example Data
+Package.
 
-Now you can edit your `main.py` file to again include the `write_properties()`
-function:
+Now you can edit your `main.py` file to again include the
+`write_properties()` function:
 
 ```{python}
 #| eval: false
@@ -186,17 +189,17 @@ print(
 
 If you made a mistake and want to update the properties in the current
 `datapackage.json`, remember that you never need to edit the JSON file
-directly. Instead, you edit the `scripts/package_properties.py` and then run
-the `main.py` script to regenerate `datapackage.json`.
+directly. Instead, you edit the `scripts/package_properties.py` and then
+run the `main.py` script to regenerate `datapackage.json`.
 
 ## Creating a README of the metadata properties
 
 Having a *human-readable* version of what is contained in the
-`datapackage.json` file is useful for others who may be working with or wanting
-to learn more about your data package. You can use `as_readme_text()` to
-convert the properties into text that can be added to a README file. Let's
-create a README file with the properties of the data package you just created
-by writing it in the `main.py` file.
+`datapackage.json` file is useful for others who may be working with or
+wanting to learn more about your data package. You can use
+`as_readme_text()` to convert the properties into text that can be added
+to a README file. Let's create a README file with the properties of the
+data package you just created by writing it in the `main.py` file.
 
 ```{python}
 #| eval: false
@@ -218,11 +221,12 @@ if __name__ == "__main__":
     main()
 ```
 
-Sprout splits the README creation functionality into two steps: One to make the
-text and one to write to the file. That way, if you want to add or manipulate
-the text, you can do so before writing it to the file. This is useful if you
-want to add information to the README that you don't want included in the
-`datapackage.json` file. For this guide we won't cover how or why to do this.
+Sprout splits the README creation functionality into two steps: One to
+make the text and one to write to the file. That way, if you want to add
+or manipulate the text, you can do so before writing it to the file.
+This is useful if you want to add information to the README that you
+don't want included in the `datapackage.json` file. For this guide we
+won't cover how or why to do this.
 
 Next, run this command in the Terminal to make the README file. The
 `write_file()` will always overwrite the existing README file.
@@ -249,8 +253,9 @@ package:
 print(file_tree(package_path.root()))
 ```
 
-Now that you know how to create and manage metadata at the project-level, it is
-time to learn how to add data to the project and manage its metadata.
+Now that you know how to create and manage metadata at the
+project-level, it is time to learn how to add data to the project and
+manage its metadata.
 
 ```{python}
 #| include: false
