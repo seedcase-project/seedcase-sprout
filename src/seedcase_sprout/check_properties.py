@@ -118,7 +118,7 @@ def check_resource_properties(properties: Any) -> ResourceProperties:
             exclusions=[cdp.Exclusion(jsonpath="$.*")],
         )
     except cdp.DataPackageError as error:
-        raise DataResourceError(error)
+        raise DataResourceError(error) from None
 
     return resource_properties
 
