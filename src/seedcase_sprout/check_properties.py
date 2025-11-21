@@ -3,6 +3,7 @@ from typing import Any
 import check_datapackage as cdp
 
 from seedcase_sprout.internals.create import _create_resource_data_path
+from seedcase_sprout.internals.functionals import _map
 from seedcase_sprout.properties import PackageProperties, ResourceProperties
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
@@ -35,10 +36,9 @@ def check_package_properties(properties: Any) -> PackageProperties:
     return _generic_check_properties(
         package_properties,
         exclusions=[
-            # Ignore checks on specific resources within the resource field.
-            cdp.Exclusion(jsonpath="$.resources[*]"),
-            # Ignore missing resources.
+            cdp.Exclusion(jsonpath="$.resources[*] | $.resources[*].*"),
             cdp.Exclusion(jsonpath="$.resources", type="required"),
+            cdp.Exclusion(jsonpath="$.resources", type="minItems"),
         ],
     )
 
@@ -147,32 +147,33 @@ def _generic_check_properties(
     Raises:
         DataPackageError: an error flagging issues in the properties.
     """
-    package_required_checks = [
-        cdp.RequiredCheck(
+    package_required_checks = _map(
+        PACKAGE_SPROUT_REQUIRED_FIELDS,
+        lambda field: cdp.RequiredCheck(
             jsonpath=f"$.{field}",
-            message=f"The `{field}` package property must be present.",
-        )
-        for field in PACKAGE_SPROUT_REQUIRED_FIELDS
-    ]
-    resource_required_checks = [
-        cdp.RequiredCheck(
-            jsonpath=f"$.resources[*].{field}",
-            message=f"The `{field}` resource property must be present.",
-        )
-        for field in RESOURCE_SPROUT_REQUIRED_FIELDS
-    ]
+            message=f"'{field}' is a required property",
+        ),
+    )
 
+    resource_required_checks = _map(
+        RESOURCE_SPROUT_REQUIRED_FIELDS,
+        lambda field: cdp.RequiredCheck(
+            jsonpath=f"$.resources[*].{field}",
+            message=f"'{field}' is a required property",
+        ),
+    )
+
+    not_blank_resource_fields = _map(
+        RESOURCE_SPROUT_REQUIRED_FIELDS, lambda field: f"$.resources[*].{field}"
+    )
     not_blank = cdp.CustomCheck(
         jsonpath=(
-            "$.name | id | licenses | title | description | version | created "
+            f"$.{' | '.join(PACKAGE_SPROUT_REQUIRED_FIELDS)} "
             "| $.contributors[*].title"
             "| $.sources[*].title"
             "| $.licenses[*].name"
             "| $.licenses[*].path"
-            "| $.resources[*].name"
-            "| $.resources[*].path"
-            "| $.resources[*].title"
-            "| $.resources[*].description"
+            f"| {' | '.join(not_blank_resource_fields)}"
         ),
         message="This property must not be empty.",
         check=lambda value: bool(value),
@@ -209,6 +210,12 @@ def _generic_check_properties(
     exclude_resource_path_type = cdp.Exclusion(
         jsonpath="$.resources[*].path", type="type"
     )
+    exclude_resource_path_pattern = cdp.Exclusion(
+        jsonpath="$.resources[*].path", type="pattern"
+    )
+    exclude_resource_path_min_items = cdp.Exclusion(
+        jsonpath="$.resources[*].path", type="minItems"
+    )
 
     cdp.check(
         properties.compact_dict,
@@ -218,6 +225,8 @@ def _generic_check_properties(
                 exclude_resource_data,
                 exclude_resource_path_or_data_required,
                 exclude_resource_path_type,
+                exclude_resource_path_pattern,
+                exclude_resource_path_min_items,
             ]
             + exclusions,
             extensions=cdp.Extensions(

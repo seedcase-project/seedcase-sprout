@@ -352,8 +352,8 @@ wheels = [
 
 [[package]]
 name = "check-datapackage"
-version = "0.18.0"
-source = { git = "https://github.com/seedcase-project/check-datapackage#8098f488019b13e849c07403e4f20cde43d34514" }
+version = "0.22.2"
+source = { git = "https://github.com/seedcase-project/check-datapackage#9410ee4881207ae124d86aeacefe4a4e4154a550" }
 dependencies = [
     { name = "jsonschema" },
     { name = "pydantic" },
