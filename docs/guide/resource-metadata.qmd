@@ -8,7 +8,7 @@ In each [data package](/docs/glossary.qmd) are [data
 resources](/docs/glossary.qmd), which contain conceptually distinct sets
 of data. This page shows you how to use Sprout to create and manage data
 resources inside a data package. You will need to have [created a data
-package](packages.qmd#creating-a-data-package) already.
+package](package.qmd#creating-a-data-package) already.
 
 ::: callout-important
 Data resources can only be created from [tidy

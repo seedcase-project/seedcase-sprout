@@ -4,7 +4,7 @@ order: 2
 jupyter: python3
 ---
 
-In the [previous guide](/docs/guide/packages.qmd), we created a Data
+In the [previous guide](/docs/guide/package.qmd), we created a Data
 Package and saw how to write a minimal set of metadata properties to
 `datapackage.json`. Here, we'll take a closer look at the full
 `package_properties.py` that's created by `create_properties_script()`.

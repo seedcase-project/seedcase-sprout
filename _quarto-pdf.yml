@@ -51,11 +51,7 @@ book:
     - index.qmd
     - part: Guide
       chapters:
-        # - docs/guide/index.qmd
-        - docs/guide/installation.qmd
-        - docs/guide/packages.qmd
-        - docs/guide/resources.qmd
-        - docs/guide/checks.qmd
+        - auto: "docs/guide/*.qmd"
     - part: "Design: Architecture"
       chapters:
         - docs/design/architecture/index.qmd

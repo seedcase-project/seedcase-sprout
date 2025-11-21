@@ -140,7 +140,7 @@ print(file_tree(package_path.root()))
 Inside the `scripts/package_properties.py` file, you will find a
 template for creating the metadata properties of your Data Package
 programmatically. We will walk through the full template in more detail
-in the [next section](/docs/guide/manage-packages.qmd) of the guide.
+in the [next section](/docs/guide/package-metadata.qmd) of the guide.
 Here, we will first start with a simplified `package_properties.py`
 script to more easily understand how to manage metadata via this script.
 
