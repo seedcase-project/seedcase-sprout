@@ -15,7 +15,7 @@ from seedcase_sprout.sprout_checks.required_fields import (
 
 
 def check_package_properties(properties: Any) -> PackageProperties:
-    r"""Check `PackageProperties` (not `ResourceProperties`) against the requirements.
+    """Check `PackageProperties` (not `ResourceProperties`) against the requirements.
 
     Package `properties` are checked against the Data Package standard and the following
     Sprout-specific requirements:
@@ -44,7 +44,7 @@ def check_package_properties(properties: Any) -> PackageProperties:
 
 
 def check_properties(properties: Any) -> PackageProperties:
-    r"""Check that all `properties` match Sprout's requirements.
+    """Check that all `properties` match Sprout's requirements.
 
     If the resources property hasn't been filled in yet, this will only check
     the package properties. The `properties` are checked against the Data
@@ -84,14 +84,14 @@ class DataResourceError(Exception):
         self,
         data_package_error: cdp.DataPackageError,
     ) -> None:
-        r"""Create a `DataResourceError` from a `cdp.DataPackageError`."""
+        """Create a `DataResourceError` from a `cdp.DataPackageError`."""
         # TODO: update when explain() implemented
         message = str(data_package_error).replace(".resources[0]", "")
         super().__init__(message)
 
 
 def check_resource_properties(properties: Any) -> ResourceProperties:
-    r"""Checks that only the resource `properties` match Sprout's requirements.
+    """Checks that only the resource `properties` match Sprout's requirements.
 
     All resource `properties` are checked against the Data Package standard and
     the following Sprout-specific requirements:
