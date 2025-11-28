@@ -356,13 +356,17 @@ wheels = [
 
 [[package]]
 name = "check-datapackage"
-version = "0.22.2"
-source = { git = "https://github.com/seedcase-project/check-datapackage#9410ee4881207ae124d86aeacefe4a4e4154a550" }
+version = "0.23.1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema" },
     { name = "pydantic" },
     { name = "python-jsonpath" },
     { name = "types-jsonschema" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a6/a8/ebaa7324aee42776437960201496af580ff56be2ff670f5d86636e8eab75/check_datapackage-0.23.1.tar.gz", hash = "sha256:9990adbda08bc5a9b0d8f831c274874dcd8170300bde1c4460d978cf9177877a", size = 1145943, upload-time = "2025-11-27T09:29:40.822Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ad/b9/87a082374f9f14026cdda201fa6c62dff20b85fb2d7f274ff6f23d0971fb/check_datapackage-0.23.1-py3-none-any.whl", hash = "sha256:86fe8b6c5d98d4959c1b71c9e25ac3a2e3f32766001542af5cf9e00c8d57eae7", size = 32427, upload-time = "2025-11-27T09:29:39.734Z" },
 ]
 
 [[package]]
@@ -2214,7 +2218,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "check-datapackage", git = "https://github.com/seedcase-project/check-datapackage" },
+    { name = "check-datapackage", specifier = ">=0.23.1" },
     { name = "dacite", specifier = ">=1.9.2" },
     { name = "deepmerge", specifier = ">=2.0" },
     { name = "jinja2", specifier = ">=3.1.6" },
