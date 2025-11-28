@@ -85,8 +85,7 @@ class DataResourceError(Exception):
         data_package_error: cdp.DataPackageError,
     ) -> None:
         """Create a `DataResourceError` from a `cdp.DataPackageError`."""
-        # TODO: update when explain() implemented
-        message = str(data_package_error).replace(".resources[0]", "")
+        message = str(data_package_error).replace("package.resources[0]", "resource")
         super().__init__(message)
 
 
