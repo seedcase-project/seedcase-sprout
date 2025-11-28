@@ -1,6 +1,7 @@
 from json import JSONDecodeError
 from pathlib import Path
 
+import check_datapackage as cdp
 from pytest import raises
 
 from seedcase_sprout import (
@@ -62,7 +63,7 @@ def test_error_incorrect_properties_in_file(tmp_path):
     properties.name = "incorrect name"
     _write_json(properties.compact_dict, tmp_path / "datapackage.json")
 
-    with raises(ExceptionGroup):
+    with raises(cdp.DataPackageError):
         read_properties(tmp_path / "datapackage.json")
 
 

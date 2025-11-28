@@ -8,6 +8,7 @@ from textwrap import dedent
 from .as_readme_text import as_readme_text
 from .check_data import check_data
 from .check_properties import (
+    DataResourceError,
     check_package_properties,
     check_properties,
     check_resource_properties,
@@ -91,4 +92,5 @@ __all__ = [
     "check_properties",
     "check_resource_properties",
     "check_data",
+    "DataResourceError",
 ]
