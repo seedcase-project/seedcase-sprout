@@ -4,6 +4,7 @@ from uuid import uuid4
 import polars as pl
 from pytest import fixture, mark, raises
 
+from seedcase_sprout.check_properties import DataResourceError
 from seedcase_sprout.constants import BATCH_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.examples import example_resource_properties
 from seedcase_sprout.properties import (
@@ -13,9 +14,6 @@ from seedcase_sprout.properties import (
 )
 from seedcase_sprout.read_resource_batches import (
     read_resource_batches,
-)
-from tests.assert_raises_errors import (
-    assert_raises_check_errors,
 )
 from tests.directory_structure_setup import (
     create_test_data_package,
@@ -200,11 +198,10 @@ def test_raises_error_when_properties_do_not_match_data(
 def test_raises_error_with_empty_resource_properties(resource_paths):
     """Raises errors from checks if the resource properties are empty."""
     # When, Then
-    assert_raises_check_errors(
-        lambda: read_resource_batches(
+    with raises(DataResourceError):
+        read_resource_batches(
             resource_properties=ResourceProperties(), paths=resource_paths
         )
-    )
 
 
 def test_uses_cwd_if_no_paths(tmp_cwd, test_package, resource_properties):
