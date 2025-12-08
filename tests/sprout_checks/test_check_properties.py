@@ -1,10 +1,10 @@
 from pathlib import Path
-from typing import cast
 
-from pytest import ExceptionInfo, fixture, mark, raises
+import check_datapackage as cdp
+from pytest import fixture, mark, raises
 
-from seedcase_sprout.check_datapackage import CheckError
 from seedcase_sprout.check_properties import (
+    DataResourceError,
     check_package_properties,
     check_properties,
     check_resource_properties,
@@ -16,9 +16,6 @@ from seedcase_sprout.properties import (
     PackageProperties,
     ResourceProperties,
     SourceProperties,
-)
-from seedcase_sprout.sprout_checks.get_blank_value_for_type import (
-    get_blank_value_for_type,
 )
 from seedcase_sprout.sprout_checks.required_fields import (
     PACKAGE_SPROUT_REQUIRED_FIELDS,
@@ -60,9 +57,23 @@ def test_passes_correct_properties(properties):
     assert check_resource_properties(properties.resources[0]) == properties.resources[0]
     assert check_resource_properties(properties.resources[1]) == properties.resources[1]
 
-    # Even when resources isn't there.
-    delattr(properties, "resources")
-    assert check_properties(properties) == properties
+
+@mark.parametrize("resources", [None, [], [ResourceProperties()]])
+def test_check_package_properties_excludes_resource_properties(properties, resources):
+    """Should pass if there are no resources or if individual resources are
+    incorrect."""
+    properties.resources = resources
+
+    assert check_package_properties(properties) == properties
+
+
+def test_check_package_properties_flags_bad_resource_type(properties):
+    """Should raise an error if the `resources` property as a whole is the wrong
+    type."""
+    properties.resources = 123
+
+    with raises(cdp.DataPackageError):
+        check_package_properties(properties)
 
 
 def test_error_incorrect_argument():
@@ -92,171 +103,91 @@ def test_error_incorrect_argument():
         check_resource_properties("")
 
 
-@mark.parametrize("field", PACKAGE_SPROUT_REQUIRED_FIELDS.keys())
+@mark.parametrize("field", PACKAGE_SPROUT_REQUIRED_FIELDS)
 def test_error_missing_required_package_properties(properties, field):
     """Should be an error if a required package properties is missing."""
     delattr(properties, field)
 
     # All properties checks
-    with raises(ExceptionGroup) as error_info:
+    with raises(cdp.DataPackageError):
         check_properties(properties)
 
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == f"$.{field}"
-    assert errors[0].validator == "required"
-
     # Package only checks
-    with raises(ExceptionGroup) as error_info:
+    with raises(cdp.DataPackageError):
         check_package_properties(properties)
 
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == f"$.{field}"
-    assert errors[0].validator == "required"
+
+def test_check_in_strict_mode(properties):
+    """Properties should be checked in strict mode."""
+    properties.name = "a name with spaces"
+
+    # All properties checks
+    with raises(cdp.DataPackageError):
+        check_properties(properties)
+
+    # Package only checks
+    with raises(cdp.DataPackageError):
+        check_package_properties(properties)
+
+
+@mark.parametrize("name", PACKAGE_SPROUT_REQUIRED_FIELDS)
+@mark.parametrize("value", ["", []])
+def test_error_blank_package_properties(properties, name, value):
+    """Should be an error when a required package field is blank."""
+    setattr(properties, name, value)
+
+    # All properties checks
+    with raises(cdp.DataPackageError):
+        check_properties(properties)
+
+    # Package only checks
+    with raises(cdp.DataPackageError):
+        check_package_properties(properties)
 
 
 @mark.parametrize(
-    "item,value,validator",
+    "field, value",
     [
-        ("name", "a name with spaces", "pattern"),
-        ("title", 123, "type"),
-        ("homepage", "not a URL", "format"),
-        ("resources", 123, "type"),
+        ("contributors", ContributorProperties(title="")),
+        ("sources", SourceProperties(title="")),
+        ("licenses", LicenseProperties(name="")),
+        ("licenses", LicenseProperties(path="")),
     ],
 )
-def test_error_incorrect_property_values(properties, item, value, validator):
-    """Should be an error when the property value is incorrect."""
-    setattr(properties, item, value)
+def test_error_blank_nested_properties(properties, field, value):
+    """Should have errors when the nested required properties are blank."""
+    setattr(properties, field, [value])
 
-    with raises(ExceptionGroup) as error_info:
-        check_package_properties(properties)
-
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == f"$.{item}"
-    assert errors[0].validator == f"{validator}"
-
-    with raises(ExceptionGroup) as error_info:
+    # All properties checks
+    with raises(cdp.DataPackageError):
         check_properties(properties)
 
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == f"$.{item}"
-    assert errors[0].validator == f"{validator}"
-
-
-@mark.parametrize("name,type", PACKAGE_SPROUT_REQUIRED_FIELDS.items())
-def test_error_blank_package_properties(properties, name, type):
-    """Should be an error when a required package field is blank."""
-    setattr(properties, name, get_blank_value_for_type(type))
-
-    with raises(ExceptionGroup) as error_info:
-        check_properties(properties)
-
-    blank_errors = [
-        error for error in _as_check_errors(error_info) if error.validator == "blank"
-    ]
-
-    assert len(blank_errors) == 1
-    assert blank_errors[0].json_path == f"$.{name}"
-
-    with raises(ExceptionGroup) as error_info:
+    # Package only checks
+    with raises(cdp.DataPackageError):
         check_package_properties(properties)
-
-    blank_errors = [
-        error for error in _as_check_errors(error_info) if error.validator == "blank"
-    ]
-
-    assert len(blank_errors) == 1
-    assert blank_errors[0].json_path == f"$.{name}"
-
-
-def test_error_missing_required_nested_properties(properties):
-    """Should have errors when the nested required properties are missing."""
-    setattr(properties, "licenses", [{}])
-    setattr(properties, "contributors", [{}])
-    setattr(properties, "sources", [{}])
-
-    with raises(ExceptionGroup) as error_info:
-        check_package_properties(properties)
-
-    required_errors = [
-        error for error in _as_check_errors(error_info) if error.validator == "required"
-    ]
-    assert [error.json_path for error in required_errors] == [
-        "$.contributors[0].title",
-        "$.licenses[0].name",
-        "$.licenses[0].path",
-        "$.sources[0].title",
-    ]
-
-    with raises(ExceptionGroup) as error_info:
-        check_properties(properties)
-
-    required_errors = [
-        error for error in _as_check_errors(error_info) if error.validator == "required"
-    ]
-    assert [error.json_path for error in required_errors] == [
-        "$.contributors[0].title",
-        "$.licenses[0].name",
-        "$.licenses[0].path",
-        "$.sources[0].title",
-    ]
 
 
 # Resource properties specific --------------------------------------------
 
 
-@mark.parametrize(
-    "field",
-    RESOURCE_SPROUT_REQUIRED_FIELDS.keys(),
-)
-def test_error_missing_required_resource_properties(properties, field):
-    """Should be an error if a required resource properties is missing."""
-    delattr(properties.resources[0], field)
+def test_passes_good_resource_properties():
+    """Should pass good resource properties."""
+    properties = example_resource_properties()
 
-    with raises(ExceptionGroup) as error_info:
-        check_resource_properties(properties.resources[0])
-
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == f"$.{field}"
-    assert errors[0].validator == "required"
-
-    with raises(ExceptionGroup) as error_info:
-        check_properties(properties)
-
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == f"$.resources[0].{field}"
-    assert errors[0].validator == "required"
+    assert check_resource_properties(properties) == properties
 
 
-@mark.parametrize("name,type", RESOURCE_SPROUT_REQUIRED_FIELDS.items())
-def test_error_blank_resource_properties(properties, name, type):
-    """Should be an error when one required resource field is blank."""
-    setattr(properties.resources[0], name, get_blank_value_for_type(type))
+def test_data_resource_error():
+    """`DataResourceError` message should be formatted correctly."""
+    properties = example_resource_properties()
+    properties.name = None
 
-    with raises(ExceptionGroup) as error_info:
-        check_properties(properties)
+    with raises(DataResourceError) as error:
+        check_resource_properties(properties)
 
-    blank_errors = [
-        error for error in _as_check_errors(error_info) if error.validator == "blank"
-    ]
-
-    assert len(blank_errors) == 1
-    assert blank_errors[0].json_path == f"$.resources[0].{name}"
-
-    with raises(ExceptionGroup) as error_info:
-        check_resource_properties(properties.resources[0])
-
-    blank_errors = [
-        error for error in _as_check_errors(error_info) if error.validator == "blank"
-    ]
-
-    assert len(blank_errors) == 1
-    assert blank_errors[0].json_path == f"$.{name}"
+    # TODO: remove all references to "package"
+    # assert "package" not in str(error.value)
+    assert "resources[0]" not in str(error.value)
 
 
 def test_errors_flagged_for_fields_with_multipart_name():
@@ -265,61 +196,113 @@ def test_errors_flagged_for_fields_with_multipart_name():
     assert properties.schema
     properties.schema.primary_key = []
 
-    with raises(ExceptionGroup) as error_info:
+    with raises(DataResourceError):
         check_resource_properties(properties)
 
-    assert all(
-        error.json_path == "$.schema.primaryKey"
-        for error in _as_check_errors(error_info)
-    )
 
+@mark.parametrize(
+    "field",
+    RESOURCE_SPROUT_REQUIRED_FIELDS,
+)
+def test_error_missing_required_resource_properties(properties, field):
+    """Should be an error if a required resource properties is missing."""
+    delattr(properties.resources[0], field)
 
-def test_error_incorrect_resource_property_values(properties):
-    """Should be an error when the property value is incorrect."""
-    properties.resources[0].title = 123
-
-    with raises(ExceptionGroup) as error_info:
-        check_resource_properties(properties.resources[0])
-
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == "$.title"
-    assert errors[0].validator == "type"
-
-    with raises(ExceptionGroup) as error_info:
+    # All properties checks
+    with raises(cdp.DataPackageError):
         check_properties(properties)
 
-    errors = _as_check_errors(error_info)
-    assert len(errors) == 1
-    assert errors[0].json_path == "$.resources[0].title"
-    assert errors[0].validator == "type"
+    # Resource only checks
+    with raises(DataResourceError):
+        check_resource_properties(properties.resources[0])
+
+
+@mark.parametrize("name", RESOURCE_SPROUT_REQUIRED_FIELDS)
+def test_error_blank_resource_properties(properties, name):
+    """Should be an error when one required resource field is blank."""
+    setattr(properties.resources[0], name, "")
+
+    # All properties checks
+    with raises(cdp.DataPackageError):
+        check_properties(properties)
+
+    # Resource only checks
+    with raises(DataResourceError):
+        check_resource_properties(properties.resources[0])
 
 
 @mark.parametrize(
     "path", ["", [], 123, str(Path("resources", "1")), "/bad/path/data.csv"]
 )
 def test_error_no_resource_name_in_path(properties, path):
-    """Should be an error when the resource name isn't in the `path` or is empty."""
+    """Should be an error when the resource name isn't in the path or the path is
+    empty."""
     properties.resources[0].path = path
 
-    with raises(ExceptionGroup) as error_info:
-        check_resource_properties(properties.resources[0])
-
-    errors = _as_check_errors(error_info)
-    assert len(errors) >= 1
-    assert all(error.json_path.endswith("path") for error in errors)
-
-    with raises(ExceptionGroup) as error_info:
+    # All properties checks
+    with raises(cdp.DataPackageError):
         check_properties(properties)
 
-    errors = _as_check_errors(error_info)
-    assert len(errors) >= 1
-    assert all(error.json_path.endswith("path") for error in errors)
+    # Resource only checks
+    with raises(DataResourceError):
+        check_resource_properties(properties.resources[0])
 
 
-def _as_check_errors(
-    error_info: ExceptionInfo[ExceptionGroup[Exception]],
-) -> list[CheckError]:
-    errors = error_info.value.exceptions
-    assert all(isinstance(error, CheckError) for error in errors)
-    return cast(list[CheckError], errors)
+def test_excludes_path_or_data_required(properties):
+    """When both path and data are missing, only path should be flagged."""
+    delattr(properties.resources[0], "path")
+
+    # All properties checks
+    with raises(cdp.DataPackageError) as error1:
+        check_properties(properties)
+    assert "`data`" not in str(error1.value)
+
+    # Resource only checks
+    with raises(DataResourceError) as error2:
+        check_resource_properties(properties.resources[0])
+    assert "`data`" not in str(error2.value)
+
+
+def test_does_not_suggest_path_can_be_array(properties):
+    """Should not suggest that path can be an array."""
+    properties.resources[0].path = 123
+
+    # All properties checks
+    with raises(cdp.DataPackageError) as error1:
+        check_properties(properties)
+    assert "array" not in str(error1.value)
+
+    # Resource only checks
+    with raises(DataResourceError) as error2:
+        check_resource_properties(properties.resources[0])
+    assert "array" not in str(error2.value)
+
+
+def test_does_not_suggest_path_should_match_regex(properties):
+    """Should not suggest that the path has to match a general path regex."""
+    properties.resources[0].path = "/bad/path"
+
+    # All properties checks
+    with raises(cdp.DataPackageError) as error1:
+        check_properties(properties)
+    assert "not match" not in str(error1.value)
+
+    # Resource only checks
+    with raises(DataResourceError) as error2:
+        check_resource_properties(properties.resources[0])
+    assert "not match" not in str(error2.value)
+
+
+def test_does_not_suggest_path_array_should_be_non_empty(properties):
+    """Should not suggest that a path that is an array should not be empty."""
+    properties.resources[0].path = []
+
+    # All properties checks
+    with raises(cdp.DataPackageError) as error1:
+        check_properties(properties)
+    assert "non-empty" not in str(error1.value)
+
+    # Resource only checks
+    with raises(DataResourceError) as error2:
+        check_resource_properties(properties.resources[0])
+    assert "non-empty" not in str(error2.value)

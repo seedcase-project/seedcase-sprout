@@ -5,6 +5,7 @@ from polars.testing import assert_frame_equal
 from pytest import fixture, mark, raises
 
 from seedcase_sprout.check_data import check_data
+from seedcase_sprout.check_properties import DataResourceError
 from seedcase_sprout.examples import (
     example_data,
     example_resource_properties,
@@ -16,7 +17,6 @@ from seedcase_sprout.properties import (
     TableSchemaProperties,
 )
 from tests.assert_raises_errors import (
-    assert_raises_check_errors,
     assert_raises_errors,
 )
 
@@ -213,4 +213,5 @@ def test_rejects_geopoint_with_incorrect_inner_type():
 
 def test_rejects_incorrect_resource_properties():
     """Should throw an error if the resource properties are incorrect."""
-    assert_raises_check_errors(lambda: check_data(example_data(), ResourceProperties()))
+    with raises(DataResourceError):
+        check_data(example_data(), ResourceProperties())

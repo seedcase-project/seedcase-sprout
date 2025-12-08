@@ -2,7 +2,9 @@ from typing import cast
 
 import polars as pl
 from polars.testing import assert_frame_equal
+from pytest import raises
 
+from seedcase_sprout.check_properties import DataResourceError
 from seedcase_sprout.examples import (
     ExamplePackage,
     example_data,
@@ -14,7 +16,6 @@ from seedcase_sprout.properties import ResourceProperties
 from seedcase_sprout.read_properties import read_properties
 from seedcase_sprout.write_resource_data import write_resource_data
 from tests.assert_raises_errors import (
-    assert_raises_check_errors,
     assert_raises_errors,
 )
 
@@ -65,9 +66,8 @@ def test_throws_error_if_resource_properties_incorrect():
     resource_properties = example_resource_properties()
     resource_properties.name = "spaces in name"
 
-    assert_raises_check_errors(
-        lambda: write_resource_data(example_data(), resource_properties)
-    )
+    with raises(DataResourceError):
+        write_resource_data(example_data(), resource_properties)
 
 
 def test_throws_error_if_properties_do_not_match_data():
