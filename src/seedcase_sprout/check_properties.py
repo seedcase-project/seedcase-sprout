@@ -205,6 +205,7 @@ def _generic_check_properties(
         check=lambda value: _check_resource_path_format(value),
         type="resource-path-format",
     )
+    # TODO: This will never fail, as `data` property is removed in `Properties`. Fix?
     no_resource_data = cdp.CustomCheck(
         jsonpath="$.resources[*].data",
         message=(
@@ -218,12 +219,15 @@ def _generic_check_properties(
     exclude_resource_path_or_data_required = cdp.Exclusion(
         jsonpath="$.resources[*]", type="required"
     )
+    # Sprout only uses string for path, so don't need this check.
     exclude_resource_path_type = cdp.Exclusion(
         jsonpath="$.resources[*].path", type="type"
     )
+    # Sprout has its own rules for naming of the paths.
     exclude_resource_path_pattern = cdp.Exclusion(
         jsonpath="$.resources[*].path", type="pattern"
     )
+    # Sprout doesn't allow path to be an array, so exclude this.
     exclude_resource_path_min_items = cdp.Exclusion(
         jsonpath="$.resources[*].path", type="minItems"
     )
