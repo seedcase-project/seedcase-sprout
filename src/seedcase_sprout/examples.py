@@ -92,7 +92,6 @@ def example_resource_properties() -> ResourceProperties:
                     type="number",
                 ),
             ],
-            primary_key=["id"],
         ),
     )
 
