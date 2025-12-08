@@ -211,6 +211,7 @@ def _generic_check_properties(
     exclude_resource_path_type = cdp.Exclusion(
         jsonpath="$.resources[*].path", type="type"
     )
+    # Sprout has its own rules for naming of the paths.
     exclude_resource_path_pattern = cdp.Exclusion(
         jsonpath="$.resources[*].path", type="pattern"
     )
