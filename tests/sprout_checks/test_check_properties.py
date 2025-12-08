@@ -185,7 +185,9 @@ def test_data_resource_error():
     with raises(DataResourceError) as error:
         check_resource_properties(properties)
 
-    assert "package.resources[0]" not in str(error.value)
+    # TODO: remove all references to "package"
+    # assert "package" not in str(error.value)
+    assert "resources[0]" not in str(error.value)
 
 
 def test_errors_flagged_for_fields_with_multipart_name():

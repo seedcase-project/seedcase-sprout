@@ -1,3 +1,4 @@
+from dataclasses import replace
 from typing import Any
 
 import check_datapackage as cdp
@@ -33,7 +34,7 @@ def check_package_properties(properties: Any) -> PackageProperties:
         DataPackageError: an error flagging issues in the package properties.
     """
     package_properties = _check_is_package_properties_type(properties)
-    return _generic_check_properties(
+    _generic_check_properties(
         package_properties,
         exclusions=[
             cdp.Exclusion(jsonpath="$.resources[*] | $.resources[*].*"),
@@ -41,6 +42,7 @@ def check_package_properties(properties: Any) -> PackageProperties:
             cdp.Exclusion(jsonpath="$.resources", type="minItems"),
         ],
     )
+    return package_properties
 
 
 def check_properties(properties: Any) -> PackageProperties:
@@ -82,10 +84,17 @@ class DataResourceError(Exception):
 
     def __init__(
         self,
-        data_package_error: cdp.DataPackageError,
+        issues: list[cdp.Issue],
     ) -> None:
-        """Create a `DataResourceError` from a `cdp.DataPackageError`."""
-        message = str(data_package_error).replace("package.resources[0]", "resource")
+        """Create a `DataResourceError` from `cdp.Issue`s."""
+        issues = _map(
+            issues,
+            lambda issue: replace(
+                issue,
+                jsonpath=issue.jsonpath.replace(".resources[0]", "", 1),
+            ),
+        )
+        message = cdp.explain(issues).replace("`datapackage.json`", "resource", 1)
         super().__init__(message)
 
 
@@ -111,20 +120,22 @@ def check_resource_properties(properties: Any) -> ResourceProperties:
         DataResourceError: an error flagging issues in the resource properties.
     """
     resource_properties = _check_is_resource_properties_type(properties)
-    try:
-        _generic_check_properties(
-            PackageProperties(resources=[resource_properties]),
-            exclusions=[cdp.Exclusion(jsonpath="$.*")],
-        )
-    except cdp.DataPackageError as error:
-        raise DataResourceError(error) from None
+    issues = _generic_check_properties(
+        PackageProperties(resources=[resource_properties]),
+        exclusions=[cdp.Exclusion(jsonpath="$.*")],
+        error=False,
+    )
+    if issues:
+        raise DataResourceError(issues) from None
 
     return resource_properties
 
 
 def _generic_check_properties(
-    properties: PackageProperties, exclusions: list[cdp.Exclusion] = []
-) -> PackageProperties:
+    properties: PackageProperties,
+    exclusions: list[cdp.Exclusion] = [],
+    error: bool = True,
+) -> list[cdp.Issue]:
     """A generic check for Sprout-specific requirements on the Frictionless standard.
 
     All `properties`, excluding those in `exclusions`, are checked against the Data
@@ -139,6 +150,7 @@ def _generic_check_properties(
     Args:
         properties: The full package properties to check, including resource properties.
         exclusions: A list of exclusions for any checks to ignore.
+        error: Whether to raise an error if any issues are found.
 
     Returns:
         Outputs the `properties` object if all checks pass.
@@ -216,7 +228,7 @@ def _generic_check_properties(
         jsonpath="$.resources[*].path", type="minItems"
     )
 
-    cdp.check(
+    return cdp.check(
         properties.compact_dict,
         config=cdp.Config(
             strict=True,
@@ -238,10 +250,8 @@ def _generic_check_properties(
                 ],
             ),
         ),
-        error=True,
+        error=error,
     )
-
-    return properties
 
 
 def _check_resource_path_format(resource_properties: Any) -> bool:
