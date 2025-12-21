@@ -4,6 +4,8 @@ order: 4
 jupyter: python3
 ---
 
+{{< include ../includes/_pretty_repr.qmd >}}
+
 <!-- TODO: I think this section needs to be updated. -->
 
 The structure and content of package and resource properties follow the
@@ -31,9 +33,6 @@ might look like:
 import seedcase_sprout as sp
 from textwrap import dedent
 
-# For pretty printing of output
-from pprint import pprint
-
 package_properties = sp.PackageProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
@@ -58,7 +57,7 @@ the original input:
 
 ```{python}
 package_properties = sp.check_package_properties(package_properties)
-pprint(package_properties)
+package_properties
 ```
 
 Now, let's say we didn't include a `description` in our package
@@ -130,7 +129,7 @@ package_properties = sp.PackageProperties(
     licenses=[sp.LicenseProperties(name="odc-pddl")],
     resources=[sp.ResourceProperties()],
 )
-pprint(sp.check_package_properties(package_properties))
+sp.check_package_properties(package_properties)
 ```
 
 ## Checking resource properties
