@@ -358,17 +358,18 @@ wheels = [
 
 [[package]]
 name = "check-datapackage"
-version = "0.25.0"
+version = "0.29.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema" },
     { name = "pydantic" },
     { name = "python-jsonpath" },
+    { name = "rich" },
     { name = "types-jsonschema" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/70/e3/cf1b70fe56f35cba0a51462c255546f92e54756096cca5750beead91fa7f/check_datapackage-0.25.0.tar.gz", hash = "sha256:8ed9ca93e2bd5313fd29606d0be041effd71be9b74c2b04dbf5e13027d8fb972", size = 1151524, upload-time = "2025-12-08T11:29:09.133Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/86/f0/183fea1322fe965adf6a6b8da2c9552733eb35d63484e2722777d12cf97e/check_datapackage-0.29.0.tar.gz", hash = "sha256:0467b7f9d134f34d8331838be8d61ed6308f4fda3cd984362ed8b0a814d674ab", size = 1153037, upload-time = "2025-12-21T10:30:59.375Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/27/20/a01248526714825134c2234ea2e6f34f7f20434023cd4f1e7dcd1eb2ddde/check_datapackage-0.25.0-py3-none-any.whl", hash = "sha256:2e80d7cba6f4c8a3902ef8033d1a2c33de961fbaac1e9f9687ada864ef309732", size = 34264, upload-time = "2025-12-08T11:29:07.948Z" },
+    { url = "https://files.pythonhosted.org/packages/f7/38/de60cea1353b7d42ac63a15c26576ce38f783fb5b3640a98dee145274b40/check_datapackage-0.29.0-py3-none-any.whl", hash = "sha256:8c32eec9c13dc9ba277531257b0ceac64a1ec1ba8abed66b3467a7bbee519dad", size = 34798, upload-time = "2025-12-21T10:31:00.34Z" },
 ]
 
 [[package]]
