@@ -36,7 +36,7 @@ def generate_dataclasses(path: Path) -> None:
     output_path = Path("tools/generated_properties.py")
 
     schema = Path(path).read_text()
-    return generate(
+    generate(
         schema,
         input_filename=str(path),
         input_file_type=InputFileType.JsonSchema,
