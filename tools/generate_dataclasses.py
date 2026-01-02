@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import Any
 
 import requests
-from datamodel_code_generator import DataModelType, InputFileType, LiteralType, generate
+from datamodel_code_generator import InputFileType, LiteralType, generate
+from datamodel_code_generator.enums import DataModelType
 
 from seedcase_sprout.internals import _write_json
 
