@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import Any
 
 import requests
-from datamodel_code_generator import DataModelType, InputFileType, LiteralType, generate
+from datamodel_code_generator import InputFileType, LiteralType, generate
+from datamodel_code_generator.enums import DataModelType
 
 from seedcase_sprout.internals import _write_json
 
@@ -35,7 +36,7 @@ def generate_dataclasses(path: Path) -> None:
     output_path = Path("tools/generated_properties.py")
 
     schema = Path(path).read_text()
-    return generate(
+    generate(
         schema,
         input_filename=str(path),
         input_file_type=InputFileType.JsonSchema,
