@@ -79,7 +79,8 @@ requests :tada:
 [@signekb](https://github.com/signekb),
 [@martonvago](https://github.com/martonvago),
 [@K-Beicher](https://github.com/K-Beicher),
-[@philter87](https://github.com/philter87)
+[@philter87](https://github.com/philter87),
+[@joelostblom](https://github.com/joelostblom)
 
 ## Licensing
 
