@@ -9,6 +9,12 @@ often, sometimes several in a day. It also means any individual release
 will not have many changes within it. Below is a list of releases along
 with what was changed within it.
 
+## 0.49.1 (2026-01-06)
+
+### Fix
+
+- :bug: import and return in `generate_dataclasses` (#1631)
+
 ## 0.49.0 (2025-12-08)
 
 ### Feat
