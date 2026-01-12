@@ -1,6 +1,6 @@
 ---
 title: "Guide"
-description: "A guide on using Sprout to structure and organize your data."
+description: "A guide to using Sprout to grow your data into a structured, organised, and FAIR Data Package."
 listing:
     contents: .
     type: grid
