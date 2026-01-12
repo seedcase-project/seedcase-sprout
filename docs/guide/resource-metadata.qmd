@@ -165,7 +165,7 @@ metadata properties. Since the file content is somewhat lengthy, it's
 hidden by default on this page. You can click the banner below to
 show it.
 
-::: {.callout-tip icon="false" collapse="true"}
+::: {.callout-tip collapse="true" appearance="minimal"}
 ## Inside the `resource/properties_patients.py` script
 
 ```{python}
@@ -280,7 +280,7 @@ that field properties are added for all the columns in the data. The
 fields that could be automatically extracted also have their metadata
 filled in already, in this case the `name` and `type`:
 
-::: {.callout-tip icon="false" collapse="true"}
+::: {.callout-tip collapse="true" appearance="minimal"}
 ## Inside the `resource_properties_patients.py` script
 
 ```{python}
@@ -399,7 +399,7 @@ package_properties = sp.PackageProperties(
 
 You can click the banner below to view the full file at this point:
 
-::: {.callout-tip icon="false" collapse="true"}
+::: {.callout-tip collapse="true" appearance="minimal"}
 ## Inside the `package_properties.py` script
 
 ```{python}
