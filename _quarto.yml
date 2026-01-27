@@ -5,12 +5,12 @@ website:
   title: "Seedcase Sprout"
   site-url: "https://sprout.seedcase-project.org/"
   repo-url: "https://github.com/seedcase-project/seedcase-sprout"
-  favicon: "_extensions/seedcase-project/seedcase-theme/logos/sprout-logo.svg"
+  favicon: "_extensions/seedcase-project/seedcase-theme/logos/sprout/icon.svg"
   page-navigation: true
   navbar:
     pinned: true
     title: false
-    logo: "_extensions/seedcase-project/seedcase-theme/logos/navbar-logo-seedcase-sprout.svg"
+    logo: "_extensions/seedcase-project/seedcase-theme/logos/sprout/navbar.svg"
     logo-alt: "Seedcase Sprout logo: Main page"
     left:
       - text: "Overview"
