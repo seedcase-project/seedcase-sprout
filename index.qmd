@@ -30,15 +30,15 @@ guide](/docs/guide/index.qmd){.btn .about-link}
 :::: landing-page-block
 ::: hero-text
 Sprout is a Python package for building up, describing, and managing
-research data. It structures your data as standardised
-[Data Packages](https://datapackage.org/) that follow the
+research data. It structures your data as standardised [Data
+Packages](https://datapackage.org/) that follow the
 [FAIR](https://www.go-fair.org/fair-principles/) principles, giving you
 flexibility and control over each step of the data management workflow.
 
 ## Key features :sparkles:
 
--   Creates and manages standardised
-    [Data Packages](https://datapackage.org/) with metadata stored in
+-   Creates and manages standardised [Data
+    Packages](https://datapackage.org/) with metadata stored in
     `datapackage.json`.
 -   Checks both your metadata and your data against the Data Package
     standard, with clear messages pointing directly to where issues
@@ -80,4 +80,3 @@ share your ideas or contribute code. Your input makes us better!
 :::
 ::::
 :::::
-
