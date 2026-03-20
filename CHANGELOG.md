@@ -9,6 +9,12 @@ often, sometimes several in a day. It also means any individual release
 will not have many changes within it. Below is a list of releases along
 with what was changed within it.
 
+## 0.49.2 (2026-03-20)
+
+### Fix
+
+- :bug: expose unexposed types in properties (#1671)
+
 ## 0.49.1 (2026-01-06)
 
 ### Fix
