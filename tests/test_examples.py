@@ -43,14 +43,11 @@ def test_example_data_matches_resource_properties_all_types():
 
 
 def test_creates_package_with_resources():
-    """Should create: package folder, datapackage.json, README."""
+    """Should create: package folder, datapackage.json."""
     with ExamplePackage() as package_path:
         # Test root folder
         assert package_path.root().is_dir()
-        assert len(list(package_path.root().iterdir())) == 3
-        # Test README
-        assert package_path.readme().is_file()
-        assert package_path.readme().read_text()
+        assert len(list(package_path.root().iterdir())) == 2
         # Test datapackage.json
         assert package_path.properties().is_file()
         properties = read_properties(package_path.properties())
@@ -61,14 +58,11 @@ def test_creates_package_with_resources():
 
 
 def test_creates_package_without_resources():
-    """Should create: package folder, datapackage.json, README."""
+    """Should create: package folder, datapackage.json."""
     with ExamplePackage(with_resources=False) as package_path:
         # Test root folder
         assert package_path.root().is_dir()
-        assert len(list(package_path.root().iterdir())) == 2
-        # Test README
-        assert package_path.readme().is_file()
-        assert package_path.readme().read_text()
+        assert len(list(package_path.root().iterdir())) == 1
         # Test datapackage.json
         assert package_path.properties().is_file()
         properties = read_properties(package_path.properties())

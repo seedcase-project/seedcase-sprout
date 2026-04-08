@@ -40,12 +40,10 @@ class PackagePath:
 
         # With default path
         sp.PackagePath().properties()
-        sp.PackagePath().readme()
 
         # With custom path
         my_path = Path("my/path")
         sp.PackagePath(my_path).properties()
-        sp.PackagePath(my_path).readme()
         ```
     """
 
@@ -60,10 +58,6 @@ class PackagePath:
     def properties(self) -> Path:
         """Path to the `datapackage.json` file."""
         return self.root() / "datapackage.json"
-
-    def readme(self) -> Path:
-        """Path to the `README.md` file."""
-        return self.root() / "README.md"
 
     def resources(self) -> Path:
         """Path to the `resources/` folder."""

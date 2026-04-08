@@ -6,7 +6,6 @@ from types import TracebackType
 
 import polars as pl
 
-from seedcase_sprout.as_readme_text import as_readme_text
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     ContributorProperties,
@@ -16,7 +15,6 @@ from seedcase_sprout.properties import (
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.write_file import write_file
 from seedcase_sprout.write_properties import write_properties
 
 
@@ -386,9 +384,6 @@ class ExamplePackage(AbstractContextManager[PackagePath]):
 
         # Save properties
         write_properties(properties=package_properties, path=package_path.properties())
-
-        # Write README
-        write_file(as_readme_text(package_properties), package_path.readme())
 
         os.chdir(package_path.root())
 
