@@ -29,12 +29,11 @@ specification outlined in our
 [documentation](https://sprout.seedcase-project.org/docs/design/interface/inputs),
 specifically that it needs to be a Polars DataFrame.
 
-For this guide, you will use the [(fake) data on
-patients](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv)
-that is already tidy.
-We've placed this data in a `raw/` folder in the Data Package and called
-it `patients.csv`, so that we can keep the original "raw" data separate
-from the processed data.
+For this guide, you will use the
+[(fake) data on patients](https://raw.githubusercontent.com/seedcase-project/data/refs/heads/main/patients/patients.csv)
+that is already tidy. We've placed this data in a `raw/` folder in the
+Data Package and called it `patients.csv`, so that we can keep the
+original "raw" data separate from the processed data.
 
 {{< include _python-minimal-package-setup.qmd >}}
 
@@ -53,8 +52,6 @@ sp.write_properties(
     properties=package_properties,
     path=package_path.properties(),
 )
-readme = sp.as_readme_text(package_properties)
-sp.write_file(readme, package_path.readme())
 
 # TODO: Maybe eventually move this over into Sprout as an example dataset, rather than via a URL.
 # Download the example data to a temporary location.
@@ -130,15 +127,15 @@ if __name__ == "__main__":
     main()
 ```
 
-1.  We already had this line in our script from the previous section of
-    the guide.
-2.  This is the only new line of code. It creates the resource
-    properties script. Note that the script is only created once, it
-    will not be overwritten if it already exists.
-3.  We have removed saving the properties into `datapackage.json` by deleting `write_properties()` and the creation
-    of the README to make it easier to see what is new. You will learn
-    how to write the resource metadata and the README later in this
-    guide.
+1. We already had this line in our script from the previous section of
+   the guide.
+2. This is the only new line of code. It creates the resource properties
+   script. Note that the script is only created once, it will not be
+   overwritten if it already exists.
+3. We have removed saving the properties into `datapackage.json` by
+   deleting `write_properties()` to make it easier to see what is new.
+   You will learn how to write the resource metadata later in this
+   guide.
 
 Now go ahead and run the script like previously:
 
@@ -162,8 +159,8 @@ As you can see, the filename has been suffixed with your chosen
 `scripts/resource_properties_patients.py`, you will see that it looks
 similar to the package metadata script, but with different names for the
 metadata properties. Since the file content is somewhat lengthy, it's
-hidden by default on this page. You can click the banner below to
-show it.
+hidden by default on this page. You can click the banner below to show
+it.
 
 ::: {.callout-tip collapse="true" appearance="minimal"}
 ## Inside the `resource/properties_patients.py` script
@@ -222,25 +219,25 @@ if __name__ == "__main__":
     main()
 ```
 
-1.  Read the original data from the `raw/` folder into a Polars
-    DataFrame.
-2.  Clean the data until you have the name and data type of each column
-    to what you want or need them to be. In our example, the raw data is
-    already cleaned and in a tidy format, but in an actual project, you
-    would likely have a separate cleaning script and call some of its
-    functions here.
-3.  Extract field properties from the cleaned data, such as the column
-    name and its data type.
-4.  Pass the extracted field properties to the function that saves the
-    properties script, so that they are included in the created file.
+1. Read the original data from the `raw/` folder into a Polars
+   DataFrame.
+2. Clean the data until you have the name and data type of each column
+   to what you want or need them to be. In our example, the raw data is
+   already cleaned and in a tidy format, but in an actual project, you
+   would likely have a separate cleaning script and call some of its
+   functions here.
+3. Extract field properties from the cleaned data, such as the column
+   name and its data type.
+4. Pass the extracted field properties to the function that saves the
+   properties script, so that they are included in the created file.
 
 ::: callout-warning
 `extract_field_properties()` extracts the field properties from the
 Polars DataFrame's schema and maps the Polars data type to a Data
-Package [field
-type](https://datapackage.org/standard/table-schema/#field-types). The
-mapping is not perfect, so you may need to edit the extracted properties
-to ensure that they are as you want them to be.
+Package
+[field type](https://datapackage.org/standard/table-schema/#field-types).
+The mapping is not perfect, so you may need to edit the extracted
+properties to ensure that they are as you want them to be.
 :::
 
 Before running the script, we need to manually delete
@@ -454,18 +451,17 @@ package_properties = sp.PackageProperties(
 )
 ```
 
-1.  Import the resource metadata from the resource properties script.
-2.  Set the `resources` parameter of the package metadata to hold
-    information about all the data resources. There would be one item in
-    the list per data resource.
-:::
+1. Import the resource metadata from the resource properties script.
+2. Set the `resources` parameter of the package metadata to hold
+   information about all the data resources. There would be one item in
+   the list per data resource.
+   :::
 
 The next step is to write the resource properties to the
 `datapackage.json` file. Since we included the `resource_properties`
 object directly into the `PackageProperties` class in the
 `scripts/package_properties.py` file, we can add the same steps as in
-the last section of the guide to write the `datapackage.json` file and
-the `README.md` file.
+the last section of the guide to write the `datapackage.json` file.
 
 ```{python}
 #| filename: "main.py"
@@ -485,17 +481,13 @@ def main():
     )
 
     sp.write_properties(properties=package_properties)      # <1>
-    readme_text = sp.as_readme_text(package_properties)     # <2>
-    sp.write_file(readme_text, sp.PackagePath().readme())   # <3>
 
 if __name__ == "__main__":
     main()
 ```
 
-1.  Write `datapackage.json` (including both the package metadata and
-    the resource metadata).
-2.  Create the README text.
-3.  Write the README file.
+1. Write `datapackage.json` (including both the package metadata and the
+   resource metadata).
 
 Now run the `main.py` file form the terminal:
 
@@ -514,11 +506,6 @@ properties.resources = [
 sp.write_properties(
     properties=properties,
     path=package_path.properties(),
-)
-readme_text = sp.as_readme_text(properties)
-sp.write_file(
-    string=readme_text,
-    path=package_path.readme()
 )
 ```
 
@@ -540,8 +527,7 @@ print(
 All the resource metadata is now also saved in this file! If you need to
 update the resource properties later on, you can simply edit the
 `scripts/resource_properties_patients.py` file and then re-run the
-`main.py` file to update the `datapackage.json` file and the `README.md`
-file.
+`main.py` file to update the `datapackage.json` file.
 
 ## Storing a backup of the data as a batch file
 

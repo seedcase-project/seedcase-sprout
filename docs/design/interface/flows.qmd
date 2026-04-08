@@ -18,12 +18,12 @@ all these objects work together and flow into one another.
 Each diagram uses specific shapes and lines to represent different
 things:
 
--   A dotted line between objects/functions means the flow is optional.
--   A solid line between objects/functions means the flow is required
-    and is the next step.
--   A cylinder means an object such as a class or file.
--   A rectangle with rounded corners means an action like a function or
-    method.
+- A dotted line between objects/functions means the flow is optional.
+- A solid line between objects/functions means the flow is required and
+  is the next step.
+- A cylinder means an object such as a class or file.
+- A rectangle with rounded corners means an action like a function or
+  method.
 
 ::: callout-caution
 For some reason, the diagrams below don't display well on some browsers
@@ -98,35 +98,6 @@ flowchart
     create_script --> python_script
 ```
 
-## Updating README after changing package or resource properties
-
-The flow for updating the README file after changing the package or
-resource properties. Since the README template text is generated from
-the properties in the `datapackage.json` file, any change to that file
-will require updating the README file. The split between
-`as_readme_text()` and `write_file()` is to allow for testing or
-programmatically modifying the generated README text before writing it
-to the file.
-
-```{mermaid}
-%%| label: fig-flow-update-readme
-%%| fig-cap: "Diagram showing the flow of objects and functions to update the README file after changing the package or resource properties."
-%%| fig-alt: "A flow diagram showing the steps to update the README file after changing the package or resource properties."
-flowchart
-    properties[(PackageProperties)]
-    path_properties("PackagePath().properties()")
-    read_properties("read_properties()")
-    as_readme_text("as_readme_text()")
-    write_file("write_file()")
-    path_readme("PackagePath().readme()")
-
-    path_properties --> read_properties
-    read_properties --> properties
-    properties --> as_readme_text
-    as_readme_text --> write_file
-    path_readme --> write_file
-```
-
 ## Checking the properties of packages or resources
 
 The flow to check the `datapackage.json` file's properties is fairly
@@ -163,10 +134,10 @@ data resource that has resource properties. Whenever data is added to a
 data resource, it gets first saved in the `batch/` folder to keep track
 of additions or changes. You add the data when:
 
--   A new data resource is created and data is added to it.
--   Additional data is added to an existing data resource.
--   You need to fix, update, or modify existing data in the resource by
-    correcting the data (e.g. fixing a data entry issue).
+- A new data resource is created and data is added to it.
+- Additional data is added to an existing data resource.
+- You need to fix, update, or modify existing data in the resource by
+  correcting the data (e.g. fixing a data entry issue).
 
 The data must be in a tidy format and must have already been loaded in
 as a Polars DataFrame.
