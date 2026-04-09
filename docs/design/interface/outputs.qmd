@@ -59,7 +59,7 @@ The folders that Sprout creates and uses are:
     each data resource in its own folder having a unique resource name
     `<name>`, e.g. `./resources/blood-samples/`.
 
-    ::: callout-note
+::: callout-note
 Using the demographics and blood sample example above, the reason why
 these sources of data would be considered two separate data resources,
 rather than a single, joint data resource, is because, while they both
@@ -73,7 +73,7 @@ output in a specific format. The two types of data are collected in
 different ways and should be recognized as separate entities and thus
 separate data resources, even though they contain data about the same
 group of people.
-    :::
+:::
 
 `./resources/<name>/batch/`
 

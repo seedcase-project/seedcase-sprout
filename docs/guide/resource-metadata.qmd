@@ -455,7 +455,7 @@ package_properties = sp.PackageProperties(
 2. Set the `resources` parameter of the package metadata to hold
    information about all the data resources. There would be one item in
    the list per data resource.
-   :::
+:::
 
 The next step is to write the resource properties to the
 `datapackage.json` file. Since we included the `resource_properties`
