@@ -72,9 +72,9 @@ Sometimes it might feel tedious to fill out metadata properties at all
 and you might be tempted to skip creating a Data Package for your data.
 But it's important to remember just how vital these metadata actually
 are. Without them, your data are simply a collection of files without
-any context or meaning. The metadata (properties) are **crucially
-important** for understanding and actually using the data in your data
-package!
+any context or meaning. The metadata (properties) are
+**crucially important** for understanding and actually using the data in
+your data package!
 
 ## Creating a more complex `datapackage.json` file
 
@@ -191,67 +191,6 @@ If you made a mistake and want to update the properties in the current
 `datapackage.json`, remember that you never need to edit the JSON file
 directly. Instead, you edit the `scripts/package_properties.py` and then
 run the `main.py` script to regenerate `datapackage.json`.
-
-## Creating a README of the metadata properties
-
-Having a *human-readable* version of what is contained in the
-`datapackage.json` file is useful for others who may be working with or
-wanting to learn more about your data package. You can use
-`as_readme_text()` to convert the properties into text that can be added
-to a README file. Let's create a README file with the properties of the
-data package you just created by writing it in the `main.py` file.
-
-```{python}
-#| eval: false
-#| filename: "main.py"
-import seedcase_sprout as sp
-from scripts.package_properties import package_properties
-
-def main():
-    # Create the properties script in default location.
-    sp.create_properties_script()
-    # Save the properties to `datapackage.json`.
-    sp.write_properties(properties=package_properties)
-    # Create text for a README of the data package.
-    readme_text = sp.as_readme_text(package_properties)
-    # Write the README text to a `README.md` file.
-    sp.write_file(readme_text, sp.PackagePath().readme())
-
-if __name__ == "__main__":
-    main()
-```
-
-Sprout splits the README creation functionality into two steps: One to
-make the text and one to write to the file. That way, if you want to add
-or manipulate the text, you can do so before writing it to the file.
-This is useful if you want to add information to the README that you
-don't want included in the `datapackage.json` file. For this guide we
-won't cover how or why to do this.
-
-Next, run this command in the Terminal to make the README file. The
-`write_file()` will always overwrite the existing README file.
-
-``` {.bash filename="Terminal"}
-uv run main.py
-```
-
-```{python}
-#| include: false
-# Only to check that it runs.
-readme_text = sp.as_readme_text(package_properties)
-sp.write_file(
-    string=readme_text,
-    path=package_path.readme()
-)
-```
-
-Now you can see that the `README.md` file has been created in your data
-package:
-
-```{python}
-#| echo: false
-print(file_tree(package_path.root()))
-```
 
 Now that you know how to create and manage metadata at the
 project-level, it is time to learn how to add data to the project and

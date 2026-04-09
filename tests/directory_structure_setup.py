@@ -20,6 +20,4 @@ def create_test_data_package(tmp_path: Path) -> Path:
         properties=example_package_properties(), path=tmp_path / "datapackage.json"
     )
 
-    (tmp_path / "README.md").touch()
-
     return tmp_path

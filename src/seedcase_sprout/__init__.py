@@ -5,7 +5,6 @@
 from pprint import pprint
 from textwrap import dedent
 
-from .as_readme_text import as_readme_text
 from .check_data import check_data
 from .check_properties import (
     DataResourceError,
@@ -73,7 +72,6 @@ __all__ = [
     "ExamplePackage",
     # Packages -----
     "write_properties",
-    "as_readme_text",
     # Resources -----
     "extract_field_properties",
     "join_resource_batches",

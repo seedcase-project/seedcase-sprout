@@ -84,7 +84,6 @@ def test_writes_properties_to_cwd_if_no_path_provided(tmp_cwd, properties):
 
 def test_writes_properties_with_dedented_descriptions(path, properties):
     """Should write properties to file with dedented description."""
-    # Simple test here bc it's tested thoroughly in the `as_readme_text` tests.
     indented_text = """
         Indented description with leading spaces.
         \t Multiline text with tab and space.

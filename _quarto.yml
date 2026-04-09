@@ -78,7 +78,6 @@ quartodoc:
     - title: "Data package functions"
       desc: "Functions to work with and manage data packages, but not the data resources within them."
       contents:
-        - as_readme_text
         - write_file
 
     - title: "Data resource functions"

@@ -19,8 +19,8 @@ functions will likely change quite a bit and may even be deleted later
 when they are no longer needed.
 :::
 
-Based on the [naming
-scheme](/docs/design/architecture/naming.qmd#naming) and the
+Based on the
+[naming scheme](/docs/design/architecture/naming.qmd#naming) and the
 [Frictionless Data Package standard](https://datapackage.org), these are
 the external-facing functions in Sprout. See the
 [Outputs](outputs.qmd#outputs) section for an overview and explanation
@@ -56,19 +56,6 @@ Edge.
 :::
 
 ## Data package functions
-
-### {{< var done >}} `as_readme_text(properties)`
-
-See the help documentation with `help(as_readme_text)` for more details.
-
-```{mermaid}
-flowchart
-    in_properties[/properties/]
-    function("as_readme_text()")
-    out[("str")]
-    in_properties --> function
-    function --> out
-```
 
 ### {{< var done >}} `write_properties(properties, path)`
 
@@ -276,9 +263,9 @@ This function checks the data against the properties in the
 `datapackage.json` file. It checks column names in the data against
 field names (`field.name`) in the properties, column data types against
 field types (`field.type`), and the data itself against any constraints
-on column values (`field.constraints`). See the [function
-flow](flows.qmd#flows) page for more details on the internal flow of
-this function.
+on column values (`field.constraints`). See the
+[function flow](flows.qmd#flows) page for more details on the internal
+flow of this function.
 
 ```{mermaid}
 flowchart
@@ -302,8 +289,8 @@ in May 2024 to have their blood collected and to fill out a survey.
 
 As per legal and privacy regulations of multiple countries, a person can
 request that any personally identifiable and sensitive data of theirs be
-deleted in a variation of a ["right to be
-forgotten"](https://en.wikipedia.org/wiki/Right_to_be_forgotten)
+deleted in a variation of a
+["right to be forgotten"](https://en.wikipedia.org/wiki/Right_to_be_forgotten)
 regulation or law. This function makes this process easier by searching
 for all places where their information is stored in the data and
 deleting it. We cannot guarantee that all data is deleted in the history

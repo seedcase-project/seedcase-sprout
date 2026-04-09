@@ -11,7 +11,6 @@ def test_package_path_outputs_an_absolute_path(tmp_path):
     path = PackagePath(tmp_path)
     assert path.root().is_absolute()
     assert path.properties().is_absolute()
-    assert path.readme().is_absolute()
     assert path.resources().is_absolute()
     assert path.resource("test").is_absolute()
     assert path.resource_data("test").is_absolute()
@@ -23,7 +22,6 @@ def test_methods_return_correct_path(tmp_path):
     package_path = PackagePath(tmp_path)
     assert package_path.root() == tmp_path
     assert package_path.properties() == tmp_path / "datapackage.json"
-    assert package_path.readme() == tmp_path / "README.md"
     assert package_path.resources() == tmp_path / "resources"
     assert package_path.resource("test") == tmp_path / "resources" / "test"
     assert (
