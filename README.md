@@ -77,6 +77,7 @@ requests :tada:
 
 [@lwjohnst86](https://github.com/lwjohnst86),
 [@signekb](https://github.com/signekb),
+[@pchmia](https://github.com/pchmia),
 [@martonvago](https://github.com/martonvago),
 [@K-Beicher](https://github.com/K-Beicher),
 [@philter87](https://github.com/philter87),
