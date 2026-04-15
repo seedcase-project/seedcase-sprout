@@ -1,11 +1,12 @@
 from typing import cast
 
 import polars as pl
+from seedcase_soil import fmap
 
 from seedcase_sprout.check_properties import (
     check_resource_properties,
 )
-from seedcase_sprout.internals import _get_nested_attr, _map
+from seedcase_sprout.internals import _get_nested_attr
 from seedcase_sprout.map_data_types import (
     _get_allowed_polars_types,
     _polars_and_datapackage_types_match,
@@ -184,7 +185,7 @@ def _get_column_type_error(
     Returns:
         A `ValueError`.
     """
-    allowed_types = _map(_get_allowed_polars_types(field.type), str)
+    allowed_types = fmap(_get_allowed_polars_types(field.type), str)
     allowed_types_str = (
         allowed_types[0]
         if len(allowed_types) == 1

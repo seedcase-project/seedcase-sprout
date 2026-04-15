@@ -2,9 +2,9 @@ from dataclasses import replace
 from typing import Any
 
 import check_datapackage as cdp
+from seedcase_soil import fmap
 
 from seedcase_sprout.internals.create import _create_resource_data_path
-from seedcase_sprout.internals.functionals import _map
 from seedcase_sprout.properties import PackageProperties, ResourceProperties
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
@@ -87,7 +87,7 @@ class DataResourceError(Exception):
         issues: list[cdp.Issue],
     ) -> None:
         """Create a `DataResourceError` from `cdp.Issue`s."""
-        issues = _map(
+        issues = fmap(
             issues,
             lambda issue: replace(
                 issue,
@@ -158,7 +158,7 @@ def _generic_check_properties(
     Raises:
         DataPackageError: an error flagging issues in the properties.
     """
-    package_required_checks = _map(
+    package_required_checks = fmap(
         PACKAGE_SPROUT_REQUIRED_FIELDS,
         lambda field: cdp.RequiredCheck(
             jsonpath=f"$.{field}",
@@ -166,7 +166,7 @@ def _generic_check_properties(
         ),
     )
 
-    resource_required_checks = _map(
+    resource_required_checks = fmap(
         RESOURCE_SPROUT_REQUIRED_FIELDS,
         lambda field: cdp.RequiredCheck(
             jsonpath=f"$.resources[*].{field}",
@@ -174,7 +174,7 @@ def _generic_check_properties(
         ),
     )
 
-    not_blank_resource_fields = _map(
+    not_blank_resource_fields = fmap(
         RESOURCE_SPROUT_REQUIRED_FIELDS, lambda field: f"$.resources[*].{field}"
     )
     not_blank = cdp.CustomCheck(
