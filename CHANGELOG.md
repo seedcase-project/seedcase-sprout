@@ -9,6 +9,12 @@ often, sometimes several in a day. It also means any individual release
 will not have many changes within it. Below is a list of releases along
 with what was changed within it.
 
+## 0.49.4 (2026-04-15)
+
+### Refactor
+
+- ♻️ import functionals from soil (#1696)
+
 ## 0.49.3 (2026-04-09)
 
 ### Refactor
