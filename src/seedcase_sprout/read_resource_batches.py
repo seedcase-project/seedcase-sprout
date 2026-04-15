@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 
 import polars as pl
+from seedcase_soil import fmap, pairwise_fmap
 
 from seedcase_sprout.check_data import check_data
 from seedcase_sprout.check_properties import (
@@ -13,7 +14,7 @@ from seedcase_sprout.constants import (
     BATCH_TIMESTAMP_FORMAT,
     BATCH_TIMESTAMP_PATTERN,
 )
-from seedcase_sprout.internals import _check_is_file, _map, _map2
+from seedcase_sprout.internals import _check_is_file
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import ResourceProperties
 
@@ -62,8 +63,8 @@ def read_resource_batches(
     if paths is None:
         paths = PackagePath().resource_batch_files(str(resource_properties.name))
 
-    _map(paths, _check_is_file)
-    return _map2(paths, [resource_properties], _read_parquet_batch_file)
+    fmap(paths, _check_is_file)
+    return pairwise_fmap(paths, [resource_properties], _read_parquet_batch_file)
 
 
 def _read_parquet_batch_file(

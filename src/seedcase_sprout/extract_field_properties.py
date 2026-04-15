@@ -1,6 +1,6 @@
 import polars as pl
+from seedcase_soil import fmap, pairwise_fmap
 
-from seedcase_sprout.internals import _map, _map2
 from seedcase_sprout.map_data_types import (
     _polars_to_datapackage,
 )
@@ -43,9 +43,9 @@ def extract_field_properties(data: pl.DataFrame) -> list[FieldProperties]:
 
     # TODO: add format="binary" to Binary field type?
     field_names = data.columns
-    field_types = _map(data.dtypes, _polars_to_datapackage)
+    field_types = fmap(data.dtypes, _polars_to_datapackage)
 
-    field_properties = _map2(
+    field_properties = pairwise_fmap(
         field_names,
         field_types,
         lambda name, type: FieldProperties(name=name, type=type),
