@@ -205,56 +205,7 @@ flowchart
 Reads the `datapackage.json` file, checks that it is correct, and then
 outputs a `PackageProperties` object.
 
-## Check functions
-
-All check functions check the properties given in the `datapackage.json`
-file against the Frictionless Data Package standard. Even the checks on
-the data itself are based on the properties given in the
-`datapackage.json` file. The checks on the properties are mainly
-wrappers around the `check_datapackage` "sub-package" (that we will
-eventually split into its own package).
-
-### {{< var done >}} `check_properties(properties)`
-
-See the help documentation with `help(check_properties)` for more
-details. This checks all the properties, both package and resources.
-
-```{mermaid}
-flowchart
-    in_properties[/properties/]
-    function("check_properties()")
-    out[("PackageProperties<br>or Error")]
-    in_properties --> function
-    function --> out
-```
-
-### {{< var done >}} `check_package_properties(properties)`
-
-See the help documentation with `help(check_package_properties)` for
-more details. This *only* checks the package properties.
-
-```{mermaid}
-flowchart
-    in_properties[/properties/]
-    function("check_package_properties()")
-    out[("PackageProperties<br>or Error")]
-    in_properties --> function
-    function --> out
-```
-
-### {{< var done >}} `check_resource_properties(resource_properties)`
-
-See the help documentation with `help(check_resource_properties)` for
-more details. The *only* checks the resource properties.
-
-```{mermaid}
-flowchart
-    in_properties[/properties/]
-    function("check_resource_properties()")
-    out[("ResourceProperties<br>or Error")]
-    in_properties --> function
-    function --> out
-```
+## Data functions
 
 ### {{< var done >}} `check_data(data, resource_properties)`
 
