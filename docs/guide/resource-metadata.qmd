@@ -386,7 +386,7 @@ adding the following lines to the `properties.py` file:
 # Import the resource properties object.
 from scripts.resource_properties_patients import resource_properties_patients
 
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     # Your existing package metadata goes here...
     resources=[
         resource_properties_patients,
@@ -406,7 +406,7 @@ You can click the banner below to view the full file at this point:
 import seedcase_sprout as sp
 from scripts.resource_properties_patients import resource_properties_patients   # <1>
 
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
     # You can write Markdown below, with the helper `sp.dedent()`.
@@ -460,7 +460,7 @@ package_properties = sp.PackageProperties(
 
 The next step is to write the resource properties to the
 `datapackage.json` file. Since we included the `resource_properties`
-object directly into the `PackageProperties` class in the
+object directly into the `SproutProperties` class in the
 `scripts/package_properties.py` file, we can add the same steps as in
 the last section of the guide to write the `datapackage.json` file.
 

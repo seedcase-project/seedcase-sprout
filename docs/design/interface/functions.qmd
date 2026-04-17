@@ -33,10 +33,10 @@ specific function. It's designed this way to make it more flexible to
 where individual packages and resources are stored and to make it a bit
 easier to write tests for the functions. For similar reasons, most of
 the functions output either a `dict` Python object, a custom
-`Properties` dataclass, or a path object.
+`BaseProperties` dataclass, or a path object.
 
 Several of the functions have an argument called `properties`. The
-properties argument is a custom `Properties` dataclass (a collection of
+properties argument is a custom `BaseProperties` dataclass (a collection of
 key-value pairs, much like a JSON-style `dict` object) that describes
 the package and its resource(s). This metadata is stored in the
 `datapackage.json` file and follows the Frictionless Data specification.
@@ -181,9 +181,9 @@ to allow us to pass structured properties objects between functions.
 They also enable users to create valid properties objects more easily
 and get an overview of optional and required class fields.
 
-### {{< var done >}} `PackageProperties`
+### {{< var done >}} `SproutProperties`
 
-See the help documentation with `help(PackageProperties())` for more
+See the help documentation with `help(SproutProperties())` for more
 details on the properties.
 
 ## Properties functions
@@ -197,13 +197,13 @@ details.
 flowchart
     in_path[/path/]
     function("read_properties()")
-    out[("PackageProperties")]
+    out[("SproutProperties")]
     in_path --> function
     function --> out
 ```
 
 Reads the `datapackage.json` file, checks that it is correct, and then
-outputs a `PackageProperties` object.
+outputs a `SproutProperties` object.
 
 ## Check functions
 
@@ -223,7 +223,7 @@ details. This checks all the properties, both package and resources.
 flowchart
     in_properties[/properties/]
     function("check_properties()")
-    out[("PackageProperties<br>or Error")]
+    out[("SproutProperties<br>or Error")]
     in_properties --> function
     function --> out
 ```
@@ -237,7 +237,7 @@ more details. This *only* checks the package properties.
 flowchart
     in_properties[/properties/]
     function("check_package_properties()")
-    out[("PackageProperties<br>or Error")]
+    out[("SproutProperties<br>or Error")]
     in_properties --> function
     function --> out
 ```

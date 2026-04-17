@@ -7,11 +7,11 @@ from seedcase_sprout.internals.get import _get_nested_attr
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     FieldProperties,
-    PackageProperties,
+    SproutProperties,
 )
 
 
-def write_properties(properties: PackageProperties, path: Path | None = None) -> Path:
+def write_properties(properties: SproutProperties, path: Path | None = None) -> Path:
     """Write the `properties` to the `datapackage.json` file.
 
     If the `datapackage.json` file already exists, it will be overwritten. If not,

@@ -26,7 +26,7 @@ from seedcase_sprout.sprout_checks.is_resource_name_correct import (
 
 
 @dataclass
-class Properties(ABC):
+class BaseProperties(ABC):
     """An abstract base class for all `*Properties` classes holding common logic."""
 
     @property
@@ -69,12 +69,12 @@ class Properties(ABC):
 
 
 @dataclass
-class ContributorProperties(Properties):
+class ContributorProperties(BaseProperties):
     """The people or organizations who contributed to this data package.
 
     Creates a dataclass object with all the necessary properties for a
     contributor. This would be given in the `contributors` field of a
-    `PackageProperties` object.
+    `SproutProperties` object.
 
     Attributes:
         title (str | None): The name of the contributor.
@@ -108,12 +108,12 @@ class ContributorProperties(Properties):
 
 
 @dataclass
-class LicenseProperties(Properties):
+class LicenseProperties(BaseProperties):
     """The license(s) under which the package or resource is provided.
 
     Creates a dataclass object with all the necessary properties for a
     license, so that it can be added to the `licenses` field of a
-    `PackageProperties` object.
+    `SproutProperties` object.
 
     Attributes:
         name (str | None): Must be an Open Definition license identifier,
@@ -134,7 +134,7 @@ class LicenseProperties(Properties):
 
 
 @dataclass
-class SourceProperties(Properties):
+class SourceProperties(BaseProperties):
     """The raw sources for this data package.
 
     Attributes:
@@ -151,7 +151,7 @@ class SourceProperties(Properties):
 
 
 @dataclass
-class ReferenceProperties(Properties):
+class ReferenceProperties(BaseProperties):
     """The destination part of a foreign key.
 
     Attributes:
@@ -167,7 +167,7 @@ class ReferenceProperties(Properties):
 
 
 @dataclass
-class TableSchemaForeignKeyProperties(Properties):
+class TableSchemaForeignKeyProperties(BaseProperties):
     """A foreign key in a table schema.
 
     A foreign key is a reference where values in a field (or fields) on the table
@@ -206,7 +206,7 @@ FieldType = Literal[
 
 
 @dataclass
-class ConstraintsProperties(Properties):
+class ConstraintsProperties(BaseProperties):
     """A dataclass that expresses constraints for validating field values.
 
     A constraint is a rule that dictates the given values, or range of values,
@@ -252,7 +252,7 @@ class ConstraintsProperties(Properties):
 
 
 @dataclass
-class FieldProperties(Properties):
+class FieldProperties(BaseProperties):
     """A field in a table schema.
 
     Provides human-readable documentation as well as additional information that can
@@ -291,7 +291,7 @@ FieldsMatchType = Literal["exact", "equal", "subset", "superset", "partial"]
 
 
 @dataclass
-class TableSchemaProperties(Properties):
+class TableSchemaProperties(BaseProperties):
     """A table schema for a data resource.
 
     Table schema is a simple language- and implementation-agnostic way to declare a
@@ -329,7 +329,7 @@ class TableSchemaProperties(Properties):
 
 
 @dataclass
-class ResourceProperties(Properties):
+class ResourceProperties(BaseProperties):
     """A data resource.
 
     A simple format to describe and package a single data resource such as an
@@ -338,7 +338,7 @@ class ResourceProperties(Properties):
     richer set of metadata.
 
     Creates a dataclass object with all the necessary properties for a resource,
-    which would be given in the `resources` field of a `PackageProperties`
+    which would be given in the `resources` field of a `SproutProperties`
     dataclass.
 
     Attributes:
@@ -396,7 +396,7 @@ class ResourceProperties(Properties):
 
 
 @dataclass
-class PackageProperties(Properties):
+class SproutProperties(BaseProperties):
     """Properties for a data package.
 
     A simple container format for describing a coherent collection of data in a single
@@ -429,13 +429,13 @@ class PackageProperties(Properties):
     Examples:
         ```{python}
         import seedcase_sprout as sp
-        print(sp.PackageProperties())
-        print(sp.PackageProperties(name="diabetes-cohort", title="Diabetes Cohort"))
-        print(sp.PackageProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
+        print(sp.SproutProperties())
+        print(sp.SproutProperties(name="diabetes-cohort", title="Diabetes Cohort"))
+        print(sp.SproutProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
 
         # To allow multiline strings, use dedent.
         from textwrap import dedent
-        print(sp.PackageProperties(
+        print(sp.SproutProperties(
             title="Birds of North America",
             description=dedent('''
                 # Markdown header
@@ -479,7 +479,7 @@ class PackageProperties(Properties):
         resources: list[ResourceProperties] | None = None,
         sources: list[SourceProperties] | None = None,
     ) -> Self:
-        """Creates a `PackageProperties` dataclass with default values.
+        """Creates a `SproutProperties` dataclass with default values.
 
         Default values (`id`, `version`, and `created`) can be overridden and unset
         values can be set using keyword arguments.
@@ -509,13 +509,13 @@ class PackageProperties(Properties):
                 package.
 
         Returns:
-            A `PackageProperties` dataclass with default values.
+            A `SproutProperties` dataclass with default values.
 
         Examples:
             ```{python}
             import seedcase_sprout as sp
 
-            sp.PackageProperties.from_default(name="my-package", title="My Package...")
+            sp.SproutProperties.from_default(name="my-package", title="My Package...")
             ```
         """
         return cls(

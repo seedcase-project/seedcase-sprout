@@ -17,7 +17,7 @@ Sprout introduces its own structural and formatting requirements.
 
 To make it easy to check metadata against all these requirements, Sprout
 provides a set of check functions. Each check function takes a
-properties object (`PackageProperties` or `ResourceProperties`) as
+properties object (`SproutProperties` or `ResourceProperties`) as
 input, runs all necessary checks, and raises a group of `CheckError`s if
 any checks fail (run `help(CheckError)` for more details). Each
 `CheckError` corresponds to a specific violated requirement. If certain
@@ -33,7 +33,7 @@ might look like:
 import seedcase_sprout as sp
 from textwrap import dedent
 
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
     description=dedent('''
@@ -66,7 +66,7 @@ alerting us that this is a required field. See the end of the output:
 
 ```{python}
 #| error: true
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
     id="123-abc-123",
@@ -84,7 +84,7 @@ case, both errors will be listed in the output:
 
 ```{python}
 #| error: true
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="Woolly Dormice (Toros Dağları)",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
     id="123-abc-123",
@@ -114,7 +114,7 @@ resource properties with all required fields missing. This will be
 ignored when the check runs:
 
 ```{python}
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
     description=dedent('''
@@ -160,7 +160,7 @@ are listed:
 
 ```{python}
 #| error: true
-properties = sp.PackageProperties(
+properties = sp.SproutProperties(
     name="woolly-dormice",
     title="Hibernation Physiology of the Woolly Dormouse: A Scoping Review.",
     id="123-abc-123",
@@ -185,7 +185,7 @@ previous section:
 ...
 |     raise ExceptionGroup(
 | ExceptionGroup: The following checks failed on the properties:
-| PackageProperties(name='woolly-dormice', id='123-abc-123', title='Hibernation Physiology of the Woolly Dormouse: A Scoping Review.', description=None, homepage=None, version='1.0.0', created='2014-05-14T05:00:01+00:00', contributors=None, keywords=None, image=None, licenses=[LicenseProperties(name='odc-pddl', path=None, title=None)], resources=[ResourceProperties(name='woolly-dormice-2015', path='https://en.wikipedia.org/wiki/Woolly_dormouse', type=None, title='Body fat percentage in the hibernating woolly dormouse', description=None, sources=None, licenses=None, format=None, mediatype=None, encoding=None, bytes=None, hash=None, dialect=None, schema=None)], sources=None) (3 sub-exceptions)
+| SproutProperties(name='woolly-dormice', id='123-abc-123', title='Hibernation Physiology of the Woolly Dormouse: A Scoping Review.', description=None, homepage=None, version='1.0.0', created='2014-05-14T05:00:01+00:00', contributors=None, keywords=None, image=None, licenses=[LicenseProperties(name='odc-pddl', path=None, title=None)], resources=[ResourceProperties(name='woolly-dormice-2015', path='https://en.wikipedia.org/wiki/Woolly_dormouse', type=None, title='Body fat percentage in the hibernating woolly dormouse', description=None, sources=None, licenses=None, format=None, mediatype=None, encoding=None, bytes=None, hash=None, dialect=None, schema=None)], sources=None) (3 sub-exceptions)
 +-+---------------- 1 ----------------
 | seedcase_sprout.check_datapackage.check_error.CheckError: Error at `$.description` caused by `required`: 'description' is a required property
 +---------------- 2 ----------------

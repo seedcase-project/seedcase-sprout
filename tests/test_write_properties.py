@@ -10,13 +10,13 @@ from seedcase_sprout.examples import (
 from seedcase_sprout.internals import _read_json, _write_json
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
-    PackageProperties,
+    SproutProperties,
 )
 from seedcase_sprout.write_properties import write_properties
 
 
 @fixture
-def properties() -> PackageProperties:
+def properties() -> SproutProperties:
     properties = example_package_properties()
     properties.resources = [example_resource_properties()]
     return properties
@@ -27,7 +27,7 @@ def path(tmp_path: Path) -> Path:
     return tmp_path / "datapackage.json"
 
 
-def assert_file_contains(path: Path, expected_properties: PackageProperties) -> None:
+def assert_file_contains(path: Path, expected_properties: SproutProperties) -> None:
     new_properties = _read_json(path)
     assert new_properties == expected_properties.compact_dict
 

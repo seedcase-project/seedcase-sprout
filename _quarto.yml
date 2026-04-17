@@ -95,7 +95,7 @@ quartodoc:
       contents:
         - ContributorProperties
         - LicenseProperties
-        - PackageProperties
+        - SproutProperties
         - SourceProperties
 
     - title: "Resource property dataclasses"

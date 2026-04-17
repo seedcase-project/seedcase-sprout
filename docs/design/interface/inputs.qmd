@@ -22,7 +22,7 @@ Properties
     [dataclasses](https://docs.python.org/3/library/dataclasses.html)
     we've created to represent the properties (metadata) of a data
     package or resource. They always use the `*Properties` suffix, such
-    as `PackageProperties` and `ResourceProperties`.
+    as `SproutProperties` and `ResourceProperties`.
 
 Data
 

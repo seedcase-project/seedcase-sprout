@@ -8,7 +8,7 @@ import time_machine
 
 from seedcase_sprout.create_properties_script import create_properties_script
 from seedcase_sprout.paths import PackagePath
-from seedcase_sprout.properties import LicenseProperties, PackageProperties
+from seedcase_sprout.properties import LicenseProperties, SproutProperties
 from tests.load_properties import load_properties
 
 
@@ -20,7 +20,7 @@ def test_creates_script_with_default_values(mock_uuid, tmp_cwd):
 
     assert script_path == PackagePath().properties_script()
     properties = load_properties(script_path, "package_properties")
-    assert properties == PackageProperties(
+    assert properties == SproutProperties(
         name=tmp_cwd.name,
         title="",
         description="",
@@ -37,7 +37,7 @@ def test_works_with_custom_path(tmp_path):
 
     assert script_path == PackagePath(tmp_path).properties_script()
     properties = cast(
-        PackageProperties, load_properties(script_path, "package_properties")
+        SproutProperties, load_properties(script_path, "package_properties")
     )
     assert properties.name == tmp_path.name
 

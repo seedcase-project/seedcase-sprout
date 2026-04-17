@@ -24,7 +24,7 @@ class CodeFormatter(CustomCodeFormatter):
             code = re.sub(class_name_pattern, f"{class_name}Properties", code)
 
         # miscellaneous edits
-        code = code.replace("DataPackageProperties", "PackageProperties")
+        code = code.replace("DataPackageProperties", "SproutProperties")
         code = code.replace("DataResourceProperties", "ResourceProperties")
         code = code.replace("schema_", "schema")
         code = code.replace("from __future__ import annotations\n", "")
