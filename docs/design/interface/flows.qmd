@@ -44,7 +44,7 @@ resource, respectively.
 
 This is the flow for making a new package. The `write_properties()`
 function will internally check the package properties. The
-`PackageProperties` input is imported from a Python script in the
+`SproutProperties` input is imported from a Python script in the
 `scripts/` folder of the data package. To update the properties in the
 `datapackage.json` file, you would edit the Python script with the
 properties directly and then rerun your main script to overwrite the
