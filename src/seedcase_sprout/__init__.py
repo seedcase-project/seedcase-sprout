@@ -6,12 +6,7 @@ from pprint import pprint
 from textwrap import dedent
 
 from .check_data import check_data
-from .check_properties import (
-    DataResourceError,
-    check_package_properties,
-    check_properties,
-    check_resource_properties,
-)
+from .check_properties import DataResourceError
 from .create_properties_script import create_properties_script
 from .create_resource_properties_script import create_resource_properties_script
 from .examples import (
@@ -88,9 +83,6 @@ __all__ = [
     "pprint",
     "dedent",
     # Checks -----
-    "check_package_properties",
-    "check_properties",
-    "check_resource_properties",
     "check_data",
     "DataResourceError",
 ]

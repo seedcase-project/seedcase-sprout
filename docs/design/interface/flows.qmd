@@ -43,13 +43,12 @@ resource, respectively.
 ## Creating or updating a package
 
 This is the flow for making a new package. The `write_properties()`
-function will internally call `check_properties()`, but this can also be
-called separately to check the properties before writing them to the
-`datapackage.json` file. The `PackageProperties` input is imported from
-a Python script in the `scripts/` folder of the data package. To update
-the properties in the `datapackage.json` file, you would edit the Python
-script with the properties directly and then rerun your main script to
-overwrite the `datapackage.json` file with the new properties.
+function will internally check the package properties. The
+`SproutProperties` input is imported from a Python script in the
+`scripts/` folder of the data package. To update the properties in the
+`datapackage.json` file, you would edit the Python script with the
+properties directly and then rerun your main script to overwrite the
+`datapackage.json` file with the new properties.
 
 ```{mermaid}
 %%| label: fig-flow-new-package
@@ -58,10 +57,8 @@ overwrite the `datapackage.json` file with the new properties.
 flowchart
     properties[(PackageProperties)]
     path_properties("PackagePath().properties()")
-    check_properties("check_properties()")
     write_properties("write_properties()")
 
-    properties -.-> check_properties
     properties --> write_properties
     path_properties --> write_properties
 ```
@@ -96,35 +93,6 @@ flowchart
     extract_field_properties --> properties_extracted
     properties_extracted --> create_script
     create_script --> python_script
-```
-
-## Checking the properties of packages or resources
-
-The flow to check the `datapackage.json` file's properties is fairly
-simple. You check `PackageProperties` (with or without resources) using
-either the `check_properties()` function or the
-`check_package_properties()` function. You check a specific resource's
-`ResourceProperties` with the `check_resource_properties()` function.
-All these functions are customised wrappers around a generic
-`_check_properties()` function, which uses arguments to decide which
-properties to check. The `_check_properties()` function is itself a
-wrapper around our `check_datapackage` "sub-package" (which we intend to
-split into its own package later).
-
-```{mermaid}
-%%| label: fig-flow-check-properties
-%%| fig-cap: "Diagram showing the flow of objects and functions to check the properties of packages or resources."
-%%| fig-alt: "A flow diagram showing the steps to check the properties of packages or resources."
-flowchart
-    properties[(PackageProperties)]
-    check_properties("check_properties()")
-    check_package_properties("check_package_properties()")
-    resource_properties[(ResourceProperties)]
-    check_resource_properties("check_resource_properties()")
-
-    properties --> check_properties
-    properties --> check_package_properties
-    resource_properties --> check_resource_properties
 ```
 
 ## Saving new or modified data to batch
