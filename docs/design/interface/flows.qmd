@@ -37,7 +37,7 @@ There are two functions you can use to help with creating much of the
 "boilerplate" code that implements some of the flows below. They are
 `create_properties_script()` and `create_resource_properties_script()`,
 and they are used to create Python scripts that contain the
-`PackageProperties` or `ResourceProperties` for a data package or
+`SproutProperties` or `ResourceProperties` for a data package or
 resource, respectively.
 
 ## Creating or updating a package
@@ -55,7 +55,7 @@ properties directly and then rerun your main script to overwrite the
 %%| fig-cap: "Diagram showing the flow of objects and functions to create a new package."
 %%| fig-alt: "A flow diagram showing the steps to making a new package."
 flowchart
-    properties[(PackageProperties)]
+    properties[(SproutProperties)]
     path_properties("PackagePath().properties()")
     write_properties("write_properties()")
 

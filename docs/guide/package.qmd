@@ -145,13 +145,13 @@ Here, we will first start with a simplified `package_properties.py`
 script to more easily understand how to manage metadata via this script.
 
 Sprout uses Python classes to support creating and editing metadata. For
-example, through the `PackageProperties` class you can use tab
+example, through the `SproutProperties` class you can use tab
 completion to view the names of all existing metadata properties instead
 of trying to memorize them or looking them up in the documentation each
 time. The docstring of each class has more information on what to write
 in the metadata. This documentation is available both in your IDE and
 this website, e.g. for
-[`PackageProperties`](/docs/reference/PackageProperties.qmd).
+[`SproutProperties`](/docs/reference/SproutProperties.qmd).
 
 In the example below, we have filled out all the required metadata
 properties on the package level with sample values. You can go ahead and
@@ -163,7 +163,7 @@ code there.
 
 import seedcase_sprout as sp
 
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
     description="Data from a 2021 study on diabetes prevalence",
@@ -222,7 +222,7 @@ uv run main.py
 
 ::: callout-important
 The `write_properties()` function will give an error if the
-`PackageProperties` object is missing some of its required fields or if
+`SproutProperties` object is missing some of its required fields or if
 they are not filled in correctly. In that case, a `datapackage.json`
 file won't be created. So you will have to return to the
 `scripts/package_properties.py` file and fill in the correct properties.

@@ -11,18 +11,18 @@ from seedcase_sprout.properties import (
     ContributorProperties,
     FieldProperties,
     LicenseProperties,
-    PackageProperties,
     ResourceProperties,
+    SproutProperties,
     TableSchemaProperties,
 )
 from seedcase_sprout.write_properties import write_properties
 
 
-def example_package_properties() -> PackageProperties:
+def example_package_properties() -> SproutProperties:
     """Generate an example package properties object.
 
     Returns:
-        An example `PackageProperties` object.
+        An example `SproutProperties` object.
 
     Examples:
         ```{python}
@@ -30,7 +30,7 @@ def example_package_properties() -> PackageProperties:
         sp.example_package_properties()
         ```
     """
-    properties = PackageProperties.from_default(
+    properties = SproutProperties.from_default(
         name="example-package",
         title="Example fake data package",
         description="Data from a fake data package on something.",

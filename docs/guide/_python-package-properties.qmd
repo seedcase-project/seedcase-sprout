@@ -1,7 +1,7 @@
 ```{python}
 #| include: false
 # This is only to check that it runs.
-properties = sp.PackageProperties.from_default(
+properties = sp.SproutProperties.from_default(
     name="diabetes-study",
     title="A Study on Diabetes",
     # You can write Markdown below, with the helper `sp.dedent()`.

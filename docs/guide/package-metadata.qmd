@@ -90,7 +90,7 @@ classes:
 
 import seedcase_sprout as sp
 
-package_properties = sp.PackageProperties(
+package_properties = sp.SproutProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
     # You can write Markdown below, with the helper `sp.dedent()`.

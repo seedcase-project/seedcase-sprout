@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from seedcase_sprout.constants import TEMPLATES_PATH
 from seedcase_sprout.paths import PackagePath
-from seedcase_sprout.properties import PackageProperties
+from seedcase_sprout.properties import SproutProperties
 from seedcase_sprout.write_file import write_file
 
 
@@ -37,6 +37,6 @@ def create_properties_script(path: Path | None = None) -> Path:
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     template = env.get_template("package_properties.py.jinja2")
     text = template.render(
-        properties=PackageProperties.from_default(name=package_path.root().name)
+        properties=SproutProperties.from_default(name=package_path.root().name)
     )
     return write_file(text, script_path)

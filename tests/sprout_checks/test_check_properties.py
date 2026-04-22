@@ -13,9 +13,9 @@ from seedcase_sprout.examples import example_resource_properties
 from seedcase_sprout.properties import (
     ContributorProperties,
     LicenseProperties,
-    PackageProperties,
     ResourceProperties,
     SourceProperties,
+    SproutProperties,
 )
 from seedcase_sprout.sprout_checks.required_fields import (
     PACKAGE_SPROUT_REQUIRED_FIELDS,
@@ -25,7 +25,7 @@ from seedcase_sprout.sprout_checks.required_fields import (
 
 @fixture
 def properties():
-    return PackageProperties(
+    return SproutProperties(
         name="package-1",
         id="abc1",
         title="Package 1",
@@ -82,7 +82,7 @@ def test_error_incorrect_argument():
         check_properties(ResourceProperties())
 
     with raises(TypeError):
-        check_resource_properties(PackageProperties())
+        check_resource_properties(SproutProperties())
 
     with raises(TypeError):
         check_properties("")

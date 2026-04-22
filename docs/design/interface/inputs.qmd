@@ -22,7 +22,11 @@ Properties
     [dataclasses](https://docs.python.org/3/library/dataclasses.html)
     we've created to represent the properties (metadata) of a data
     package or resource. They always use the `*Properties` suffix, such
-    as `PackageProperties` and `ResourceProperties`.
+    as `SproutProperties` and `ResourceProperties`. While `SproutProperties`
+    holds general Data Package properties, we intentionally avoided a name
+    such as `DataPackageProperties` to communicate that Sprout uses stricter
+    criteria for some properties than the full flexibility that is available
+    in the Data Package specification.
 
 Data
 

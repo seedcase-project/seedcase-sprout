@@ -229,7 +229,7 @@ class ResourceProperties:
 
 
 @dataclass
-class PackageProperties:
+class SproutProperties:
     """Data Package
 
     Attributes:

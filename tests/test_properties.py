@@ -13,10 +13,10 @@ from seedcase_sprout.properties import (
     ContributorProperties,
     FieldProperties,
     LicenseProperties,
-    PackageProperties,
     ReferenceProperties,
     ResourceProperties,
     SourceProperties,
+    SproutProperties,
     TableSchemaForeignKeyProperties,
     TableSchemaProperties,
 )
@@ -34,7 +34,7 @@ from seedcase_sprout.properties import (
         FieldProperties,
         TableSchemaProperties,
         ResourceProperties,
-        PackageProperties,
+        SproutProperties,
     ],
 )
 def test_initiated_class_only_contains_none_values(cls):
@@ -54,7 +54,7 @@ def test_compact_dict_preserves_only_non_none_values():
     # Since this is a test of the base class, it's enough to test only one subclass
 
     # Given
-    properties = PackageProperties(name="package-1", version="3.2.1")
+    properties = SproutProperties(name="package-1", version="3.2.1")
 
     # When, then
     assert properties.compact_dict == {"name": "package-1", "version": "3.2.1"}
@@ -63,7 +63,7 @@ def test_compact_dict_preserves_only_non_none_values():
 def test_compact_dict_removes_none_values_in_nested_objects():
     """Given properties with a nested structure, should return a dictionary with only
     non-None values"""
-    properties = PackageProperties(
+    properties = SproutProperties(
         resources=[
             ResourceProperties(
                 schema=TableSchemaProperties(
@@ -89,9 +89,9 @@ def test_compact_dict_removes_none_values_in_nested_objects():
 @patch("seedcase_sprout.properties.uuid4", return_value=UUID(int=1))
 @time_machine.travel(datetime(2024, 5, 14, 5, 0, 1, tzinfo=ZoneInfo("UTC")), tick=False)
 def test_creates_package_properties_with_correct_defaults(mock_uuid):
-    """`from_default` should create `PackageProperties` with correct defaults for id,
+    """`from_default` should create `SproutProperties` with correct defaults for id,
     version, and created."""
-    properties = PackageProperties.from_default()
+    properties = SproutProperties.from_default()
 
     assert properties.id == str(mock_uuid())
     assert properties.version == "0.1.0"
@@ -101,8 +101,8 @@ def test_creates_package_properties_with_correct_defaults(mock_uuid):
 @time_machine.travel(datetime(2024, 5, 14, 5, 0, 1, tzinfo=ZoneInfo("UTC")), tick=False)
 def test_allows_overriding_defaults():
     """It should be possible to override defaults with non-None values when creating
-    `PackageProperties` using `from_default`."""
-    properties = PackageProperties.from_default(id="abc", name="my-name", created=None)
+    `SproutProperties` using `from_default`."""
+    properties = SproutProperties.from_default(id="abc", name="my-name", created=None)
 
     assert properties.name == "my-name"
     assert properties.id == "abc"
@@ -133,7 +133,7 @@ def test_allows_overriding_defaults():
         ),
         (
             {"version": "1.0.0", "contributors": [{"familyName": "Doe"}]},
-            PackageProperties(
+            SproutProperties(
                 version="1.0.0", contributors=[ContributorProperties(family_name="Doe")]
             ),
         ),

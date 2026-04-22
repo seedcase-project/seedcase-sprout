@@ -3,14 +3,14 @@ from pathlib import Path
 from seedcase_sprout.check_properties import check_properties
 from seedcase_sprout.internals import _check_is_file, _read_json
 from seedcase_sprout.paths import PackagePath
-from seedcase_sprout.properties import PackageProperties
+from seedcase_sprout.properties import SproutProperties
 
 
-def read_properties(path: Path | None = None) -> PackageProperties:
+def read_properties(path: Path | None = None) -> SproutProperties:
     """Read in the properties from the `datapackage.json` file.
 
     Reads the `datapackage.json` file, checks that it is correct, and then
-    outputs a `PackageProperties` object.
+    outputs a `SproutProperties` object.
 
     Args:
         path: The path to the `datapackage.json` file. Use `PackagePath().properties()`
@@ -18,7 +18,7 @@ def read_properties(path: Path | None = None) -> PackageProperties:
             for the `datapackage.json` file in the current working directory.
 
     Returns:
-        A `PackageProperties` object with the properties from the
+        A `SproutProperties` object with the properties from the
             `datapackage.json` file.
 
     Examples:
@@ -36,6 +36,6 @@ def read_properties(path: Path | None = None) -> PackageProperties:
     path = path or PackagePath().properties()
     _check_is_file(path)
     properties_dict = _read_json(path)
-    properties = PackageProperties.from_dict(properties_dict)
+    properties = SproutProperties.from_dict(properties_dict)
     check_properties(properties)
     return properties

@@ -5,7 +5,7 @@ import check_datapackage as cdp
 from seedcase_soil import fmap
 
 from seedcase_sprout.internals.create import _create_resource_data_path
-from seedcase_sprout.properties import PackageProperties, ResourceProperties
+from seedcase_sprout.properties import ResourceProperties, SproutProperties
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
 )
@@ -15,8 +15,8 @@ from seedcase_sprout.sprout_checks.required_fields import (
 )
 
 
-def check_package_properties(properties: Any) -> PackageProperties:
-    """Check `PackageProperties` (not `ResourceProperties`) against the requirements.
+def check_package_properties(properties: Any) -> SproutProperties:
+    """Check `SproutProperties` (not `ResourceProperties`) against the requirements.
 
     Package `properties` are checked against the Data Package standard and the following
     Sprout-specific requirements:
@@ -45,7 +45,7 @@ def check_package_properties(properties: Any) -> PackageProperties:
     return package_properties
 
 
-def check_properties(properties: Any) -> PackageProperties:
+def check_properties(properties: Any) -> SproutProperties:
     """Check that all `properties` match Sprout's requirements.
 
     If the resources property hasn't been filled in yet, this will only check
@@ -121,7 +121,7 @@ def check_resource_properties(properties: Any) -> ResourceProperties:
     """
     resource_properties = _check_is_resource_properties_type(properties)
     issues = _generic_check_properties(
-        PackageProperties(resources=[resource_properties]),
+        SproutProperties(resources=[resource_properties]),
         exclusions=[cdp.Exclusion(jsonpath="$.*")],
         error=False,
     )
@@ -132,7 +132,7 @@ def check_resource_properties(properties: Any) -> ResourceProperties:
 
 
 def _generic_check_properties(
-    properties: PackageProperties,
+    properties: SproutProperties,
     exclusions: list[cdp.Exclusion] = [],
     error: bool = True,
 ) -> list[cdp.Issue]:
@@ -205,7 +205,7 @@ def _generic_check_properties(
         check=lambda value: _check_resource_path_format(value),
         type="resource-path-format",
     )
-    # TODO: This will never fail, as `data` property is removed in `Properties`. Fix?
+    # TODO: This will never fail as `data` property is removed in `BaseProperties`. Fix?
     no_resource_data = cdp.CustomCheck(
         jsonpath="$.resources[*].data",
         message=(
@@ -284,10 +284,10 @@ def _check_resource_path_format(resource_properties: Any) -> bool:
     return path == expected_path
 
 
-def _check_is_package_properties_type(properties: Any) -> PackageProperties:
-    if not isinstance(properties, PackageProperties):
+def _check_is_package_properties_type(properties: Any) -> SproutProperties:
+    if not isinstance(properties, SproutProperties):
         raise TypeError(
-            f"Expected properties to be a PackageProperties object,"
+            f"Expected properties to be a SproutProperties object,"
             f"but the object is {type(properties)}"
         )
     return properties
