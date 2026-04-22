@@ -112,9 +112,6 @@ quartodoc:
       desc: "Functions used to work with properties."
       contents:
         - check_data
-        - check_properties
-        - check_package_properties
-        - check_resource_properties
         - create_properties_script
         - create_resource_properties_script
         - read_properties
