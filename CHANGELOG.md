@@ -9,6 +9,12 @@ often, sometimes several in a day. It also means any individual release
 will not have many changes within it. Below is a list of releases along
 with what was changed within it.
 
+## 0.49.6 (2026-04-22)
+
+### Refactor
+
+- ♻️ rename `Properties` classes to be more specific (#1698)
+
 ## 0.49.5 (2026-04-21)
 
 ### Refactor
