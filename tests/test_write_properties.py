@@ -8,7 +8,6 @@ from seedcase_sprout.examples import (
     example_package_properties,
     example_resource_properties,
 )
-from seedcase_sprout.internals import _read_json
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     SproutProperties,
@@ -29,7 +28,7 @@ def path(tmp_path: Path) -> Path:
 
 
 def assert_file_contains(path: Path, expected_properties: SproutProperties) -> None:
-    new_properties = _read_json(path)
+    new_properties = ss.read_properties(ss.parse_source(str(path)))
     assert new_properties == expected_properties.compact_dict
 
 
