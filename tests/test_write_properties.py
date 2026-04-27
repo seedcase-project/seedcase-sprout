@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import check_datapackage as cdp
-import seedcase_soil as ss
+import seedcase_soil as so
 from pytest import fixture, raises
 
 from seedcase_sprout.examples import (
@@ -28,7 +28,7 @@ def path(tmp_path: Path) -> Path:
 
 
 def assert_file_contains(path: Path, expected_properties: SproutProperties) -> None:
-    new_properties = ss.read_properties(ss.parse_source(str(path)))
+    new_properties = so.read_properties(so.parse_source(str(path)))
     assert new_properties == expected_properties.compact_dict
 
 
@@ -44,7 +44,7 @@ def test_overwrites_properties_when_file_exists(path, properties):
         "name": "old-name",
         "resources": [{"name": "old-resource-name"}, {"name": "another-old-resource"}],
     }
-    ss.write_properties(old_properties, path)
+    so.write_properties(old_properties, path)
 
     assert write_properties(properties, path) == path
     assert_file_contains(path, properties)
