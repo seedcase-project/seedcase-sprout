@@ -1,15 +1,15 @@
-from json import JSONDecodeError
 from pathlib import Path
 
 import check_datapackage as cdp
+import seedcase_soil as so
 from pytest import raises
+from seedcase_soil import errors
 
 from seedcase_sprout import (
     example_package_properties,
     read_properties,
     write_properties,
 )
-from seedcase_sprout.internals import _write_json
 from seedcase_sprout.paths import PackagePath
 
 
@@ -37,23 +37,23 @@ def test_reads_when_resource_not_exists(tmp_path):
 
 
 def test_throws_error_if_path_points_to_dir(tmp_path):
-    """Should throw FileNotFoundError if the path points to a folder."""
-    with raises(FileNotFoundError):
+    """Should throw FileDoesNotExistError if the path points to a folder."""
+    with raises(errors.FileDoesNotExistError):
         read_properties(tmp_path)
 
 
 def test_throws_error_if_path_points_to_nonexistent_file(tmp_path):
-    """Should throw FileNotFoundError if the path points to a nonexistent file."""
-    with raises(FileNotFoundError):
+    """Should throw FileDoesNotExistError if the path points to a nonexistent file."""
+    with raises(errors.FileDoesNotExistError):
         read_properties(tmp_path / "datapackage.json")
 
 
 def test_throws_error_if_properties_file_cannot_be_read(tmp_path):
-    """Should throw JSONDecodeError if the properties file cannot be read as JSON."""
+    """Should throw JSONFormatError if the properties file cannot be read as JSON."""
     file_path = Path(tmp_path / "datapackage.json")
     file_path.write_text(",,, this is not, JSON")
 
-    with raises(JSONDecodeError):
+    with raises(errors.JSONFormatError):
         read_properties(file_path)
 
 
@@ -61,7 +61,7 @@ def test_error_incorrect_properties_in_file(tmp_path):
     """Can't read in properties if the properties file is incorrect."""
     properties = example_package_properties()
     properties.name = "incorrect name"
-    _write_json(properties.compact_dict, tmp_path / "datapackage.json")
+    so.write_properties(properties.compact_dict, tmp_path / "datapackage.json")
 
     with raises(cdp.DataPackageError):
         read_properties(tmp_path / "datapackage.json")
@@ -78,5 +78,5 @@ def test_reads_properties_from_cwd_if_no_path_provided(tmp_cwd):
 def test_fails_correctly_if_no_path_provided_and_no_properties_in_cwd(tmp_cwd):
     """Should throw the expected error if no path is provided and there is no
     datapackage.json in the cwd."""
-    with raises(FileNotFoundError):
+    with raises(errors.FileDoesNotExistError):
         read_properties()

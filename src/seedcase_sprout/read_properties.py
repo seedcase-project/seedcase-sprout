@@ -1,7 +1,8 @@
 from pathlib import Path
 
+import seedcase_soil as so
+
 from seedcase_sprout.check_properties import check_properties
-from seedcase_sprout.internals import _check_is_file, _read_json
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import SproutProperties
 
@@ -30,12 +31,12 @@ def read_properties(path: Path | None = None) -> SproutProperties:
         ```
 
     Raises:
-        FileNotFound: If the `datapackage.json` file doesn't exist.
-        JSONDecodeError: If the `datapackage.json` file couldn't be read.
+        so.errors.FileDoesNotExistError: If the file cannot be found.
+        so.errors.JSONFormatError: If the JSON file is malformatted.
     """
-    path = path or PackagePath().properties()
-    _check_is_file(path)
-    properties_dict = _read_json(path)
+    properties_dict = so.read_properties(
+        so.parse_source(str(path or PackagePath().properties()))
+    )
     properties = SproutProperties.from_dict(properties_dict)
     check_properties(properties)
     return properties
