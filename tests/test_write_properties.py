@@ -1,13 +1,14 @@
 from pathlib import Path
 
 import check_datapackage as cdp
+import seedcase_soil as ss
 from pytest import fixture, raises
 
 from seedcase_sprout.examples import (
     example_package_properties,
     example_resource_properties,
 )
-from seedcase_sprout.internals import _read_json, _write_json
+from seedcase_sprout.internals import _read_json
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     SproutProperties,
@@ -44,7 +45,7 @@ def test_overwrites_properties_when_file_exists(path, properties):
         "name": "old-name",
         "resources": [{"name": "old-resource-name"}, {"name": "another-old-resource"}],
     }
-    _write_json(old_properties, path)
+    ss.write_properties(old_properties, path)
 
     assert write_properties(properties, path) == path
     assert_file_contains(path, properties)

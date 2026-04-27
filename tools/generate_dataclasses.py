@@ -3,10 +3,9 @@ from pathlib import Path
 from typing import Any
 
 import requests
+import seedcase_soil as ss
 from datamodel_code_generator import InputFileType, LiteralType, generate
 from datamodel_code_generator.enums import DataModelType
-
-from seedcase_sprout.internals import _write_json
 
 
 def get_schema(path: Path) -> Any:
@@ -27,7 +26,7 @@ def get_schema(path: Path) -> Any:
     ]
     del table_schema_fkey_items["oneOf"]
 
-    _write_json(schema, path)
+    ss.write_properties(schema, path)
     return schema
 
 

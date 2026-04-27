@@ -1,8 +1,10 @@
 from pathlib import Path
 from typing import cast
 
+import seedcase_soil as ss
+
 from seedcase_sprout.check_properties import check_properties
-from seedcase_sprout.internals import _to_dedented, _write_json
+from seedcase_sprout.internals import _to_dedented
 from seedcase_sprout.internals.get import _get_nested_attr
 from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
@@ -46,4 +48,4 @@ def write_properties(properties: SproutProperties, path: Path | None = None) -> 
 
     check_properties(properties)
 
-    return _write_json(properties.compact_dict, path)
+    return ss.write_properties(properties.compact_dict, path)

@@ -2,6 +2,7 @@ from json import JSONDecodeError
 from pathlib import Path
 
 import check_datapackage as cdp
+import seedcase_soil as ss
 from pytest import raises
 
 from seedcase_sprout import (
@@ -9,7 +10,6 @@ from seedcase_sprout import (
     read_properties,
     write_properties,
 )
-from seedcase_sprout.internals import _write_json
 from seedcase_sprout.paths import PackagePath
 
 
@@ -61,7 +61,7 @@ def test_error_incorrect_properties_in_file(tmp_path):
     """Can't read in properties if the properties file is incorrect."""
     properties = example_package_properties()
     properties.name = "incorrect name"
-    _write_json(properties.compact_dict, tmp_path / "datapackage.json")
+    ss.write_properties(properties.compact_dict, tmp_path / "datapackage.json")
 
     with raises(cdp.DataPackageError):
         read_properties(tmp_path / "datapackage.json")
