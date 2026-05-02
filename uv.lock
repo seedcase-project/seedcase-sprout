@@ -375,7 +375,7 @@ wheels = [
 
 [[package]]
 name = "check-datapackage"
-version = "0.33.0"
+version = "0.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema" },
@@ -385,9 +385,9 @@ dependencies = [
     { name = "seedcase-soil" },
     { name = "types-jsonschema" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ce/40/6d132b8522caaa81f2d3cad81c37dc732b094891feba893bb04a97697f0e/check_datapackage-0.33.0.tar.gz", hash = "sha256:c1df154f2047d6b8ecddf3ba4a7d7d2c36b6eae8e010fdf65d70df7e71f56701", size = 1083043, upload-time = "2026-04-16T13:26:51.507Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/ac/77af7c0c6ebc5dde15da31891365b6c0ec9427b9a6b1786a53f1024972a3/check_datapackage-0.34.0.tar.gz", hash = "sha256:494f8c5c3df6d2f54ef8a41a497ea19a0acfb5d2d77ca3b16a0d06ce26c09a58", size = 1086921, upload-time = "2026-04-30T08:28:47.958Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/98/502d40cca9275b947b1d7c69080da5592ad0985294d5facb7da3387557e5/check_datapackage-0.33.0-py3-none-any.whl", hash = "sha256:d3e123149679506871c7bb7650a38e7b644a07ab755dc786ed0d42af88e3ef58", size = 35836, upload-time = "2026-04-16T13:26:52.621Z" },
+    { url = "https://files.pythonhosted.org/packages/19/4d/2ac332e5de86c049a67f9a95ada7cd4ca559a4f38c7e66603f4b6c8cbe16/check_datapackage-0.34.0-py3-none-any.whl", hash = "sha256:f63c19b2cf1d9be03574620c3819f4e4bafb898efa269a140c401a4d89ce70b0", size = 36206, upload-time = "2026-04-30T08:28:46.698Z" },
 ]
 
 [[package]]
