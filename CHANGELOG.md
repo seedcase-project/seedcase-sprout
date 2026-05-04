@@ -9,6 +9,8 @@ often, sometimes several in a day. It also means any individual release
 will not have many changes within it. Below is a list of releases along
 with what was changed within it.
 
+## 0.50.0 (2026-05-04)
+
 ## 0.49.7 (2026-04-27)
 
 ### Refactor
