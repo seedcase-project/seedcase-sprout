@@ -12,7 +12,9 @@ a shell
 script](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
 or [via pipx](https://docs.astral.sh/uv/getting-started/installation/#pypi).
 
-To check that these programs are installed, run the following commands
+To check that
+
+these programs are installed, run the following commands
 in your Terminal:
 
 ``` {.bash filename="Terminal"}
@@ -47,7 +49,7 @@ structure of a Python project:
 
 <!-- TODO: Auto-create this some how? -->
 
-```
+```text
 diabetes-study/
 ├── .git/
 ├── .gitignore
