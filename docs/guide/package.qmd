@@ -118,7 +118,7 @@ your Terminal:
 
 ``` {.bash filename="Terminal"}
 touch scripts/__init__.py
-```ya
+```
 
 ```{python}
 #| include: false
