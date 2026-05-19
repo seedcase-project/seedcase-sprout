@@ -49,6 +49,7 @@ guide](https://sprout.seedcase-project.org/docs/guide/installation):
 
 ```{python}
 #| echo: false
+from seedcase_soil import file_tree
 print(file_tree(package_path.root()))
 ```
 

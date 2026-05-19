@@ -47,7 +47,7 @@ structure of a Python project:
 
 <!-- TODO: Auto-create this some how? -->
 
-```
+```text
 diabetes-study/
 ├── .git/
 ├── .gitignore
