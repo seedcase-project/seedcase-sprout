@@ -12,8 +12,10 @@ Sprout helps to ensure and enforce that research data are well-designed,
 discoverable, well-documented, and ultimately more (re)usable for later
 analyses.
 
-Specifically, Sprout assists in the creation of a [Data
-Package](/docs/glossary.qmd) which enforces best practices for both the
+<!-- TODO: update link to data package glossary -->
+
+Specifically, Sprout assists in the creation of a Data
+Package which enforces best practices for both the
 **data** and **metadata** in a project:
 
 - **Data** must follow the [tidy specification for tabular

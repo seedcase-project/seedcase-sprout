@@ -6,9 +6,11 @@ jupyter: python3
 
 ## What is a Data Package?
 
-At the core of Sprout is the [Data Package](/docs/glossary.qmd), which
+<!-- TODO: update links to glossary for terms -->
+
+At the core of Sprout is the Data Package, which
 is a standardized way of documenting data via structured metadata.
-Technically, a data Package is any folder that has a file called
+Technically, a Data Package is any folder that has a file called
 `datapackage.json` in it that contains metadata following the formal
 [Data Package
 specification](https://datapackage.org/standard/data-package/#introduction).
@@ -21,7 +23,7 @@ with a standardized naming convention, e.g. the title of the project
 should be stored as `"title": "your project title"`.
 
 In this guide, we will refer to each piece of metadata stored in the
-JSON file as a [*metadata property*](/docs/glossary.qmd) (or just a
+JSON file as a *metadata property* (or just a
 *property* for short). You can view an example of a complete
 `datapackage.json` file in this [example
 repository](https://github.com/seedcase-project/example-seed-beetle/blob/main/datapackage.json).
