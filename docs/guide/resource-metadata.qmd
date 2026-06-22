@@ -6,11 +6,13 @@ jupyter: python3
 
 ## What is a data resource?
 
+<!-- TODO: Update links to glossary for terms -->
+
 In the previous sections, we have seen how to create and manage package
 metadata for our data package. In this section, we will explore how we
 can add data files and manage its metadata (e.g. documenting the type of
 data in each column). In a Data Package, data files are referred to as
-[data resources](/docs/glossary.qmd), each containing a conceptually
+data resources, each containing a conceptually
 distinct set of data. We refer to the metadata for a data resource as
 "resource metadata".
 
@@ -85,7 +87,7 @@ raw_data_patients
 ## Managing resource metadata with Sprout
 
 Before you can store a data file as a resource in your data package, you
-need to describe its [metadata properties](/docs/glossary.qmd). The
+need to describe its metadata properties. The
 resource's metadata are what allow other people to understand what your
 data is about and to use it more easily.
 
