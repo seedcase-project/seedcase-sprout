@@ -2,11 +2,11 @@
 
 <p align="center">
     <a href="https://sprout.seedcase-project.org/">
-        <img src="https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/main/_extensions/seedcase-project/seedcase-theme/logos/navbar-logo-seedcase-sprout.svg" alt="Link to Sprout website" height="150"/>
+        <img src="https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/main/_extensions/seedcase-project/seedcase-theme/logos/sprout/navbar.svg" alt="Link to Sprout website" height="150"/>
     </a>
 </p>
 
-## seedcase-sprout: Grow structured, organised, and FAIR data
+# seedcase-sprout: Grow structured, organised, and FAIR data
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-teal.json?raw=true.svg)](https://github.com/copier-org/copier)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800477.svg)](https://doi.org/10.5281/zenodo.15800477)
@@ -18,10 +18,8 @@ Version](https://img.shields.io/pypi/v/seedcase-sprout.svg)](https://pypi.org/pr
 Release](https://img.shields.io/github/v/release/seedcase-project/seedcase-sprout.svg)](https://github.com/seedcase-project/seedcase-sprout/releases/latest)
 [![Supported Python Version from PEP 621
 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/refs/heads/main/pyproject.toml)](https://github.com/seedcase-project/seedcase-sprout/blob/main/pyproject.toml)
-[![Build
-documentation](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml)
-[![Check
-package](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/check-package.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/check-package.yml)
+[![Website](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/build-website.yml)
+[![Checks](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/checks.yml/badge.svg)](https://github.com/seedcase-project/seedcase-sprout/actions/workflows/checks.yml)
 [![code
 coverage](https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/coverage.svg?raw=true)](https://htmlpreview.github.io/?https://raw.githubusercontent.com/seedcase-project/seedcase-sprout/coverage/index.html)
 [![OpenSSF
@@ -43,22 +41,16 @@ way using modern data engineering best practices. Sprout is designed to
 organise, describe, and store data for effective discovery, management,
 and analysis.
 
-Check out our [website](https://sprout.seedcase-project.org/) for more
-information, such as an
-[overview](https://sprout.seedcase-project.org/docs/overview/), how to
-use it [guide](https://sprout.seedcase-project.org/docs/guide/), or to
-read about the
-[design](https://sprout.seedcase-project.org/docs/design/). For a list
-of changes, see our
-[changelog](https://sprout.seedcase-project.org/docs/releases/) page.
+Check out our [website](https://sprout.seedcase-project.org) for more
+information, such as the features it provides and a
+[guide](https://sprout.seedcase-project.org/docs/guide) to using the
+package. For a list of changes, see our [changelog](CHANGELOG.md).
 
-## Installing
-
-Seedcase Sprout can be installed in two ways. The first is to install it
-as a user, and the second is to install it as a contributor.
-
-To install Sprout for general use, see our [Installation
-Guide](https://sprout.seedcase-project.org/docs/guide/installation).
+> [!TIP]
+>
+> This Python package was generated from the [Template Python
+> Package](https://github.com/seedcase-project/template-python-package)
+> Seedcase template :tada:
 
 ## Contributing
 
@@ -75,13 +67,13 @@ to abide by its terms.
 The following people have contributed to this project by submitting pull
 requests :tada:
 
-[@lwjohnst86](https://github.com/lwjohnst86),
-[@signekb](https://github.com/signekb),
-[@pchmia](https://github.com/pchmia),
-[@martonvago](https://github.com/martonvago),
+[@joelostblom](https://github.com/joelostblom),
 [@K-Beicher](https://github.com/K-Beicher),
+[@lwjohnst86](https://github.com/lwjohnst86),
+[@martonvago](https://github.com/martonvago),
+[@pchmia](https://github.com/pchmia),
 [@philter87](https://github.com/philter87),
-[@joelostblom](https://github.com/joelostblom)
+[@signekb](https://github.com/signekb)
 
 ## Licensing
 
@@ -93,10 +85,7 @@ For a list of changes, see our [changelog](CHANGELOG.md) page.
 
 ## Citing
 
-This project is part of the Seedcase Project, which is a collaborative
-effort to create a framework for data management and analysis in
-research. If you use this project in your work, please cite it as
-follows:
+If you use this package in your work, please cite it as follows:
 
 Johnston L.W., Brødbæk S.K., Beicher K., Vago M. (2025). Seedcase
 Sprout: Grow structured, organised, and FAIR data. DOI:

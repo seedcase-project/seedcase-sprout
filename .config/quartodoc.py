@@ -1,15 +1,17 @@
 """Custom quartodoc renderer that fixes the output of returns and raises sections."""
+# ruff: noqa
 
 from __future__ import annotations
 
 from typing import Literal, Union
 
 from plum import dispatch
-from quartodoc import MdRenderer, layout
 from quartodoc._griffe_compat import docstrings as ds
 from quartodoc.pandoc.blocks import DefinitionList
 from quartodoc.renderers.md_renderer import ParamRow
 from tabulate import tabulate
+
+from quartodoc import MdRenderer, layout
 
 
 class Renderer(MdRenderer):  # type: ignore[misc]

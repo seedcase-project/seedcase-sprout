@@ -1,3 +1,9 @@
 gh:
-  repo: seedcase-sprout
-  org: seedcase-project
+  org: "seedcase-project"
+  repo: "seedcase-sprout"
+
+tagline: "Grow structured, organised, and FAIR data"
+
+links:
+  github: "https://github.com/seedcase-project/seedcase-sprout"
+  site: "https://sprout.seedcase-project.org"
