@@ -104,7 +104,8 @@ def test_writes_properties_with_dedented_descriptions(path, properties):
 
 def test_throws_error_if_resource_description_is_none(path, properties):
     """Should throw an error if the required resource description is None, i.e.,
-    dedentation works and the subsequent check fails."""
+    dedentation works and the subsequent check fails.
+    """
     properties.resources[0].description = None
 
     with raises(cdp.DataPackageError):

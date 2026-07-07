@@ -1,13 +1,13 @@
 # Changelog
 
 Since we follow [Conventional
-Commits](https://decisions.seedcase-project.org/why-conventional-commits),
-we're able to automatically create a release with
+Commits](https://decisions.seedcase-project.org/why-conventional-commits), we're
+able to automatically create a release with
 [Commitizen](https://decisions.seedcase-project.org/why-semantic-release-with-commitizen)
-based on the commit messages. This means that releases can happen quite
-often, sometimes several in a day. It also means any individual release
-will not have many changes within it. Below is a list of releases along
-with what was changed within it.
+based on the commit messages. This means that releases can happen quite often,
+sometimes several in a day. It also means any individual release will not have
+many changes within it. Below is a list of releases along with what was changed
+within it.
 
 ## 0.51.0 (2026-06-04)
 
@@ -101,7 +101,8 @@ with what was changed within it.
 
 ### Feat
 
-- :sparkles: dedent resource and field descriptions in `write_properties()` (#1488)
+- :sparkles: dedent resource and field descriptions in `write_properties()`
+  (#1488)
 
 ## 0.46.6 (2025-07-23)
 
@@ -119,7 +120,8 @@ with what was changed within it.
 
 ### Fix
 
-- :bug: dedent `description` in `as_readme_text()` and `write_properties()` (#1476)
+- :bug: dedent `description` in `as_readme_text()` and `write_properties()`
+  (#1476)
 
 ## 0.46.3 (2025-07-03)
 
@@ -179,7 +181,8 @@ with what was changed within it.
 
 ### Fix
 
-- :bug: change `fields_match` to be an array in `extract_resource_properties()` (#1392)
+- :bug: change `fields_match` to be an array in `extract_resource_properties()`
+  (#1392)
 
 ## 0.44.9 (2025-06-19)
 
@@ -269,13 +272,15 @@ with what was changed within it.
 
 ### Refactor
 
-- :recycle: action of `create_resource_structure()` into `write_resource_batch()` (#1295)
+- :recycle: action of `create_resource_structure()` into
+  `write_resource_batch()` (#1295)
 
 ## 0.43.1 (2025-05-21)
 
 ### Refactor
 
-- :recycle: update `extract_resource_properties()` to take `pl.DataFrame` (#1264)
+- :recycle: update `extract_resource_properties()` to take `pl.DataFrame`
+  (#1264)
 
 ## 0.43.0 (2025-05-21)
 
@@ -527,7 +532,8 @@ with what was changed within it.
 
 ### Refactor
 
-- :fire: remove `create_package_properties()` and replace it with `write_*()` (#1153)
+- :fire: remove `create_package_properties()` and replace it with `write_*()`
+  (#1153)
 
 ## 0.26.6 (2025-03-24)
 
@@ -593,13 +599,15 @@ with what was changed within it.
 
 ### Feat
 
-- :sparkles: add mapping from Frictionless data types to Polars data types (#1106)
+- :sparkles: add mapping from Frictionless data types to Polars data types
+  (#1106)
 
 ## 0.21.1 (2025-03-05)
 
 ### Fix
 
-- :bug: only remove qmd files in reference post render to fix md formatting issues (#1107)
+- :bug: only remove qmd files in reference post render to fix md formatting
+  issues (#1107)
 
 ## 0.21.0 (2025-03-04)
 
@@ -617,7 +625,8 @@ with what was changed within it.
 
 ### Feat
 
-- ✨ extract resource properties from `.json`, `.ndjson`, and `.jsonl` files (#1085)
+- ✨ extract resource properties from `.json`, `.ndjson`, and `.jsonl` files
+  (#1085)
 
 ## 0.19.0 (2025-02-24)
 
@@ -641,7 +650,8 @@ with what was changed within it.
 
 ### Feat
 
-- ✨ add initial `extract_resource_properties()` (csv, tsv, and parquet files) (#1067)
+- ✨ add initial `extract_resource_properties()` (csv, tsv, and parquet files)
+  (#1067)
 
 ## 0.17.0 (2025-02-19)
 
@@ -731,7 +741,7 @@ with what was changed within it.
 
 ### Refactor
 
-- ♻️  user `Properties` classes in user facing functions (#976)
+- ♻️ user `Properties` classes in user facing functions (#976)
 
 ## 0.11.0 (2025-01-21)
 

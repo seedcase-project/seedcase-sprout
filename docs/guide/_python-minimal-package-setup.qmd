@@ -1,5 +1,7 @@
-```{python setup}
+```{python}
+#| label: setup
 #| include: false
+
 import seedcase_sprout as sp
 import subprocess
 import seedir as sd

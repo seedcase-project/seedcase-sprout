@@ -36,13 +36,15 @@ def test_methods_return_correct_path(tmp_path):
 
 def test_resource_batch_files_returns_empty_list_when_no_batches(tmp_path):
     """resource_batch_files() should return an empty list when no batches are found
-    for the resource."""
+    for the resource.
+    """
     assert PackagePath(tmp_path).resource_batch_files("test") == []
 
 
 def test_resource_batch_files_returns_file_paths_when_batches(tmp_path):
     """resource_batch_files() should return the file paths to the batch files of the
-    resource. Only Parquet files should be returned."""
+    resource. Only Parquet files should be returned.
+    """
     package_path = PackagePath(tmp_path)
     # Add batches for 2 resources
     for resource in ["test1", "test2"]:
@@ -58,7 +60,8 @@ def test_resource_batch_files_returns_file_paths_when_batches(tmp_path):
 
 def test_path_defaults_to_cwd_at_call_time(tmp_cwd):
     """When no root path is provided, the root path should default to the cwd of the
-    calling script."""
+    calling script.
+    """
     package_path = PackagePath()
     assert package_path.root() == tmp_cwd
 
@@ -68,7 +71,8 @@ def test_resource_properties_script_returns_correct_path_with_resource_name(
     tmp_path, resource_name
 ):
     """Should return the path to the resource properties script with the resource
-    name in snake case."""
+    name in snake case.
+    """
     package_path = PackagePath(tmp_path)
     assert (
         package_path.resource_properties_script(resource_name)
@@ -80,7 +84,8 @@ def test_resource_properties_script_returns_correct_path_without_resource_name(
     tmp_path,
 ):
     """Should return the path to the resource properties script without a
-    resource name."""
+    resource name.
+    """
     package_path = PackagePath(tmp_path)
     assert (
         package_path.resource_properties_script()

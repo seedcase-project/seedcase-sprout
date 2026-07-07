@@ -64,7 +64,8 @@ def resource_properties() -> ResourceProperties:
 )
 def test_accepts_correct_columns(fr_type, pl_types):
     """Should not raise an error when columns in the data match columns in the
-    resource properties."""
+    resource properties.
+    """
     resource_properties = example_resource_properties()
     assert resource_properties.schema
     resource_properties.schema.fields = [
@@ -79,7 +80,8 @@ def test_accepts_correct_columns(fr_type, pl_types):
 
 def test_accepts_columns_in_any_order():
     """Should not raise an error when the data types match but the columns are in a
-    different order."""
+    different order.
+    """
     resource_properties = example_resource_properties()
     assert resource_properties.schema and resource_properties.schema.fields
     resource_properties.schema.fields.reverse()
@@ -183,7 +185,8 @@ def test_rejects_multiple_incorrect_column_types():
 
 def test_rejects_geopoint_with_incorrect_size():
     """Should raise an error if the size of the array representing a geopoint is not
-    correct."""
+    correct.
+    """
     data = pl.DataFrame(
         {"my_geopoint": pl.Series([[1, 1, 1]] * 3, dtype=pl.Array(pl.Int8, 3))}
     )
@@ -198,7 +201,8 @@ def test_rejects_geopoint_with_incorrect_size():
 
 def test_rejects_geopoint_with_incorrect_inner_type():
     """Should raise an error if the type of the nested elements in a geopoint array is
-    not correct."""
+    not correct.
+    """
     data = pl.DataFrame(
         {"my_geopoint": pl.Series([["a", "b"]] * 3, dtype=pl.Array(pl.String, 2))}
     )
