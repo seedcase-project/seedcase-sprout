@@ -1,6 +1,5 @@
 ---
 title: "Overview"
-jupyter: python3
 ---
 
 ## What is Sprout?
