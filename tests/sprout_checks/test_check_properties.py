@@ -61,7 +61,8 @@ def test_passes_correct_properties(properties):
 @mark.parametrize("resources", [None, [], [ResourceProperties()]])
 def test_check_package_properties_excludes_resource_properties(properties, resources):
     """Should pass if there are no resources or if individual resources are
-    incorrect."""
+    incorrect.
+    """
     properties.resources = resources
 
     assert check_package_properties(properties) == properties
@@ -69,7 +70,8 @@ def test_check_package_properties_excludes_resource_properties(properties, resou
 
 def test_check_package_properties_flags_bad_resource_type(properties):
     """Should raise an error if the `resources` property as a whole is the wrong
-    type."""
+    type.
+    """
     properties.resources = 123
 
     with raises(cdp.DataPackageError):
@@ -236,7 +238,8 @@ def test_error_blank_resource_properties(properties, name):
 )
 def test_error_no_resource_name_in_path(properties, path):
     """Should be an error when the resource name isn't in the path or the path is
-    empty."""
+    empty.
+    """
     properties.resources[0].path = path
 
     # All properties checks

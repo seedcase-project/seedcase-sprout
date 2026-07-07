@@ -15,7 +15,6 @@ from seedcase_sprout.paths import PackagePath
 
 def test_reads_in_as_package_properties(tmp_path):
     """Should read in the properties from the `datapackage.json` file."""
-
     expected_properties = example_package_properties()
     properties_path = tmp_path / "datapackage.json"
     properties_path = write_properties(expected_properties, properties_path)
@@ -26,7 +25,6 @@ def test_reads_in_as_package_properties(tmp_path):
 
 def test_reads_when_resource_not_exists(tmp_path):
     """Should not give an error if there are no resources on the package."""
-
     expected_properties = example_package_properties()
     expected_properties.resources = None
     properties_path = tmp_path / "datapackage.json"
@@ -77,6 +75,7 @@ def test_reads_properties_from_cwd_if_no_path_provided(tmp_cwd):
 
 def test_fails_correctly_if_no_path_provided_and_no_properties_in_cwd(tmp_cwd):
     """Should throw the expected error if no path is provided and there is no
-    datapackage.json in the cwd."""
+    datapackage.json in the cwd.
+    """
     with raises(errors.FileDoesNotExistError):
         read_properties()

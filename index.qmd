@@ -3,9 +3,9 @@ toc: false
 page-layout: custom
 ---
 
-::::: landing-page-block
-:::: hero-text
-::: text-center
+::: landing-page-block
+::::: hero-text
+::::::: text-center
 ![](_extensions/seedcase-project/seedcase-theme/logos/sprout/icon.svg){fig-alt="Sprout logo."
 width="150px"}
 
@@ -16,67 +16,65 @@ height="50px"}
 
 [Overview](/docs/index.qmd){.btn .about-link} [Explore
 guide](/docs/guide/index.qmd){.btn .about-link}
-:::
-::::
+:::::::
 :::::
-
-:::: landing-page-block
-::: {#hero-heading}
-{{< include /docs/includes/_badges.qmd >}}
 :::
-::::
 
-::::: hero-banner
-:::: landing-page-block
-::: hero-text
-Sprout is a Python package for building up, describing, and managing
-research data. It structures your data as standardised [Data
+::: landing-page-block
+::::: {#hero-heading}
+{{< include /docs/includes/_badges.qmd >}}
+:::::
+:::
+
+::: hero-banner
+::::: landing-page-block
+::::::: hero-text
+Sprout is a Python package for building up, describing, and managing research
+data. It structures your data as standardised [Data
 Packages](https://datapackage.org/) that follow the
 [FAIR](https://www.go-fair.org/fair-principles/) principles, giving you
 flexibility and control over each step of the data management workflow.
 
 ## Key features :sparkles:
 
--   Creates and manages standardised [Data
-    Packages](https://datapackage.org/) with metadata stored in
-    `datapackage.json`.
--   Checks both your metadata and your data against the Data Package
-    standard, with clear messages pointing directly to where issues
-    occur.
--   Stores data in [Apache Parquet](https://parquet.apache.org/)
-    format---an open, efficient, and widely supported format.
--   Tracks data changes through a batch system with automatic
-    versioning, supporting data lineage and auditability.
--   Auto-extracts field properties from your data, so you spend less
-    time writing metadata manually.
-:::
-::::
+- Creates and manages standardised [Data Packages](https://datapackage.org/)
+  with metadata stored in `datapackage.json`.
+- Checks both your metadata and your data against the Data Package standard,
+  with clear messages pointing directly to where issues occur.
+- Stores data in [Apache Parquet](https://parquet.apache.org/) format---an open,
+  efficient, and widely supported format.
+- Tracks data changes through a batch system with automatic versioning,
+  supporting data lineage and auditability.
+- Auto-extracts field properties from your data, so you spend less time writing
+  metadata manually.
+:::::::
 :::::
+:::
 
-::::: landing-page-block
-:::: hero-text
+::: landing-page-block
+::::: hero-text
 ## About the Seedcase Project
 
-Sprout is part of the [**Seedcase
-Project**](https://seedcase-project.org), which helps research projects
-manage and process data in line with the
+Sprout is part of the [**Seedcase Project**](https://seedcase-project.org),
+which helps research projects manage and process data in line with the
 [FAIR](https://www.go-fair.org/fair-principles/) principles.
 
-::: text-center
-[Check out the Seedcase Project](https://seedcase-project.org/){.btn
+::::::: text-center
+[Check out the Seedcase
+Project](https://seedcase-project.org/){.btn
 .about-link}
-:::
-::::
+:::::::
 :::::
+:::
 
-::::: hero-banner
-:::: landing-page-block
-::: hero-text
+::: hero-banner
+::::: landing-page-block
+::::::: hero-text
 ## Want to contribute?
 
 We would love your feedback or contributions! Head over to the [GitHub
-repository](https://github.com/seedcase-project/seedcase-sprout) to
-share your ideas or contribute code. Your input makes us better!
-:::
-::::
+repository](https://github.com/seedcase-project/seedcase-sprout) to share your
+ideas or contribute code. Your input makes us better!
+:::::::
 :::::
+:::

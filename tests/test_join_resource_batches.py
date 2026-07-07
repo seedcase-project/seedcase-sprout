@@ -71,7 +71,8 @@ def test_batches_are_joined_correctly(data_list, resource_properties):
 
 def test_batches_are_joined_correct_with_no_primary_key(data_list, resource_properties):
     """Duplicate rows (all cells are identical except timestamp) are removed when there
-    isn't a primary key."""
+    isn't a primary key.
+    """
     # Given
     resource_properties.schema.primary_key = None
 

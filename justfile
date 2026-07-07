@@ -1,12 +1,20 @@
 @_default:
     just --list --unsorted
 
-@_checks: check-python check-unused check-security check-spelling check-commits
-@_tests: test-python
-@_builds: build-contributors build-website build-readme
-
 # Run all build-related recipes in the justfile
-run-all: install-deps update-quarto-theme format-python _checks _tests _builds
+run-all: install-deps update-quarto-theme format-all check-all test-all build-all
+
+# Run all formatters
+format-all: format-python format-md format-docstrings
+
+# Run all checks
+check-all: check-python check-unused check-security check-spelling check-urls
+
+# Run all tests
+test-all: test-python
+
+# Run all builds
+build-all: build-contributors build-website build-readme
 
 # List all TODO items in the repository
 list-todos:
@@ -19,12 +27,10 @@ list-todos:
 
 # Install the pre-commit hooks
 install-precommit:
-  # Install pre-commit hooks
   uvx pre-commit install
-  # Run pre-commit hooks on all files
-  uvx pre-commit run --all-files
-  # Update versions of pre-commit hooks
   uvx pre-commit autoupdate
+  uvx pre-commit run --all-files
+
 # Update the Quarto seedcase-theme extension
 update-quarto-theme:
   # Add theme if it doesn't exist, update if it does
@@ -34,73 +40,49 @@ update-quarto-theme:
 install-deps:
   uv sync --all-extras --dev --upgrade
 
-# Run the Python tests
-test-python:
-  uv run pytest
-  # Make the badge from the coverage report
-  uv run genbadge coverage \
-    -i coverage.xml \
-    -o htmlcov/coverage.svg
+# Reformat Python code to match coding style and general structure
+format-python:
+  uvx ruff check --fix .
+  uvx ruff format .
+
+# Reformat Python dostrings
+format-docstrings:
+  uvx format-docstring \
+    --docstring-style google \
+    --include-arg-types false \
+    --include-arg-defaults false \
+    --include-return-and-yield-types false \
+    --fix-rst-backticks false \
+    src/
+
+# Format Markdown files
+format-md:
+  # Use both rumdl and panache, for different purposes
+  uvx rumdl fmt --silent
+  uvx --from panache-cli panache format . --quiet
 
 # Check Python code for any errors that need manual attention
 check-python:
   # Check formatting
-  uv run ruff check .
+  uvx ruff check .
   # Check types
-  uv run mypy .
-
-# Reformat Python code to match coding style and general structure
-format-python:
-  uv run ruff check --fix .
-  uv run ruff format .
-
-# Build the Python docstrings as a section in the website using quartodoc
-build-quartodoc:
-  # To let Quarto know where python is.
-  export QUARTO_PYTHON=.venv/bin/python3
-  # Delete any previously built files from quartodoc.
-  # -f is to not give an error if the files don't exist yet.
-  rm -rf docs/reference
-  uv run quartodoc build
-
-# Build the documentation website using Quarto
-build-website:  build-quartodoc
-  uv run quarto render --execute
-
-# Preview the documentation website with automatic reload on changes
-preview-website: build-quartodoc
-  uv run quarto preview --execute
-
-# Check the commit messages on the current branch that are not on the main branch
-check-commits:
-  #!/usr/bin/env bash
-  branch_name=$(git rev-parse --abbrev-ref HEAD)
-  number_of_commits=$(git rev-list --count HEAD ^main)
-  if [[ ${branch_name} != "main" && ${number_of_commits} -gt 0 ]]
-  then
-    # If issue happens, try `uv tool update-shell`
-    uvx --from commitizen cz check --rev-range main..HEAD
-  else
-    echo "On 'main' or current branch doesn't have any commits."
-  fi
+  uvx pyrefly check
 
 # Run basic security checks on the package
 check-security:
-  uv run bandit -r src/
+  uvx bandit -r src/
 
 # Check for spelling errors in files
 check-spelling:
-  uv run typos
+  uvx typos --config .config/typos.toml
 
-# Build the documentation as PDF using Quarto
-build-pdf:
-  # To let Quarto know where python is.
-  export QUARTO_PYTHON=.venv/bin/python3
-  uv run quarto install tinytex
-  # For generating images from Mermaid diagrams
-  uv run quarto install chromium
-  uv run quarto render --profile pdf --to pdf
-  find docs -name "mermaid-figure-*.png" -delete
+# Check that URLs work
+check-urls:
+  lychee . \
+    --verbose \
+    --extensions md,qmd,py \
+    --exclude "github\.com" \
+    --exclude-path "_badges.qmd"
 
 # Check for unused code in the package and its tests
 check-unused:
@@ -112,7 +94,28 @@ check-unused:
   # - 60 %: attribute, class, function, method, property, variable
   # There are some things should be ignored though, with the allowlist.
   # Create an allowlist with `vulture --make-allowlist`
-  uv run vulture src/ tests/ **/vulture-allowlist.py
+  uvx vulture --min-confidence 100 src/ tests/ **/vulture-allowlist.py
+
+# Run the Python tests
+test-python:
+  uv run pytest
+  # Make the badge from the coverage report
+  uv run genbadge coverage \
+    -i coverage.xml \
+    -o htmlcov/coverage.svg
+
+# Build the Python docstrings as a section in the website using quartodoc
+build-quartodoc:
+  # To let Quarto know where python is.
+  export QUARTO_PYTHON=.venv/bin/python3
+  # Delete any previously built files from quartodoc.
+  # -f is to not give an error if the files don't exist yet.
+  rm -rf docs/reference
+  uv run quartodoc build
+
+# Build the documentation website using Quarto
+build-website: build-quartodoc
+  uv run quarto render --execute
 
 # Re-build the README file from the Quarto version
 build-readme:
@@ -121,6 +124,10 @@ build-readme:
 # Generate a Quarto include file with the contributors
 build-contributors:
   sh ./tools/get-contributors.sh seedcase-project/seedcase-sprout > docs/includes/_contributors.qmd
+
+# Preview the website with automatic reload on changes
+preview-website: build-quartodoc
+  uvx --from quarto quarto preview
 
 # Check for and apply updates from the template
 update-from-template:

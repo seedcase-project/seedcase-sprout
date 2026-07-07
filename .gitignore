@@ -69,6 +69,7 @@ cover/
 docs/.quarto/
 *.ipynb
 *.quarto_ipynb
+**/*.quarto_ipynb
 *.storage
 
 # Quartodoc
@@ -84,5 +85,4 @@ site
 
 # Misc files
 *.log
-
-**/*.quarto_ipynb
+/.luarc.json

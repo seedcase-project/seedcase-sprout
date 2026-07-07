@@ -2,11 +2,11 @@
 title: "Guide"
 description: "A guide to using Sprout to grow your data into a structured, organised, and FAIR Data Package."
 listing:
-    contents: .
-    type: grid
-    sort: "order"
-    fields:
-        - title
+  contents: .
+  type: grid
+  sort: "order"
+  fields:
+    - title
 ---
 
 {{< include _preamble.qmd >}}

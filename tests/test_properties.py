@@ -44,7 +44,8 @@ def test_initiated_class_only_contains_none_values(cls):
 
 def test_compact_dict_generates_empty_dictionary_when_no_args_given():
     """Should return an empty dictionary, when no arguments are given to Properties
-    class."""
+    class.
+    """
     # Since this is a test of the base class, it's enough to test only one subclass
     assert ResourceProperties().compact_dict == {}
 
@@ -62,7 +63,8 @@ def test_compact_dict_preserves_only_non_none_values():
 
 def test_compact_dict_removes_none_values_in_nested_objects():
     """Given properties with a nested structure, should return a dictionary with only
-    non-None values"""
+    non-None values
+    """
     properties = SproutProperties(
         resources=[
             ResourceProperties(
@@ -90,7 +92,8 @@ def test_compact_dict_removes_none_values_in_nested_objects():
 @time_machine.travel(datetime(2024, 5, 14, 5, 0, 1, tzinfo=ZoneInfo("UTC")), tick=False)
 def test_creates_package_properties_with_correct_defaults(mock_uuid):
     """`from_default` should create `SproutProperties` with correct defaults for id,
-    version, and created."""
+    version, and created.
+    """
     properties = SproutProperties.from_default()
 
     assert properties.id == str(mock_uuid())
@@ -101,7 +104,8 @@ def test_creates_package_properties_with_correct_defaults(mock_uuid):
 @time_machine.travel(datetime(2024, 5, 14, 5, 0, 1, tzinfo=ZoneInfo("UTC")), tick=False)
 def test_allows_overriding_defaults():
     """It should be possible to override defaults with non-None values when creating
-    `SproutProperties` using `from_default`."""
+    `SproutProperties` using `from_default`.
+    """
     properties = SproutProperties.from_default(id="abc", name="my-name", created=None)
 
     assert properties.name == "my-name"
@@ -163,7 +167,8 @@ def test_transforms_dict_to_properties(dict, expected_properties):
 )
 def test_autogenerates_resource_data_path(resource_properties, path):
     """Should autogenerate the resource path from the resource name after object
-    creation (if the name is correct)."""
+    creation (if the name is correct).
+    """
     assert resource_properties.path == path
 
 

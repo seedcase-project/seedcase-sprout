@@ -2,25 +2,24 @@
 title: "C4 Models"
 ---
 
-This section contains the [C4 Models](https://c4model.com/) for Sprout.
-The C4 Model is an established visualization approach to describe the
-architecture of a software system. It breaks the system down into four
-levels of architectural abstraction: Context, Containers, Components,
-and Code. The last level is rarely used nor recommended for most
-software architecture since it is used to visualize a high degree of
-detail that most projects don't need. For our case, we only needed to
-create the **Context** and **Containers** diagrams.
+This section contains the [C4 Models](https://c4model.com/) for Sprout. The C4
+Model is an established visualization approach to describe the architecture of a
+software system. It breaks the system down into four levels of architectural
+abstraction: Context, Containers, Components, and Code. The last level is rarely
+used nor recommended for most software architecture since it is used to
+visualize a high degree of detail that most projects don't need. For our case,
+we only needed to create the **Context** and **Containers** diagrams.
 
 These diagrams and their content draw from our overall Seedcase [design
 documentation](https://design.seedcase-project.org/) and [design
-decisions](https://decisions.seedcase-project.org/). See those websites
-for more information.
+decisions](https://decisions.seedcase-project.org/). See those websites for more
+information.
 
 ## Context
 
-The Context diagram shows the users and any external systems that
-interact with Sprout. This includes the user roles described in the
-[User Personas](user-personas.qmd#user-types) page.
+The Context diagram shows the users and any external systems that interact with
+Sprout. This includes the user roles described in the [User
+Personas](user-personas.qmd#user-types) page.
 
 ::: callout-caution
 For some reason, these diagrams don't display well on some browsers like
@@ -51,9 +50,9 @@ flowchart LR
 
 ## Container
 
-The Container diagram shows the larger parts of the system, what they
-are responsible for, and how they interact with each other. It also
-shows the technology choices for each container.
+The Container diagram shows the larger parts of the system, what they are
+responsible for, and how they interact with each other. It also shows the
+technology choices for each container.
 
 ```{mermaid}
 %%| label: fig-c4-container

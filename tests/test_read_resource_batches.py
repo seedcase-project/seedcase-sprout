@@ -206,7 +206,8 @@ def test_raises_error_with_empty_resource_properties(resource_paths):
 
 def test_uses_cwd_if_no_paths(tmp_cwd, test_package, resource_properties):
     """If no paths are provided, should use the cwd as the package root to retrieve
-    batch files from resource."""
+    batch files from resource.
+    """
     data_list = read_resource_batches(resource_properties)
 
     assert len(data_list) == 2
@@ -216,7 +217,8 @@ def test_no_error_thrown_when_no_batches_using_cwd_as_default(
     tmp_cwd, resource_properties
 ):
     """No error should be thrown if the cwd has no batch files for the given
-    resource."""
+    resource.
+    """
     data_list = read_resource_batches(resource_properties)
 
     assert len(data_list) == 0

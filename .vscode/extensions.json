@@ -1,14 +1,14 @@
 {
   "recommendations": [
     "eamodio.gitlens",
-    "github.vscode-github-actions",
+    "GitHub.vscode-github-actions",
     "redhat.vscode-yaml",
     "donjayamanne.githistory",
     "felipecaputo.git-project-manager",
     "GitHub.vscode-pull-request-github",
     "ms-python.python",
     "ms-python.vscode-pylance",
-    "matangover.mypy",
+    "meta.pyrefly",
     "njpwerner.autodocstring",
     "quarto.quarto",
     "ms-toolsai.jupyter",
@@ -16,7 +16,9 @@
     "charliermarsh.ruff",
     "pshaddel.conventional-branch",
     "tekumara.typos-vscode",
-    "EditorConfig.EditorConfig"
+    "EditorConfig.EditorConfig",
+    "rvben.rumdl",
+    "jolars.panache"
   ],
   "unwantedRecommendations": []
 }
