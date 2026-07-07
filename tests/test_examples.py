@@ -74,7 +74,8 @@ def test_creates_package_without_resources():
 
 def test_changes_cwd_to_package_root_in_package_context():
     """Within the context, the cwd should be the package root.
-    After exiting the context, the cwd should be reset to the original location."""
+    After exiting the context, the cwd should be reset to the original location.
+    """
     original_cwd = Path.cwd()
     with ExamplePackage() as package_path:
         # Resolve paths to ensure symlinks are compared correctly on MacOS as well
@@ -86,7 +87,8 @@ def test_changes_cwd_to_package_root_in_package_context():
 
 def test_restores_cwd_when_error_raised_in_context():
     """The original cwd should be restored after exiting the context, even if an error
-    was raised inside the context."""
+    was raised inside the context.
+    """
     original_cwd = Path.cwd()
     with ExamplePackage(), raises(ValueError):
         raise ValueError("An error!")
@@ -96,7 +98,8 @@ def test_restores_cwd_when_error_raised_in_context():
 
 def test_manages_temp_folder_correctly():
     """The package root should be in a temporary folder.
-    After exiting the context, the package root should not exist."""
+    After exiting the context, the package root should not exist.
+    """
     temp_root = Path(tempfile.gettempdir())
     with ExamplePackage() as package_path:
         assert temp_root in package_path.root().parents
@@ -106,7 +109,8 @@ def test_manages_temp_folder_correctly():
 
 def test_can_use_context_without_referencing_package_path_explicitly():
     """It should be possible to omit the package path from function calls within the
-    context."""
+    context.
+    """
     with ExamplePackage():
         properties = read_properties()
         assert check_properties(properties)

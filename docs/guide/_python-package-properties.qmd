@@ -1,5 +1,6 @@
 ```{python}
 #| include: false
+
 # This is only to check that it runs.
 properties = sp.SproutProperties.from_default(
     name="diabetes-study",

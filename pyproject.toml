@@ -3,16 +3,16 @@ name = "seedcase-sprout"
 version = "0.51.0"
 description = "Grow your research data in a structured, modern way that follows best practices."
 authors = [
-  {name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
-  {name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
-  {name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
-  {name = "Marton Vago", email = "marton.vago95@gmail.com" },
+  { name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
+  { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
+  { name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
+  { name = "Marton Vago", email = "marton.vago95@gmail.com" },
 ]
 maintainers = [
-  {name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
-  {name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
-  {name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
-  {name = "Marton Vago", email = "marton.vago95@gmail.com" },
+  { name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
+  { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
+  { name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
+  { name = "Marton Vago", email = "marton.vago95@gmail.com" },
 ]
 readme = "README.md"
 license = "MIT"
@@ -33,13 +33,33 @@ keywords = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "check-datapackage>=0.23.1",
-    "dacite>=1.9.2",
-    "deepmerge>=2.0",
-    "jinja2>=3.1.6",
-    "jsonschema>=4.23.0",
-    "polars>=1.26.0",
-    "seedcase-soil>=0.11.0",
+  "check-datapackage>=0.23.1",
+  "dacite>=1.9.2",
+  "deepmerge>=2.0",
+  "jinja2>=3.1.6",
+  "jsonschema>=4.23.0",
+  "polars>=1.26.0",
+  "seedcase-soil>=0.11.0",
+]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+
+  # Strict typing, checked via Pyrefly
+  "Typing :: Typed",
+
+  # How mature is this project? Common values are
+  #   3 - Alpha
+  #   4 - Beta
+  #   5 - Production/Stable
+  "Development Status :: 4 - Beta",
+
+  # Indicate who your project is intended for
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+
+  # Specify the Python versions you support here.
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
 ]
 
 [project.urls]
@@ -50,29 +70,41 @@ issues = "https://github.com/seedcase-project/seedcase-sprout/issues"
 
 [dependency-groups]
 dev = [
-    "bandit>=1.8.3",
-    "commitizen>=4.5.0",
-    "datamodel-code-generator>=0.28.5",
-    "emoji>=2.14.1",
-    "genbadge>=1.1.2",
-    "jupyter>=1.1.1",
-    "mypy>=1.16.1",
-    "pre-commit>=4.2.0",
-    "pytest>=8.3.5",
-    "pytest-cov>=6.1.1",
-    "pyyaml>=6.0.2",
-    "quarto>=0.1.0",
-    "quartodoc>=0.11.1",
-    "ruff>=0.11.4",
-    "seedir>=0.5.1",
-    "time-machine>=2.16.0",
-    "types-jsonschema>=4.24.0.20250528",
-    "types-requests>=2.32.4.20250611",
-    "types-tabulate>=0.9.0.20241207",
-    "typos>=1.31.1",
-    "vulture>=2.14",
+  "bandit>=1.8.3",
+  "datamodel-code-generator>=0.28.5",
+  "emoji>=2.14.1",
+  "genbadge>=1.1.2",
+  "jupyter>=1.1.1",
+  "pytest>=8.3.5",
+  "pytest-cov>=6.1.1",
+  "pyyaml>=6.0.2",
+  "quarto>=0.1.0",
+  "quartodoc>=0.11.1",
+  "seedir>=0.5.1",
+  "time-machine>=2.16.0",
+  "types-jsonschema>=4.24.0.20250528",
+  "types-requests>=2.32.4.20250611",
+  "types-tabulate>=0.9.0.20241207",
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+# - A short traceback (tb) mode to make it easier to view
+# - Use the `src/` package (importlib)
+# - Use code coverage on the `src/` package
+# - If tests fail, do not generate coverage report
+# - Create the coverage report in XML (for badge), terminal, and HTML
+# - Trigger failure if below 90% code coverage
+addopts = "--tb=short --import-mode=importlib --cov=src --no-cov-on-fail --cov-report=term --cov-report=xml --cov-report=html --cov-fail-under=90"
+
+[tool.pyrefly]
+project-includes = ["src/"]
+min-severity = "warn"
+python-version = "3.12.0"
+preset = "strict"
+
+[tool.ruff]
+extend = ".config/ruff.toml"

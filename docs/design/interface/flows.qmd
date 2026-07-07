@@ -4,51 +4,46 @@ toc-depth: 2
 ---
 
 ::: callout-important
-We created this document mainly as a way to help us as a team all
-understand and agree on what we're making and what needs to be worked
-on. This means that the flows may change quite substantially until we've
-reached a stable full release at `v1.0.0`.
+We created this document mainly as a way to help us as a team all understand and
+agree on what we're making and what needs to be worked on. This means that the
+flows may change quite substantially until we've reached a stable full release
+at `v1.0.0`.
 :::
 
-Based on the [functions](functions.qmd) page that lists and describes
-the main functions and classes that make up the interface in detail
-including their input and output, this document describes and shows how
-all these objects work together and flow into one another.
+Based on the [functions](functions.qmd) page that lists and describes the main
+functions and classes that make up the interface in detail including their input
+and output, this document describes and shows how all these objects work
+together and flow into one another.
 
-Each diagram uses specific shapes and lines to represent different
-things:
+Each diagram uses specific shapes and lines to represent different things:
 
 - A dotted line between objects/functions means the flow is optional.
-- A solid line between objects/functions means the flow is required and
-  is the next step.
+- A solid line between objects/functions means the flow is required and is the
+  next step.
 - A cylinder means an object such as a class or file.
-- A rectangle with rounded corners means an action like a function or
-  method.
+- A rectangle with rounded corners means an action like a function or method.
 
 ::: callout-caution
-For some reason, the diagrams below don't display well on some browsers
-like Firefox. To see them, try using a different browser like Chrome or
-Edge.
+For some reason, the diagrams below don't display well on some browsers like
+Firefox. To see them, try using a different browser like Chrome or Edge.
 :::
 
 ## Creating scripts from templates
 
 There are two functions you can use to help with creating much of the
 "boilerplate" code that implements some of the flows below. They are
-`create_properties_script()` and `create_resource_properties_script()`,
-and they are used to create Python scripts that contain the
-`SproutProperties` or `ResourceProperties` for a data package or
-resource, respectively.
+`create_properties_script()` and `create_resource_properties_script()`, and they
+are used to create Python scripts that contain the `SproutProperties` or
+`ResourceProperties` for a data package or resource, respectively.
 
 ## Creating or updating a package
 
-This is the flow for making a new package. The `write_properties()`
-function will internally check the package properties. The
-`SproutProperties` input is imported from a Python script in the
-`scripts/` folder of the data package. To update the properties in the
-`datapackage.json` file, you would edit the Python script with the
-properties directly and then rerun your main script to overwrite the
-`datapackage.json` file with the new properties.
+This is the flow for making a new package. The `write_properties()` function
+will internally check the package properties. The `SproutProperties` input is
+imported from a Python script in the `scripts/` folder of the data package. To
+update the properties in the `datapackage.json` file, you would edit the Python
+script with the properties directly and then rerun your main script to overwrite
+the `datapackage.json` file with the new properties.
 
 ```{mermaid}
 %%| label: fig-flow-new-package
@@ -65,18 +60,16 @@ flowchart
 
 ## Extracting properties from data
 
-The flow for extracting a resource's field properties from data. This is
-useful when the data is in a format that contains metadata about the
-data, such as a CSV file with a header row that contains the column
-names. While the `extract_field_properties()` function extracts all
-*required* `FieldProperties` from the data, there are many optional
-properties that are still very useful and should be filled in manually.
-The output of the `extract_field_properties()` function can be used to
-generate a Python script to give you a starting point for writing the
-resource properties. Afterwards, if you want to update the resource
-properties, you'll edit this Python script and then re-run your build
-process to generate the `datapackage.json` file with the updated
-properties.
+The flow for extracting a resource's field properties from data. This is useful
+when the data is in a format that contains metadata about the data, such as a
+CSV file with a header row that contains the column names. While the
+`extract_field_properties()` function extracts all *required* `FieldProperties`
+from the data, there are many optional properties that are still very useful and
+should be filled in manually. The output of the `extract_field_properties()`
+function can be used to generate a Python script to give you a starting point
+for writing the resource properties. Afterwards, if you want to update the
+resource properties, you'll edit this Python script and then re-run your build
+process to generate the `datapackage.json` file with the updated properties.
 
 ```{mermaid}
 %%| label: fig-flow-extract-field-properties
@@ -97,18 +90,18 @@ flowchart
 
 ## Saving new or modified data to batch
 
-A data resource needs data, not just properties. You can add data to any
-data resource that has resource properties. Whenever data is added to a
-data resource, it gets first saved in the `batch/` folder to keep track
-of additions or changes. You add the data when:
+A data resource needs data, not just properties. You can add data to any data
+resource that has resource properties. Whenever data is added to a data
+resource, it gets first saved in the `batch/` folder to keep track of additions
+or changes. You add the data when:
 
 - A new data resource is created and data is added to it.
 - Additional data is added to an existing data resource.
-- You need to fix, update, or modify existing data in the resource by
-  correcting the data (e.g. fixing a data entry issue).
+- You need to fix, update, or modify existing data in the resource by correcting
+  the data (e.g. fixing a data entry issue).
 
-The data must be in a tidy format and must have already been loaded in
-as a Polars DataFrame.
+The data must be in a tidy format and must have already been loaded in as a
+Polars DataFrame.
 
 ```{mermaid}
 %%| label: fig-flow-save-data-to-batch
@@ -128,12 +121,12 @@ flowchart
 
 ## Checking data against the properties
 
-The data must always match what is described in the properties. This
-means that the data must have the same column names, column types, and
-column constraints. The `check_data()` function will internally call
-several separate functions for these specific checks. Each of these
-functions outputs an error message describing what the problems are if
-the check fails. Otherwise, the input data frame is returned unchanged.
+The data must always match what is described in the properties. This means that
+the data must have the same column names, column types, and column constraints.
+The `check_data()` function will internally call several separate functions for
+these specific checks. Each of these functions outputs an error message
+describing what the problems are if the check fails. Otherwise, the input data
+frame is returned unchanged.
 
 ```{mermaid}
 %%| label: fig-flow-check-data-against-properties
@@ -161,14 +154,14 @@ flowchart
 
 ## Creating or re-creating the resource data
 
-The batch data files are used to keep track of changes to the data. The
-data that will be used is kept clean and ready for analysis, while
-original data is not deleted. This flow converts batch data into the
-final resource data file. The steps are split up so that, if needed or
-desired, you can make modifications to the data before it is written to
-the final resource data. While `write_resource_data()` will call
-`check_data()` internally, this can also be called separately to check
-the data before writing it to the final resource data.
+The batch data files are used to keep track of changes to the data. The data
+that will be used is kept clean and ready for analysis, while original data is
+not deleted. This flow converts batch data into the final resource data file.
+The steps are split up so that, if needed or desired, you can make modifications
+to the data before it is written to the final resource data. While
+`write_resource_data()` will call `check_data()` internally, this can also be
+called separately to check the data before writing it to the final resource
+data.
 
 ```{mermaid}
 %%| label: fig-flow-create-resource-data
@@ -199,13 +192,12 @@ flowchart
 
 ## Modifying data types or table schema
 
-Sometimes you may need to modify the data types or table schema of the
-data in a resource. Before using this flow, you first need to modify the
-resource properties. The `update_resource_batches()` function will
-update each batch DataFrame with the new data types or table schema.
-Then, you can use `write_resource_batch()` to save the updated data back
-to the batch files. The same file names should be used to overwrite old
-batch files.
+Sometimes you may need to modify the data types or table schema of the data in a
+resource. Before using this flow, you first need to modify the resource
+properties. The `update_resource_batches()` function will update each batch
+DataFrame with the new data types or table schema. Then, you can use
+`write_resource_batch()` to save the updated data back to the batch files. The
+same file names should be used to overwrite old batch files.
 
 ```{mermaid}
 %%| label: fig-flow-modify-data-types
@@ -232,11 +224,11 @@ flowchart
 
 ## Deleting an observational unit
 
-If you need to delete an observational unit from the data, you can use
-this flow. The `delete_observational_unit()` function will delete the
-observational unit from the data and output a list of DataFrames with
-the deletions. The `write_resource_batch()` function will save the
-updated data back to the batch files.
+If you need to delete an observational unit from the data, you can use this
+flow. The `delete_observational_unit()` function will delete the observational
+unit from the data and output a list of DataFrames with the deletions. The
+`write_resource_batch()` function will save the updated data back to the batch
+files.
 
 <!-- TODO: I don't know how the saving back to the batch files will work yet. -->
 

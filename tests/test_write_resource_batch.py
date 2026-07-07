@@ -34,7 +34,8 @@ def test_writes_correct_resource_batch_file(tmp_path):
 
 def test_does_not_duplicate_batch_file(tmp_cwd):
     """Should not create a new batch file when the data has already been saved in an
-    existing batch file."""
+    existing batch file.
+    """
     # Given
     data = example_data()
     resource_properties = example_resource_properties()
@@ -51,7 +52,8 @@ def test_does_not_duplicate_batch_file(tmp_cwd):
 
 def test_creates_new_batch_file_when_data_not_duplicate(tmp_cwd):
     """Should create a new batch file when the data is different from data in
-    existing batch files."""
+    existing batch files.
+    """
     # Given
     existing_data = example_data()
     new_data = example_data()
@@ -69,7 +71,8 @@ def test_creates_new_batch_file_when_data_not_duplicate(tmp_cwd):
 
 def test_writes_correct_resource_batch_file_with_unordered_columns(tmp_path):
     """Writes batch file correctly even if columns aren't in the order expected by the
-    resource properties."""
+    resource properties.
+    """
     # Given
     (tmp_path / "resources" / example_resource_properties().name).mkdir(parents=True)
     data = example_data().select(["value", "name", "id"])
