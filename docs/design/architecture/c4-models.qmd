@@ -29,7 +29,10 @@ Firefox. To see them, try using a different browser like Chrome or Edge.
 ```{mermaid}
 %%| label: fig-c4-context
 %%| fig-width: 6.3
-%%| fig-cap: "C4 Context diagram showing a very basic overview of Sprout and its anticipated users."
+%%| fig-cap: >-
+%%|   C4 Context diagram showing a very basic overview of Sprout and its
+%%|   anticipated users.
+
 flowchart LR
     user_owner(["Owner/creator<br>[person]<br><br>Creates and owns a<br>project that generates<br>data. Uses Sprout<br>for more control."])
     user_admin(["Administrator<br>[person]<br><br>Manages data and<br>metadata from a<br>project for an owner.<br>Uses Sprout for<br>more control."])
@@ -57,7 +60,10 @@ technology choices for each container.
 ```{mermaid}
 %%| label: fig-c4-container
 %%| fig-width: 6.3
-%%| fig-cap: "C4 Container diagram showing larger functional parts of Sprout and their connections."
+%%| fig-cap: >-
+%%|   C4 Container diagram showing larger functional parts of Sprout and their
+%%|   connections.
+
 flowchart TB
     user(["User<br>[person]"])
     subgraph sprout [Sprout]

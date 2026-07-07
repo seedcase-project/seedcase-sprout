@@ -22,9 +22,11 @@ First, change your `main.py` to look like this:
 
 import seedcase_sprout as sp
 
+
 def main():
     # Create the properties script in the default location.
     sp.create_properties_script()
+
 
 if __name__ == "__main__":
     main()
@@ -55,12 +57,7 @@ sp.create_properties_script(package_path.root())
 #| output: asis
 #| filename: "scripts/package_properties.py"
 
-print(
-    '```python',
-    package_path.properties_script().read_text(),
-    '```',
-    sep='\n'
-)
+print("```python", package_path.properties_script().read_text(), "```", sep="\n")
 ````
 
 As you can see, there are a lot of available metadata properties. However, as we
@@ -114,7 +111,7 @@ package_properties = sp.SproutProperties(
             email="zdena_ziri@example.com",
             path="example.com/zdena_ziri",
             roles=["creator"],
-        )
+        ),
     ],
     licenses=[
         sp.LicenseProperties(
@@ -145,11 +142,13 @@ function:
 import seedcase_sprout as sp
 from scripts.package_properties import package_properties
 
+
 def main():
     # Create the metadata properties script in default location.
     sp.create_properties_script()
     # Write metadata properties from properties script to `datapackage.json`.
     sp.write_properties(properties=package_properties)
+
 
 if __name__ == "__main__":
     main()
@@ -159,10 +158,7 @@ if __name__ == "__main__":
 #| include: false
 
 # Only to check that it runs.
-sp.write_properties(
-    properties=package_properties,
-    path=package_path.properties()
-)
+sp.write_properties(properties=package_properties, path=package_path.properties())
 ```
 
 Then, use uv to run the script from the Terminal.
@@ -179,12 +175,7 @@ contains all the metadata from the `scripts/package_properties.py`:
 #| output: asis
 #| filename: datapackage.json
 
-print(
-    '```json',
-    (package_path.path / 'datapackage.json').read_text(),
-    '```',
-    sep='\n'
-)
+print("```json", (package_path.path / "datapackage.json").read_text(), "```", sep="\n")
 ````
 
 If you made a mistake and want to update the properties in the current

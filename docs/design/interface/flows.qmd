@@ -49,6 +49,7 @@ the `datapackage.json` file with the new properties.
 %%| label: fig-flow-new-package
 %%| fig-cap: "Diagram showing the flow of objects and functions to create a new package."
 %%| fig-alt: "A flow diagram showing the steps to making a new package."
+
 flowchart
     properties[(SproutProperties)]
     path_properties("PackagePath().properties()")
@@ -73,8 +74,11 @@ process to generate the `datapackage.json` file with the updated properties.
 
 ```{mermaid}
 %%| label: fig-flow-extract-field-properties
-%%| fig-cap: "Diagram showing the flow of objects and functions to extract a resource's field properties from data."
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to extract a resource's
+%%|   field properties from data.
 %%| fig-alt: "A flow diagram showing the steps to extract field properties from data."
+
 flowchart
     data[("DataFrame<br>(Tidy)")]
     properties_extracted[("FieldProperties<br>(extracted)")]
@@ -105,8 +109,13 @@ Polars DataFrame.
 
 ```{mermaid}
 %%| label: fig-flow-save-data-to-batch
-%%| fig-cap: "Diagram showing the flow of objects and functions to save new, added, or modified data to a batch."
-%%| fig-alt: "A flow diagram showing the steps to save new, added, or modified data to a batch."
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to save new, added, or
+%%|   modified data to a batch.
+%%| fig-alt: >-
+%%|   A flow diagram showing the steps to save new, added, or modified data to a
+%%|   batch.
+
 flowchart
     data[("DataFrame<br>(original data)")]
     resource_properties[(ResourceProperties)]
@@ -130,8 +139,11 @@ frame is returned unchanged.
 
 ```{mermaid}
 %%| label: fig-flow-check-data-against-properties
-%%| fig-cap: "Diagram showing the flow of objects and functions to check data against the properties."
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to check data against
+%%|   the properties.
 %%| fig-alt: "A flow diagram showing the steps to check data against the properties."
+
 flowchart
     data[(DataFrame)]
     resource_properties[(ResourceProperties)]
@@ -165,8 +177,11 @@ data.
 
 ```{mermaid}
 %%| label: fig-flow-create-resource-data
-%%| fig-cap: "Diagram showing the flow of objects and functions to create or re-create the resource data."
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to create or re-create
+%%|   the resource data.
 %%| fig-alt: "A flow diagram showing the steps to create or re-create the resource data."
+
 flowchart
     path_resource_batch_files("PackagePath().resource_batch_files()")
     read_resource_batches("read_resource_batches()")
@@ -201,8 +216,11 @@ same file names should be used to overwrite old batch files.
 
 ```{mermaid}
 %%| label: fig-flow-modify-data-types
-%%| fig-cap: "Diagram showing the flow of objects and functions to modify data types or table schema."
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to modify data types or
+%%|   table schema.
 %%| fig-alt: "A flow diagram showing the steps to modify data types or table schema."
+
 flowchart
     path_resource_batch_files("path_resource_batch_files()")
     read_resource_batches("read_resource_batches()")
@@ -234,8 +252,11 @@ files.
 
 ```{mermaid}
 %%| label: fig-flow-delete-observational-unit
-%%| fig-cap: "Diagram showing the flow of objects and functions to delete an observational unit."
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to delete an
+%%|   observational unit.
 %%| fig-alt: "A flow diagram showing the steps to delete an observational unit."
+
 flowchart
     path_resource_batch_files("path_resource_batch_files()")
     read_resource_batches("read_resource_batches()")
