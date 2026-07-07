@@ -50,6 +50,7 @@ guide](https://sprout.seedcase-project.org/docs/guide/installation):
 #| echo: false
 
 from seedcase_soil import file_tree
+
 print(file_tree(package_path.root()))
 ```
 
@@ -82,9 +83,11 @@ can simply uncomment it to get started.
 
 import seedcase_sprout as sp
 
+
 def main():
     # Create the properties script in the default location.
     sp.create_properties_script()
+
 
 if __name__ == "__main__":
     main()
@@ -123,6 +126,7 @@ touch scripts/__init__.py
 #| include: false
 
 import subprocess
+
 # Touch file in scripts/ folder in the package_path
 subprocess.run(["touch", str(package_path.root() / "scripts/__init__.py")])
 ```
@@ -195,11 +199,13 @@ by including it within the `main.py` script like we have done below:
 import seedcase_sprout as sp
 from scripts.package_properties import package_properties
 
+
 def main():
     # Create the metadata properties script in default location.
     sp.create_properties_script()
     # Write metadata properties from properties script to `datapackage.json`.
     sp.write_properties(properties=package_properties)
+
 
 if __name__ == "__main__":
     main()
@@ -209,10 +215,7 @@ if __name__ == "__main__":
 #| include: false
 
 # Only to check that it runs.
-sp.write_properties(
-    properties=package_properties,
-    path=package_path.properties()
-)
+sp.write_properties(properties=package_properties, path=package_path.properties())
 ```
 
 Then, use uv to run the script from the Terminal:
