@@ -71,6 +71,7 @@ issues = "https://github.com/seedcase-project/seedcase-sprout/issues"
 [dependency-groups]
 dev = [
   "bandit>=1.8.3",
+  "coverage==7.15.0",
   "datamodel-code-generator>=0.28.5",
   "emoji>=2.14.1",
   "genbadge>=1.1.2",
