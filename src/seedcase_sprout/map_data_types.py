@@ -80,7 +80,7 @@ def _polars_and_datapackage_types_match(
 def _get_allowed_polars_types(
     datapackage_type: FieldType | None,
 ) -> list[type[pl.DataType]]:
-    """Return the Polars types that can represent the given Data Package type.
+    """Match the Polars types with their Data Package type.
 
     Args:
         datapackage_type: The Data Package type.
@@ -104,7 +104,7 @@ def _get_allowed_polars_types(
 
 
 def _polars_to_datapackage(polars_type: pl.DataType) -> FieldType:
-    """Return the Data Package type that is the best match for the given Polars type.
+    """Match the Data Package type with its Polars type.
 
     Args:
         polars_type: The Polars type to match.

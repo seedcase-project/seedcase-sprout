@@ -27,8 +27,9 @@ def write_resource_data(
             `batch/` folder.
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to create the Parquet file for.
-        package_path: The path to the data package root folder (where `datapackage.json`
-            is located). Defaults to the current working directory.
+        package_path: The path to the data package root folder (where
+            `datapackage.json` is located). Defaults to the current working
+            directory.
 
     Returns:
         The path of the created Parquet file.

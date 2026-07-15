@@ -199,8 +199,7 @@ class ResourceProperties:
         format (str | None): The file format of this resource.
         mediatype (str | None): The media type of this resource. Can be any
             valid media type listed with
-            [IANA](https://www.iana.org/assignments/media-types/media-
-            types.xhtml).
+            [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).
         encoding (str | None): The file encoding of this resource.
         bytes (int | None): The size of this resource in bytes.
         hash (str | None): The MD5 hash of this resource. Indicate other

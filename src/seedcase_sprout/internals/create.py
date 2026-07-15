@@ -4,7 +4,7 @@ from seedcase_sprout.internals.to import _to_snake_case
 
 
 def _create_resource_data_path(resource_name: str) -> str:
-    """Creates a stringified relative path to the resource data file based on the name.
+    """Creates a relative path to the resource data file.
 
     Args:
         resource_name: The name of the resource.
@@ -17,7 +17,7 @@ def _create_resource_data_path(resource_name: str) -> str:
 
 
 def _create_resource_properties_script_filename(resource_name: str = "") -> str:
-    """Creates the filename for the resource properties script from the resource name.
+    """Creates the the resource properties script filename.
 
     Args:
         resource_name: The name of the resource. Defaults to "".

@@ -8,7 +8,8 @@ def _get_iso_timestamp() -> str:
     """Gets the current ISO timestamp compliant with the Data Package spec.
 
     Returns:
-        The current ISO timestamp as a string. E.g. `2024-05-14T05:00:01+00:00`.
+        The current ISO timestamp as a string. E.g.
+        `2024-05-14T05: 00:01+00:00`.
     """
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
@@ -18,21 +19,22 @@ def _get_nested_attr(
 ) -> T | None:
     """Returns the attribute specified by `attributes`.
 
-    Tries to resolve the chain of attributes against `base_object`. Returns None
-    or the specified default value if the attribute chain cannot be resolved.
+    Tries to resolve the chain of attributes against `base_object`. Returns
+    None or the specified default value if the attribute chain cannot be
+    resolved.
 
     Args:
         base_object: The object to start resolving the attributes from.
         attributes: The chain of attributes as a dot-separated string.
-        default: The default value to return if the attributes cannot be resolved.
-            Defaults to None.
+        default: The default value to return if the attributes cannot be
+            resolved. Defaults to None.
 
     Returns:
         The value at the end of the attribute chain.
 
     Raises:
-        ValueError: If the attribute chain contains an element that is not a valid
-            identifier.
+        ValueError: If the attribute chain contains an element that is not a
+            valid identifier.
 
     Examples:
         ```{python}

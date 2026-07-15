@@ -16,12 +16,12 @@ from seedcase_sprout.properties import (
 def write_properties(properties: SproutProperties, path: Path | None = None) -> Path:
     """Write the `properties` to the `datapackage.json` file.
 
-    If the `datapackage.json` file already exists, it will be overwritten. If not,
-    a new file will be created.
+    If the `datapackage.json` file already exists, it will be overwritten. If
+    not, a new file will be created.
 
     Args:
-        properties: The properties to write. Use `create_properties_script()` to
-            create a file with your properties object.
+        properties: The properties to write. Use `create_properties_script()`
+            to create a file with your properties object.
         path: A `Path` to the `datapackage.json` file.
 
     Returns:

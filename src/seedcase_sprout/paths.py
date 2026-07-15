@@ -1,9 +1,9 @@
-"""This module contains functions to get the paths to various data package files.
+"""Contains functions to get the paths to various data package files.
 
-They are intended to be used in conjunction with other functions to read, write, and
-edit the contents and properties of various files within a data package. Specifically,
-they are used in the context of a data package stored in the working directory ("local"
-first approach).
+They are intended to be used in conjunction with other functions to read,
+write, and edit the contents and properties of various files within a data
+package. Specifically, they are used in the context of a data package stored in
+the working directory ("local" first approach).
 """
 
 from pathlib import Path
@@ -26,11 +26,12 @@ class PackagePath:
     -   If the wrong `resource_name` is given, an error message will include a
         list of all the actual `resource_name`'s for a specific package.
 
-    Outputs a `PackagePath` object representing the structure of a data package.
+    Outputs a `PackagePath` object representing the structure of a data
+    package.
 
     Args:
-        path: Provide a path to the package directory. Defaults to the current working
-            directory.
+        path: Provide a path to the package directory. Defaults to the current
+            working directory.
 
     Examples:
         ```{python}
@@ -67,8 +68,8 @@ class PackagePath:
         """Path to the specified `resources/<name>/` folder.
 
         Args:
-            resource_name: The name of the resource. Use `ResourceProperties.name` to
-                get the correct resource name.
+            resource_name: The name of the resource. Use
+                `ResourceProperties.name` to get the correct resource name.
         """
         return self.resources() / str(resource_name)
 
@@ -76,8 +77,8 @@ class PackagePath:
         """Path to the specific resource's data file.
 
         Args:
-            resource_name: The name of the resource. Use `ResourceProperties.name` to
-                get the correct resource name.
+            resource_name: The name of the resource. Use
+                `ResourceProperties.name` to get the correct resource name.
         """
         return self.resource(resource_name) / "data.parquet"
 
@@ -85,8 +86,8 @@ class PackagePath:
         """Path to the specific resource's `batch/` folder.
 
         Args:
-            resource_name: The name of the resource. Use `ResourceProperties.name` to
-                get the correct resource name.
+            resource_name: The name of the resource. Use
+                `ResourceProperties.name` to get the correct resource name.
         """
         return self.resource(resource_name) / "batch"
 
@@ -94,8 +95,8 @@ class PackagePath:
         """Paths to all the files in the specific resource's `batch/` folder.
 
         Args:
-            resource_name: The name of the resource. Use `ResourceProperties.name` to
-                get the correct resource name.
+            resource_name: The name of the resource. Use
+                `ResourceProperties.name` to get the correct resource name.
         """
         return list(self.resource_batch(resource_name).glob("*.parquet"))
 

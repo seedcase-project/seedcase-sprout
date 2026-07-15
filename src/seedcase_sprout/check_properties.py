@@ -16,10 +16,10 @@ from seedcase_sprout.sprout_checks.required_fields import (
 
 
 def check_package_properties(properties: Any) -> SproutProperties:
-    """Check `SproutProperties` (not `ResourceProperties`) against the requirements.
+    """Check `SproutProperties` against Sprout's requirements.
 
-    Package `properties` are checked against the Data Package standard and the following
-    Sprout-specific requirements:
+    Package `properties` are checked against the Data Package standard and the
+    following Sprout-specific requirements:
 
     - Sprout-specific required fields are present.
     - Required fields are not blank.
@@ -55,8 +55,8 @@ def check_properties(properties: Any) -> SproutProperties:
     - Sprout-specific required fields are present
     - Required fields are not blank
 
-    If the resources property *has* been filled in, these resource properties will also
-    be checked:
+    If the resources property *has* been filled in, these resource properties
+    will also be checked:
 
     - `path` is of type string.
     - `path` includes resource name.
@@ -99,7 +99,7 @@ class DataResourceError(Exception):
 
 
 def check_resource_properties(properties: Any) -> ResourceProperties:
-    """Checks that only the resource `properties` match Sprout's requirements.
+    """Checks the resource properties against Sprout's requirements.
 
     All resource `properties` are checked against the Data Package standard and
     the following Sprout-specific requirements:
@@ -136,10 +136,11 @@ def _generic_check_properties(
     exclusions: list[cdp.Exclusion] = [],
     error: bool = True,
 ) -> list[cdp.Issue]:
-    """A generic check for Sprout-specific requirements on the Frictionless standard.
+    """Checks Sprout's requirements against the Data Package spec.
 
-    All `properties`, excluding those in `exclusions`, are checked against the Data
-    Package standard as well as the following Sprout-specific requirements:
+    All `properties`, excluding those in `exclusions`, are checked against the
+    Data Package standard as well as the following Sprout-specific
+    requirements:
 
     - Sprout-specific required fields are present
     - Required fields are not blank
@@ -148,7 +149,8 @@ def _generic_check_properties(
     - Resource `data` is not set
 
     Args:
-        properties: The full package properties to check, including resource properties.
+        properties: The full package properties to check, including resource
+            properties.
         exclusions: A list of exclusions for any checks to ignore.
         error: Whether to raise an error if any issues are found.
 
@@ -259,10 +261,10 @@ def _generic_check_properties(
 
 
 def _check_resource_path_format(resource_properties: Any) -> bool:
-    """Checks if the data path in the resource properties has the correct format.
+    """Checks the data path in the resource properties.
 
-    As the path is constructed from the resource name, its format can only be checked
-    if the resource name is correct.
+    As the path is constructed from the resource name, its format can only be
+    checked if the resource name is correct.
     """
     if not isinstance(resource_properties, dict):
         return True

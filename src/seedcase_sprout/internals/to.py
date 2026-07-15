@@ -9,7 +9,6 @@ def _to_snake_case(name: str) -> str:
 
     Returns:
         The package or resource name in snake case.
-
     """
     return name.replace(".", "_").replace("-", "_").lower()
 
@@ -30,8 +29,8 @@ def _to_camel_case(text: str) -> str:
 def _to_dedented(text: str | None) -> str | None:
     """Dedents text by removing leading whitespace and tabs from each line.
 
-    If it is not indented, it will be returned as is.
-    If the first line starts with newlines, those will be removed.
+    If it is not indented, it will be returned as is. If the first line starts
+    with newlines, those will be removed.
 
     Args:
         text: The text to dedent.
