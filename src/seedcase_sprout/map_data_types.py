@@ -57,7 +57,8 @@ def _get_allowed_datapackage_types(polars_type: pl.DataType) -> list[FieldType]:
         and polars_type.size == 2
         and polars_type.inner.is_numeric()
     ):
-        return allowed_types + ["geopoint"]
+        geopoint: list[FieldType] = ["geopoint"]
+        return allowed_types + geopoint
 
     return allowed_types
 
