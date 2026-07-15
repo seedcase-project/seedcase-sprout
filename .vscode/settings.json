@@ -16,12 +16,16 @@
     "perf"
   ],
   "conventional-branch.format": "{Type}/{Branch}",
-  "[quarto][qmd][md]": {
-    "editor.formatOnSave": false,
+  "[quarto][qmd][md][jinja][jinja-md]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "jolars.panache"
   },
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
+  "[python][jinja][jinja-py]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "always",
+    }
   },
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
   "python.languageServer": "Pylance",
@@ -31,4 +35,8 @@
   "conventionalCommits.emojiFormat": "emoji",
   "conventionalCommits.promptScopes": false,
   "typos.config": ".config/typos.toml",
+  "files.associations": {
+    "*.py.jinja2": "jinja-py",
+    "*.md.jinja2": "jinja-md"
+  }
 }
