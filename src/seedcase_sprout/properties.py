@@ -28,11 +28,11 @@ from seedcase_sprout.sprout_checks.is_resource_name_correct import (
 
 @dataclass
 class BaseProperties(ABC):
-    """Base class for all `*Properties` classes to hold common logic."""
+    """Base class for all `*Properties` classes."""
 
     @property
     def compact_dict(self) -> dict[str, Any]:
-        """Converts `*Properties` to a `camelCase` dictionary.
+        """Converts a `*Properties` object to a `camelCase` dictionary.
 
         Applies recursively to nested `*Properties` objects. Also removes any
         keys with None values.
@@ -51,7 +51,7 @@ class BaseProperties(ABC):
 
     @classmethod
     def from_dict(cls: type[Self], data: dict[str, Any]) -> Self:
-        """Creates a `*Properties` filled with data from a dictionary.
+        """Creates a `*Properties` object with data from a dictionary.
 
         Args:
             cls: The class to create the `*Properties` object from.
