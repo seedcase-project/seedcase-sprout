@@ -71,7 +71,7 @@ class PackagePath:
             resource_name: The name of the resource. Use
                 `ResourceProperties.name` to get the correct resource name.
         """
-        return self.resources() / str(resource_name)
+        return self.resources() / resource_name
 
     def resource_data(self, resource_name: str) -> Path:
         """Path to the specific resource's data file.
