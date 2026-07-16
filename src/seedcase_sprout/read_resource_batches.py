@@ -47,17 +47,6 @@ def read_resource_batches(
         ValueError: If the batch file name is not in the expected pattern.
         ValueError: If the timestamp column name matches an existing column in the
             DataFrame.
-
-    Examples:
-        ``` {python}
-        import seedcase_sprout as sp
-
-        with sp.ExamplePackage():
-            resource_properties = sp.example_resource_properties()
-            sp.write_resource_batch(sp.example_data(), resource_properties)
-
-            sp.read_resource_batches(resource_properties)
-        ```
     """
     check_resource_properties(resource_properties)
     if paths is None:

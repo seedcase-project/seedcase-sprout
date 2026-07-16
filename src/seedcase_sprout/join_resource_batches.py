@@ -46,18 +46,6 @@ def join_resource_batches(
             shapes, such as mismatched column names or numbers.
         polars.exceptions.SchemaError: If the dataframes in data_list have
             different schemas, e.g., their column data types don't match.
-
-    Examples:
-        ```{python}
-        import seedcase_sprout as sp
-
-        with sp.ExamplePackage():
-            resource_properties = sp.example_resource_properties()
-            sp.write_resource_batch(sp.example_data(), resource_properties)
-            batches = sp.read_resource_batches(resource_properties=resource_properties)
-
-            sp.join_resource_batches(batches, resource_properties)
-        ```
     """
     check_resource_properties(resource_properties)
 
