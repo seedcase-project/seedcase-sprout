@@ -601,9 +601,9 @@ only one batch data file stored in the resource's folder, only this one will be
 used to build the data resource's Parquet file. To create this main Parquet
 file, you need to read in all the batch files, join them together, and,
 optionally, do any additional processing on the data before writing it to the
-file. The functions to use are `read_staging()`,
-`join_staging()`, and `write_resource_data()`. Several of these
-functions will internally run checks via `check_data()`.
+file. The functions to use are `read_staging()`, `join_staging()`, and
+`write_resource_data()`. Several of these functions will internally run checks
+via `check_data()`.
 
 Let's add these functions to the `main.py` file to make the `data.parquet` file:
 
