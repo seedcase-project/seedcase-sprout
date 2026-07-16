@@ -95,7 +95,7 @@ flowchart
 ## Checking data against the properties
 
 The data must always match what is described in the properties. This means that
-the data must have the same column names, column types,> and column constraints.
+the data must have the same column names, column types, and column constraints.
 The `check_data()` function will internally call several separate functions for
 these specific checks. Each of these functions outputs an error message
 describing what the problems are if the check fails. Otherwise, the input data
