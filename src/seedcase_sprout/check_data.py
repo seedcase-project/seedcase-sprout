@@ -20,7 +20,7 @@ from seedcase_sprout.properties import (
 def check_data(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Check that the DataFrame matches the requirements in the properties.
+    """Checks that the DataFrame matches the requirements in the properties.
 
     Run a few checks to compare between the data and the properties on the
     items:
@@ -46,7 +46,7 @@ def check_data(
         resource_properties: The specific `ResourceProperties` for the `data`.
 
     Returns:
-        The `data` if checks all pass.
+        The `data` if all checks pass.
 
     Raises:
         ExceptionGroup[CheckError]: If the resource properties are incorrect.

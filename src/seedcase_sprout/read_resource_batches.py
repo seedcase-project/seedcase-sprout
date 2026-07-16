@@ -45,8 +45,8 @@ def read_resource_batches(
 
     Raises:
         ValueError: If the batch file name is not in the expected pattern.
-        ValueError: If the timestamp column name matches an existing column in the
-            DataFrame.
+        ValueError: If the timestamp column name matches an existing column in
+            the DataFrame.
     """
     check_resource_properties(resource_properties)
     if paths is None:

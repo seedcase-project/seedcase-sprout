@@ -33,8 +33,8 @@ def _get_nested_attr(
         The value at the end of the attribute chain.
 
     Raises:
-        ValueError: If the attribute chain contains an element that is not a valid
-            identifier.
+        ValueError: If the attribute chain contains an element that is not a
+            valid identifier.
     """
     attributes_list = attributes.split(".")
     if any(not attribute.isidentifier() for attribute in attributes_list):
