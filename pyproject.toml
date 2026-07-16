@@ -71,6 +71,7 @@ issues = "https://github.com/seedcase-project/seedcase-sprout/issues"
 [dependency-groups]
 dev = [
   "bandit>=1.8.3",
+  "coverage==7.15.0",
   "datamodel-code-generator>=0.28.5",
   "emoji>=2.14.1",
   "genbadge>=1.1.2",
@@ -92,19 +93,23 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
-# - A short traceback (tb) mode to make it easier to view
-# - Use the `src/` package (importlib)
-# - Use code coverage on the `src/` package
-# - If tests fail, do not generate coverage report
-# - Create the coverage report in XML (for badge), terminal, and HTML
-# - Trigger failure if below 90% code coverage
+# - A short traceback (tb) mode to make it easier to view.
+# - Use the `src/` package (importlib).
+# - Use code coverage on the `src/` package.
+# - If tests fail, do not generate coverage report.
+# - Create the coverage report in XML (for badge), terminal, and HTML.
+# - Trigger failure if below 90% code coverage.
 addopts = "--tb=short --import-mode=importlib --cov=src --no-cov-on-fail --cov-report=term --cov-report=xml --cov-report=html --cov-fail-under=90"
 
 [tool.pyrefly]
 project-includes = ["src/"]
+search-path = ["src/"]
 min-severity = "warn"
 python-version = "3.12.0"
 preset = "strict"
+python-interpreter-path = ".venv/bin/python"
+# Use inline `# type: ignore` comments, which can be useful.
+permissive-ignores = true
 
 [tool.ruff]
 extend = ".config/ruff.toml"
