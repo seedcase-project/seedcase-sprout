@@ -33,20 +33,8 @@ def _get_nested_attr(
         The value at the end of the attribute chain.
 
     Raises:
-        ValueError: If the attribute chain contains an element that is not a
-            valid identifier.
-
-    Examples:
-        ```{python}
-        class Inner:
-            pass
-        class Middle:
-            inner: Inner = Inner()
-        class Outer:
-            middle: Middle = Middle()
-
-        _get_nested_attr(Outer(), "middle.inner")
-        ```
+        ValueError: If the attribute chain contains an element that is not a valid
+            identifier.
     """
     attributes_list = attributes.split(".")
     if any(not attribute.isidentifier() for attribute in attributes_list):
