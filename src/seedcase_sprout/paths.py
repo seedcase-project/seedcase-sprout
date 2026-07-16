@@ -81,23 +81,23 @@ class PackagePath:
         """
         return self.resource(resource_name) / "data.parquet"
 
-    def resource_batch(self, resource_name: str) -> Path:
-        """Path to the specific resource's `batch/` folder.
+    def staging(self, resource_name: str) -> Path:
+        """Path to the specific resource's `staging/` folder.
 
         Args:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
                 get the correct resource name.
         """
-        return self.resource(resource_name) / "batch"
+        return "staging" / self.resource(resource_name)
 
-    def resource_batch_files(self, resource_name: str) -> list[Path]:
-        """Paths to all the files in the specific resource's `batch/` folder.
+    def staging_files(self, resource_name: str) -> list[Path]:
+        """Paths to all the files in the specific resource's `staging/` folder.
 
         Args:
             resource_name: The name of the resource. Use `ResourceProperties.name` to
                 get the correct resource name.
         """
-        return list(self.resource_batch(resource_name).glob("*.parquet"))
+        return list(self.staging(resource_name).glob("*.parquet"))
 
     def properties_script(self) -> Path:
         """Path to the properties script."""

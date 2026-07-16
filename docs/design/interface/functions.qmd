@@ -70,45 +70,45 @@ flowchart
 
 ## Data resource functions
 
-### {{< var done >}} `write_resource_batch(data, resource_properties)`
+### {{< var done >}} `write_staging(data, resource_properties)`
 
-See the help documentation with `help(write_resource_batch)` for more details.
+See the help documentation with `help(write_staging)` for more details.
 
 ```{mermaid}
 flowchart
     in_data[/data/]
     in_properties[/resource_properties/]
-    function("write_resource_batch()")
+    function("write_staging()")
     out[("{path}/{timestamp}-{uuid}.parquet")]
     in_data --> function
     in_properties --> function
     function --> out
 ```
 
-### {{< var done >}} `read_resource_batches(resource_properties, paths)`
+### {{< var done >}} `read_staging(resource_properties, paths)`
 
-See the help documentation with `help(read_resource_batches)` for more details.
+See the help documentation with `help(read_staging)` for more details.
 
 ```{mermaid}
 flowchart
     in_path[/paths/]
     in_properties[/resource_properties/]
-    function("read_resource_batches()")
+    function("read_staging()")
     out[("List[DataFrame]")]
     in_path --> function
     in_properties --> function
     function --> out
 ```
 
-### {{< var done >}} `join_resource_batches(data_list, resource_properties)`
+### {{< var done >}} `join_staging(data_list, resource_properties)`
 
-See the help documentation with `help(join_resource_batches)` for more details.
+See the help documentation with `help(join_staging)` for more details.
 
 ```{mermaid}
 flowchart
     in_data[/data_list/]
     in_properties[/resource_properties/]
-    function("join_resource_batches()")
+    function("join_staging()")
     out[("DataFrame")]
     in_data --> function
     in_properties --> function

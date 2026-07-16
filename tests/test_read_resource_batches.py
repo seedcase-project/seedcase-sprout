@@ -5,28 +5,28 @@ import polars as pl
 from pytest import fixture, mark, raises
 
 from seedcase_sprout.check_properties import DataResourceError
-from seedcase_sprout.constants import BATCH_TIMESTAMP_COLUMN_NAME
+from seedcase_sprout.constants import STAGING_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.examples import example_resource_properties
 from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.read_resource_batches import (
-    read_resource_batches,
+from seedcase_sprout.read_staging import (
+    read_staging,
 )
 from tests.directory_structure_setup import (
     create_test_data_package,
 )
 
-batch_data_1 = pl.DataFrame(
+staging_data_1 = pl.DataFrame(
     {
         "id": [0, 1, 2],
         "name": ["anne", "belinda", "catherine"],
     }
 )
 
-batch_data_2 = pl.DataFrame(
+staging_data_2 = pl.DataFrame(
     {
         "id": [3, 4, 5],
         "name": ["dorothy", "figaro", "gabrielle"],
@@ -53,12 +53,12 @@ def resource_properties() -> ResourceProperties:
 def test_package(tmp_path):
     # TODO: Switch to using examples
     create_test_data_package(tmp_path)
-    batch_path = tmp_path / "resources" / "1" / "batch"
-    batch_path.mkdir(parents=True)
+    staging_path = tmp_path / "resources" / "1" / "staging"
+    staging_path.mkdir(parents=True)
 
-    for batch_data in [batch_data_1, batch_data_2]:
-        batch_data.write_parquet(
-            Path(batch_path / f"2025-03-26T100346Z-{uuid4()}").with_suffix(".parquet")
+    for staging_data in [staging_data_1, staging_data_2]:
+        staging_data.write_parquet(
+            Path(staging_path / f"2025-03-26T100346Z-{uuid4()}").with_suffix(".parquet")
         )
 
     return tmp_path
@@ -66,18 +66,18 @@ def test_package(tmp_path):
 
 @fixture
 def resource_paths(test_package):
-    return list((test_package / "resources" / "1" / "batch").iterdir())
+    return list((test_package / "resources" / "1" / "staging").iterdir())
 
 
-def test_reads_resource_batches_correctly(resource_paths, resource_properties):
-    """Reads the resource batches correctly with the expected timestamp column."""
+def test_reads_staging_correctly(resource_paths, resource_properties):
+    """Reads the resource staginges correctly with the expected timestamp column."""
     # Given, When
-    data_list = read_resource_batches(
+    data_list = read_staging(
         resource_properties=resource_properties, paths=resource_paths
     )
     timestamp_column = [
-        data_list[0][BATCH_TIMESTAMP_COLUMN_NAME],
-        data_list[1][BATCH_TIMESTAMP_COLUMN_NAME],
+        data_list[0][STAGING_TIMESTAMP_COLUMN_NAME],
+        data_list[1][STAGING_TIMESTAMP_COLUMN_NAME],
     ]
 
     # Then
@@ -96,9 +96,7 @@ def test_raises_error_when_file_does_not_exist(resource_paths, resource_properti
 
     # When, Then
     with raises(FileNotFoundError):
-        read_resource_batches(
-            resource_properties=resource_properties, paths=resource_paths
-        )
+        read_staging(resource_properties=resource_properties, paths=resource_paths)
 
 
 def test_raises_error_when_file_not_parquet(tmp_path):
@@ -107,7 +105,7 @@ def test_raises_error_when_file_not_parquet(tmp_path):
     csv_file.touch()
 
     with raises(ValueError):
-        read_resource_batches(
+        read_staging(
             paths=[csv_file], resource_properties=example_resource_properties()
         )
 
@@ -117,22 +115,20 @@ def test_raises_error_when_timestamp_column_matches_existing_column(
 ):
     """Raises ValueError when the timestamp column name matches an existing column."""
     # Given
-    batch_path = resource_paths[0].parent
+    staging_path = resource_paths[0].parent
 
-    batch_data = pl.DataFrame(
+    staging_data = pl.DataFrame(
         {
             "id": [0, 1, 2],
-            BATCH_TIMESTAMP_COLUMN_NAME: ["2024-03-26T100346Z"] * 3,
+            STAGING_TIMESTAMP_COLUMN_NAME: ["2024-03-26T100346Z"] * 3,
         }
     )
-    batch_path = Path(batch_path) / f"2025-03-26T100346Z-{uuid4()}.parquet"
-    batch_data.write_parquet(batch_path)
+    staging_path = Path(staging_path) / f"2025-03-26T100346Z-{uuid4()}.parquet"
+    staging_data.write_parquet(staging_path)
 
     # When, Then
     with raises(ValueError):
-        read_resource_batches(
-            resource_properties=resource_properties, paths=[batch_path]
-        )
+        read_staging(resource_properties=resource_properties, paths=[staging_path])
 
 
 @mark.parametrize(
@@ -148,17 +144,15 @@ def test_raises_error_when_timestamp_column_matches_existing_column(
 def test_raises_error_when_file_name_timestamp_does_not_match_pattern(
     resource_paths, resource_properties, incorrect_timestamp
 ):
-    """Raises ValueError when the batch file name is not in the expected pattern."""
+    """Raises ValueError when the staging file name is not in the expected pattern."""
     # Given
-    batch_path = resource_paths[0].parent
-    batch_file_path = Path(batch_path) / f"{incorrect_timestamp}-{uuid4()}.parquet"
-    batch_data_1.write_parquet(batch_file_path)
+    staging_path = resource_paths[0].parent
+    staging_file_path = Path(staging_path) / f"{incorrect_timestamp}-{uuid4()}.parquet"
+    staging_data_1.write_parquet(staging_file_path)
 
     # When, Then
     with raises(ValueError):
-        read_resource_batches(
-            resource_properties=resource_properties, paths=[batch_file_path]
-        )
+        read_staging(resource_properties=resource_properties, paths=[staging_file_path])
 
 
 def test_if_multiple_correct_timestamps_in_file_name_use_first_one(
@@ -166,19 +160,19 @@ def test_if_multiple_correct_timestamps_in_file_name_use_first_one(
 ):
     """If multiple timestamps are found in the file name, the first one is used."""
     # Given
-    batch_path = resource_paths[0].parent
-    batch_file_path = (
-        Path(batch_path) / f"2025-03-26T100346Z-1990-03-26T100346Z-{uuid4()}.parquet"
+    staging_path = resource_paths[0].parent
+    staging_file_path = (
+        Path(staging_path) / f"2025-03-26T100346Z-1990-03-26T100346Z-{uuid4()}.parquet"
     )
-    batch_data_1.write_parquet(batch_file_path)
+    staging_data_1.write_parquet(staging_file_path)
 
     # When
-    data_list = read_resource_batches(
-        resource_properties=resource_properties, paths=[batch_file_path]
+    data_list = read_staging(
+        resource_properties=resource_properties, paths=[staging_file_path]
     )
 
     # Then
-    assert data_list[0][BATCH_TIMESTAMP_COLUMN_NAME][0] == "2025-03-26T100346Z"
+    assert data_list[0][STAGING_TIMESTAMP_COLUMN_NAME][0] == "2025-03-26T100346Z"
 
 
 def test_raises_error_when_properties_do_not_match_data(
@@ -190,35 +184,31 @@ def test_raises_error_when_properties_do_not_match_data(
 
     # When, Then
     with raises(ValueError):
-        read_resource_batches(
-            resource_properties=resource_properties, paths=resource_paths
-        )
+        read_staging(resource_properties=resource_properties, paths=resource_paths)
 
 
 def test_raises_error_with_empty_resource_properties(resource_paths):
     """Raises errors from checks if the resource properties are empty."""
     # When, Then
     with raises(DataResourceError):
-        read_resource_batches(
-            resource_properties=ResourceProperties(), paths=resource_paths
-        )
+        read_staging(resource_properties=ResourceProperties(), paths=resource_paths)
 
 
 def test_uses_cwd_if_no_paths(tmp_cwd, test_package, resource_properties):
     """If no paths are provided, should use the cwd as the package root to retrieve
-    batch files from resource.
+    staging files from resource.
     """
-    data_list = read_resource_batches(resource_properties)
+    data_list = read_staging(resource_properties)
 
     assert len(data_list) == 2
 
 
-def test_no_error_thrown_when_no_batches_using_cwd_as_default(
+def test_no_error_thrown_when_no_staging_using_cwd_as_default(
     tmp_cwd, resource_properties
 ):
-    """No error should be thrown if the cwd has no batch files for the given
+    """No error should be thrown if the cwd has no staging files for the given
     resource.
     """
-    data_list = read_resource_batches(resource_properties)
+    data_list = read_staging(resource_properties)
 
     assert len(data_list) == 0

@@ -15,7 +15,7 @@ def write_resource_data(
     """Check and write the resource data into a file.
 
     This function takes the `data` obtained after using
-    `join_resource_batches()`, checks it against the `resource_properties`, and
+    `join_staging()`, checks it against the `resource_properties`, and
     then writes the data to the resources `data.parquet` file .  The Parquet
     file is saved based on the path found in `ResourceProperties.path` and is
     always overwritten.  Before writing, this function does a check against the
@@ -23,8 +23,7 @@ def write_resource_data(
     tidy.
 
     Args:
-        data: A DataFrame object with the resources data from the files in its
-            `batch/` folder.
+        data: A DataFrame object with the resources data from the staging files.
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to create the Parquet file for.
         package_path: The path to the data package root folder (where `datapackage.json`
@@ -40,9 +39,9 @@ def write_resource_data(
         with sp.ExamplePackage():
             resource_properties = sp.example_resource_properties()
             # Add and join batch files
-            sp.write_resource_batch(sp.example_data(), resource_properties)
-            batches = sp.read_resource_batches(resource_properties)
-            data = sp.join_resource_batches(batches, resource_properties)
+            sp.write_staging(sp.example_data(), resource_properties)
+            batches = sp.read_staging(resource_properties)
+            data = sp.join_staging(batches, resource_properties)
             # Write resource data file
             sp.write_resource_data(data, resource_properties)
     """

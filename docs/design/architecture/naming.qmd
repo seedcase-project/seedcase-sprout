@@ -36,10 +36,10 @@ also occasionally use "properties" to refer to the file itself.
   | Object             | Description                                                                                                                                                         |
   | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | package            | A data package that contains a collection of related data resources and properties.                                                                                 |
-  | resource           | A single data file within a package, along with its properties and associated batch data files.                                                                     |
+  | resource           | A single data file within a package, along with its properties files.                                                                     |
   | properties         | Metadata about a package or resource.                                                                                                                               |
   | path               | A file path listing the location of folders or files that Sprout interacts with.                                                                                    |
-  | data               | The data file(s) within a resource. Within Sprout, this consists of the Parquet data and batch files.                                                               |
+  | data               | The data file(s) within a resource. Within Sprout, this consists of the Parquet data.                                                               |
   | identifier         | A unique identifier for a package (*only for server environments*), denoted as `id`.                                                                                |
   | observational unit | The unit of observation, meaning the data associated with a specific entity at a specific time, e.g. a person who had their weight measured on their 30th birthday. |
 
@@ -50,9 +50,9 @@ also occasionally use "properties" to refer to the file itself.
   | dir            | A shortened name for folder or directory.                                                                                                                                 |
   | packages       | The folder that contains all packages. *Only for server environments*.                                                                                                    |
   | resources      | The folder that contains all resource files in a package.                                                                                                                 |
-  | batch          | The folder that contains the batch data files for a data resource (data files timestamped when first added (or updated) to a resource).                                   |
+  | staging        | The folder that contains the staging data files for a data resource. These are files that were timestamped when first added (or updated) as raw files.                                   |
   | JSON           | The main way we save and pass information around on the package's or resource's properties.                                                                               |
-  | Parquet        | A columnar, efficient storage file format that we use to save data within a resource. Both the final resource data as well as resource batch files are stored as Parquet. |
+  | Parquet        | A columnar, efficient storage file format that we use to save data within a resource. Both the final resource data as well as staging files are stored as Parquet. |
 
   : Specific files and folders used within or output by Sprout.
 

@@ -552,7 +552,7 @@ resource.
 
 As shown above, the data is currently loaded as a Polars DataFrame called
 `raw_data_patients`. Now, it's time to store this data in the resource's folder
-by using the `write_resource_batch()` function in the `main.py` file.
+by using the `write_staging()` function in the `main.py` file.
 
 ```{python}
 #| filename: "main.py"
@@ -567,7 +567,7 @@ def main():
     # Previous code is excluded to keep it short.
     # New code inserted at the bottom -----
     # Save the batch data.
-    sp.write_resource_batch(
+    sp.write_staging(
         data=raw_data_patients, resource_properties=resource_properties_patients
     )
 ```
@@ -576,7 +576,7 @@ def main():
 #| include: false
 
 # Only to check that it runs.
-sp.write_resource_batch(
+sp.write_staging(
     data=raw_data_patients,
     resource_properties=resource_properties_patients,
     package_path=package_path.root(),
@@ -601,8 +601,8 @@ only one batch data file stored in the resource's folder, only this one will be
 used to build the data resource's Parquet file. To create this main Parquet
 file, you need to read in all the batch files, join them together, and,
 optionally, do any additional processing on the data before writing it to the
-file. The functions to use are `read_resource_batches()`,
-`join_resource_batches()`, and `write_resource_data()`. Several of these
+file. The functions to use are `read_staging()`,
+`join_staging()`, and `write_resource_data()`. Several of these
 functions will internally run checks via `check_data()`.
 
 Let's add these functions to the `main.py` file to make the `data.parquet` file:
@@ -616,11 +616,11 @@ def main():
     # Previous code is excluded to keep it short.
     # New code inserted at the bottom -----
     # Read in all the batch data files for the resource as a list.
-    batch_data = sp.read_resource_batches(
+    batch_data = sp.read_staging(
         resource_properties=resource_properties_patients
     )
     # Join them all together into a single Polars DataFrame.
-    joined_data = sp.join_resource_batches(
+    joined_data = sp.join_staging(
         data_list=batch_data, resource_properties=resource_properties_patients
     )
     sp.write_resource_data(
@@ -632,11 +632,11 @@ def main():
 #| include: false
 
 # Just to check that it runs.
-batch_data = sp.read_resource_batches(
+batch_data = sp.read_staging(
     resource_properties=resource_properties_patients,
-    paths=package_path.resource_batch_files("patients"),
+    paths=package_path.staging_files("patients"),
 )
-joined_data = sp.join_resource_batches(
+joined_data = sp.join_staging(
     data_list=batch_data, resource_properties=resource_properties_patients
 )
 sp.write_resource_data(
