@@ -1,4 +1,4 @@
-# Support Python 3.12+
+# Support Python 3.12+.
 target-version = "py312"
 
 # In addition to the default formatters/linters, add these as well.
@@ -10,19 +10,20 @@ extend-select = [
   "D",
   # Add isort to list.
   "I",
-  # Check for unused arguments
+  # Check for unused arguments.
   "ARG",
 ]
-# Ignore missing docstring at the top of files
+# Ignore missing docstring at the top of files.
 ignore = ["D100"]
 
 [lint.pydocstyle]
 convention = "google"
 
+[lint.per-file-ignores]
+# Ignore "Module imported but unused" error in all init files.
+"__init__.py" = ["F401"]
+# Don't require docstrings and ignore unused arguments in test files.
+"../**/tests/*" = ["D", "ARG"]
+
 [format]
 docstring-code-format = true
-
-[lint.per-file-ignores]
-# ignore "Module imported but unused" error in all init files
-"__init__.py" = ["F401"]
-"**/tests/*" = ["D"]
