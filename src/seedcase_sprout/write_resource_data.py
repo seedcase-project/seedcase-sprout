@@ -32,19 +32,6 @@ def write_resource_data(
 
     Returns:
         The path of the created Parquet file.
-
-    Examples:
-        ```{python}
-        import seedcase_sprout as sp
-
-        with sp.ExamplePackage():
-            resource_properties = sp.example_resource_properties()
-            # Add and join batch files
-            sp.write_resource_batch(sp.example_data(), resource_properties)
-            batches = sp.read_resource_batches(resource_properties)
-            data = sp.join_resource_batches(batches, resource_properties)
-            # Write resource data file
-            sp.write_resource_data(data, resource_properties)
     """
     check_data(data, resource_properties)
     data_path = PackagePath(package_path).resource_data(str(resource_properties.name))
