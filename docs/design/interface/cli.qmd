@@ -1,0 +1,63 @@
+---
+title: "Command line interface"
+---
+
+This document describes the command-line interface (CLI) as a development
+reference and to track implementation status.
+
+{{< include /docs/includes/_design-status.qmd >}}
+
+## {{< var wip >}} `seedcase-sprout`
+
+`seedcase-sprout` has the following signature:
+
+```bash {filename="Terminal"}
+seedcase-sprout <COMMAND> [PARAMETERS]
+```
+
+When used on its own, `seedcase-sprout` shows the help message as a shorthand
+for `--help`:
+
+```bash {filename="Terminal"}
+seedcase-sprout
+```
+
+::: callout-note
+As a convenience, we provide the command `sprout` as a shorthand for
+`seedcase-sprout`. It can be used in place of `seedcase-sprout` in all
+instances.
+:::
+
+`seedcase-sprout` has several commands: `extract-metadata`, `create-template`,
+`build-resources`, `build-metadata`, and `build` that runs the other `build-*`
+commands. These commands are described below.
+
+### {{< var wip >}} `extract-metadata`
+
+The `extract-metadata` command extracts metadata from a Parquet file in the
+`staging/` directory and outputs a Python script with `ResourceProperties()`
+dataclass filled in with the extracted metadata. It has the signature:
+
+```bash {filename="Terminal"}
+seedcase-sprout extract-metadata [PARQUET-FILE] --output/-o [OUTPUT-FILE]
+```
+
+```{mermaid}
+%%| label: fig-cli-extract-metadata-flow
+%%| fig-cap: "The flow of input and output through the CLI `extract-metadata` command."
+%%| fig-alt: >-
+%%|   Diagram showing the flow of input and output through the CLI
+%%|   `extract-metadata` command. The user provides the source of the Parquet
+%%|   file and the output file, which are used by the `extract-metadata` command
+%%|   to generate the Python script with extracted metadata.
+
+flowchart LR
+    parquet[/"Parquet file<br>[PARQUET-FILE]"/]
+    output_opt["Output file<br>[--output]"]
+    extract["extract-metadata"]
+    output[/"Python script<br>[File]"/]
+
+    parquet --> extract
+    output_opt --> extract
+    extract --> output
+```
