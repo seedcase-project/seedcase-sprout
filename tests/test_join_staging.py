@@ -1,10 +1,10 @@
 import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, raises
+from seedcase_sprout.join_staging import join_staging
 
 from seedcase_sprout.constants import STAGING_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.examples import example_resource_properties
-from seedcase_sprout.join_staging import join_staging
 from seedcase_sprout.properties import (
     ResourceProperties,
 )
@@ -108,7 +108,7 @@ def test_staging_are_joined_correct_with_no_primary_key(data_list, resource_prop
 def test_staging_joined_correctly_when_primary_key_is_multiple_fields(
     data_list, resource_properties
 ):
-    """staging are joined correctly when the primary key is multiple fields."""
+    """Staging are joined correctly when the primary key is multiple fields."""
     # Given
     resource_properties.schema.primary_key = ["id", "value"]
 

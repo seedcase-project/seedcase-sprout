@@ -4,6 +4,7 @@ import re
 import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import raises
+from seedcase_sprout.write_staging import write_staging
 
 from seedcase_sprout.constants import BATCH_TIMESTAMP_PATTERN
 from seedcase_sprout.examples import (
@@ -11,7 +12,6 @@ from seedcase_sprout.examples import (
     example_resource_properties,
 )
 from seedcase_sprout.paths import PackagePath
-from seedcase_sprout.write_staging import write_staging
 
 
 def test_writes_correct_staging_file(tmp_path):

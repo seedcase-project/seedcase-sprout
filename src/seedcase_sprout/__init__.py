@@ -35,12 +35,12 @@ from .properties import (
     TableSchemaProperties,
 )
 from .read_properties import read_properties
-from .read_staging import read_staging
 from .read_resource_data import read_resource_data
+from .read_staging import read_staging
 from .write_file import write_file
 from .write_properties import write_properties
-from .write_staging import write_staging
 from .write_resource_data import write_resource_data
+from .write_staging import write_staging
 
 __all__ = [
     # Properties -----
