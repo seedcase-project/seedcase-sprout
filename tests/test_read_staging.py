@@ -3,9 +3,6 @@ from uuid import uuid4
 
 import polars as pl
 from pytest import fixture, mark, raises
-from seedcase_sprout.read_staging import (
-    read_staging,
-)
 
 from seedcase_sprout.check_properties import DataResourceError
 from seedcase_sprout.constants import STAGING_TIMESTAMP_COLUMN_NAME
@@ -14,6 +11,9 @@ from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
     TableSchemaProperties,
+)
+from seedcase_sprout.read_staging import (
+    read_staging,
 )
 from tests.directory_structure_setup import (
     create_test_data_package,

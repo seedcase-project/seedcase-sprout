@@ -1,10 +1,10 @@
 import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, raises
-from seedcase_sprout.join_staging import join_staging
 
 from seedcase_sprout.constants import STAGING_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.examples import example_resource_properties
+from seedcase_sprout.join_staging import join_staging
 from seedcase_sprout.properties import (
     ResourceProperties,
 )
