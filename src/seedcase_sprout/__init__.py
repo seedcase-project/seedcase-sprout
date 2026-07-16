@@ -39,7 +39,6 @@ from .read_resource_batches import read_resource_batches
 from .read_resource_data import read_resource_data
 from .write_file import write_file
 from .write_properties import write_properties
-from .write_resource_batch import write_resource_batch
 from .write_resource_data import write_resource_data
 
 __all__ = [
@@ -72,7 +71,6 @@ __all__ = [
     "join_resource_batches",
     "read_resource_batches",
     "read_resource_data",
-    "write_resource_batch",
     "create_resource_properties_script",
     "write_resource_data",
     # Path -----

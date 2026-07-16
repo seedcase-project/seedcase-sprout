@@ -70,21 +70,6 @@ flowchart
 
 ## Data resource functions
 
-### {{< var done >}} `write_resource_batch(data, resource_properties)`
-
-See the help documentation with `help(write_resource_batch)` for more details.
-
-```{mermaid}
-flowchart
-    in_data[/data/]
-    in_properties[/resource_properties/]
-    function("write_resource_batch()")
-    out[("{path}/{timestamp}-{uuid}.parquet")]
-    in_data --> function
-    in_properties --> function
-    function --> out
-```
-
 ### {{< var done >}} `read_resource_batches(resource_properties, paths)`
 
 See the help documentation with `help(read_resource_batches)` for more details.
