@@ -261,7 +261,7 @@ def _generic_check_properties(
 
 
 def _check_resource_path_format(resource_properties: Any) -> bool:
-    """Checks the data path in the resource properties.
+    """Checks the data path format in the resource properties.
 
     As the path is constructed from the resource name, its format can only be
     checked if the resource name is correct.
