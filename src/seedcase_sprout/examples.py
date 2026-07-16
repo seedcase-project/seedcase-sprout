@@ -3,6 +3,7 @@ import tempfile
 from contextlib import AbstractContextManager
 from pathlib import Path
 from types import TracebackType
+from typing import override
 
 import polars as pl
 
@@ -353,6 +354,9 @@ class ExamplePackage(AbstractContextManager[PackagePath]):
         self.calling_dir = Path.cwd()
         self.temp_dir = tempfile.TemporaryDirectory()
 
+    # `__enter__` is already defined in the parent class, so this decorator overrides
+    # it to allow correct type checking.
+    @override
     def __enter__(self) -> PackagePath:
         """Create the temporary package structure and switch to its directory.
 
@@ -389,6 +393,9 @@ class ExamplePackage(AbstractContextManager[PackagePath]):
 
         return package_path
 
+    # `__enter__` is already defined in the parent class, so this decorator overrides
+    # it to allow correct type checking.
+    @override
     def __exit__(
         self,
         error_type: type[BaseException] | None,
