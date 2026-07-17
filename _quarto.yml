@@ -83,8 +83,8 @@ quartodoc:
       desc: "Functions to work with and manage data resources found within a data package."
       contents:
         - extract_field_properties
-        - join_resource_batches
-        - read_resource_batches
+        - join_staging
+        - read_staging
         - write_resource_batch
         - write_resource_data
         - DataResourceError

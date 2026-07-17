@@ -1,6 +1,5 @@
 ---
 title: "Flows"
-toc-depth: 2
 ---
 
 ::: callout-important
@@ -59,12 +58,12 @@ flowchart
     path_properties --> write_properties
 ```
 
-## Saving new or modified data to batch
+## Saving new or modified data to staging
 
 A data resource needs data, not just properties. You can add data to any data
 resource that has resource properties. Whenever data is added to a data
-resource, it gets first saved in the `batch/` folder to keep track of additions
-or changes. You add the data when:
+resource, it gets first saved in the `staging/` folder to keep track of
+additions or changes. You add the data when:
 
 - A new data resource is created and data is added to it.
 - Additional data is added to an existing data resource.
@@ -75,22 +74,22 @@ The data must be in a tidy format and must have already been loaded in as a
 Polars DataFrame.
 
 ```{mermaid}
-%%| label: fig-flow-save-data-to-batch
+%%| label: fig-flow-save-data-to-staging
 %%| fig-cap: >-
 %%|   Diagram showing the flow of objects and functions to save new, added, or
-%%|   modified data to a batch.
+%%|   modified data to a staging.
 %%| fig-alt: >-
 %%|   A flow diagram showing the steps to save new, added, or modified data to a
-%%|   batch.
+%%|   staging.
 
 flowchart
     data[("DataFrame<br>(original data)")]
     resource_properties[(ResourceProperties)]
-    write_resource_batch("write_resource_batch()")
+    write_staging("write_staging()")
     check_data("check_data()")
 
-    data --> write_resource_batch
-    resource_properties --> write_resource_batch
+    data --> write_staging
+    resource_properties --> write_staging
     data -.-> check_data
     resource_properties -.-> check_data
 ```
@@ -133,9 +132,9 @@ flowchart
 
 ## Creating or re-creating the resource data
 
-The batch data files are used to keep track of changes to the data. The data
+The staging data files are used to keep track of changes to the data. The data
 that will be used is kept clean and ready for analysis, while original data is
-not deleted. This flow converts batch data into the final resource data file.
+not deleted. This flow converts staging data into the final resource data file.
 The steps are split up so that, if needed or desired, you can make modifications
 to the data before it is written to the final resource data. While
 `write_resource_data()` will call `check_data()` internally, this can also be
@@ -150,19 +149,19 @@ data.
 %%| fig-alt: "A flow diagram showing the steps to create or re-create the resource data."
 
 flowchart
-    path_resource_batch_files("PackagePath().resource_batch_files()")
-    read_resource_batches("read_resource_batches()")
+    path_staging_files("PackagePath().staging_files()")
+    read_staging("read_staging()")
     list_data[("List[DataFrame]")]
-    join_resource_batches("join_resource_batches()")
+    join_staging("join_staging()")
     joined_data[(DataFrame)]
     write_resource_data("write_resource_data()")
     resource_properties[(ResourceProperties)]
     check_data("check_data()")
 
-    path_resource_batch_files --> read_resource_batches
-    read_resource_batches --> list_data
-    list_data --> join_resource_batches
-    join_resource_batches --> joined_data
+    path_staging_files --> read_staging
+    read_staging --> list_data
+    list_data --> join_staging
+    join_staging --> joined_data
     joined_data --> write_resource_data
     resource_properties --> write_resource_data
     joined_data -.-> check_data
@@ -176,10 +175,10 @@ flowchart
 
 Sometimes you may need to modify the data types or table schema of the data in a
 resource. Before using this flow, you first need to modify the resource
-properties. The `update_resource_batches()` function will update each batch
-DataFrame with the new data types or table schema. Then, you can use
-`write_resource_batch()` to save the updated data back to the batch files. The
-same file names should be used to overwrite old batch files.
+properties. The `update_staging()` function will update each staging DataFrame
+with the new data types or table schema. Then, you can use `write_staging()` to
+save the updated data back to the staging files. The same file names should be
+used to overwrite old staging files.
 
 ```{mermaid}
 %%| label: fig-flow-modify-data-types
@@ -189,21 +188,21 @@ same file names should be used to overwrite old batch files.
 %%| fig-alt: "A flow diagram showing the steps to modify data types or table schema."
 
 flowchart
-    path_resource_batch_files("path_resource_batch_files()")
-    read_resource_batches("read_resource_batches()")
+    path_staging_files("path_staging_files()")
+    read_staging("read_staging()")
     properties_updated[("ResourceProperties<br>(updated)")]
     list_data[("List[DataFrame]")]
     list_data_updated[("List[DataFrame]<br>(updated)")]
-    update_resource_batches("update_resource_batches()")
-    write_resource_batch("write_resource_batch()")
+    update_staging("update_staging()")
+    write_staging("write_staging()")
 
-    path_resource_batch_files --> read_resource_batches
-    read_resource_batches --> list_data
-    list_data --> update_resource_batches
-    properties_updated --> update_resource_batches
-    update_resource_batches --> list_data_updated
-    list_data_updated --> write_resource_batch
-    properties_updated --> write_resource_batch
+    path_staging_files --> read_staging
+    read_staging --> list_data
+    list_data --> update_staging
+    properties_updated --> update_staging
+    update_staging --> list_data_updated
+    list_data_updated --> write_staging
+    properties_updated --> write_staging
 ```
 :::
 
@@ -212,10 +211,9 @@ flowchart
 If you need to delete an observational unit from the data, you can use this
 flow. The `delete_observational_unit()` function will delete the observational
 unit from the data and output a list of DataFrames with the deletions. The
-`write_resource_batch()` function will save the updated data back to the batch
-files.
+`write_staging()` function will save the updated data back to the staging files.
 
-<!-- TODO: I don't know how the saving back to the batch files will work yet. -->
+<!-- TODO: I don't know how the saving back to the staging files will work yet. -->
 
 ```{mermaid}
 %%| label: fig-flow-delete-observational-unit
@@ -225,19 +223,19 @@ files.
 %%| fig-alt: "A flow diagram showing the steps to delete an observational unit."
 
 flowchart
-    path_resource_batch_files("path_resource_batch_files()")
-    read_resource_batches("read_resource_batches()")
+    path_staging_files("path_staging_files()")
+    read_staging("read_staging()")
     list_data_current[("List[DataFrame]<br>(original)")]
     list_data_deletions[("List[DataFrame]<br>(deletions)")]
     obs_unit[("dict<br>(observational unit)")]
     delete_observational_unit("delete_observational_unit()")
-    write_resource_batch("write_resource_batch()")
+    write_staging("write_staging()")
 
-    path_resource_batch_files --> read_resource_batches
-    read_resource_batches --> list_data_current
+    path_staging_files --> read_staging
+    read_staging --> list_data_current
     list_data_current --> delete_observational_unit
     obs_unit --> delete_observational_unit
     delete_observational_unit --> list_data_deletions
-    list_data_deletions --> write_resource_batch
-    path_resource_batch_files --> write_resource_batch
+    list_data_deletions --> write_staging
+    path_staging_files --> write_staging
 ```

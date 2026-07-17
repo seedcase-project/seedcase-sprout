@@ -13,7 +13,7 @@ from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import ResourceProperties
 
 
-def write_resource_batch(
+def write_staging(
     data: pl.DataFrame,
     resource_properties: ResourceProperties,
     package_path: Path | None = None,
@@ -52,7 +52,7 @@ def write_resource_batch(
 
         with sp.ExamplePackage():
             resource_properties = sp.read_properties().resources[0]
-            sp.write_resource_batch(
+            sp.write_staging(
                 data=sp.example_data(),
                 resource_properties=resource_properties,
             )
@@ -64,12 +64,12 @@ def write_resource_batch(
     package = PackagePath(package_path)
     resource_name = str(resource_properties.name)
 
-    for batch_path in package.resource_batch_files(resource_name):
+    for batch_path in package.staging_files(resource_name):
         batch = pl.read_parquet(batch_path)
         if data.equals(batch):
             return batch_path
 
-    batch_path = package.resource_batch(resource_name)
+    batch_path = package.staging(resource_name)
     batch_path.mkdir(exist_ok=True, parents=True)
     # TODO: Move out some of this into the create_batch_file_name during refactoring
     batch_file_path = batch_path / _create_batch_file_name()
