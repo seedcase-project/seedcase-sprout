@@ -34,9 +34,11 @@ commands. These commands are described below.
 
 ### {{< var wip >}} `extract-metadata`
 
-The `extract-metadata` command extracts metadata from a Parquet file
-and outputs a Python script with the `ResourceProperties()`
-dataclass filled in with the extracted metadata. It is meant to be used with Parquet files in the `staging/` directory that have the same schema (columns and data types) as the final resource. It has the signature:
+The `extract-metadata` command extracts metadata from a Parquet file and outputs
+a Python script with the `ResourceProperties()` dataclass filled in with the
+extracted metadata. It is meant to be used with Parquet files in the `staging/`
+directory that have the same schema (columns and data types) as the final
+resource. It has the signature:
 
 ```bash {filename="Terminal"}
 seedcase-sprout extract-metadata [PARQUET-PATH] --output/-o [OUTPUT-PATH]
@@ -47,9 +49,9 @@ seedcase-sprout extract-metadata [PARQUET-PATH] --output/-o [OUTPUT-PATH]
 %%| fig-cap: "The flow of input and output through the CLI `extract-metadata` command."
 %%| fig-alt: >-
 %%|   Diagram showing the flow of input and output through the CLI
-%%|   `extract-metadata` command. The user provides the path to the Parquet
-%%|   file and the output file, which are used
-%%|   to generate a Python script with extracted metadata.
+%%|   `extract-metadata` command. The user provides the path to the Parquet file
+%%|   and the output file, which are used to generate a Python script with
+%%|   extracted metadata.
 
 flowchart LR
     parquet[/"Parquet file<br>[PARQUET-FILE]"/]

@@ -22,7 +22,9 @@ metadata.
 %%| fig-cap: >-
 %%|   Diagram showing the flow of objects and functions to extract a resource's
 %%|   metadata from data.
-%%| fig-alt: "A flow diagram showing the steps to extract resource metadata from a Parquet file."
+%%| fig-alt: >-
+%%|   A flow diagram showing the steps to extract resource metadata from a
+%%|   Parquet file.
 
 flowchart
     parquet[/"Parquet data<br>[PARQUET-FILE]"/]
