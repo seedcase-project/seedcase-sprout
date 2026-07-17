@@ -172,8 +172,8 @@ flowchart
 ## Deleting an observational unit
 
 If you need to delete an observational unit from the data, you can use this
-flow. The `delete_observational_unit()` function will delete the observational
-unit from the data and output a list of DataFrames with the deletions.
+flow. The `delete_observational_unit()` function deletes the observational
+unit from the data and outputs a list of DataFrames containing the updated data.
 
 <!-- TODO: I don't know how the saving back to the batch files will work yet. -->
 
