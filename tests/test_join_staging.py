@@ -41,7 +41,7 @@ def resource_properties() -> ResourceProperties:
 
 
 def test_staging_are_joined_correctly(data_list, resource_properties):
-    """Test that the staging are joined correctly."""
+    """Test that the staging files are joined correctly."""
     # Given
     resource_properties.schema.primary_key = "id"
 

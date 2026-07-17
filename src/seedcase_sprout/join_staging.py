@@ -12,7 +12,7 @@ from seedcase_sprout.properties import ResourceProperties
 def join_staging(
     data_list: list[pl.DataFrame], resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Join all DataFrames from `staging/` into a single (Polars) DataFrame.
+    """Join DataFrames from `staging/` into a single (Polars) DataFrame.
 
     This function takes a list of DataFrames, joins them together and drops any
     duplicate observational units based on the primary key from `resource_properties`.

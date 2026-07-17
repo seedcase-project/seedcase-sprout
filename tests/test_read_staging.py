@@ -70,7 +70,7 @@ def resource_paths(test_package):
 
 
 def test_reads_staging_correctly(resource_paths, resource_properties):
-    """Reads the resource staginges correctly with the expected timestamp column."""
+    """Reads staging files correctly with the expected timestamp column."""
     # Given, When
     data_list = read_staging(
         resource_properties=resource_properties, paths=resource_paths
