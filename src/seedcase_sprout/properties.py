@@ -60,7 +60,7 @@ class BaseProperties(ABC):
         """
         return from_dict(
             data_class=cls,
-            data=data,
+            data=data,  # type: ignore[arg-type] # TODO: Not sure how to set type correctly from dacite.
             config=Config(
                 # Expect keys in the input to be in camel case
                 convert_key=_to_camel_case,

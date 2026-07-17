@@ -42,8 +42,10 @@ install-deps:
 
 # Reformat Python code to match coding style and general structure
 format-python:
-  uvx ruff check --fix .
-  uvx ruff format .
+  # Separate fix to format imports
+  uvx ruff check --select I --fix
+  uvx ruff check --fix
+  uvx ruff format
 
 # Reformat Python dostrings
 format-docstrings:
