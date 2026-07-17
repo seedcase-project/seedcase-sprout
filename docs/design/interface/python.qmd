@@ -1,0 +1,45 @@
+---
+title: "Python interface"
+---
+
+This document describes the design of the Python functions forming the CLI and
+the library layer, as well as tracking implementation status.
+
+{{< include /docs/includes/_design-status.qmd >}}
+
+## CLI functions
+
+### {{< var planned >}} `extract_metadata()`
+
+`extract_metadata()` has two arguments: `parquet_path` and `output_path`. The
+`parquet_path` argument is the path to a Parquet file in, e.g. the `staging/`
+directory, and the `output_path` argument is the path to the Python script that
+will have the `ResourceProperties()` dataclass filled in with the extracted
+metadata.
+
+```{mermaid}
+%%| label: fig-flow-extract-resource-metadata
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to extract a resource's
+%%|   metadata from data.
+%%| fig-alt: >-
+%%|   A flow diagram showing the steps to extract resource metadata from a
+%%|   Parquet file.
+
+flowchart
+    parquet[/"Parquet data<br>[PARQUET-PATH]"/]
+    read_parquet["read_parquet()"]
+    output_opt["Output path<br>[--output]"]
+    output[/"Python script<br>[File]"/]
+    data[("DataFrame<br>(Tidy)")]
+    extract_resource_metadata("extract_resource_metadata()")
+    metadata[("ResourceProperties<br>(extracted)")]
+
+    parquet --> read_parquet
+    read_parquet --> data
+    data --> extract_resource_metadata
+    extract_resource_metadata --> metadata
+    output_opt --> write_metadata["write_resource_metadata()"]
+    metadata --> write_metadata
+    write_metadata --> output
+```
