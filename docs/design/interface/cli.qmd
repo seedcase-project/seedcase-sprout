@@ -54,8 +54,8 @@ seedcase-sprout extract-metadata [PARQUET-PATH] --output/-o [OUTPUT-PATH]
 %%|   extracted metadata.
 
 flowchart LR
-    parquet[/"Parquet file<br>[PARQUET-FILE]"/]
-    output_opt["Output file<br>[--output]"]
+    parquet[/"Parquet path<br>[PARQUET-PATH]"/]
+    output_opt["Output path<br>[--output]"]
     extract["extract-metadata"]
     output[/"Python script<br>[File]"/]
 
