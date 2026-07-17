@@ -24,17 +24,19 @@ def write_resource_batch(
     DataFrame to the resource folder provided by the `path` property in the
     `resource_properties`. The function saves the DataFrame as file with a
     timestamped, unique name, as a backup. If the data is exactly the same as
-    the data in one of the existing batch files, it won't be duplicated. See the
-    [design](https://sprout.seedcase-project.org/docs/design/) docs for an
+    the data in one of the existing batch files, it won't be duplicated. See
+    the [design](https://sprout.seedcase-project.org/docs/design/) docs for an
     explanation of this batch file. Data is always checked against the
     `resource_properties` before it is written to the batch folder.
 
     Args:
-        data: A Polars DataFrame object with the data to write to the batch folder.
+        data: A Polars DataFrame object with the data to write to the batch
+            folder.
         resource_properties: The properties object for the specific resource.
             Use `read_properties()` to read the properties for the resource.
-        package_path: The path to the data package root folder (where `datapackage.json`
-            is located). Defaults to the current working directory.
+        package_path: The path to the data package root folder (where
+            `datapackage.json` is located). Defaults to the current working
+            directory.
 
     Returns:
         The path to the written Parquet resource file.

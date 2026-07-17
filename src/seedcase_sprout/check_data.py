@@ -20,16 +20,15 @@ from seedcase_sprout.properties import (
 def check_data(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Check that the DataFrame matches the requirements in the resource properties.
+    """Checks that the DataFrame matches the requirements in the properties.
 
-    Run a few checks to compare between the data and the properties on the items:
+    Run a few checks to compare between the data and the properties on the
+    items:
 
-    | Data | Properties |
-    |:------|:------------|
-    | Column names | `field.name` |
-    | Column types | `field.types` |
-    | Column values' types | `field.types` |
-    | Column values' constraints | `field.constraints` |
+    - Column names: `field.name`
+    - Column types: `field.types`
+    - Column values' types: `field.types`
+    - Column values' constraints: `field.constraints`
 
     The error messages are generally in the format of:
 
@@ -47,7 +46,7 @@ def check_data(
         resource_properties: The specific `ResourceProperties` for the `data`.
 
     Returns:
-        The `data` if checks all pass.
+        The `data` if all checks pass.
 
     Raises:
         ExceptionGroup[CheckError]: If the resource properties are incorrect.
@@ -75,7 +74,7 @@ def check_data(
 def _check_column_names(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Checks that column names in `data` match those in `resource_properties`.
+    """Checks that column names in `data` match those in the properties.
 
     Columns may appear in any order.
 
@@ -131,13 +130,14 @@ def _format_column_name_error_message(
 def _check_column_types(
     data: pl.DataFrame, resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Checks that column data types match the data types specified in the properties.
+    """Checks that column data types match the data types in the properties.
 
     The resource properties specify a Frictionless data type for each column.
-    This function checks if the Polars data type of each column in the data matches
-    the expected Frictionless data type.
+    This function checks if the Polars data type of each column in the data
+    matches the expected Frictionless data type.
 
-    Column names are expected to match the names specified in the resource properties.
+    Column names are expected to match the names specified in the resource
+    properties.
 
     Args:
         data: The data frame to check.
@@ -147,7 +147,8 @@ def _check_column_types(
         The data frame, if all column types are correct.
 
     Raises:
-        ExceptionGroup: A group of `ValueError`s, one per incorrectly typed column.
+        ExceptionGroup: A group of `ValueError`s, one per incorrectly typed
+            column.
     """
     fields = cast(
         list[FieldProperties],
@@ -176,7 +177,7 @@ def _check_column_types(
 def _get_column_type_error(
     polars_type: pl.DataType, field: FieldProperties
 ) -> ValueError:
-    """Creates an error for a column where Polars and Frictionless types don't match.
+    """Creates an error when Polars and Data Package column types mismatch.
 
     Args:
         polars_type: The Polars type.

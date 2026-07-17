@@ -14,7 +14,8 @@ def create_properties_script(path: Path | None = None) -> Path:
     If the script already exists, it will not be overwritten.
 
     Args:
-        path: The path to the package folder. Defaults to the current working directory.
+        path: The path to the package folder. Defaults to the current working
+            directory.
 
     Returns:
         The path to the newly created properties script.
