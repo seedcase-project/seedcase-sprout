@@ -10,21 +10,22 @@ from seedcase_sprout.properties import FieldProperties
 def extract_field_properties(data: pl.DataFrame) -> list[FieldProperties]:
     """Extract field properties from a Polars DataFrame.
 
-    Data types are extracted from the DataFrame's schema and mapped from Polars to
-    Data Package data types. For the best results, ensure that the DataFrame's schema is
-    correct---this may require some manually fixing. Since there are differences
-    between Polars and Data Package data types, the mapping may not always be
-    perfect, and some data types may be extracted to simpler types. For
-    example, a year column may be extracted as an integer instead of Data
-    Package's `year` type. Be sure to review and modify the extracted
-    properties to suit your needs.
+    Data types are extracted from the DataFrame's schema and mapped from Polars
+    to Data Package data types. For the best results, ensure that the
+    DataFrame's schema is correct---this may require some manually fixing.
+    Since there are differences between Polars and Data Package data types, the
+    mapping may not always be perfect, and some data types may be extracted to
+    simpler types. For example, a year column may be extracted as an integer
+    instead of Data Package's `year` type. Be sure to review and modify the
+    extracted properties to suit your needs.
 
     Args:
-        data: A Polars DataFrame containing the data to extract properties from.
+        data: A Polars DataFrame containing the data to extract properties
+            from.
 
     Returns:
-        A list of `FieldProperties` objects, each representing a field/column in the
-        DataFrame.
+        A list of `FieldProperties` objects, each representing a field/column
+        in the DataFrame.
 
     Raises:
         ValueError: If the data is empty.

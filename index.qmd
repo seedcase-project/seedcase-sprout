@@ -6,11 +6,11 @@ page-layout: custom
 ::: landing-page-block
 ::::: hero-text
 ::::::: text-center
-![](_extensions/seedcase-project/seedcase-theme/logos/sprout/icon.svg){fig-alt="Sprout logo."
-width="150px"}
+![](_extensions/seedcase-project/seedcase-theme/logos/sprout/icon.svg){fig-alt="Sprout
+logo." width="150px"}
 
-![](_extensions/seedcase-project/seedcase-theme/logos/sprout/font.svg){fig-alt="Sprout font."
-height="50px"}
+![](_extensions/seedcase-project/seedcase-theme/logos/sprout/font.svg){fig-alt="Sprout
+font." height="50px"}
 
 ## Grow organised and FAIR data
 
@@ -35,7 +35,7 @@ Packages](https://datapackage.org/) that follow the
 [FAIR](https://www.go-fair.org/fair-principles/) principles, giving you
 flexibility and control over each step of the data management workflow.
 
-## Key features :sparkles:
+## Key features
 
 - Creates and manages standardised [Data Packages](https://datapackage.org/)
   with metadata stored in `datapackage.json`.

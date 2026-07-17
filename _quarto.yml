@@ -52,6 +52,8 @@ website:
             - docs/design/interface/inputs.qmd
             - docs/design/interface/outputs.qmd
             - docs/design/interface/functions.qmd
+            - docs/design/interface/cli.qmd
+            - docs/design/interface/python.qmd
             - docs/design/interface/flows.qmd
     - id: guide
       contents:

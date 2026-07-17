@@ -58,39 +58,6 @@ flowchart
     path_properties --> write_properties
 ```
 
-## Extracting properties from data
-
-The flow for extracting a resource's field properties from data. This is useful
-when the data is in a format that contains metadata about the data, such as a
-CSV file with a header row that contains the column names. While the
-`extract_field_properties()` function extracts all *required* `FieldProperties`
-from the data, there are many optional properties that are still very useful and
-should be filled in manually. The output of the `extract_field_properties()`
-function can be used to generate a Python script to give you a starting point
-for writing the resource properties. Afterwards, if you want to update the
-resource properties, you'll edit this Python script and then re-run your build
-process to generate the `datapackage.json` file with the updated properties.
-
-```{mermaid}
-%%| label: fig-flow-extract-field-properties
-%%| fig-cap: >-
-%%|   Diagram showing the flow of objects and functions to extract a resource's
-%%|   field properties from data.
-%%| fig-alt: "A flow diagram showing the steps to extract field properties from data."
-
-flowchart
-    data[("DataFrame<br>(Tidy)")]
-    properties_extracted[("FieldProperties<br>(extracted)")]
-    extract_field_properties("extract_field_properties()")
-    python_script("Python script<br>(generated with<br>extracted properties)")
-    create_script("create_resource_properties_script()")
-
-    data --> extract_field_properties
-    extract_field_properties --> properties_extracted
-    properties_extracted --> create_script
-    create_script --> python_script
-```
-
 ## Saving new or modified data to staging
 
 A data resource needs data, not just properties. You can add data to any data
