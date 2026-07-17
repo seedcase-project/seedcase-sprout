@@ -22,31 +22,31 @@ from seedcase_sprout.properties import ResourceProperties
 def read_resource_batches(
     resource_properties: ResourceProperties, paths: list[Path] | None = None
 ) -> list[pl.DataFrame]:
-    """Read all the batch resource file(s) into a list of (Polars) DataFrames.
+    """Read all batch resource file(s) into a list of DataFrames.
 
-    Use this function to read the Parquet file(s) specified in `paths` into
-    a list of Polars DataFrames, and perform checks on each of the DataFrames
+    Use this function to read the Parquet file(s) specified in `paths` into a
+    list of Polars DataFrames, and perform checks on each of the DataFrames
     against the `resource_properties`. The `resource_properties` object is used
     to check the data and ensure it is correct. While Sprout generally assumes
     that the files stored in the `resources/<name>/batch/` folder are already
-    correctly structured and tidy, this function still runs checks to ensure the
-    data are correct by comparing to the properties.
+    correctly structured and tidy, this function still runs checks to ensure
+    the data are correct by comparing to the properties.
 
     Args:
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to check the data against.
-        paths: A list of paths for all the Parquet files in the resource's `batch/`
-            folder. Use `PackagePath().resource_batch_files()` to help provide the
-            correct paths to the batch files. Defaults to the batch files of the given
-            resource.
+        paths: A list of paths for all the Parquet files in the resource's
+            `batch/` folder. Use `PackagePath().resource_batch_files()` to help
+            provide the correct paths to the batch files. Defaults to the batch
+            files of the given resource.
 
     Returns:
         A list of DataFrame objects from all the batch files.
 
     Raises:
         ValueError: If the batch file name is not in the expected pattern.
-        ValueError: If the timestamp column name matches an existing column in the
-            DataFrame.
+        ValueError: If the timestamp column name matches an existing column in
+            the DataFrame.
     """
     check_resource_properties(resource_properties)
     if paths is None:
@@ -61,8 +61,8 @@ def _read_parquet_batch_file(
 ) -> pl.DataFrame:
     """Reads a Parquet batch file and adds the timestamp as a column.
 
-    This function reads a Parquet batch file into a Polars DataFrame and adds
-    a timestamp column to the DataFrame, extracted from the file name.
+    This function reads a Parquet batch file into a Polars DataFrame and adds a
+    timestamp column to the DataFrame, extracted from the file name.
 
     Args:
         path: Path to the Parquet batch file.
@@ -89,7 +89,8 @@ def _extract_timestamp_from_batch_file_path(path: Path) -> str:
     """Extracts the timestamp from the file name.
 
     Since the batch file name has been created by `_create_batch_file_name()`,
-    it should contain a timestamp in the format defined by BATCH_TIMESTAMP_PATTERN.
+    it should contain a timestamp in the format defined by
+    BATCH_TIMESTAMP_PATTERN.
 
     If multiple timestamps are found in the file name, the first one is used.
     """
@@ -128,7 +129,8 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
         Data with added timestamp column.
 
     Raises:
-        ValueError: If a column with the name BATCH_TIMESTAMP_COLUMN_NAME already exists
+        ValueError: If a column with the name BATCH_TIMESTAMP_COLUMN_NAME
+            already exists
         in the data.
     """
     # TODO: We could move this to be a check of the resource properties in

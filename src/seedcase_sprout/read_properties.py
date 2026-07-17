@@ -14,9 +14,10 @@ def read_properties(path: Path | None = None) -> SproutProperties:
     outputs a `SproutProperties` object.
 
     Args:
-        path: The path to the `datapackage.json` file. Use `PackagePath().properties()`
-            to help get the correct path. If no path is provided, this function looks
-            for the `datapackage.json` file in the current working directory.
+        path: The path to the `datapackage.json` file. Use
+            `PackagePath().properties()` to help get the correct path. If no
+            path is provided, this function looks for the `datapackage.json`
+            file in the current working directory.
 
     Returns:
         A `SproutProperties` object with the properties from the

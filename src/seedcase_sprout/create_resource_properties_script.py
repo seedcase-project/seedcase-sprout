@@ -19,19 +19,21 @@ def create_resource_properties_script(
 ) -> Path:
     """Create a script using the resource properties template.
 
-    You can include the resource name and the fields' name and type information.
-    If the script already exists, it will not be overwritten.
+    You can include the resource name and the fields' name and type
+    information. If the script already exists, it will not be overwritten.
 
     Args:
         resource_name: The name of the new resource. Defaults to None.
         fields: The fields (columns) of the new resource. Defaults to None.
-        path: The path to the package folder. Defaults to the current working directory.
+        path: The path to the package folder. Defaults to the current working
+            directory.
 
     Returns:
         The path to the newly created script file.
 
     Raises:
-        ValueError: If the resource name is not correct (e.g., contains spaces).
+        ValueError: If the resource name is not correct (e.g., contains
+            spaces).
 
     Examples:
         ```{python}

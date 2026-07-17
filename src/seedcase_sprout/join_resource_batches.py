@@ -12,27 +12,27 @@ from seedcase_sprout.properties import ResourceProperties
 def join_resource_batches(
     data_list: list[pl.DataFrame], resource_properties: ResourceProperties
 ) -> pl.DataFrame:
-    """Join all the batch resource DataFrames into a single (Polars) DataFrame.
+    """Join all the batch DataFrames into one.
 
     This function takes a list of DataFrames, joins them together and drops any
-    duplicate observational units based on the primary key from `resource_properties`.
-    Then, it confirms that the data are correct against the `resource_properties` after
-    the join.
+    duplicate observational units based on the primary key from
+    `resource_properties`. Then, it confirms that the data are correct against
+    the `resource_properties` after the join.
 
-    The observational unit is the primary key of the resource. For example, if a person
-    is part of a research study and has multiple observations, the person's ID and the
-    date of collection would be the observational unit.
+    The observational unit is the primary key of the resource. For example, if
+    a person is part of a research study and has multiple observations, the
+    person's ID and the date of collection would be the observational unit.
 
-    If there are any duplicate observational units in the data, only the most recent
-    observational unit will be kept based on the timestamp of the batch file. This way,
-    if there are any errors or mistakes in older batch files that have been corrected in
-    later files, the mistake will be kept in the batch file, but won't be included in
-    the `data.parquet` file.
+    If there are any duplicate observational units in the data, only the most
+    recent observational unit will be kept based on the timestamp of the batch
+    file. This way, if there are any errors or mistakes in older batch files
+    that have been corrected in later files, the mistake will be kept in the
+    batch file, but won't be included in the `data.parquet` file.
 
     Args:
         data_list: A list of Polars DataFrames for all the batch files. Use
-            `read_resource_batches()` to get a list of DataFrames that have been
-            checked against the properties individually.
+            `read_resource_batches()` to get a list of DataFrames that have
+            been checked against the properties individually.
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource to check the data against.
 
@@ -42,8 +42,8 @@ def join_resource_batches(
 
     Raises:
         ValueError: If an empty `data_list` is provided.
-        polars.exceptions.ShapeError: If the dataframes in data_list have different
-            shapes, such as mismatched column names or numbers.
+        polars.exceptions.ShapeError: If the dataframes in data_list have
+            different shapes, such as mismatched column names or numbers.
         polars.exceptions.SchemaError: If the dataframes in data_list have
             different schemas, e.g., their column data types don't match.
     """
