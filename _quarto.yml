@@ -70,7 +70,7 @@ quartodoc:
   parser: google
   dynamic: true
   renderer:
-    style: .config/quartodoc.py
+    style: "quartodoc_style.py"
     table_style: description-list
     show_signature_annotations: true
   sections:
