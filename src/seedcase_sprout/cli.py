@@ -26,26 +26,26 @@ app = setup_cli(
 
 @app.command()
 def extract_metadata(
-    parquet_path: Path,
+    data: Path,
     /,  # End of positional-only args
     *,  # Start of keyword-only params
-    output_path: Optional[Path] = None,
+    output: Optional[Path] = None,
 ) -> None:
     """Extract metadata from a Parquet file.
 
     Args:
-        parquet_path: The path to the Parquet file.
-        output_path: The path where the extracted metadata should be saved.
+        data: The path to the Parquet file.
+        output: The path where the extracted metadata should be saved.
             Defaults to `<parquet-filename>_properties.py` in the root folder.
     """
-    if output_path is None:
-        output_path = Path(f"{parquet_path.stem}_properties.py")
+    if output is None:
+        output = Path(f"{data.stem}_properties.py")
 
-    data = pl.read_parquet(parquet_path)
+    df = pl.read_parquet(data)
     script_text = create_resource_properties_script_text(
-        fields=extract_field_properties(data)
+        fields=extract_field_properties(df)
     )
-    write_file(script_text, output_path)
+    write_file(script_text, output)
 
 
 def main() -> None:
