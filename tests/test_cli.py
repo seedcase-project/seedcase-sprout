@@ -18,7 +18,7 @@ def mock_write_file(mocker):
 
 
 @pytest.fixture
-def mock_extract_field_properties(mocker):
+def _mock_extract_field_properties(mocker):
     return mocker.patch("seedcase_sprout.cli.extract_field_properties")
 
 
@@ -30,7 +30,7 @@ def mock_create_resource_properties_script_text(mocker):
 def test_extract_metadata_with_default_output_path(
     mock_read_parquet,
     mock_write_file,
-    mock_extract_field_properties,
+    _mock_extract_field_properties,
     mock_create_resource_properties_script_text,
 ):
     app(["extract-metadata", "path/to/data.parquet"], result_action="return_value")
@@ -45,7 +45,7 @@ def test_extract_metadata_with_default_output_path(
 def test_extract_metadata_with_custom_output_path(
     mock_read_parquet,
     mock_write_file,
-    mock_extract_field_properties,
+    _mock_extract_field_properties,
     mock_create_resource_properties_script_text,
 ):
     app(
