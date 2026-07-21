@@ -54,9 +54,24 @@ def create_resource_properties_script(
     if script_path.exists():
         return script_path
 
+    text = create_resource_properties_script_text(fields or [], resource_name)
+    return write_file(text, script_path)
+
+
+def create_resource_properties_script_text(
+    fields: list[FieldProperties],
+    resource_name: str = "",
+) -> str:
+    """Create the text for the resource properties script.
+
+    Args:
+        fields: The fields (columns) of the new resource.
+        resource_name: The name of the new resource.
+
+    Returns:
+        The script text.
+    """
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     env.filters["to_variable_name"] = _create_resource_properties_script_filename
     template = env.get_template("resource_properties.py.jinja2")
-    text = template.render(resource_name=resource_name, fields=fields)
-
-    return write_file(text, script_path)
+    return template.render(resource_name=resource_name, fields=fields)
