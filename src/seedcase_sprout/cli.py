@@ -35,8 +35,9 @@ def extract_metadata(
 
     Args:
         data: The path to the Parquet file.
-        output: The path where the extracted metadata should be saved.
-            Defaults to `<parquet-filename>_properties.py` in the root folder.
+        output: The path where the extracted metadata should be saved. Defaults
+            to `<parquet-filename>_properties.py` in the current working
+            directory.
     """
     if output is None:
         output = Path(f"{data.stem}_properties.py")
