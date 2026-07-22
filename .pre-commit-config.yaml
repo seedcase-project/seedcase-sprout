@@ -44,6 +44,13 @@ repos:
       # Run the formatter.
       - id: ruff-format
 
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    # uv version.
+    rev: 0.11.31
+    hooks:
+      # Update the uv lockfile
+      - id: uv-lock
+
   - repo: https://github.com/facebook/pyrefly-pre-commit
     # Note: this is the version of the pre-commit hook, NOT the pyrefly version used for type checking.
     rev: 1.2.0.dev2
@@ -52,5 +59,3 @@ repos:
         name: Pyrefly (type checking)
         # Recommended to do full repo checks, not just on changed files.
         pass_filenames: false
-        additional_dependencies:
-          - .
