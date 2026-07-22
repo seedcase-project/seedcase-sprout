@@ -52,3 +52,5 @@ repos:
         name: Pyrefly (type checking)
         # Recommended to do full repo checks, not just on changed files.
         pass_filenames: false
+        additional_dependencies:
+          - .
