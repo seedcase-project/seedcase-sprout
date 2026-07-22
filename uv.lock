@@ -2227,6 +2227,7 @@ dependencies = [
     { name = "jinja2" },
     { name = "jsonschema" },
     { name = "polars" },
+    { name = "pyrefly" },
     { name = "seedcase-soil" },
 ]
 
@@ -2238,7 +2239,6 @@ dev = [
     { name = "emoji" },
     { name = "genbadge" },
     { name = "jupyter" },
-    { name = "pyrefly" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pyyaml" },
@@ -2259,6 +2259,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "jsonschema", specifier = ">=4.23.0" },
     { name = "polars", specifier = ">=1.26.0" },
+    { name = "pyrefly", specifier = ">=1.1.1" },
     { name = "seedcase-soil", specifier = ">=0.11.0" },
 ]
 
@@ -2270,7 +2271,6 @@ dev = [
     { name = "emoji", specifier = ">=2.14.1" },
     { name = "genbadge", specifier = ">=1.1.2" },
     { name = "jupyter", specifier = ">=1.1.1" },
-    { name = "pyrefly", specifier = ">=1.1.1" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
     { name = "pyyaml", specifier = ">=6.0.2" },
