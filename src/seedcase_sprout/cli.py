@@ -1,7 +1,6 @@
 """Functions for the exposed CLI."""
 
 from pathlib import Path
-from typing import Optional
 
 import polars as pl
 from seedcase_soil import (
@@ -29,7 +28,7 @@ def extract_metadata(
     data: Path,
     /,  # End of positional-only args
     *,  # Start of keyword-only params
-    output: Optional[Path] = None,
+    output: Path | None = None,
 ) -> None:
     """Extract metadata from a Parquet file.
 
