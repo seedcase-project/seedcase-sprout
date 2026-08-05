@@ -7,6 +7,7 @@ from textwrap import dedent
 
 from .check_data import check_data
 from .check_properties import DataResourceError
+from .cli import extract_metadata
 from .create_properties_script import create_properties_script
 from .create_resource_properties_script import create_resource_properties_script
 from .examples import (
@@ -83,4 +84,5 @@ __all__ = [
     # Checks -----
     "check_data",
     "DataResourceError",
+    "extract_metadata",
 ]

@@ -78,6 +78,7 @@ dev = [
   "jupyter>=1.1.1",
   "pytest>=8.3.5",
   "pytest-cov>=6.1.1",
+  "pytest-mock>=3.15.1",
   "pyyaml>=6.0.2",
   "quarto>=0.1.0",
   "quartodoc>=0.11.1",
@@ -87,6 +88,10 @@ dev = [
   "types-requests>=2.32.4.20250611",
   "types-tabulate>=0.9.0.20241207",
 ]
+
+[project.scripts]
+seedcase-sprout = "seedcase_sprout.cli:main"
+sprout = "seedcase_sprout.cli:main"
 
 [build-system]
 requires = ["hatchling"]
