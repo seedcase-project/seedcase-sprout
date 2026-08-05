@@ -59,9 +59,11 @@ format-docstrings:
 
 # Format Markdown files
 format-md:
-  # Use both rumdl and panache, for different purposes
-  uvx rumdl fmt --silent
   uvx --from panache-cli panache format . --quiet
+
+# Check Markdown files
+check-md:
+  uvx rumdl check
 
 # Check Python code for any errors that need manual attention
 check-python:
