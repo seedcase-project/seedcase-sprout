@@ -28,7 +28,7 @@ As a convenience, we provide the command `sprout` as a shorthand for
 instances.
 :::
 
-`seedcase-sprout` has several commands: `extract-metadata`, `create-template`,
+`seedcase-sprout` has several commands: `extract-metadata`, `compose-metadata`,
 `build-resources`, `build-metadata`, and `build` that runs the other `build-*`
 commands. These commands are described below.
 
@@ -55,11 +55,45 @@ seedcase-sprout extract-metadata [PARQUET-PATH] --output/-o [OUTPUT-PATH]
 
 flowchart LR
     parquet[/"Parquet path<br>[PARQUET-PATH]"/]
-    output_opt["Output path<br>[--output]"]
+    output_opt[/"Output path<br>[--output]"/]
     extract["extract-metadata"]
     output[/"Python script<br>[File]"/]
 
     parquet --> extract
     output_opt --> extract
     extract --> output
+```
+
+### {{< var wip >}} `compose-metadata`
+
+The `compose-metadata` command creates a Python script with metadata fields that
+haven't been filled in yet. This command is meant to be used to start filling
+out some metadata when none yet exists. It creates a Python script with empty
+`*Properties()` dataclasses. It has the signature:
+
+```bash {filename="Terminal"}
+seedcase-sprout compose-metadata [OUTPUT-PATH] --type [TYPE]
+```
+
+The `--type` determines whether to make a file with metadata for the package
+overall (top-level metadata) or for a resource file. The default is the package
+overall.
+
+```{mermaid}
+%%| label: fig-cli-compose-metadata-flow
+%%| fig-cap: "The flow of input and output through the CLI `compose-metadata` command."
+%%| fig-alt: >-
+%%|   Diagram showing the flow of input and output through the CLI
+%%|   `compose-metadata` command. The user provides an output path to where the
+%%|   file should be created, as well as the type of metadata to create.
+
+flowchart LR
+    output_path[/"Path<br>[OUTPUT-PATH]"/]
+    type[/"Metadata type<br>[TYPE]"/]
+    compose["compose-metadata"]
+    output[/"Python script<br>[File]"/]
+
+    output_path --> compose
+    type --> compose
+    compose --> output
 ```

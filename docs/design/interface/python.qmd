@@ -29,7 +29,7 @@ metadata.
 flowchart
     parquet[/"Parquet data<br>[PARQUET-PATH]"/]
     read_parquet["read_parquet()"]
-    output_opt["Output path<br>[--output]"]
+    output_opt[/"Output path<br>[--output]"/]
     output[/"Python script<br>[File]"/]
     data[("DataFrame<br>(Tidy)")]
     extract_resource_metadata("extract_resource_metadata()")
@@ -42,4 +42,33 @@ flowchart
     output_opt --> write_metadata["write_resource_metadata()"]
     metadata --> write_metadata
     write_metadata --> output
+```
+
+### {{< var planned >}} `compose_metadata()`
+
+`compose_metadata()` has two arguments: `output_path` and `type`. The
+`output_path` argument is the path to where the Python script will be created,
+which will contain an empty `PackageProperties()` or `ResourceProperties()`
+dataclass. The `type` argument is the type of metadata to create: `package` or
+`resource`.
+
+```{mermaid}
+%%| label: fig-flow-compose-metadata
+%%| fig-cap: >-
+%%|   Diagram showing the flow of objects and functions to compose the metadata
+%%|   in a Python script.
+%%| fig-alt: >-
+%%|   A flow diagram showing the steps to extract resource metadata from a
+%%|   Parquet file.
+
+flowchart
+    output_path[/"Output path<br>[output_path]"/]
+    type[/"Type of metadata<br>[type]"/]
+    template[/"Template<br>[File]"/]
+    render_template["render_template()"]
+    write_file("write_file()")
+    output[/"Python script<br>[File]"/]
+
+    type & template --> render_template -->|string| write_file
+    output_path --> write_file --> output
 ```
