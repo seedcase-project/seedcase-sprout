@@ -54,11 +54,11 @@ def create_resource_properties_script(
     if script_path.exists():
         return script_path
 
-    text = create_resource_properties_script_text(fields or [], resource_name)
+    text = create_resource_properties_text(fields or [], resource_name)
     return write_file(text, script_path)
 
 
-def create_resource_properties_script_text(
+def create_resource_properties_text(
     fields: list[FieldProperties],
     resource_name: str = "",
 ) -> str:
@@ -69,7 +69,7 @@ def create_resource_properties_script_text(
         resource_name: The name of the new resource.
 
     Returns:
-        The script text.
+        The text that will be saved in the Python script.
     """
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     env.filters["to_variable_name"] = _create_resource_properties_script_filename

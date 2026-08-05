@@ -9,7 +9,7 @@ from seedcase_soil import (
 )
 
 from seedcase_sprout.create_resource_properties_script import (
-    create_resource_properties_script_text,
+    create_resource_properties_text,
 )
 from seedcase_sprout.extract_field_properties import extract_field_properties
 from seedcase_sprout.write_file import write_file
@@ -17,35 +17,33 @@ from seedcase_sprout.write_file import write_file
 app = setup_cli(
     name="seedcase-sprout",
     help=(
-        "Grow your research data in a structured, modern way that follows best"
-        " practices."
+        "Grow organised and FAIR (findable, accessible, interoperable, and reusable) "
+        "data."
     ),
 )
 
 
 @app.command()
 def extract_metadata(
-    data: Path,
-    /,  # End of positional-only args
+    parquet_path: Path,
+    /,  # End of positional-only params
     *,  # Start of keyword-only params
-    output: Path | None = None,
+    output_path: Path | None = None,
 ) -> None:
     """Extract metadata from a Parquet file.
 
     Args:
-        data: The path to the Parquet file.
-        output: The path where the extracted metadata should be saved. Defaults
+        parquet_path: The path to the Parquet file.
+        output_path: The path where the extracted metadata should be saved. Defaults
             to `<parquet-filename>_properties.py` in the current working
             directory.
     """
-    if output is None:
-        output = Path(f"{data.stem}_properties.py")
+    if output_path is None:
+        output_path = Path(f"{parquet_path.stem}_properties.py")
 
-    df = pl.read_parquet(data)
-    script_text = create_resource_properties_script_text(
-        fields=extract_field_properties(df)
-    )
-    write_file(script_text, output)
+    df = pl.read_parquet(parquet_path)
+    script_text = create_resource_properties_text(fields=extract_field_properties(df))
+    write_file(script_text, output_path)
 
 
 def main() -> None:
