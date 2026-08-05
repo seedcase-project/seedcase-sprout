@@ -108,7 +108,7 @@ def _extract_timestamp_from_batch_file_path(path: Path) -> str:
 def _check_batch_file_timestamp(timestamp: str) -> str:
     """Checks the timestamp format and that it is a correct calendar date."""
     try:
-        datetime.strptime(timestamp, BATCH_TIMESTAMP_FORMAT)
+        datetime.strptime(timestamp, BATCH_TIMESTAMP_FORMAT).astimezone()
         return timestamp
     except ValueError as error:
         raise ValueError(
