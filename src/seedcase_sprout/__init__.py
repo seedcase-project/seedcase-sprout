@@ -84,6 +84,5 @@ __all__ = [
     # Checks -----
     "check_data",
     "DataResourceError",
-    # CLI -----
     "extract_metadata",
 ]
