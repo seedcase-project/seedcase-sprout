@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # TODO: This doesn't run, because it can't find the tools module.
 from pathlib import Path
 from typing import Any

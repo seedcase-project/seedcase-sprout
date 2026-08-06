@@ -1,5 +1,5 @@
 from dataclasses import replace
-from typing import Any
+from typing import Any, Optional
 
 import check_datapackage as cdp
 from seedcase_soil import fmap
@@ -133,7 +133,7 @@ def check_resource_properties(properties: Any) -> ResourceProperties:
 
 def _generic_check_properties(
     properties: SproutProperties,
-    exclusions: list[cdp.Exclusion] = [],
+    exclusions: Optional[list[cdp.Exclusion]] = None,
     error: bool = True,
 ) -> list[cdp.Issue]:
     """Checks Sprout's requirements against the Data Package spec.
@@ -160,6 +160,9 @@ def _generic_check_properties(
     Raises:
         DataPackageError: an error flagging issues in the properties.
     """
+    if exclusions is None:
+        exclusions = []
+
     package_required_checks = fmap(
         PACKAGE_SPROUT_REQUIRED_FIELDS,
         lambda field: cdp.RequiredCheck(
@@ -189,13 +192,13 @@ def _generic_check_properties(
             f"| {' | '.join(not_blank_resource_fields)}"
         ),
         message="This property must not be empty.",
-        check=lambda value: bool(value),
+        check=bool,
         type="not-blank",
     )
     resource_path_string = cdp.CustomCheck(
         jsonpath="$.resources[*].path",
         message="Resource path must be of type string.",
-        check=lambda value: isinstance(value, str),
+        check=lambda value: isinstance(value, str),  # type: ignore # typechecker can't infer lambda parameter type
         type="resource-path-string",
     )
     resource_path_format = cdp.CustomCheck(
@@ -204,7 +207,7 @@ def _generic_check_properties(
             "Resource path must have the format "
             "`resources/<resource-name>/data.parquet`."
         ),
-        check=lambda value: _check_resource_path_format(value),
+        check=_check_resource_path_format,
         type="resource-path-format",
     )
     # TODO: This will never fail as `data` property is removed in `BaseProperties`. Fix?
@@ -214,7 +217,7 @@ def _generic_check_properties(
             "Sprout doesn't use the `data` field, instead it expects data "
             "in separate files that are given in the `path` field."
         ),
-        check=lambda value: value is None,
+        check=lambda value: value is None,  # type: ignore # typechecker can't infer lambda parameter type
         type="no-inline-data",
     )
     exclude_resource_data = cdp.Exclusion(jsonpath="$.resources[*].data")
