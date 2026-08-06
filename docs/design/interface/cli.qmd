@@ -67,8 +67,7 @@ flowchart LR
 ### {{< var wip >}} `compose-metadata`
 
 The `compose-metadata` command creates a Python script with metadata fields that
-haven't been filled in yet. This command is meant to be used to start filling
-out some metadata when none yet exists. It creates a Python script with empty
+haven't been filled in yet. It creates a Python script with empty
 `*Properties()` dataclasses. It has the signature:
 
 ```bash {filename="Terminal"}
