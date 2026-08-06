@@ -44,7 +44,7 @@ class BaseProperties(ABC):
         """
         return asdict(
             obj=self,
-            dict_factory=lambda tuples: {  # type: ignore # typechecker can't determine output of lambda
+            dict_factory=lambda tuples: {  # type: ignore # typechecker can't infer lambda parameter type
                 _to_camel_case(key): value for key, value in tuples if value is not None
             },
         )

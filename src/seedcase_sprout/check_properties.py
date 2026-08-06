@@ -217,7 +217,7 @@ def _generic_check_properties(
             "Sprout doesn't use the `data` field, instead it expects data "
             "in separate files that are given in the `path` field."
         ),
-        check=lambda value: value is None,  # type: ignore # typechecker can't determine output of lambda
+        check=lambda value: value is None,  # type: ignore # typechecker can't infer lambda parameter type
         type="no-inline-data",
     )
     exclude_resource_data = cdp.Exclusion(jsonpath="$.resources[*].data")
