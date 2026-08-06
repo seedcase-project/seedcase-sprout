@@ -1,4 +1,5 @@
 import polars as pl
+import seedcase_soil as so
 from pytest import raises
 
 from seedcase_sprout.examples import (
@@ -17,11 +18,9 @@ def _keep_extractable_properties(
     """Filter example properties to only keep the extractable properties."""
     assert example_properties.schema
     assert example_properties.schema.fields
-    return list(
-        map(
-            lambda field: FieldProperties(name=field.name, type=field.type),
-            example_properties.schema.fields,
-        )
+    return so.fmap(
+        example_properties.schema.fields,
+        lambda field: FieldProperties(name=field.name, type=field.type),
     )
 
 

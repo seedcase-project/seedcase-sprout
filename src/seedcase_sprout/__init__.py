@@ -41,44 +41,36 @@ from .write_properties import write_properties
 from .write_resource_data import write_resource_data
 
 __all__ = [
-    # Properties -----
     "ConstraintsProperties",
     "ContributorProperties",
+    "DataResourceError",
+    "ExamplePackage",
     "FieldProperties",
     "FieldType",
     "FieldsMatchType",
     "LicenseProperties",
-    "SproutProperties",
+    "PackagePath",
     "ReferenceProperties",
     "ResourceProperties",
     "SourceProperties",
+    "SproutProperties",
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
-    "read_properties",
+    "check_data",
     "create_properties_script",
-    # Example data and properties -----
-    "example_package_properties",
-    "example_resource_properties",
+    "create_resource_properties_script",
+    "dedent",
     "example_data",
     "example_data_all_types",
+    "example_package_properties",
+    "example_resource_properties",
     "example_resource_properties_all_types",
-    "ExamplePackage",
-    # Packages -----
-    "write_properties",
-    # Resources -----
     "extract_field_properties",
     "join_resource_batches",
-    "read_resource_batches",
-    "create_resource_properties_script",
-    "write_resource_data",
-    # Path -----
-    "PackagePath",
-    # Helpers -----
-    # "pretty_json",
-    "write_file",
     "pprint",
-    "dedent",
-    # Checks -----
-    "check_data",
-    "DataResourceError",
+    "read_properties",
+    "read_resource_batches",
+    "write_file",
+    "write_properties",
+    "write_resource_data",
 ]
