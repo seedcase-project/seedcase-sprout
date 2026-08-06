@@ -192,13 +192,13 @@ def _generic_check_properties(
             f"| {' | '.join(not_blank_resource_fields)}"
         ),
         message="This property must not be empty.",
-        check=lambda value: bool(value),  # type: ignore # typechecker can't determine output of lambda
+        check=bool,
         type="not-blank",
     )
     resource_path_string = cdp.CustomCheck(
         jsonpath="$.resources[*].path",
         message="Resource path must be of type string.",
-        check=lambda value: isinstance(value, str),  # type: ignore # typechecker can't determine output of lambda
+        check=lambda value: isinstance(value, str),  # type: ignore # typechecker can't infer lambda parameter type
         type="resource-path-string",
     )
     resource_path_format = cdp.CustomCheck(
@@ -207,7 +207,7 @@ def _generic_check_properties(
             "Resource path must have the format "
             "`resources/<resource-name>/data.parquet`."
         ),
-        check=lambda value: _check_resource_path_format(value),  # type: ignore # typechecker can't determine output of lambda
+        check=_check_resource_path_format,
         type="resource-path-format",
     )
     # TODO: This will never fail as `data` property is removed in `BaseProperties`. Fix?
