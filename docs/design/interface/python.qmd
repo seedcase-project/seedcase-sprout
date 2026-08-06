@@ -58,8 +58,8 @@ dataclass. The `type` argument is the type of metadata to create: `package` or
 %%|   Diagram showing the flow of objects and functions to compose the metadata
 %%|   in a Python script.
 %%| fig-alt: >-
-%%|   A flow diagram showing the steps to extract resource metadata from a
-%%|   Parquet file.
+%%|   A flow diagram showing the steps to creating the Python file with the
+%%|   empty metadata fields.
 
 flowchart
     output_path[/"Output path<br>[output_path]"/]
