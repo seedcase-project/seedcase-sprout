@@ -44,16 +44,15 @@ flowchart
     write_metadata --> output
 ```
 
-### {{< var planned >}} `compose_metadata()`
+### {{< var planned >}} `init_metadata()`
 
-`compose_metadata()` has two arguments: `output_path` and `type`. The
-`output_path` argument is the path to where the Python script will be created,
-which will contain an empty `PackageProperties()` or `ResourceProperties()`
-dataclass. The `type` argument is the type of metadata to create: `package` or
-`resource`.
+`init_metadata()` has two arguments: `output_path` and `type`. The `output_path`
+argument is the path to where the Python script will be created, which will
+contain an empty `PackageProperties()` or `ResourceProperties()` dataclass. The
+`type` argument is the type of metadata to create: `package` or `resource`.
 
 ```{mermaid}
-%%| label: fig-flow-compose-metadata
+%%| label: fig-flow-init-metadata
 %%| fig-cap: >-
 %%|   Diagram showing the flow of objects and functions to compose the metadata
 %%|   in a Python script.

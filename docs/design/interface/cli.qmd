@@ -28,7 +28,7 @@ As a convenience, we provide the command `sprout` as a shorthand for
 instances.
 :::
 
-`seedcase-sprout` has several commands: `extract-metadata`, `compose-metadata`,
+`seedcase-sprout` has several commands: `extract-metadata`, `init-metadata`,
 `build-resources`, `build-metadata`, and `build` that runs the other `build-*`
 commands. These commands are described below.
 
@@ -64,35 +64,43 @@ flowchart LR
     extract --> output
 ```
 
-### {{< var wip >}} `compose-metadata`
+### {{< var wip >}} `init-metadata`
 
-The `compose-metadata` command creates a Python script with metadata fields that
+The `init-metadata` command creates a Python script with metadata fields that
 haven't been filled in yet. It creates a Python script with empty
 `*Properties()` dataclasses. It has the signature:
 
 ```bash {filename="Terminal"}
-seedcase-sprout compose-metadata [OUTPUT-PATH] --type [TYPE]
+seedcase-sprout init-metadata [OUTPUT-PATH] --type [TYPE]
 ```
 
-The `--type` determines whether to make a file with metadata for the package
-overall (top-level metadata) or for a resource file. The default is the package
-overall.
+The `output-path` is the path to the file that will be created (e.g.
+`package_properties.py` or `resource1_properties.py`) so that there is full
+flexibility and control about where and what name the file will have. The
+`--type` determines whether to make a file with metadata for the package overall
+(top-level metadata) or for a resource file. The default is the package overall.
+
+Unlike `extract-metadata` when `--type` is `resource`, the output is a Python
+script with a `ResourceProperties()` class listing all fields but nothing filled
+in yet (all commented out). For resource metadata, the script will have be
+manually imported into the package metadata file (since the
+`PackageProperties()` contains a field for the `ResourceProperties()`).
 
 ```{mermaid}
-%%| label: fig-cli-compose-metadata-flow
-%%| fig-cap: "The flow of input and output through the CLI `compose-metadata` command."
+%%| label: fig-cli-init-metadata-flow
+%%| fig-cap: "The flow of input and output through the CLI `init-metadata` command."
 %%| fig-alt: >-
 %%|   Diagram showing the flow of input and output through the CLI
-%%|   `compose-metadata` command. The user provides an output path to where the
+%%|   `init-metadata` command. The user provides an output path to where the
 %%|   file should be created, as well as the type of metadata to create.
 
 flowchart LR
     output_path[/"Path<br>[OUTPUT-PATH]"/]
     type[/"Metadata type<br>[TYPE]"/]
-    compose["compose-metadata"]
+    init["init-metadata"]
     output[/"Python script<br>[File]"/]
 
-    output_path --> compose
-    type --> compose
-    compose --> output
+    output_path --> init
+    type --> init
+    init --> output
 ```
