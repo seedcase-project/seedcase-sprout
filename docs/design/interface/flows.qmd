@@ -28,14 +28,6 @@ For some reason, the diagrams below don't display well on some browsers like
 Firefox. To see them, try using a different browser like Chrome or Edge.
 :::
 
-## Creating scripts from templates
-
-There are two functions you can use to help with creating much of the
-"boilerplate" code that implements some of the flows below. They are
-`create_properties_script()` and `create_resource_properties_script()`, and they
-are used to create Python scripts that contain the `SproutProperties` or
-`ResourceProperties` for a data package or resource, respectively.
-
 ## Creating or updating a package
 
 This is the flow for making a new package. The `write_properties()` function
