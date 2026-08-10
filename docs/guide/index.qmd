@@ -6,9 +6,11 @@ description: >-
 listing:
   contents: .
   type: grid
+  grid-columns: 1
   sort: "order"
   fields:
     - title
+    - description
 ---
 
 {{< include _preamble.qmd >}}
