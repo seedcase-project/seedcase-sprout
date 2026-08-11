@@ -130,6 +130,11 @@ quartodoc:
         - example_data_all_types
         - ExamplePackage
 
+    - title: CLI functions
+      desc: "Functions available via the command line interface."
+      contents:
+        - extract_metadata
+
 metadata-files:
   - docs/reference/_sidebar.yml
 
