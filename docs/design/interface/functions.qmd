@@ -115,21 +115,6 @@ flowchart
     function --> out
 ```
 
-### {{< var done >}} `read_resource_data(resource_name, path)`
-
-See the help documentation with `help(read_resource_data)` for more details.
-
-```{mermaid}
-flowchart
-    in_name[/resource_name/]
-    in_path[/path/]
-    function("read_resource_data()")
-    out[("DataFrame")]
-    in_name --> function
-    in_path --> function
-    function --> out
-```
-
 ### {{< var done >}} `extract_field_properties(data)`
 
 See the help documentation with `help(extract_field_properties)` for more
