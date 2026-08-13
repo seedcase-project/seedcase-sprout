@@ -92,7 +92,7 @@ class PackagePath:
         return "staging" / self.resource(resource_name)
 
     def staging_files(self, resource_name: str) -> list[Path]:
-        """Paths to all the files in the specific resource's `staging/` folder.
+        """Paths to all files in the specific resource's `staging/`.
 
         Args:
             resource_name: The name of the resource. Use

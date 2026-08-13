@@ -7,6 +7,7 @@ from textwrap import dedent
 
 from .check_data import check_data
 from .check_properties import DataResourceError
+from .cli import extract_metadata
 from .create_properties_script import create_properties_script
 from .create_resource_properties_script import create_resource_properties_script
 from .examples import (
@@ -35,54 +36,43 @@ from .properties import (
     TableSchemaProperties,
 )
 from .read_properties import read_properties
-from .read_resource_data import read_resource_data
 from .read_staging import read_staging
 from .write_file import write_file
 from .write_properties import write_properties
 from .write_resource_data import write_resource_data
-from .write_staging import write_staging
 
 __all__ = [
-    # Properties -----
     "ConstraintsProperties",
     "ContributorProperties",
+    "DataResourceError",
+    "ExamplePackage",
     "FieldProperties",
     "FieldType",
     "FieldsMatchType",
     "LicenseProperties",
-    "SproutProperties",
+    "PackagePath",
     "ReferenceProperties",
     "ResourceProperties",
     "SourceProperties",
+    "SproutProperties",
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
-    "read_properties",
+    "check_data",
     "create_properties_script",
-    # Example data and properties -----
-    "example_package_properties",
-    "example_resource_properties",
+    "create_resource_properties_script",
+    "dedent",
     "example_data",
     "example_data_all_types",
+    "example_package_properties",
+    "example_resource_properties",
     "example_resource_properties_all_types",
-    "ExamplePackage",
-    # Packages -----
-    "write_properties",
-    # Resources -----
     "extract_field_properties",
+    "extract_metadata",
     "join_staging",
-    "read_staging",
-    "read_resource_data",
-    "write_staging",
-    "create_resource_properties_script",
-    "write_resource_data",
-    # Path -----
-    "PackagePath",
-    # Helpers -----
-    # "pretty_json",
-    "write_file",
     "pprint",
-    "dedent",
-    # Checks -----
-    "check_data",
-    "DataResourceError",
+    "read_properties",
+    "read_staging",
+    "write_file",
+    "write_properties",
+    "write_resource_data",
 ]

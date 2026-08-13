@@ -22,10 +22,10 @@ from seedcase_sprout.properties import ResourceProperties
 def read_staging(
     resource_properties: ResourceProperties, paths: list[Path] | None = None
 ) -> list[pl.DataFrame]:
-    """Read all a resource's staging file(s) into a list of (Polars) DataFrames.
+    """Read all staging file(s) into a list of (Polars) DataFrames.
 
-    Use this function to read the Parquet file(s) specified in `paths` into
-    a list of Polars DataFrames, and perform checks on each of the DataFrames
+    Use this function to read the Parquet file(s) specified in `paths` into a
+    list of Polars DataFrames, and perform checks on each of the DataFrames
     against the `resource_properties`. The `resource_properties` object is used
     to check the data and ensure it is correct. This function also runs checks
     to ensure the data are correct by comparing to the properties.
@@ -33,9 +33,9 @@ def read_staging(
     Args:
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to check the data against.
-        paths: A list of paths for all the Parquet files in `staging/`
-            folder. Use `PackagePath().staging_files()` to help provide the
-            correct paths to these files. Defaults to the staging files of the given
+        paths: A list of paths for all the Parquet files in `staging/` folder.
+            Use `PackagePath().staging_files()` to help provide the correct
+            paths to these files. Defaults to the staging files of the given
             resource.
 
     Returns:
@@ -43,8 +43,8 @@ def read_staging(
 
     Raises:
         ValueError: If the staging file name is not in the expected pattern.
-        ValueError: If the timestamp column name matches an existing column in the
-            DataFrame.
+        ValueError: If the timestamp column name matches an existing column in
+            the DataFrame.
 
     Examples:
         ``` {python}
@@ -96,13 +96,13 @@ def _extract_timestamp_from_staging_path(path: Path) -> str:
 
 def _check_staging_file_timestamp(timestamp: str) -> str:
     try:
-        datetime.strptime(timestamp, STAGING_TIMESTAMP_FORMAT)
+        datetime.strptime(timestamp, STAGING_TIMESTAMP_FORMAT).astimezone()
         return timestamp
     except ValueError as error:
         raise ValueError(
             f"Timestamp '{timestamp}' in the staging file name is not in the "
-            f"expected format '{STAGING_TIMESTAMP_FORMAT}' or is not a correct calendar "
-            "date (e.g., 30 February)."
+            f"expected format '{STAGING_TIMESTAMP_FORMAT}' or is not a correct"
+            "calendar date (e.g., 30 February)."
         ) from error
 
 
@@ -114,7 +114,7 @@ def _add_timestamp_as_column(data: pl.DataFrame, timestamp: str) -> pl.DataFrame
             "One or multiple of the provided resource staging files contain a "
             f"column named '{STAGING_TIMESTAMP_COLUMN_NAME}'. This column is used "
             "internally in Sprout to remove duplicate rows across staging. Please "
-            "rename it in the staging files and resource properties to read the resource "
+            "rename it in the staging files and resource properties to read the "
             "staging files."
         )
     return data.with_columns(pl.lit(timestamp).alias(STAGING_TIMESTAMP_COLUMN_NAME))

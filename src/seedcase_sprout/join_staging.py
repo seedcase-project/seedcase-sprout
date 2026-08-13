@@ -24,15 +24,15 @@ def join_staging(
     person's ID and the date of collection would be the observational unit.
 
     If there are any duplicate observational units in the data, only the most
-    recent observational unit will be kept based on the timestamp of the staging
-    file. This way, if there are any errors or mistakes in older staging files
-    that have been corrected in later files, the mistake will be kept in the
-    staging file, but won't be included in the `data.parquet` file.
+    recent observational unit will be kept based on the timestamp of the
+    staging file. This way, if there are any errors or mistakes in older
+    staging files that have been corrected in later files, the mistake will be
+    kept in the staging file, but won't be included in the `data.parquet` file.
 
     Args:
         data_list: A list of Polars DataFrames for all the staging files. Use
-            `read_staging()` to get a list of DataFrames that have
-            been checked against the properties individually.
+            `read_staging()` to get a list of DataFrames that have been checked
+            against the properties individually.
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource to check the data against.
 
