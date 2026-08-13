@@ -89,7 +89,7 @@ class PackagePath:
             resource_name: The name of the resource. Use
                 `ResourceProperties.name` to get the correct resource name.
         """
-        return "staging" / self.resource(resource_name)
+        return self.root() / "staging" / resource_name
 
     def staging_files(self, resource_name: str) -> list[Path]:
         """Paths to all files in the specific resource's `staging/`.

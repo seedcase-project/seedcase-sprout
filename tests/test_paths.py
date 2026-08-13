@@ -29,7 +29,7 @@ def test_methods_return_correct_path(tmp_path):
         == tmp_path / "resources" / "test" / "data.parquet"
     )
 
-    assert package_path.staging("test") == tmp_path / "resources" / "test" / "staging"
+    assert package_path.staging("test") == tmp_path / "staging" / "test"
 
 
 def test_staging_files_returns_empty_list_when_no_staging(tmp_path):

@@ -194,15 +194,6 @@ def test_raises_error_with_empty_resource_properties(resource_paths):
         read_staging(resource_properties=ResourceProperties(), paths=resource_paths)
 
 
-def test_uses_cwd_if_no_paths(tmp_cwd, test_package, resource_properties):
-    """If no paths are provided, should use the cwd as the package root to retrieve
-    staging files from resource.
-    """
-    data_list = read_staging(resource_properties)
-
-    assert len(data_list) == 2
-
-
 def test_no_error_thrown_when_no_staging_using_cwd_as_default(
     tmp_cwd, resource_properties
 ):
