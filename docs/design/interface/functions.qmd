@@ -70,21 +70,6 @@ flowchart
 
 ## Data resource functions
 
-### {{< var done >}} `write_staging(data, resource_properties)`
-
-See the help documentation with `help(write_staging)` for more details.
-
-```{mermaid}
-flowchart
-    in_data[/data/]
-    in_properties[/resource_properties/]
-    function("write_staging()")
-    out[("{path}/{timestamp}-{uuid}.parquet")]
-    in_data --> function
-    in_properties --> function
-    function --> out
-```
-
 ### {{< var done >}} `read_staging(resource_properties, paths)`
 
 See the help documentation with `help(read_staging)` for more details.
@@ -127,21 +112,6 @@ flowchart
     out[("./resources/{name}/data.parquet")]
     in_data --> function
     in_properties --> function
-    function --> out
-```
-
-### {{< var done >}} `read_resource_data(resource_name, path)`
-
-See the help documentation with `help(read_resource_data)` for more details.
-
-```{mermaid}
-flowchart
-    in_name[/resource_name/]
-    in_path[/path/]
-    function("read_resource_data()")
-    out[("DataFrame")]
-    in_name --> function
-    in_path --> function
     function --> out
 ```
 

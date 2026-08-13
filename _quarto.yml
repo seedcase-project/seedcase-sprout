@@ -20,13 +20,13 @@ website:
         href: docs/design/index.qmd
       - text: "Reference"
         href: docs/reference/index.qmd
+    right:
+      - text: "<img src='/_extensions/seedcase-project/seedcase-theme/logos/seedcase/a-part-of.svg' alt='Main Seedcase website' height='30px'>"
+        href: "https://seedcase-project.org"
     tools:
       - icon: github
         href: "https://github.com/seedcase-project/seedcase-sprout"
         aria-label: "GitHub icon: Source code"
-      - icon: house
-        href: "https://seedcase-project.org"
-        aria-label: "House icon: Main website for the Seedcase Project"
   sidebar:
     - id: overview
       pinned: true
@@ -70,7 +70,7 @@ quartodoc:
   parser: google
   dynamic: true
   renderer:
-    style: .config/quartodoc.py
+    style: "quartodoc_style.py"
     table_style: description-list
     show_signature_annotations: true
   sections:
@@ -130,6 +130,11 @@ quartodoc:
         - example_data
         - example_data_all_types
         - ExamplePackage
+
+    - title: CLI functions
+      desc: "Functions available via the command line interface."
+      contents:
+        - extract_metadata
 
 metadata-files:
   - docs/reference/_sidebar.yml

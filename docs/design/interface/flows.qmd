@@ -27,14 +27,6 @@ For some reason, the diagrams below don't display well on some browsers like
 Firefox. To see them, try using a different browser like Chrome or Edge.
 :::
 
-## Creating scripts from templates
-
-There are two functions you can use to help with creating much of the
-"boilerplate" code that implements some of the flows below. They are
-`create_properties_script()` and `create_resource_properties_script()`, and they
-are used to create Python scripts that contain the `SproutProperties` or
-`ResourceProperties` for a data package or resource, respectively.
-
 ## Creating or updating a package
 
 This is the flow for making a new package. The `write_properties()` function
@@ -56,42 +48,6 @@ flowchart
 
     properties --> write_properties
     path_properties --> write_properties
-```
-
-## Saving new or modified data to staging
-
-A data resource needs data, not just properties. You can add data to any data
-resource that has resource properties. Whenever data is added to a data
-resource, it gets first saved in the `staging/` folder to keep track of
-additions or changes. You add the data when:
-
-- A new data resource is created and data is added to it.
-- Additional data is added to an existing data resource.
-- You need to fix, update, or modify existing data in the resource by correcting
-  the data (e.g. fixing a data entry issue).
-
-The data must be in a tidy format and must have already been loaded in as a
-Polars DataFrame.
-
-```{mermaid}
-%%| label: fig-flow-save-data-to-staging
-%%| fig-cap: >-
-%%|   Diagram showing the flow of objects and functions to save new, added, or
-%%|   modified data to a staging.
-%%| fig-alt: >-
-%%|   A flow diagram showing the steps to save new, added, or modified data to a
-%%|   staging.
-
-flowchart
-    data[("DataFrame<br>(original data)")]
-    resource_properties[(ResourceProperties)]
-    write_staging("write_staging()")
-    check_data("check_data()")
-
-    data --> write_staging
-    resource_properties --> write_staging
-    data -.-> check_data
-    resource_properties -.-> check_data
 ```
 
 ## Checking data against the properties
@@ -169,49 +125,13 @@ flowchart
 ```
 
 ::: content-hidden
-<!-- TODO: Need to reconsider this flow. Or see it in action first. -->
-
-## Modifying data types or table schema
-
-Sometimes you may need to modify the data types or table schema of the data in a
-resource. Before using this flow, you first need to modify the resource
-properties. The `update_staging()` function will update each staging DataFrame
-with the new data types or table schema. Then, you can use `write_staging()` to
-save the updated data back to the staging files. The same file names should be
-used to overwrite old staging files.
-
-```{mermaid}
-%%| label: fig-flow-modify-data-types
-%%| fig-cap: >-
-%%|   Diagram showing the flow of objects and functions to modify data types or
-%%|   table schema.
-%%| fig-alt: "A flow diagram showing the steps to modify data types or table schema."
-
-flowchart
-    path_staging_files("path_staging_files()")
-    read_staging("read_staging()")
-    properties_updated[("ResourceProperties<br>(updated)")]
-    list_data[("List[DataFrame]")]
-    list_data_updated[("List[DataFrame]<br>(updated)")]
-    update_staging("update_staging()")
-    write_staging("write_staging()")
-
-    path_staging_files --> read_staging
-    read_staging --> list_data
-    list_data --> update_staging
-    properties_updated --> update_staging
-    update_staging --> list_data_updated
-    list_data_updated --> write_staging
-    properties_updated --> write_staging
-```
-:::
+<!-- TODO: Consider this more, but hide it for now. -->
 
 ## Deleting an observational unit
 
 If you need to delete an observational unit from the data, you can use this
-flow. The `delete_observational_unit()` function will delete the observational
-unit from the data and output a list of DataFrames with the deletions. The
-`write_staging()` function will save the updated data back to the staging files.
+flow. The `delete_observational_unit()` function deletes the observational unit
+from the data and outputs a list of DataFrames containing the updated data.
 
 <!-- TODO: I don't know how the saving back to the staging files will work yet. -->
 
@@ -239,3 +159,4 @@ flowchart
     list_data_deletions --> write_staging
     path_staging_files --> write_staging
 ```
+:::

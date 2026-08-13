@@ -14,7 +14,8 @@ def _get_iso_timestamp() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
-def _get_nested_attr(
+# `[T]` indicates a type parameter, see https://docs.astral.sh/ruff/rules/non-pep695-generic-function/
+def _get_nested_attr[T](
     base_object: Any, attributes: str, default: T | None = None
 ) -> T | None:
     """Returns the attribute specified by `attributes`.
