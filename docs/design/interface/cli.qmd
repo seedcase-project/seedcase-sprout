@@ -32,7 +32,7 @@ instances.
 `build-resources`, `build-metadata`, and `build` that runs the other `build-*`
 commands. These commands are described below.
 
-### {{< var wip >}} `extract-metadata`
+### {{< var done >}} `extract-metadata`
 
 The `extract-metadata` command extracts metadata from a Parquet file and outputs
 a Python script with the `ResourceProperties()` dataclass filled in with the
@@ -64,7 +64,7 @@ flowchart LR
     extract --> output
 ```
 
-### {{< var wip >}} `init-metadata`
+### {{< var done >}} `init-metadata`
 
 The `init-metadata` command creates a Python script with metadata fields that
 haven't been filled in yet. It creates a Python script with empty
