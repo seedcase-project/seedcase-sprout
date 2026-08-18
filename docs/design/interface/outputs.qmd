@@ -68,16 +68,6 @@ different ways and should be recognized as separate entities and thus separate
 data resources, even though they contain data about the same group of people.
 :::
 
-`./resources/<name>/batch/`
-
-:   Data for a specific data resource is often stored and structured in batches.
-    These are bulk collections of data that are processed together. This
-    `batch/` folder is where the data is stored before it is processed and saved
-    in the `data.parquet` file. This folder makes it possible to keep track of
-    data additions and updates, serving as a version history for the data
-    resource. This can help with troubleshooting issues that may arise during
-    data entry or processing.
-
 ### Files
 
 Sprout creates and uses these files:
@@ -90,19 +80,6 @@ Sprout creates and uses these files:
     package (like title, description, and contributors) as well as metadata on
     the data resources (like column names, data types, descriptions, and a path
     to the Parquet file with the data in it).
-
-`./resources/<name>/batch/<timestamp>-<uuid>.parquet`
-
-:   These are [Parquet](https://decisions.seedcase-project.org/why-parquet/)
-    files that store the data in a structured, columnar format. These files are
-    created when data is added or updated in a specific data resource and are
-    stored in the `batch/` folder before being processed and stored in the
-    `data.parquet` file. The files in the `batch/` folder are not linked within
-    the `datapackage.json` file. Every time a user adds or updates data in the
-    data resource, the data file is checked for correctness against the
-    `datapackage.json` properties, before being stored in the `batch/` folder.
-    All files within this folder are used to (re-)generate the data resource's
-    `data.parquet` file.
 
 `./resources/<name>/data.parquet`
 

@@ -58,3 +58,26 @@ user-friendly interface to Sprout, since it removes the need to support or
 consider all the wide variety of formats data can be stored or structured in.
 Because data processing and organizing can be so strongly dependent on the
 domain, we leave this to the user to handle.
+
+## Staging directory
+
+This directory contains data for data resources that are tidied and processed
+from the raw data. These are bulk collections of data that are processed
+together. This `staging/` folder is where the data is stored before it is
+processed and saved in the `data.parquet` file. This folder makes the history
+between raw data and the final data resource clearer. This can help with
+troubleshooting issues that may arise during data entry or processing or for
+auditing purposes. The default location is `./staging/<resource-name>/`.
+
+## Staging files
+
+These are [Parquet](https://parquet.apache.org/) files that store data in a
+structured, columnar format (see our [decision
+post](https://decisions.seedcase-project.org/why-parquet/) for why we use
+Parquet files). These files are created when timestamped raw data has been
+tidied and processed in preparation for being added to a data resource. These
+files are usually kept in a file path in the format
+`staging/<resource-name>/<timestamp>.parquet`. Files in `staging/` are not
+linked within the `datapackage.json` file. Every time a user adds or updates the
+raw data, these `staging/` files should also be updated. Before being joined
+into a data resource, they are checked against the properties.
