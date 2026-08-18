@@ -142,3 +142,6 @@ format:
   seedcase-theme-html:
     include-before-body:
       - "docs/includes/site-counter.html"
+
+execute:
+  freeze: auto
