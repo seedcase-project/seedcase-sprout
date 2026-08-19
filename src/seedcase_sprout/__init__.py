@@ -19,7 +19,7 @@ from .examples import (
     example_resource_properties_all_types,
 )
 from .extract_field_properties import extract_field_properties
-from .join_resource_batches import join_resource_batches
+from .join_staging import join_staging
 from .paths import PackagePath
 from .properties import (
     ConstraintsProperties,
@@ -36,7 +36,7 @@ from .properties import (
     TableSchemaProperties,
 )
 from .read_properties import read_properties
-from .read_resource_batches import read_resource_batches
+from .read_staging import read_staging
 from .write_file import write_file
 from .write_properties import write_properties
 from .write_resource_data import write_resource_data
@@ -69,10 +69,10 @@ __all__ = [
     "extract_field_properties",
     "extract_metadata",
     "init_metadata",
-    "join_resource_batches",
+    "join_staging",
     "pprint",
     "read_properties",
-    "read_resource_batches",
+    "read_staging",
     "write_file",
     "write_properties",
     "write_resource_data",

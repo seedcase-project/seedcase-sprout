@@ -70,7 +70,7 @@ flowchart TB
         package["Data package functions<br>[Python]<br><br>Create, manage, and check a data package<br>and its 'properties' (metadata)."]
         resource["Data resource functions<br>[Python]<br><br>Create, manage, and check data resources<br>and their 'properties' (metadata) in a<br>data package."]
         obs_unit["Observational unit functions<br>[Python]<br><br>Manage and delete observational units<br>in a resource. An observational unit<br>is an entity with data collected at a<br>specific time. Necessary for<br>GDPR-compliance."]
-        batch[("Batch data<br>[Parquet]")]
+        staging[("Staging data<br>[Parquet]")]
         data[("Data<br>[Parquet]")]
         metadata[["Metadata ('properties')<br>[Frictionless Standard, JSON]"]]
     end
@@ -80,8 +80,8 @@ flowchart TB
     package --> metadata
     resource --> data
     resource --> metadata
-    obs_unit --> batch
-    resource --> batch
+    obs_unit --> staging
+    resource --> staging
     sprout --> output:::external
 
     classDef system fill:none
