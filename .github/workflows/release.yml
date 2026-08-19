@@ -73,7 +73,7 @@ jobs:
         id: check_changes
         run: |
           # Determine if a bump is possible.
-          if [[ $(cog bump --auto --dry-run --config .config/cog.toml) != No* ]]; then
+          if [[ $(cog --config .config/cog.toml bump --auto --dry-run) != No* ]]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
@@ -82,7 +82,7 @@ jobs:
       - name: Create tag and update changelog
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          cog bump --auto --config .config/cog.toml
+          cog --config .config/cog.toml bump --auto
 
       - name: Create GitHub release
         id: create_release
