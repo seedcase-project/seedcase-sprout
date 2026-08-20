@@ -134,6 +134,7 @@ quartodoc:
       desc: "Functions available via the command line interface."
       contents:
         - extract_metadata
+        - init_metadata
 
 metadata-files:
   - docs/reference/_sidebar.yml

@@ -1,13 +1,16 @@
 """Functions for the exposed CLI."""
 
 from pathlib import Path
+from typing import Annotated, Literal
 
 import polars as pl
+from cyclopts import Parameter
 from seedcase_soil import (
     run_without_tracebacks,
     setup_cli,
 )
 
+from seedcase_sprout.create_properties_script import create_properties_text
 from seedcase_sprout.create_resource_properties_script import (
     create_resource_properties_text,
 )
@@ -21,6 +24,32 @@ app = setup_cli(
         "data."
     ),
 )
+
+
+@app.command()
+def init_metadata(
+    output_path: Path,
+    /,  # End of positional-only params
+    *,  # Start of keyword-only params
+    metadata_type: Annotated[
+        Literal["package", "resource"], Parameter(name="--type")
+    ] = "package",
+) -> None:
+    """Create a Python script with empty metadata fields.
+
+    Args:
+        output_path: The path where the script will be created.
+        metadata_type: Whether to create a script for package metadata (i.e.,
+            top-level metadata) or resource metadata.
+    """
+    name = output_path.stem
+
+    if metadata_type == "package":
+        script_text = create_properties_text(package_name=name)
+    else:
+        script_text = create_resource_properties_text(fields=[], resource_name=name)
+
+    write_file(script_text, output_path)
 
 
 @app.command()
