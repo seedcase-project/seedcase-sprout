@@ -71,6 +71,7 @@ docs/.quarto/
 *.quarto_ipynb
 **/*.quarto_ipynb
 *.storage
+_freeze/
 
 # Quartodoc
 /docs/reference/
@@ -81,7 +82,6 @@ _site
 _book
 public
 site
-
 
 # Misc files
 *.log
