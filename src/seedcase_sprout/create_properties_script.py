@@ -35,9 +35,19 @@ def create_properties_script(path: Path | None = None) -> Path:
     if script_path.exists():
         return script_path
 
+    text = create_properties_text(package_name=package_path.root().name)
+    return write_file(text, script_path)
+
+
+def create_properties_text(package_name: str = "") -> str:
+    """Create the text for the properties script.
+
+    Args:
+        package_name: The name of the package.
+
+    Returns:
+        The text that will be saved in the Python script.
+    """
     env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=True)
     template = env.get_template("package_properties.py.jinja2")
-    text = template.render(
-        properties=SproutProperties.from_default(name=package_path.root().name)
-    )
-    return write_file(text, script_path)
+    return template.render(properties=SproutProperties.from_default(name=package_name))
