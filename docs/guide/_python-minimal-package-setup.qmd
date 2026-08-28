@@ -11,5 +11,4 @@ from tempfile import TemporaryDirectory
 temp_path = TemporaryDirectory()
 package_path = Path(temp_path.name) / "diabetes-study"
 subprocess.run(["uv", "init", str(package_path)])
-package_path = sp.PackagePath(package_path)
 ```
