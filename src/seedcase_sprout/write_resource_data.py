@@ -3,7 +3,6 @@ from pathlib import Path
 import polars as pl
 
 from seedcase_sprout.check_data import check_data
-from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import ResourceProperties
 
 
@@ -33,8 +32,10 @@ def write_resource_data(
     Returns:
         The path of the created Parquet file.
     """
+    if package_path is None:
+        package_path = Path(".")
     check_data(data, resource_properties)
-    data_path = PackagePath(package_path).resource_data(str(resource_properties.name))
+    data_path = package_path / "resources" / str(resource_properties.name)
 
     data.write_parquet(data_path)
     return data_path
