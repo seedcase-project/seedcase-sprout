@@ -25,12 +25,11 @@ section for an overview and explanation of the different outputs provided by
 Sprout.
 
 Nearly all functions have a `path` argument. Depending on what the function
-does, the path object will represent a different location. Use the
-`PackagePath.*()` functions to get the correct path object for the specific
-function. It's designed this way to make it more flexible to where individual
-packages and resources are stored and to make it a bit easier to write tests for
-the functions. For similar reasons, most of the functions output either a `dict`
-Python object, a custom `BaseProperties` dataclass, or a path object.
+does, the path object will represent a different location. It's designed this
+way to make it more flexible to where individual packages and resources are
+stored and to make it a bit easier to write tests for the functions. For similar
+reasons, most of the functions output either a `dict` Python object, a custom
+`BaseProperties` dataclass, or a path object.
 
 Several of the functions have an argument called `properties`. The properties
 argument is a custom `BaseProperties` dataclass (a collection of key-value
@@ -128,10 +127,6 @@ flowchart
     in_data_path --> function
     function --> out
 ```
-
-## Path functions
-
-See the help documentation with `help(PackagePath)` for more details.
 
 ## Properties dataclasses
 
