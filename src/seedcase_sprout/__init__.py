@@ -8,8 +8,6 @@ from textwrap import dedent
 from .check_data import check_data
 from .check_properties import DataResourceError
 from .cli import extract_metadata, init_metadata
-from .create_properties_script import create_properties_script
-from .create_resource_properties_script import create_resource_properties_script
 from .examples import (
     ExamplePackage,
     example_data,
@@ -58,8 +56,6 @@ __all__ = [
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
     "check_data",
-    "create_properties_script",
-    "create_resource_properties_script",
     "dedent",
     "example_data",
     "example_data_all_types",
