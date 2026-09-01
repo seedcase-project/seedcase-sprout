@@ -64,7 +64,7 @@ jobs:
 
       # Install uv to use git-cliff and panache
       - name: Set up uv
-        uses: astral-sh/setup-uv@f98e06938123ccabd21905ea5d0069192241f9f1 # v8.3.1
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
         with:
           enable-cache: true
 
@@ -128,7 +128,7 @@ jobs:
       # - https://www.andrlik.org/dispatches/til-use-uv-for-build-and-publish-github-actions/
       # - https://github.com/astral-sh/trusted-publishing-examples
       - name: Set up uv
-        uses: astral-sh/setup-uv@f98e06938123ccabd21905ea5d0069192241f9f1 # v8.3.1
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
 
       - name: Build distributions
         # Builds dists from source and stores them in the dist/ directory.
