@@ -15,12 +15,11 @@ from seedcase_sprout.constants import (
     STAGING_TIMESTAMP_PATTERN,
 )
 from seedcase_sprout.internals import _check_is_file
-from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import ResourceProperties
 
 
 def read_staging(
-    resource_properties: ResourceProperties, paths: list[Path] | None = None
+    resource_properties: ResourceProperties, paths: list[Path]
 ) -> list[pl.DataFrame]:
     """Read all staging file(s) into a list of (Polars) DataFrames.
 
@@ -34,9 +33,6 @@ def read_staging(
         resource_properties: The `ResourceProperties` object that contains the
             properties of the resource you want to check the data against.
         paths: A list of paths for all the Parquet files in `staging/` folder.
-            Use `PackagePath().staging_files()` to help provide the correct
-            paths to these files. Defaults to the staging files of the given
-            resource.
 
     Returns:
         A list of DataFrame objects from all the staging files.
@@ -45,12 +41,8 @@ def read_staging(
         ValueError: If the staging file name is not in the expected pattern.
         ValueError: If the timestamp column name matches an existing column in
             the DataFrame.
-
     """
     check_resource_properties(resource_properties)
-    if paths is None:
-        paths = PackagePath().staging_files(str(resource_properties.name))
-
     fmap(paths, _check_is_file)
     return pairwise_fmap(paths, [resource_properties], _read_staging_parquet)
 
