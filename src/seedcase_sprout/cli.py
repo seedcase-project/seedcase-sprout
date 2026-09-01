@@ -10,11 +10,11 @@ from seedcase_soil import (
     setup_cli,
 )
 
-from seedcase_sprout.create_properties_script import create_properties_text
-from seedcase_sprout.create_resource_properties_script import (
+from seedcase_sprout.extract_field_properties import extract_field_properties
+from seedcase_sprout.init import (
+    create_properties_text,
     create_resource_properties_text,
 )
-from seedcase_sprout.extract_field_properties import extract_field_properties
 from seedcase_sprout.write_file import write_file
 
 app = setup_cli(
