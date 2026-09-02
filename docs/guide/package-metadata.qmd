@@ -1,64 +1,22 @@
 ---
 title: "Adding to the package metadata"
+# TODO: Update this to be executable again (after the refactor).
+execute:
+  eval: false
 order: 2
 jupyter: python3
 ---
 
 In the [previous guide](/docs/guide/package.qmd), we created a Data Package and
 saw how to write a minimal set of metadata properties to `datapackage.json`.
-Here, we'll take a closer look at the full `package_properties.py` that's
-created by `create_properties_script()`.
+Here, we'll take a closer look at the full `package.py` that was created by the
+CLI command `init-metadata`.
 
-::: callout-important
-Before we get started with this section, it's necessary to delete any previously
-created `scripts/package_properties.py` since `create_properties_script()` does
-not overwrite this file if it already exists.
-:::
-
-First, change your `main.py` to look like this:
-
-```{python}
-#| filename: "main.py"
-
-import seedcase_sprout as sp
-
-
-def main():
-    # Create the properties script in the default location.
-    sp.create_properties_script()
-
-
-if __name__ == "__main__":
-    main()
-```
-
-Now run the script from terminal:
-
-```bash {filename="Terminal"}
-uv run main.py
-```
-
-If you now view the created `package_properties.py` script, you'll see that it
+Open up the `src/diabetes_study/metadata/package.py` script, you'll see that it
 includes a template containing many of the most commonly used metadata names
-together with comments indicating which are required and which are optional:
-
-<!-- Create the script where quarto can find it for building the docs -->
+together with comments indicating which are required and which are optional.
 
 {{< include _python-minimal-package-setup.qmd >}}
-
-```{python}
-#| include: false
-
-sp.create_properties_script(package_path.root())
-```
-
-````{python}
-#| echo: false
-#| output: asis
-#| filename: "scripts/package_properties.py"
-
-print("```python", package_path.properties_script().read_text(), "```", sep="\n")
-````
 
 As you can see, there are a lot of available metadata properties. However, as we
 saw in the previous section and as you can see from the comments in this
@@ -81,7 +39,7 @@ classes `ContributorProperties` and `SourceProperties`. Let's create a slightly
 more complex example using one of these other classes:
 
 ```{python}
-#| filename: "scripts/package_properties.py"
+#| filename: "src/diabetes_study/metadata/package.py"
 
 import seedcase_sprout as sp
 
@@ -130,64 +88,19 @@ package_properties = sp.SproutProperties(
 You can see that we included a more involved description of the package using
 the helper function `dedent()` and that we used the `ContributorProperties`
 class twice as we set the `contributors` parameter to a list of two contributors
-who co-created this example Data Package.
+who co-created this example Data Package. As you read in the [previous
+section](package.qmd), you can save the changes to the `PackageProperties` to
+`datapackage.json` with `write_properties()`, for example:
 
-Now you can edit your `main.py` file to again include the `write_properties()`
-function:
-
-```{python}
-#| eval: false
-#| filename: "main.py"
-
-import seedcase_sprout as sp
-from scripts.package_properties import package_properties
-
-
-def main():
-    # Create the metadata properties script in default location.
-    sp.create_properties_script()
-    # Write metadata properties from properties script to `datapackage.json`.
-    sp.write_properties(properties=package_properties)
-
-
-if __name__ == "__main__":
-    main()
+```python
+sp.write_properties(properties=package_properties, path="../../datapackage.json")
 ```
 
-```{python}
-#| include: false
-
-# Only to check that it runs.
-sp.write_properties(properties=package_properties, path=package_path.properties())
-```
-
-Then, use uv to run the script from the Terminal.
-
-```bash {filename="Terminal"}
-uv run main.py
-```
-
-When you inspect the created `datapackage.json` file, you'll see that it
-contains all the metadata from the `scripts/package_properties.py`:
-
-````{python}
-#| echo: false
-#| output: asis
-#| filename: datapackage.json
-
-print("```json", (package_path.path / "datapackage.json").read_text(), "```", sep="\n")
-````
-
-If you made a mistake and want to update the properties in the current
-`datapackage.json`, remember that you never need to edit the JSON file directly.
-Instead, you edit the `scripts/package_properties.py` and then run the `main.py`
-script to regenerate `datapackage.json`.
+When you rebuild the `datapackage.json` file, you'll see that it contains all
+the metadata from the `package.py`. If you made a mistake and want to update the
+properties in the current `datapackage.json`, remember that you never need to
+edit the JSON file directly. Instead, you edit the `package.py` and then run the
+`build.py` script to regenerate `datapackage.json`.
 
 Now that you know how to create and manage metadata at the project-level, it is
 time to learn how to add data to the project and manage its metadata.
-
-```{python}
-#| include: false
-
-temp_path.cleanup()
-```
