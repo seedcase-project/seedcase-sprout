@@ -166,8 +166,8 @@ input-dir = "staging/blood/"
 output-dir = "resources/"
 ```
 
-For the `units-file`, it should be in a [tidy
-format](https://www.jstatsoft.org/article/view/v059i10). It might look something
+For the `units-file`, it should be in a [tidy format](inputs.qmd). 
+It might look something
 like:
 
 ```text
