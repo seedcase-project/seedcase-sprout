@@ -7,14 +7,9 @@ more general description of what domain we expect data to come from and how it
 may look like conceptually, see the [input
 data](/docs/design/architecture/input-data.qmd#input-data) document.
 
-The objects we primarily incorporate in the interface are paths, properties, and
-data, as described in the [naming](/docs/design/architecture/naming.qmd#naming)
+The objects we primarily incorporate in the interface are properties and data,
+as described in the [naming](/docs/design/architecture/naming.qmd#naming)
 document.
-
-## Paths
-
-These objects are always `Path` objects from Python's
-[`pathlib`](https://docs.python.org/3/library/pathlib.html).
 
 ## Properties
 

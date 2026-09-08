@@ -43,11 +43,11 @@ the `datapackage.json` file with the new properties.
 
 flowchart
     properties[(SproutProperties)]
-    path_properties("PackagePath().properties()")
+    path("path")
     write_properties("write_properties()")
 
     properties --> write_properties
-    path_properties --> write_properties
+    path --> write_properties
 ```
 
 ## Checking data against the properties
@@ -105,7 +105,7 @@ data.
 %%| fig-alt: "A flow diagram showing the steps to create or re-create the resource data."
 
 flowchart
-    path_staging_files("PackagePath().staging_files()")
+    path("Path")
     read_staging("read_staging()")
     list_data[("List[DataFrame]")]
     join_staging("join_staging()")
@@ -114,7 +114,7 @@ flowchart
     resource_properties[(ResourceProperties)]
     check_data("check_data()")
 
-    path_staging_files --> read_staging
+    path --> read_staging
     read_staging --> list_data
     list_data --> join_staging
     join_staging --> joined_data
