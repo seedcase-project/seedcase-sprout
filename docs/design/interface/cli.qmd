@@ -29,8 +29,7 @@ instances.
 :::
 
 `seedcase-sprout` has several commands: `extract-metadata`, `init-metadata`,
-`build-resources`, `build-metadata`, and `build` that runs the other `build-*`
-commands. These commands are described below.
+`build-metadata`, and `build-resources`. These commands are described below.
 
 ### {{< var done >}} `extract-metadata`
 
@@ -103,4 +102,95 @@ flowchart LR
     output_path --> init
     type --> init
     init --> output
+```
+
+### {{< var wip >}} `build-resources`
+
+The `build-resources` command converts a set of "staging" Parquet files and
+converts them into the final resource, along with other additional functionality
+(described below). It has the signature:
+
+```bash {filename="Terminal"}
+seedcase-sprout build-resources [PROJECT-DIR] --config-file [CONFIG-FILE]
+```
+
+While setting the `--config-file` is optional, the file itself is required.
+Because converting staging Parquet files into the final resources is a bit
+complex, this file is used to ensure a reproducible build with clear
+instructions on what files go into what resource. If the `--config-file`
+argument is not set, `build-resources` and will look in this order for these
+files:
+
+- `.config/sprout.toml`
+- `sprout.toml` or `.sprout.toml`
+- `pyproject.toml` (under `[tool.sprout.*]`)
+
+The configurations for the `build-resources` command are under the
+`[build-resources]` table. This contains two sub-tables:
+
+- `delete-obs-units` for settings on which ["observational units"](inputs.qmd)
+  to exclude/delete from the final resources (this is for legal and privacy
+  compliance). The values of the observational units to exclude are set by a CSV
+  file with the `units-file` field. The filepath is relative to the data package
+  root. The `units-file` must contain the column name or names that have the IDs
+  for the observational unit and the value(s) to exclude. The column(s) should
+  be the lowest fundamental unit across all resources, for example, the study ID
+  for the person, even if there are more precise observational units, such as a
+  person's ID and the visit date of the study. In order for the deletion to work
+  correctly for all resources, the given units' columns must also be present in
+  order for the unit to be removed.
+- `resources` is a list of tables with the resource `name`, the directory where
+  the staging Parquet files are kept in `input-dir`, and the final output
+  directory where the new, e.g. `<resource-name>.parquet` file will be created
+  with `output-dir`. The `name` field is used in place of `<resource-name>`. To
+  allow for additional extensions, there is also a (for now) placeholder
+  `extras` field.
+
+```toml {.filename="sprout.toml"}
+# While top level for Sprout, is also needed for `build-resources`.
+metadata-file = ""
+
+[build-resources.delete-obs-units]
+units-file = ""
+
+[[build-resources.resources]]
+name = "demographics"
+input-dir = "staging/demographics/"
+output-dir = "resources/"
+# E.g. for making partition or for storing images.
+extras = {...}
+
+[[build-resource.resources]]
+name = "blood"
+input-dir = "staging/blood/"
+output-dir = "resources/"
+```
+
+For the `units-file`, it should be in a [tidy format](inputs.qmd). It might look
+something like:
+
+```text
+participant_id,date_id
+1,2020-01-01
+1,2020-06-01
+2,2020-12-31
+```
+
+```{mermaid}
+%%| label: fig-cli-build-resources-flow
+%%| fig-cap: "The flow of input and output through the CLI `build-resources` command."
+%%| fig-alt: >-
+%%|   Diagram showing the flow of input and output through the CLI
+%%|   `build-resources` command. The user optionally provides the path to the
+%%|   project directory (that is the data package root) and the path to the
+%%|   config file that describes how to build the staging files into resources.
+
+flowchart LR
+    config_file[/"Configuration file<br>with build instructions<br>[--config-file]"/]
+    project_dir[/"Project directory<br>[PROJECT-DIR]"/]
+    build_resources["build-resources"]
+    output[/"Resource files<br>[Parquet]"/]
+
+    config_file & project_dir --> build_resources
+    build_resources --> output
 ```
