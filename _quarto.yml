@@ -74,15 +74,9 @@ quartodoc:
     table_style: description-list
     show_signature_annotations: true
   sections:
-    - title: "Data package functions"
-      desc: "Functions to work with and manage data packages, but not the data resources within them."
-      contents:
-        - write_file
-
     - title: "Data resource functions"
       desc: "Functions to work with and manage data resources found within a data package."
       contents:
-        - extract_field_properties
         - join_staging
         - read_staging
         - write_resource_data
@@ -110,15 +104,8 @@ quartodoc:
       desc: "Functions used to work with properties."
       contents:
         - check_data
-        - create_properties_script
-        - create_resource_properties_script
         - read_properties
         - write_properties
-
-    - title: "Path functions"
-      desc: "Functions to support providing the correct file paths to files and folders in a data package for other functions."
-      contents:
-        - PackagePath
 
     - title: "Helper functions"
       desc: "Functions to support working with data packages and running code within Seedcase Sprout."
@@ -128,7 +115,6 @@ quartodoc:
         - example_resource_properties_all_types
         - example_data
         - example_data_all_types
-        - ExamplePackage
 
     - title: CLI functions
       desc: "Functions available via the command line interface."
