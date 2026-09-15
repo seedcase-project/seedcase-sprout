@@ -114,31 +114,30 @@ functionality (described below). It has the signature:
 seedcase-sprout build-resources [PROJECT-DIR] --config-file [CONFIG-FILE]
 ```
 
-While setting the `--config-file` is optional, the file itself is required.
-Because converting staging Parquet files into the final resources is a bit
-complex, this file is used to ensure a reproducible build with clear
-instructions on what files go into what resource. If the `--config-file`
-argument is not set, `build-resources` and will look in this order for these
-files:
+The `PROJECT-DIR` defaults to the current working directory. While setting the
+`--config-file` is optional, the file itself is required. Because converting
+staging Parquet files into the final resources is a bit complex, this file is
+used to ensure a reproducible build with clear instructions on what files go
+into what resource. If the `--config-file` argument is not set,
+`build-resources` and will look in this order for these files:
 
 - `.config/sprout.toml`
 - `sprout.toml` or `.sprout.toml`
 - `pyproject.toml` (under `[tool.sprout.*]`)
 
 The configurations for the `build-resources` command are under the
-`[build-resources]` table. This contains two sub-tables:
+`[build-resources]` table. This contains a field and a sub-table:
 
-- `delete-obs-units` for settings on which ["observational units"](inputs.qmd)
-  to exclude/delete from the final resources (this is for legal and privacy
-  compliance). The values of the observational units to exclude are set by a CSV
-  file with the `units-file` field. The filepath is relative to the data package
-  root. The `units-file` must contain the column name or names that have the IDs
-  for the observational unit and the value(s) to exclude. The column(s) should
-  be the lowest fundamental unit across all resources, for example, the study ID
-  for the person, even if there are more precise observational units, such as a
-  person's ID and the visit date of the study. In order for the deletion to work
-  correctly for all resources, the given units' columns must also be present in
-  order for the unit to be removed.
+- `delete-obs-units-file` for a csv file with a list of ["observational
+  units"](inputs.qmd) to exclude/delete from the final resources (this is for
+  legal and privacy compliance). The filepath is relative to the data package
+  root. The file must contain the column name or names that have the IDs for the
+  observational unit and the value(s) to exclude. The column(s) should be the
+  base unit used across all resources that represents entity of interest. For
+  example, the participant ID for the person who has had their data collected
+  for the research study. In order for the deletion to work correctly for all
+  resources, the given units' columns must also be present in order for the unit
+  to be removed.
 - `resources` is a list of tables with the resource `name`, the directory where
   the staging Parquet files are kept in `input-dir`, and the final output
   directory where the new, e.g. `<resource-name>.parquet` file will be created
