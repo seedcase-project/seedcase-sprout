@@ -107,8 +107,8 @@ flowchart LR
 ### {{< var wip >}} `build-resources`
 
 The `build-resources` command converts a set of "staging" Parquet files and
-converts them into the final resources, along with other additional functionality
-(described below). It has the signature:
+converts them into the final resources, along with other additional
+functionality (described below). It has the signature:
 
 ```bash {filename="Terminal"}
 seedcase-sprout build-resources [PROJECT-DIR] --config-file [CONFIG-FILE]
