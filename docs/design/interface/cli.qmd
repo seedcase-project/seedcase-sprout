@@ -107,7 +107,7 @@ flowchart LR
 ### {{< var wip >}} `build-resources`
 
 The `build-resources` command converts a set of "staging" Parquet files and
-converts them into the final resource, along with other additional functionality
+converts them into the final resources, along with other additional functionality
 (described below). It has the signature:
 
 ```bash {filename="Terminal"}
@@ -150,8 +150,8 @@ The configurations for the `build-resources` command are under the
 # While top level for Sprout, is also needed for `build-resources`.
 metadata-file = ""
 
-[build-resources.delete-obs-units]
-units-file = ""
+[build-resources]
+delete-obs-units-file = ""
 
 [[build-resources.resources]]
 name = "demographics"
