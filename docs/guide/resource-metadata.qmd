@@ -54,7 +54,6 @@ import seedcase_sprout as sp
 package_properties = sp.example_package_properties()
 raw_data_path = Path("..") / ".." / "data" / "patients.csv"
 raw_data_patients = pl.read_csv(raw_data_path)
-raw_data_patients
 raw_data_patients.write_parquet(Path("../../data/patients.parquet"))
 ```
 
