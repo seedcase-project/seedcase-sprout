@@ -304,7 +304,6 @@ file. Since we included the `resource_properties` object directly into the
 uv run src/diabetes_study/build.py
 ```
 
-
 All the resource metadata is now also saved in this file! If you need to update
 the resource properties later on, you can simply edit the `patients.py` file and
 then rerun the `build.py` file to update the `datapackage.json` file.
