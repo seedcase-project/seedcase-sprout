@@ -72,6 +72,12 @@ Overall, Sprout must:
 - Rely on as few assumptions and expectations as possible: This package should
   not be (too) opinionated about the order steps are taken, what steps are
   taken, where they are taken, and other specific details.
+- Allow ["right to be forgotten"](https://gdpr-info.eu/art-17-gdpr/) for human
+  data: If someone requests their data to be deleted or no longer used for any
+  purposes, data owners are legally required to comply with this request. While
+  removing all traces of someone's data can be or often is near impossible,
+  legally the data should at the least not be included in or distributed for any
+  analyses.
 
 In general, Sprout will not:
 
