@@ -24,9 +24,9 @@ To install globally, run:
 uv tool install seedcase-sprout
 ```
 
-Once installed, you can run the program with `seedcase-sprout` (or `sprout` for
-short). Alternatively, use `uvx` to run Sprout without having to separately
-install it first---this always fetches the latest version:
+Once installed, you can run the program with `seedcase-sprout`. Alternatively,
+use `uvx` to run Sprout without having to separately install it first---this
+always fetches the latest version:
 
 ```bash {filename="Terminal"}
 uvx seedcase-sprout
