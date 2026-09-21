@@ -89,7 +89,8 @@ event) that the data was collected on at a given point in time. Based on legal
 regulations on the "right to be forgotten" in many countries (most prominent is
 the EU GDPR), a person can request that any personally identifiable and
 sensitive data of theirs is deleted. In order to achieve this legal requirement,
-the data must contain adequate identifiers to allow for
+the data must contain adequate identifiers that actually delete the correct
+data.
 
 ::: callout-note
 An example of a more granular observational unit might be a person in a research
@@ -108,6 +109,6 @@ specific observational unit (e.g. a person). That's because data can be saved
 within any backups done by the data owner or automatically in the server, or
 when stored within source management systems (e.g. like Git). The only legal
 requirement is that the data that is requested to "be forgotten" is no longer
-used for any other purposes. Because of this, Sprout takes as input a list of
-observational units to exclude from the final data package that is intended for
-distribution and use.
+used for any other purposes aside from what it has already been used for.
+Because of this, Sprout takes as input a list of observational units to exclude
+from the final data package that is intended for distribution and use.
