@@ -94,8 +94,8 @@ the data must contain adequate identifiers to allow for
 ::: callout-note
 An example of a more granular observational unit might be a person in a research
 study who came to the clinic at a specific time in May 2024 to have their blood
-collected and filled out a survey. This person may only want the data from
-that May 2024 visit to be removed.
+collected and filled out a survey. This person may only want the data from that
+May 2024 visit to be removed.
 
 A "coarser" observational unit might be a person who participated in a research
 study and had data collected for many different measurements at multiple points.
