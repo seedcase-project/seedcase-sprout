@@ -54,7 +54,6 @@ import seedcase_sprout as sp
 package_properties = sp.example_package_properties()
 raw_data_path = Path("..") / ".." / "data" / "patients.csv"
 raw_data_patients = pl.read_csv(raw_data_path)
-raw_data_patients
 raw_data_patients.write_parquet(Path("../../data/patients.parquet"))
 ```
 
@@ -113,7 +112,7 @@ To ease the process of adding `fields` to your resource metadata, Sprout has the
 `extract-metadata` command, which allows you to extract metadata from each
 column in your dataset. To use this function, we need to save the data you are
 processing in a Parquet file, as this command can only extract from Parquet
-files. Taking the approach means you can take the time to process and clean up
+files. Taking this approach means you can take the time to process and clean up
 your raw data first, before finally extracting the metadata to document your
 data more fully. You can run the command like:
 
@@ -128,7 +127,7 @@ type](https://datapackage.org/standard/table-schema/#field-types). The mapping
 is not perfect, so you may need to edit the extracted properties to ensure that
 they are as you want them to be.
 
-If you now open this newly created script, it will have many more of it's fields
+If you now open this newly created script, it will have many more of its fields
 filled in as well as including fields for all the columns.
 
 ## Writing the resource metadata to `datapackage.json`
@@ -303,12 +302,6 @@ file. Since we included the `resource_properties` object directly into the
 
 ```bash
 uv run src/diabetes_study/build.py
-```
-
-Now run the `main.py` file form the terminal:
-
-```bash {filename="Terminal"}
-uv run main.py
 ```
 
 All the resource metadata is now also saved in this file! If you need to update

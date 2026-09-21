@@ -28,7 +28,7 @@ jobs:
       # This is a useful security step to check for unexpected outbound calls from the runner,
       # which could indicate a compromised token or runner.
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           egress-policy: audit
 
@@ -64,7 +64,7 @@ jobs:
 
       # Install uv to use git-cliff and panache
       - name: Set up uv
-        uses: astral-sh/setup-uv@f98e06938123ccabd21905ea5d0069192241f9f1 # v8.3.1
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
         with:
           enable-cache: true
 
@@ -112,7 +112,7 @@ jobs:
     if: ${{ needs.github-release.outputs.has_changes }}
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           egress-policy: audit
 
@@ -128,7 +128,7 @@ jobs:
       # - https://www.andrlik.org/dispatches/til-use-uv-for-build-and-publish-github-actions/
       # - https://github.com/astral-sh/trusted-publishing-examples
       - name: Set up uv
-        uses: astral-sh/setup-uv@f98e06938123ccabd21905ea5d0069192241f9f1 # v8.3.1
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
 
       - name: Build distributions
         # Builds dists from source and stores them in the dist/ directory.
