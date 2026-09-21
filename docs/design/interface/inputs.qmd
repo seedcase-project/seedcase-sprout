@@ -91,10 +91,10 @@ the EU GDPR), a person can request that any personally identifiable and
 sensitive data of theirs is deleted. In order to achieve this legal requirement,
 the data must contain adequate identifiers to allow for
 
-::: callout-tip
+::: callout-note
 An example of a more granular observational unit might be a person in a research
 study who came to the clinic at a specific time in May 2024 to have their blood
-collected and filled out a survey. This person may only want the data they from
+collected and filled out a survey. This person may only want the data from
 that May 2024 visit to be removed.
 
 A "coarser" observational unit might be a person who participated in a research
@@ -103,11 +103,11 @@ This person may want *all* their data removed, from all periods of time and all
 types of data.
 :::
 
-Technically it is near-impossible to completely remove all traces of data on a
+Technically, it is near-impossible to completely remove all traces of data on a
 specific observational unit (e.g. a person). That's because data can be saved
 within any backups done by the data owner or automatically in the server, or
 when stored within source management systems (e.g. like Git). The only legal
 requirement is that the data that is requested to "be forgotten" is no longer
-used for any other purposes. This means that an input to Sprout is a list of
+used for any other purposes. Because of this, Sprout takes as input a list of
 observational units to exclude from the final data package that is intended for
 distribution and use.
