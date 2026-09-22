@@ -7,7 +7,7 @@ reference and to track implementation status.
 
 {{< include /docs/includes/_design-status.qmd >}}
 
-## {{< var wip >}} `seedcase-sprout`
+## {{< var done >}} `seedcase-sprout`
 
 `seedcase-sprout` has the following signature:
 
@@ -21,12 +21,6 @@ for `--help`:
 ```bash {filename="Terminal"}
 seedcase-sprout
 ```
-
-::: callout-note
-As a convenience, we provide the command `sprout` as a shorthand for
-`seedcase-sprout`. It can be used in place of `seedcase-sprout` in all
-instances.
-:::
 
 `seedcase-sprout` has several commands: `extract-metadata`, `init-metadata`,
 `build-metadata`, and `build-resources`. These commands are described below.
