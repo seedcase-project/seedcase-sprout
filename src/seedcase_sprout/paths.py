@@ -8,7 +8,7 @@ the working directory ("local" first approach).
 
 from pathlib import Path
 
-from seedcase_sprout.internals import _create_resource_properties_script_filename
+from seedcase_sprout.init_metadata import _create_filename
 
 
 class PackagePath:
@@ -110,8 +110,4 @@ class PackagePath:
         Args:
             resource_name: The name of the resource.
         """
-        return (
-            self.root()
-            / "scripts"
-            / f"{_create_resource_properties_script_filename(resource_name)}.py"
-        )
+        return self.root() / "scripts" / f"{_create_filename(resource_name)}.py"
