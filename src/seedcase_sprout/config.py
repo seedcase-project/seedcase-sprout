@@ -58,9 +58,9 @@ class Config(KebabModel, frozen=True):
 def load_config(project_dir: Path, config_path: Path | None = None) -> Config:
     """Loads the Sprout configuration.
 
-    First tries the given path, then `.config/sprout.toml`, `sprout.toml`, and
-    `.sprout.toml` in that order, and finally `pyproject.toml` under
-    `[tool.sprout]`.
+    Uses `config_path` if given. If no `config_path` is given, it first tries
+    `.config/sprout.toml`, then `sprout.toml`, and `.sprout.toml` in that
+    order, and finally `pyproject.toml` under `[tool.sprout]`.
     """
     if config_path is not None:
         return _load_config_from_path(config_path)
