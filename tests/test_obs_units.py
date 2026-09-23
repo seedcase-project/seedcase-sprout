@@ -55,9 +55,6 @@ def test_reading_none_path_returns_none():
     )
 
 
-# not csv
-
-
 def test_reads_file_with_only_header(tmp_path):
     (tmp_path / "units.csv").write_text("participant_id,visit_id")
     units_df = read_obs_unit_file(tmp_path / "units.csv", package_properties)
@@ -76,8 +73,14 @@ def test_reads_correct_ids(_units_csv):
 
     assert units_df is not None
     assert_frame_equal(
-        units_df, pl.DataFrame({"participant_id": ["abc"], "visit_id": ["123"]})
+        units_df, pl.DataFrame({"participant_id": ["abc"], "visit_id": [123]})
     )
+
+
+def test_errors_when_null_in_file(tmp_path):
+    (tmp_path / "units.csv").write_text("participant_id,visit_id\nabc,")
+    with raises(ValueError):
+        read_obs_unit_file(tmp_path / "units.csv", package_properties)
 
 
 @mark.parametrize(
@@ -191,14 +194,14 @@ def test_excludes_rows_with_two_cols_in_id():
     data = pl.DataFrame(
         {
             "participant_id": ["a", "a", "b", "c"],
-            "visit_id": ["a", "b", "a", "c"],
+            "visit_id": [1, 2, 1, 3],
             "another_col": [1, 2, 3, 4],
         }
     )
     units_df = pl.DataFrame(
         {
             "participant_id": ["a", "c"],
-            "visit_id": ["a", "c"],
+            "visit_id": [1, 3],
         }
     )
 
@@ -209,7 +212,7 @@ def test_excludes_rows_with_two_cols_in_id():
         pl.DataFrame(
             {
                 "participant_id": ["a", "b"],
-                "visit_id": ["b", "a"],
+                "visit_id": [2, 1],
                 "another_col": [2, 3],
             }
         ),
@@ -227,26 +230,6 @@ def test_does_not_exclude_rows_when_none_match(participant_ids):
     units_df = pl.DataFrame(
         {
             "participant_id": participant_ids,
-        }
-    )
-
-    result_df = exclude_deleted_obs_units(data=data, obs_unit_ids=units_df)
-
-    assert_frame_equal(result_df, data)
-
-
-def test_none_values_do_not_exclude_rows():
-    data = pl.DataFrame(
-        {
-            "participant_id": ["a", "a", "b", "c", None],
-            "visit_id": ["a", "b", "a", None, None],
-            "another_col": [1, 2, 3, 4, None],
-        }
-    )
-    units_df = pl.DataFrame(
-        {
-            "participant_id": [None, "c", None],
-            "visit_id": ["a", None, None],
         }
     )
 

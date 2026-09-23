@@ -10,10 +10,7 @@ from seedcase_sprout.properties import ResourceProperties, SproutProperties
 def read_obs_unit_file(
     path: Optional[Path], package_properties: SproutProperties
 ) -> Optional[pl.DataFrame]:
-    """Reads the IDs of observational units from a CSV at the given path.
-
-    All columns are read as string to avoid inferring their type incorrectly.
-    """
+    """Reads the IDs of observational units from a CSV at the given path."""
     # TODO: decide if config checks should be centralised (here: units file must be a
     # CSV and obs. unit ID cols must be fields in all resources)
     if not path:
@@ -21,9 +18,9 @@ def read_obs_unit_file(
     if path.suffix.lower() != ".csv":
         raise ValueError(f"Expected a CSV file, got: {path.name!r}.")
 
-    obs_unit_ids = pl.read_csv(path, has_header=True, infer_schema=False)
-    # TODO: should we check that the df contains no null values?
-    _check_obs_unit_id_cols(obs_unit_ids.columns, package_properties)
+    obs_unit_ids = pl.read_csv(path, has_header=True, infer_schema=True)
+    _check_no_nulls_in_df(obs_unit_ids)
+    _check_id_cols_in_all_resources(obs_unit_ids.columns, package_properties)
     return obs_unit_ids
 
 
@@ -34,17 +31,21 @@ def exclude_deleted_obs_units(
 
     Both the data and the columns of the observational unit ID should be checked against
     the properties before using this function.
-
-    # TODO: decide how to handle nulls
-    A null observational unit ID component will not match any value in the data.
-    Null values in the data are not matched by any observational unit ID component.
     """
     if obs_unit_ids.is_empty():
         return data
     return data.join(obs_unit_ids, on=obs_unit_ids.columns, how="anti")
 
 
-def _check_obs_unit_id_cols(
+def _check_no_nulls_in_df(df: pl.DataFrame) -> None:
+    if df.null_count().sum_horizontal().item() > 0:
+        raise ValueError(
+            "IDs listed in the observational units file must not have "
+            "null as a component."
+        )
+
+
+def _check_id_cols_in_all_resources(
     id_cols: list[str], package_properties: SproutProperties
 ) -> None:
     if not package_properties.resources:
