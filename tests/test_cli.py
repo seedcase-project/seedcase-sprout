@@ -24,20 +24,20 @@ def _mock_extract_field_properties(mocker):
 
 
 @pytest.fixture
-def mock_create_resource_properties_text(mocker):
-    return mocker.patch("seedcase_sprout.cli.create_resource_properties_text")
+def mock_init_resource_metadata(mocker):
+    return mocker.patch("seedcase_sprout.cli.init_resource_metadata")
 
 
 @pytest.fixture
-def mock_create_properties_text(mocker):
-    return mocker.patch("seedcase_sprout.cli.create_properties_text")
+def mock_init_package_metadata(mocker):
+    return mocker.patch("seedcase_sprout.cli.init_package_metadata")
 
 
 @mark.parametrize("metadata_type", [[], ["--type", "package"]])
 def test_init_package_metadata(
     mock_write_file,
-    mock_create_properties_text,
-    mock_create_resource_properties_text,
+    mock_init_package_metadata,
+    mock_init_resource_metadata,
     metadata_type,
 ):
     output_path = Path("path/to/my-package.py")
@@ -47,18 +47,18 @@ def test_init_package_metadata(
         result_action="return_value",
     )
 
-    mock_create_properties_text.assert_called_once_with(package_name="my-package")
-    mock_create_resource_properties_text.assert_not_called()
+    mock_init_package_metadata.assert_called_once_with(name="my-package")
+    mock_init_resource_metadata.assert_not_called()
     mock_write_file.assert_called_once_with(
-        mock_create_properties_text.return_value,
+        mock_init_package_metadata.return_value,
         output_path,
     )
 
 
 def test_init_resource_metadata(
     mock_write_file,
-    mock_create_properties_text,
-    mock_create_resource_properties_text,
+    mock_init_package_metadata,
+    mock_init_resource_metadata,
 ):
     output_path = Path("path/to/my-resource.py")
 
@@ -67,12 +67,10 @@ def test_init_resource_metadata(
         result_action="return_value",
     )
 
-    mock_create_resource_properties_text.assert_called_once_with(
-        fields=[], resource_name="my-resource"
-    )
-    mock_create_properties_text.assert_not_called()
+    mock_init_resource_metadata.assert_called_once_with(metadata=[], name="my-resource")
+    mock_init_package_metadata.assert_not_called()
     mock_write_file.assert_called_once_with(
-        mock_create_resource_properties_text.return_value,
+        mock_init_resource_metadata.return_value,
         output_path,
     )
 
@@ -81,13 +79,13 @@ def test_extract_metadata_with_default_output_path(
     mock_read_parquet,
     mock_write_file,
     _mock_extract_field_properties,
-    mock_create_resource_properties_text,
+    mock_init_resource_metadata,
 ):
     app(["extract-metadata", "path/to/data.parquet"], result_action="return_value")
 
     mock_read_parquet.assert_called_once_with(Path("path/to/data.parquet"))
     mock_write_file.assert_called_once_with(
-        mock_create_resource_properties_text.return_value,
+        mock_init_resource_metadata.return_value,
         Path("data_properties.py"),
     )
 
@@ -96,7 +94,7 @@ def test_extract_metadata_with_custom_output_path(
     mock_read_parquet,
     mock_write_file,
     _mock_extract_field_properties,
-    mock_create_resource_properties_text,
+    mock_init_resource_metadata,
 ):
     app(
         [
@@ -110,6 +108,6 @@ def test_extract_metadata_with_custom_output_path(
 
     mock_read_parquet.assert_called_once_with(Path("path/to/data.parquet"))
     mock_write_file.assert_called_once_with(
-        mock_create_resource_properties_text.return_value,
+        mock_init_resource_metadata.return_value,
         Path("path/to/output.py"),
     )
