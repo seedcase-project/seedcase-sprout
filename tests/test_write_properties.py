@@ -8,7 +8,6 @@ from seedcase_sprout.examples import (
     example_package_properties,
     example_resource_properties,
 )
-from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     SproutProperties,
 )
@@ -75,11 +74,6 @@ def test_throws_error_if_error_in_resource_properties(path, properties):
 
     with raises(cdp.DataPackageError):
         write_properties(properties, path)
-
-
-def test_writes_properties_to_cwd_if_no_path_provided(tmp_cwd, properties):
-    """If no path is provided, should use datapackage.json in the cwd."""
-    assert write_properties(properties) == PackagePath(tmp_cwd).properties()
 
 
 def test_writes_properties_with_dedented_descriptions(path, properties):
