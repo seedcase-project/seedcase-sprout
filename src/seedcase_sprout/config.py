@@ -1,26 +1,13 @@
 import tomllib
 from dataclasses import field
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Any
 
 import seedcase_soil as so
 from pydantic import (
-    AfterValidator,
     BaseModel,
     ConfigDict,
 )
-
-
-def _check_path_relative(value: Path) -> Path:
-    if value.is_absolute():
-        raise ValueError(
-            f"{value!r} is an absolute path. Please provide a path relative to the "
-            "project root."
-        )
-    return value
-
-
-type RelativePath = Annotated[Path, AfterValidator(_check_path_relative)]
 
 
 class KebabModel(BaseModel, frozen=True):
@@ -36,22 +23,22 @@ class ResourceConfig(KebabModel, frozen=True):
     """Configuration for a resource to be built."""
 
     name: str
-    input_dir: RelativePath
-    output_dir: RelativePath
+    input_dir: Path
+    output_dir: Path
     extras: dict[str, Any] | None = None
 
 
 class BuildResourcesConfig(KebabModel, frozen=True):
     """Configuration for the `build-resources` CLI command."""
 
-    delete_obs_units_file: RelativePath | None = None
+    delete_obs_units_file: Path | None = None
     resources: list[ResourceConfig] = field(default_factory=list)
 
 
 class Config(KebabModel, frozen=True):
     """Configuration for Sprout."""
 
-    metadata_file: RelativePath = Path("datapackage.json")
+    metadata_file: Path = Path("datapackage.json")
     build_resources: BuildResourcesConfig = field(default_factory=BuildResourcesConfig)
 
 

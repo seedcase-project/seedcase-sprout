@@ -1,6 +1,5 @@
 from pathlib import Path
 
-import pydantic
 from pytest import fixture, raises
 
 from seedcase_sprout.config import (
@@ -113,28 +112,6 @@ def test_config_created_from_dict_with_default_values():
             resources=[],
         ),
     )
-
-
-def test_paths_must_be_relative():
-    with raises(pydantic.ValidationError):
-        Config(metadata_file=Path("/absolute/path.json"))
-
-    with raises(pydantic.ValidationError):
-        BuildResourcesConfig(delete_obs_units_file=Path("/absolute/path.csv"))
-
-    with raises(pydantic.ValidationError):
-        ResourceConfig(
-            name="name",
-            input_dir=Path("/absolute/dir"),
-            output_dir=Path("relative"),
-        )
-
-    with raises(pydantic.ValidationError):
-        ResourceConfig(
-            name="name",
-            input_dir=Path("relative"),
-            output_dir=Path("/absolute/dir"),
-        )
 
 
 def test_loads_config_from_custom_path_as_first_preference(
