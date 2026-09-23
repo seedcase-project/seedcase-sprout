@@ -1,7 +1,7 @@
 import tomllib
 from dataclasses import field
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import seedcase_soil as so
 from pydantic import (
@@ -10,8 +10,8 @@ from pydantic import (
 )
 
 
-class KebabModel(BaseModel, frozen=True):
-    """Allow creating Pydantic model from kebab-case data."""
+class ConfigFile(BaseModel, frozen=True):
+    """Pydantic model for TOML config files."""
 
     model_config = ConfigDict(
         alias_generator=lambda string: string.replace("_", "-"),
@@ -19,30 +19,30 @@ class KebabModel(BaseModel, frozen=True):
     )
 
 
-class ResourceConfig(KebabModel, frozen=True):
+class ResourceConfig(ConfigFile, frozen=True):
     """Configuration for a resource to be built."""
 
     name: str
     input_dir: Path
     output_dir: Path
-    extras: dict[str, Any] | None = None
+    extras: Optional[dict[str, Any]] = None
 
 
-class BuildResourcesConfig(KebabModel, frozen=True):
+class BuildResourcesConfig(ConfigFile, frozen=True):
     """Configuration for the `build-resources` CLI command."""
 
-    delete_obs_units_file: Path | None = None
+    delete_obs_units_file: Optional[Path] = None
     resources: list[ResourceConfig] = field(default_factory=list)
 
 
-class Config(KebabModel, frozen=True):
+class Config(ConfigFile, frozen=True):
     """Configuration for Sprout."""
 
     metadata_file: Path = Path("datapackage.json")
     build_resources: BuildResourcesConfig = field(default_factory=BuildResourcesConfig)
 
 
-def load_config(project_dir: Path, config_path: Path | None = None) -> Config:
+def load_config(project_dir: Path, config_path: Optional[Path] = None) -> Config:
     """Loads the Sprout configuration.
 
     Uses `config_path` if given. If no `config_path` is given, it first tries
@@ -70,7 +70,7 @@ def _load_config_from_path(path: Path) -> Config:
     return Config.model_validate(config)
 
 
-def _load_config_from_default_paths(project_dir: Path) -> Config | None:
+def _load_config_from_default_paths(project_dir: Path) -> Optional[Config]:
     paths = [
         project_dir / ".config" / "sprout.toml",
         project_dir / "sprout.toml",
@@ -83,7 +83,7 @@ def _load_config_from_default_paths(project_dir: Path) -> Config | None:
     return _load_config_from_path(files[0]) if files else None
 
 
-def _load_config_from_pyproject(project_dir: Path) -> Config | None:
+def _load_config_from_pyproject(project_dir: Path) -> Optional[Config]:
     pyproject_path = project_dir / "pyproject.toml"
     if not pyproject_path.is_file():
         return None
