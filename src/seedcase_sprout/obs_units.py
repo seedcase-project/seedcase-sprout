@@ -29,8 +29,8 @@ def exclude_deleted_obs_units(
 ) -> pl.DataFrame:
     """Excludes the given observational units from the dataset.
 
-    Both the data and the columns of the observational unit ID should be checked against
-    the properties before using this function.
+    Both the data and the columns of the observational unit ID should be
+    checked against the properties before using this function.
     """
     if obs_unit_ids.is_empty():
         return data
