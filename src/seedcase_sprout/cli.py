@@ -11,9 +11,9 @@ from seedcase_soil import (
 )
 
 from seedcase_sprout.extract_field_properties import extract_field_properties
-from seedcase_sprout.init import (
-    create_properties_text,
-    create_resource_properties_text,
+from seedcase_sprout.init_metadata import (
+    init_package_metadata,
+    init_resource_metadata,
 )
 from seedcase_sprout.write_file import write_file
 
@@ -45,9 +45,9 @@ def init_metadata(
     name = output_path.stem
 
     if metadata_type == "package":
-        script_text = create_properties_text(package_name=name)
+        script_text = init_package_metadata(name=name)
     else:
-        script_text = create_resource_properties_text(fields=[], resource_name=name)
+        script_text = init_resource_metadata(metadata=[], name=name)
 
     write_file(script_text, output_path)
 
@@ -71,7 +71,7 @@ def extract_metadata(
         output_path = Path(f"{parquet_path.stem}_properties.py")
 
     df = pl.read_parquet(parquet_path)
-    script_text = create_resource_properties_text(fields=extract_field_properties(df))
+    script_text = init_resource_metadata(metadata=extract_field_properties(df))
     write_file(script_text, output_path)
 
 
