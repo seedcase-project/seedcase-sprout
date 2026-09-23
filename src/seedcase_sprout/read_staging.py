@@ -45,7 +45,6 @@ def read_staging(
         ValueError: If the staging file name is not in the expected pattern.
         ValueError: If the timestamp column name matches an existing column in
             the DataFrame.
-
     """
     check_resource_properties(resource_properties)
     if paths is None:

@@ -93,7 +93,6 @@ dev = [
 
 [project.scripts]
 seedcase-sprout = "seedcase_sprout.cli:main"
-sprout = "seedcase_sprout.cli:main"
 
 [build-system]
 requires = ["hatchling"]
