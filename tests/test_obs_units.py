@@ -60,7 +60,6 @@ def test_reads_file_with_only_header(tmp_path):
     (tmp_path / "units.csv").write_text("participant_id,visit_id")
     units_df = read_obs_unit_file(tmp_path / "units.csv", package_properties)
 
-    assert units_df is not None
     assert_frame_equal(
         units_df,
         pl.DataFrame({"participant_id": [], "visit_id": []}).with_columns(
@@ -72,7 +71,6 @@ def test_reads_file_with_only_header(tmp_path):
 def test_reads_correct_ids(_units_csv):
     units_df = read_obs_unit_file(_units_csv, package_properties)
 
-    assert units_df is not None
     assert_frame_equal(
         units_df, pl.DataFrame({"participant_id": ["abc"], "visit_id": [123]})
     )
