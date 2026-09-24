@@ -19,11 +19,9 @@ from seedcase_sprout.properties import (
 
 
 def read_obs_unit_file(
-    path: Optional[Path], package_properties: SproutProperties
-) -> Optional[pl.DataFrame]:
+    path: Path, package_properties: SproutProperties
+) -> pl.DataFrame:
     """Reads the IDs of observational units from a CSV at the given path."""
-    if not path:
-        return None
     if path.suffix.lower() != ".csv":
         raise ValueError(f"Expected a CSV file, got: {path.name!r}.")
 

@@ -4,7 +4,6 @@ import polars as pl
 from polars.testing import assert_frame_equal
 from pytest import fixture, mark, raises
 
-from seedcase_sprout.examples import example_package_properties
 from seedcase_sprout.obs_units import (
     exclude_deleted_obs_units,
     read_obs_unit_file,
@@ -55,13 +54,6 @@ package_properties = SproutProperties.from_default(
 def _units_csv(tmp_path) -> Path:
     (tmp_path / "units.csv").write_text("participant_id,visit_id\nabc,123")
     return tmp_path / "units.csv"
-
-
-def test_reading_none_path_returns_none():
-    assert (
-        read_obs_unit_file(path=None, package_properties=example_package_properties())
-        is None
-    )
 
 
 def test_reads_file_with_only_header(tmp_path):
