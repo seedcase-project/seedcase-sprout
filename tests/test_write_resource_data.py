@@ -11,21 +11,22 @@ from tests.assert_raises_errors import (
 )
 
 
-def test_throws_error_if_resource_properties_incorrect():
+def test_throws_error_if_resource_properties_incorrect(tmp_path):
     """Should throw an error if the resource properties are incorrect."""
     resource_properties = example_resource_properties()
     resource_properties.name = "spaces in name"
 
     with raises(DataResourceError):
-        write_resource_data(example_data(), resource_properties)
+        write_resource_data(example_data(), resource_properties, tmp_path)
 
 
-def test_throws_error_if_properties_do_not_match_data():
+def test_throws_error_if_properties_do_not_match_data(tmp_path):
     """Should throw an error if the resource properties and the data don't match."""
     resource_properties = example_resource_properties()
     assert resource_properties.schema and resource_properties.schema.fields
     resource_properties.schema.fields[0].type = "yearmonth"
 
     assert_raises_errors(
-        lambda: write_resource_data(example_data(), resource_properties), ValueError
+        lambda: write_resource_data(example_data(), resource_properties, tmp_path),
+        ValueError,
     )
