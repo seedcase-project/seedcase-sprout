@@ -192,14 +192,3 @@ def test_raises_error_with_empty_resource_properties(resource_paths):
     # When, Then
     with raises(DataResourceError):
         read_staging(resource_properties=ResourceProperties(), paths=resource_paths)
-
-
-def test_no_error_thrown_when_no_staging_using_cwd_as_default(
-    tmp_cwd, resource_properties
-):
-    """No error should be thrown if the cwd has no staging files for the given
-    resource.
-    """
-    data_list = read_staging(resource_properties)
-
-    assert len(data_list) == 0

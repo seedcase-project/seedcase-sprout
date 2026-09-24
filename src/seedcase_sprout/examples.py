@@ -1,13 +1,7 @@
-import os
-import tempfile
-from contextlib import AbstractContextManager
 from pathlib import Path
-from types import TracebackType
-from typing import override
 
 import polars as pl
 
-from seedcase_sprout.paths import PackagePath
 from seedcase_sprout.properties import (
     ContributorProperties,
     FieldProperties,
@@ -16,7 +10,6 @@ from seedcase_sprout.properties import (
     SproutProperties,
     TableSchemaProperties,
 )
-from seedcase_sprout.write_properties import write_properties
 
 
 def example_package_properties() -> SproutProperties:
@@ -317,91 +310,3 @@ def example_data_all_polars_types() -> pl.DataFrame:
             # TODO: Couldn't find a way to create pl.Unknown
         }
     )
-
-
-class ExamplePackage(AbstractContextManager[PackagePath]):
-    """A temporary, example data package with optional resources.
-
-    Examples:
-        ```{python}
-        import seedcase_sprout as sp
-        with sp.ExamplePackage() as package_path:
-            properties = sp.read_properties(package_path.properties())
-
-        with sp.ExamplePackage(with_resources=False):
-            properties = sp.read_properties()
-
-        with sp.ExamplePackage(package_name="my-package"):
-            properties = sp.read_properties()
-        ```
-    """
-
-    def __init__(
-        self,
-        package_name: str = str(example_package_properties().name),
-        with_resources: bool = True,
-    ):
-        """Initialise the `ExamplePackage` context manager.
-
-        Args:
-            package_name: The name of the package and its root folder.
-            with_resources: Whether resources should be added when creating the
-                package. Defaults to True.
-        """
-        self.package_name = package_name
-        self.with_resources = with_resources
-        self.calling_dir = Path.cwd()
-        self.temp_dir = tempfile.TemporaryDirectory()
-
-    # `__enter__` is already defined in the parent class, so this decorator overrides
-    # it to allow correct type checking.
-    @override
-    def __enter__(self) -> PackagePath:
-        """Create the temporary package and switch to its directory.
-
-        Returns:
-            A `PackagePath` object pointing to the root of the temporary
-            package.
-        """
-        package_dir = Path(self.temp_dir.name) / self.package_name
-        package_dir.mkdir(exist_ok=True)
-        package_path = PackagePath(package_dir)
-
-        # Create package properties
-        package_properties = example_package_properties()
-        package_properties.name = self.package_name
-
-        # Create resource properties
-        if self.with_resources:
-            resource_properties = example_resource_properties()
-            package_properties.resources = [resource_properties]
-
-            # Create resource folders
-            package_path.resource(str(resource_properties.name)).mkdir(
-                exist_ok=True, parents=True
-            )
-
-            # Include some data in the resource
-            example_data().write_parquet(
-                package_path.resource_data(str(resource_properties.name)),
-            )
-
-        # Save properties
-        write_properties(properties=package_properties, path=package_path.properties())
-
-        os.chdir(package_path.root())
-
-        return package_path
-
-    # `__enter__` is already defined in the parent class, so this decorator overrides
-    # it to allow correct type checking.
-    @override
-    def __exit__(
-        self,
-        error_type: type[BaseException] | None,
-        error: BaseException | None,
-        traceback: TracebackType | None,
-    ) -> None:
-        """Restore the original working directory and clean up."""
-        os.chdir(self.calling_dir)
-        self.temp_dir.cleanup()

@@ -9,7 +9,6 @@ from .check_data import check_data
 from .check_properties import DataResourceError
 from .cli import extract_metadata, init_metadata
 from .examples import (
-    ExamplePackage,
     example_data,
     example_data_all_types,
     example_package_properties,
@@ -18,7 +17,6 @@ from .examples import (
 )
 from .extract_field_properties import extract_field_properties
 from .join_staging import join_staging
-from .paths import PackagePath
 from .properties import (
     ConstraintsProperties,
     ContributorProperties,
@@ -43,12 +41,10 @@ __all__ = [
     "ConstraintsProperties",
     "ContributorProperties",
     "DataResourceError",
-    "ExamplePackage",
     "FieldProperties",
     "FieldType",
     "FieldsMatchType",
     "LicenseProperties",
-    "PackagePath",
     "ReferenceProperties",
     "ResourceProperties",
     "SourceProperties",
