@@ -49,11 +49,12 @@ package_properties = SproutProperties.from_default(
             title="test",
             description="test",
             schema=TableSchemaProperties(
+                primary_key=["participant_id", "visit_id"],
                 fields=[
                     FieldProperties(name="participant_id", type="string"),
                     FieldProperties(name="visit_id", type="integer"),
                     FieldProperties(name="other_col", type="number"),
-                ]
+                ],
             ),
         ),
         ResourceProperties(
@@ -61,11 +62,12 @@ package_properties = SproutProperties.from_default(
             title="test",
             description="test",
             schema=TableSchemaProperties(
+                primary_key=["participant_id", "visit_id"],
                 fields=[
                     FieldProperties(name="participant_id", type="string"),
                     FieldProperties(name="visit_id", type="integer"),
                     FieldProperties(name="other_col", type="boolean"),
-                ]
+                ],
             ),
         ),
     ],
@@ -85,37 +87,42 @@ def _datapackage_json(tmp_path) -> Path:
 
 @fixture
 def _resource_1_data(tmp_path) -> Path:
-    data_path = (
-        tmp_path
-        / sprout_config(tmp_path).build_resources.resources[0].input_dir
-        / "2026-09-08T092401Z.parquet"
+    input_dir = (
+        tmp_path / sprout_config(tmp_path).build_resources.resources[0].input_dir
     )
-    data_path.parent.mkdir(parents=True, exist_ok=True)
+    input_dir.mkdir(parents=True, exist_ok=True)
+    pl.DataFrame(
+        {
+            "participant_id": ["a", "a", "b", "c"],
+            "visit_id": [1, 2, 1, 1],
+            "other_col": [2.3, 4.3, 0, None],
+        }
+    ).write_parquet(input_dir / "2025-09-08T092401Z.parquet")
+    # ID (b, 1) corrected to 5.0
     pl.DataFrame(
         {
             "participant_id": ["a", "a", "b", "c"],
             "visit_id": [1, 2, 1, 1],
             "other_col": [2.3, 4.3, 5.0, None],
         }
-    ).write_parquet(data_path)
-    return data_path
+    ).write_parquet(input_dir / "2026-09-08T092401Z.parquet")
+    return input_dir
 
 
 @fixture
 def _resource_2_data(tmp_path) -> Path:
-    data_path = (
-        sprout_config(tmp_path).build_resources.resources[1].input_dir
-        / "2026-09-09T133400Z.parquet"
+    input_dir = (
+        tmp_path / sprout_config(tmp_path).build_resources.resources[1].input_dir
     )
-    data_path.parent.mkdir(parents=True, exist_ok=True)
+    input_dir.mkdir(parents=True, exist_ok=True)
     pl.DataFrame(
         {
             "participant_id": ["a", "a", "b", "c"],
             "visit_id": [1, 2, 1, 5],
             "other_col": [True, False, True, False],
         }
-    ).write_parquet(data_path)
-    return data_path
+    ).write_parquet(input_dir / "2026-09-09T133400Z.parquet")
+    return input_dir
 
 
 def test_excludes_deleted_obs_units(
