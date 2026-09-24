@@ -2,16 +2,6 @@ import polars as pl
 
 from seedcase_sprout.properties import FieldType
 
-"""Mapping from Data Package types to Polars types for reading in obs. unit IDs."""
-DATAPACKAGE_TO_POLARS: dict[FieldType, type[pl.DataType]] = {
-    "integer": pl.Int64,
-    "number": pl.Float64,
-    "string": pl.String,
-    "year": pl.Int64,
-    "boolean": pl.Boolean,
-}
-
-
 """
 Mapping between Polars types and Data Package types.
 
