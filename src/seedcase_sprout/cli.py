@@ -10,6 +10,8 @@ from seedcase_soil import (
     setup_cli,
 )
 
+from seedcase_sprout.build_resources import build_resources as build_resources_impl
+from seedcase_sprout.config import load_config
 from seedcase_sprout.extract_field_properties import extract_field_properties
 from seedcase_sprout.init_metadata import (
     init_package_metadata,
@@ -73,6 +75,27 @@ def extract_metadata(
     df = pl.read_parquet(parquet_path)
     script_text = init_resource_metadata(metadata=extract_field_properties(df))
     write_file(script_text, output_path)
+
+
+@app.command()
+def build_resources(
+    project_dir: Path | None = None,
+    /,  # End of positional-only params
+    *,  # Start of keyword-only params
+    config_file: Path | None = None,
+) -> None:
+    """Convert a set of "staging" Parquet files into the final resources.
+
+    Args:
+        project_dir: The directory containing the project files.
+        config_file: The path to the configuration file.
+    """
+    if project_dir is None:
+        project_dir = Path.cwd()
+
+    config = load_config(project_dir=project_dir, config_path=config_file)
+
+    build_resources_impl(config=config, project_dir=project_dir)
 
 
 def main() -> None:
