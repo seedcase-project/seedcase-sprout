@@ -6,7 +6,7 @@ from uuid import UUID
 from zoneinfo import ZoneInfo
 
 import time_machine
-from pytest import mark
+from pytest import mark, raises
 
 from seedcase_sprout.properties import (
     ConstraintsProperties,
@@ -180,3 +180,33 @@ def test_resource_path_included_in_compact_dict():
         "name": "test-resource",
         "path": str(Path("resources", "test-resource", "data.parquet")),
     }
+
+
+def test_gets_resource_by_name():
+    properties = SproutProperties(
+        resources=[
+            ResourceProperties(name="resource-1"),
+            ResourceProperties(name="resource-2"),
+        ],
+    )
+
+    assert properties.get_resource_by_name("resource-2") == ResourceProperties(
+        name="resource-2"
+    )
+
+
+@mark.parametrize("resources", [None, [], [ResourceProperties(name="no-match")]])
+def test_get_resource_by_name_errors_when_no_match(resources):
+    properties = SproutProperties(resources=resources)
+
+    with raises(ValueError, match="No resource"):
+        properties.get_resource_by_name("resource-2")
+
+
+def test_get_resource_by_name_errors_when_multiple_matches():
+    properties = SproutProperties(
+        resources=[ResourceProperties(name="resource-2")] * 2,
+    )
+
+    with raises(ValueError, match="More than one"):
+        properties.get_resource_by_name("resource-2")
