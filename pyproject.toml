@@ -3,16 +3,17 @@ name = "seedcase-sprout"
 version = "0.51.0"
 description = "Grow your research data in a structured, modern way that follows best practices."
 authors = [
-  { name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
   { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
   { name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
-  { name = "Marton Vago", email = "marton.vago95@gmail.com" },
+  { name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
+  { name = "Joel Ostblom", email = "joel@joelostblom.com" },
+  { name = "Fruzsina Vago", email = "fruzsi.vago@gmail.com" },
 ]
 maintainers = [
-  { name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
-  { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
   { name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
-  { name = "Marton Vago", email = "marton.vago95@gmail.com" },
+  { name = "Luke W. Johnston", email = "lwjohnst@gmail.com" },
+  { name = "Joel Ostblom", email = "joel@joelostblom.com" },
+  { name = "Fruzsina Vago", email = "fruzsi.vago@gmail.com" },
 ]
 readme = "README.md"
 license = "MIT"
@@ -40,6 +41,7 @@ dependencies = [
   "jinja2>=3.1.6",
   "jsonschema>=4.23.0",
   "polars>=1.26.0",
+  "pydantic>=2.13.5",
   "seedcase-soil>=0.11.0",
 ]
 classifiers = [
@@ -72,7 +74,7 @@ issues = "https://github.com/seedcase-project/seedcase-sprout/issues"
 [dependency-groups]
 dev = [
   "bandit>=1.8.3",
-  "coverage==7.16.0",
+  "coverage==7.16.2",
   "datamodel-code-generator>=0.28.5",
   "emoji>=2.14.1",
   "genbadge>=1.1.2",
