@@ -67,10 +67,10 @@ to abide by its terms.
 The following people have contributed to this project by submitting pull
 requests :tada:
 
+[@fruvago](https://github.com/fruvago),
 [@joelostblom](https://github.com/joelostblom),
 [@K-Beicher](https://github.com/K-Beicher),
 [@lwjohnst86](https://github.com/lwjohnst86),
-[@martonvago](https://github.com/martonvago),
 [@pchmia](https://github.com/pchmia),
 [@philter87](https://github.com/philter87),
 [@signekb](https://github.com/signekb)
@@ -87,14 +87,14 @@ For a list of changes, see our [changelog](CHANGELOG.md) page.
 
 If you use this package in your work, please cite it as follows:
 
-Johnston L.W., Brødbæk S.K., Beicher K., Vago M. (2025). Seedcase
-Sprout: Grow structured, organised, and FAIR data. DOI:
+Beicher K., Brødbæk S.K., Johnston L.W., Ostblom J., Vago F. (2025).
+Seedcase Sprout: Grow structured, organised, and FAIR data. DOI:
 10.5281/zenodo.15800477 URL: https://sprout.seedcase-project.org
 
 Or as a BibTeX entry:
 
     @misc{YourReferenceHere,
-    author = {Johnston, Luke William and Brødbæk, Signe Kirk and Beicher, Kristiane and Vago, Marton},
+    author = {Beicher, Kristiane and Brødbæk, Signe Kirk and Johnston, Luke William and Ostblom, Joel and Vago, Fruzsina},
     doi = {10.5281/zenodo.15800477},
     month = {7},
     title = {Seedcase Sprout: Grow structured, organised, and FAIR data.},
