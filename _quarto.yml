@@ -74,14 +74,6 @@ quartodoc:
     table_style: description-list
     show_signature_annotations: true
   sections:
-    - title: "Data resource functions"
-      desc: "Functions to work with and manage data resources found within a data package."
-      contents:
-        - join_staging
-        - read_staging
-        - write_resource_data
-        - DataResourceError
-
     - title: "Package property dataclasses"
       desc: "Dataclasses to help create properties at the package level."
       contents:
@@ -103,8 +95,6 @@ quartodoc:
     - title: "Property functions"
       desc: "Functions used to work with properties."
       contents:
-        - check_data
-        - read_properties
         - write_properties
 
     - title: "Helper functions"
