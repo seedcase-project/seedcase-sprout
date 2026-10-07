@@ -7,9 +7,9 @@ from seedcase_soil import errors
 
 from seedcase_sprout import (
     example_package_properties,
-    read_properties,
     write_properties,
 )
+from seedcase_sprout.read_properties import read_properties
 
 
 def test_reads_in_as_package_properties(tmp_path):
