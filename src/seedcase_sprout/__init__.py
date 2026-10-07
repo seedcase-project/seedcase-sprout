@@ -15,7 +15,6 @@ from .examples import (
     example_resource_properties,
     example_resource_properties_all_types,
 )
-from .extract_field_properties import extract_field_properties
 from .join_staging import join_staging
 from .properties import (
     ConstraintsProperties,
@@ -58,7 +57,6 @@ __all__ = [
     "example_package_properties",
     "example_resource_properties",
     "example_resource_properties_all_types",
-    "extract_field_properties",
     "extract_metadata",
     "init_metadata",
     "join_staging",
