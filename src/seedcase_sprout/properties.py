@@ -14,6 +14,7 @@ from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
 from uuid import uuid4
 
+import seedcase_soil as so
 from dacite import Config, from_dict
 
 from seedcase_sprout.internals import (
@@ -519,3 +520,16 @@ class SproutProperties(BaseProperties):
             resources=resources,
             sources=sources,
         )
+
+    def get_resource_by_name(self, name: str) -> ResourceProperties:
+        """Gets the resource properties with the given name."""
+        resources = self.resources or []
+        matches = so.keep(resources, lambda resource: resource.name == name)
+        if not matches:
+            raise ValueError(f"No resource called {name!r} found in data package.")
+        # TODO: Move to check-datapackage
+        if len(matches) > 1:
+            raise ValueError(
+                f"More than one resource called {name!r} found in data package."
+            )
+        return matches[0]
