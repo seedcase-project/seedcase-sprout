@@ -79,7 +79,6 @@ quartodoc:
       contents:
         - join_staging
         - read_staging
-        - write_resource_data
         - DataResourceError
 
     - title: "Package property dataclasses"
