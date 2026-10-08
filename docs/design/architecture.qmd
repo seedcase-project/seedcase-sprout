@@ -1,0 +1,282 @@
+---
+title: "Architecture"
+---
+
+This document contains a description of Sprout's expected user types, naming,
+and C4 models. For design details of the Seedcase Project as a whole, see the
+[Seedcase Design](https://design.seedcase-project.org) documentation.
+
+The purpose of this is to ensure that the team shares a common understanding
+about the implementation and to outline the design to anyone else interested in
+the internal workings of the package.
+
+## User types
+
+Sprout has only one main user type: data producers. However within this group,
+there are a few users that may use Sprout in slightly different ways.
+
+- Owner: This user is someone who controls or has legal authority over the data.
+  The owner may also be the creator of the data package and who sets up the data
+  processing pipelines. However, they may also be someone who isn't technically
+  skilled in the necessary data engineering skills, so will end up delegating
+  most of the administrative and engineering tasks to others. Regardless of
+  their other data tasks, they set the overall vision or direction of what the
+  data package contains and what Sprout actually processes.
+
+- Software developer/data engineer: This user is someone who is the one actively
+  developing and building up the data package. They will be the ones writing the
+  Python code and using Sprout to assist with making the data package. They will
+  be familiar with programming, designing pipelines, and writing in various
+  types of files (e.g. Python or TOML). They likely won't have deep familiarity
+  and knowledge about the data itself or the metadata, so they would likely
+  struggle to edit or describe the data in any meaningful way.
+
+- Domain expert: This user is someone who has more detailed knowledge about the
+  data itself, how it will be used, and what the data actually means. They will
+  be involved in documenting the data and metadata, as well as checking that the
+  types of processing done on the data accurately reflects its eventual use.
+  They might not be very familiar with programming or coding and need a simple
+  and direct way of contributing their knowledge, especially with editing the
+  metadata.
+
+## Naming
+
+This describes at a high level the names of objects and actions within Sprout.
+
+### Objects
+
+  | Object             | Description                                                                                                                                                         |
+  | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | package            | A data package that contains a collection of related data resources and properties.                                                                                 |
+  | resource           | A single data file within a package, along with its properties.                                                                                                     |
+  | properties         | Metadata about a package or resource.                                                                                                                               |
+  | path               | A file path listing the location of folders or files that Sprout interacts with.                                                                                    |
+  | data               | The data file(s) within a resource. Within Sprout, this consists of the Parquet data.                                                                               |
+  | identifier         | A unique identifier for a package (*only for server environments*), denoted as `id`.                                                                                |
+  | observational unit | The unit of observation, meaning the data associated with a specific entity at a specific time, e.g. a person who had their weight measured on their 30th birthday. |
+
+  : General objects used throughout Sprout.
+
+  | File or folder | Description                                                                                                                                                        |
+  | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | dir            | A shortened name for folder or directory.                                                                                                                          |
+  | packages       | The folder that contains all packages. *Only for server environments*.                                                                                             |
+  | resources      | The folder that contains all resource files in a package.                                                                                                          |
+  | staging        | The folder that contains the staging data files for a data resource. These files are processed from raw data.                                                      |
+  | TOML           | The file format that contains the staged metadata that still needs final editing, before being generated into the final metadata format.                           |
+  | JSON           | The main way we save and pass information around on the package's or resource's properties.                                                                        |
+  | Parquet        | A columnar, efficient storage file format that we use to save data within a resource. Both the final resource data as well as staging files are stored as Parquet. |
+
+  : Specific files and folders used within or output by Sprout.
+
+### Actions
+
+  | Action  | Description                                                                                |
+  | ------- | ------------------------------------------------------------------------------------------ |
+  | init    | Initialise an object or file (e.g. a package or resource metadata).                        |
+  | delete  | Delete an observational unit to comply with legal requirements.                            |
+  | extract | Extract specific information from an object, specifically the properties from a data file. |
+  | build   | Build various aspects of the objects above into the final data package.                    |
+
+  : General actions that Sprout can take on objects or files/folders.
+
+## Expected domain-specific data
+
+Currently, we only have experience with health data, so we have a bias towards
+that type of data. So this section describes the type of data we expect Sprout
+to interact with and use. However, theoretically Sprout can handle any data as
+long as it is tidy and in Parquet files.
+
+Health research data tends to consist of these types of data:
+
+- **Clinical**: This data is typically collected during patient visits to
+  doctors. Depending on the country or administrative region, there will likely
+  already be well-established data processing and storage pipelines in place.
+- **Register**: This type of data is highly dependent on the country or region.
+  Generally, this data is collected for national or regional administrative
+  purposes, such as recording employment status, income, address, medication
+  purchases, and diagnoses. Like for routine clinical data, the pipelines in
+  place for processing and storing this data are usually very extensive and well
+  established.
+- **Biological sample data**: This type of data is generated from biological
+  samples, like blood, saliva, semen, hair, or urine. Sample analytic techniques
+  often produce large volumes of data per person. Samples may be generated in
+  larger established laboratories or in smaller research groups, depending on
+  what analytic technology is used and how new it is. The structure and format
+  of the generated data also tend to be highly variable and depend heavily on
+  the technology used, sometimes requiring specialized software to process and
+  output.
+- **Survey or questionnaire**: This type of data is often collected based on a
+  given study's aims and research questions. There are hundreds of different
+  questionnaires that can have highly specific purposes and uses for their data.
+  The volume and format of the collected data also vary widely between surveys.
+
+The flow and frequency of data collection in research such as health research
+(and even in most industry settings) rarely is truly real-time data collection
+or streaming. Most data collection is done in "batches", with data being
+collected at irregular and inconsistent intervals and then stored to be
+processed later. This batch collection can be broken down into two categories
+based on its frequency:
+
+- *Routine or "continuous" collection*, where data is collected at more regular
+  intervals and in smaller batches of "observational units"[^1]. Ingestion or
+  processing of this type of data may happen on a more regular basis. Clinical
+  data as well as survey or questionnaire data tends to fall under this
+  category. For example, data collected on a few patients seen during the day at
+  a clinic.
+- *Grouped collection*, where data is collected from many observational units
+  during a short period of time at very irregular intervals or potentially only
+  once. Data ingesting or processing occurs some time after all the data has
+  been collected. Biological sample data would fall under this category, since
+  laboratories usually run several samples at once and input data after internal
+  quality control checks and machine-specific data processing. While
+  register-based and clinical data usually get collected continuously, direct
+  access to them is only given on a batch and infrequent basis, so they may also
+  fall under this category. Survey data may also come in batches, depending on
+  the questionnaire and software used for its collection.
+
+[^1]: Observational unit is the "entity" that the data was collected from at a
+    given point in time, such as a human participant in a cohort study or a rat
+    in an animal study at a specific time point.
+
+This means that data Sprout will process must handle the "batched" nature of the
+data, on top of potential changes to this data across batches.
+
+## C4-inspired models
+
+This section contains diagrams that are inspired by [C4
+Models](https://c4model.com/). The C4 Model is an established visualisation
+approach to describe the architecture of a software system. It breaks the system
+down into four levels of architectural abstraction: system context, containers,
+components, and code. We only describe the context and the containers.
+
+These diagrams and their content draw from our overall Seedcase [design
+documentation](https://design.seedcase-project.org/) and [design
+decisions](https://decisions.seedcase-project.org/). See those websites for more
+information.
+
+## Context
+
+The system context diagram shows the users and external systems that interact
+with Sprout.
+
+```{mermaid}
+%%| label: fig-c4-context
+%%| fig-cap: >-
+%%|   C4 system context diagram showing the users, Sprout system, and external
+%%|   filesystem. Parallogram, greyed out boxes represent input and output as
+%%|   the external filesystem, the rectangle represent Sprout, and the rounded
+%%|   boxes represent the users.
+%%| fig-alt: >-
+%%|   Flowchart diagram with boxes and arrows/connections for the different
+%%|   objects and actions, focusing on the content of Sprout. The user interacts
+%%|   with the staging metadata and data files as input to Sprout. Sprout builds
+%%|   the last pieces of the metadata and data into the package.
+
+flowchart TD
+
+    subgraph Users
+        direction TB
+        user_owner("Owner<br>[person]"):::user
+        user_eng("Software/data engineer<br>[person]"):::user
+        user_expert("Domain expert<br>[person]"):::user
+    end
+
+    obs_units[/"Observational units<br>to delete<br>[Optional, CSV]"/]:::external
+    staged_metadata[/"Staged metadata<br>[TOML, e.g. `staging/`]"/]:::external
+    staged_data[/"Staged data<br>[Parquet, e.g. `staging/`]"/]:::external
+    package_metadata[/"Package metadata<br>[e.g. datapackage.json]"/]:::external
+    package_data[/"Data resources<br>[Parquet, e.g. `resources/`]"/]:::external
+
+    sprout["seedcase-sprout<br>[Python package]"]:::system
+
+    staged_metadata --> sprout -.->|init<br>extract| staged_metadata
+    staged_data -.->|extract| staged_metadata
+
+    Users -->|prepare| staged_metadata & staged_data
+    Users -->|create| obs_units --> sprout
+    sprout -->|build| package_data & package_metadata
+
+    %% Styling
+    style Users fill:#FFFFFF, color:#000000
+
+    classDef user fill:#FFFFFF,color:#000000;
+    classDef system stroke-width:4pt
+    classDef external fill:lightgrey
+```
+
+### Container/component
+
+In C4, a [container diagram](https://c4model.com/diagrams/container) zooms in on
+the system boundary to show the *containers* within it while a [component
+diagram](https://c4model.com/abstractions/component) is "a grouping of related
+functionality encapsulated behind a well-defined interface", like a class or a
+module. For Sprout, we have a two containers for the CLI and the library, and
+within each is the component diagram. The diagram below shows the main actions
+and objects within zen-do, how they interact with each other at a high level,
+and the technologies used for each.
+
+```{mermaid}
+%%| label: fig-c4-container
+%%| fig-cap: >-
+%%|   C4 component and container diagram showing the inputs, outputs, and
+%%|   actions within Sprout. Parallogram boxes represent input and output, the
+%%|   rectangles represents actions, and the rounded boxes represent the start
+%%|   of the flow (the user).
+%%| fig-alt: >-
+%%|   Flowchart diagram with boxes and arrows/connections for the different
+%%|   objects and actions, focusing on the content of Sprout. The user interacts
+%%|   with the staging files mainly through the config file and uses Sprout
+%%|   either as CLI or as a Python library to generate the metadata in staging
+%%|   to modify and manually edit. Sprout ends up creating a package's final
+%%|   data and metadata.
+
+flowchart TB
+    user("User<br>[person]"):::user
+
+    subgraph input ["Input"]
+        staged_data[/"Staging data<br>[Parquet, `staging/`]"/]
+        staged_metadata_in[/"Staging metadata<br>[TOML, `staging/`]"/]
+        obs_units[/"Observational<br>units file<br>[CSV, `src/`]"/]
+        config[/"Sprout config<br>[TOML, `sprout.toml`]"/]
+    end
+
+    subgraph sprout-cli ["seedcase-sprout CLI"]
+        init["init-metadata<br>[Python]"]
+        build_resources["build-resources<br>[Python]"]
+        build_metadata["build-metadata<br>[Python]"]
+        extract_metadata["extract-metadata<br>[Python]"]
+    end
+
+    subgraph sprout-lib ["seedcase-sprout library"]
+        metadata["Metadata<br>[Python Class]"]
+        write_metadata["write_metadata()<br>[Python function]"]
+        metadata --> write_metadata
+    end
+
+    subgraph output ["Output"]
+        staged_metadata_out[/"Staging metadata<br>to use as input<br>[TOML, `staging/`]"/]
+        package_metadata[/"Metadata file<br>[e.g. `datapackage.json`]"/]
+        package_data[/"Data resources<br>[Parquet,<br>`resources/**/*.parquet`]"/]
+    end
+
+    user -->|prepare| input
+    user -->|use in<br>Python<br>scripts| sprout-lib
+    write_metadata --> staged_metadata_out
+
+    init -->|create| staged_metadata_out
+    staged_data --> extract_metadata -->|create| staged_metadata_out
+
+    staged_data -->|paths<br>as setting| config
+    staged_metadata_in -->|paths<br>as setting| config --> build_metadata --> package_metadata
+    obs_units -->|path<br>as setting| config
+    config -->|check data<br>against metadata<br>and delete<br>obs unit data| build_resources --> package_data
+
+    %% Styling
+    style input fill:#FFFFFF,color:#000000;
+    style sprout-cli fill:#FFFFFF,color:#000000;
+    style sprout-lib fill:#FFFFFF,color:#000000;
+    style output fill:#FFFFFF,color:#000000;
+    classDef user fill:#FFFFFF,color:#000000;
+    classDef external fill:#F5F5F5;
+```
