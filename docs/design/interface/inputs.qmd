@@ -2,36 +2,61 @@
 title: "Inputs"
 ---
 
-In this document we describe the inputs to Sprout at a technical level. For a
-more general description of what domain we expect data to come from and how it
-may look like conceptually, see the [input
-data](/docs/design/architecture/input-data.qmd#input-data) document.
+This page documents the inputs to Sprout's CLI and Python library. The inputs to
+the library are mainly to fill out `Metadata` classes within Python scripts as
+part of the data package build pipeline.
 
-The objects we primarily incorporate in the interface are properties and data,
-as described in the [naming](/docs/design/architecture/naming.qmd#naming)
-document.
+In general, the data and metadata inputs come from files in a "staging"
+directory. For more detail on what is kept within a staging directory and why to
+use this structure, check out our [Building Data
+Packages](https://data-pkg-guide.seedcase-project.org) guide. Briefly, this
+directory contains data for data resources that are tidied and processed from
+the raw data as well as metadata that has been edited (manually or
+programmatically) to accurately reflect the data. The files in staging are bulk
+collections of data that are processed together. This `staging/` directory is
+where the data is stored before it is processed and saved in the `resources/`
+directory. Using the staging directory makes the history between raw data and
+the final data resource more transparent and reproducible. It can also help with
+troubleshooting issues that may arise during data entry or processing or for
+auditing purposes.
 
-## Properties
+## Configuration file
 
-These are Python
-[dataclasses](https://docs.python.org/3/library/dataclasses.html) we've created
-to represent the properties (metadata) of a data package or resource. They
-always use the `*Properties` suffix, such as `SproutProperties` and
-`ResourceProperties`. While `SproutProperties` holds general Data Package
-properties, we intentionally avoided a name such as `DataPackageProperties` to
-communicate that Sprout uses stricter criteria for some properties than the full
-flexibility that is available in the Data Package specification.
+The paths to all the important files, like the data in staging, are kept within
+a `.config/sprout.toml` file. Other locations include `sprout.toml`,
+`.sprout.toml`, or kept within the `pyproject.toml` file. Most of the below
+input go through this configuration file. Details about what exactly is
+contained within this file are described in the sections for each individual CLI
+command in the [CLI interface design](cli.qmd) document.
+
+## Metadata
+
+This is either the Python classes or the TOML files that contain the TOML
+representation of the Python classes. The TOML files are used to manually edit
+or add information on the metadata, while the Python classes are used when
+programmatic processing of metadata is possible.
 
 ## Data
 
-These data input objects are always
-[Polars](https://decisions.seedcase-project.org/why-polars-for-data-cleaning/)
-`DataFrame` objects.
+The data input are
+[Parquet](https://decisions.seedcase-project.org/why-parquet/) files kept within
+the staging directory. These files are created when the batch raw data has been
+tidied and processed in preparation for being added to a data resource. These
+files are usually (but not required to be) kept in a path with a format that
+looks like:
 
-Sprout expects the data objects to be in a
-[tidy](https://vita.had.co.nz/papers/tidy-data.html) format. Tidy data is a
-conceptual framework around how data should be structured to be optimally usable
-for analysis. This is similar to what is called [third normal
+```text
+staging/<data-source>/<resource-name>/<timestamp>.parquet
+```
+
+Sprout reads these files into
+[Polars](https://decisions.seedcase-project.org/why-polars-for-data-cleaning/)
+`DataFrame` objects to continue the build process into the final data package
+structure. The input data should be in a
+[tidy](https://vita.had.co.nz/papers/tidy-data.html) format, though Sprout
+doesn't have any direct way of enforcing this. Tidy data is a conceptual
+framework around how data should be structured to be optimally usable for
+analysis. This is similar to what is called [third normal
 form](https://en.wikipedia.org/wiki/Third_normal_form) in relational database
 development, excluding the emphasis on creating additional tables to reduce
 redundancy.
@@ -46,46 +71,26 @@ This tidy structure makes it easier to process and use the data for later
 analysis. If it is already in this form, there is less need to transform it
 later.
 
-We have set a requirement on using tidy data frames because it simplifies the
-workflow and allows users to use their own, potentially highly customised,
-workflows for processing their data. This also allows for a more flexible and
-user-friendly interface to Sprout, since it removes the need to support or
-consider all the wide variety of formats data can be stored or structured in.
-Because data processing and organizing can be so strongly dependent on the
-domain, we leave this to the user to handle.
-
-## Staging directory
-
-This directory contains data for data resources that are tidied and processed
-from the raw data. These are bulk collections of data that are processed
-together. This `staging/` folder is where the data is stored before it is
-processed and saved in the `data.parquet` file. This folder makes the history
-between raw data and the final data resource clearer. This can help with
-troubleshooting issues that may arise during data entry or processing or for
-auditing purposes. The default location is `./staging/<resource-name>/`.
-
-## Staging files
-
-These are [Parquet](https://parquet.apache.org/) files that store data in a
-structured, columnar format (see our [decision
-post](https://decisions.seedcase-project.org/why-parquet/) for why we use
-Parquet files). These files are created when timestamped raw data has been
-tidied and processed in preparation for being added to a data resource. These
-files are usually kept in a file path in the format
-`staging/<resource-name>/<timestamp>.parquet`. Files in `staging/` are not
-linked within the `datapackage.json` file. Every time a user adds or updates the
-raw data, these `staging/` files should also be updated. Before being joined
-into a data resource, they are checked against the properties.
-
 ## Observational units (for deletion)
 
-An observational unit is the level of detail on the entity (e.g. human, animal,
-event) that the data was collected on at a given point in time. Based on legal
-regulations on the "right to be forgotten" in many countries (most prominent is
-the EU GDPR), a person can request that any personally identifiable and
-sensitive data of theirs is deleted. In order to achieve this legal requirement,
-the data must contain adequate identifiers that actually delete the correct
-data.
+An [observational unit](https://en.wikipedia.org/wiki/Unit_of_observation) is
+the level of detail on the entity (e.g. human, animal, event) that the data was
+collected on at a given point in time for a specific analysis. This is also
+called the [statistical unit](https://en.wikipedia.org/wiki/Statistical_unit).
+Many countries, most prominently in the EU with the
+[GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation), have
+some legal regulations or framework around the ["right to be
+forgotten"](https://en.wikipedia.org/wiki/Right_to_be_forgotten). This legal
+regulation requires that if a person has had their data collected, they can
+request that any personally identifiable and sensitive data of theirs is
+deleted. In order to fulfill this legal requirement, the data must at a minimum
+contain some identifiers to that person to be able to delete the correct data.
+
+Within the configuration file (e.g. `.config/sprout.toml`) is a field to give a
+path to a CSV that has a column or columns of the identifiers that link to
+people who want their data deleted. So if anyone requests their data to be
+deleted, the owner or other user would need to include the identifier(s) in this
+file so that during the build process Sprout can remove that person's data.
 
 ::: callout-note
 An example of a more granular observational unit might be a person in a research
@@ -104,6 +109,6 @@ specific observational unit (e.g. a person). That's because data can be saved
 within any backups done by the data owner or automatically in the server, or
 when stored within source management systems (e.g. like Git). The only legal
 requirement is that the data that is requested to "be forgotten" is no longer
-used for any other purposes aside from what it has already been used for.
-Because of this, Sprout takes as input a list of observational units to exclude
-from the final data package that is intended for distribution and use.
+used for any other purposes aside from what it has already been used for. As
+long as that person's data is no longer used for further distribution and use,
+the law would be upheld.
