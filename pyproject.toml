@@ -1,7 +1,7 @@
 [project]
 name = "seedcase-sprout"
 version = "0.51.0"
-description = "Grow your research data in a structured, modern way that follows best practices."
+description = "Build prepared data and metadata into a data package"
 authors = [
   { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
   { name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },
@@ -96,8 +96,8 @@ dev = [
 seedcase-sprout = "seedcase_sprout.cli:main"
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build"]
+build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 # - A short traceback (tb) mode to make it easier to view.
