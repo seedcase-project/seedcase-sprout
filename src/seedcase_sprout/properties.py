@@ -9,6 +9,7 @@ content of the properties.
 # `generate_properties/generated_properties.py` file. Update the auto-generated
 # properties file to add more dataclasses and move them into this file.
 
+import re
 from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
@@ -20,9 +21,6 @@ from seedcase_sprout.internals import (
     _create_resource_data_path,
     _get_iso_timestamp,
     _to_camel_case,
-)
-from seedcase_sprout.sprout_checks.is_resource_name_correct import (
-    _is_resource_name_correct,
 )
 
 
@@ -519,3 +517,18 @@ class SproutProperties(BaseProperties):
             resources=resources,
             sources=sources,
         )
+
+
+def _is_resource_name_correct(resource_name: Any) -> bool:
+    """Checks if the given resource name is correct.
+
+    Args:
+        resource_name: The resource name to check.
+
+    Returns:
+        Whether the resource name is correct.
+    """
+    name_pattern = r"^[a-z0-9._-]+$"
+    return isinstance(resource_name, str) and bool(
+        re.match(name_pattern, resource_name)
+    )
