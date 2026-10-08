@@ -1,9 +1,5 @@
 import polars as pl
 
-from seedcase_sprout.check_data import check_data
-from seedcase_sprout.check_properties import (
-    check_resource_properties,
-)
 from seedcase_sprout.constants import STAGING_TIMESTAMP_COLUMN_NAME
 from seedcase_sprout.internals import _get_nested_attr
 from seedcase_sprout.properties import ResourceProperties
@@ -16,12 +12,11 @@ def join_staging(
 
     This function takes a list of DataFrames, joins them together and drops any
     duplicate observational units based on the primary key from
-    `resource_properties`. Then, it confirms that the data are correct against
-    the `resource_properties` after the join.
+    `resource_properties`.
 
     The observational unit is the primary key of the resource. For example, if
     a person is part of a research study and has multiple observations, the
-    person's ID and the date of collection would be the observational unit.
+    person's ID and the date of collection might be the observational unit.
 
     If there are any duplicate observational units in the data, only the most
     recent observational unit will be kept based on the timestamp of the
@@ -47,8 +42,6 @@ def join_staging(
         polars.exceptions.SchemaError: If the dataframes in data_list have
             different schemas, e.g., their column data types don't match.
     """
-    check_resource_properties(resource_properties)
-
     if data_list == []:
         raise ValueError(
             "Could not join DataFrames because the `data_list` is "
@@ -59,9 +52,6 @@ def join_staging(
     data = pl.concat(data_list)
     primary_key = _get_nested_attr(resource_properties, "schema.primary_key")
     data = _drop_duplicate_obs_units(data, primary_key)
-
-    check_data(data, resource_properties)
-
     return data
 
 
