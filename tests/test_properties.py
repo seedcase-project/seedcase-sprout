@@ -157,11 +157,11 @@ def test_transforms_dict_to_properties(dict, expected_properties):
         (ResourceProperties(name="space in name"), None),
         (
             ResourceProperties(name="test-resource"),
-            str(Path("resources", "test-resource", "data.parquet")),
+            str(Path("resources", "test-resource.parquet")),
         ),
         (
             ResourceProperties(name="test-resource", path="some/path"),
-            str(Path("resources", "test-resource", "data.parquet")),
+            str(Path("resources", "test-resource.parquet")),
         ),
     ],
 )
@@ -178,5 +178,5 @@ def test_resource_path_included_in_compact_dict():
 
     assert resource_properties.compact_dict == {
         "name": "test-resource",
-        "path": str(Path("resources", "test-resource", "data.parquet")),
+        "path": str(Path("resources", "test-resource.parquet")),
     }

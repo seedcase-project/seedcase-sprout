@@ -27,7 +27,8 @@ def join_staging(
     recent observational unit will be kept based on the timestamp of the
     staging file. This way, if there are any errors or mistakes in older
     staging files that have been corrected in later files, the mistake will be
-    kept in the staging file, but won't be included in the `data.parquet` file.
+    kept in the staging file, but won't be included in the
+    `<resource-name>.parquet` file.
 
     Args:
         data_list: A list of Polars DataFrames for all the staging files. Use
