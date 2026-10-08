@@ -60,7 +60,6 @@ This describes at a high level the names of objects and actions within Sprout.
   | File or folder | Description                                                                                                                                                        |
   | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
   | dir            | A shortened name for folder or directory.                                                                                                                          |
-  | packages       | The folder that contains all packages. *Only for server environments*.                                                                                             |
   | resources      | The folder that contains all resource files in a package.                                                                                                          |
   | staging        | The folder that contains the staging data files for a data resource. These files are processed from raw data.                                                      |
   | TOML           | The file format that contains the staged metadata that still needs final editing, before being generated into the final metadata format.                           |
