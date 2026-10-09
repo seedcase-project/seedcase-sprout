@@ -7,9 +7,9 @@ the library layer, as well as tracking implementation status.
 
 {{< include /docs/includes/_design-status.qmd >}}
 
-## CLI functions
+## CLI
 
-### {{< var planned >}} `extract_metadata()`
+### {{< var done >}} `extract_metadata()`
 
 `extract_metadata()` has two arguments: `parquet_path` and `output_path`. The
 `parquet_path` argument is the path to a Parquet file in, e.g. the `staging/`
@@ -32,19 +32,20 @@ flowchart
     output_opt[/"Output path<br>[--output]"/]
     output[/"Python script<br>[File]"/]
     data[("DataFrame<br>(Tidy)")]
-    extract_resource_metadata("extract_resource_metadata()")
+    extract_metadata["extract_column_metadata()"]
     metadata[("ResourceProperties<br>(extracted)")]
+    init_metadata["init_resource_metadata()"]
 
     parquet --> read_parquet
     read_parquet --> data
-    data --> extract_resource_metadata
-    extract_resource_metadata --> metadata
-    output_opt --> write_metadata["write_resource_metadata()"]
-    metadata --> write_metadata
-    write_metadata --> output
+    data --> extract_metadata
+    extract_metadata --> metadata -->|render<br>from<br>template| init_metadata
+    output_opt --> write["write_file()"]
+    init_metadata -->|string| write
+    write --> output
 ```
 
-### {{< var planned >}} `init_metadata()`
+### {{< var done >}} `init_metadata()`
 
 `init_metadata()` has two arguments: `output_path` and `type`. The `output_path`
 argument is the path to where the Python script will be created, which will
@@ -64,10 +65,28 @@ flowchart
     output_path[/"Output path<br>[output_path]"/]
     type[/"Type of metadata<br>[type]"/]
     template[/"Template<br>[File]"/]
-    render_template["render_template()"]
+    init_metadata["init_*_metadata()"]
     write_file("write_file()")
     output[/"Python script<br>[File]"/]
 
-    type & template --> render_template -->|string| write_file
+    type -->|package<br>or resource| init_metadata
+    template --> init_metadata -->|string| write_file
     output_path --> write_file --> output
 ```
+
+## Library
+
+### {{< var done >}} Metadata classes
+
+These classes contain an explicit, structured set of official metadata defined
+for a data package. The main purpose of these classes is to give programmatic
+access to the structured metadata. That way the metadata can be generated from
+writing Python code that, if it's possible, can processes some input source of
+metadata into Sprout's metadata structure. The classes also make it easier to
+get an overview or learn about what fields are part of the metadata in Sprout
+(e.g. optional vs required fields) and what will be eventually generated into
+the final data package. We currently only have metadata classes for the [Data
+Package spec](https://datapackage.org).
+
+See the help documentation with `help(SproutProperties())` for more details on
+the metadata classes.
