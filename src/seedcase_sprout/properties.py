@@ -424,16 +424,16 @@ class SproutProperties(BaseProperties):
         print(sp.SproutProperties(name="diabetes-cohort", title="Diabetes Cohort"))
         print(sp.SproutProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
 
-        # To allow multiline strings, use dedent.
-        from textwrap import dedent
+        # To allow multiline strings, create another variable first.
+        description_text = '''
+        # Markdown header
+
+        A dataset of bird sightings. With some **bolding**.
+        '''
+
         print(sp.SproutProperties(
             title="Birds of North America",
-            description=dedent('''
-                # Markdown header
-
-                A dataset of bird sightings. With some **bolding**.
-                '''
-            )
+            description=description_text
         ))
         ```
     """

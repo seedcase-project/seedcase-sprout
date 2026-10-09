@@ -5,7 +5,7 @@ from .create import (
     _create_resource_data_path,
 )
 from .get import _get_iso_timestamp, _get_nested_attr
-from .to import _to_camel_case, _to_dedented, _to_snake_case
+from .to import _to_camel_case, _to_snake_case
 
 __all__ = [
     "_check_is_dir",
@@ -14,6 +14,5 @@ __all__ = [
     "_get_iso_timestamp",
     "_get_nested_attr",
     "_to_camel_case",
-    "_to_dedented",
     "_to_snake_case",
 ]
