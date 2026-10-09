@@ -6,7 +6,7 @@
     </a>
 </p>
 
-# seedcase-sprout: Grow structured, organised, and FAIR data
+# seedcase-sprout: Build prepared data and metadata into a data package
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-teal.json?raw=true.svg)](https://github.com/copier-org/copier)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15800477.svg)](https://doi.org/10.5281/zenodo.15800477)
