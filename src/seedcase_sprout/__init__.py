@@ -34,7 +34,6 @@ from .properties import (
 from .read_properties import read_properties
 from .read_staging import read_staging
 from .write_file import write_file
-from .write_properties import write_properties
 from .write_resource_data import write_resource_data
 
 __all__ = [
@@ -66,6 +65,5 @@ __all__ = [
     "read_properties",
     "read_staging",
     "write_file",
-    "write_properties",
     "write_resource_data",
 ]

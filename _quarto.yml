@@ -105,7 +105,6 @@ quartodoc:
       contents:
         - check_data
         - read_properties
-        - write_properties
 
     - title: "Helper functions"
       desc: "Functions to support working with data packages and running code within Seedcase Sprout."
