@@ -3,8 +3,9 @@ title: "Design"
 ---
 
 The purpose of these documents is to describe the design of Sprout in enough
-detail to help us to best develop it in a sustain way. It also ensures we as a
-team have a shared understanding of what Sprout is and is not.
+detail to guide a sustainable implementation (i.e., maintainable in the long
+term). It also ensures that the team has a shared understanding of the package's
+scope and architecture.
 
 Sprout's design builds off of our overall Seedcase [design principles and
 patterns](https://design.seedcase-project.org/), in that any design we create
@@ -29,10 +30,10 @@ standardized and organized data package structure.
 
 Concretely, Sprout:
 
-1. Process staged data and metadata into a final data package.
-2. Ensure metadata is correct and that the data matches the metadata.
-2. Assist with creating and editing metadata by extracting metadata from staged
-   data.
+1. Processes staged data and metadata into a final data package.
+2. Ensures that metadata is correct and that the data matches the metadata.
+3. Extracts metadata from staged data.
+4. Creates files from templates to simplify filling in with metadata.
 
 ## Requirements
 
