@@ -187,3 +187,58 @@ flowchart LR
     config_file & project_dir --> build_resources
     build_resources --> output
 ```
+
+#### Internal flow of functions and objects
+
+```{mermaid}
+%%| label: fig-build-resources-internal-flow
+%%| fig-cap: >-
+%%|   The internal flow of functions and objects in the `build-resources` CLI
+%%|   command.
+%%| fig-alt: >-
+%%|   Diagram of the internal flow of functions and objects in the
+%%|   `build-resources` CLI command.
+
+flowchart TD
+    %% Inputs, config, metadata
+    project_dir:::input --> load_metadata{{"load_metadata()"}} --> metadata[PackageMetadata]
+    project_dir --> load_config
+    config_file:::input --> load_config{{"load_config()"}} --> Config
+    Config --metadata_file--> load_metadata
+    metadata --> check_metadata{{"check_metadata()"}} --> metadata_checked[PackageMetadata]
+
+    %% Deleted IDs
+    project_dir --> get_deleted_ids{{"get_deleted_ids()"}} --> deleted_ids[pl.DataFrame]
+    deleted_ids --> check_deleted_ids{{"check_deleted_ids()"}} --> deleted_ids_checked[pl.DataFrame]
+    Config --delete_obs_units_file--> get_deleted_ids
+    metadata_checked -- obs_unit_id_cols --> check_deleted_ids
+
+    %% Map over resources
+    Config --resources--> resource_configs["list[ResourceConfig]"]
+    project_dir --> build_resource
+    deleted_ids_checked --> build_resource
+    metadata_checked --resources--> build_resource
+    resource_configs --map--> build_resource
+
+    subgraph build_resource["build_resource()"]
+        direction TB
+
+        get_resource_metadata{{"get_resource_metadata()"}} --> ResourceMetadata
+        read_batches{{"read_batches()"}} --> batches["list[Batch(pl.LazyFrame, path, timestamp)]"]
+        batches --> check_schema{{"check_schema()"}} --> batches_checked["list[Batch]"]
+        ResourceMetadata --> check_schema
+        batches_checked --> join_batches{{"join_batches()"}} --> built_data[pl.LazyFrame]
+        ResourceMetadata --primary_key--> join_batches
+        built_data --> drop_deleted_ids{{"drop_deleted_ids()"}} --> built_data_del[pl.LazyFrame]
+        built_data_del --collect--> check_constraints{{"check_constraints()"}} --> built_data_checked[pl.DataFrame]
+        ResourceMetadata --> check_constraints
+        built_data_checked --> write_data{{"write_data()"}}
+    end
+
+    %% Results
+    build_resource --> build_results["list[BuildResult(name, path, error)]"]
+    build_results --> log_result{{"log_result()"}}
+
+    classDef input fill:#FFF
+    style build_resource fill:#FFF, color:#000
+```
