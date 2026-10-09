@@ -3,12 +3,11 @@ from pathlib import Path
 import check_datapackage as cdp
 import seedcase_soil as so
 from pytest import raises
-from seedcase_soil import errors
+from seedcase_soil import errors, write_properties
 
 from seedcase_sprout import (
     example_package_properties,
     read_properties,
-    write_properties,
 )
 
 
@@ -16,7 +15,9 @@ def test_reads_in_as_package_properties(tmp_path):
     """Should read in the properties from the `datapackage.json` file."""
     expected_properties = example_package_properties()
     properties_path = Path(tmp_path) / "datapackage.json"
-    properties_path = write_properties(expected_properties, properties_path)
+    properties_path = write_properties(
+        expected_properties.compact_dict, properties_path
+    )
     actual_properties = read_properties(properties_path)
 
     assert expected_properties == actual_properties
@@ -27,7 +28,9 @@ def test_reads_when_resource_not_exists(tmp_path):
     expected_properties = example_package_properties()
     expected_properties.resources = None
     properties_path = Path(tmp_path) / "datapackage.json"
-    properties_path = write_properties(expected_properties, properties_path)
+    properties_path = write_properties(
+        expected_properties.compact_dict, properties_path
+    )
     actual_properties = read_properties(properties_path)
 
     assert expected_properties == actual_properties
