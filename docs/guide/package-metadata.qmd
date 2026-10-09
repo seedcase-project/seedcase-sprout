@@ -45,14 +45,14 @@ import seedcase_sprout as sp
 
 # You can write Markdown in the description text
 description_text = """
-        # Data from a 2021 study on diabetes prevalence
+# Data from a 2021 study on diabetes prevalence
 
-        This data package contains data from a study conducted in 2021 on the
-        *prevalence* of diabetes in various populations. The data includes:
+This data package contains data from a study conducted in 2021 on the
+*prevalence* of diabetes in various populations. The data includes:
 
-        - demographic information
-        - health metrics
-        - survey responses about lifestyle
+- demographic information
+- health metrics
+- survey responses about lifestyle
 """
 
 package_properties = sp.SproutProperties(
