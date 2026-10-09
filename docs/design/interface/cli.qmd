@@ -139,7 +139,7 @@ The configurations for the `build-resources` command are under the
   allow for additional extensions, there is also a (for now) placeholder
   `extras` field.
 
-```toml {.filename="sprout.toml"}
+```toml {filename="sprout.toml"}
 # While top level for Sprout, is also needed for `build-resources`.
 metadata-file = ""
 
