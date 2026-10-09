@@ -9,7 +9,7 @@ team have a shared understanding of what Sprout is and is not.
 Sprout's design builds off of our overall Seedcase [design principles and
 patterns](https://design.seedcase-project.org/), in that any design we create
 for Sprout should strongly follow the same design principles and patterns
-described
+described there.
 
 There are two main sections of this design documentation:
 
@@ -23,9 +23,9 @@ There are two main sections of this design documentation:
 
 ## Purpose
 
-The overall aim of Sprout is to process data and metadata that is in a
-semistructured and mostly cleaned ("staged") state into a standardized and
-organized data package structure.
+The overall aim of Sprout is to take data and metadata that has been prepared
+and cleaned from a raw state into "staged" state and process it into a
+standardized and organized data package structure.
 
 Concretely, Sprout:
 
@@ -41,8 +41,8 @@ Overall, Sprout must:
 - Handle various sizes of data. The size of research data is often not as large
   as in industry, but it can still be large enough to require specific care and
   handling.
-- Handle different overall structures of data (e.g. Parquet partitions) and
-  types of files (e.g. images).
+- Handle processing and building different overall structures of data (e.g.
+  Parquet partitions) and types of files (e.g. images).
 - Process and store tabular data that is in Parquet files and is
   [tidy](https://www.jstatsoft.org/article/view/v059i10/).
 - Allow for data updates from source locations, such as batch updates from a
