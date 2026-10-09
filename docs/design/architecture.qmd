@@ -264,9 +264,10 @@ flowchart TB
     init -->|create| staged_metadata_out
     staged_data --> extract_metadata -->|create| staged_metadata_out
 
-    staged_data -->|paths<br>as setting| config
-    staged_metadata_in -->|paths<br>as setting| config --> build_metadata --> package_metadata
     obs_units -->|path<br>as setting| config
+    staged_metadata_in -->|paths<br>as setting| config --> build_metadata
+    staged_data -->|paths<br>as setting| config
+    build_metadata --> package_metadata
     config -->|check data<br>against metadata<br>and delete<br>obs unit data| build_resources --> package_data
 
     %% Styling
