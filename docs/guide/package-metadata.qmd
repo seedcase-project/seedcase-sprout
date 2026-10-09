@@ -43,11 +43,8 @@ more complex example using one of these other classes:
 
 import seedcase_sprout as sp
 
-package_properties = sp.SproutProperties(
-    name="diabetes-study",
-    title="A Study on Diabetes",
-    # You can write Markdown below, with the helper `sp.dedent()`.
-    description=sp.dedent("""
+# You can write Markdown in the description text
+description_text = """
         # Data from a 2021 study on diabetes prevalence
 
         This data package contains data from a study conducted in 2021 on the
@@ -56,7 +53,12 @@ package_properties = sp.SproutProperties(
         - demographic information
         - health metrics
         - survey responses about lifestyle
-        """),
+"""
+
+package_properties = sp.SproutProperties(
+    name="diabetes-study",
+    title="A Study on Diabetes",
+    description=description_text,
     contributors=[
         sp.ContributorProperties(
             title="Jamie Jones",
@@ -85,12 +87,12 @@ package_properties = sp.SproutProperties(
 )
 ```
 
-You can see that we included a more involved description of the package using
-the helper function `dedent()` and that we used the `ContributorProperties`
-class twice as we set the `contributors` parameter to a list of two contributors
-who co-created this example Data Package. As you read in the [previous
-section](package.qmd), you can save the changes to the `PackageProperties` to
-`datapackage.json` with `write_properties()`, for example:
+You can see that we included a more involved description of the package and that
+we used the `ContributorProperties` class twice as we set the `contributors`
+parameter to a list of two contributors who co-created this example Data
+Package. As you read in the [previous section](package.qmd), you can save the
+changes to the `PackageProperties` to `datapackage.json` with
+`write_properties()`, for example:
 
 ```python
 sp.write_properties(properties=package_properties, path="../../datapackage.json")
