@@ -249,8 +249,6 @@ flowchart TB
 
     subgraph sprout-lib ["seedcase-sprout library"]
         metadata["Metadata<br>[Python Class]"]
-        write_metadata["write_metadata()<br>[Python function]"]
-        metadata --> write_metadata
     end
 
     subgraph output ["Output"]
@@ -261,7 +259,7 @@ flowchart TB
 
     user -->|prepare| input
     user -->|use in<br>Python<br>scripts| sprout-lib
-    write_metadata --> staged_metadata_out
+    sprout-lib -->|write| staged_metadata_out
 
     init -->|create| staged_metadata_out
     staged_data --> extract_metadata -->|create| staged_metadata_out
