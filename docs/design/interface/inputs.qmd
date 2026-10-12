@@ -134,7 +134,7 @@ The following data constraints can be declared for a column: `required`,
 `unique`, `pattern`, `format`, `enum`, `minimum`, `maximum`. However, not all
 constraints are applicable to all data types. For example, `boolean` columns
 don't support `minimum` and `integer` columns don't support `pattern`. To keep
-the TOML interface simple, these restrictions are not enforced by the TOML
+the TOML interface simple, these restrictions are not expressed by the TOML
 structure itself.
 
 <!-- TODO: Decide how type-constraint mismatches are handled: error on read or ignore -->
