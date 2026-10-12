@@ -2,13 +2,12 @@
 title: "Outputs"
 ---
 
-Sprout works as part of other tools to develop and build a [data
-package](https://data-pkg-guide.seedcase-project.org). This document describes
-Sprout's outputs as part of developing a data package.
+Sprout is one of several tools used to develop and build [data
+packages](https://data-pkg-guide.seedcase-project.org). This document describes
+the outputs Sprout generates during this process.
 
 ::: callout-note
-For more details about data packages and what they mean, check out our
-[guide](https://data-pkg-guide.seedcase-project.org). Briefly a data package
+In brief, a data package
 consists of one or more files (called data resources) that contain data specific
 to a given set of conditions or research questions. For instance, a data package
 could be a research study that collects information from people older than 50
@@ -18,10 +17,13 @@ education, or blood sample data like blood glucose, cholesterol, or blood
 pressure. Here, the basic demographics could be one data resource, while the
 blood sample data could be another data resource within the data package.
 
-Data packages are called many things in other fields. For instance it could be a
-"cohort study data", a "data resource", a clinical trial dataset, a dataset, a
-data "product", a study dataset, simply "data", or any other combination of
-words that include the word data.
+For more details about data packages and what they mean, check out our
+[guide](https://data-pkg-guide.seedcase-project.org). 
+
+Data packages are called many things in other fields. For instance, a data package could be called
+"cohort study data", a "data resource", a "clinical trial dataset", a "dataset", a
+"data product", a "study dataset", simply "data", or any other combination of
+words that include the word "data".
 :::
 
 ## Data resources
@@ -38,8 +40,8 @@ default following these patterns:
   resources where data for a single subject is also a single file, for example
   an image or audio file.
 
-How a resource is defined requires the [domain expert
-user](/docs/design/architecture.qmd). In general, a data resource encompasses
+What data is included in a resource must be defined by a [domain expert](/docs/design/architecture.qmd). 
+In general, a data resource encompasses
 data collected in a specific way and for a specific set of measurements from a
 specific set of input sources for a specific purpose. The data resource(s) will
 always be within one specific package, with each data resource in its own folder
@@ -47,7 +49,7 @@ having a unique resource name `<name>`, e.g. `resources/blood-samples.parquet`.
 
 ::: callout-note
 For example, a data package may have two data resources, one for demographics
-and another for blood samples. Why are these data as these specific data
+and another for blood samples. Why are these data divided into these specific data
 resources? Because they represent two distinct approaches to collecting and
 interpreting the data. While they are both on the same group of people, they
 collect the data in different ways. Demographic data is usually collected with a
@@ -68,4 +70,4 @@ Standard](https://datapackage.org). This machine-readable JSON file is the
 (current) foundation for what makes a set of files and folders a data package.
 This file contains metadata on the package (like title, description, and
 contributors) as well as metadata on the data resources (like column names, data
-types, descriptions, and a path to the Parquet file with the data in it).
+types, descriptions, and paths to the Parquet file(s) containing the resource data).
