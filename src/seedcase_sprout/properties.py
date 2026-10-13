@@ -424,7 +424,7 @@ class SproutProperties(BaseProperties):
         print(sp.SproutProperties(name="diabetes-cohort", title="Diabetes Cohort"))
         print(sp.SproutProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
 
-        # To allow multiline strings, create another variable first.
+        # Multiline strings are supported, but indentation is preserved.
         description_text = '''
         # Markdown header
 
