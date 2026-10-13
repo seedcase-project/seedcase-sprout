@@ -29,16 +29,18 @@ or any other combination of words that include the word "data".
 ## Data resources
 
 Sprout builds staged and tidy data into the final
-[Parquet](https://decisions.seedcase-project.org/why-parquet/) data resources, by
-default following these patterns:
+[Parquet](https://decisions.seedcase-project.org/why-parquet/) data resources,
+by default following these patterns:
 
 - `resources/<name>.parquet` for resources with only one tabular data file.
 - `resources/<name>/part-*.parquet` for resources that benefit from being in a
   [Parquet partition
   format](https://duckdb.org/docs/current/data/partitioning/hive_partitioning).
-- `resources/<name>/data.parquet` with `resources/<name>/<single-file>.<extension>` for
-  resources where data for a single subject is also a single file, such as
-  an image or audio file. For example, `resources/liver-scan/id-101.dcm` for a [DCM](https://en.wikipedia.org/wiki/DICOM) image of a liver for participant 101.
+- `resources/<name>/data.parquet` with
+  `resources/<name>/<single-file>.<extension>` for resources where data for a
+  single subject is also a single file, such as an image or audio file. For
+  example, `resources/liver-scan/id-101.dcm` for a
+  [DCM](https://en.wikipedia.org/wiki/DICOM) image of a liver for participant 101.
 
 What data is included in a resource must be defined by a [domain
 expert](/docs/design/architecture.qmd). In general, a data resource encompasses
