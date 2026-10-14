@@ -244,20 +244,22 @@ You can click the banner below to view the full file at this point:
 import seedcase_sprout as sp
 from .patients import resource_properties_patients  # <1>
 
+# You can write Markdown in the description field
+description_text = """
+# Data from a 2021 study on diabetes prevalence
+
+This data package contains data from a study conducted in 2021 on the
+*prevalence* of diabetes in various populations. The data includes:
+
+- demographic information
+- health metrics
+- survey responses about lifestyle
+"""
+
 package_properties = sp.SproutProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
-    # You can write Markdown below, with the helper `sp.dedent()`.
-    description=sp.dedent("""
-        # Data from a 2021 study on diabetes prevalence
-
-        This data package contains data from a study conducted in 2021 on the
-        *prevalence* of diabetes in various populations. The data includes:
-
-        - demographic information
-        - health metrics
-        - survey responses about lifestyle
-        """),
+    description=description_text,
     contributors=[
         sp.ContributorProperties(
             title="Jamie Jones",
