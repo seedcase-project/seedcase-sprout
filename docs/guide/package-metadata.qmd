@@ -91,11 +91,18 @@ You can see that we included a more involved description of the package and that
 we used the `ContributorProperties` class twice as we set the `contributors`
 parameter to a list of two contributors who co-created this example Data
 Package. As you read in the [previous section](package.qmd), you can save the
-changes to the `PackageProperties` to `datapackage.json` with
-`write_properties()`, for example:
+changes to the `PackageProperties` to `datapackage.json` with our other package
+[Soil](https://soil.seedcase-project.org)'s function `write_properties()`, for
+example:
 
 ```python
-sp.write_properties(properties=package_properties, path="../../datapackage.json")
+import seedcase_soil as so
+
+so.write_properties(
+    # Requires the properties as a dict
+    properties=package_properties.compact_dict,
+    path="../../datapackage.json",
+)
 ```
 
 When you rebuild the `datapackage.json` file, you'll see that it contains all

@@ -203,14 +203,6 @@ resource_properties_patients = sp.ResourceProperties(
 )
 ```
 
-::: callout-warning
-If the `title` and `description` properties are not filled in, you'll get a
-`CheckError` when you try to use `write_properties()` to save the resource's
-properties to the `datapackage.json` file. You will understand these errors more
-deeply after reading the next section in the guide; for now focus on making sure
-that the three required fields above are all filled out.
-:::
-
 Our resource properties file include the `name`, `title`, and `description` of
 that data resource together with the `name` and `type` of each field in the data
 resource. To write these resource metadata to `datapackage.json`, you need to
