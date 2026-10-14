@@ -1,13 +1,9 @@
 from pathlib import Path
-from typing import cast
 
 import seedcase_soil as so
 
 from seedcase_sprout.check_properties import check_properties
-from seedcase_sprout.internals import _to_dedented
-from seedcase_sprout.internals.get import _get_nested_attr
 from seedcase_sprout.properties import (
-    FieldProperties,
     SproutProperties,
 )
 
@@ -30,19 +26,6 @@ def write_properties(properties: SproutProperties, path: Path) -> Path:
         ExceptionGroup: If there is an error in the properties. A group of
             `CheckError`s, one error for each failed check.
     """
-    # Dedent descriptions
-    properties.description = _to_dedented(properties.description)
-
-    # TODO: Code to find all description fields and dedent to avoid nested for-loops?
-    for resource in properties.resources or []:
-        resource.description = _to_dedented(resource.description)
-
-        for field in cast(
-            list[FieldProperties],
-            _get_nested_attr(resource, "schema.fields", default=[]),
-        ):
-            field.description = _to_dedented(field.description)
-
     check_properties(properties)
 
     return so.write_properties(properties.compact_dict, path)
