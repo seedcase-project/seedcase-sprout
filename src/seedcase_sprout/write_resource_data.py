@@ -2,7 +2,6 @@ from pathlib import Path
 
 import polars as pl
 
-from seedcase_sprout.check_data import check_data
 from seedcase_sprout.properties import ResourceProperties
 
 
@@ -17,9 +16,7 @@ def write_resource_data(
     checks it against the `resource_properties`, and then writes the data to
     the resources `<resource-name>.parquet` file .  The Parquet file is saved
     based on the path found in `ResourceProperties.path` and is always
-    overwritten.  Before writing, this function does a check against the
-    `resource_properties` to ensure that the data is correctly structured and
-    tidy.
+    overwritten.
 
     Args:
         data: A DataFrame object with the resources data from the staging
@@ -35,7 +32,6 @@ def write_resource_data(
     """
     if package_path is None:
         package_path = Path(".")
-    check_data(data, resource_properties)
     data_path = package_path / "resources" / str(resource_properties.name)
 
     data.write_parquet(data_path)
