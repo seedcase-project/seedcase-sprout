@@ -4,44 +4,43 @@ title: "Overview"
 
 ## What is Sprout?
 
-Sprout is a Python package that is designed to help create and manage a
-standardised and organised structure for storing and describing research data.
-Using modern data engineering and management practices, Sprout helps to ensure
-and enforce that research data are well-designed, discoverable, well-documented,
-and ultimately more (re)usable for later analyses.
+Sprout is a Python package that is designed to help build a [data
+package](https://data-pkg-guide.seedcase-project.org). Importantly, Sprout
+provides tools to create high-quality metadata that is accurately connected to
+the data. Specifically, Sprout builds prepared and tidied data and
+well-documented metadata into the core components of a data package:
 
-<!-- TODO: update link to data package glossary -->
-
-Specifically, Sprout assists in the creation of a Data Package which enforces
-best practices for both the **data** and **metadata** in a project:
-
-- **Data** must follow the [tidy specification for tabular
-  data](https://sprout.seedcase-project.org/docs/design/interface/inputs), be
+- **Data** in a [tidy
+  format](https://sprout.seedcase-project.org/docs/design/interface/inputs),
   stored in [Apache
-  Parquet](https://decisions.seedcase-project.org/why-parquet/) format, and be
-  found in a standardized location in the project.
-- **Metadata** must follow the [Frictionless Data
-  Package](https://decisions.seedcase-project.org/why-frictionless-data/)
-  specification. It is created, managed, and verified programmatically to avoid
-  mistakes from manual edits and to guarantee that it conforms to the
-  specification.
+  Parquet](https://decisions.seedcase-project.org/why-parquet/) format in a
+  standardized location.
+- **Metadata** that follows specific standards (currently the [Frictionless Data
+  Package
+  specification](https://decisions.seedcase-project.org/why-frictionless-data/))
+  that correctly connects to the underlying data.
+
+Once these are built in the data package, they are ready for bundling,
+versioning, and distribution to be shared and used.
 
 ## Why use it?
 
 There are many tools for processing, cleaning, and transforming data, and for
 storing them in databases on servers and building data warehouses. However, few
-tools are specifically designed to create structured and organised data that is
-directly linked to its metadata---and even fewer assist in creating and
-structuring that metadata. Without metadata, data is nearly unusable.
+tools are specifically designed around building a set of data that follows basic
+software development lifecycle practices and principles. In particular, as a
+cohesive and reproducible package development processes that can be easily
+audited, versioned, and distributed.
 
 Sprout integrates a few key standards and practices to help build a fantastic
 dataset *along with its metadata*. In that way, it ensures the data will be more
 easily usable for later analysis, for finding the right data needed for the
 analysis, and for better understanding of what is actually in the data.
 
-Since Sprout is a Python package, you can use Python as you normally would to
-help build up your data and metadata. You don't need to learn another tool nor
-use a new interface. It's just code.
+Sprout has two main component: a command-line interface (CLI) and a Python
+library. The CLI is used to simplify the process of creating metadata and
+building up the pieces of the data package, while the Python library contains
+tools to help with programmatic extraction and creation of metadata.
 
 ## Learning more
 

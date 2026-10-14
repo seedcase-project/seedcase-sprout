@@ -1,17 +1,30 @@
+import re
 from dataclasses import replace
 from typing import Any, Optional
 
 import check_datapackage as cdp
 from seedcase_soil import fmap
 
-from seedcase_sprout.internals.create import _create_resource_data_path
 from seedcase_sprout.properties import ResourceProperties, SproutProperties
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
 )
-from seedcase_sprout.sprout_checks.required_fields import (
-    PACKAGE_SPROUT_REQUIRED_FIELDS,
-    RESOURCE_SPROUT_REQUIRED_FIELDS,
+
+PACKAGE_SPROUT_REQUIRED_FIELDS = (
+    "name",
+    "id",
+    "licenses",
+    "title",
+    "description",
+    "version",
+    "created",
+)
+
+RESOURCE_SPROUT_REQUIRED_FIELDS = (
+    "name",
+    "path",
+    "title",
+    "description",
 )
 
 
@@ -204,8 +217,7 @@ def _generic_check_properties(
     resource_path_format = cdp.CustomCheck(
         jsonpath="$.resources[*]",
         message=(
-            "Resource path must have the format "
-            "`resources/<resource-name>/data.parquet`."
+            "Resource path must have the format `resources/<resource-name>.parquet`."
         ),
         check=_check_resource_path_format,
         type="resource-path-format",
@@ -285,8 +297,7 @@ def _check_resource_path_format(resource_properties: Any) -> bool:
     ):
         return True
 
-    expected_path = _create_resource_data_path(str(name))
-    return path == expected_path
+    return bool(re.match(f"resources/{name}", path))
 
 
 def _check_is_package_properties_type(properties: Any) -> SproutProperties:
