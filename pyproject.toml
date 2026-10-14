@@ -1,7 +1,7 @@
 [project]
 name = "seedcase-sprout"
 version = "0.51.0"
-description = "Grow your research data in a structured, modern way that follows best practices."
+description = "Build prepared data and metadata into a data package"
 authors = [
   { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
   { name = "Signe Kirk Brødbæk", email = "signekb@clin.au.dk" },

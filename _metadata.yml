@@ -2,7 +2,7 @@ gh:
   org: "seedcase-project"
   repo: "seedcase-sprout"
 
-tagline: "Grow structured, organised, and FAIR data"
+tagline: "Build prepared data and metadata into a data package"
 
 links:
   github: "https://github.com/seedcase-project/seedcase-sprout"
