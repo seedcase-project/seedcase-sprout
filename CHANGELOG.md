@@ -21,6 +21,14 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.1](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.0..0.52.1) - 2026-10-14
+
+### ♻️ Refactor
+
+- Remove use of `dedent()`, TOML is the recommended way now
+  [#1878](https://github.com/seedcase-project/seedcase-sprout/pull/1878)
+  ([8c1819a](https://github.com/seedcase-project/seedcase-sprout/commit/8c1819a000d74f605b7463a5e3fa844fc5af80b6))
+
 ## [0.52.0](https://github.com/seedcase-project/seedcase-sprout/compare/0.51.0..0.52.0) - 2026-10-14
 
 ### ✨ Features
