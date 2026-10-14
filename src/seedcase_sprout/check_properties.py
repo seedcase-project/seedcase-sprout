@@ -5,8 +5,9 @@ from typing import Any, Optional
 import check_datapackage as cdp
 from seedcase_soil import fmap
 
-from seedcase_sprout.properties import ResourceProperties, SproutProperties
-from seedcase_sprout.sprout_checks.is_resource_name_correct import (
+from seedcase_sprout.properties import (
+    ResourceProperties,
+    SproutProperties,
     _is_resource_name_correct,
 )
 
