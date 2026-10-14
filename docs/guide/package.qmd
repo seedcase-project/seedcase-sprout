@@ -137,17 +137,18 @@ package_properties = sp.SproutProperties(
 
 Now that you've filled in some of the package metadata, it's time to create your
 `datapackage.json` file. Creating this file also officially makes this Python
-project a Data Package. You can use the `write_properties()` function for this
-by including it within some type of script, like `build.py` script (see our
+project a Data Package. You can use the
+[Soil's](https://soil.seedcase-project.org) `write_properties()` function for
+this by including it within some type of script, like `build.py` script (see our
 template for more details):
 
 ```{python}
 #| filename: "src/diabetes_study/build.py"
 
-import seedcase_sprout as sp
+import seedcase_soil as so
 from diabetes_study.metadata.package import package_properties
 
-sp.write_properties(properties=package_properties, path="../../datapackage.json")
+so.write_properties(properties=package_properties, path="../../datapackage.json")
 ```
 
 Then, use uv to run the script from the Terminal:
@@ -157,13 +158,12 @@ uv run src/diabetes_study/build.py
 ```
 
 ::: callout-important
-The `write_properties()` function will give an error if the `SproutProperties`
-object is missing some of its required fields or if they are not filled in
-correctly. In that case, a `datapackage.json` file won't be created. So you will
-have to return to the `package.py` file and fill in the correct properties.
+You should always run checks on the `datapackge.json` file with
+[`check-datapackage`](https://check-datapackage.seedcase-project.org) to confirm
+the metadata is correct.
 :::
 
-The `write_properties()` function created the `datapackage.json` file in your
+The `so.write_properties()` function created the `datapackage.json` file in your
 data package's `diabetes-study` root folder, which contains the properties you
 added to it. Now, you will see the added `datapackage.json` file in your Data
 Package folder.

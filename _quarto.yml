@@ -51,10 +51,8 @@ website:
           contents:
             - docs/design/interface/inputs.qmd
             - docs/design/interface/outputs.qmd
-            - docs/design/interface/functions.qmd
             - docs/design/interface/cli.qmd
             - docs/design/interface/python.qmd
-            - docs/design/interface/flows.qmd
     - id: guide
       contents:
         - section: "Guide"
@@ -105,7 +103,6 @@ quartodoc:
       contents:
         - check_data
         - read_properties
-        - write_properties
 
     - title: "Helper functions"
       desc: "Functions to support working with data packages and running code within Seedcase Sprout."

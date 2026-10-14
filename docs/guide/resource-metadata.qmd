@@ -203,14 +203,6 @@ resource_properties_patients = sp.ResourceProperties(
 )
 ```
 
-::: callout-warning
-If the `title` and `description` properties are not filled in, you'll get a
-`CheckError` when you try to use `write_properties()` to save the resource's
-properties to the `datapackage.json` file. You will understand these errors more
-deeply after reading the next section in the guide; for now focus on making sure
-that the three required fields above are all filled out.
-:::
-
 Our resource properties file include the `name`, `title`, and `description` of
 that data resource together with the `name` and `type` of each field in the data
 resource. To write these resource metadata to `datapackage.json`, you need to
@@ -244,20 +236,22 @@ You can click the banner below to view the full file at this point:
 import seedcase_sprout as sp
 from .patients import resource_properties_patients  # <1>
 
+# You can write Markdown in the description field
+description_text = """
+# Data from a 2021 study on diabetes prevalence
+
+This data package contains data from a study conducted in 2021 on the
+*prevalence* of diabetes in various populations. The data includes:
+
+- demographic information
+- health metrics
+- survey responses about lifestyle
+"""
+
 package_properties = sp.SproutProperties(
     name="diabetes-study",
     title="A Study on Diabetes",
-    # You can write Markdown below, with the helper `sp.dedent()`.
-    description=sp.dedent("""
-        # Data from a 2021 study on diabetes prevalence
-
-        This data package contains data from a study conducted in 2021 on the
-        *prevalence* of diabetes in various populations. The data includes:
-
-        - demographic information
-        - health metrics
-        - survey responses about lifestyle
-        """),
+    description=description_text,
     contributors=[
         sp.ContributorProperties(
             title="Jamie Jones",
