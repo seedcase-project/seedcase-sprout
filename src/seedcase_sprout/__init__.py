@@ -26,7 +26,6 @@ from .properties import (
     TableSchemaForeignKeyProperties,
     TableSchemaProperties,
 )
-from .write_properties import write_properties
 
 __all__ = [
     "ConstraintsProperties",
@@ -50,5 +49,4 @@ __all__ = [
     "extract_metadata",
     "init_metadata",
     "pprint",
-    "write_properties",
 ]

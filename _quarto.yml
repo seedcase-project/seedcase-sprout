@@ -90,11 +90,6 @@ quartodoc:
         - TableSchemaForeignKeyProperties
         - TableSchemaProperties
 
-    - title: "Property functions"
-      desc: "Functions used to work with properties."
-      contents:
-        - write_properties
-
     - title: "Helper functions"
       desc: "Functions to support working with data packages and running code within Seedcase Sprout."
       contents:
