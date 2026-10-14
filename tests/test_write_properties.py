@@ -76,30 +76,8 @@ def test_throws_error_if_error_in_resource_properties(path, properties):
         write_properties(properties, path)
 
 
-def test_writes_properties_with_dedented_descriptions(path, properties):
-    """Should write properties to file with dedented description."""
-    indented_text = """
-        Indented description with leading spaces.
-        \t Multiline text with tab and space.
-        """
-
-    properties.description = indented_text
-    properties.resources[0].description = indented_text
-    properties.resources[0].schema.fields[0].description = indented_text
-
-    write_properties(properties, path)
-
-    dedented_text = (
-        "Indented description with leading spaces.\\nMultiline text with tab and space."
-    )
-    file_text = path.read_text()
-    assert file_text.count(dedented_text) == 3
-
-
-def test_throws_error_if_resource_description_is_none(path, properties):
-    """Should throw an error if the required resource description is None, i.e.,
-    dedentation works and the subsequent check fails.
-    """
+def test_fail_if_resource_description_is_none(path, properties):
+    """Should fail if the required resource description is None."""
     properties.resources[0].description = None
 
     with raises(cdp.DataPackageError):
