@@ -9,9 +9,22 @@ from seedcase_sprout.properties import ResourceProperties, SproutProperties
 from seedcase_sprout.sprout_checks.is_resource_name_correct import (
     _is_resource_name_correct,
 )
-from seedcase_sprout.sprout_checks.required_fields import (
-    PACKAGE_SPROUT_REQUIRED_FIELDS,
-    RESOURCE_SPROUT_REQUIRED_FIELDS,
+
+PACKAGE_SPROUT_REQUIRED_FIELDS = (
+    "name",
+    "id",
+    "licenses",
+    "title",
+    "description",
+    "version",
+    "created",
+)
+
+RESOURCE_SPROUT_REQUIRED_FIELDS = (
+    "name",
+    "path",
+    "title",
+    "description",
 )
 
 
