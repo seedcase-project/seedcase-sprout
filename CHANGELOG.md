@@ -21,6 +21,14 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.4](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.3..0.52.4) - 2026-10-14
+
+### ♻️ Refactor
+
+- Remove `write_properties()`
+  [#1879](https://github.com/seedcase-project/seedcase-sprout/pull/1879)
+  ([c2cf78c](https://github.com/seedcase-project/seedcase-sprout/commit/c2cf78c3c14307c8526e4feebeb8a96a5ba3ba39))
+
 ## [0.52.3](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.2..0.52.3) - 2026-10-14
 
 ### ♻️ Refactor
