@@ -33,6 +33,16 @@ def mock_init_package_metadata(mocker):
     return mocker.patch("seedcase_sprout.cli.init_package_metadata")
 
 
+@pytest.fixture
+def mock_load_config(mocker):
+    return mocker.patch("seedcase_sprout.cli.load_config")
+
+
+@pytest.fixture
+def mock_build_resources_impl(mocker):
+    return mocker.patch("seedcase_sprout.cli.build_resources_impl")
+
+
 @mark.parametrize("metadata_type", [[], ["--type", "package"]])
 def test_init_package_metadata(
     mock_write_file,
@@ -110,4 +120,47 @@ def test_extract_metadata_with_custom_output_path(
     mock_write_file.assert_called_once_with(
         mock_init_resource_metadata.return_value,
         Path("path/to/output.py"),
+    )
+
+
+def test_build_resources_with_custom_project_dir(
+    mock_load_config, mock_build_resources_impl
+):
+    app(
+        ["build-resources", "path/to/project"],
+        result_action="return_value",
+    )
+
+    mock_load_config.assert_called_once_with(
+        project_dir=Path("path/to/project"), config_path=None
+    )
+    mock_build_resources_impl.assert_called_once_with(
+        config=mock_load_config.return_value, project_dir=Path("path/to/project")
+    )
+
+
+def test_build_resources_with_default_project_dir(
+    mock_load_config, mock_build_resources_impl, tmp_cwd
+):
+    app(["build-resources"], result_action="return_value")
+
+    mock_load_config.assert_called_once_with(project_dir=tmp_cwd, config_path=None)
+    mock_build_resources_impl.assert_called_once_with(
+        config=mock_load_config.return_value, project_dir=tmp_cwd
+    )
+
+
+def test_build_resources_with_custom_config_file(
+    mock_load_config, mock_build_resources_impl, tmp_cwd
+):
+    app(
+        ["build-resources", "--config-file", "path/to/config.toml"],
+        result_action="return_value",
+    )
+
+    mock_load_config.assert_called_once_with(
+        project_dir=tmp_cwd, config_path=Path("path/to/config.toml")
+    )
+    mock_build_resources_impl.assert_called_once_with(
+        config=mock_load_config.return_value, project_dir=tmp_cwd
     )

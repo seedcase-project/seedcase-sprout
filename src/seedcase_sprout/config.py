@@ -42,6 +42,11 @@ class Config(ConfigFile, frozen=True):
     build_resources: BuildResourcesConfig = field(default_factory=BuildResourcesConfig)
 
 
+def resolve_config_path(path: Path, project_dir: Path) -> Path:
+    """Resolves relative config paths against the project root."""
+    return path if path.is_absolute() else project_dir / path
+
+
 def load_config(project_dir: Path, config_path: Optional[Path] = None) -> Config:
     """Loads the Sprout configuration.
 
