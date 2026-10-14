@@ -1,6 +1,6 @@
 [remote]
 # Strictly don't connect to the internet to generate the changelog.
-offline = false
+offline = true
 
 [remote.github]
 owner = "seedcase-project"
@@ -33,6 +33,7 @@ within each one.
 
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in
 the changelog.
+
 """
 
 body = """
@@ -59,7 +60,7 @@ body = """
         ## [{{ version | trim_start_matches(pat="v") }}]\
           ({{ self::remote_url() }}/compare/{{ previous.version }}..{{ version }}) - {{ timestamp | date(format="%Y-%m-%d") }}
     {% else %}\
-        ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+        ## {{ version | trim_start_matches(pat="v") }} - {{ timestamp | date(format="%Y-%m-%d") }}
     {% endif %}\
 {% else %}\
     ## [unreleased]
@@ -105,9 +106,6 @@ output = "CHANGELOG.md"
 commit_preprocessors = [
   # Replace pull request numbers with links to GitHub.
   { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "[#${2}](https://github.com/seedcase-project/seedcase-sprout/pull/${2})" },
-  # Check spelling of the commit message using https://github.com/crate-ci/typos.
-  # If the spelling is incorrect, it will be fixed automatically.
-  { pattern = '.*', replace_command = 'uvx typos --write-changes -' },
   # Remove gitmoji, both actual UTF emoji and :emoji:
   { pattern = ' *(:\w+:|[\p{Emoji_Presentation}\p{Extended_Pictographic}](?:\u{FE0F})?\u{200D}?) *', replace = "" },
 ]

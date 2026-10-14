@@ -3,7 +3,6 @@
 # the package is imported via `from seedcase_sprout import *`.
 
 from pprint import pprint
-from textwrap import dedent
 
 from .cli import extract_metadata, init_metadata
 from .examples import (
@@ -42,7 +41,6 @@ __all__ = [
     "SproutProperties",
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
-    "dedent",
     "example_data",
     "example_data_all_types",
     "example_package_properties",
