@@ -4,6 +4,8 @@ import check_datapackage as cdp
 from pytest import fixture, mark, raises
 
 from seedcase_sprout.check_properties import (
+    PACKAGE_SPROUT_REQUIRED_FIELDS,
+    RESOURCE_SPROUT_REQUIRED_FIELDS,
     DataResourceError,
     check_package_properties,
     check_properties,
@@ -16,10 +18,6 @@ from seedcase_sprout.properties import (
     ResourceProperties,
     SourceProperties,
     SproutProperties,
-)
-from seedcase_sprout.sprout_checks.required_fields import (
-    PACKAGE_SPROUT_REQUIRED_FIELDS,
-    RESOURCE_SPROUT_REQUIRED_FIELDS,
 )
 
 

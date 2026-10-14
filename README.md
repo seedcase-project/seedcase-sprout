@@ -36,15 +36,17 @@ Practices](https://www.bestpractices.dev/projects/10459/badge?raw=true.svg)](htt
 
 Sprout is one component of the [Seedcase
 Project](https://seedcase-project.org) framework that aims to take data
-created or collected for research studies and “grow” it in a structured
-way using modern data engineering best practices. Sprout is designed to
-organise, describe, and store data for effective discovery, management,
-and analysis.
+created or collected for research studies that has been prepared and
+tidied and “grow” it by building it into a structured format. Sprout is
+designed to finish the last steps of building a data package, by
+providing tools to create metadata that correctly describes data and to
+organise the data and metadata into a coherent structure.
 
 Check out our [website](https://sprout.seedcase-project.org) for more
 information, such as the features it provides and a
 [guide](https://sprout.seedcase-project.org/docs/guide) to using the
-package. For a list of changes, see our [changelog](CHANGELOG.md).
+package. For a list of changes, see our
+[changelog](https://sprout.seedcase-project.org/changelog).
 
 > [!TIP]
 >
@@ -54,13 +56,14 @@ package. For a list of changes, see our [changelog](CHANGELOG.md).
 
 ## Contributing
 
-Check out our [contributing document](CONTRIBUTING.md) for information
-on how to contribute to the project, including how to set up your
-development environment.
+Check out our [contributing
+document](https://sprout.seedcase-project.org/contributing) for
+information on how to contribute to the project, including how to set up
+your development environment.
 
 Please note that this project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
-to abide by its terms.
+Conduct](https://github.com/seedcase-project/seedcase-sprout/blob/main/CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
 
 ### Contributors
 
@@ -77,11 +80,13 @@ requests :tada:
 
 ## Licensing
 
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [MIT
+License](https://github.com/seedcase-project/seedcase-sprout/blob/mainLICENSE.md).
 
 ## Changelog
 
-For a list of changes, see our [changelog](CHANGELOG.md) page.
+For a list of changes, see our
+[changelog](https://sprout.seedcase-project.org/changelog) page.
 
 ## Citing
 
