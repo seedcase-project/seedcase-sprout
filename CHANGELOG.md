@@ -21,6 +21,14 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.3](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.2..0.52.3) - 2026-10-14
+
+### ♻️ Refactor
+
+- Move check constants into file they are used
+  [#1872](https://github.com/seedcase-project/seedcase-sprout/pull/1872)
+  ([ccc2851](https://github.com/seedcase-project/seedcase-sprout/commit/ccc2851b6ab79ee8766a04f63bd39bfe4f81801e))
+
 ## [0.52.2](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.1..0.52.2) - 2026-10-14
 
 ### ♻️ Refactor
