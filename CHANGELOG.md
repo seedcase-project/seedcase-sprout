@@ -21,6 +21,14 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.6](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.5..0.52.6) - 2026-10-14
+
+### ♻️ Refactor
+
+- Simplify public Python library interface
+  [#1855](https://github.com/seedcase-project/seedcase-sprout/pull/1855)
+  ([034fb01](https://github.com/seedcase-project/seedcase-sprout/commit/034fb0160030dce2689d8eb89511f8b8d82f9f48))
+
 ## [0.52.5](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.4..0.52.5) - 2026-10-14
 
 ### ♻️ Refactor
