@@ -21,6 +21,14 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.2](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.1..0.52.2) - 2026-10-14
+
+### ♻️ Refactor
+
+- Switch to `resource-name.parquet` as default
+  [#1862](https://github.com/seedcase-project/seedcase-sprout/pull/1862)
+  ([cc5effb](https://github.com/seedcase-project/seedcase-sprout/commit/cc5effbc38ef69e1ff700d1be5ad603e6a4de963))
+
 ## [0.52.1](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.0..0.52.1) - 2026-10-14
 
 ### ♻️ Refactor
