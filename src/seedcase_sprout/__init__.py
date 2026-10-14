@@ -3,7 +3,6 @@
 # the package is imported via `from seedcase_sprout import *`.
 
 from pprint import pprint
-from textwrap import dedent
 
 from .check_data import check_data
 from .check_properties import DataResourceError
@@ -52,7 +51,6 @@ __all__ = [
     "TableSchemaForeignKeyProperties",
     "TableSchemaProperties",
     "check_data",
-    "dedent",
     "example_data",
     "example_data_all_types",
     "example_package_properties",

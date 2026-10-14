@@ -29,24 +29,20 @@ guide](/docs/guide/index.qmd){.btn .about-link}
 ::: hero-banner
 ::::: landing-page-block
 ::::::: hero-text
-Sprout is a Python package for building up, describing, and managing research
-data. It structures your data as standardised [Data
-Packages](https://datapackage.org/) that follow the
-[FAIR](https://www.go-fair.org/fair-principles/) principles, giving you
-flexibility and control over each step of the data management workflow.
+Sprout is a Python package for building up and describing research data. It
+contributes to structuring your data into a [data
+package](https://data-pkg-guide.seedcase-project.org) that follows data
+engineering practices and [FAIR](https://www.go-fair.org/fair-principles/)
+principles.
 
 ## Key features
 
-- Creates and manages standardised [Data Packages](https://datapackage.org/)
-  with metadata stored in `datapackage.json`.
-- Checks both your metadata and your data against the Data Package standard,
-  with clear messages pointing directly to where issues occur.
+- Processes prepared and tidied data into a final [data
+  package](https://data-pkg-guide.seedcase-project.org)
 - Stores data in [Apache Parquet](https://parquet.apache.org/) format---an open,
   efficient, and widely supported format.
-- Tracks data changes through a batch system with automatic versioning,
-  supporting data lineage and auditability.
-- Auto-extracts field properties from your data, so you spend less time writing
-  metadata manually.
+- Extracts key metadata from your data, so you spend less time writing metadata
+  manually.
 :::::::
 :::::
 :::
