@@ -1,6 +1,6 @@
 [project]
 name = "seedcase-sprout"
-version = "0.52.4"
+version = "0.52.5"
 description = "Grow your research data in a structured, modern way that follows best practices."
 authors = [
   { name = "Kristiane Beicher", email = "kris.beicher@clin.au.dk" },
