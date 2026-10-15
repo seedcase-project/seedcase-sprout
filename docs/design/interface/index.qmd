@@ -9,6 +9,8 @@ It is split into the following set of documents:
   types used to represent properties and data.
 - The main [outputs](outputs.qmd#outputs), including the files, folders, and
   Python objects produced by Sprout.
+- The [metadata file](metadata-file.qmd) produced and consumed by Sprout that
+  describes the data package.
 - The [command-line interface](cli.qmd) commands and their overall design.
 - The [Python library](python.qmd) for how Sprout might be used within Python
   code.
