@@ -80,6 +80,9 @@ def extract_metadata(
         output_path = Path(f"{parquet_path.stem}_properties.py")
 
     df = pl.read_parquet(parquet_path)
+    if df.is_empty():
+        raise ValueError("Data is empty. Cannot extract field properties.")
+
     script_text = init_resource_metadata(metadata=extract_column_metadata(df))
     write_file(script_text, output_path)
 
