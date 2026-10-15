@@ -59,7 +59,7 @@ def test_extract_metadata_with_custom_output_path(tmp_path):
     assert output_path.is_file()
 
 
-def test_fail_extract_metadata_with_empty_parquet(capsys, tmp_path):
+def test_fail_extract_metadata_with_empty_parquet(tmp_path):
     input_parquet = tmp_path / "fake.parquet"
     create_empty_parquet(input_parquet)
     with raises(ValueError):
