@@ -21,6 +21,32 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.8](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.7..0.52.8) - 2026-10-15
+
+### ♻️ Refactor
+
+- Remove unused `write_resource_data()`
+  [#1865](https://github.com/seedcase-project/seedcase-sprout/pull/1865)
+  ([e08bfdf](https://github.com/seedcase-project/seedcase-sprout/commit/e08bfdf7dce66951b93e5945436ae99794f45982))
+
+### 📝 Documentation
+
+- Update overall design of Sprout to match current focus
+  [#1853](https://github.com/seedcase-project/seedcase-sprout/pull/1853)
+  ([76a821c](https://github.com/seedcase-project/seedcase-sprout/commit/76a821c5ed8b721840a62d5e92ec0b08c7a3f0ce))
+- Update output interface design to match current direction
+  [#1861](https://github.com/seedcase-project/seedcase-sprout/pull/1861)
+  ([cffe009](https://github.com/seedcase-project/seedcase-sprout/commit/cffe009e86b85a2e15393d4bae045ee87468c539))
+- Update inputs design interface to match current design
+  [#1868](https://github.com/seedcase-project/seedcase-sprout/pull/1868)
+  ([d6d5c98](https://github.com/seedcase-project/seedcase-sprout/commit/d6d5c988d51c98feabc6e57233501e9e258ab2a0))
+
+### 🧪 Tests
+
+- Remove tests for deeply internal functions
+  [#1866](https://github.com/seedcase-project/seedcase-sprout/pull/1866)
+  ([9723cf2](https://github.com/seedcase-project/seedcase-sprout/commit/9723cf2602d38d21d61c7fdaa4d3a3cd5db9c91e))
+
 ## [0.52.7](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.6..0.52.7) - 2026-10-14
 
 ### ♻️ Refactor
