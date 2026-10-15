@@ -21,6 +21,23 @@ within each one.
 Commits from bots, like `dependabot` or `pre-commit-ci`, are not included in the
 changelog.
 
+## [0.52.9](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.8..0.52.9) - 2026-10-15
+
+### ♻️ Refactor
+
+- Simplify and rename `extract_column_metadata()` function
+  [#1859](https://github.com/seedcase-project/seedcase-sprout/pull/1859)
+  ([29a86cf](https://github.com/seedcase-project/seedcase-sprout/commit/29a86cf4c69acf1a313efb97fc75e68b537d3e9d))
+
+### 📝 Documentation
+
+- Update architecture docs into one file
+  [#1863](https://github.com/seedcase-project/seedcase-sprout/pull/1863)
+  ([6c9c27c](https://github.com/seedcase-project/seedcase-sprout/commit/6c9c27c15d2a98f7d722499e13e56fb237c26724))
+- Describe example TOML file
+  [#1885](https://github.com/seedcase-project/seedcase-sprout/pull/1885)
+  ([e9f31e5](https://github.com/seedcase-project/seedcase-sprout/commit/e9f31e560d9d94cf555a480d75bfd8eab4dbd8a4))
+
 ## [0.52.8](https://github.com/seedcase-project/seedcase-sprout/compare/0.52.7..0.52.8) - 2026-10-15
 
 ### ♻️ Refactor

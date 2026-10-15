@@ -2414,7 +2414,7 @@ wheels = [
 
 [[package]]
 name = "seedcase-sprout"
-version = "0.52.8"
+version = "0.52.9"
 source = { editable = "." }
 dependencies = [
     { name = "check-datapackage" },
