@@ -1,0 +1,129 @@
+---
+title: "Metadata file"
+---
+
+Sprout reads metadata from TOML files. It is possible to store metadata about
+the package and all resources in one TOML file or split resource metadata across
+different TOML files. Metadata about licenses and contributors may also be split
+out into into separate files.
+
+The following example shows a package metadata file with all possible fields
+filled in. It includes one resource under `[[resources]]` that is specified
+inline and lists two other resources under `[extend]` that are in separate TOML
+files.
+
+```toml {filename="package.toml"}
+name = "test"
+title = "Test Package"
+description = "A test package"
+version = "0.1.0"
+homepage = "https://example.com"
+repository = "https://github.com/my-project/test"
+readme = "README.md"
+keywords = ["test", "example"]
+observation-key = ["participant_id"]
+
+[[contributors]]
+name = "John Doe"
+email = "john.doe@example.com"
+orcid = "ABC"
+organisation = "Example Org"
+roles = ["author", "maintainer"]
+
+[[licenses]]
+name = "CC-BY-4.0"
+file = "license.txt"
+
+[[resources]]
+name = "participants"
+title = "Participants"
+description = "A resource containing participant data"
+primary-key = ["participant_id"]
+
+[[resources.columns]]
+name = "participant_id"
+title = "Participant ID"
+description = "The unique identifier for a participant"
+type = "integer"
+required = true
+unique = true
+
+[[resources.columns]]
+name = "username"
+title = "Username"
+description = "The username of the participant in the system"
+type = "string"
+required = true
+unique = true
+pattern = "^[a-zA-Z0-9_]{3,20}$"
+
+[[resources.columns]]
+name = "dob"
+title = "Date of Birth"
+description = "The date of birth of the participant"
+type = "date"
+required = true
+unique = false
+format = "%Y-%m-%d"
+minimum = "1900-01-01"
+maximum = "2024-12-31"
+
+[extend]
+licenses = ["license-ext.toml"]
+contributors = ["contributors-ext.toml"]
+resources = ["diagnoses.toml", "medications.toml"]
+```
+
+The `observation-key` specifies the column or columns that identify an
+observational unit in the study. These columns must be present in every resource
+in the package and have matching data types across resources.
+
+One of the resources referenced in the `[extend]` block is shown below:
+
+```toml {filename="diagnoses.toml"}
+name = "diagnoses"
+title = "Diagnoses"
+description = "A resource containing diagnosis data for participants"
+primary-key = ["diagnosis_id", "participant_id"]
+
+[[foreign-keys]]
+target-resource = "participants"
+columns = ["participant_id"]
+
+[[columns]]
+name = "diagnosis_id"
+title = "Diagnosis ID"
+description = "The code identifying the diagnosis"
+type = "string"
+required = true
+unique = false
+enum = ["D001", "D002", "D003", "D004"]
+
+[[columns]]
+name = "participant_id"
+title = "Participant ID"
+description = "The unique identifier for a participant"
+type = "integer"
+required = true
+unique = false
+
+[[columns]]
+name = "notes"
+title = "Notes"
+description = "Additional notes about the diagnosis"
+type = "string"
+required = false
+unique = false
+```
+
+Each column has one of the following data types: `integer`, `string`, `boolean`,
+`float`, `date`, `datetime`, `time`.
+
+The following data constraints can be declared for a column: `required`,
+`unique`, `pattern`, `format`, `enum`, `minimum`, `maximum`. However, not all
+constraints are applicable to all data types. For example, `boolean` columns
+don't support `minimum` and `integer` columns don't support `pattern`. To keep
+the TOML interface simple, these restrictions are not expressed by the TOML
+structure itself.
+
+<!-- TODO: Decide how type-constraint mismatches are handled: error on read or ignore -->
