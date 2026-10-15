@@ -67,7 +67,7 @@ they contain data about the same group of people.
 ## Metadata
 
 The current metadata format output by Sprout is the
-[`datapackage.json`](https://datapackge.org) from the [Data Package
+[`datapackage.json`](https://datapackage.org) from the [Data Package
 Standard](https://datapackage.org). This machine-readable JSON file is the
 (current) foundation for what makes a set of files and folders a data package.
 This file contains metadata on the package (like title, description, and
