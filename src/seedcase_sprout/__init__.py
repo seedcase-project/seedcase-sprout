@@ -45,7 +45,6 @@ __all__ = [
     "example_package_properties",
     "example_resource_properties",
     "example_resource_properties_all_types",
-    "extract_field_properties",
     "extract_metadata",
     "init_metadata",
     "pprint",
