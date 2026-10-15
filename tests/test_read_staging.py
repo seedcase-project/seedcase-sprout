@@ -4,9 +4,7 @@ from uuid import uuid4
 import polars as pl
 from pytest import fixture, mark, raises
 
-from seedcase_sprout.check_properties import DataResourceError
 from seedcase_sprout.constants import STAGING_TIMESTAMP_COLUMN_NAME
-from seedcase_sprout.examples import example_resource_properties
 from seedcase_sprout.properties import (
     FieldProperties,
     ResourceProperties,
@@ -69,12 +67,10 @@ def resource_paths(test_package):
     return list((test_package / "resources" / "1" / "staging").iterdir())
 
 
-def test_reads_staging_correctly(resource_paths, resource_properties):
+def test_reads_staging_correctly(resource_paths):
     """Reads staging files correctly with the expected timestamp column."""
     # Given, When
-    data_list = read_staging(
-        resource_properties=resource_properties, paths=resource_paths
-    )
+    data_list = read_staging(paths=resource_paths)
     timestamp_column = [
         data_list[0][STAGING_TIMESTAMP_COLUMN_NAME],
         data_list[1][STAGING_TIMESTAMP_COLUMN_NAME],
@@ -89,14 +85,14 @@ def test_reads_staging_correctly(resource_paths, resource_properties):
     )
 
 
-def test_raises_error_when_file_does_not_exist(resource_paths, resource_properties):
+def test_raises_error_when_file_does_not_exist(resource_paths):
     """Raises FileNotFoundError when a file in the list of paths doesn't exist"""
     # Given
     resource_paths.append(Path("non-existent-file.parquet"))
 
     # When, Then
     with raises(FileNotFoundError):
-        read_staging(resource_properties=resource_properties, paths=resource_paths)
+        read_staging(paths=resource_paths)
 
 
 def test_raises_error_when_file_not_parquet(tmp_path):
@@ -105,14 +101,10 @@ def test_raises_error_when_file_not_parquet(tmp_path):
     csv_file.touch()
 
     with raises(ValueError):
-        read_staging(
-            paths=[csv_file], resource_properties=example_resource_properties()
-        )
+        read_staging(paths=[csv_file])
 
 
-def test_raises_error_when_timestamp_column_matches_existing_column(
-    resource_paths, resource_properties
-):
+def test_raises_error_when_timestamp_column_matches_existing_column(resource_paths):
     """Raises ValueError when the timestamp column name matches an existing column."""
     # Given
     staging_path = resource_paths[0].parent
@@ -128,7 +120,7 @@ def test_raises_error_when_timestamp_column_matches_existing_column(
 
     # When, Then
     with raises(ValueError):
-        read_staging(resource_properties=resource_properties, paths=[staging_path])
+        read_staging(paths=[staging_path])
 
 
 @mark.parametrize(
@@ -142,7 +134,7 @@ def test_raises_error_when_timestamp_column_matches_existing_column(
     ],
 )
 def test_raises_error_when_file_name_timestamp_does_not_match_pattern(
-    resource_paths, resource_properties, incorrect_timestamp
+    resource_paths, incorrect_timestamp
 ):
     """Raises ValueError when the staging file name is not in the expected pattern."""
     # Given
@@ -152,12 +144,10 @@ def test_raises_error_when_file_name_timestamp_does_not_match_pattern(
 
     # When, Then
     with raises(ValueError):
-        read_staging(resource_properties=resource_properties, paths=[staging_file_path])
+        read_staging(paths=[staging_file_path])
 
 
-def test_if_multiple_correct_timestamps_in_file_name_use_first_one(
-    resource_paths, resource_properties
-):
+def test_if_multiple_correct_timestamps_in_file_name_use_first_one(resource_paths):
     """If multiple timestamps are found in the file name, the first one is used."""
     # Given
     staging_path = resource_paths[0].parent
@@ -167,28 +157,7 @@ def test_if_multiple_correct_timestamps_in_file_name_use_first_one(
     staging_data_1.write_parquet(staging_file_path)
 
     # When
-    data_list = read_staging(
-        resource_properties=resource_properties, paths=[staging_file_path]
-    )
+    data_list = read_staging(paths=[staging_file_path])
 
     # Then
     assert data_list[0][STAGING_TIMESTAMP_COLUMN_NAME][0] == "2025-03-26T100346Z"
-
-
-def test_raises_error_when_properties_do_not_match_data(
-    resource_paths, resource_properties
-):
-    """Raises errors from checks when the resource properties don't match the data."""
-    # Given
-    resource_properties.schema.fields[0].name = "not-id"
-
-    # When, Then
-    with raises(ValueError):
-        read_staging(resource_properties=resource_properties, paths=resource_paths)
-
-
-def test_raises_error_with_empty_resource_properties(resource_paths):
-    """Raises errors from checks if the resource properties are empty."""
-    # When, Then
-    with raises(DataResourceError):
-        read_staging(resource_properties=ResourceProperties(), paths=resource_paths)

@@ -3,35 +3,23 @@ from datetime import datetime
 from pathlib import Path
 
 import polars as pl
-from seedcase_soil import fmap, pairwise_fmap
+from seedcase_soil import fmap
 
-from seedcase_sprout.check_data import check_data
-from seedcase_sprout.check_properties import (
-    check_resource_properties,
-)
 from seedcase_sprout.constants import (
     STAGING_TIMESTAMP_COLUMN_NAME,
     STAGING_TIMESTAMP_FORMAT,
     STAGING_TIMESTAMP_PATTERN,
 )
 from seedcase_sprout.internals import _check_is_file
-from seedcase_sprout.properties import ResourceProperties
 
 
-def read_staging(
-    resource_properties: ResourceProperties, paths: list[Path]
-) -> list[pl.DataFrame]:
+def read_staging(paths: list[Path]) -> list[pl.DataFrame]:
     """Read all staging file(s) into a list of (Polars) DataFrames.
 
     Use this function to read the Parquet file(s) specified in `paths` into a
-    list of Polars DataFrames, and perform checks on each of the DataFrames
-    against the `resource_properties`. The `resource_properties` object is used
-    to check the data and ensure it is correct. This function also runs checks
-    to ensure the data are correct by comparing to the properties.
+    list of Polars DataFrames.
 
     Args:
-        resource_properties: The `ResourceProperties` object that contains the
-            properties of the resource you want to check the data against.
         paths: A list of paths for all the Parquet files in `staging/` folder.
 
     Returns:
@@ -42,21 +30,17 @@ def read_staging(
         ValueError: If the timestamp column name matches an existing column in
             the DataFrame.
     """
-    check_resource_properties(resource_properties)
     fmap(paths, _check_is_file)
-    return pairwise_fmap(paths, [resource_properties], _read_staging_parquet)
+    return fmap(paths, _read_staging_parquet)
 
 
-def _read_staging_parquet(
-    path: Path, resource_properties: ResourceProperties
-) -> pl.DataFrame:
+def _read_staging_parquet(path: Path) -> pl.DataFrame:
     if path.suffix != ".parquet":
         raise ValueError(
             "Failed to read the staging file. Expected a file with a "
             f"`.parquet` extension but found {path}."
         )
     data = pl.read_parquet(path)
-    check_data(data, resource_properties)
 
     timestamp = _extract_timestamp_from_staging_path(path)
     _check_staging_file_timestamp(timestamp)
