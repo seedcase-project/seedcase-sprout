@@ -9,6 +9,7 @@ content of the properties.
 # `generate_properties/generated_properties.py` file. Update the auto-generated
 # properties file to add more dataclasses and move them into this file.
 
+import re
 from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Literal, Self
@@ -20,9 +21,6 @@ from seedcase_sprout.internals import (
     _create_resource_data_path,
     _get_iso_timestamp,
     _to_camel_case,
-)
-from seedcase_sprout.sprout_checks.is_resource_name_correct import (
-    _is_resource_name_correct,
 )
 
 
@@ -424,16 +422,16 @@ class SproutProperties(BaseProperties):
         print(sp.SproutProperties(name="diabetes-cohort", title="Diabetes Cohort"))
         print(sp.SproutProperties(licenses=[sp.LicenseProperties(name="ODC-BY-1.0")]))
 
-        # To allow multiline strings, use dedent.
-        from textwrap import dedent
+        # Multiline strings are supported, but indentation is preserved.
+        description_text = '''
+        # Markdown header
+
+        A dataset of bird sightings. With some **bolding**.
+        '''
+
         print(sp.SproutProperties(
             title="Birds of North America",
-            description=dedent('''
-                # Markdown header
-
-                A dataset of bird sightings. With some **bolding**.
-                '''
-            )
+            description=description_text
         ))
         ```
     """
@@ -519,3 +517,18 @@ class SproutProperties(BaseProperties):
             resources=resources,
             sources=sources,
         )
+
+
+def _is_resource_name_correct(resource_name: Any) -> bool:
+    """Checks if the given resource name is correct.
+
+    Args:
+        resource_name: The resource name to check.
+
+    Returns:
+        Whether the resource name is correct.
+    """
+    name_pattern = r"^[a-z0-9._-]+$"
+    return isinstance(resource_name, str) and bool(
+        re.match(name_pattern, resource_name)
+    )

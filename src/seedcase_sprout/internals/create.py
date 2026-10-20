@@ -9,6 +9,6 @@ def _create_resource_data_path(resource_name: str) -> str:
 
     Returns:
         The relative path from the package root to the resource data file.
-            E.g., "resources/test-resource/data.parquet"
+            E.g., "resources/test-resource.parquet"
     """
-    return str(Path("resources", resource_name, "data.parquet"))
+    return str(Path("resources", f"{resource_name}.parquet"))
