@@ -38,6 +38,7 @@ def test_init_metadata(
     assert output_path.is_file()
 
 
+# TODO: Add more extensive tests to assess extraction
 def test_extract_metadata_with_default_output_path(tmp_path, monkeypatch: MonkeyPatch):
     monkeypatch.chdir(tmp_path)
     input_parquet = tmp_path / "fake.parquet"
