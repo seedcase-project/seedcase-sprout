@@ -218,16 +218,15 @@ When the TOML metadata file is read, resource, license, and contributor
 extensions under `[extend]` are resolved into their corresponding metadata
 classes as follows:
 
-1. The metadata file at the given path is parsed into a `PackageSpec` object.
-   This class models the structure of the metadata file exactly, including the
-   `extend` attribute.
-2. Each path in `extend.resources` is resolved relative to the directory
+1. The metadata file at the given path is parsed into a Python dictionary.
+2. The `extend` property, if it exists, is checked for correctness.
+3. Each path in `extend.resources` is resolved relative to the directory
    containing the metadata file.
-3. Each extension file is read into a `Resource` object.
-4. These `Resource` objects are combined with the resources defined inline in
+4. Each extension file is read into a `Resource` object.
+5. These `Resource` objects are combined with the resources defined inline in
    the original metadata file.
-5. Licenses and contributors are resolved in the same way.
-6. A `Package` object is created from the `PackageSpec`, with the combined
+6. Licenses and contributors are resolved in the same way.
+7. A `Package` object is created from the Python dictionary, with the combined
    resources, licenses, and contributors.
 
-<!-- TODO: Raise errors as we go or once at the last step? -->
+<!-- TODO: Are we happy to expose Pydantic errors? -->
