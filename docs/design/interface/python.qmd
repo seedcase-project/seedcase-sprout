@@ -76,7 +76,7 @@ flowchart
 
 ## Library
 
-### {{< var done >}} Metadata classes
+### {{< var planned >}} Metadata classes
 
 These classes contain an explicit, structured set of official metadata defined
 for a data package. The main purpose of these classes is to give programmatic
@@ -85,8 +85,149 @@ writing Python code that, if it's possible, can processes some input source of
 metadata into Sprout's metadata structure. The classes also make it easier to
 get an overview or learn about what fields are part of the metadata in Sprout
 (e.g. optional vs required fields) and what will be eventually generated into
-the final data package. We currently only have metadata classes for the [Data
-Package spec](https://datapackage.org).
+the final data package.
 
-See the help documentation with `help(SproutProperties())` for more details on
-the metadata classes.
+See the help documentation with `help(Package())` for more details on the
+metadata classes.
+
+#### Class architecture
+
+The class architecture follows the structure of the [TOML metadata
+file](metadata-file.qmd) with two differences:
+
+- Columns with different data types are represented by different classes, so
+  that each class only defines the constraints applicable to its data type.
+
+- `Package` does not have an `extend` attribute because extensions are resolved
+  when the TOML metadata file is read.
+
+The metadata classes exposed in the library interface are sketched out below.
+The aim is to show the attributes and their types for each class, rather than
+provide a full implementation plan. All classes are Pydantic models.
+
+```python
+class DataType(StrEnum):
+    INTEGER = "integer"
+    STRING = "string"
+    BOOLEAN = "boolean"
+    FLOAT = "float"
+    DATE = "date"
+    DATETIME = "datetime"
+    TIME = "time"
+
+class IntegerColumn:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    required: bool = False
+    unique: bool = False
+    enum: Optional[list[int]] = None
+    minimum: Optional[int] = None
+    maximum: Optional[int] = None
+
+class FloatColumn:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    required: bool = False
+    unique: bool = False
+    minimum: Optional[float] = None
+    maximum: Optional[float] = None
+
+class BooleanColumn:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    required: bool = False
+    unique: bool = False
+
+class StringColumn:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    required: bool = False
+    unique: bool = False
+    enum: Optional[list[str]] = None
+    pattern: Optional[str] = None
+    min_length: Optional[int] = None
+    max_length: Optional[int] = None
+
+class DateColumn:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    required: bool = False
+    unique: bool = False
+    # TODO: Consider if parsing is useful for checking constraints
+    enum: Optional[list[str]] = None
+    # In a specified format language
+    format: Optional[str] = None
+    minimum: Optional[str] = None
+    maximum: Optional[str] = None
+
+class DatetimeColumn:
+    ...
+    # same as in DateColumn
+
+class TimeColumn:
+    ...
+    # same as in DateColumn
+
+class ForeignKey:
+    target_resource: NonEmptyString
+    columns: NonEmptyList[NonEmptyString]
+
+class Resource:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    primary_key: NonEmptyList[NonEmptyString]
+    foreign_keys: Optional[NonEmptyList[ForeignKey]] = None
+    columns: NonEmptyList[any column type]
+
+class Contributor:
+    # TODO: decide which fields are required
+    name: Optional[NonEmptyString] = None
+    email: Optional[NonEmptyString] = None
+    orcid: Optional[NonEmptyString] = None
+    organisation: Optional[NonEmptyString] = None
+    roles: Optional[NonEmptyList[NonEmptyString]] = None
+
+class License:
+    name: NonEmptyString
+    file: Optional[Path] = None
+
+class Package:
+    name: NonEmptyString
+    title: NonEmptyString
+    description: NonEmptyString
+    version: NonEmptyString = "0.1.0"
+    homepage: Optional[NonEmptyString] = None
+    repository: Optional[NonEmptyString] = None
+    readme: Optional[Path] = None
+    keywords: Optional[NonEmptyList[NonEmptyString]] = None
+    observation_key: NonEmptyList[NonEmptyString]
+    contributors: NonEmptyList[Contributor]
+    licenses: NonEmptyList[License]
+    resources: NonEmptyList[Resource]
+```
+
+#### Reading TOML files into metadata objects
+
+When the TOML metadata file is read, resource, license, and contributor
+extensions under `[extend]` are resolved into their corresponding metadata
+classes as follows:
+
+1. The metadata file at the given path is parsed into a `PackageSpec` object.
+   This class models the structure of the metadata file exactly, including the
+   `extend` attribute.
+2. Each path in `extend.resources` is resolved relative to the directory
+   containing the metadata file.
+3. Each extension file is read into a `Resource` object.
+4. These `Resource` objects are combined with the resources defined inline in
+   the original metadata file.
+5. Licenses and contributors are resolved in the same way.
+6. A `Package` object is created from the `PackageSpec`, with the combined
+   resources, licenses, and contributors.
+
+<!-- TODO: Raise errors as we go or once at the last step? -->
