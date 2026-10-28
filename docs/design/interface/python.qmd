@@ -121,7 +121,7 @@ class IntegerColumn:
     description: NonEmptyString
     required: bool = False
     unique: bool = False
-    enum: Optional[list[int]] = None
+    enum: Optional[NonEmptySet[int]] = None
     minimum: Optional[int] = None
     maximum: Optional[int] = None
 
@@ -147,7 +147,7 @@ class StringColumn:
     description: NonEmptyString
     required: bool = False
     unique: bool = False
-    enum: Optional[list[str]] = None
+    enum: Optional[NonEmptySet[str]] = None
     pattern: Optional[str] = None
     min_length: Optional[int] = None
     max_length: Optional[int] = None
@@ -159,11 +159,11 @@ class DateColumn:
     required: bool = False
     unique: bool = False
     # TODO: Consider if parsing is useful for checking constraints
-    enum: Optional[list[str]] = None
+    enum: Optional[NonEmptySet[NonEmptyString]] = None
     # In a specified format language
-    format: Optional[str] = None
-    minimum: Optional[str] = None
-    maximum: Optional[str] = None
+    format: Optional[NonEmptyString] = None
+    minimum: Optional[NonEmptyString] = None
+    maximum: Optional[NonEmptyString] = None
 
 class DatetimeColumn:
     ...
