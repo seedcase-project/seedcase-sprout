@@ -74,6 +74,96 @@ flowchart
     output_path --> write_file --> output
 ```
 
+### {{< var planned >}} `build-resources`
+
+The `build-resources` command converts sets of staged Parquet files into the
+final resources.
+
+If any step errors, the build stops immediately without any cleanup. The
+displaying of errors is handled by `run_without_tracebacks()` from Soil. It is
+the responsibility of each internal function raising the error to include enough
+information in the message to identify the point of failure (e.g., which
+resource failed at which step).
+
+<!-- TODO: Decide if no batches for a resource is an error. -->
+<!-- TODO: Decide whether to normalise data types before concat and join (batches and deleted IDs can disagree even when each matches the metadata). -->
+
+The following classes are used to represent the resources throughout the build
+pipeline:
+
+```python
+@dataclass(frozen=True)
+class Batch:
+    """The data from one staged file, with the timestamp taken from its file name."""
+
+    path: Path
+    timestamp: datetime
+    data: pl.LazyFrame
+
+
+@dataclass(frozen=True)
+class BuildTarget:
+    """The build details for one resource, including where to read and write it."""
+
+    resource_metadata: ResourceProperties
+    input_dir: Path
+    output_path: Path
+
+
+@dataclass(frozen=True)
+class BuildData[T]:
+    """A resource's build target together with its data at one stage of the build."""
+
+    build_target: BuildTarget
+    data: T
+```
+
+```{mermaid}
+%%| label: fig-build-resources-internal-flow
+%%| fig-cap: >-
+%%|   The internal flow of functions and objects in the `build-resources` CLI
+%%|   command.
+%%| fig-alt: >-
+%%|   Diagram of the internal flow of functions and objects in the
+%%|   `build-resources` CLI command.
+
+flowchart TD
+    %% Config and metadata
+    config_file[/"config_file"/]:::io --> read_config["read_config()<br><i>raises if not found or incorrect</i>"] --> Config[/"Config"/]
+    project_dir[/"project_dir"/]:::io --> read_config
+    Config -->|metadata_file| read_metadata["read_metadata()<br><i>raises if not found or incorrect</i>"] --> metadata[/"PackageMetadata"/]
+    project_dir --> read_metadata
+    metadata --> check_metadata["check_metadata()<br><i>raises if incorrect</i>"] --> metadata_checked[/"PackageMetadata"/]
+
+    %% Deleted IDs
+    Config -->|delete_obs_units_file| read_csv["pl.read_csv()<br><i>may raise</i>"] --> deleted_ids[/"pl.DataFrame"/]
+    project_dir --> read_csv
+    metadata_checked --> check_deleted_ids["check_deleted_ids()<br><i>raises if incorrect</i>"] --> deleted_ids_checked[/"pl.DataFrame"/]
+    deleted_ids --> check_deleted_ids
+
+    %% Resources: each step runs over the whole list
+    Config -->|resources| resource_configs[/"list[ResourceConfig]"/]
+    resource_configs --> get_build_target["get_build_target()<br><i>raises if resource missing</i>"] --> build_targets[/"list[BuildTarget]"/]
+    project_dir --> get_build_target
+    metadata_checked --> get_build_target
+
+    build_targets --> read_staged_resource["read_staged_resource()<br><i>raises if timestamp incorrect</i>"] --> staged[/"list[BuildData[list[Batch]]]"/]
+    staged --> check_schema["check_schema()<br><i>raises if incorrect</i>"]
+    check_schema --> join_batches["join_batches()"]
+    join_batches --> joined[/"list[BuildData[pl.LazyFrame]]"/]
+
+    joined --> drop_deleted_ids["drop_deleted_ids()"] --> joined_after_delete[/"list[BuildData[pl.LazyFrame]]"/]
+    deleted_ids_checked -->|"if any"| drop_deleted_ids
+    joined_after_delete --> collect["collect()<br><i>errors on lazy frames surface here</i>"]
+
+    collect --> collected[/"list[BuildData[pl.DataFrame]]"/]
+    collected --> check_constraints["check_constraints()<br><i>raises if incorrect</i>"]
+    check_constraints --> write_parquet["write_parquet()<br><i>may raise</i>"]
+    write_parquet --> outputs[/"output Parquet files"/]:::io
+
+    classDef io fill:#FFF
+```
+
 ## Library
 
 ### {{< var done >}} Metadata classes
