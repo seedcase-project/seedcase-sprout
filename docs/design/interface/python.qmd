@@ -81,8 +81,8 @@ final resources.
 
 If any step errors, the build stops immediately without any cleanup. The
 displaying of errors is handled by `run_without_tracebacks()` from Soil. It is
-the responsibility of each internal function raising the error to include enough
-information in the message to identify the point of failure (e.g., which
+the responsibility of each internal function to include enough
+information in the error message to identify the point of failure (e.g., which
 resource failed at which step).
 
 <!-- TODO: Decide if no batches for a resource is an error. -->
@@ -129,16 +129,16 @@ class BuildData[T]:
 
 flowchart TD
     %% Config and metadata
-    config_file[/"config_file"/]:::io --> read_config["read_config()<br><i>raises if not found or incorrect</i>"] --> Config[/"Config"/]
+    config_file[/"config_file"/]:::io --> read_config["read_config()"] --> Config[/"Config"/]
     project_dir[/"project_dir"/]:::io --> read_config
-    Config -->|metadata_file| read_metadata["read_metadata()<br><i>raises if not found or incorrect</i>"] --> metadata[/"PackageMetadata"/]
+    Config -->|metadata_file| read_metadata["read_metadata()"] --> metadata[/"PackageMetadata"/]
     project_dir --> read_metadata
-    metadata --> check_metadata["check_metadata()<br><i>raises if incorrect</i>"] --> metadata_checked[/"PackageMetadata"/]
+    metadata --> check_metadata["check_metadata()"] --> metadata_checked[/"PackageMetadata"/]
 
     %% Deleted IDs
-    Config -->|delete_obs_units_file| read_csv["pl.read_csv()<br><i>may raise</i>"] --> deleted_ids[/"pl.DataFrame"/]
+    Config -->|delete_obs_units_file| read_csv["pl.read_csv()"] --> deleted_ids[/"pl.DataFrame"/]
     project_dir --> read_csv
-    metadata_checked --> check_deleted_ids["check_deleted_ids()<br><i>raises if incorrect</i>"] --> deleted_ids_checked[/"pl.DataFrame"/]
+    metadata_checked --> check_deleted_ids["check_deleted_ids()"] --> deleted_ids_checked[/"pl.DataFrame"/]
     deleted_ids --> check_deleted_ids
 
     %% Resources: each step runs over the whole list
