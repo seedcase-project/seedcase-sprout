@@ -81,9 +81,9 @@ final resources.
 
 If any step errors, the build stops immediately without any cleanup. The
 displaying of errors is handled by `run_without_tracebacks()` from Soil. It is
-the responsibility of each internal function to include enough
-information in the error message to identify the point of failure (e.g., which
-resource failed at which step).
+the responsibility of each internal function to include enough information in
+the error message to identify the point of failure (e.g., which resource failed
+at which step).
 
 <!-- TODO: Decide if no batches for a resource is an error. -->
 <!-- TODO: Decide whether to normalise data types before concat and join (batches and deleted IDs can disagree even when each matches the metadata). -->
