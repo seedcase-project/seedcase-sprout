@@ -103,17 +103,21 @@ file](metadata-file.qmd) with two differences:
 
 The metadata classes exposed in the library interface are sketched out below.
 The aim is to show the attributes and their types for each class, rather than
-provide a full implementation plan. All classes are Pydantic models.
+provide a full implementation plan. All classes are implemented in Rust and
+exposed in the Python library through PyO3 bindings.
+
+<!-- TODO: Decide how Rust errors should be mapped to Python exceptions in the bindings. -->
 
 ```python
 class DataType(StrEnum):
-    INTEGER = "integer"
-    STRING = "string"
-    BOOLEAN = "boolean"
-    FLOAT = "float"
-    DATE = "date"
-    DATETIME = "datetime"
-    TIME = "time"
+    integer = "integer"
+    string = "string"
+    boolean = "boolean"
+    float = "float"
+    date = "date"
+    datetime = "datetime"
+    time = "time"
+    duration = "duration"
 
 class IntegerColumn:
     name: NonEmptyString
@@ -124,6 +128,11 @@ class IntegerColumn:
     enum: Optional[NonEmptySet[int]] = None
     minimum: Optional[int] = None
     maximum: Optional[int] = None
+
+class DurationColumn:
+    # In microseconds
+    ...
+    # Same fields as IntegerColumn
 
 class FloatColumn:
     name: NonEmptyString
@@ -158,20 +167,19 @@ class DateColumn:
     description: NonEmptyString
     required: bool = False
     unique: bool = False
-    # TODO: Consider if parsing is useful for checking constraints
-    enum: Optional[NonEmptySet[NonEmptyString]] = None
+    enum: Optional[NonEmptySet[date]] = None
     # In a specified format language
     format: Optional[NonEmptyString] = None
-    minimum: Optional[NonEmptyString] = None
-    maximum: Optional[NonEmptyString] = None
+    minimum: Optional[date] = None
+    maximum: Optional[date] = None
 
 class DatetimeColumn:
     ...
-    # same as in DateColumn
+    # Same fields as DateColumn, but using datetime instead of date
 
 class TimeColumn:
     ...
-    # same as in DateColumn
+    # Same fields as DateColumn, but using time instead of date
 
 class ForeignKey:
     target_resource: NonEmptyString
@@ -186,9 +194,8 @@ class Resource:
     columns: NonEmptyList[any column type]
 
 class Contributor:
-    # TODO: decide which fields are required
-    name: Optional[NonEmptyString] = None
-    email: Optional[NonEmptyString] = None
+    name: NonEmptyString
+    email: NonEmptyString
     orcid: Optional[NonEmptyString] = None
     organisation: Optional[NonEmptyString] = None
     roles: Optional[NonEmptyList[NonEmptyString]] = None
@@ -214,19 +221,15 @@ class Package:
 
 #### Reading TOML files into metadata objects
 
-When the TOML metadata file is read, resource, license, and contributor
+When the TOML metadata file is read, the resource, license, and contributor
 extensions under `[extend]` are resolved into their corresponding metadata
-classes as follows:
+objects as follows:
 
-1. The metadata file at the given path is parsed into a Python dictionary.
+1. The metadata file at the given path is parsed in Rust.
 2. The `extend` property, if it exists, is checked for correctness.
-3. Each path in `extend.resources` is resolved relative to the directory
-   containing the metadata file.
-4. Each extension file is read into a `Resource` object.
-5. These `Resource` objects are combined with the resources defined inline in
-   the original metadata file.
-6. Licenses and contributors are resolved in the same way.
-7. A `Package` object is created from the Python dictionary, with the combined
-   resources, licenses, and contributors.
-
-<!-- TODO: Are we happy to expose Pydantic errors? -->
+3. Each path in `extend.resources`, `extend.licenses`, and `extend.contributors`
+   is resolved relative to the directory containing the metadata file.
+4. Each extension file is read into a `Resource`, `License`, or `Contributor`
+   object.
+5. These objects are combined with the objects defined inline in the original
+   metadata file.
