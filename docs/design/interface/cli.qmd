@@ -181,8 +181,8 @@ participant_id,date_id
 %%| fig-cap: "The flow of input and output through the CLI `build-resources` command."
 %%| fig-alt: >-
 %%|   Diagram showing the flow of input and output through the CLI
-%%|   `build-resources` command. The user optionally provides the path to the project
-%%|   directory that also includes a config file that describes how to
+%%|   `build-resources` command. The user optionally provides the path to the
+%%|   project directory that also includes a config file that describes how to
 %%|   build the staging files into resources.
 
 flowchart LR
