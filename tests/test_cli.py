@@ -1,115 +1,70 @@
 """Tests for the CLI commands."""
 
-from pathlib import Path
-
-import pytest
-from pytest import mark
+import polars as pl
+from pytest import MonkeyPatch, mark, raises
 
 from seedcase_sprout.cli import app
 
-# TODO: Refactor to not use mocks
+
+def create_data_as_parquet(path):
+    df = pl.DataFrame(
+        {
+            "col1": [1, -1, -3, 4],
+            "col2": ["b", "c", "d", "a"],
+        }
+    )
+    df.write_parquet(path)
+    return path
 
 
-@pytest.fixture
-def mock_read_parquet(mocker):
-    return mocker.patch("seedcase_sprout.cli.pl.read_parquet")
+def create_empty_parquet(path):
+    df = pl.DataFrame({"col1": []})
+    df.write_parquet(path)
+    return path
 
 
-@pytest.fixture
-def mock_write_file(mocker):
-    return mocker.patch("seedcase_sprout.cli.write_file")
-
-
-@pytest.fixture
-def _mock_extract_column_metadata(mocker):
-    return mocker.patch("seedcase_sprout.cli.extract_column_metadata")
-
-
-@pytest.fixture
-def mock_init_resource_metadata(mocker):
-    return mocker.patch("seedcase_sprout.cli.init_resource_metadata")
-
-
-@pytest.fixture
-def mock_init_package_metadata(mocker):
-    return mocker.patch("seedcase_sprout.cli.init_package_metadata")
-
-
-@mark.parametrize("metadata_type", [[], ["--type", "package"]])
-def test_init_package_metadata(
-    mock_write_file,
-    mock_init_package_metadata,
-    mock_init_resource_metadata,
+@mark.parametrize("metadata_type", [["--type", "resource"], ["--type", "package"]])
+def test_init_metadata(
     metadata_type,
+    tmp_path,
 ):
-    output_path = Path("path/to/my-package.py")
+    output_path = tmp_path / "metadata-file.py"
 
     app(
         ["init-metadata", str(output_path), *metadata_type],
         result_action="return_value",
     )
 
-    mock_init_package_metadata.assert_called_once_with(name="my-package")
-    mock_init_resource_metadata.assert_not_called()
-    mock_write_file.assert_called_once_with(
-        mock_init_package_metadata.return_value,
-        output_path,
-    )
+    assert output_path.is_file()
 
 
-def test_init_resource_metadata(
-    mock_write_file,
-    mock_init_package_metadata,
-    mock_init_resource_metadata,
-):
-    output_path = Path("path/to/my-resource.py")
+# TODO: Add more extensive tests to assess extraction
+def test_extract_metadata_with_default_output_path(tmp_path, monkeypatch: MonkeyPatch):
+    monkeypatch.chdir(tmp_path)
+    input_parquet = tmp_path / "fake.parquet"
+    create_data_as_parquet(input_parquet)
+    app(["extract-metadata", str(input_parquet)], result_action="return_value")
+    output_path = tmp_path / "fake_properties.py"
+    assert output_path.is_file()
 
+
+def test_extract_metadata_with_custom_output_path(tmp_path):
+    input_parquet = tmp_path / "fake.parquet"
+    create_data_as_parquet(input_parquet)
+    output_path = tmp_path / "properties.py"
     app(
-        ["init-metadata", str(output_path), "--type", "resource"],
+        ["extract-metadata", str(input_parquet), "--output-path", str(output_path)],
         result_action="return_value",
     )
 
-    mock_init_resource_metadata.assert_called_once_with(metadata=[], name="my-resource")
-    mock_init_package_metadata.assert_not_called()
-    mock_write_file.assert_called_once_with(
-        mock_init_resource_metadata.return_value,
-        output_path,
-    )
+    assert output_path.is_file()
 
 
-# def test_extract_metadata_with_default_output_path(
-#     mock_read_parquet,
-#     mock_write_file,
-#     _mock_extract_column_metadata,
-#     mock_init_resource_metadata,
-# ):
-#     app(["extract-metadata", "path/to/data.parquet"], result_action="return_value")
-#
-#     mock_read_parquet.assert_called_once_with(Path("path/to/data.parquet"))
-#     mock_write_file.assert_called_once_with(
-#         mock_init_resource_metadata.return_value,
-#         Path("data_properties.py"),
-#     )
-#
-#
-# def test_extract_metadata_with_custom_output_path(
-#     mock_read_parquet,
-#     mock_write_file,
-#     _mock_extract_column_metadata,
-#     mock_init_resource_metadata,
-# ):
-#     app(
-#         [
-#             "extract-metadata",
-#             "path/to/data.parquet",
-#             "--output-path",
-#             "path/to/output.py",
-#         ],
-#         result_action="return_value",
-#     )
-#
-#     mock_read_parquet.assert_called_once_with(Path("path/to/data.parquet"))
-#     mock_write_file.assert_called_once_with(
-#         mock_init_resource_metadata.return_value,
-#         Path("path/to/output.py"),
-#     )
+def test_fail_extract_metadata_with_empty_parquet(tmp_path):
+    input_parquet = tmp_path / "fake.parquet"
+    create_empty_parquet(input_parquet)
+    with raises(ValueError):
+        app(
+            ["extract-metadata", str(input_parquet)],
+            result_action="return_value",
+        )
