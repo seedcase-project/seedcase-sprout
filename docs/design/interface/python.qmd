@@ -128,36 +128,36 @@ class BuildData[T]:
 
 flowchart TD
     %% Config and metadata
-    config_file[/"config_file"/]:::io --> read_config["read_config()"] --> Config[/"Config"/]
     project_dir[/"project_dir"/]:::io --> read_config
-    Config -->|metadata_file| read_metadata["read_metadata()"] --> metadata[/"PackageMetadata"/]
-    project_dir --> read_metadata
+    read_config["read_config()"] --> Config[/"Config"/]
+    Config --> resolve_paths["resolve_paths()"] --> config_resolved[/"Config"/]
+    project_dir --> resolve_paths
+    config_resolved -->|metadata_file| read_metadata["read_metadata()"] --> metadata[/"PackageMetadata"/]
     metadata --> check_metadata["check_metadata()"] --> metadata_checked[/"PackageMetadata"/]
 
     %% Deleted IDs
-    Config -->|delete_obs_units_file| read_csv["pl.read_csv()"] --> deleted_ids[/"pl.DataFrame"/]
-    project_dir --> read_csv
+    config_resolved -->|delete_obs_units_file| read_csv["pl.read_csv()"] --> deleted_ids[/"pl.DataFrame"/]
     metadata_checked --> check_deleted_ids["check_deleted_ids()"] --> deleted_ids_checked[/"pl.DataFrame"/]
     deleted_ids --> check_deleted_ids
 
     %% Resources: each step runs over the whole list
-    Config -->|resources| resource_configs[/"list[ResourceConfig]"/]
-    resource_configs --> get_build_target["get_build_target()"] --> build_targets[/"list[BuildTarget]"/]
-    project_dir --> get_build_target
+    config_resolved -->|resources| resource_configs[/"list[ResourceConfig]"/]
+    resource_configs -->|map| get_build_target["get_build_target()"] --> build_targets[/"list[BuildTarget]"/]
     metadata_checked --> get_build_target
 
-    build_targets --> read_staged_resource["read_staged_resource()"] --> staged[/"list[BuildData[list[StagingFile]]]"/]
-    staged --> check_schema["check_schema()"]
-    check_schema --> join_staging_files["join_staging_files()"]
+    build_targets -->|map| read_staged_resource["read_staged_resource()"] --> staged[/"list[BuildData[list[StagingFile]]]"/]
+    staged -->|map| check_schema["check_schema()"]
+    check_schema -->|map| join_staging_files["join_staging_files()"]
     join_staging_files --> joined[/"list[BuildData[pl.LazyFrame]]"/]
 
-    joined --> drop_deleted_ids["drop_deleted_ids()"] --> joined_after_delete[/"list[BuildData[pl.LazyFrame]]"/]
+    joined -->|map| drop_deleted_ids["drop_deleted_ids()"] --> joined_after_delete[/"list[BuildData[pl.LazyFrame]]"/]
     deleted_ids_checked -->|"if any"| drop_deleted_ids
-    joined_after_delete --> collect["collect()<br><i>errors on lazy frames surface here</i>"]
+    joined_after_delete -->|map| collect["collect()<br><i>errors on lazy frames surface here</i>"]
 
     collect --> collected[/"list[BuildData[pl.DataFrame]]"/]
-    collected --> check_constraints["check_constraints()"]
-    check_constraints --> write_parquet["write_parquet()"]
+    collected -->|map| check_schema_joined["check_schema()"]
+    check_schema_joined -->|map| check_constraints["check_constraints()"]
+    check_constraints -->|map| write_parquet["write_parquet()"]
     write_parquet --> outputs[/"output Parquet files"/]:::io
 
     classDef io fill:#FFF
