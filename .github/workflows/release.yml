@@ -109,7 +109,7 @@ jobs:
       name: pypi
     needs:
       - github-release
-    if: ${{ needs.github-release.outputs.has_changes }}
+    if: ${{ needs.github-release.outputs.has_changes == 'true' }}
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
@@ -135,5 +135,4 @@ jobs:
         run: uv build
 
       - name: Publish 📦 to PyPI
-        # Only publish if the option is explicitly set in the calling workflow.
         run: uv publish --trusted-publishing always
